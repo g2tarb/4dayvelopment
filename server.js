@@ -242,7 +242,7 @@ function buildEmailHTML(data) {
   </head>
   <body>
     <div class="card">
-      <div class="header">🚀 Nouveau message — 4dayvelopment</div>
+      <div class="header">🚀 Nouveau message | 4dayvelopment</div>
       <div class="body">
         <div class="field"><div class="label">Prénom</div><div class="value">${escapeHtml(prenom)}</div></div>
         <div class="field"><div class="label">Email</div><div class="value"><a href="mailto:${escapeHtml(email)}" style="color:#f2b13b">${escapeHtml(email)}</a></div></div>
@@ -309,7 +309,7 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
         from:    `"4dayvelopment" <${process.env.MAIL_USER}>`,
         to:      process.env.MAIL_TO || process.env.MAIL_USER,
         replyTo: data.email,
-        subject: `[Contact] ${data.secteur || 'Nouveau message'} — ${data.prenom}`,
+        subject: `[Contact] ${data.secteur || 'Nouveau message'} · ${data.prenom}`,
         html:    buildEmailHTML(data),
       });
 
@@ -362,9 +362,9 @@ app.get('/api/toasts', apiLimiter, (req, res) => {
     { emoji: '👀', name: '5 personnes regardent ce site',       detail: 'en ce moment même',             time: 'En direct' },
     { emoji: '💼', name: 'Karim D. réserve une démo',           detail: 'Application web sur-mesure',    time: 'au cours du mois' },
     { emoji: '👀', name: '3 personnes consultent les services', detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '📈', name: 'Julie M. — +340% de conv.',           detail: 'Site Pro + SEO avancé',         time: 'au cours du mois' },
+    { emoji: '📈', name: 'Julie M., +340% de conv.',           detail: 'Site Pro + SEO avancé',         time: 'au cours du mois' },
     { emoji: '👀', name: '6 personnes découvrent l\'agence',    detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '🎯', name: 'Amandine C. — 3 000€/mois',           detail: 'Boutique e-commerce lancée',    time: 'au cours du mois' },
+    { emoji: '🎯', name: 'Amandine C., 3 000€/mois',           detail: 'Boutique e-commerce lancée',    time: 'au cours du mois' },
     { emoji: '👀', name: '9 personnes regardent ce site',       detail: 'en ce moment même',             time: 'En direct' },
     { emoji: '🇧🇪', name: 'Lucas V. démarre son projet',        detail: 'Site vitrine + blog',           time: 'au cours du mois' },
   ];
@@ -399,7 +399,7 @@ function buildArticleHTML(data) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(title)} — 4dayvelopment</title>
+  <title>${escapeHtml(title)} | 4dayvelopment</title>
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <meta name="theme-color" content="#DA5426">

@@ -92,8 +92,8 @@ export function initSmoothScroll() {
 /* ── Sticky CTA mobile (apparait apres hero) ──────────── */
 const STICKY_BUDGET_REDIRECT = {
   'Moins de 1 000€': '/essentiel',
-  '1 000 – 2 000€':  '/devis',
-  '2 000 – 5 000€':  '/devis',
+  '1 000 à 2 000€':  '/devis',
+  '2 000 à 5 000€':  '/devis',
   '5 000€ et plus':  '/devis',
 };
 

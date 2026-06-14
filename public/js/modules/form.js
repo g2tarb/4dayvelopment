@@ -3,8 +3,8 @@ import { $, $$, on, raf } from './utils.js';
 
 const BUDGET_REDIRECT = {
   'Moins de 1 000€': '/essentiel',
-  '1 000 – 2 000€':  '/devis',
-  '2 000 – 5 000€':  '/devis',
+  '1 000 à 2 000€':  '/devis',
+  '2 000 à 5 000€':  '/devis',
   '5 000€ et plus':  '/devis',
 };
 
@@ -88,7 +88,7 @@ export function initContactForm() {
          prenom:    $('#f-name').value.trim(),
          email:     $('#f-email').value.trim(),
          telephone: $('#f-phone').value.trim(),
-         secteur:   $('#f-service').value + ($('#f-budget').value ? ' — budget: ' + $('#f-budget').value : ''),
+         secteur:   $('#f-service').value + ($('#f-budget').value ? ' · budget: ' + $('#f-budget').value : ''),
          message:   $('#f-message').value.trim(),
         }),
       });

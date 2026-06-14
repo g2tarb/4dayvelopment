@@ -14,10 +14,10 @@
   const TOTAL = 4;
 
   const budgetMap = [
-    '< 500 €', '500 – 1 000 €', '1 000 – 2 000 €',
-    '2 000 – 3 000 €', '3 000 – 5 000 €', '5 000 – 7 500 €',
-    '7 500 – 10 000 €', '10 000 – 15 000 €', '15 000 – 25 000 €',
-    '25 000 – 50 000 €', '50 000 € +'
+    '< 500 €', '500 à 1 000 €', '1 000 à 2 000 €',
+    '2 000 à 3 000 €', '3 000 à 5 000 €', '5 000 à 7 500 €',
+    '7 500 à 10 000 €', '10 000 à 15 000 €', '15 000 à 25 000 €',
+    '25 000 à 50 000 €', '50 000 € +'
   ];
 
   /* ══ BUDGET SLIDER ══ */
@@ -192,7 +192,7 @@
   /* ══ RECAP ══ */
   function getPages() {
     const checked = [...document.querySelectorAll('input[name="pages"]:checked')];
-    return checked.map(c => c.value).join(', ') || '—';
+    return checked.map(c => c.value).join(', ') || 'Non renseigné';
   }
   function getFonctionnalites() {
     const checked = [...document.querySelectorAll('input[name="fonctionnalites"]:checked')];
@@ -204,27 +204,28 @@
     const data = collectData();
     const grid = document.getElementById('recap-grid');
     const en = localStorage.getItem('lang') === 'en';
+    const NA = en ? 'Not provided' : 'Non renseigné';
     const rows = [
       { l: en ? 'First name / Last name' : 'Prénom / Nom', v: [data.prenom, data.nom].filter(Boolean).join(' ') },
       { l: 'Email',        v: data.email },
-      { l: en ? 'Phone'    : 'Téléphone',   v: data.tel || '—' },
-      { l: en ? 'Company'  : 'Société',     v: data.societe || '—' },
-      { l: en ? 'Sector'   : 'Secteur',     v: data.secteur || '—' },
-      { l: en ? 'Current site' : 'Site actuel', v: data.siteActuel || '—' },
-      { l: en ? 'Site type'    : 'Type de site', v: data.typeSite || '—' },
+      { l: en ? 'Phone'    : 'Téléphone',   v: data.tel || NA },
+      { l: en ? 'Company'  : 'Société',     v: data.societe || NA },
+      { l: en ? 'Sector'   : 'Secteur',     v: data.secteur || NA },
+      { l: en ? 'Current site' : 'Site actuel', v: data.siteActuel || NA },
+      { l: en ? 'Site type'    : 'Type de site', v: data.typeSite || NA },
       { l: 'Budget',      v: data.budget },
-      { l: en ? 'Timeline' : 'Délai',       v: data.delai || '—' },
-      { l: en ? 'Goal'     : 'Objectif',    v: data.objectif || '—' },
+      { l: en ? 'Timeline' : 'Délai',       v: data.delai || NA },
+      { l: en ? 'Goal'     : 'Objectif',    v: data.objectif || NA },
       { l: 'Pages',       v: data.pages, full: true },
       { l: en ? 'Features' : 'Fonctionnalités', v: data.fonctionnalites, full: true },
-      { l: en ? 'Visual style' : 'Style visuel', v: data.style || '—' },
+      { l: en ? 'Visual style' : 'Style visuel', v: data.style || NA },
       { l: 'Description', v: data.description, full: true },
     ];
 
     grid.innerHTML = rows.map(r => `
       <div class="recap-item${r.full ? ' full' : ''}">
         <div class="recap-label">${r.l}</div>
-        <div class="recap-value${r.v === '—' || !r.v ? ' empty' : ''}">${escHtml(r.v || '—')}</div>
+        <div class="recap-value${r.v === NA || r.v === 'Non renseigné' || !r.v ? ' empty' : ''}">${escHtml(r.v || NA)}</div>
       </div>
     `).join('');
   }
@@ -289,7 +290,7 @@ ${d.description}
           prenom:    d.prenom,
           email:     d.email,
           telephone: d.tel,
-          secteur:   `${d.typeSite || 'Non renseigné'} — ${d.secteur || ''} — budget: ${d.budget}`,
+          secteur:   `${d.typeSite || 'Non renseigné'} · ${d.secteur || ''} · budget: ${d.budget}`,
           message,
         }),
 
@@ -387,7 +388,7 @@ ${d.description}
       ['#err-prenom', 'Prénom requis (min. 2 caractères).'],
       ['#err-email',  'Adresse email invalide.'],
       /* section 0 — select secteur */
-      ['#f-secteur', '<option value="">— Choisir —</option><option>Commerce / E-commerce</option><option>Restauration / Food</option><option>Santé / Bien-être</option><option>Immobilier</option><option>Services B2B</option><option>Artisanat / Bâtiment</option><option>Consulting / Formation</option><option>Création / Art</option><option>Tech / Startup</option><option>Association / ONG</option><option>Autre</option>'],
+      ['#f-secteur', '<option value="">Choisir…</option><option>Commerce / E-commerce</option><option>Restauration / Food</option><option>Santé / Bien-être</option><option>Immobilier</option><option>Services B2B</option><option>Artisanat / Bâtiment</option><option>Consulting / Formation</option><option>Création / Art</option><option>Tech / Startup</option><option>Association / ONG</option><option>Autre</option>'],
       /* section 1 — labels */
       ['[data-section="1"] .form-group > label', 'Type de site souhaité <span class="req">*</span>', 0],
       ['[data-section="1"] .form-group > label', 'Budget estimé', 1],
@@ -416,7 +417,7 @@ ${d.description}
       ['#err-type',  'Veuillez choisir un type de site.'],
       ['#err-delai', 'Veuillez sélectionner un délai.'],
       /* section 1 — objectif select */
-      ['#f-objectif', '<option value="">— Choisir —</option><option>Attirer plus de clients</option><option>Vendre mes produits en ligne</option><option>Améliorer mon image de marque</option><option>Automatiser des processus internes</option><option>Me démarquer de la concurrence</option><option>Générer des leads qualifiés</option><option>Fidéliser ma clientèle existante</option>'],
+      ['#f-objectif', '<option value="">Choisir…</option><option>Attirer plus de clients</option><option>Vendre mes produits en ligne</option><option>Améliorer mon image de marque</option><option>Automatiser des processus internes</option><option>Me démarquer de la concurrence</option><option>Générer des leads qualifiés</option><option>Fidéliser ma clientèle existante</option>'],
       /* section 2 — labels */
       ['[data-section="2"] .form-group > label', 'Pages souhaitées (cochez tout ce qui s\'applique)', 0],
       ['[data-section="2"] .form-group > label', 'Fonctionnalités souhaitées', 1],
@@ -509,7 +510,7 @@ ${d.description}
       ['#err-prenom', 'First name required (min. 2 characters).'],
       ['#err-email',  'Invalid email address.'],
       /* section 0 — select secteur */
-      ['#f-secteur', '<option value="">— Select —</option><option>Retail / E-commerce</option><option>Restaurant / Food</option><option>Health / Wellness</option><option>Real estate</option><option>B2B Services</option><option>Trades / Construction</option><option>Consulting / Training</option><option>Arts / Creative</option><option>Tech / Startup</option><option>Non-profit / NGO</option><option>Other</option>'],
+      ['#f-secteur', '<option value="">Select…</option><option>Retail / E-commerce</option><option>Restaurant / Food</option><option>Health / Wellness</option><option>Real estate</option><option>B2B Services</option><option>Trades / Construction</option><option>Consulting / Training</option><option>Arts / Creative</option><option>Tech / Startup</option><option>Non-profit / NGO</option><option>Other</option>'],
       /* section 1 — labels */
       ['[data-section="1"] .form-group > label', 'Desired site type <span class="req">*</span>', 0],
       ['[data-section="1"] .form-group > label', 'Estimated budget', 1],
@@ -538,7 +539,7 @@ ${d.description}
       ['#err-type',  'Please choose a site type.'],
       ['#err-delai', 'Please select a timeline.'],
       /* section 1 — objectif select */
-      ['#f-objectif', '<option value="">— Select —</option><option>Attract more clients</option><option>Sell my products online</option><option>Improve my brand image</option><option>Automate internal processes</option><option>Stand out from the competition</option><option>Generate qualified leads</option><option>Retain existing customers</option>'],
+      ['#f-objectif', '<option value="">Select…</option><option>Attract more clients</option><option>Sell my products online</option><option>Improve my brand image</option><option>Automate internal processes</option><option>Stand out from the competition</option><option>Generate qualified leads</option><option>Retain existing customers</option>'],
       /* section 2 — labels */
       ['[data-section="2"] .form-group > label', 'Desired pages (check all that apply)', 0],
       ['[data-section="2"] .form-group > label', 'Desired features', 1],
