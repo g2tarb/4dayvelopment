@@ -3,18 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio | Nos Realisations Sites Web — 4dayvelopment</title>
-  <meta name="description" content="Decouvrez les realisations de 4dayvelopment : sites vitrines, e-commerces et applications web livres en 4 jours. Resultats concrets pour nos clients.">
+  <title>Portfolio | Nos réalisations de sites web — 4dayvelopment</title>
+  <meta name="description" content="Découvrez les réalisations de 4dayvelopment : sites vitrines, e-commerces, plateformes et applications web livrés en 4 jours. Survolez chaque projet pour voir sa direction artistique.">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <meta name="theme-color" content="#DA5426">
-  <link rel="canonical" href="https://4dayvelopment.fr/portfolio">
+  <link rel="canonical" href="https://4dayvelopment.fr/portfolio/">
 
   <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="4dayvelopment">
-  <meta property="og:title" content="Portfolio | Nos Realisations Sites Web — 4dayvelopment">
-  <meta property="og:description" content="Sites vitrines, e-commerces et applications web livres en 4 jours. Decouvrez les resultats concrets de nos clients.">
-  <meta property="og:url" content="https://4dayvelopment.fr/portfolio">
+  <meta property="og:title" content="Portfolio | Nos réalisations de sites web — 4dayvelopment">
+  <meta property="og:description" content="Sites vitrines, e-commerces, plateformes et applications web livrés en 4 jours. Découvrez les réalisations concrètes de nos clients.">
+  <meta property="og:url" content="https://4dayvelopment.fr/portfolio/">
   <meta property="og:image" content="https://4dayvelopment.fr/og-image.jpg">
   <meta property="og:locale" content="fr_FR">
 
@@ -26,15 +26,137 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/style.css">
+
+  <style>
+    /* ===== GRILLE PORTFOLIO — révélation de la DA au survol ===== */
+    .pf-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(330px, 1fr));
+      gap:20px;
+    }
+    .pcard {
+      position:relative;
+      display:block;
+      aspect-ratio:4/3;
+      border-radius:18px;
+      overflow:hidden;
+      background:#141414;
+      border:1px solid #222;
+      text-decoration:none;
+      color:inherit;
+      isolation:isolate;
+      transition:border-color .4s ease, transform .4s ease, box-shadow .4s ease;
+    }
+    .pcard:hover, .pcard:focus-visible {
+      transform:translateY(-4px);
+      border-color:color-mix(in srgb, var(--brand) 55%, transparent);
+      box-shadow:0 24px 60px -20px color-mix(in srgb, var(--brand) 45%, transparent);
+      outline:none;
+    }
+    /* Visuel : la bribe de DA du site réel */
+    .pcard-visual {
+      position:absolute; inset:0; z-index:0;
+      background-size:cover; background-position:top center;
+      filter:saturate(.72) brightness(.74);
+      transform:scale(1.04);
+      transition:filter .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);
+    }
+    .pcard:hover .pcard-visual, .pcard:focus-visible .pcard-visual {
+      filter:saturate(1.06) brightness(1);
+      transform:scale(1.1);
+    }
+    /* Fallback dégradé (sites à loader/vidéo non capturables) */
+    .pcard-visual.ph {
+      background:radial-gradient(120% 120% at 30% 18%, var(--brand), transparent 58%), #111;
+    }
+    .pcard-visual.ph::after {
+      content:attr(data-letter);
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      font-family:'Syne',sans-serif; font-weight:800;
+      font-size:7rem; color:#fff; opacity:.12;
+    }
+    /* Voile pour lisibilité du texte */
+    .pcard-overlay {
+      position:absolute; inset:0; z-index:1;
+      background:linear-gradient(to top,
+        rgba(8,8,8,.96) 0%, rgba(8,8,8,.8) 30%, rgba(8,8,8,.28) 60%, transparent 100%);
+      transition:opacity .4s ease;
+    }
+    /* Contenu */
+    .pcard-body {
+      position:absolute; inset:0; z-index:2;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:22px;
+    }
+    .pcard-top {
+      position:absolute; top:18px; left:22px; right:22px;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .pcard-cat {
+      background:rgba(0,0,0,.42); backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff; padding:5px 12px; border-radius:100px;
+      font-size:11px; font-weight:600; letter-spacing:.03em; text-transform:uppercase;
+    }
+    .pcard-num {
+      font-family:'JetBrains Mono',monospace; font-size:13px;
+      color:var(--brand); font-weight:600;
+      text-shadow:0 1px 6px rgba(0,0,0,.6);
+    }
+    .pcard-title {
+      font-family:'Syne',sans-serif; font-weight:700;
+      font-size:1.6rem; color:#fff; line-height:1.05; margin:0 0 8px;
+    }
+    .pcard-kpi {
+      font-family:'Syne',sans-serif; font-weight:800; font-size:1rem;
+      color:var(--brand); margin-bottom:10px;
+    }
+    .pcard-desc {
+      color:#c8c8c8; font-size:13.5px; line-height:1.6;
+      max-height:0; opacity:0; overflow:hidden; margin:0;
+      transition:max-height .45s ease, opacity .4s ease, margin .4s ease;
+    }
+    .pcard:hover .pcard-desc, .pcard:focus-visible .pcard-desc {
+      max-height:160px; opacity:1; margin-bottom:13px;
+    }
+    .pcard-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:13px; }
+    .pcard-tags span {
+      font-family:'JetBrains Mono',monospace;
+      font-size:10px; letter-spacing:.02em;
+      color:#d2d2d2; background:rgba(255,255,255,.07);
+      border:1px solid rgba(255,255,255,.1);
+      padding:4px 9px; border-radius:6px; text-transform:uppercase;
+    }
+    .pcard-cta {
+      font-size:13px; font-weight:600; color:var(--brand);
+      opacity:0; transform:translateY(8px);
+      transition:opacity .4s ease, transform .4s ease;
+    }
+    .pcard:hover .pcard-cta, .pcard:focus-visible .pcard-cta { opacity:1; transform:translateY(0); }
+
+    /* Tactile / mobile : pas de hover -> tout est révélé */
+    @media (hover: none), (max-width: 768px) {
+      .pcard-visual { filter:saturate(.95) brightness(.9); transform:scale(1.02); }
+      .pcard-desc { max-height:160px; opacity:1; margin-bottom:13px; }
+      .pcard-cta { opacity:1; transform:none; }
+    }
+    /* Accessibilité : mouvement réduit */
+    @media (prefers-reduced-motion: reduce) {
+      .pcard, .pcard-visual, .pcard-desc, .pcard-cta { transition:none; }
+      .pcard:hover { transform:none; }
+      .pcard:hover .pcard-visual { transform:scale(1.04); }
+    }
+  </style>
 </head>
 <body>
 
   <!-- NAV -->
   <nav id="navbar">
     <a href="/" class="nav-logo">
-      <img src="/logo/logo4day.png" alt="4dayvelopment — Agence web Paris, sites livres en 4 jours" class="logo-img" width="160" height="40">
+      <img src="/logo/logo4day.png" alt="4dayvelopment — Agence web Paris, sites livrés en 4 jours" class="logo-img" width="160" height="40">
     </a>
     <ul class="nav-links">
       <li><a href="/services/site-vitrine">Site Vitrine</a></li>
@@ -53,7 +175,7 @@
   <main>
 
   <!-- HERO -->
-  <section class="hero" style="min-height:auto;padding:140px 0 60px;">
+  <section class="hero" style="min-height:auto;padding:140px 0 50px;">
     <div class="container">
       <nav aria-label="Fil d'Ariane" class="breadcrumb">
         <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;gap:8px;list-style:none;padding:0;font-size:14px;color:#666;">
@@ -71,110 +193,190 @@
 
       <div class="badge reveal" style="margin-top:24px;">
         <span class="badge-dot"></span>
-        <span>Nos realisations clients</span>
+        <span>Nos réalisations clients</span>
       </div>
 
       <h1 class="hero-title reveal" style="font-size:clamp(2.2rem,5vw,3.8rem);margin-top:20px;">
-        Nos <em class="gradient-text">realisations</em>
+        Nos <em class="gradient-text">réalisations</em>
       </h1>
 
-      <p class="hero-desc reveal" style="max-width:700px;">
-        Chaque projet est unique. Decouvrez comment nous avons aide nos clients a developper leur presence en ligne avec des sites performants, livres en 4 jours.
+      <p class="hero-desc reveal" style="max-width:720px;">
+        Chaque projet a sa propre direction artistique. Survolez une carte pour découvrir l'univers du site — vitrines, e-commerces, plateformes et applications, tous conçus et livrés en 4 jours.
       </p>
     </div>
   </section>
 
-  <!-- PROJECTS GRID -->
-  <section style="padding:40px 0 80px;">
+  <!-- GRILLE PROJETS -->
+  <section style="padding:30px 0 80px;">
     <div class="container" style="max-width:1100px;">
+      <div class="pf-grid">
 
-      <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(360px, 1fr));gap:20px;">
-
-        <!-- Secours Pare-Brise -->
-        <article class="reveal" style="background:#141414;border:1px solid #222;border-radius:16px;padding:32px;transition:border-color 0.3s;" onmouseenter="this.style.borderColor='rgba(218,84,38,0.35)'" onmouseleave="this.style.borderColor='#222'">
-          <div style="margin-bottom:16px;">
-            <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">Site Vitrine</span>
+        <!-- 01 SecurEats -->
+        <a class="pcard" href="https://secure-site-weld.vercel.app/" target="_blank" rel="noopener" style="--brand:#E0A82E;" aria-label="Voir le site SecurEats (nouvel onglet)">
+          <div class="pcard-visual" style="background-image:url('/portfolio/da/secureats.jpg');"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">App + Site</span><span class="pcard-num">01</span></div>
+            <h2 class="pcard-title">SecurEats</h2>
+            <div class="pcard-kpi">Livré en 30-45 min</div>
+            <p class="pcard-desc">Écosystème fast-food 2-en-1 : site vitrine + PWA installable, commande sans intermédiaire ni compte obligatoire.</p>
+            <div class="pcard-tags"><span>PWA</span><span>Web Crypto</span><span>QR Code</span><span>Service Worker</span></div>
+            <span class="pcard-cta">Voir le site →</span>
           </div>
-          <h2 style="color:#e8e8e8;font-size:1.3rem;font-weight:700;margin-bottom:12px;">Secours Pare-Brise</h2>
-          <p style="color:#888;font-size:14px;line-height:1.7;margin-bottom:20px;">
-            Site vitrine pour un service de remplacement de pare-brise. Interface claire et formulaire de devis optimise pour maximiser les conversions.
-          </p>
-          <div style="font-size:2rem;font-weight:800;margin-bottom:16px;" class="gradient-text">+200% de devis</div>
-          <p style="color:#666;font-size:13px;margin-bottom:20px;">Demandes de devis en ligne multipliees par 3 grace a un parcours utilisateur repense.</p>        </article>
+        </a>
 
-        <!-- Thiep's Restaurant -->
-        <article class="reveal" style="background:#141414;border:1px solid #222;border-radius:16px;padding:32px;transition:border-color 0.3s;" onmouseenter="this.style.borderColor='rgba(218,84,38,0.35)'" onmouseleave="this.style.borderColor='#222'">
-          <div style="margin-bottom:16px;">
-            <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">Site Vitrine</span>
+        <!-- 02 Clara Martinez -->
+        <a class="pcard" href="https://clara-martinez-project.vercel.app/" target="_blank" rel="noopener" style="--brand:#C9A24B;" aria-label="Voir le site Clara Martinez (nouvel onglet)">
+          <div class="pcard-visual" style="background-image:url('/portfolio/da/clara-martinez.jpg');"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Site Vitrine luxe</span><span class="pcard-num">02</span></div>
+            <h2 class="pcard-title">Clara Martinez</h2>
+            <div class="pcard-kpi">94% de clients satisfaits</div>
+            <p class="pcard-desc">Site vitrine premium pour business coach — DA dark luxe, fond aurora animé en canvas et parcours de conversion.</p>
+            <div class="pcard-tags"><span>HTML5</span><span>Canvas</span><span>Aurora BG</span><span>Motion</span></div>
+            <span class="pcard-cta">Voir le site →</span>
           </div>
-          <h2 style="color:#e8e8e8;font-size:1.3rem;font-weight:700;margin-bottom:12px;">Thiep's Restaurant</h2>
-          <p style="color:#888;font-size:14px;line-height:1.7;margin-bottom:20px;">
-            Site vitrine pour un restaurant africain a Paris. Mise en valeur du menu, de l'ambiance et integration d'un systeme de reservation en ligne.
-          </p>
-          <div style="font-size:2rem;font-weight:800;margin-bottom:16px;" class="gradient-text">x3 reservations</div>
-          <p style="color:#666;font-size:13px;margin-bottom:20px;">Reservations en ligne multipliees par 3 des le premier mois de mise en ligne.</p>        </article>
+        </a>
 
-        <!-- Proprio Link -->
-        <article class="reveal" style="background:#141414;border:1px solid #222;border-radius:16px;padding:32px;transition:border-color 0.3s;" onmouseenter="this.style.borderColor='rgba(218,84,38,0.35)'" onmouseleave="this.style.borderColor='#222'">
-          <div style="margin-bottom:16px;">
-            <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">Application Web</span>
+        <!-- 03 Sirven -->
+        <a class="pcard" href="https://www.sirven.dev/" target="_blank" rel="noopener" style="--brand:#D8CFA8;" aria-label="Voir le site Sirven (nouvel onglet)">
+          <div class="pcard-visual" style="background-image:url('/portfolio/da/sirven.jpg');"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Portfolio créatif</span><span class="pcard-num">03</span></div>
+            <h2 class="pcard-title">Sirven</h2>
+            <div class="pcard-kpi">Sites web · Automation · IA</div>
+            <p class="pcard-desc">Site portfolio d'un studio web, automation &amp; IA — DA noir et crème, typographie grasse géante.</p>
+            <div class="pcard-tags"><span>Sur-mesure</span><span>Automation</span><span>IA</span></div>
+            <span class="pcard-cta">Voir le site →</span>
           </div>
-          <h2 style="color:#e8e8e8;font-size:1.3rem;font-weight:700;margin-bottom:12px;">Proprio Link</h2>
-          <p style="color:#888;font-size:14px;line-height:1.7;margin-bottom:20px;">
-            Plateforme de mise en relation entre proprietaires et locataires. Inscription simplifiee, matching intelligent et messagerie integree.
-          </p>
-          <div style="font-size:2rem;font-weight:800;margin-bottom:16px;" class="gradient-text">500+ inscrits</div>
-          <p style="color:#666;font-size:13px;margin-bottom:20px;">Plus de 500 utilisateurs inscrits en seulement 2 mois apres le lancement.</p>        </article>
+        </a>
 
-        <!-- Flaynn -->
-        <article class="reveal" style="background:#141414;border:1px solid #222;border-radius:16px;padding:32px;transition:border-color 0.3s;" onmouseenter="this.style.borderColor='rgba(218,84,38,0.35)'" onmouseleave="this.style.borderColor='#222'">
-          <div style="margin-bottom:16px;">
-            <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">Application Web</span>
+        <!-- 04 EMON -->
+        <a class="pcard" href="https://www.emonworldwide.com/" target="_blank" rel="noopener" style="--brand:#C9A978;" aria-label="Voir le site EMON (nouvel onglet)">
+          <div class="pcard-visual" style="background-image:url('/portfolio/da/emon.jpg');"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Site Vitrine luxe</span><span class="pcard-num">04</span></div>
+            <h2 class="pcard-title">EMON</h2>
+            <div class="pcard-kpi">Des objets faits pour durer</div>
+            <p class="pcard-desc">Site vitrine ultra-luxe pour une maison d'objets — DA éditoriale « light on leather », typographie serif monumentale.</p>
+            <div class="pcard-tags"><span>Luxe</span><span>Éditorial</span><span>Motion</span></div>
+            <span class="pcard-cta">Voir le site →</span>
           </div>
-          <h2 style="color:#e8e8e8;font-size:1.3rem;font-weight:700;margin-bottom:12px;">Flaynn</h2>
-          <p style="color:#888;font-size:14px;line-height:1.7;margin-bottom:20px;">
-            SaaS de gestion de projets creatifs. Dashboard intuitif, collaboration en temps reel et suivi des livrables pour les equipes creatives.
-          </p>
-          <div style="font-size:2rem;font-weight:800;margin-bottom:16px;" class="gradient-text">MVP en 4 jours</div>
-          <p style="color:#666;font-size:13px;margin-bottom:20px;">Produit minimum viable fonctionnel livre en 4 jours, pret pour les premiers utilisateurs.</p>        </article>
+        </a>
 
-        <!-- Emoi Agency -->
-        <article class="reveal" style="background:#141414;border:1px solid #222;border-radius:16px;padding:32px;transition:border-color 0.3s;" onmouseenter="this.style.borderColor='rgba(218,84,38,0.35)'" onmouseleave="this.style.borderColor='#222'">
-          <div style="margin-bottom:16px;">
-            <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">Site Vitrine</span>
+        <!-- 05 Proprio Link -->
+        <a class="pcard" href="https://proprio-link.fr/" target="_blank" rel="noopener" style="--brand:#4F6BFF;" aria-label="Voir le site Proprio Link (nouvel onglet)">
+          <div class="pcard-visual" style="background-image:url('/portfolio/da/proprio-link.jpg');"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Plateforme</span><span class="pcard-num">05</span></div>
+            <h2 class="pcard-title">Proprio Link</h2>
+            <div class="pcard-kpi">Du propriétaire à l'agent</div>
+            <p class="pcard-desc">Plateforme de mise en relation directe propriétaires ↔ professionnels de l'immobilier, multilingue.</p>
+            <div class="pcard-tags"><span>Matching</span><span>Multilingue</span><span>Annonces</span></div>
+            <span class="pcard-cta">Voir le site →</span>
           </div>
-          <h2 style="color:#e8e8e8;font-size:1.3rem;font-weight:700;margin-bottom:12px;">Emoi Agency</h2>
-          <p style="color:#888;font-size:14px;line-height:1.7;margin-bottom:20px;">
-            Site vitrine pour une agence evenementielle. Design immersif mettant en avant les evenements passes et un formulaire de contact performant.
-          </p>
-          <div style="font-size:2rem;font-weight:800;margin-bottom:16px;" class="gradient-text">+180% trafic</div>
-          <p style="color:#666;font-size:13px;margin-bottom:20px;">Trafic organique en hausse de 180% en 3 mois grace au SEO technique et au contenu optimise.</p>        </article>
+        </a>
 
-        <!-- Inspi Officiel -->
-        <article class="reveal" style="background:#141414;border:1px solid #222;border-radius:16px;padding:32px;transition:border-color 0.3s;" onmouseenter="this.style.borderColor='rgba(218,84,38,0.35)'" onmouseleave="this.style.borderColor='#222'">
-          <div style="margin-bottom:16px;">
-            <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">E-commerce</span>
+        <!-- 06 DYG -->
+        <a class="pcard" href="https://dyg-olfu.onrender.com/" target="_blank" rel="noopener" style="--brand:#38BDF8;" aria-label="Voir le site DYG (nouvel onglet)">
+          <div class="pcard-visual" style="background-image:url('/portfolio/da/dyg.jpg');"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Plateforme</span><span class="pcard-num">06</span></div>
+            <h2 class="pcard-title">DYG</h2>
+            <div class="pcard-kpi">150+ exercices, 100% gratuit</div>
+            <p class="pcard-desc">Plateforme communautaire pour développeurs : scan GitHub, plus de 150 exercices et vrais projets en équipe.</p>
+            <div class="pcard-tags"><span>GitHub API</span><span>100% Gratuit</span><span>Communauté</span></div>
+            <span class="pcard-cta">Voir le site →</span>
           </div>
-          <h2 style="color:#e8e8e8;font-size:1.3rem;font-weight:700;margin-bottom:12px;">Inspi Officiel</h2>
-          <p style="color:#888;font-size:14px;line-height:1.7;margin-bottom:20px;">
-            Boutique e-commerce mode streetwear. Catalogue produits, paiement securise, gestion des stocks et design fidele a l'identite de la marque.
-          </p>
-          <div style="font-size:2rem;font-weight:800;margin-bottom:16px;" class="gradient-text">3 000 EUR mois 1</div>
-          <p style="color:#666;font-size:13px;margin-bottom:20px;">3 000 euros de chiffre d'affaires genere des le premier mois de mise en ligne.</p>        </article>
+        </a>
+
+        <!-- 07 Secours Pare-Brise -->
+        <a class="pcard" href="https://www.secoursparebrise.fr/" target="_blank" rel="noopener" style="--brand:#2F6BFF;" aria-label="Voir le site Secours Pare-Brise (nouvel onglet)">
+          <div class="pcard-visual" style="background-image:url('/portfolio/da/secours-pare-brise.jpg');"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Site Vitrine</span><span class="pcard-num">07</span></div>
+            <h2 class="pcard-title">Secours Pare-Brise</h2>
+            <div class="pcard-kpi">Devis prêt en 2 min</div>
+            <p class="pcard-desc">Site vitrine avec devis en ligne pour un service de réparation de pare-brise, optimisé pour le SEO local.</p>
+            <div class="pcard-tags"><span>Devis en ligne</span><span>Responsive</span><span>SEO Local</span></div>
+            <span class="pcard-cta">Voir le site →</span>
+          </div>
+        </a>
+
+        <!-- 08 Thiep's Restaurant -->
+        <a class="pcard" href="https://thiepsrestaurant.fr/" target="_blank" rel="noopener" style="--brand:#43A047;" aria-label="Voir le site Thiep's Restaurant (nouvel onglet)">
+          <div class="pcard-visual" style="background-image:url('/portfolio/da/thieps.jpg');"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Site Vitrine</span><span class="pcard-num">08</span></div>
+            <h2 class="pcard-title">Thiep's Restaurant</h2>
+            <div class="pcard-kpi">Douceurs d'Afrique en ligne</div>
+            <p class="pcard-desc">Site vitrine et commande en ligne pour un restaurant de cuisine ouest-africaine (Mali, Sénégal).</p>
+            <div class="pcard-tags"><span>Commande en ligne</span><span>Menu</span><span>Livraison</span></div>
+            <span class="pcard-cta">Voir le site →</span>
+          </div>
+        </a>
+
+        <!-- 09 Emoi Agency -->
+        <a class="pcard" href="https://emoi-agency.fr/" target="_blank" rel="noopener" style="--brand:#F37021;" aria-label="Voir le site Emoi Agency (nouvel onglet)">
+          <div class="pcard-visual" style="background-image:url('/portfolio/da/emoi-agency.jpg');"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Site Vitrine</span><span class="pcard-num">09</span></div>
+            <h2 class="pcard-title">Emoi Agency</h2>
+            <div class="pcard-kpi">Agence marketing, Paris</div>
+            <p class="pcard-desc">Site vitrine d'une agence de marketing digital parisienne, avec prise de rendez-vous intégrée.</p>
+            <div class="pcard-tags"><span>WordPress</span><span>SEO</span><span>Branding</span></div>
+            <span class="pcard-cta">Voir le site →</span>
+          </div>
+        </a>
+
+        <!-- 10 Nakama (fallback dégradé) -->
+        <a class="pcard" href="https://www.nakama-app.fr/" target="_blank" rel="noopener" style="--brand:#D4AF37;" aria-label="Voir le site Nakama (nouvel onglet)">
+          <div class="pcard-visual ph" data-letter="N"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Application Web</span><span class="pcard-num">10</span></div>
+            <h2 class="pcard-title">Nakama</h2>
+            <div class="pcard-kpi">Le matching sportif × coach</div>
+            <p class="pcard-desc">Plateforme française de matching comportemental entre sportifs et coachs — recherche par sport, créneau et lieu.</p>
+            <div class="pcard-tags"><span>Matching</span><span>Recherche</span><span>Coaching</span></div>
+            <span class="pcard-cta">Voir le site →</span>
+          </div>
+        </a>
+
+        <!-- 11 Scory (fallback dégradé) -->
+        <a class="pcard" href="https://scory.dev/" target="_blank" rel="noopener" style="--brand:#B08D57;" aria-label="Voir le site Scory (nouvel onglet)">
+          <div class="pcard-visual ph" data-letter="S"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-body">
+            <div class="pcard-top"><span class="pcard-cat">Portfolio créatif</span><span class="pcard-num">11</span></div>
+            <h2 class="pcard-title">Scory</h2>
+            <div class="pcard-kpi">Expériences web immersives</div>
+            <p class="pcard-desc">Portfolio immersif d'un développeur créatif — carrousel plein écran, effets Three.js / GLSL / GSAP.</p>
+            <div class="pcard-tags"><span>Three.js</span><span>GLSL</span><span>GSAP</span><span>Vanilla JS</span></div>
+            <span class="pcard-cta">Voir le site →</span>
+          </div>
+        </a>
 
       </div>
-
     </div>
   </section>
 
   <!-- CTA -->
-  <section style="padding:60px 0 100px;">
+  <section style="padding:40px 0 100px;">
     <div class="container" style="text-align:center;max-width:700px;">
-      <h2 class="section-title reveal">Votre projet pourrait etre <em class="gradient-text">le prochain</em></h2>
+      <h2 class="section-title reveal">Votre projet pourrait être <em class="gradient-text">le prochain</em></h2>
       <p class="section-sub reveal" style="margin-bottom:32px;">
-        Discutons de votre projet gratuitement. Nous vous proposerons une solution sur-mesure, livree en 4 jours.
+        Discutons de votre projet gratuitement. Nous vous proposerons une solution sur-mesure, livrée en 4 jours.
       </p>
-      <a href="/#contact" class="btn-primary magnetic reveal">Demarrer mon projet →</a>
+      <a href="/#contact" class="btn-primary magnetic reveal">Démarrer mon projet →</a>
     </div>
   </section>
 
@@ -184,14 +386,14 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="/" class="footer-logo"><img src="/logo/logo4day.png" alt="4dayvelopment" class="logo-img" width="160" height="40"></a>
-        <p>Un site qui vend, livre en 4 jours.<br>Garanti ou c'est gratuit.</p>
+        <p>Un site qui vend, livré en 4 jours.<br>Garanti ou c'est gratuit.</p>
       </div>
       <div class="footer-links-group">
         <h4>Services</h4>
         <ul>
           <li><a href="/services/site-vitrine">Site Vitrine</a></li>
           <li><a href="/services/e-commerce">E-commerce</a></li>
-          <li><a href="/services/referencement-seo">SEO & Referencement</a></li>
+          <li><a href="/services/referencement-seo">SEO &amp; Référencement</a></li>
         </ul>
       </div>
       <div class="footer-links-group">
@@ -213,10 +415,10 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 4dayvelopment. Tous droits reserves.</p>
+      <p>&copy; 2026 4dayvelopment. Tous droits réservés.</p>
       <ul class="footer-legal">
-        <li><a href="/mentions-legales">Mentions legales</a></li>
-        <li><a href="/confidentialite">Confidentialite</a></li>
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/confidentialite">Confidentialité</a></li>
         <li><a href="/cgv">CGV</a></li>
       </ul>
     </div>
@@ -227,8 +429,8 @@
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "Portfolio — Nos Realisations",
-    "description": "Decouvrez les realisations de 4dayvelopment : sites vitrines, e-commerces et applications web livres en 4 jours.",
+    "name": "Portfolio — Nos réalisations",
+    "description": "Découvrez les réalisations de 4dayvelopment : sites vitrines, e-commerces, plateformes et applications web livrés en 4 jours.",
     "url": "https://4dayvelopment.fr/portfolio",
     "publisher": {
       "@type": "Organization",
@@ -238,42 +440,17 @@
     "mainEntity": {
       "@type": "ItemList",
       "itemListElement": [
-        {
-          "@type": "ListItem",
-          "position": 1,
-          "name": "Secours Pare-Brise",
-          "description": "Site vitrine pour un service de remplacement de pare-brise. +200% de demandes de devis en ligne."
-        },
-        {
-          "@type": "ListItem",
-          "position": 2,
-          "name": "Thiep's Restaurant",
-          "description": "Site vitrine pour un restaurant africain a Paris. Reservations en ligne multipliees par 3."
-        },
-        {
-          "@type": "ListItem",
-          "position": 3,
-          "name": "Proprio Link",
-          "description": "Plateforme de mise en relation proprietaires/locataires. 500+ inscrits en 2 mois."
-        },
-        {
-          "@type": "ListItem",
-          "position": 4,
-          "name": "Flaynn",
-          "description": "SaaS / application web pour la gestion de projets creatifs. MVP livre en 4 jours."
-        },
-        {
-          "@type": "ListItem",
-          "position": 5,
-          "name": "Emoi Agency",
-          "description": "Site vitrine pour une agence evenementielle. +180% de trafic organique en 3 mois."
-        },
-        {
-          "@type": "ListItem",
-          "position": 6,
-          "name": "Inspi Officiel",
-          "description": "E-commerce mode streetwear. 3 000 EUR CA le premier mois."
-        }
+        { "@type": "ListItem", "position": 1,  "name": "SecurEats", "url": "https://secure-site-weld.vercel.app/", "description": "Écosystème fast-food 2-en-1 : site vitrine + PWA installable." },
+        { "@type": "ListItem", "position": 2,  "name": "Clara Martinez", "url": "https://clara-martinez-project.vercel.app/", "description": "Site vitrine premium pour business coach, DA dark luxe et fond aurora animé." },
+        { "@type": "ListItem", "position": 3,  "name": "Sirven", "url": "https://www.sirven.dev/", "description": "Site portfolio d'un studio web, automation et IA." },
+        { "@type": "ListItem", "position": 4,  "name": "EMON", "url": "https://www.emonworldwide.com/", "description": "Site vitrine ultra-luxe pour une maison d'objets, DA éditoriale light on leather." },
+        { "@type": "ListItem", "position": 5,  "name": "Proprio Link", "url": "https://proprio-link.fr/", "description": "Plateforme de mise en relation propriétaires et professionnels de l'immobilier." },
+        { "@type": "ListItem", "position": 6,  "name": "DYG", "url": "https://dyg-olfu.onrender.com/", "description": "Plateforme communautaire pour développeurs, scan GitHub et 150+ exercices." },
+        { "@type": "ListItem", "position": 7,  "name": "Secours Pare-Brise", "url": "https://www.secoursparebrise.fr/", "description": "Site vitrine avec devis en ligne, optimisé SEO local." },
+        { "@type": "ListItem", "position": 8,  "name": "Thiep's Restaurant", "url": "https://thiepsrestaurant.fr/", "description": "Site vitrine et commande en ligne pour un restaurant ouest-africain." },
+        { "@type": "ListItem", "position": 9,  "name": "Emoi Agency", "url": "https://emoi-agency.fr/", "description": "Site vitrine d'une agence de marketing digital parisienne." },
+        { "@type": "ListItem", "position": 10, "name": "Nakama", "url": "https://www.nakama-app.fr/", "description": "Plateforme française de matching comportemental sportifs et coachs." },
+        { "@type": "ListItem", "position": 11, "name": "Scory", "url": "https://scory.dev/", "description": "Portfolio immersif d'un développeur créatif, Three.js / GLSL / GSAP." }
       ]
     }
   }
