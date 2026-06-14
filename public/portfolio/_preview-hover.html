@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Preview — cartes portfolio hover DA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background:#0a0a0a; color:#e8e8e8;
+    font-family:'Inter',sans-serif;
+    padding:60px 24px; min-height:100vh;
+  }
+  .wrap { max-width:1100px; margin:0 auto; }
+  h1 { font-family:'Syne',sans-serif; font-size:2rem; margin-bottom:8px; }
+  .sub { color:#888; margin-bottom:40px; font-size:14px; }
+  .hint { color:#f2b13b; font-size:13px; margin-bottom:32px; }
+
+  .grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(340px,1fr));
+    gap:22px;
+  }
+
+  /* ===== CARTE PROJET ===== */
+  .pcard {
+    position:relative;
+    aspect-ratio:4/3;
+    border-radius:18px;
+    overflow:hidden;
+    background:#141414;
+    border:1px solid #222;
+    cursor:pointer;
+    transition:border-color .4s ease, transform .4s ease, box-shadow .4s ease;
+    isolation:isolate;
+  }
+  .pcard:hover {
+    transform:translateY(-4px);
+    border-color:color-mix(in srgb, var(--brand) 55%, transparent);
+    box-shadow:0 24px 60px -20px color-mix(in srgb, var(--brand) 45%, transparent);
+  }
+
+  /* Visuel DA (la bribe du site réel) */
+  .pcard-visual {
+    position:absolute; inset:0; z-index:0;
+    background-size:cover; background-position:top center;
+    /* État repos : légèrement désaturé + zoomé */
+    filter:saturate(.75) brightness(.78);
+    transform:scale(1.04);
+    transition:filter .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);
+  }
+  .pcard:hover .pcard-visual {
+    filter:saturate(1.1) brightness(1);
+    transform:scale(1.1);
+  }
+  /* placeholder dégradé pour projets sans capture */
+  .pcard-visual.ph {
+    background:radial-gradient(120% 120% at 30% 20%, var(--brand), transparent 60%), #111;
+  }
+  .pcard-visual.ph::after {
+    content:attr(data-letter);
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Syne',sans-serif; font-weight:800;
+    font-size:7rem; color:#fff; opacity:.10;
+  }
+
+  /* Voile dégradé pour lisibilité du texte (bas de carte) */
+  .pcard-overlay {
+    position:absolute; inset:0; z-index:1;
+    background:linear-gradient(to top,
+      rgba(8,8,8,.95) 0%, rgba(8,8,8,.78) 32%, rgba(8,8,8,.25) 62%, transparent 100%);
+    transition:opacity .4s ease;
+  }
+  .pcard:hover .pcard-overlay { opacity:.9; }
+
+  /* Contenu */
+  .pcard-body {
+    position:absolute; inset:0; z-index:2;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding:24px;
+  }
+  .pcard-top {
+    position:absolute; top:20px; left:24px; right:24px;
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .pcard-cat {
+    background:rgba(0,0,0,.4); backdrop-filter:blur(8px);
+    border:1px solid rgba(255,255,255,.12);
+    color:#fff; padding:5px 12px; border-radius:100px;
+    font-size:11px; font-weight:600; letter-spacing:.04em;
+    text-transform:uppercase;
+  }
+  .pcard-num {
+    font-family:'JetBrains Mono',monospace; font-size:13px;
+    color:var(--brand); font-weight:600;
+  }
+  .pcard-title {
+    font-family:'Syne',sans-serif; font-weight:700;
+    font-size:1.7rem; color:#fff; line-height:1.05;
+    margin-bottom:8px;
+  }
+  .pcard-kpi {
+    font-family:'Syne',sans-serif; font-weight:800; font-size:1.05rem;
+    color:var(--brand); margin-bottom:10px;
+  }
+  .pcard-desc {
+    color:#c4c4c4; font-size:13.5px; line-height:1.6;
+    max-height:0; opacity:0; overflow:hidden;
+    transition:max-height .45s ease, opacity .4s ease, margin .4s ease;
+    margin-bottom:0;
+  }
+  .pcard:hover .pcard-desc {
+    max-height:120px; opacity:1; margin-bottom:14px;
+  }
+  .pcard-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:14px; }
+  .pcard-tags span {
+    font-family:'JetBrains Mono',monospace;
+    font-size:10px; letter-spacing:.03em;
+    color:#cfcfcf; background:rgba(255,255,255,.07);
+    border:1px solid rgba(255,255,255,.1);
+    padding:4px 9px; border-radius:6px; text-transform:uppercase;
+  }
+  .pcard-cta {
+    font-size:13px; font-weight:600; color:var(--brand);
+    opacity:0; transform:translateY(8px);
+    transition:opacity .4s ease, transform .4s ease;
+  }
+  .pcard:hover .pcard-cta { opacity:1; transform:translateY(0); }
+
+  /* Forcé "hover" pour la capture de droite */
+  .force-hover .pcard { transform:translateY(-4px); border-color:color-mix(in srgb, var(--brand) 55%, transparent); box-shadow:0 24px 60px -20px color-mix(in srgb, var(--brand) 45%, transparent); }
+  .force-hover .pcard-visual { filter:saturate(1.1) brightness(1); transform:scale(1.1); }
+  .force-hover .pcard-visual.ph { transform:scale(1.1); }
+  .force-hover .pcard-desc { max-height:120px; opacity:1; margin-bottom:14px; }
+  .force-hover .pcard-cta { opacity:1; transform:translateY(0); }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Cartes portfolio — survol révèle la DA</h1>
+    <p class="sub">Prototype. Au repos : aperçu désaturé + nom. Au survol : la DA s'anime (couleur, zoom), la description et le CTA apparaissent.</p>
+    <p class="hint">Astuce : ajoute <strong>?hover</strong> à l'URL pour figer l'état survolé (utile pour comparer).</p>
+
+    <div class="grid" id="grid">
+
+      <!-- Flaynn (réel) -->
+      <article class="pcard" style="--brand:#a855f7;">
+        <div class="pcard-visual" style="background-image:url('/portfolio/da/flaynn.jpg');"></div>
+        <div class="pcard-overlay"></div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="pcard-cat">Application Web</span>
+            <span class="pcard-num">01</span>
+          </div>
+          <h2 class="pcard-title">Flaynn</h2>
+          <div class="pcard-kpi">Scoring startup en 24h</div>
+          <p class="pcard-desc">Plateforme de scoring d'idées startup : analyse sur 5 piliers, benchmark sectoriel et verdict investisseur en 24 heures.</p>
+          <div class="pcard-tags"><span>Next.js</span><span>Scoring IA</span><span>SaaS</span></div>
+          <span class="pcard-cta">Voir le projet →</span>
+        </div>
+      </article>
+
+      <!-- Linky (réel) -->
+      <article class="pcard" style="--brand:#ec4899;">
+        <div class="pcard-visual" style="background-image:url('/portfolio/da/linky.jpg');"></div>
+        <div class="pcard-overlay"></div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="pcard-cat">Site Vitrine</span>
+            <span class="pcard-num">02</span>
+          </div>
+          <h2 class="pcard-title">Linky</h2>
+          <div class="pcard-kpi">Agence marketing premium</div>
+          <p class="pcard-desc">Site vitrine d'une agence marketing orientée performance : DA claymorphism, dégradés vifs, CRM et automation au cœur du discours.</p>
+          <div class="pcard-tags"><span>WordPress</span><span>Motion</span><span>SEO</span></div>
+          <span class="pcard-cta">Voir le projet →</span>
+        </div>
+      </article>
+
+      <!-- Placeholder dégradé : SecurEats -->
+      <article class="pcard" style="--brand:#DA5426;">
+        <div class="pcard-visual ph" data-letter="S"></div>
+        <div class="pcard-overlay"></div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="pcard-cat">App + Site</span>
+            <span class="pcard-num">03</span>
+          </div>
+          <h2 class="pcard-title">SecurEats</h2>
+          <div class="pcard-kpi">Écosystème fast-food 2-en-1</div>
+          <p class="pcard-desc">PWA installable + site vitrine, cryptographie AES-256 native. (DA à capturer dès que tu me donnes l'URL.)</p>
+          <div class="pcard-tags"><span>PWA</span><span>Web Crypto</span><span>QR Code</span></div>
+          <span class="pcard-cta">Voir le projet →</span>
+        </div>
+      </article>
+
+      <!-- Placeholder dégradé : Clara Martinez -->
+      <article class="pcard" style="--brand:#d4af37;">
+        <div class="pcard-visual ph" data-letter="C"></div>
+        <div class="pcard-overlay"></div>
+        <div class="pcard-body">
+          <div class="pcard-top">
+            <span class="pcard-cat">Site Vitrine</span>
+            <span class="pcard-num">04</span>
+          </div>
+          <h2 class="pcard-title">Clara Martinez</h2>
+          <div class="pcard-kpi">Coaching business luxe</div>
+          <p class="pcard-desc">Site vitrine premium pour coach : direction artistique aurora, conversion calée. (DA à capturer.)</p>
+          <div class="pcard-tags"><span>HTML5</span><span>Canvas</span><span>Aurora BG</span></div>
+          <span class="pcard-cta">Voir le projet →</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+
+  <script>
+    if (location.search.includes('hover')) document.getElementById('grid').classList.add('force-hover');
+  </script>
+</body>
+</html>
