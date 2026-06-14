@@ -275,6 +275,14 @@ nav.scrolled {
   border-bottom: 1px solid var(--border);
   box-shadow: 0 4px 30px rgba(0,0,0,0.4);
 }
+/* Fil d'Ariane : c'est aussi un <nav>, mais il ne doit PAS hériter du
+   positionnement fixe de la barre de navigation principale. */
+.breadcrumb {
+  position: static;
+  z-index: auto;
+  display: block;
+  padding: 0;
+}
 
 .nav-logo { display: flex; align-items: center; }
 .logo-img { height: clamp(72px, 10vw, 113px); width: auto; object-fit: contain; transition: filter .3s; }
