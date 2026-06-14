@@ -19,17 +19,6 @@ export function initPageTransition() {
   });
 }
 
-export function initBar() {
-  const bar = $('#announcement-bar');
-  if (!bar || sessionStorage.getItem('bar-off')) { bar && bar.remove(); return; }
-  document.body.classList.add('bar-visible');
-  on($('.bar-close'), 'click', () => {
-    bar.style.cssText += 'transform:translateY(-100%);opacity:0;transition:all .3s ease;';
-    setTimeout(() => { bar.remove(); document.body.classList.remove('bar-visible'); }, 300);
-    sessionStorage.setItem('bar-off', '1');
-  });
-}
-
 export function initProgress() {
   const bar = document.createElement('div');
   bar.id = 'scroll-progress';

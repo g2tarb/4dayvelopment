@@ -12,18 +12,6 @@
   const raf = requestAnimationFrame;
   const on = (el, ev, fn) => el && el.addEventListener(ev, fn);
 
-  /* ── 1. ANNOUNCEMENT BAR ──────────────────────────────── */
-  function initBar() {
-    const bar = $('#announcement-bar');
-    if (!bar || sessionStorage.getItem('bar-off')) { bar && bar.remove(); return; }
-    document.body.classList.add('bar-visible');
-    on($('.bar-close', bar), 'click', () => {
-      bar.style.cssText += 'transform:translateY(-100%);opacity:0;transition:all .3s ease;';
-      setTimeout(() => { bar.remove(); document.body.classList.remove('bar-visible'); }, 300);
-      sessionStorage.setItem('bar-off', '1');
-    });
-  }
-
   /* ── 2. SCROLL PROGRESS ───────────────────────────────── */
   function initProgress() {
     const bar = document.createElement('div');
@@ -516,18 +504,6 @@
     });
   }
 
-  /* ── 17. THEME TOGGLE (dark / light) ─────────────────── */
-  function initTheme() {
-    const btn = $('#theme-toggle');
-    if (!btn) return;
-    const saved = localStorage.getItem('theme');
-    if (saved === 'light') { document.body.classList.add('light-mode'); btn.textContent = '☀️'; }
-    on(btn, 'click', () => {
-      const isLight = document.body.classList.toggle('light-mode');
-      btn.textContent = isLight ? '☀️' : '🌙';
-      localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    });
-  }
 
   /* ── 18. LANGUAGE TOGGLE (FR / EN) ───────────────────── */
   const translations = {
@@ -535,8 +511,6 @@
       'nav-services': 'Services', 'nav-process': 'Processus', 'nav-tarifs': 'Tarifs',
       'nav-avis': 'Avis', 'nav-faq': 'FAQ', 'nav-cta': 'Démarrer →',
       'nav-cta-mobile': 'Démarrer mon projet →',
-      'bar-text': '🔥 <strong>3 places restantes ce mois-ci</strong> — Délai de livraison garanti en 4 jours',
-      'bar-cta': 'Réserver ma place',
       'hero-badge': 'Agence web nouvelle génération · 2026',
       'hero-h1': 'Votre site internet,<br><em class="gradient-text">livré en 4 jours.</em>',
       'hero-desc': 'Des sites performants, modernes et sur-mesure pour entrepreneurs, freelances et PME qui veulent dominer leur marché en ligne.',
@@ -596,7 +570,6 @@
       'contact-h2': 'Prêt à faire décoller<br><em class="cta-gradient">votre projet ?</em>',
       'contact-p': 'Décrivez votre projet ci-contre. On vous répond <strong>sous 24h</strong> avec un plan d\'action concret et un devis personnalisé.',
       'cg-1': 'Réponse sous 24h garantie', 'cg-2': 'Données 100% confidentielles', 'cg-3': 'Devis gratuit & personnalisé', 'cg-4': 'Satisfait ou remboursé 14j',
-      'urgency-text': '🔥 Seulement <strong>3 places disponibles</strong> ce mois-ci',
       'prospect-btn': 'Vous avez un grand projet sur-mesure ? Dites-nous tout →',
       'form-name': 'Nom complet *', 'form-email': 'Email *', 'form-phone': 'Téléphone',
       'form-service': 'Service souhaité', 'form-budget': 'Budget approximatif',
@@ -631,8 +604,6 @@
       'nav-services': 'Services', 'nav-process': 'Process', 'nav-tarifs': 'Pricing',
       'nav-avis': 'Reviews', 'nav-faq': 'FAQ', 'nav-cta': 'Get started →',
       'nav-cta-mobile': 'Start my project →',
-      'bar-text': '🔥 <strong>3 spots left this month</strong> — Delivery guaranteed in 4 days',
-      'bar-cta': 'Reserve my spot',
       'hero-badge': 'Next-generation web agency · 2026',
       'hero-h1': 'Your professional website,<br><em class="gradient-text">delivered in 4 days.</em>',
       'hero-desc': 'High-performance, modern, tailor-made websites for entrepreneurs, freelancers and SMBs who want to dominate their market online.',
@@ -692,7 +663,6 @@
       'contact-h2': 'Ready to launch<br><em class="cta-gradient">your project?</em>',
       'contact-p': 'Describe your project. We\'ll get back to you <strong>within 24h</strong> with a concrete action plan and a personalised quote.',
       'cg-1': 'Reply guaranteed within 24h', 'cg-2': '100% confidential data', 'cg-3': 'Free & personalised quote', 'cg-4': 'Money-back guarantee 14 days',
-      'urgency-text': '🔥 Only <strong>3 spots available</strong> this month',
       'prospect-btn': 'Have a large custom project? Tell us everything →',
       'form-name': 'Full name *', 'form-email': 'Email *', 'form-phone': 'Phone',
       'form-service': 'Service needed', 'form-budget': 'Approximate budget',
@@ -764,9 +734,7 @@
   /* ── INIT ─────────────────────────────────────────────── */
   function init() {
     checkMotion();
-    initTheme();
     initLang();
-    initBar();
     initProgress();
     initNav();
     initGlow();

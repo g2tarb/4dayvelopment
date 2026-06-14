@@ -3,11 +3,11 @@
    Orchestrateur ES6 modules · Sans bundler
    ================================================================ */
 
-import { initBar, initProgress, initNav, initSmoothScroll, initFloatingCTA, initPageTransition, initStickyCTA, initBottomSheetSwipe } from './modules/navigation.js';
+import { initProgress, initNav, initSmoothScroll, initFloatingCTA, initPageTransition, initStickyCTA, initBottomSheetSwipe } from './modules/navigation.js';
 import { initCursor, initGlow, initMagnetic, initScramble, initReveal, initCounters } from './modules/animations.js';
 import { initContactForm, initBudgetChips, initToasts, initExit } from './modules/form.js';
 import { initLang } from './modules/i18n.js';
-import { checkMotion, initTheme, initFAQ } from './modules/ui.js';
+import { checkMotion, initFAQ } from './modules/ui.js';
 import { initThreeUniverse } from './modules/three-bg.js';
 import { initConsent } from './modules/consent.js';
 
@@ -55,9 +55,7 @@ async function init() {
 
   // Priorité haute — bloquant le rendu si absent
   checkMotion();
-  initTheme();
   await initLang();       // async : applique la langue sauvegardée avant le premier paint
-  initBar();
   initProgress();
   initPageTransition();
   initNav();
