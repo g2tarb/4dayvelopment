@@ -13,3 +13,6 @@ npm-debug.log*
 
 # Données leads locales (contient des infos personnelles)
 data/
+
+# Sources d'images brutes (non servies par le site)
+/image/
