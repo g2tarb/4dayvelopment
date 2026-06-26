@@ -410,7 +410,7 @@ function buildArticleHTML(data) {
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${url}">
-  <meta property="og:image" content="https://4dayvelopment.fr/og-image.svg">
+  <meta property="og:image" content="https://4dayvelopment.fr/og-image.jpg">
   <meta property="og:locale" content="fr_FR">
   <meta property="article:published_time" content="${date}">
 
