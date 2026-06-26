@@ -825,10 +825,11 @@
         "publisher": { "@id": "https://4dayvelopment.fr/#organization" }
       },
       {
-        "@type": ["Organization", "LocalBusiness"],
+        "@type": ["Organization", "ProfessionalService"],
         "@id": "https://4dayvelopment.fr/#organization",
         "name": "4dayvelopment",
         "url": "https://4dayvelopment.fr/",
+        "slogan": "Votre site internet, livré en 4 jours.",
         "logo": {
           "@type": "ImageObject",
           "url": "https://4dayvelopment.fr/logo/logo4day.png"
@@ -838,20 +839,15 @@
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Paris",
+          "addressRegion": "Île-de-France",
           "addressCountry": "FR"
         },
         "areaServed": [
-          { "@type": "Country", "name": "France" },
-          { "@type": "Country", "name": "Belgium" }
+          { "@type": "City", "name": "Paris" },
+          { "@type": "AdministrativeArea", "name": "Île-de-France" },
+          { "@type": "Country", "name": "France" }
         ],
         "priceRange": "€€",
-        "aggregateRating": {
-          "@type": "AggregateRating",
-          "ratingValue": "4.9",
-          "bestRating": "5",
-          "ratingCount": "17",
-          "reviewCount": "17"
-        },
         "hasOfferCatalog": {
           "@type": "OfferCatalog",
           "name": "Services de création web",
