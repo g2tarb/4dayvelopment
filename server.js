@@ -345,11 +345,6 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
   return res.json({ success: true, message: 'Message envoyé avec succès ! Nous vous répondons sous 24h.' });
 });
 
-/* ── GET /api/stats ───────────────────────────────────── */
-app.get('/api/stats', apiLimiter, (req, res) => {
-  res.json({ sites: 152, satisfaction: 98, delai: 4, support: '24/7', avis: '4.9/5', clients: 150 });
-});
-
 /* ═══════════════════════════════════════════════════════
    BLOG — Publication depuis n8n
 ═══════════════════════════════════════════════════════ */
