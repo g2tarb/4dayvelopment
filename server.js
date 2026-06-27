@@ -361,13 +361,31 @@ const articleSchema = z.object({
   category:    z.string().trim().max(50).optional().default('Guide'),
   content:     z.string().trim().min(100),
   readTime:    z.string().trim().max(20).optional().default('5 min de lecture'),
+  faq:         z.array(z.object({
+    question: z.string().trim().min(3).max(300),
+    answer:   z.string().trim().min(3).max(2000),
+  })).max(20).optional(),
 });
 
 function buildArticleHTML(data) {
-  const { title, slug, description, category, content, readTime } = data;
+  const { title, slug, description, category, content, readTime, faq } = data;
   const date     = new Date().toISOString().split('T')[0];
   const dateFR   = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   const url      = `https://4dayvelopment.fr/blog/${slug}`;
+
+  const faqHtml = (faq && faq.length) ? `
+        <section style="margin-top:50px;">
+          <h2 style="color:#e8e8e8;font-size:1.8rem;margin-bottom:24px;">Questions fréquentes</h2>
+          ${faq.map(f => `<div style="margin-bottom:22px;">
+            <h3 style="color:#e8e8e8;font-size:1.2rem;margin-bottom:8px;">${escapeHtml(f.question)}</h3>
+            <p style="color:#bbb;line-height:1.8;">${escapeHtml(f.answer)}</p>
+          </div>`).join('')}
+        </section>` : '';
+
+  const faqJsonLd = (faq && faq.length) ? `
+  <script type="application/ld+json">
+  ${JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })) })}
+  </script>` : '';
 
   return `<!DOCTYPE html>
 <html lang="fr" dir="ltr">
@@ -388,6 +406,7 @@ function buildArticleHTML(data) {
   <meta property="og:image" content="https://4dayvelopment.fr/og-image.jpg">
   <meta property="og:locale" content="fr_FR">
   <meta property="article:published_time" content="${date}">
+  <meta property="article:modified_time" content="${date}">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
@@ -424,46 +443,54 @@ function buildArticleHTML(data) {
   </nav>
 
   <main>
-  <article style="max-width:800px;margin:0 auto;padding:140px 20px 80px;">
 
-    <nav aria-label="Fil d'Ariane" class="breadcrumb">
-      <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;font-size:14px;color:#666;">
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a itemprop="item" href="/" style="color:#888;text-decoration:none;"><span itemprop="name">Accueil</span></a>
-          <meta itemprop="position" content="1"><span style="margin-left:8px;color:#444;">›</span>
-        </li>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a itemprop="item" href="/blog" style="color:#888;text-decoration:none;"><span itemprop="name">Blog</span></a>
-          <meta itemprop="position" content="2"><span style="margin-left:8px;color:#444;">›</span>
-        </li>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name" style="color:#f2b13b;">${escapeHtml(title)}</span>
-          <meta itemprop="position" content="3">
-        </li>
-      </ol>
-    </nav>
+  <section class="hero" style="min-height:auto;padding:140px 24px 60px;">
+    <div class="container" style="max-width:800px;">
 
-    <div style="display:flex;gap:12px;align-items:center;margin:24px 0 20px;">
-      <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">${escapeHtml(category)}</span>
-      <time datetime="${date}" style="font-size:13px;color:#666;">${dateFR}</time>
-      <span style="font-size:13px;color:#666;">· ${escapeHtml(readTime)}</span>
+      <nav aria-label="Fil d'Ariane" class="breadcrumb" style="margin-top:24px;">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;font-size:14px;color:#666;">
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="/" style="color:#888;text-decoration:none;"><span itemprop="name">Accueil</span></a>
+            <meta itemprop="position" content="1"><span style="margin-left:8px;color:#444;">›</span>
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="/blog" style="color:#888;text-decoration:none;"><span itemprop="name">Blog</span></a>
+            <meta itemprop="position" content="2"><span style="margin-left:8px;color:#444;">›</span>
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name" style="color:#f2b13b;">${escapeHtml(title)}</span>
+            <meta itemprop="position" content="3">
+          </li>
+        </ol>
+      </nav>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:20px;margin-bottom:20px;">
+        <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">${escapeHtml(category)}</span>
+        <time datetime="${date}" style="font-size:13px;color:#666;">${dateFR}</time>
+        <span style="font-size:13px;color:#666;">· ${escapeHtml(readTime)}</span>
+      </div>
+
+      <h1 class="hero-title reveal" style="font-size:clamp(2rem,5vw,3.2rem);margin-top:0;line-height:1.2;">${escapeHtml(title)}</h1>
+      <p class="hero-desc reveal" style="max-width:700px;">${escapeHtml(description)}</p>
     </div>
+  </section>
 
-    <h1 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,4.5vw,3rem);font-weight:800;line-height:1.15;color:#e8e8e8;margin-bottom:24px;">${escapeHtml(title)}</h1>
+  <article style="padding:20px 0 80px;">
+    <div class="container" style="max-width:800px;">
+      <div style="color:#bbb;line-height:1.9;font-size:16px;">
+        ${content}
+      </div>
+${faqHtml}
+      <div style="background:rgba(218,84,38,0.08);border:1px solid rgba(218,84,38,0.2);border-radius:14px;padding:28px;margin:40px 0;text-align:center;">
+        <p style="font-size:18px;color:#e8e8e8;font-weight:700;margin-bottom:12px;">Un projet en tête ?</p>
+        <p style="font-size:14px;color:#888;margin-bottom:20px;">Devis gratuit sous 24h · Livraison en 4 jours · Sans engagement</p>
+        <a href="/#contact" class="btn-primary magnetic" style="display:inline-flex;">Demander mon devis gratuit →</a>
+      </div>
 
-    <div style="color:#bbb;line-height:1.9;font-size:16px;">
-      ${content}
+      <a href="/blog" style="color:#f2b13b;font-weight:600;font-size:14px;text-decoration:none;">← Retour au blog</a>
     </div>
-
-    <div style="background:rgba(218,84,38,0.08);border:1px solid rgba(218,84,38,0.2);border-radius:14px;padding:28px;margin:40px 0;text-align:center;">
-      <p style="font-size:18px;color:#e8e8e8;font-weight:700;margin-bottom:12px;">Un projet en tête ?</p>
-      <p style="font-size:14px;color:#888;margin-bottom:20px;">Devis gratuit sous 24h · Livraison en 4 jours · Sans engagement</p>
-      <a href="/#contact" class="btn-primary magnetic" style="display:inline-flex;">Demander mon devis gratuit →</a>
-    </div>
-
-    <a href="/blog" style="color:#f2b13b;font-weight:600;font-size:14px;text-decoration:none;">← Retour au blog</a>
-
   </article>
+
   </main>
 
   <footer>
@@ -518,6 +545,10 @@ function buildArticleHTML(data) {
     "mainEntityOfPage": { "@type": "WebPage", "@id": "${url}" }
   }
   </script>
+${faqJsonLd}
+
+  <script src="/js/vendor/three-loader.js" defer></script>
+  <script type="module" src="/js/main.js"></script>
 </body>
 </html>`;
 }
