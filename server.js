@@ -500,7 +500,7 @@ ${faqHtml}
         <p>Un site qui vend, livré en 4 jours.<br>Garanti ou c'est gratuit.</p>
       </div>
       <div class="footer-links-group">
-        <h4>Services</h4>
+        <p class="footer-col-h">Services</p>
         <ul>
           <li><a href="/services/site-vitrine">Site Vitrine</a></li>
           <li><a href="/services/e-commerce">E-commerce</a></li>
@@ -508,7 +508,7 @@ ${faqHtml}
         </ul>
       </div>
       <div class="footer-links-group">
-        <h4>Agence</h4>
+        <p class="footer-col-h">Agence</p>
         <ul>
           <li><a href="/#process">Processus</a></li>
           <li><a href="/#tarifs">Tarifs</a></li>
@@ -516,7 +516,7 @@ ${faqHtml}
         </ul>
       </div>
       <div class="footer-links-group">
-        <h4>Contact</h4>
+        <p class="footer-col-h">Contact</p>
         <ul>
           <li><a href="/#contact">Prendre RDV</a></li>
           <li><a href="mailto:contact@4dayvelopment.fr">contact@4dayvelopment.fr</a></li>

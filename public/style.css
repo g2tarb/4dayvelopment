@@ -1770,7 +1770,8 @@ footer {
   color: var(--accent2);
   background: rgba(218,84,38,0.08);
 }
-.footer-links-group h4 {
+.footer-links-group h4,
+.footer-links-group .footer-col-h {
   font-size: 12px;
   font-weight: 700;
   color: var(--muted);
@@ -2312,7 +2313,7 @@ footer {
   }
   .footer-brand .logo-img { height: clamp(56px, 9vw, 78px); }
   .footer-brand p { font-size: 13px; }
-  .footer-links-group h4 { font-size: 11px; margin-bottom: 14px; }
+  .footer-links-group h4, .footer-links-group .footer-col-h { font-size: 11px; margin-bottom: 14px; }
   .footer-links-group a { font-size: 13px; }
   .footer-bottom {
     flex-direction: column;
