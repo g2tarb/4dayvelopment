@@ -431,6 +431,17 @@ nav.scrolled {
   line-height: 1.75;
 }
 
+/* Pages internes (services, blog, portfolio, legal) : le contenu hero est dans
+   .container. On le centre explicitement pour que les blocs a max-width
+   (hero-desc, etc.) restent parfaitement au milieu et non decales a gauche. */
+.hero > .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero > .container > * { max-width: 100%; }
+.hero > .container .breadcrumb { align-self: flex-start; } /* fil d'Ariane garde a gauche (articles) */
+
 /* Hero actions */
 .hero-actions {
   display: flex;
