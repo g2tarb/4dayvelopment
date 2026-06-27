@@ -455,7 +455,7 @@ function buildArticleHTML(data) {
     </div>
 
     <div style="background:rgba(218,84,38,0.08);border:1px solid rgba(218,84,38,0.2);border-radius:14px;padding:28px;margin:40px 0;text-align:center;">
-      <p style="font-size:18px;color:#e8e8e8;font-weight:700;margin-bottom:12px;">Un projet en tete ?</p>
+      <p style="font-size:18px;color:#e8e8e8;font-weight:700;margin-bottom:12px;">Un projet en tête ?</p>
       <p style="font-size:14px;color:#888;margin-bottom:20px;">Devis gratuit sous 24h · Livraison en 4 jours · Sans engagement</p>
       <a href="/#contact" class="btn-primary magnetic" style="display:inline-flex;">Demander mon devis gratuit →</a>
     </div>
@@ -469,7 +469,7 @@ function buildArticleHTML(data) {
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="/" class="footer-logo"><img src="/logo/logo4day.png" alt="4dayvelopment" class="logo-img" width="160" height="40"></a>
-        <p>Un site qui vend, livre en 4 jours.<br>Garanti ou c'est gratuit.</p>
+        <p>Un site qui vend, livré en 4 jours.<br>Garanti ou c'est gratuit.</p>
       </div>
       <div class="footer-links-group">
         <h4>Services</h4>
@@ -496,7 +496,7 @@ function buildArticleHTML(data) {
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 4dayvelopment. Tous droits reserves.</p>
+      <p>&copy; 2026 4dayvelopment. Tous droits réservés.</p>
     </div>
   </footer>
 
