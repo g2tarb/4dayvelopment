@@ -350,27 +350,6 @@ app.get('/api/stats', apiLimiter, (req, res) => {
   res.json({ sites: 152, satisfaction: 98, delai: 4, support: '24/7', avis: '4.9/5', clients: 150 });
 });
 
-/* ── GET /api/toasts ──────────────────────────────────── */
-app.get('/api/toasts', apiLimiter, (req, res) => {
-  const toasts = [
-    { emoji: '👀', name: '4 personnes regardent ce site',       detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '🇫🇷', name: 'Marie L. vient de commander',        detail: 'Site vitrine professionnel',    time: 'au cours du mois' },
-    { emoji: '👀', name: '7 personnes consultent nos tarifs',   detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '⭐', name: 'Thomas B. signe son contrat',         detail: 'Refonte complète e-commerce',   time: 'au cours du mois' },
-    { emoji: '👀', name: '2 personnes remplissent le brief',    detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '🚀', name: 'Sophie R. donne 5 étoiles',           detail: '"Résultat incroyable, merci !"',time: 'au cours du mois' },
-    { emoji: '👀', name: '5 personnes regardent ce site',       detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '💼', name: 'Karim D. réserve une démo',           detail: 'Application web sur-mesure',    time: 'au cours du mois' },
-    { emoji: '👀', name: '3 personnes consultent les services', detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '📈', name: 'Julie M., +340% de conv.',           detail: 'Site Pro + SEO avancé',         time: 'au cours du mois' },
-    { emoji: '👀', name: '6 personnes découvrent l\'agence',    detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '🎯', name: 'Amandine C., 3 000€/mois',           detail: 'Boutique e-commerce lancée',    time: 'au cours du mois' },
-    { emoji: '👀', name: '9 personnes regardent ce site',       detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '🇧🇪', name: 'Lucas V. démarre son projet',        detail: 'Site vitrine + blog',           time: 'au cours du mois' },
-  ];
-  res.json(toasts);
-});
-
 /* ═══════════════════════════════════════════════════════
    BLOG — Publication depuis n8n
 ═══════════════════════════════════════════════════════ */
