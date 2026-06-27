@@ -425,23 +425,6 @@ function buildArticleHTML(data) {
   <main>
   <article style="max-width:800px;margin:0 auto;padding:140px 20px 80px;">
 
-    <nav aria-label="Fil d'Ariane" class="breadcrumb">
-      <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;gap:8px;list-style:none;padding:0;font-size:14px;color:#666;">
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a itemprop="item" href="/" style="color:#888;text-decoration:none;"><span itemprop="name">Accueil</span></a>
-          <meta itemprop="position" content="1"><span style="margin-left:8px;color:#444;">›</span>
-        </li>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a itemprop="item" href="/blog" style="color:#888;text-decoration:none;"><span itemprop="name">Blog</span></a>
-          <meta itemprop="position" content="2"><span style="margin-left:8px;color:#444;">›</span>
-        </li>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name" style="color:#f2b13b;">${escapeHtml(title)}</span>
-          <meta itemprop="position" content="3">
-        </li>
-      </ol>
-    </nav>
-
     <div style="display:flex;gap:12px;align-items:center;margin:24px 0 20px;">
       <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">${escapeHtml(category)}</span>
       <time datetime="${date}" style="font-size:13px;color:#666;">${dateFR}</time>
