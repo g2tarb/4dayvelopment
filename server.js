@@ -408,14 +408,15 @@ function buildArticleHTML(data) {
       <img src="/logo/logo4day.png" alt="4dayvelopment" class="logo-img" width="160" height="40">
     </a>
     <ul class="nav-links">
-      <li><a href="/services/site-vitrine">Site Vitrine</a></li>
-      <li><a href="/services/e-commerce">E-commerce</a></li>
-      <li><a href="/services/referencement-seo">SEO</a></li>
-      <li><a href="/blog" class="active">Blog</a></li>
-      <li><a href="/#tarifs">Tarifs</a></li>
+      <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
+      <li><a href="https://4dayvelopment.fr/services/e-commerce">E-commerce</a></li>
+      <li><a href="https://4dayvelopment.fr/services/referencement-seo">SEO</a></li>
+      <li><a href="https://4dayvelopment.fr/portfolio">Portfolio</a></li>
+      <li><a href="https://4dayvelopment.fr/#tarifs">Tarifs</a></li>
+      <li><a href="https://4dayvelopment.fr/blog" class="active">Blog</a></li>
     </ul>
     <div class="nav-right">
-      <a href="/#contact" class="nav-cta">Devis gratuit →</a>
+      <a href="https://4dayvelopment.fr/#contact" class="nav-cta">Devis gratuit →</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
