@@ -12,9 +12,9 @@ function debounce(fn, delay) {
 export function initThreeUniverse() {
   if (typeof THREE === 'undefined') return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (matchMedia('(max-width: 768px)').matches) return; // pas de canvas sur mobile (perf)
 
-  const isMobile = matchMedia('(max-width: 768px)').matches;
-  const isLowEnd = (navigator.hardwareConcurrency || 4) <= 2 || isMobile;
+  const isLowEnd = (navigator.hardwareConcurrency || 4) <= 2;
 
   const canvas = document.createElement('canvas');
   canvas.id = 'three-bg';

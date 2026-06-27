@@ -126,7 +126,7 @@ app.use(express.static(path.join(__dirname, 'public'), {
     if (filePath.endsWith('.html')) {
       res.setHeader('Cache-Control', 'no-cache');
     }
-    if (/\.(js|css|svg|png|jpg|woff2?)$/.test(filePath)) {
+    if (/\.(js|css|svg|png|jpg|webp|woff2?)$/.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
     }
   },
@@ -426,7 +426,7 @@ function buildArticleHTML(data) {
 
   <nav id="navbar">
     <a href="/" class="nav-logo">
-      <img src="/logo/logo4day.png" alt="4dayvelopment" class="logo-img" width="160" height="40">
+      <img src="/logo/logo4day.webp" alt="4dayvelopment" class="logo-img" width="160" height="40">
     </a>
     <ul class="nav-links">
       <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
@@ -496,7 +496,7 @@ ${faqHtml}
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="/" class="footer-logo"><img src="/logo/logo4day.png" alt="4dayvelopment" class="logo-img" width="160" height="40"></a>
+        <a href="/" class="footer-logo"><img src="/logo/logo4day.webp" alt="4dayvelopment" class="logo-img" width="160" height="40"></a>
         <p>Un site qui vend, livré en 4 jours.<br>Garanti ou c'est gratuit.</p>
       </div>
       <div class="footer-links-group">
