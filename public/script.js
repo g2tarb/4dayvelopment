@@ -383,19 +383,23 @@
     if (matchMedia('(max-width: 768px)').matches) return;
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%';
     $$('.section-title').forEach(el => {
-      const orig = el.textContent.trim();
+      // Les titres a HTML interne (em.gradient-text, <br>) ne sont jamais scrambles :
+      // reecrire leur contenu en texte detruirait le degrade et les sauts de ligne.
+      if (el.children.length > 0) return;
+      const orig = el.innerHTML;            // sauvegarde/restauration par innerHTML, pas textContent
+      const text = el.textContent;
       let frame, iv;
       on(el, 'mouseenter', () => {
         clearInterval(iv);
         frame = 0;
         iv = setInterval(() => {
-          el.textContent = orig.split('').map((c, i) =>
-            c === ' ' ? ' ' : c === '\n' ? '\n' : i < frame ? orig[i] : chars[Math.floor(Math.random() * chars.length)]
+          el.textContent = text.split('').map((c, i) =>
+            c === ' ' ? ' ' : i < frame ? text[i] : chars[Math.floor(Math.random() * chars.length)]
           ).join('');
-          if (++frame > orig.length) { el.textContent = orig; clearInterval(iv); }
+          if (++frame > text.length) { el.innerHTML = orig; clearInterval(iv); }
         }, 32);
       });
-      on(el, 'mouseleave', () => { clearInterval(iv); el.textContent = orig; });
+      on(el, 'mouseleave', () => { clearInterval(iv); el.innerHTML = orig; });
     });
   }
 
