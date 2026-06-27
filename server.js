@@ -121,6 +121,7 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
   etag: true,
+  redirect: false, // pas de 301 /dir -> /dir/ : /blog et /portfolio servis directement par leurs routes propres
   setHeaders(res, filePath) {
     if (filePath.endsWith('.html')) {
       res.setHeader('Cache-Control', 'no-cache');
