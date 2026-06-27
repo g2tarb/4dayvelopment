@@ -630,13 +630,8 @@ app.post('/api/blog/publish', apiLimiter, validateWith(articleSchema), (req, res
   try {
     fs.writeFileSync(filePath, buildArticleHTML(data), 'utf-8');
 
-    // Enregistrer la route propre
-    cleanPages[`/blog/${data.slug}`] = `blog/${data.slug}.html`;
-
-    // Ajouter dynamiquement la route Express
-    app.get(`/blog/${data.slug}`, (req, res) => {
-      res.sendFile(filePath);
-    });
+    // La route propre /blog/:slug (generique, enregistree avant le catch-all 404)
+    // sert automatiquement le fichier de l'article : aucun enregistrement dynamique necessaire.
 
     addToSitemap(data.slug);
     addToBlogIndex(data);
@@ -705,6 +700,23 @@ const htmlRedirects = {
 for (const [oldUrl, newUrl] of Object.entries(htmlRedirects)) {
   app.get(oldUrl, (req, res) => res.redirect(301, newUrl));
 }
+
+/* ── Articles de blog : route propre generique (AVANT le catch-all 404) ── */
+// Sert public/blog/<slug>.html pour tout article (existant ou publie via l'API),
+// afin que /blog/:slug reponde 200 a son URL propre. Slug valide uniquement
+// (minuscules/chiffres/tirets) -> pas de traversee de repertoire.
+app.get('/blog/:slug', (req, res) => {
+  const { slug } = req.params;
+  if (slug === 'index' || !/^[a-z0-9-]+$/.test(slug)) {
+    return res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+  }
+  const filePath = path.join(BLOG_DIR, `${slug}.html`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+  }
+});
 
 /* ── Fallback → 404 ──────────────────────────────────── */
 app.get('/{*splat}', (req, res) => {
