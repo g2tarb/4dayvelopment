@@ -672,6 +672,7 @@ const cleanPages = {
   '/services/site-vitrine':  'services/site-vitrine.html',
   '/services/e-commerce':    'services/e-commerce.html',
   '/services/referencement-seo': 'services/referencement-seo.html',
+  '/services/site-internet-restaurant': 'services/site-internet-restaurant.html',
   '/portfolio':       'portfolio.html',
   '/mentions-legales': 'mentions-legales.html',
   '/confidentialite': 'confidentialite.html',

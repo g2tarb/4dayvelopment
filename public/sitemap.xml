@@ -46,6 +46,13 @@
   </url>
 
   <url>
+    <loc>https://4dayvelopment.fr/services/site-internet-restaurant</loc>
+    <lastmod>2026-06-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
     <loc>https://4dayvelopment.fr/blog</loc>
     <lastmod>2026-06-27</lastmod>
     <changefreq>weekly</changefreq>
