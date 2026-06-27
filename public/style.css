@@ -414,6 +414,8 @@ nav.scrolled {
   background-clip: text;
   animation: gradient-shift 4s linear infinite;
   display: inline-block;
+  padding-bottom: 0.12em; /* evite de rogner le bas des jambages (j, g, p) avec background-clip:text */
+  padding-right: 0.06em;  /* marge pour l'oblique de l'italique (em) */
 }
 @keyframes gradient-shift {
   0%{background-position:0% 50%}
@@ -745,10 +747,14 @@ section { padding: 100px 24px; }
 }
 
 /* ── REVEAL ANIMATION ──────────────────────────────────────── */
+/* L'etat masque n'est applique QUE si le JS a demarre (html.js-enabled).
+   Sans JS, ou si le JS echoue a charger, le contenu .reveal reste visible. */
 .reveal {
+  transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+}
+.js-enabled .reveal:not(.visible) {
   opacity: 0;
   transform: translateY(36px);
-  transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
 }
 .reveal.visible {
   opacity: 1;

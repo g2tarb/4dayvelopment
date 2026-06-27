@@ -11,6 +11,10 @@ import { checkMotion, initFAQ } from './modules/ui.js';
 import { initThreeUniverse } from './modules/three-bg.js';
 import { initConsent } from './modules/consent.js';
 
+/* Active les etats animes (reveal) uniquement quand le JS tourne.
+   Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
+document.documentElement.classList.add('js-enabled');
+
 /* ── Injection auto des elements globaux (pages secondaires) ── */
 function injectGlobalElements() {
   // Page transition overlay

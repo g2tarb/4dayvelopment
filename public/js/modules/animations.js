@@ -92,6 +92,11 @@ export function initScramble() {
 
 export function initReveal() {
   const els = $$('.reveal');
+  // Fallback : si IntersectionObserver est indisponible, on revele tout immediatement.
+  if (!('IntersectionObserver' in window)) {
+    els.forEach(el => el.classList.add('visible'));
+    return;
+  }
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
