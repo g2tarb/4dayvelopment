@@ -18,16 +18,24 @@ async function post(url, { headers, body, timeoutMs, key }) {
   return res.json();
 }
 
-/** Anthropic /v1/messages → { text, usage } */
+// Modèles Claude routés via OpenRouter (une seule clé pour tout). Map ID direct → slug OpenRouter.
+const OR_CLAUDE = {
+  'claude-sonnet-5': 'anthropic/claude-sonnet-5',
+  'claude-opus-4-8': 'anthropic/claude-opus-4.8',
+};
+
+/** Claude via OpenRouter (OpenAI-compat) → { text, usage } */
 export async function anthropic(payload, { timeoutMs = 300000 } = {}) {
-  const json = await post('https://api.anthropic.com/v1/messages', {
-    key: 'anthropic',
+  const { model, thinking, output_config, ...rest } = payload; // champs propres à Anthropic retirés
+  const slug = OR_CLAUDE[model] || `anthropic/${model}`;
+  const json = await post('https://openrouter.ai/api/v1/chat/completions', {
+    key: 'openrouter-claude',
     timeoutMs,
-    headers: { 'x-api-key': require_('anthropicKey'), 'anthropic-version': '2023-06-01' },
-    body: payload,
+    headers: { authorization: `Bearer ${require_('openrouterKey')}` },
+    body: { model: slug, ...rest },
   });
-  const block = (json.content || []).find((b) => b.type === 'text');
-  return { text: block ? block.text : '', usage: json.usage || null };
+  const content = json?.choices?.[0]?.message?.content ?? '';
+  return { text: content, usage: json.usage || null };
 }
 
 /** OpenAI-compat (Perplexity / OpenRouter) → { content, usage } */
