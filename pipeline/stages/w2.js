@@ -190,7 +190,7 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
       `📊 Secteur: ${sectorNormalized || 'n/a'} · 🧭 Verdict: ${verdict} · 💶 ~${costFinal} EUR`,
       `📧 Envoyés à ${config.operatorEmail || '(email non configuré)'}${warn}`,
       '',
-      `Colle-les dans Claude Design, puis \`/prop ${leadId} <1-3> <prix> [M]\` après le call.`,
+      `Colle-les dans Claude Design pour les maquettes. Après le call, *réponds à ce message* avec \`maquette prix\` (ex : \`1 2000\`, ou \`1 2000 M\` pour offrir la maintenance) → je génère la proposition.`,
     ].join('\n'), kb);
   } catch (err) {
     const stage = err instanceof GateError ? err.stage : 'exception';
