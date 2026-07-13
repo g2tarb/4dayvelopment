@@ -83,13 +83,12 @@ export function costEur(model, usage) {
   return { eur: usd * USD_EUR, known: true };
 }
 
-/* ── PDFShift (Basic auth, clé:x) → Buffer PDF ── */
+/* ── PDFShift (header X-API-Key) → Buffer PDF. Params repris de W3 n8n (A4, print CSS). ── */
 export async function pdfshift(html) {
-  const auth = Buffer.from(`${require_('pdfshiftKey')}:`).toString('base64');
   const res = await fetch('https://api.pdfshift.io/v3/convert/pdf', {
     method: 'POST',
-    headers: { 'content-type': 'application/json', authorization: `Basic ${auth}` },
-    body: JSON.stringify({ source: html, sandbox: false }),
+    headers: { 'content-type': 'application/json', 'X-API-Key': require_('pdfshiftKey') },
+    body: JSON.stringify({ source: html, landscape: false, use_print: true, format: 'A4', margin: '20px 24px' }),
     signal: AbortSignal.timeout(120000),
   });
   if (!res.ok) throw new Error(`pdfshift: HTTP ${res.status} — ${(await res.text().catch(() => '')).slice(0, 200)}`);
