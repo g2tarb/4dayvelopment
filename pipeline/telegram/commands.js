@@ -122,10 +122,14 @@ export function registerCommands(bot) {
 
 function runProp(ctx, parts, md) {
   const id = normId(parts[0]);
-  const da = Number(parts[1]);
-  const prix = Number(parts[2]);
+  const da = parseInt(parts[1], 10);
+  const prix = parseInt(String(parts[2] ?? '').replace(/[^\d]/g, ''), 10); // tolère "2000€"
   const maintenance = /^m$/i.test(parts[3] || '');
-  if (!id || !(da >= 1 && da <= 3) || !(prix > 0)) return md(ctx, 'Usage : `/prop LEAD-xxx <1-3> <prix> [M]`');
+  const errs = [];
+  if (!id) errs.push(`ID invalide (reçu: "${parts[0] ?? ''}")`);
+  if (!(da >= 1 && da <= 3)) errs.push(`maquette 1-3 attendue (reçu: "${parts[1] ?? ''}")`);
+  if (!(prix > 0)) errs.push(`prix attendu (reçu: "${parts[2] ?? ''}")`);
+  if (errs.length) return md(ctx, `⚠️ ${errs.join(' · ')}\nFormat : \`/prop LEAD-xxxxxxxx-xxxx <1-3> <prix>\`\nEx : \`/prop ${id || 'LEAD-20260713-1430'} 1 2000\``);
   if (!db.getLead(id)) return md(ctx, `⚠️ Lead introuvable : ${id}`);
   md(ctx, `📋 Génération de la proposition pour ${id} (maquette ${da}, ${prix}€${maintenance ? ', maintenance offerte' : ''})…`);
   enqueue({ name: 'w3:preview', leadId: id, run: () => previewProposition({ leadId: id, da, prix, maintenance }) });
