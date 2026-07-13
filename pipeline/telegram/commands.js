@@ -3,9 +3,11 @@
 
 import * as db from '../db.js';
 import { enqueue } from '../queue.js';
+import { config, newLeadId } from '../config.js';
 import { runW2 } from '../stages/w2.js';
 import { runW4 } from '../stages/w4.js';
 import { previewProposition } from '../stages/w3.js';
+import { qualifyLead } from '../stages/intake.js';
 
 // Accepte 'LEAD-20260713-1200' ou le short '20260713-1200'.
 const normId = (s) => { const v = String(s || '').trim().toUpperCase(); return v.startsWith('LEAD-') ? v : (/^\d{8}-\d{4}$/.test(v) ? `LEAD-${v}` : null); };
@@ -93,6 +95,15 @@ export function registerCommands(bot) {
     if (!id) return md(ctx, 'Usage : `/brief LEAD-xxxxxxxx-xxxx`');
     md(ctx, `📐 Brief technique pour ${id}…`);
     enqueue({ name: 'w4:brief', leadId: id, run: () => runW4({ leadId: id }) });
+  });
+
+  // /testlead <secteur> — crée un lead de test (comme l'arrivée d'un formulaire), pour tester le flux.
+  bot.command('testlead', (ctx) => {
+    const secteur = String(ctx.match || '').trim() || 'coach sportif';
+    const id = newLeadId();
+    db.insertLead({ id, prenom: 'Test', email: config.operatorEmail || 'test@example.com', secteur, message: 'Lead de test injecté via /testlead. Je veux un site premium pour présenter et vendre mes offres.' });
+    md(ctx, `🧪 Lead de test créé : \`${id}\` (${secteur}). Qualification en cours…`);
+    enqueue({ name: 'intake:qualify', leadId: id, run: () => qualifyLead({ leadId: id }) });
   });
 
   // /prop LEAD-xxx <1-3> <prix> [M]
