@@ -74,6 +74,7 @@ const parseJson = (raw) => { const s = String(raw || ''); const a = s.indexOf('{
 /* ── Orchestrateur ── */
 export async function runW2({ leadId, mode = 'normal', force = false, parentRunId = null }) {
   const runId = newRunId();
+  const runStart = Date.now(); // durée mesurée sur le RUN, pas sur l'âge du lead
   db.createRun({ run_id: runId, lead_id: leadId, mode, parent_run_id: parentRunId });
   const lead = db.getLead(leadId);
   if (!lead) { db.markRunFailed(runId, 'route', 'lead introuvable'); return send(`⚠️ Lead introuvable : ${leadId}`); }
@@ -144,7 +145,7 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
     /* 5. Budget (avant Opus) */
     const OPUS_PROJ = (12000 / 1e6) * 5 + (16000 / 1e6) * 25; // $ projetés Opus
     const projectedEur = usageAcc.reduce((s, u) => s + costEur(modelForCall(u.call), u.usage).eur, 0) + OPUS_PROJ * 0.92;
-    const ageMin = (Date.now() - new Date(lead.created_at).getTime()) / 60000;
+    const ageMin = (Date.now() - runStart) / 60000; // temps écoulé du run en cours
     if (projectedEur > 2.0) throw new GateError('budget', `budget_projete_${projectedEur.toFixed(2)}eur`);
     if (ageMin > 20) throw new GateError('duree', `duree_${ageMin.toFixed(1)}min`);
 
