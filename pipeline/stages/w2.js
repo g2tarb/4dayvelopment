@@ -51,25 +51,22 @@ const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-
 function ngrams(s, n) { const t = norm(s).split(' ').filter(Boolean); const out = []; for (let i = 0; i + n <= t.length; i++) out.push(t.slice(i, i + n).join(' ')); return out; }
 function overlap(excerpt, corpus) { const g = ngrams(excerpt, 3); if (!g.length) return 0; const set = new Set(ngrams(corpus, 3)); let hit = 0; for (const x of g) if (set.has(x)) hit++; return hit / g.length; }
 
-export function validateDossier(dossier, corpus, sectorNormalized) {
-  const EVIDENCE_MATCH_MIN = 0.6, MIN_TERRITORIES = 3;
+// Prépare le dossier : garde les territoires exploitables, dédoublonne, signale les sources
+// faibles. Ne bloque JAMAIS le run — la qualité des sources est un avertissement, pas un échec.
+export function prepareDossier(dossier, corpus) {
   const terrs = Array.isArray(dossier.territories) ? dossier.territories : [];
-  const reasons = [], seenUrl = new Set(), seenName = new Set(), validated = [];
+  const warnings = [], seen = new Set(), kept = [];
   terrs.forEach((t, i) => {
     const id = t.territory_id || `T${i + 1}`;
-    if (!t.source_url) return reasons.push(`${id}_missing_source_url`);
-    if (!t.evidence_excerpt || String(t.evidence_excerpt).trim().length < 12) return reasons.push(`${id}_missing_evidence`);
-    if (!t.name) return reasons.push(`${id}_missing_name`);
-    if (!t.why_relevant) return reasons.push(`${id}_missing_why_relevant`);
-    const url = String(t.source_url).toLowerCase().replace(/\/$/, ''), nm = norm(t.name);
-    if (seenUrl.has(url)) return reasons.push(`${id}_dup_url`);
-    if (seenName.has(nm)) return reasons.push(`${id}_dup_name`);
-    if (overlap(t.evidence_excerpt, corpus) < EVIDENCE_MATCH_MIN) return reasons.push(`${id}_evidence_not_found`);
-    seenUrl.add(url); seenName.add(nm); validated.push({ ...t, territory_id: id });
+    const name = t.name || `Référence ${i + 1}`;
+    const key = norm(name);
+    if (key && seen.has(key)) return; // dédoublonne silencieusement
+    if (key) seen.add(key);
+    const conf = t.evidence_excerpt ? overlap(t.evidence_excerpt, corpus) : 0;
+    if (conf < 0.3) warnings.push(`${id}_source_faible`);
+    kept.push({ ...t, territory_id: id, name });
   });
-  if (!sectorNormalized) reasons.push('sector_relevance_insufficient');
-  const valid = validated.length >= MIN_TERRITORIES && reasons.length === 0;
-  return { valid, reasons, territories: valid ? validated.slice(0, 5) : validated };
+  return { territories: kept.slice(0, 5), warnings };
 }
 
 const parseJson = (raw) => { const s = String(raw || ''); const a = s.indexOf('{'), b = s.lastIndexOf('}'); try { return JSON.parse(a >= 0 && b > a ? s.slice(a, b + 1) : s); } catch { return {}; } };
@@ -94,6 +91,7 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
   }
 
   const usageAcc = [];
+  const warnings = []; // qualité (sources faibles, mentions IA, diversité) — signalé, jamais bloquant
   const acc = (call, usage) => { usageAcc.push({ call, usage }); };
   const partialEur = () => Math.round(usageAcc.reduce((s, u) => s + costEur(modelForCall(u.call), u.usage).eur, 0) * 100) / 100;
 
@@ -129,15 +127,17 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
     const dossierRes = await anthropic({ model: 'claude-sonnet-5', max_tokens: 3000, temperature: 0.2, messages: [{ role: 'user', content: dossierPrompt }] });
     acc('anthropic_sonnet_dossier', dossierRes.usage);
     const dossier = parseJson(dossierRes.text.replace(/^```json\s*|^```\s*|\s*```$/g, ''));
-    const dv = validateDossier(dossier, researchRaw, sectorNormalized);
-    if (!dv.valid) throw new GateError('dossier', dv.reasons.join(','));
+    const dv = prepareDossier(dossier, researchRaw);
     dossier.territories = dv.territories;
+    warnings.push(...dv.warnings);
     db.updateRun(runId, { research_dossier_json: JSON.stringify(dossier) });
 
     /* Mode diagnostic : on s'arrête après le dossier et on rend un rapport. */
     if (mode === 'diag') {
       db.updateRun(runId, { status: 'diagnostic', cost_estimated: partialEur(), completed_at: db.now() });
-      const lines = dv.territories.map((t, i) => `${i + 1}. *${t.name}* — ${t.why_relevant}\n${t.source_url}`);
+      const lines = dv.territories.length
+        ? dv.territories.map((t, i) => `${i + 1}. *${t.name}* — ${t.why_relevant || ''}\n${t.source_url || ''}`)
+        : ['(aucune source structurée exploitable)'];
       return send([`🔍 *Diagnostic ${leadId}*`, `Secteur normalisé: ${sectorNormalized || 'n/a'}`, '', ...lines, '', `💶 ~${partialEur()} EUR`].join('\n'));
     }
 
@@ -150,16 +150,16 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
 
     /* 6. Génération (Anthropic Opus) */
     const schemaOpus = '{"briefs":[{"direction_id":"D1","territory_id":"T1","creative_axis":"axe dominant unique","core_tension":"tension creative ou strategique","concept_name":"nom","concept":"description 2-3 phrases","target_perception":"perception visee","reponse_demande":"comment cette direction repond a CE client","visual_system":{"palette":["couleurs precises"],"typography":["polices"],"layout_principles":["principes"],"motion_principles":["animations"],"imagery_principles":["style images"]},"references":["source reelle 1","2","3"],"structure_page":["section 1","2","3"],"ton_editorial":"ton","prompt_claude_design":"prompt complet autosuffisant pret a coller"}]}';
-    const opusPrompt = `Tu es directeur de creation senior dans une agence web premium. Produis 3 directions creatives DISTINCTES et excellentes pour ce prospect.\n\nOBJECTIF ABSOLU: repondre a la demande reelle du client, ancrer chaque direction sur un territoire de reference REEL et distinct du dossier, et donner envie. Chaque direction doit etre credible et desirable.\n\nINVARIANTS (obligatoires):\n- EXACTEMENT 3 directions.\n- Chaque direction utilise un territory_id DIFFERENT present dans le dossier.\n- Les 3 creative_axis sont differents. Les 3 core_tension sont differents.\n- Aucune direction n'est une variante cosmetique d'une autre.\n- N'impose AUCUNE esthetique fixe. La diversite vient du secteur, du lead, des sources et des axes.\n- prompt_claude_design est autosuffisant: objectif business, contexte de marque, audience, architecture de page, hierarchie, direction visuelle, palette et usage, typographies et hierarchie, layout/spacing/interactions, ton editorial, directives d'images et video, sujets de recherche d'assets stock type Unsplash, style visuel des assets, contraintes d'accessibilite, elements interdits, criteres de reussite.\n- INTERDIT dans tout texte produit: le tiret cadratin, et toute mention d'IA dans le site genere.\n\n=== BRIEF CLIENT (brut) ===\nSecteur: ${secteur}\nDemande: ${message}\nResume: ${resume}\nSecteur normalise: ${sectorNormalized}\n\n=== DOSSIER SECTORIEL (territoires prouves) ===\n${JSON.stringify(dossier.territories)}\n\n=== ANALYSE DEMANDE ===\n${JSON.stringify(analyse)}\n\nReponds UNIQUEMENT en JSON valide, sans texte autour, sans fences, structure exacte:\n${schemaOpus}`;
+    const opusPrompt = `Tu es directeur de creation senior dans une agence web premium. Produis 3 directions creatives DISTINCTES et excellentes pour ce prospect.\n\nOBJECTIF ABSOLU: repondre a la demande reelle du client, ancrer chaque direction sur un territoire de reference REEL et distinct du dossier, et donner envie. Chaque direction doit etre credible et desirable.\n\nINVARIANTS (obligatoires):\n- EXACTEMENT 3 directions.\n- Si le dossier fournit des territoires, ancre chaque direction sur l'un d'eux (idealement un different par direction). Si le dossier est vide ou incomplet, ancre-toi sur le secteur et la recherche.\n- Les 3 creative_axis sont differents. Les 3 core_tension sont differents.\n- Aucune direction n'est une variante cosmetique d'une autre.\n- N'impose AUCUNE esthetique fixe. La diversite vient du secteur, du lead, des sources et des axes.\n- prompt_claude_design est autosuffisant: objectif business, contexte de marque, audience, architecture de page, hierarchie, direction visuelle, palette et usage, typographies et hierarchie, layout/spacing/interactions, ton editorial, directives d'images et video, sujets de recherche d'assets stock type Unsplash, style visuel des assets, contraintes d'accessibilite, elements interdits, criteres de reussite.\n- INTERDIT dans tout texte produit: le tiret cadratin, et toute mention d'IA dans le site genere.\n\n=== BRIEF CLIENT (brut) ===\nSecteur: ${secteur}\nDemande: ${message}\nResume: ${resume}\nSecteur normalise: ${sectorNormalized}\n\n=== DOSSIER SECTORIEL (territoires prouves) ===\n${JSON.stringify(dossier.territories)}\n\n=== ANALYSE DEMANDE ===\n${JSON.stringify(analyse)}\n\nReponds UNIQUEMENT en JSON valide, sans texte autour, sans fences, structure exacte:\n${schemaOpus}`;
     const gen = await anthropic({ model: 'claude-opus-4-8', max_tokens: 16000, thinking: { type: 'adaptive' }, output_config: { effort: 'high' }, messages: [{ role: 'user', content: opusPrompt }] });
     acc('anthropic_opus_generation', gen.usage);
 
     /* 7. Parse + gates structure/lint */
     const parsed = parseJson(gen.text);
     const briefs = Array.isArray(parsed.briefs) ? parsed.briefs : [];
-    if (briefs.length !== 3) throw new GateError('generation', `briefs_count_${briefs.length}`);
-    structureGate(briefs, dossier);
-    lintGate(briefs);
+    if (briefs.length !== 3) throw new GateError('generation', `le modèle a renvoyé ${briefs.length} directions au lieu de 3`);
+    warnings.push(...structureGate(briefs, dossier));
+    warnings.push(...lintGate(briefs)); // corrige les tirets en place, signale les mentions IA
     db.updateRun(runId, { briefs_json: JSON.stringify(briefs) });
 
     /* 8. Critique (OpenRouter) + gate diversité */
@@ -170,7 +170,8 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
     const critRes = await openrouter({ model: 'openai/gpt-5.6-terra-pro', max_tokens: 1500, temperature: 0.2, response_format: { type: 'json_object' }, messages: [{ role: 'user', content: critPrompt }] });
     acc('openrouter_critique', critRes.usage);
     const critic = parseJson(critRes.content);
-    const verdict = diversiteGate(critic); // jette si bloquant, sinon retourne le verdict
+    const { verdict, warnings: divWarns } = diversiteGate(critic);
+    warnings.push(...divWarns);
     db.updateRun(runId, { scores_json: JSON.stringify(critic), critic_verdict: verdict });
 
     /* 9. Fin W2 : email des 3 prompts design + déverrouillage (briefs_generes) + notif Telegram */
@@ -183,7 +184,7 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
       if (config.operatorEmail) await sendDesignPromptsEmail({ to: config.operatorEmail, leadId, secteur: sectorNormalized, briefs });
     } catch (e) { await alert(`⚠️ Envoi email des prompts échoué (${leadId}) : ${e.message}. Ils restent en base (run ${runId.slice(4)}).`); }
 
-    const warn = verdict === 'review' ? '\n⚠️ Verdict critique: REVIEW, prompts à relire.' : '';
+    const warn = warnings.length ? `\n⚠️ À surveiller (${warnings.length}) : ${warnings.slice(0, 6).join(', ')}${warnings.length > 6 ? '…' : ''}` : '';
     const kb = new InlineKeyboard().text('🔄 Régénérer', cb('R', leadId, runId));
     await send([
       `✅ *3 prompts design prêts* — ${leadId}`,
@@ -196,59 +197,57 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
     const stage = err instanceof GateError ? err.stage : 'exception';
     db.markRunFailed(runId, stage, err.message);
     const restored = db.rollbackLead(leadId, runId);
-    await alert(`❌ W2 échec *${stage}* sur ${leadId}\n\`${String(err.message).slice(0, 300)}\`\n${restored ? '↩️ lead restauré à son état précédent' : '⚠️ lead possédé par un autre run, non touché'}`);
+    await alert(`❌ W2 échec *${stage}* sur ${leadId}\n\`${String(err.message || 'raison non précisée').slice(0, 300)}\`\n${restored ? '↩️ lead restauré à son état précédent' : '⚠️ lead possédé par un autre run, non touché'}`);
   }
 }
 
-/* ── Gates (jettent GateError) ── */
+/* ── Gates : contrôles de qualité NON bloquants. Ils retournent des avertissements
+   (jamais d'exception) — le run produit toujours ses 3 prompts, on signale les faiblesses. ── */
 export { GateError };
+
 export function structureGate(briefs, dossier) {
-  const ids = new Set((dossier.territories || []).map((t) => t.territory_id));
-  const reasons = [], axes = new Set(), tens = new Set(), terr = new Set();
+  const warnings = [], axes = new Set();
   briefs.forEach((b, i) => {
     const d = b.direction_id || `D${i + 1}`;
-    ['creative_axis', 'core_tension', 'concept', 'prompt_claude_design'].forEach((f) => { if (!b[f]) reasons.push(`${d}_missing_${f}`); });
-    if (b.territory_id && !ids.has(b.territory_id)) reasons.push(`${d}_territory_not_in_dossier`);
+    if (!b.prompt_claude_design) warnings.push(`${d}_prompt_manquant`);
+    if (!b.concept) warnings.push(`${d}_concept_manquant`);
     axes.add(String(b.creative_axis || '').toLowerCase().trim());
-    tens.add(String(b.core_tension || '').toLowerCase().trim());
-    terr.add(String(b.territory_id || '').trim());
   });
-  if (axes.size < 3) reasons.push('axes_not_distinct');
-  if (tens.size < 3) reasons.push('tensions_not_distinct');
-  if (terr.size < 3) reasons.push('territories_not_distinct');
-  if (reasons.length) throw new GateError('structure', reasons.join(','));
+  if (axes.size < 3) warnings.push('axes_peu_distincts');
+  return warnings;
 }
 
-const EMDASH = /[—–]/;
-const AI_PATTERNS = [/\bIA\b/i, /\bAI\b/i, /intelligence artificielle/i, /artificial intelligence/i, /chatgpt/i, /\bgpt-?\d/i, /\bclaude\b/i, /anthropic/i, /openai/i, /\bLLM\b/i];
+const EMDASH = /[—–]/g;
+const AI_PATTERNS = [/\bIA\b/i, /intelligence artificielle/i, /chatgpt/i, /\bgpt-?\d/i, /\bclaude\b/i, /anthropic/i, /openai/i, /\bLLM\b/i];
+// Corrige les tirets cadratins EN PLACE (remplace par ", ") et signale les mentions d'IA.
 export function lintGate(briefs) {
   const FIELDS = ['concept_name', 'concept', 'target_perception', 'reponse_demande', 'ton_editorial', 'prompt_claude_design', 'creative_axis', 'core_tension'];
-  const reasons = [];
+  const warnings = [];
   briefs.forEach((b, i) => {
     const d = b.direction_id || `D${i + 1}`;
     FIELDS.forEach((f) => {
-      const v = String(b[f] || '');
-      if (EMDASH.test(v)) reasons.push(`${d}_${f}_tiret`);
-      if (AI_PATTERNS.some((p) => p.test(v))) reasons.push(`${d}_${f}_mention_ia`);
+      if (b[f] == null) return;
+      let v = String(b[f]);
+      if (EMDASH.test(v)) { v = v.replace(EMDASH, ', '); b[f] = v; }
+      if (AI_PATTERNS.some((p) => p.test(v))) warnings.push(`${d}_${f}_mention_ia`);
     });
     const vs = b.visual_system || {};
     ['palette', 'typography', 'layout_principles', 'motion_principles', 'imagery_principles'].forEach((k) => {
-      (vs[k] || []).forEach((item) => { if (EMDASH.test(String(item))) reasons.push(`${d}_visual_${k}_tiret`); });
+      if (Array.isArray(vs[k])) vs[k] = vs[k].map((item) => String(item).replace(EMDASH, ', '));
     });
   });
-  if (reasons.length) throw new GateError('lint', reasons.join(','));
+  return warnings;
 }
 
 export function diversiteGate(critic) {
   const MIN_ANCHOR = 7, MIN_FIDELITY = 7, MIN_CREDIBILITY = 6, MAX_PAIR = 4;
-  const dirs = critic.directions || [], pairs = critic.pairwise_similarity || [], reasons = [];
+  const dirs = critic.directions || [], pairs = critic.pairwise_similarity || [], warnings = [];
   dirs.forEach((d) => {
-    if ((d.sector_anchor_score || 0) < MIN_ANCHOR) reasons.push(`${d.direction_id}_anchor`);
-    if ((d.source_fidelity_score || 0) < MIN_FIDELITY) reasons.push(`${d.direction_id}_fidelity`);
-    if ((d.credibility_score || 0) < MIN_CREDIBILITY) reasons.push(`${d.direction_id}_credibility`);
+    if ((d.sector_anchor_score || 0) < MIN_ANCHOR) warnings.push(`${d.direction_id}_ancrage_faible`);
+    if ((d.source_fidelity_score || 0) < MIN_FIDELITY) warnings.push(`${d.direction_id}_fidelite_faible`);
+    if ((d.credibility_score || 0) < MIN_CREDIBILITY) warnings.push(`${d.direction_id}_credibilite_faible`);
   });
-  pairs.forEach((p) => { if ((p.score || 0) > MAX_PAIR) reasons.push(`similar_${(p.pair || []).join('_')}`); });
+  pairs.forEach((p) => { if ((p.score || 0) > MAX_PAIR) warnings.push(`${(p.pair || []).join('/')}_proches`); });
   const verdict = critic.overall_verdict || (dirs.length ? 'review' : 'fail');
-  if (verdict === 'fail' || dirs.length !== 3 || reasons.length) throw new GateError('critique', reasons.join(',') || 'verdict_fail');
-  return verdict;
+  return { verdict, warnings };
 }

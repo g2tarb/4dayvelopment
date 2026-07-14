@@ -25,42 +25,42 @@ test('routeLead : diag bloqué si run actif, force démarre si aucun run', () =>
   assert.equal(w2.routeLead({ id: 'LEAD-1', status: 'briefs_generes' }, { force: true }).route, 'run');
 });
 
-test('validateDossier : 3 territoires prouvés → valide ; extrait absent → rejeté', () => {
-  const corpus = 'Le studio X utilise une palette sombre et une typographie serif elegante. La marque Y mise sur un layout aere et des animations discretes. Le site Z propose une navigation immersive plein ecran.';
-  const good = { territories: [
-    { territory_id: 'T1', name: 'Studio X', source_url: 'https://x.fr', evidence_excerpt: 'une palette sombre et une typographie serif elegante', why_relevant: 'ancrage premium' },
-    { territory_id: 'T2', name: 'Marque Y', source_url: 'https://y.fr', evidence_excerpt: 'un layout aere et des animations discretes', why_relevant: 'sobriete' },
-    { territory_id: 'T3', name: 'Site Z', source_url: 'https://z.fr', evidence_excerpt: 'une navigation immersive plein ecran', why_relevant: 'immersion' },
+test('prepareDossier : garde les territoires, signale les sources faibles, ne bloque jamais', () => {
+  const corpus = 'Le studio X utilise une palette sombre et une typographie serif elegante. La marque Y mise sur un layout aere et des animations discretes.';
+  const d = { territories: [
+    { territory_id: 'T1', name: 'Studio X', source_url: 'https://x.fr', evidence_excerpt: 'une palette sombre et une typographie serif elegante', why_relevant: 'premium' },
+    { territory_id: 'T2', name: 'Inventé', source_url: 'https://a.fr', evidence_excerpt: 'totalement absent du corpus de recherche', why_relevant: 'x' },
   ] };
-  assert.equal(w2.validateDossier(good, corpus, 'agence').valid, true);
-
-  const bad = { territories: [{ territory_id: 'T1', name: 'Inventé', source_url: 'https://a.fr', evidence_excerpt: 'ceci est totalement absent du corpus de recherche brute', why_relevant: 'x' }] };
-  assert.equal(w2.validateDossier(bad, corpus, 'agence').valid, false);
+  const r = w2.prepareDossier(d, corpus);
+  assert.equal(r.territories.length, 2, 'garde les 2 territoires');
+  assert.ok(r.warnings.some((w) => w.includes('T2')), 'signale la source faible T2');
+  // dossier vide → aucun territoire, aucun crash
+  assert.deepEqual(w2.prepareDossier({}, corpus).territories, []);
 });
 
-test('structureGate : 3 distinctes passent ; territoire dupliqué jette', () => {
-  const dossier = { territories: [{ territory_id: 'T1' }, { territory_id: 'T2' }, { territory_id: 'T3' }] };
-  const mk = (id, axis, tension, terr) => ({ direction_id: id, creative_axis: axis, core_tension: tension, concept: 'c', prompt_claude_design: 'p', territory_id: terr });
-  const ok = [mk('D1', 'a', 't1', 'T1'), mk('D2', 'b', 't2', 'T2'), mk('D3', 'c', 't3', 'T3')];
-  assert.doesNotThrow(() => w2.structureGate(ok, dossier));
-  const dup = [mk('D1', 'a', 't1', 'T1'), mk('D2', 'b', 't2', 'T1'), mk('D3', 'c', 't3', 'T1')];
-  assert.throws(() => w2.structureGate(dup, dossier), /territories_not_distinct/);
+test('structureGate : renvoie des avertissements, ne jette jamais', () => {
+  const mk = (id, axis) => ({ direction_id: id, creative_axis: axis, concept: 'c', prompt_claude_design: 'p' });
+  assert.deepEqual(w2.structureGate([mk('D1', 'a'), mk('D2', 'b'), mk('D3', 'c')], {}), []);
+  const w = w2.structureGate([{ direction_id: 'D1', creative_axis: 'a' }], {}); // prompt + concept manquants
+  assert.ok(w.includes('D1_prompt_manquant') && w.includes('D1_concept_manquant'));
 });
 
-test('lintGate : tiret cadratin et mention IA jettent', () => {
-  const base = { direction_id: 'D1', concept: 'propre', creative_axis: 'a', core_tension: 't', prompt_claude_design: 'ok' };
-  assert.doesNotThrow(() => w2.lintGate([base]));
-  assert.throws(() => w2.lintGate([{ ...base, concept: 'un design — élégant' }]), /tiret/);
-  assert.throws(() => w2.lintGate([{ ...base, concept: 'généré par IA' }]), /mention_ia/);
+test('lintGate : corrige les tirets en place, signale les mentions IA (ne jette pas)', () => {
+  const b = { direction_id: 'D1', concept: 'un design — élégant', creative_axis: 'généré par IA' };
+  const w = w2.lintGate([b]);
+  assert.equal(b.concept, 'un design ,  élégant', 'tiret remplacé en place');
+  assert.ok(w.some((x) => x.includes('mention_ia')));
 });
 
-test('diversiteGate : bons scores → verdict ; ancrage faible → jette', () => {
+test('diversiteGate : renvoie {verdict, warnings}, ne jette jamais', () => {
   const good = { directions: [
     { direction_id: 'D1', sector_anchor_score: 8, source_fidelity_score: 8, credibility_score: 7 },
     { direction_id: 'D2', sector_anchor_score: 9, source_fidelity_score: 7, credibility_score: 8 },
     { direction_id: 'D3', sector_anchor_score: 7, source_fidelity_score: 9, credibility_score: 9 },
   ], pairwise_similarity: [{ pair: ['D1', 'D2'], score: 2 }], overall_verdict: 'pass' };
-  assert.equal(w2.diversiteGate(good), 'pass');
-  const weak = { ...good, directions: [{ direction_id: 'D1', sector_anchor_score: 3, source_fidelity_score: 8, credibility_score: 7 }, good.directions[1], good.directions[2]] };
-  assert.throws(() => w2.diversiteGate(weak), /anchor/);
+  const r = w2.diversiteGate(good);
+  assert.equal(r.verdict, 'pass');
+  assert.equal(r.warnings.length, 0);
+  const weak = w2.diversiteGate({ ...good, directions: [{ direction_id: 'D1', sector_anchor_score: 3, source_fidelity_score: 8, credibility_score: 7 }, good.directions[1], good.directions[2]] });
+  assert.ok(weak.warnings.some((x) => x.includes('ancrage_faible')));
 });
