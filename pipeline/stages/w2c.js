@@ -20,7 +20,7 @@ function resolveRun(leadId, runShort) {
 export function regen(leadId, runShort, reply) {
   const runId = resolveRun(leadId, runShort);
   // Quota / cooldown (idempotence best-effort → devient transactionnel : COUNT en base).
-  if (db.countRunsToday(leadId) >= MAX_REGEN_PER_DAY) return reply(`⛔ Limite de ${MAX_REGEN_PER_DAY} régénérations/jour atteinte pour ce lead.`);
+  if (db.countRunsLast24h(leadId) >= MAX_REGEN_PER_DAY) return reply(`⛔ Limite de ${MAX_REGEN_PER_DAY} régénérations sur 24 h atteinte pour ce lead.`);
   const runs = db.getRunsByLead(leadId);
   if (runs[0] && Date.now() - new Date(runs[0].created_at).getTime() < REGEN_COOLDOWN_MS) {
     return reply('⏳ Régénération trop rapprochée, attends ~2 min.');

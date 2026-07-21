@@ -35,7 +35,7 @@ test('runs : création, échec, quota du jour', () => {
   db.insertLead({ id: 'LEAD-20260713-0003' });
   db.createRun({ run_id: 'RUN-a', lead_id: 'LEAD-20260713-0003' });
   db.createRun({ run_id: 'RUN-b', lead_id: 'LEAD-20260713-0003' });
-  assert.equal(db.countRunsToday('LEAD-20260713-0003'), 2);
+  assert.equal(db.countRunsLast24h('LEAD-20260713-0003'), 2);
 
   db.markRunFailed('RUN-a', 'generation', 'boom');
   assert.equal(db.getRun('RUN-a').status, 'echec_generation');

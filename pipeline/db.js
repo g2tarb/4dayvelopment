@@ -199,11 +199,12 @@ export function markRunFailed(runId, stage, message) {
   updateRun(runId, { status: `echec_${stage}`, error_stage: stage, error_message: String(message).slice(0, 500), completed_at: now() });
 }
 
-// Regen : compte les runs déclenchés aujourd'hui pour ce lead (cooldown/quota, ex-n8n MAX_REGEN_PER_DAY).
-export function countRunsToday(leadId) {
-  const since = new Date(); since.setHours(0, 0, 0, 0);
+// Regen : compte les runs des dernières 24 h pour ce lead (quota, ex-n8n MAX_REGEN_PER_DAY).
+// Fenêtre glissante : indépendante du fuseau du serveur, pas de burst à cheval sur minuit.
+export function countRunsLast24h(leadId) {
+  const since = new Date(Date.now() - 86400000).toISOString();
   return db.prepare('SELECT COUNT(*) n FROM runs WHERE lead_id = ? AND created_at >= ?')
-    .get(leadId, since.toISOString()).n;
+    .get(leadId, since).n;
 }
 
 // Reprise après crash : leads coincés dans une étape en cours sans run terminé.

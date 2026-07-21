@@ -598,14 +598,8 @@ app.post('/api/blog/publish', apiLimiter, validateWith(articleSchema), (req, res
 
   try {
     fs.writeFileSync(filePath, buildArticleHTML(data), 'utf-8');
-
-    // Enregistrer la route propre
-    cleanPages[`/blog/${data.slug}`] = `blog/${data.slug}.html`;
-
-    // Ajouter dynamiquement la route Express
-    app.get(`/blog/${data.slug}`, (req, res) => {
-      res.sendFile(filePath);
-    });
+    // Pas de route à enregistrer : la route générique /blog/:slug sert le fichier,
+    // y compris après un redémarrage (les app.get() ajoutés à chaud ne survivaient pas).
 
     addToSitemap(data.slug);
     addToBlogIndex(data);
@@ -651,7 +645,6 @@ const cleanPages = {
   '/confidentialite': 'confidentialite.html',
   '/cgv':            'cgv.html',
   '/blog':           'blog/index.html',
-  '/blog/combien-coute-site-internet-2026': 'blog/combien-coute-site-internet-2026.html',
 };
 
 // Servir les URLs propres
@@ -665,6 +658,15 @@ for (const [route, file] of Object.entries(cleanPages)) {
     }
   });
 }
+
+// Articles de blog : route générique, survit aux redémarrages (remplace les app.get ajoutés à chaud).
+app.get('/blog/:slug', (req, res) => {
+  const { slug } = req.params;
+  // Même whitelist que articleSchema : bloque toute traversée de chemin.
+  const filePath = /^[a-z0-9-]+$/.test(slug) ? path.join(BLOG_DIR, `${slug}.html`) : null;
+  if (filePath && fs.existsSync(filePath)) return res.sendFile(filePath);
+  return res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
 
 // Redirection 301 des anciennes URLs .html vers URLs propres
 const htmlRedirects = {
