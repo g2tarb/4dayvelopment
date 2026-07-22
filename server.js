@@ -273,33 +273,36 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
     return res.status(400).json({ success: false, message: 'Bot détecté.' });
   }
 
-  // Sauvegarde locale systématique (filet de sécurité)
+  // Sauvegarde locale systématique (filet de sécurité, anti-perte de lead)
   saveLead(data);
 
-  // Appel webhook n8n (non bloquant, mais les échecs sont désormais visibles)
-  if (process.env.N8N_WEBHOOK_URL) {
+  // Émission du lead : nouveau pipeline en priorité (PIPELINE_INTAKE_URL + token),
+  // fallback n8n (N8N_WEBHOOK_URL) tant que la bascule n'est pas finie. Non bloquant.
+  const target = process.env.PIPELINE_INTAKE_URL || process.env.N8N_WEBHOOK_URL;
+  if (target) {
+    const isPipeline = Boolean(process.env.PIPELINE_INTAKE_URL);
     try {
-      const webhookRes = await fetch(process.env.N8N_WEBHOOK_URL, {
+      const webhookRes = await fetch(target, {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(isPipeline && process.env.PIPELINE_INTAKE_TOKEN ? { 'x-pipeline-token': process.env.PIPELINE_INTAKE_TOKEN } : {}),
+        },
         body:    JSON.stringify(data),
         signal:  AbortSignal.timeout(8000),
       });
       if (webhookRes.ok) {
-        logger.info({ name: data.prenom, status: webhookRes.status }, 'Webhook n8n déclenché');
+        logger.info({ name: data.prenom, status: webhookRes.status, target: isPipeline ? 'pipeline' : 'n8n' }, 'Lead émis');
       } else {
         const detail = await webhookRes.text().catch(() => '');
-        logger.warn(
-          { name: data.prenom, status: webhookRes.status, detail: detail.slice(0, 200) },
-          'Webhook n8n a répondu en erreur (non bloquant) — vérifier N8N_WEBHOOK_URL et que le workflow est actif',
-        );
+        logger.warn({ name: data.prenom, status: webhookRes.status, detail: detail.slice(0, 200) }, 'Cible lead a répondu en erreur (non bloquant)');
       }
     } catch (webhookErr) {
       const reason = webhookErr.name === 'TimeoutError' ? 'timeout (8s)' : webhookErr.message;
-      logger.warn({ name: data.prenom, err: reason }, 'Webhook n8n injoignable (non bloquant)');
+      logger.warn({ name: data.prenom, err: reason }, 'Cible lead injoignable (non bloquant) — le lead reste dans data/leads.json');
     }
   } else {
-    logger.warn({ name: data.prenom }, 'Webhook n8n ignoré — N8N_WEBHOOK_URL non défini');
+    logger.warn({ name: data.prenom }, 'Aucune cible lead (ni PIPELINE_INTAKE_URL ni N8N_WEBHOOK_URL)');
   }
 
   const mailConfigured = process.env.MAIL_USER && !process.env.MAIL_USER.includes('ton-email');
