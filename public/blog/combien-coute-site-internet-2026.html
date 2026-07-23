@@ -60,18 +60,17 @@
     <div class="container" style="max-width:800px;">
 
       <nav aria-label="Fil d'Ariane" class="breadcrumb" style="margin-top:24px;">
-        <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;font-size:14px;color:#666;">
-          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a itemprop="item" href="/" style="color:#888;text-decoration:none;"><span itemprop="name">Accueil</span></a>
-            <meta itemprop="position" content="1"><span style="margin-left:8px;color:#444;">›</span>
+        <ol style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;font-size:14px;color:#666;">
+          <li>
+            <a href="/" style="color:#888;text-decoration:none;"><span>Accueil</span></a>
+            <span style="margin-left:8px;color:#444;">›</span>
           </li>
-          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <a itemprop="item" href="/blog" style="color:#888;text-decoration:none;"><span itemprop="name">Blog</span></a>
-            <meta itemprop="position" content="2"><span style="margin-left:8px;color:#444;">›</span>
+          <li>
+            <a href="/blog" style="color:#888;text-decoration:none;"><span>Blog</span></a>
+            <span style="margin-left:8px;color:#444;">›</span>
           </li>
-          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-            <span itemprop="name" style="color:#f2b13b;">Combien coûte un site internet en 2026</span>
-            <meta itemprop="position" content="3">
+          <li>
+            <span style="color:#f2b13b;">Combien coûte un site internet en 2026</span>
           </li>
         </ol>
       </nav>
@@ -416,7 +415,7 @@
     },
     "image": "https://4dayvelopment.fr/og-image.jpg",
     "articleSection": "Guide",
-    "inLanguage": "fr"
+    "inLanguage": "fr-FR"
   }
   </script>
 
@@ -476,6 +475,11 @@
       }
     ]
   }
+  </script>
+
+  <!-- JSON-LD BreadcrumbList -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://4dayvelopment.fr/"},{"@type":"ListItem","position":2,"name":"Blog","item":"https://4dayvelopment.fr/blog"},{"@type":"ListItem","position":3,"name":"Combien coûte un site internet en 2026","item":"https://4dayvelopment.fr/blog/combien-coute-site-internet-2026"}]}
   </script>
 
   <script type="module" src="/js/main.js"></script>
