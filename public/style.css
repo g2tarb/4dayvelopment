@@ -403,6 +403,7 @@ nav.scrolled {
   line-height: 1.05;
   letter-spacing: -2px;
   margin-bottom: 24px;
+  overflow-wrap: break-word; /* évite le débordement des titres longs en mobile (ex. "professionnel" à 375px) */
 }
 
 /* Gradient text global */

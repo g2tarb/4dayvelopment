@@ -839,10 +839,10 @@
   <!-- ── FLOATING CTA ── -->
   <div id="floating-cta">
     <div class="fcta-menu" id="fcta-menu">
-      <div class="fcta-item" onclick="window.location.href='#contact'">
+      <a class="fcta-item" href="#contact">
         <span class="fcta-label" data-i18n="fcta-call">Réserver un appel</span>
         <div class="fcta-icon fcta-cal">📅</div>
-      </div>
+      </a>
     </div>
     <button id="fcta-main" aria-label="Contact">
       <svg viewBox="0 0 24 24" fill="white"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
@@ -911,6 +911,18 @@
           "@type": "OfferCatalog",
           "name": "Services de création web",
           "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Essentiel",
+                "description": "Site vitrine jusqu'à 3 pages, design personnalisé, SEO de base, hébergement 1 an inclus, livré en 4 jours.",
+                "provider": { "@id": "https://4dayvelopment.fr/#organization" }
+              },
+              "price": "990",
+              "priceCurrency": "EUR",
+              "availability": "https://schema.org/InStock"
+            },
             {
               "@type": "Offer",
               "itemOffered": {

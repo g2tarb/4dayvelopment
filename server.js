@@ -129,6 +129,24 @@ if (process.env.NODE_ENV === 'production') {
   });
 }
 
+/* ── SEO : URLs canoniques (301) ───────────────────────────
+   .html et slash final -> version propre. DOIT précéder express.static,
+   qui sinon sert les .html en 200 (duplication de contenu indexable). */
+const HTML_RENAMES = { '/lead.html': '/devis' };
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const p = req.path;
+  const qs = req.originalUrl.slice(p.length);
+  if (HTML_RENAMES[p]) return res.redirect(301, HTML_RENAMES[p] + qs);
+  if (p.endsWith('.html')) {
+    let clean = p.slice(0, -5);
+    if (clean.endsWith('/index')) clean = clean.slice(0, -6) || '/';
+    return res.redirect(301, (clean || '/') + qs);
+  }
+  if (p.length > 1 && p.endsWith('/')) return res.redirect(301, p.slice(0, -1) + qs);
+  next();
+});
+
 /* ── Helmet avec CSP explicite ────────────────────────── */
 app.use(helmet({
   contentSecurityPolicy: {
@@ -611,8 +629,6 @@ function addToSitemap(slug) {
   <url>
     <loc>${url}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
 `;
     sitemap = sitemap.replace('</urlset>', entry + '</urlset>');
@@ -740,15 +756,6 @@ for (const [route, file] of Object.entries(cleanPages)) {
       res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
     }
   });
-}
-
-// Redirection 301 des anciennes URLs .html vers URLs propres
-const htmlRedirects = {
-  '/lead.html':      '/devis',
-  '/essentiel.html': '/essentiel',
-};
-for (const [oldUrl, newUrl] of Object.entries(htmlRedirects)) {
-  app.get(oldUrl, (req, res) => res.redirect(301, newUrl));
 }
 
 /* ── Articles de blog : route propre generique (AVANT le catch-all 404) ── */
