@@ -11,9 +11,10 @@ import { config, leadShort } from '../config.js';
 
 const send = (text, kb) => bot.api.sendMessage(config.adminChatId, text, { parse_mode: 'Markdown', ...(kb ? { reply_markup: kb } : {}) });
 
-function htmlPrompt(lead, prix, maintenanceOfferte) {
+function htmlPrompt(lead, prix, maintenanceOfferte, direction) {
   const acompte = Math.round(prix * 0.5);
   const maintenance = maintenanceOfferte ? '79€ TTC/mois (1er mois offert)' : '79€ TTC/mois';
+  const note = String(lead.note_operateur || '').slice(0, 1500);
   return `Tu es directeur artistique et commercial de 4Dayvelopment.
 
 Ta mission : générer une proposition commerciale HTML premium, autonome, prête à convertir en PDF.
@@ -39,17 +40,26 @@ DONNÉES DE LA PROPOSITION :
 - Solde (50%) : ${acompte}€
 - Maintenance : ${maintenance}
 - Validité : 30 jours
+${direction ? `
+DIRECTION CRÉATIVE RETENUE (imprègne le CONTEXTE et le PÉRIMÈTRE de son vocabulaire et de sa vision, sans jargon design) :
+- Concept : ${direction.concept_name || ''}. ${direction.concept || ''}
+- Axe : ${direction.creative_axis || ''}
+- Réponse à la demande : ${direction.reponse_demande || ''}
+- Ton éditorial : ${direction.ton_editorial || ''}` : ''}
+${note ? `
+DIRECTIVES DE L'OPÉRATEUR (prioritaires, à refléter dans le document) :
+${note}` : ''}
 
 STRUCTURE OBLIGATOIRE :
 1. HEADER - Logo, mois/année, n° proposition, titre "Proposition commerciale." (orange sur "commerciale."), grid CLIENT/PROJET/VALIDITÉ
-2. CONTEXTE - "Ce qu'on construit." 2 paragraphes personnalisés
+2. CONTEXTE - "Ce qu'on construit." 2 paragraphes vraiment personnalisés : reprendre le vocabulaire propre du client (noms de sa méthode, de ses offres, de son univers) et la vision de la direction retenue. Jamais de texte qui pourrait servir à un autre client.
 3. PÉRIMÈTRE - 5 livrables (01 Site premium, 02-03 spécifiques secteur, 04 Mise en ligne, 05 Accompagnement), badges "Inclus", bloc "Hors périmètre"
 4. INVESTISSEMENT - Sprint prix€, Hébergement offert, SSL inclus, Total TTC, modalités 50/50, maintenance
 5. PLANNING - "4 jours. Pas un de plus." J1-J4
 6. CONDITIONS - "Ce qu'on s'engage à faire." 5 conditions
 7. FOOTER - 4Dayvelopment + liens
 
-RÈGLES : CSS inline ou <style> (sauf Google Fonts). Zéro animation/fixed/backdrop-filter. Zéro lorem ipsum. HTML statique imprimable. Retourne UNIQUEMENT le HTML brut sans markdown ni backticks.`;
+RÈGLES : CSS inline ou <style> (sauf Google Fonts). Zéro animation/fixed/backdrop-filter. Zéro lorem ipsum. HTML statique imprimable. Zéro tiret cadratin, zéro emoji, zéro tournure d'IA en français comme en anglais (sublimer, élever votre, révolutionner, propulser, n'hésitez pas, dans un monde où, seamless, elevate) et zéro exclamation marketing : écriture sobre, précise, humaine. Retourne UNIQUEMENT le HTML brut sans markdown ni backticks.`;
 }
 
 const stripFences = (s) => String(s || '').replace(/^```html\s*|^```\s*|\s*```$/g, '').trim();
@@ -60,7 +70,13 @@ export async function previewProposition({ leadId, da, prix, maintenance = false
   if (!(da >= 1 && da <= 3)) return send('⚠️ Maquette invalide (1-3).');
   if (!(prix > 0)) return send('⚠️ Prix invalide.');
 
-  const gen = await anthropic({ model: 'claude-sonnet-5', max_tokens: 8000, messages: [{ role: 'user', content: htmlPrompt(lead, prix, maintenance) }] });
+  // Direction créative retenue (celle de la maquette choisie) : la proposition en reprend la vision.
+  const runs = db.getRunsByLead(leadId);
+  const approved = runs.find((r) => r.status === 'approuve' && r.briefs_json) || runs.find((r) => r.briefs_json);
+  let direction = null;
+  try { direction = approved ? (JSON.parse(approved.briefs_json)[da - 1] || null) : null; } catch { /* proposition sans direction */ }
+
+  const gen = await anthropic({ model: 'claude-sonnet-5', max_tokens: 8000, messages: [{ role: 'user', content: htmlPrompt(lead, prix, maintenance, direction) }] });
   const html = stripFences(gen.text);
   if (!html.includes('<')) throw new Error('HTML de proposition vide');
   db.setLeadFields(leadId, { html_prop: html, da_choisie: da, prix_prop: prix, status: 'apercu_envoye' });

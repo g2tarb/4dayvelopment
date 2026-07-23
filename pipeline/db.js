@@ -55,6 +55,9 @@ db.exec(`
   CREATE INDEX IF NOT EXISTS idx_runs_lead ON runs(lead_id);
 `);
 
+// Migration additive : directives libres de l'opérateur, injectées dans les générations (W2/W3).
+try { db.exec('ALTER TABLE leads ADD COLUMN note_operateur TEXT'); } catch { /* colonne déjà présente */ }
+
 const now = () => new Date().toISOString();
 
 /* ── Leads ────────────────────────────────────────────── */

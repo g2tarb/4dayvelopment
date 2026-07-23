@@ -98,6 +98,20 @@ export function registerCommands(bot) {
     enqueue({ name: 'w4:brief', leadId: id, run: () => runW4({ leadId: id }) });
   });
 
+  // /note LEAD-xxx <directives> — directives libres de l'opérateur, injectées en priorité dans les
+  // générations suivantes (briefs W2 et proposition W3). Vide = effacer. Le levier « sur mesure ».
+  bot.command('note', (ctx) => {
+    const [idRaw, ...rest] = String(ctx.match || '').trim().split(/\s+/);
+    const id = normId(idRaw);
+    const note = rest.join(' ').trim();
+    if (!id) return md(ctx, 'Usage : `/note LEAD-xxx <directives libres>` (sans texte : efface la note)');
+    if (!db.getLead(id)) return md(ctx, `⚠️ Lead introuvable : ${id}`);
+    db.setLeadFields(id, { note_operateur: note || null });
+    return md(ctx, note
+      ? `📝 Note enregistrée pour ${id}. Elle guidera les prochaines générations (briefs et proposition) :\n_${note.slice(0, 300)}_`
+      : `📝 Note effacée pour ${id}.`);
+  });
+
   // /testlead <secteur> — crée un lead de test (comme l'arrivée d'un formulaire), pour tester le flux.
   bot.command('testlead', (ctx) => {
     const secteur = String(ctx.match || '').trim() || 'coach sportif';

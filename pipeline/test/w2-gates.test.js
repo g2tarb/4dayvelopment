@@ -52,6 +52,13 @@ test('lintGate : corrige les tirets en place, signale les mentions IA (ne jette 
   assert.ok(w.some((x) => x.includes('mention_ia')));
 });
 
+test('lintGate : signale les tournures IA françaises (tell_ia)', () => {
+  const b = { direction_id: 'D1', concept: 'Nous allons sublimer votre image et propulser votre marque' };
+  const w = w2.lintGate([b]);
+  assert.ok(w.some((x) => x.includes('tell_ia')), 'tell français détecté');
+  assert.deepEqual(w2.lintGate([{ direction_id: 'D2', concept: 'Un studio sobre, précis, incarné.' }]), [], 'texte sain non signalé');
+});
+
 test('diversiteGate : renvoie {verdict, warnings}, ne jette jamais', () => {
   const good = { directions: [
     { direction_id: 'D1', sector_anchor_score: 8, source_fidelity_score: 8, credibility_score: 7 },
