@@ -98,7 +98,7 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
 
   try {
     const secteur = String(lead.secteur || '').slice(0, 400);
-    const message = String(lead.message || '').slice(0, 800);
+    const message = String(lead.message || '').slice(0, 4000); // plafond anti-coût, assez large pour les briefs riches
     const resume = String(lead.resume_ia || '');
 
     /* 1. Recherche concurrents (Perplexity sonar-pro) */
