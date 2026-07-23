@@ -57,16 +57,61 @@ ensureLeadsFile();
 function saveLead(data) {
   try {
     const leads = JSON.parse(fs.readFileSync(LEADS_FILE, 'utf-8'));
-    leads.push({
+    const record = {
       ...data,
       receivedAt: new Date().toISOString(),
       id: `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    });
+    };
+    leads.push(record);
     fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
     logger.info({ name: data.prenom }, 'Lead sauvegardé localement');
+    return record.id;
   } catch (err) {
     logger.error({ err: err.message }, 'Échec sauvegarde locale du lead');
+    return null;
   }
+}
+
+function markLeadForwarded(id) {
+  if (!id) return;
+  try {
+    const leads = JSON.parse(fs.readFileSync(LEADS_FILE, 'utf-8'));
+    const lead = leads.find((l) => l.id === id);
+    if (lead) {
+      lead.pipelineSentAt = new Date().toISOString();
+      fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
+    }
+  } catch (err) {
+    logger.warn({ err: err.message }, 'Échec marquage lead transmis');
+  }
+}
+
+/* ── Rejeu automatique : leads jamais transmis au pipeline (VPS injoignable au moment T).
+   Toutes les 10 min, on retente ceux sans pipelineSentAt. Filet anti-perte, zéro doublon. ── */
+if (process.env.PIPELINE_INTAKE_URL) {
+  setInterval(async () => {
+    let pending = [];
+    try {
+      pending = JSON.parse(fs.readFileSync(LEADS_FILE, 'utf-8')).filter((l) => !l.pipelineSentAt).slice(0, 10);
+    } catch { return; }
+    for (const lead of pending) {
+      try {
+        const res = await fetch(process.env.PIPELINE_INTAKE_URL, {
+          method:  'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(process.env.PIPELINE_INTAKE_TOKEN ? { 'x-pipeline-token': process.env.PIPELINE_INTAKE_TOKEN } : {}),
+          },
+          body:    JSON.stringify(lead),
+          signal:  AbortSignal.timeout(8000),
+        });
+        if (res.ok) {
+          markLeadForwarded(lead.id);
+          logger.info({ id: lead.id, name: lead.prenom }, 'Lead rejoué vers le pipeline');
+        }
+      } catch { /* pipeline toujours injoignable, on retentera */ }
+    }
+  }, 10 * 60 * 1000).unref();
 }
 
 /* ── App ──────────────────────────────────────────────── */
@@ -197,7 +242,7 @@ function validateWith(schema) {
   return (req, res, next) => {
     const result = schema.safeParse(req.body);
     if (!result.success) {
-      const errors = result.error.errors.map(e => ({
+      const errors = result.error.issues.map(e => ({
         field:   e.path.join('.'),
         message: e.message,
       }));
@@ -274,7 +319,7 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
   }
 
   // Sauvegarde locale systématique (filet de sécurité, anti-perte de lead)
-  saveLead(data);
+  const localId = saveLead(data);
 
   // Émission du lead : nouveau pipeline en priorité (PIPELINE_INTAKE_URL + token),
   // fallback n8n (N8N_WEBHOOK_URL) tant que la bascule n'est pas finie. Non bloquant.
@@ -292,6 +337,7 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
         signal:  AbortSignal.timeout(8000),
       });
       if (webhookRes.ok) {
+        if (isPipeline) markLeadForwarded(localId);
         logger.info({ name: data.prenom, status: webhookRes.status, target: isPipeline ? 'pipeline' : 'n8n' }, 'Lead émis');
       } else {
         const detail = await webhookRes.text().catch(() => '');
