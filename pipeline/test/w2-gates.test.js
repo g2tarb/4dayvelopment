@@ -39,17 +39,33 @@ test('prepareDossier : garde les territoires, signale les sources faibles, ne bl
 });
 
 test('structureGate : renvoie des avertissements, ne jette jamais', () => {
-  const mk = (id, axis) => ({ direction_id: id, creative_axis: axis, concept: 'c', prompt_claude_design: 'p' });
-  assert.deepEqual(w2.structureGate([mk('D1', 'a'), mk('D2', 'b'), mk('D3', 'c')], {}), []);
-  const w = w2.structureGate([{ direction_id: 'D1', creative_axis: 'a' }], {}); // prompt + concept manquants
-  assert.ok(w.includes('D1_prompt_manquant') && w.includes('D1_concept_manquant'));
+  const mk = (id, ambiance) => ({ direction_id: id, nom: 'n', philosophie: 'p', palette: { primaire: '#000' }, ambiance });
+  assert.deepEqual(w2.structureGate([mk('D1', 'sombre'), mk('D2', 'lumineux'), mk('D3', 'brut')], {}), []);
+  const w = w2.structureGate([{ direction_id: 'D1' }], {}); // nom/philosophie/palette manquants
+  assert.ok(w.includes('D1_nom_manquant') && w.includes('D1_philosophie_manquante') && w.includes('D1_palette_manquante'));
 });
 
 test('lintGate : corrige les tirets en place, signale les mentions IA (ne jette pas)', () => {
-  const b = { direction_id: 'D1', concept: 'un design — élégant', creative_axis: 'généré par IA' };
-  const w = w2.lintGate([b]);
-  assert.equal(b.concept, 'un design ,  élégant', 'tiret remplacé en place');
+  const d = { direction_id: 'D1', nom: 'un design — élégant', ambiance: 'généré par IA' };
+  const w = w2.lintGate([d]);
+  assert.equal(d.nom, 'un design ,  élégant', 'tiret remplacé en place');
   assert.ok(w.some((x) => x.includes('mention_ia')));
+});
+
+test('extractHtmlAndNote : extrait la note et le HTML, lève GateError si invalide', () => {
+  const raw = '<!-- NOTE_DEV: j\'ai suivi le concept du DA -->\n<!DOCTYPE html><html><body>x</body></html>\nbruit final';
+  const { html, devNote } = w2.extractHtmlAndNote(raw, 'D1');
+  assert.equal(devNote, "j'ai suivi le concept du DA");
+  assert.ok(html.startsWith('<!DOCTYPE') && html.endsWith('</html>'));
+  assert.throws(() => w2.extractHtmlAndNote('texte sans balises html', 'D1'), w2.GateError);
+});
+
+test('lintHtml : scrub les tirets cadratins, signale les mentions IA (ne jette pas)', () => {
+  const r = w2.lintHtml('<p>un site — sur mesure</p>');
+  assert.equal(r.html, '<p>un site ,  sur mesure</p>');
+  assert.deepEqual(r.warnings, []);
+  const r2 = w2.lintHtml('<p>genere par ChatGPT</p>');
+  assert.ok(r2.warnings.includes('html_mention_ia'));
 });
 
 test('diversiteGate : renvoie {verdict, warnings}, ne jette jamais', () => {

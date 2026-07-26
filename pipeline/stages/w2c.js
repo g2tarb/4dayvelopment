@@ -37,3 +37,18 @@ export function retry(leadId, runShort, reply) {
   reply('↻ Relance lancée…');
   enqueue({ name: 'w2:retry', leadId, run: () => runW2({ leadId, force: true, parentRunId: runId }) });
 }
+
+// Choix éditorial simple (bouton "Choisir Direction N"), pas une transition de run : le lead est
+// déjà au repos (briefs_generes) quand ce bouton est cliqué, donc UPDATE direct sans CAS (comme /modifier).
+export function chooseDirection(leadId, dirNum, reply) {
+  const lead = db.getLead(leadId);
+  if (!lead) return reply(`⚠️ Lead introuvable : ${leadId}`);
+  const n = parseInt(dirNum, 10);
+  if (!(n >= 1 && n <= 3)) return reply('⚠️ Direction invalide (1-3).');
+  let htmlArr = [];
+  try { htmlArr = JSON.parse(lead.mockups_html || '[]'); } catch { /* rien à choisir */ }
+  const html = htmlArr[n - 1];
+  if (!html) return reply(`⚠️ Aucune maquette trouvée pour la direction ${n} (${leadId}).`);
+  db.setLeadFields(leadId, { da_choisie: n, chosen_mockup_html: html });
+  return reply(`✅ Direction ${n} sélectionnée pour ${leadId}.\n\nProchaine étape : appelle le client, puis \`/prop ${leadId} ${n} <prix>\`.`);
+}

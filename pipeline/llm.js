@@ -63,15 +63,24 @@ const PRICE = { // $/Mtoken [input, output]
   'openai/gpt-5.6-terra-pro': [2, 8],
   'claude-sonnet-5': [3, 15],
   'claude-opus-4-8': [5, 25],
+  'z-ai/glm-5.2': [1.4, 4.4],
 };
 
 // Modèle facturé pour un appel donné (clé de journalisation → modèle réel), pour l'estimation de coût.
+// 'glm' AVANT 'openrouter' : les labels du Dev HTML contiennent les deux substrings.
 export function modelForCall(call) {
   if (call.includes('perplexity')) return 'sonar-pro';
+  if (call.includes('glm')) return 'z-ai/glm-5.2';
   if (call.includes('openrouter')) return 'openai/gpt-5.6-terra-pro';
   if (call.includes('opus')) return 'claude-opus-4-8';
   return 'claude-sonnet-5'; // dossier + autres appels anthropic
 }
+
+// Projection de coût ($) AVANT de dépenser, pour le garde-fou budget (cf. w2.js étape 6).
+export const projectUsd = (model, inTok, outTok) => {
+  const p = PRICE[model] || [0, 0];
+  return (inTok / 1e6) * p[0] + (outTok / 1e6) * p[1];
+};
 
 export function costEur(model, usage) {
   if (!usage) return { eur: 0, known: false };

@@ -34,6 +34,9 @@ Résumé: ${lead.resume_ia || ''}
 === DIRECTION CRÉATIVE RETENUE ===
 ${brief ? JSON.stringify(brief, null, 2) : '(aucune direction structurée disponible — déduis un parti pris cohérent avec le secteur)'}
 
+=== HTML DE LA MAQUETTE RETENUE (structure/palette/typo réellement utilisées) ===
+${lead.chosen_mockup_html || '(aucune maquette HTML disponible, déduis-toi du contexte ci-dessus)'}
+
 Produis un brief technique structuré: objectif, stack recommandée, arborescence des pages, sections par page,
 système visuel (palette/typo/spacing), composants à construire, intégrations (formulaire, analytics, SEO de base),
 contenu à collecter auprès du client, checklist de livraison sur 4 jours (J1 à J4), critères de recette.

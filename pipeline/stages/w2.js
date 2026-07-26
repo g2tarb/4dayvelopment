@@ -1,16 +1,18 @@
-// W2 — génération des 3 directions créatives. Port fidèle de la chaîne n8n :
-// route → verrou (CAS) → recherche (Perplexity×2 + OpenRouter) → dossier (Haiku + preuve)
-// → budget → génération (Opus) → gates parse/structure/lint → critique (OpenRouter) → QC.
-// Tout échec (exception LLM ou gate) → rollback atomique + alerte. Plus de mort silencieuse.
+// W2 — génération des 3 directions créatives. Route → verrou (CAS) → recherche (Perplexity×2 +
+// OpenRouter) → dossier (Sonnet + preuve) → budget → Directeur Artistique (univers visuels JSON)
+// → critique/diversité → Lead Developer (HTML x3, GLM) → rendu Puppeteer (PNG) → Telegram
+// (photos + boutons de choix) → QC + email récap. Tout échec (exception LLM/gate/rendu) →
+// rollback atomique + alerte. Plus de mort silencieuse.
 
-import { InlineKeyboard } from 'grammy';
+import { InlineKeyboard, InputFile } from 'grammy';
 import * as db from '../db.js';
 import { newRunId, leadShort } from '../config.js';
-import { anthropic, perplexity, openrouter, costEur, modelForCall } from '../llm.js';
+import { anthropic, perplexity, openrouter, costEur, modelForCall, projectUsd } from '../llm.js';
 import { bot, alert } from '../telegram/bot.js';
 import { config } from '../config.js';
-import { sendDesignPromptsEmail } from '../email.js';
+import { sendDirectionsRecapEmail } from '../email.js';
 import { cb } from '../telegram/render.js';
+import { renderDirectionsToPng } from '../render.js';
 
 const AVAL = ['apercu_envoye', 'proposition_envoyee', 'signe'];
 class GateError extends Error { constructor(stage, reason) { super(reason); this.stage = stage; } }
@@ -142,57 +144,93 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
       return send([`🔍 *Diagnostic ${leadId}*`, `Secteur normalisé: ${sectorNormalized || 'n/a'}`, '', ...lines, '', `💶 ~${partialEur()} EUR`].join('\n'));
     }
 
-    /* 5. Budget (avant Opus) */
-    const OPUS_PROJ = (12000 / 1e6) * 5 + (16000 / 1e6) * 25; // $ projetés Opus
-    const projectedEur = usageAcc.reduce((s, u) => s + costEur(modelForCall(u.call), u.usage).eur, 0) + OPUS_PROJ * 0.92;
+    /* 5. Budget (avant DA + critique + Dev) */
+    const NEXT_PROJ_USD =
+      projectUsd('openai/gpt-5.6-terra-pro', 2500, 3000)   // 7A : Directeur Artistique
+      + projectUsd('openai/gpt-5.6-terra-pro', 2000, 1500) // 7A-bis : critique
+      + 3 * projectUsd('z-ai/glm-5.2', 2500, 8000);        // 7B : 3x Lead Developer (HTML)
+    const projectedEur = usageAcc.reduce((s, u) => s + costEur(modelForCall(u.call), u.usage).eur, 0) + NEXT_PROJ_USD * 0.92;
     const ageMin = (Date.now() - runStart) / 60000; // temps écoulé du run en cours
     if (projectedEur > 2.0) throw new GateError('budget', `budget_projete_${projectedEur.toFixed(2)}eur`);
     if (ageMin > 20) throw new GateError('duree', `duree_${ageMin.toFixed(1)}min`);
 
-    /* 6. Génération (Anthropic Opus) */
-    const schemaOpus = '{"briefs":[{"direction_id":"D1","territory_id":"T1","creative_axis":"axe dominant unique","core_tension":"tension creative ou strategique","concept_name":"nom","concept":"description 2-3 phrases","target_perception":"perception visee","reponse_demande":"comment cette direction repond a CE client","visual_system":{"palette":["couleurs precises"],"typography":["polices"],"layout_principles":["principes"],"motion_principles":["animations"],"imagery_principles":["style images"]},"references":["source reelle 1","2","3"],"structure_page":["section 1","2","3"],"ton_editorial":"ton","prompt_claude_design":"prompt complet autosuffisant pret a coller"}]}';
-    const opusPrompt = `Tu es directeur de creation primé (niveau Awwwards Site of the Day, FWA, studios comme Locomotive, Bruno Simon, Cuberto, Obys). Tu produis 3 directions creatives pour un site premium qui doit faire dire "wow". Standard: site memorable et signe, jamais un template SaaS generique.\n\nOBJECTIF ABSOLU: repondre a la demande reelle du client, et proposer 3 partis-pris FORTS, distinctifs et desirables, chacun avec une vraie signature (concept, systeme visuel, interactions). On doit sentir une intention d'auteur, pas un habillage par defaut.\n\nEXIGENCE DE QUALITE (le plus important):\n- Refuse les choix par defaut et les cliches: pas de police Inter/Roboto "par securite", pas de hero centre banal bleu SaaS, pas de layout template. Choisis des typographies a caractere (nommees precisement), un systeme de couleur ose mais juste (hex exacts), une mise en page et des interactions memorables (scroll, motion, transitions) qui servent le concept.\n- Chaque direction = un concept fort qu'on pourrait defendre devant un jury. Nomme des references reelles de studios/sites qui incarnent le niveau vise.\n\nINVARIANTS (obligatoires):\n- EXACTEMENT 3 directions. Les 3 creative_axis sont differents, les 3 core_tension sont differents, aucune n'est une variante cosmetique d'une autre.\n- Si le dossier fournit des territoires, ancre chaque direction sur l'un d'eux (idealement un different par direction). Sinon ancre-toi sur le secteur et la recherche.\n- N'impose AUCUNE esthetique fixe imposee d'en haut: la diversite vient du secteur, du lead, des sources et des axes.\n- prompt_claude_design: EXTREMEMENT detaille (vise 220 mots ou plus), autosuffisant et exigeant, pret a produire un site de niveau award des le premier jet. Il couvre: objectif business, contexte de marque, audience, architecture de page section par section, hierarchie, direction visuelle precise, palette (hex) et usage, typographies nommees et hierarchie, layout/spacing/grille, interactions et motion detaillees, ton editorial, directives d'images et de video, requetes d'assets stock type Unsplash + style vise, contraintes d'accessibilite (contraste, focus, alt), criteres de reussite mesurables.\n- Le prompt_claude_design DOIT contenir une regle explicite et non negociable pour le site genere: INTERDICTION ABSOLUE des tirets cadratins (—) et demi-cadratins (–), des emojis, du lorem ipsum, des placeholders, des photos stock generiques et souriantes de banque d'images, et de toute tournure ou "tell" d'IA (formulations passe-partout, "elevate your", "seamless", listes robotiques). Ecriture humaine, incarnee, specifique au client.\n- N'ecris toi-meme aucun tiret cadratin ni mention d'IA dans les textes produits.\n\n=== BRIEF CLIENT (brut) ===\nSecteur: ${secteur}\nDemande: ${message}\nResume: ${resume}\nSecteur normalise: ${sectorNormalized}\n\n=== DOSSIER SECTORIEL (territoires prouves) ===\n${JSON.stringify(dossier.territories)}\n\n=== ANALYSE DEMANDE ===\n${JSON.stringify(analyse)}\n\nReponds UNIQUEMENT en JSON valide, sans texte autour, sans fences, structure exacte:\n${schemaOpus}`;
-    const gen = await anthropic({ model: 'claude-opus-4-8', max_tokens: 16000, thinking: { type: 'adaptive' }, output_config: { effort: 'high' }, messages: [{ role: 'user', content: opusPrompt }] });
-    acc('anthropic_opus_generation', gen.usage);
+    /* 7A. Directeur Artistique (OpenRouter gpt-5.6-terra-pro) : 3 univers visuels, pas de HTML */
+    const schemaDA = '{"directions":[{"direction_id":"D1","territory_id":"T1","nom":"nom court et memorable de l\'univers","philosophie":"principe directeur en 1-2 phrases","polices":{"titres":"Police Google Fonts nommee precisement","corps":"Police Google Fonts nommee precisement"},"palette":{"primaire":"#RRGGBB","secondaire":"#RRGGBB","accent":"#RRGGBB","fond":"#RRGGBB","texte":"#RRGGBB"},"style_layout":"principe de mise en page et de grille","framer_inspirations":["site ou studio reel 1","2"],"ambiance":"atmosphere sensorielle en quelques mots","regles_css":["regle non negociable 1","2","3"],"interdits":["a eviter 1","2"]}]}';
+    const daPrompt = `Tu es Directeur Artistique senior pour une agence web premium francaise (niveau Awwwards/FWA). Tu definis 3 UNIVERS VISUELS distincts pour un site premium, sans coder ni ecrire de contenu : seulement le systeme de direction artistique (typo, couleurs, ambiance, layout, inspirations).\n\nOBJECTIF: 3 partis-pris forts et desirables, chacun avec une signature propre. Refuse les choix par defaut: pas de police Inter/Roboto "par securite", pas de bleu SaaS generique, pas de layout template. Choisis des typographies a caractere (Google Fonts nommees precisement), des couleurs osees mais justes (hex exacts), un style de mise en page memorable.\n\nINVARIANTS:\n- EXACTEMENT 3 univers. Les 3 "ambiance" sont clairement distinctes.\n- Si le dossier fournit des territoires, ancre chaque univers sur l'un d'eux (idealement un different par univers). Sinon ancre-toi sur le secteur et la recherche.\n- regles_css: 3 a 5 regles non negociables et concretes pour le developpeur.\n- interdits: 2 a 4 choses explicitement a eviter pour CET univers.\n- Zero tiret cadratin (—), zero mention d'IA, zero emoji.\n\n=== BRIEF CLIENT (brut) ===\nSecteur: ${secteur}\nDemande: ${message}\nResume: ${resume}\nSecteur normalise: ${sectorNormalized}\n\n=== DOSSIER SECTORIEL (territoires prouves) ===\n${JSON.stringify(dossier.territories)}\n\n=== ANALYSE DEMANDE ===\n${JSON.stringify(analyse)}\n\nReponds UNIQUEMENT en JSON valide, sans texte autour, sans fences, structure exacte:\n${schemaDA}`;
+    const daRes = await openrouter({ model: 'openai/gpt-5.6-terra-pro', messages: [{ role: 'user', content: daPrompt }], max_tokens: 3000, temperature: 0.9, response_format: { type: 'json_object' } });
+    acc('openrouter_da', daRes.usage);
+    const daParsed = parseJson(daRes.content);
+    const directions = Array.isArray(daParsed.directions) ? daParsed.directions : [];
+    if (directions.length !== 3) throw new GateError('da', `le DA a renvoyé ${directions.length} univers au lieu de 3`);
+    warnings.push(...structureGate(directions, dossier));
+    warnings.push(...lintGate(directions)); // corrige les tirets en place, signale les mentions IA
 
-    /* 7. Parse + gates structure/lint */
-    const parsed = parseJson(gen.text);
-    const briefs = Array.isArray(parsed.briefs) ? parsed.briefs : [];
-    if (briefs.length !== 3) throw new GateError('generation', `le modèle a renvoyé ${briefs.length} directions au lieu de 3`);
-    warnings.push(...structureGate(briefs, dossier));
-    warnings.push(...lintGate(briefs)); // corrige les tirets en place, signale les mentions IA
-    db.updateRun(runId, { briefs_json: JSON.stringify(briefs) });
-
-    /* 8. Critique (OpenRouter) + gate diversité */
-    const critBriefs = briefs.map((b) => ({ direction_id: b.direction_id, territory_id: b.territory_id, creative_axis: b.creative_axis, core_tension: b.core_tension, concept_name: b.concept_name, concept: b.concept, visual_system: b.visual_system, references: b.references }));
+    /* 7A-bis. Critique (OpenRouter) + gate diversité — réutilise diversiteGate telle quelle */
+    const critDirs = directions.map((d) => ({ direction_id: d.direction_id, territory_id: d.territory_id, nom: d.nom, philosophie: d.philosophie, palette: d.palette, style_layout: d.style_layout, ambiance: d.ambiance }));
     const critTerrs = dossier.territories.map((t) => ({ territory_id: t.territory_id, name: t.name, source_url: t.source_url, why_relevant: t.why_relevant }));
     const schemaCrit = '{"directions":[{"direction_id":"D1","sector_anchor_score":0,"source_fidelity_score":0,"distinctiveness_score":0,"credibility_score":0,"one_line_verdict":"..."}],"pairwise_similarity":[{"pair":["D1","D2"],"score":0,"reason":"..."}],"overall_verdict":"pass|review|fail"}';
-    const critPrompt = `Tu es un directeur de creation critique et exigeant. Evalue 3 directions creatives pour un site web, notees de 0 a 10.\n\nCriteres par direction: sector_anchor_score (ancrage au secteur normalise: ${sectorNormalized}), source_fidelity_score (fidelite aux territoires de reference fournis), distinctiveness_score (reelle distinction vs les autres), credibility_score (credibilite pro).\nAjoute pairwise_similarity (score 0-10 de similarite entre chaque paire, 0=totalement distinct) et overall_verdict.\n\nReponds UNIQUEMENT en JSON valide, structure exacte:\n${schemaCrit}\n\n=== TERRITOIRES ===\n${JSON.stringify(critTerrs)}\n\n=== DIRECTIONS ===\n${JSON.stringify(critBriefs)}`;
+    const critPrompt = `Tu es un directeur de creation critique et exigeant. Evalue 3 univers visuels pour un site web, notes de 0 a 10.\n\nCriteres par univers: sector_anchor_score (ancrage au secteur normalise: ${sectorNormalized}), source_fidelity_score (fidelite aux territoires de reference fournis), distinctiveness_score (reelle distinction vs les autres), credibility_score (credibilite pro).\nAjoute pairwise_similarity (score 0-10 de similarite entre chaque paire, 0=totalement distinct) et overall_verdict.\n\nReponds UNIQUEMENT en JSON valide, structure exacte:\n${schemaCrit}\n\n=== TERRITOIRES ===\n${JSON.stringify(critTerrs)}\n\n=== UNIVERS ===\n${JSON.stringify(critDirs)}`;
     const critRes = await openrouter({ model: 'openai/gpt-5.6-terra-pro', max_tokens: 1500, temperature: 0.2, response_format: { type: 'json_object' }, messages: [{ role: 'user', content: critPrompt }] });
     acc('openrouter_critique', critRes.usage);
     const critic = parseJson(critRes.content);
     const { verdict, warnings: divWarns } = diversiteGate(critic);
     warnings.push(...divWarns);
-    db.updateRun(runId, { scores_json: JSON.stringify(critic), critic_verdict: verdict });
+    db.updateRun(runId, { briefs_json: JSON.stringify(directions), scores_json: JSON.stringify(critic), critic_verdict: verdict });
 
-    /* 9. Fin W2 : email des 3 prompts design + déverrouillage (briefs_generes) + notif Telegram */
-    if (!db.completeW2(leadId, runId)) throw new GateError('qc_guard', 'lead non possédé en fin de W2');
+    /* 7B. Lead Developer (OpenRouter z-ai/glm-5.2) : code chaque univers en HTML complet, en parallèle */
+    const devPrompt = (direction) => `Tu es Lead Developer front-end senior. Tu recois un UNIVERS VISUEL defini par un Directeur Artistique. Ta mission: coder une page HTML COMPLETE, autonome, prete a etre ouverte dans un navigateur, qui incarne cet univers pour ce client.\n\nCONTRAINTES TECHNIQUES (obligatoires):\n- Un seul fichier HTML autonome. Tailwind CSS via CDN (<script src="https://cdn.tailwindcss.com"></script>).\n- Polices via Google Fonts (<link> dans le <head>), celles de l'univers (ou meilleures, voir plus bas).\n- ZERO JavaScript personnalise (aucun <script> hors CDN Tailwind). Rendu statique.\n- Contenu realiste pour ce client, pas de lorem ipsum, pas de placeholder.\n- Zero tiret cadratin, zero emoji, zero mention d'IA.\n- Images: URLs Unsplash pertinentes au secteur, jamais de <img> cassee.\n\nLIBERTE CREATIVE: si le concept du DA te semble trop generique ou trop proche des deux autres univers, tu as le droit de le faire evoluer. Dans tous les cas, commence ta reponse par UNE ligne:\n<!-- NOTE_DEV: [ta raison de deviation, ou "j'ai suivi le concept du DA"] -->\npuis directement <!DOCTYPE html>.\n\n=== UNIVERS VISUEL A CODER ===\n${JSON.stringify(direction)}\n\n=== CONTEXTE CLIENT ===\nSecteur: ${secteur}\nDemande: ${message}\nResume: ${resume}\n\nReponds avec la note NOTE_DEV puis le document HTML complet, rien d'autre.`;
+    const devResults = await Promise.all(directions.map(async (direction, i) => {
+      const res = await openrouter({ model: 'z-ai/glm-5.2', messages: [{ role: 'user', content: devPrompt(direction) }], max_tokens: 8000, temperature: 0.5 });
+      acc(`openrouter_glm_dev_${i + 1}`, res.usage);
+      const { html, devNote } = extractHtmlAndNote(res.content, direction.direction_id || `D${i + 1}`);
+      const lint = lintHtml(html);
+      if (lint.warnings.length) warnings.push(...lint.warnings);
+      return { html: lint.html, devNote };
+    }));
+
+    /* 7C. Rendu Puppeteer (HTML -> PNG), un seul navigateur, séquentiel */
+    const renders = await renderDirectionsToPng(
+      directions.map((d, i) => ({ id: d.direction_id || `D${i + 1}`, html: devResults[i].html })),
+      leadId,
+    );
+
+    /* 7D. Envoi Telegram : 3 photos + bouton "Choisir Direction N" par photo */
+    for (let i = 0; i < 3; i++) {
+      const d = directions[i];
+      const caption = [
+        `🎨 *Direction ${i + 1}/3* — ${leadId}`,
+        `📍 ${d.nom || ''}`,
+        `🎯 ${d.ambiance || ''}`,
+        '',
+        `💬 Avis du Dev : ${devResults[i].devNote || 'pas de note laissée.'}`,
+      ].join('\n');
+      const kb = new InlineKeyboard().text(`✅ Choisir Direction ${i + 1}`, cb('CH', leadId, runId, i + 1));
+      await bot.api.sendPhoto(config.adminChatId, new InputFile(renders[i].pngPath), { caption, parse_mode: 'Markdown', reply_markup: kb });
+    }
+
+    /* 7E. Fin W2 : persistance atomique (même UPDATE que le déverrouillage) + email récap */
+    const enriched = directions.map((d, i) => ({ ...d, devNote: devResults[i].devNote }));
+    const ok = db.completeW2(leadId, runId, {
+      mockups_html: JSON.stringify(devResults.map((d) => d.html)),
+      mockups_meta: JSON.stringify(enriched),
+    });
+    if (!ok) throw new GateError('qc_guard', 'lead non possédé en fin de W2');
     const costFinal = partialEur();
     db.updateRun(runId, { status: 'approuve', cost_estimated: costFinal, completed_at: db.now() });
     if (parentRunId) db.updateRun(parentRunId, { status: 'remplace', replaced_by_run_id: runId });
 
     try {
-      if (config.operatorEmail) await sendDesignPromptsEmail({ to: config.operatorEmail, leadId, secteur: sectorNormalized, briefs });
-    } catch (e) { await alert(`⚠️ Envoi email des prompts échoué (${leadId}) : ${e.message}. Ils restent en base (run ${runId.slice(4)}).`); }
+      if (config.operatorEmail) await sendDirectionsRecapEmail({ to: config.operatorEmail, leadId, secteur: sectorNormalized, directions: enriched });
+    } catch (e) { await alert(`⚠️ Envoi email récap échoué (${leadId}) : ${e.message}. Les maquettes restent en base (run ${runId.slice(4)}).`); }
 
     const warn = warnings.length ? `\n⚠️ À surveiller (${warnings.length}) : ${warnings.slice(0, 6).join(', ')}${warnings.length > 6 ? '…' : ''}` : '';
     const kb = new InlineKeyboard().text('🔄 Régénérer', cb('R', leadId, runId));
     await send([
-      `✅ *3 prompts design prêts* — ${leadId}`,
+      `✅ *3 maquettes prêtes* — ${leadId}`,
       `📊 Secteur: ${sectorNormalized || 'n/a'} · 🧭 Verdict: ${verdict} · 💶 ~${costFinal} EUR`,
-      `📧 Envoyés à ${config.operatorEmail || '(email non configuré)'}${warn}`,
+      `📧 Récap envoyé à ${config.operatorEmail || '(email non configuré)'}${warn}`,
       '',
-      `Colle-les dans Claude Design pour les maquettes. Après le call, *réponds à ce message* avec \`maquette prix\` (ex : \`1 2000\`, ou \`1 2000 M\` pour offrir la maintenance) → je génère la proposition.`,
+      `Choisis une direction ci-dessus, ou régénère si rien ne convient. Après le call, *réponds à ce message* avec \`maquette prix\` (ex : \`1 2000\`, ou \`1 2000 M\` pour offrir la maintenance) → je génère la proposition.`,
     ].join('\n'), kb);
   } catch (err) {
     const stage = err instanceof GateError ? err.stage : 'exception';
@@ -206,38 +244,66 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
    (jamais d'exception) — le run produit toujours ses 3 prompts, on signale les faiblesses. ── */
 export { GateError };
 
-export function structureGate(briefs, dossier) {
-  const warnings = [], axes = new Set();
-  briefs.forEach((b, i) => {
-    const d = b.direction_id || `D${i + 1}`;
-    if (!b.prompt_claude_design) warnings.push(`${d}_prompt_manquant`);
-    if (!b.concept) warnings.push(`${d}_concept_manquant`);
-    axes.add(String(b.creative_axis || '').toLowerCase().trim());
+// Vérifie que chaque univers DA a ses champs clés et que les 3 ambiances sont distinctes.
+export function structureGate(directions, dossier) {
+  const warnings = [], ambiances = new Set();
+  directions.forEach((d, i) => {
+    const id = d.direction_id || `D${i + 1}`;
+    if (!d.nom) warnings.push(`${id}_nom_manquant`);
+    if (!d.philosophie) warnings.push(`${id}_philosophie_manquante`);
+    if (!d.palette || !d.palette.primaire) warnings.push(`${id}_palette_manquante`);
+    ambiances.add(String(d.ambiance || '').toLowerCase().trim());
   });
-  if (axes.size < 3) warnings.push('axes_peu_distincts');
+  if (ambiances.size < 3) warnings.push('ambiances_peu_distinctes');
   return warnings;
 }
 
 const EMDASH = /[—–]/g;
 const AI_PATTERNS = [/\bIA\b/i, /intelligence artificielle/i, /chatgpt/i, /\bgpt-?\d/i, /\bclaude\b/i, /anthropic/i, /openai/i, /\bLLM\b/i];
-// Corrige les tirets cadratins EN PLACE (remplace par ", ") et signale les mentions d'IA.
-export function lintGate(briefs) {
-  const FIELDS = ['concept_name', 'concept', 'target_perception', 'reponse_demande', 'ton_editorial', 'prompt_claude_design', 'creative_axis', 'core_tension'];
+// Corrige les tirets cadratins EN PLACE (remplace par ", ") et signale les mentions d'IA, sur les
+// univers visuels DA (texte JSON, pas le HTML — voir lintHtml plus bas pour le HTML du Dev).
+export function lintGate(directions) {
+  const FIELDS = ['nom', 'philosophie', 'style_layout', 'ambiance'];
+  const LIST_FIELDS = ['framer_inspirations', 'regles_css', 'interdits'];
   const warnings = [];
-  briefs.forEach((b, i) => {
-    const d = b.direction_id || `D${i + 1}`;
+  directions.forEach((d, i) => {
+    const id = d.direction_id || `D${i + 1}`;
     FIELDS.forEach((f) => {
-      if (b[f] == null) return;
-      let v = String(b[f]);
-      if (EMDASH.test(v)) { v = v.replace(EMDASH, ', '); b[f] = v; }
-      if (AI_PATTERNS.some((p) => p.test(v))) warnings.push(`${d}_${f}_mention_ia`);
+      if (d[f] == null) return;
+      let v = String(d[f]);
+      if (EMDASH.test(v)) { v = v.replace(EMDASH, ', '); d[f] = v; }
+      if (AI_PATTERNS.some((p) => p.test(v))) warnings.push(`${id}_${f}_mention_ia`);
     });
-    const vs = b.visual_system || {};
-    ['palette', 'typography', 'layout_principles', 'motion_principles', 'imagery_principles'].forEach((k) => {
-      if (Array.isArray(vs[k])) vs[k] = vs[k].map((item) => String(item).replace(EMDASH, ', '));
+    LIST_FIELDS.forEach((f) => {
+      if (Array.isArray(d[f])) d[f] = d[f].map((item) => String(item).replace(EMDASH, ', '));
     });
+    if (d.polices) ['titres', 'corps'].forEach((k) => { if (d.polices[k]) d.polices[k] = String(d.polices[k]).replace(EMDASH, ', '); });
   });
   return warnings;
+}
+
+// Extrait le HTML et la note NOTE_DEV depuis la réponse brute du Lead Developer (GLM). Lève
+// GateError si <!DOCTYPE>/</html> sont introuvables, au lieu de renvoyer du HTML tronqué/invalide
+// à Puppeteer (contrairement au brouillon initial qui ignorait ce cas silencieusement).
+export function extractHtmlAndNote(raw, directionId = '?') {
+  let html = String(raw || '').trim().replace(/^```html?\s*/i, '').replace(/```\s*$/i, '');
+  let devNote = 'Pas de note laissée.';
+  const noteMatch = html.match(/<!--\s*NOTE_DEV:\s*(.*?)\s*-->/i);
+  if (noteMatch) devNote = noteMatch[1];
+  const docStart = html.search(/<!DOCTYPE/i);
+  const htmlEnd = html.search(/<\/html>/i);
+  if (docStart < 0 || htmlEnd < 0) throw new GateError('dev_html', `${directionId}: HTML invalide (DOCTYPE/</html> introuvable)`);
+  html = html.slice(docStart, htmlEnd + '</html>'.length);
+  return { html, devNote };
+}
+
+// Scrub tirets cadratins + détecte mentions IA dans le HTML généré par le Dev (jamais bloquant).
+// ponytail: regex globale sur tout le HTML — accepté car "zéro JS custom" imposé au Dev, donc pas
+// de faux positif probable dans un <script>/attribut ; à affiner seulement si un cas réel apparaît.
+export function lintHtml(html) {
+  const out = String(html || '').replace(EMDASH, ', ');
+  const warnings = AI_PATTERNS.some((p) => p.test(out)) ? ['html_mention_ia'] : [];
+  return { html: out, warnings };
 }
 
 export function diversiteGate(critic) {

@@ -29,7 +29,10 @@ db.exec(`
     active_run_id TEXT,
     da_choisie    INTEGER,
     prix_prop     REAL,
-    html_prop     TEXT
+    html_prop     TEXT,
+    mockups_html       TEXT,                   -- JSON: 3 HTML générés (étape 7B)
+    mockups_meta       TEXT,                   -- JSON: 3 univers DA + devNote (étape 7A/7B)
+    chosen_mockup_html TEXT                    -- HTML de la direction choisie via bouton Telegram
   );
 
   CREATE TABLE IF NOT EXISTS runs (
@@ -54,6 +57,16 @@ db.exec(`
 
   CREATE INDEX IF NOT EXISTS idx_runs_lead ON runs(lead_id);
 `);
+
+// Migration additive idempotente : une base déjà en prod ne rejoue pas CREATE TABLE IF NOT EXISTS.
+// SQLite n'a pas ADD COLUMN IF NOT EXISTS, d'où la vérification via PRAGMA table_info.
+function ensureColumn(table, column, ddl) {
+  const cols = db.prepare(`PRAGMA table_info(${table})`).all().map((c) => c.name);
+  if (!cols.includes(column)) db.exec(`ALTER TABLE ${table} ADD COLUMN ${column} ${ddl}`);
+}
+ensureColumn('leads', 'mockups_html', 'TEXT');
+ensureColumn('leads', 'mockups_meta', 'TEXT');
+ensureColumn('leads', 'chosen_mockup_html', 'TEXT');
 
 const now = () => new Date().toISOString();
 
@@ -128,13 +141,17 @@ export function acquireLead(leadId, runId, statusPrec = null) {
   return r.changes === 1;
 }
 
-// Fin de W2 : briefs_en_cours → briefs_generes, libère le lock. Les 3 prompts partent par mail ;
-// pas d'étape d'approbation manuelle (l'opérateur construit les maquettes puis fait /prop).
-export function completeW2(leadId, runId) {
+// Fin de W2 : briefs_en_cours → briefs_generes, libère le lock. Les maquettes partent par Telegram
+// (+ email récap) ; pas d'étape d'approbation manuelle (l'opérateur choisit une direction puis /prop).
+// `extra` (ex: mockups_html/mockups_meta) est écrit dans le MÊME UPDATE atomique que le déverrouillage,
+// pour éviter une fenêtre de course entre "écrire les résultats" et "libérer le verrou".
+export function completeW2(leadId, runId, extra = {}) {
+  const keys = Object.keys(extra);
+  const assign = ["status = 'briefs_generes'", 'active_run_id = NULL', 'status_prec = NULL', ...keys.map((k) => `${k} = @${k}`)].join(', ');
   const r = db.prepare(`
-    UPDATE leads SET status = 'briefs_generes', active_run_id = NULL, status_prec = NULL
+    UPDATE leads SET ${assign}
     WHERE id = @id AND active_run_id = @run AND status = 'briefs_en_cours'
-  `).run({ id: leadId, run: runId });
+  `).run({ id: leadId, run: runId, ...extra });
   return r.changes === 1;
 }
 
