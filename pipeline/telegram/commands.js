@@ -9,8 +9,9 @@ import { runW4 } from '../stages/w4.js';
 import { previewProposition } from '../stages/w3.js';
 import { qualifyLead } from '../stages/intake.js';
 
-// Accepte 'LEAD-20260713-1200' ou le short '20260713-1200'.
-const normId = (s) => { const v = String(s || '').trim().toUpperCase(); return v.startsWith('LEAD-') ? v : (/^\d{8}-\d{4}$/.test(v) ? `LEAD-${v}` : null); };
+// Accepte 'LEAD-20260713-1200' ou le short '20260713-1200', avec ou sans suffixe '-AB3D'
+// (les leads d'avant le suffixe aléatoire restent en base : les deux formats coexistent).
+export const normId = (s) => { const v = String(s || '').trim().toUpperCase(); return v.startsWith('LEAD-') ? v : (/^\d{8}-\d{4}(-[A-Z0-9]{4})?$/.test(v) ? `LEAD-${v}` : null); };
 const STATUS_EMOJI = { nouveau: '🆕', briefs_en_cours: '⏳', briefs_qc: '📋', briefs_generes: '✅', apercu_envoye: '📄', proposition_envoyee: '📧', signe: '✍️', briefs_echec: '❌' };
 
 export function registerCommands(bot) {
@@ -97,6 +98,20 @@ export function registerCommands(bot) {
     enqueue({ name: 'w4:brief', leadId: id, run: () => runW4({ leadId: id }) });
   });
 
+  // /note LEAD-xxx <directives> — directives libres de l'opérateur, injectées en priorité dans les
+  // générations suivantes (briefs W2 et proposition W3). Vide = effacer. Le levier « sur mesure ».
+  bot.command('note', (ctx) => {
+    const [idRaw, ...rest] = String(ctx.match || '').trim().split(/\s+/);
+    const id = normId(idRaw);
+    const note = rest.join(' ').trim();
+    if (!id) return md(ctx, 'Usage : `/note LEAD-xxx <directives libres>` (sans texte : efface la note)');
+    if (!db.getLead(id)) return md(ctx, `⚠️ Lead introuvable : ${id}`);
+    db.setLeadFields(id, { note_operateur: note || null });
+    return md(ctx, note
+      ? `📝 Note enregistrée pour ${id}. Elle guidera les prochaines générations (briefs et proposition) :\n_${note.slice(0, 300)}_`
+      : `📝 Note effacée pour ${id}.`);
+  });
+
   // /testlead <secteur> — crée un lead de test (comme l'arrivée d'un formulaire), pour tester le flux.
   bot.command('testlead', (ctx) => {
     const secteur = String(ctx.match || '').trim() || 'coach sportif';
@@ -114,7 +129,7 @@ export function registerCommands(bot) {
     const t = ctx.message.text.trim();
     const m = t.match(/^([1-3])\s+(\d+)\s*(M)?$/i);
     const parent = ctx.message.reply_to_message?.text || '';
-    const leadMatch = parent.match(/LEAD-\d{8}-\d{4}/);
+    const leadMatch = parent.match(/LEAD-\d{8}-\d{4}(?:-[A-Z0-9]{4})?/);
     if (m && leadMatch) return runProp(ctx, [leadMatch[0], m[1], m[2], m[3]], md);
     return next();
   });

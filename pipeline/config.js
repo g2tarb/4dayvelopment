@@ -36,7 +36,9 @@ const rand4 = () => Math.random().toString(36).toUpperCase().replace(/[^A-Z0-9]/
 
 export function newLeadId() {
   const s = stamp();
-  return `LEAD-${s.ymd}-${s.hm}`; // leadShort = ymd-hm (8+4 chiffres)
+  // Suffixe aléatoire obligatoire : l'ID est PRIMARY KEY, deux leads dans la même
+  // minute collisionnaient (insert en échec = lead perdu pour le pipeline).
+  return `LEAD-${s.ymd}-${s.hm}-${rand4()}`; // leadShort = ymd-hm-XXXX
 }
 
 export function newRunId() {

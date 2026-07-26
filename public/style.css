@@ -403,6 +403,7 @@ nav.scrolled {
   line-height: 1.05;
   letter-spacing: -2px;
   margin-bottom: 24px;
+  overflow-wrap: break-word; /* évite le débordement des titres longs en mobile (ex. "professionnel" à 375px) */
 }
 
 /* Gradient text global */
@@ -430,6 +431,17 @@ nav.scrolled {
   margin-bottom: 40px;
   line-height: 1.75;
 }
+
+/* Pages internes (services, blog, portfolio, legal) : le contenu hero est dans
+   .container. On le centre explicitement pour que les blocs a max-width
+   (hero-desc, etc.) restent parfaitement au milieu et non decales a gauche. */
+.hero > .container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hero > .container > * { max-width: 100%; }
+.hero > .container .breadcrumb { align-self: flex-start; } /* fil d'Ariane garde a gauche (articles) */
 
 /* Hero actions */
 .hero-actions {
@@ -658,6 +670,11 @@ nav.scrolled {
 @keyframes scroll-bounce {
   0%,100%{opacity:1;transform:translateY(0)}
   50%{opacity:0.3;transform:translateY(12px)}
+}
+@media (max-height: 900px) {
+  /* Sur les hauteurs de viewport courtes/moyennes, le hero n'a pas assez de
+     marge sous le contenu centre : l'indicateur chevauche la ligne avis/etoiles. */
+  .scroll-indicator { display: none; }
 }
 
 /* ── LOGOS TICKER ──────────────────────────────────────────── */
@@ -1040,8 +1057,8 @@ section { padding: 100px 24px; }
 /* ── PRICING ───────────────────────────────────────────────── */
 .pricing-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
   margin-top: 60px;
   align-items: start;
 }
@@ -1104,6 +1121,35 @@ section { padding: 100px 24px; }
   font-size: 12px;
   color: var(--muted);
   margin-top: 4px;
+}
+.plan-wp-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 16px 0 20px;
+  padding: 10px 14px;
+  background: rgba(136,64,131,0.10);
+  border: 1px solid rgba(136,64,131,0.28);
+  border-radius: var(--radius);
+}
+.plan-wp-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.plan-wp-price {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  white-space: nowrap;
+}
+.plan-wp-price em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent2);
 }
 .plan-desc {
   color: var(--muted);
@@ -1168,6 +1214,82 @@ section { padding: 100px 24px; }
 .btn-plan-filled:hover {
   box-shadow: 0 8px 36px rgba(218,84,38,0.55);
   transform: translateY(-2px);
+}
+
+/* WordPress delivery option band */
+.wp-option-band {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  margin-top: 32px;
+  padding: 32px;
+  background: rgba(136,64,131,0.07);
+  border: 1px solid rgba(136,64,131,0.25);
+  border-radius: var(--radius-lg);
+}
+.wp-option-icon {
+  flex: 0 0 auto;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #884083, #f2b13b);
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.wp-option-content { flex: 1 1 auto; min-width: 0; }
+.wp-option-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+.wp-option-text {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+.wp-option-prices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.wp-option-price-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 10px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.wp-option-price-item span {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.wp-option-price-item strong {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  color: var(--text);
+}
+.wp-option-note {
+  font-size: 12px;
+  color: var(--muted);
+}
+.wp-option-note strong { color: var(--accent2); }
+
+@media (max-width: 600px) {
+  .wp-option-band { flex-direction: column; padding: 24px; }
 }
 
 /* Guarantees */
@@ -1759,7 +1881,8 @@ footer {
   color: var(--accent2);
   background: rgba(218,84,38,0.08);
 }
-.footer-links-group h4 {
+.footer-links-group h4,
+.footer-links-group .footer-col-h {
   font-size: 12px;
   font-weight: 700;
   color: var(--muted);
@@ -1992,7 +2115,7 @@ footer {
 
   .services-grid { grid-template-columns: repeat(2, 1fr); }
 
-  .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
   .pricing-card { padding: 32px 28px; }
   .plan-price { font-size: 3rem; }
 
@@ -2152,7 +2275,7 @@ footer {
     background: var(--border);
   }
   /* 1st sep = vertical col */
-  .stat-sep:nth-child(2) { width: 1px; height: 100%; grid-row: 1; }
+  .stat-sep:nth-child(2) { width: 1px; height: 100%; grid-row: 1; grid-column: 2; }
   /* 2nd sep = horizontal row */
   .stat-sep:nth-child(4) {
     display: block;
@@ -2160,7 +2283,7 @@ footer {
     width: 100%; height: 1px;
   }
   /* 3rd sep = vertical col 2nd row */
-  .stat-sep:nth-child(6) { width: 1px; height: 100%; grid-row: 3; }
+  .stat-sep:nth-child(6) { width: 1px; height: 100%; grid-row: 3; grid-column: 2; }
 
   /* Social proof */
   .hero-proof { gap: 12px; }
@@ -2301,7 +2424,7 @@ footer {
   }
   .footer-brand .logo-img { height: clamp(56px, 9vw, 78px); }
   .footer-brand p { font-size: 13px; }
-  .footer-links-group h4 { font-size: 11px; margin-bottom: 14px; }
+  .footer-links-group h4, .footer-links-group .footer-col-h { font-size: 11px; margin-bottom: 14px; }
   .footer-links-group a { font-size: 13px; }
   .footer-bottom {
     flex-direction: column;

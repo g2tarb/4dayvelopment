@@ -100,8 +100,9 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
 
   try {
     const secteur = String(lead.secteur || '').slice(0, 400);
-    const message = String(lead.message || '').slice(0, 800);
+    const message = String(lead.message || '').slice(0, 4000); // plafond anti-coût, assez large pour les briefs riches
     const resume = String(lead.resume_ia || '');
+    const note = String(lead.note_operateur || '').slice(0, 1500);
 
     /* 1. Recherche concurrents (Perplexity sonar-pro) */
     const concPrompt = `Tu es analyste concurrentiel pour une agence web premium francaise. Recherche sur le web, cite des sources reelles avec URLs.\n\nSecteur du prospect: ${secteur}\nZone: France\nCe qu'il vend: ${message}\n\nRapporte, factuel et source: 1) 4 a 6 concurrents ou references reelles et actuelles du secteur en France (noms reels + URL). Pour chacun, ce que fait BIEN leur site. 2) Les sections types des meilleurs sites du secteur. 3) Les elements de reassurance recurrents. 4) Ce qu'il faut EVITER. Cite les URLs. Reponds en francais, dense.`;
@@ -156,14 +157,15 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
 
     /* 7A. Directeur Artistique (OpenRouter gpt-5.6-terra-pro) : 3 univers visuels, pas de HTML */
     const schemaDA = '{"directions":[{"direction_id":"D1","territory_id":"T1","nom":"nom court et memorable de l\'univers","philosophie":"principe directeur en 1-2 phrases","polices":{"titres":"Police Google Fonts nommee precisement","corps":"Police Google Fonts nommee precisement"},"palette":{"primaire":"#RRGGBB","secondaire":"#RRGGBB","accent":"#RRGGBB","fond":"#RRGGBB","texte":"#RRGGBB"},"style_layout":"principe de mise en page et de grille","framer_inspirations":["site ou studio reel 1","2"],"ambiance":"atmosphere sensorielle en quelques mots","regles_css":["regle non negociable 1","2","3"],"interdits":["a eviter 1","2"]}]}';
-    const daPrompt = `Tu es Directeur Artistique senior pour une agence web premium francaise (niveau Awwwards/FWA). Tu definis 3 UNIVERS VISUELS distincts pour un site premium, sans coder ni ecrire de contenu : seulement le systeme de direction artistique (typo, couleurs, ambiance, layout, inspirations).\n\nOBJECTIF: 3 partis-pris forts et desirables, chacun avec une signature propre. Refuse les choix par defaut: pas de police Inter/Roboto "par securite", pas de bleu SaaS generique, pas de layout template. Choisis des typographies a caractere (Google Fonts nommees precisement), des couleurs osees mais justes (hex exacts), un style de mise en page memorable.\n\nINVARIANTS:\n- EXACTEMENT 3 univers. Les 3 "ambiance" sont clairement distinctes.\n- Si le dossier fournit des territoires, ancre chaque univers sur l'un d'eux (idealement un different par univers). Sinon ancre-toi sur le secteur et la recherche.\n- regles_css: 3 a 5 regles non negociables et concretes pour le developpeur.\n- interdits: 2 a 4 choses explicitement a eviter pour CET univers.\n- Zero tiret cadratin (—), zero mention d'IA, zero emoji.\n\n=== BRIEF CLIENT (brut) ===\nSecteur: ${secteur}\nDemande: ${message}\nResume: ${resume}\nSecteur normalise: ${sectorNormalized}\n\n=== DOSSIER SECTORIEL (territoires prouves) ===\n${JSON.stringify(dossier.territories)}\n\n=== ANALYSE DEMANDE ===\n${JSON.stringify(analyse)}\n\nReponds UNIQUEMENT en JSON valide, sans texte autour, sans fences, structure exacte:\n${schemaDA}`;
+    const notePrompt = note ? `\n=== DIRECTIVES DE L'OPERATEUR (prioritaires sur tout le reste) ===\n${note}\n` : '';
+    const daPrompt = `Tu es Directeur Artistique senior pour une agence web premium francaise (niveau Awwwards/FWA). Tu definis 3 UNIVERS VISUELS distincts pour un site premium, sans coder ni ecrire de contenu : seulement le systeme de direction artistique (typo, couleurs, ambiance, layout, inspirations).\n\nOBJECTIF: 3 partis-pris forts et desirables, chacun avec une signature propre. Refuse les choix par defaut: pas de police Inter/Roboto "par securite", pas de bleu SaaS generique, pas de layout template. Choisis des typographies a caractere (Google Fonts nommees precisement), des couleurs osees mais justes (hex exacts), un style de mise en page memorable.\n\nINVARIANTS:\n- EXACTEMENT 3 univers. Les 3 "ambiance" sont clairement distinctes.\n- Si le dossier fournit des territoires, ancre chaque univers sur l'un d'eux (idealement un different par univers). Sinon ancre-toi sur le secteur et la recherche.\n- regles_css: 3 a 5 regles non negociables et concretes pour le developpeur.\n- interdits: 2 a 4 choses explicitement a eviter pour CET univers.\n- Zero tiret cadratin (—), zero mention d'IA, zero emoji.\n\n=== BRIEF CLIENT (brut) ===\nSecteur: ${secteur}\nDemande: ${message}\nResume: ${resume}\nSecteur normalise: ${sectorNormalized}\n${notePrompt}\n=== DOSSIER SECTORIEL (territoires prouves) ===\n${JSON.stringify(dossier.territories)}\n\n=== ANALYSE DEMANDE ===\n${JSON.stringify(analyse)}\n\nReponds UNIQUEMENT en JSON valide, sans texte autour, sans fences, structure exacte:\n${schemaDA}`;
     const daRes = await openrouter({ model: 'openai/gpt-5.6-terra-pro', messages: [{ role: 'user', content: daPrompt }], max_tokens: 3000, temperature: 0.9, response_format: { type: 'json_object' } });
     acc('openrouter_da', daRes.usage);
     const daParsed = parseJson(daRes.content);
     const directions = Array.isArray(daParsed.directions) ? daParsed.directions : [];
     if (directions.length !== 3) throw new GateError('da', `le DA a renvoyé ${directions.length} univers au lieu de 3`);
     warnings.push(...structureGate(directions, dossier));
-    warnings.push(...lintGate(directions)); // corrige les tirets en place, signale les mentions IA
+    warnings.push(...lintGate(directions)); // corrige les tirets en place, signale les mentions IA/tells IA
 
     /* 7A-bis. Critique (OpenRouter) + gate diversité — réutilise diversiteGate telle quelle */
     const critDirs = directions.map((d) => ({ direction_id: d.direction_id, territory_id: d.territory_id, nom: d.nom, philosophie: d.philosophie, palette: d.palette, style_layout: d.style_layout, ambiance: d.ambiance }));
@@ -178,7 +180,7 @@ export async function runW2({ leadId, mode = 'normal', force = false, parentRunI
     db.updateRun(runId, { briefs_json: JSON.stringify(directions), scores_json: JSON.stringify(critic), critic_verdict: verdict });
 
     /* 7B. Lead Developer (OpenRouter z-ai/glm-5.2) : code chaque univers en HTML complet, en parallèle */
-    const devPrompt = (direction) => `Tu es Lead Developer front-end senior. Tu recois un UNIVERS VISUEL defini par un Directeur Artistique. Ta mission: coder une page HTML COMPLETE, autonome, prete a etre ouverte dans un navigateur, qui incarne cet univers pour ce client.\n\nCONTRAINTES TECHNIQUES (obligatoires):\n- Un seul fichier HTML autonome. Tailwind CSS via CDN (<script src="https://cdn.tailwindcss.com"></script>).\n- Polices via Google Fonts (<link> dans le <head>), celles de l'univers (ou meilleures, voir plus bas).\n- ZERO JavaScript personnalise (aucun <script> hors CDN Tailwind). Rendu statique.\n- Contenu realiste pour ce client, pas de lorem ipsum, pas de placeholder.\n- Zero tiret cadratin, zero emoji, zero mention d'IA.\n- Images: URLs Unsplash pertinentes au secteur, jamais de <img> cassee.\n\nLIBERTE CREATIVE: si le concept du DA te semble trop generique ou trop proche des deux autres univers, tu as le droit de le faire evoluer. Dans tous les cas, commence ta reponse par UNE ligne:\n<!-- NOTE_DEV: [ta raison de deviation, ou "j'ai suivi le concept du DA"] -->\npuis directement <!DOCTYPE html>.\n\n=== UNIVERS VISUEL A CODER ===\n${JSON.stringify(direction)}\n\n=== CONTEXTE CLIENT ===\nSecteur: ${secteur}\nDemande: ${message}\nResume: ${resume}\n\nReponds avec la note NOTE_DEV puis le document HTML complet, rien d'autre.`;
+    const devPrompt = (direction) => `Tu es Lead Developer front-end senior. Tu recois un UNIVERS VISUEL defini par un Directeur Artistique. Ta mission: coder une page HTML COMPLETE, autonome, prete a etre ouverte dans un navigateur, qui incarne cet univers pour ce client.\n\nCONTRAINTES TECHNIQUES (obligatoires):\n- Un seul fichier HTML autonome. Tailwind CSS via CDN (<script src="https://cdn.tailwindcss.com"></script>).\n- Polices via Google Fonts (<link> dans le <head>), celles de l'univers (ou meilleures, voir plus bas).\n- ZERO JavaScript personnalise (aucun <script> hors CDN Tailwind). Rendu statique.\n- Contenu realiste pour ce client, pas de lorem ipsum, pas de placeholder.\n- Zero tiret cadratin, zero emoji, zero mention ou tournure d'IA (seamless, sublimer, elever votre, revolutionner, propulser votre, n'hesitez pas, dans un monde ou, elevate your, exclamations marketing).\n- Images: URLs Unsplash pertinentes au secteur, jamais de <img> cassee.\n\nLIBERTE CREATIVE: si le concept du DA te semble trop generique ou trop proche des deux autres univers, tu as le droit de le faire evoluer. Dans tous les cas, commence ta reponse par UNE ligne:\n<!-- NOTE_DEV: [ta raison de deviation, ou "j'ai suivi le concept du DA"] -->\npuis directement <!DOCTYPE html>.\n\n=== UNIVERS VISUEL A CODER ===\n${JSON.stringify(direction)}\n\n=== CONTEXTE CLIENT ===\nSecteur: ${secteur}\nDemande: ${message}\nResume: ${resume}\n${notePrompt}\nReponds avec la note NOTE_DEV puis le document HTML complet, rien d'autre.`;
     const devResults = await Promise.all(directions.map(async (direction, i) => {
       const res = await openrouter({ model: 'z-ai/glm-5.2', messages: [{ role: 'user', content: devPrompt(direction) }], max_tokens: 8000, temperature: 0.5 });
       acc(`openrouter_glm_dev_${i + 1}`, res.usage);
@@ -260,7 +262,9 @@ export function structureGate(directions, dossier) {
 
 const EMDASH = /[—–]/g;
 const AI_PATTERNS = [/\bIA\b/i, /intelligence artificielle/i, /chatgpt/i, /\bgpt-?\d/i, /\bclaude\b/i, /anthropic/i, /openai/i, /\bLLM\b/i];
-// Corrige les tirets cadratins EN PLACE (remplace par ", ") et signale les mentions d'IA, sur les
+// Tournures d'IA reconnaissables (FR + EN) : signalées en avertissement, jamais bloquantes.
+const AI_TELLS = [/\bseamless\b/i, /sans couture/i, /sublimer/i, /élever votre/i, /elever votre/i, /révolutionn/i, /revolutionn/i, /propulser votre/i, /n'hésitez pas/i, /n'hesitez pas/i, /dans un monde où/i, /dans un monde ou/i, /elevate your/i];
+// Corrige les tirets cadratins EN PLACE (remplace par ", ") et signale les mentions/tells d'IA, sur les
 // univers visuels DA (texte JSON, pas le HTML — voir lintHtml plus bas pour le HTML du Dev).
 export function lintGate(directions) {
   const FIELDS = ['nom', 'philosophie', 'style_layout', 'ambiance'];
@@ -273,6 +277,7 @@ export function lintGate(directions) {
       let v = String(d[f]);
       if (EMDASH.test(v)) { v = v.replace(EMDASH, ', '); d[f] = v; }
       if (AI_PATTERNS.some((p) => p.test(v))) warnings.push(`${id}_${f}_mention_ia`);
+      if (AI_TELLS.some((p) => p.test(v))) warnings.push(`${id}_${f}_tell_ia`);
     });
     LIST_FIELDS.forEach((f) => {
       if (Array.isArray(d[f])) d[f] = d[f].map((item) => String(item).replace(EMDASH, ', '));
@@ -302,7 +307,9 @@ export function extractHtmlAndNote(raw, directionId = '?') {
 // de faux positif probable dans un <script>/attribut ; à affiner seulement si un cas réel apparaît.
 export function lintHtml(html) {
   const out = String(html || '').replace(EMDASH, ', ');
-  const warnings = AI_PATTERNS.some((p) => p.test(out)) ? ['html_mention_ia'] : [];
+  const warnings = [];
+  if (AI_PATTERNS.some((p) => p.test(out))) warnings.push('html_mention_ia');
+  if (AI_TELLS.some((p) => p.test(out))) warnings.push('html_tell_ia');
   return { html: out, warnings };
 }
 

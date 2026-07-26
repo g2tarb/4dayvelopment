@@ -17,7 +17,10 @@ const fs   = require('fs');
 const path = require('path');
 
 const LEADS_FILE = path.join(__dirname, '..', 'data', 'leads.json');
-const WEBHOOK    = process.env.N8N_WEBHOOK_URL;
+// Cible : pipeline en priorité (avec token), fallback n8n si la bascule n'est pas faite.
+const WEBHOOK    = process.env.PIPELINE_INTAKE_URL || process.env.N8N_WEBHOOK_URL;
+const IS_PIPELINE = Boolean(process.env.PIPELINE_INTAKE_URL);
+const SENT_KEY   = IS_PIPELINE ? 'pipelineSentAt' : 'n8nSentAt';
 
 const ALL = process.argv.includes('--all');
 const DRY = process.argv.includes('--dry');
@@ -33,7 +36,7 @@ async function main() {
   }
 
   const leads = JSON.parse(fs.readFileSync(LEADS_FILE, 'utf-8'));
-  const pending = ALL ? leads : leads.filter(l => !l.n8nSentAt);
+  const pending = ALL ? leads : leads.filter(l => !l[SENT_KEY]);
 
   console.log(`→ ${leads.length} lead(s) au total, ${pending.length} à envoyer vers N8n.`);
   if (DRY) console.log('  (mode --dry : aucune requête réelle)\n');
@@ -51,11 +54,14 @@ async function main() {
     try {
       const res = await fetch(WEBHOOK, {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(IS_PIPELINE && process.env.PIPELINE_INTAKE_TOKEN ? { 'x-pipeline-token': process.env.PIPELINE_INTAKE_TOKEN } : {}),
+        },
         body:    JSON.stringify(lead),
       });
       if (res.ok) {
-        lead.n8nSentAt = new Date().toISOString();
+        lead[SENT_KEY] = new Date().toISOString();
         ok++;
         console.log(`  ✓ ${label} → HTTP ${res.status}`);
       } else {

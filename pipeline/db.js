@@ -32,7 +32,8 @@ db.exec(`
     html_prop     TEXT,
     mockups_html       TEXT,                   -- JSON: 3 HTML générés (étape 7B)
     mockups_meta       TEXT,                   -- JSON: 3 univers DA + devNote (étape 7A/7B)
-    chosen_mockup_html TEXT                    -- HTML de la direction choisie via bouton Telegram
+    chosen_mockup_html TEXT,                   -- HTML de la direction choisie via bouton Telegram
+    note_operateur     TEXT                    -- directives libres, injectées dans les générations (W2/W3)
   );
 
   CREATE TABLE IF NOT EXISTS runs (
@@ -67,6 +68,7 @@ function ensureColumn(table, column, ddl) {
 ensureColumn('leads', 'mockups_html', 'TEXT');
 ensureColumn('leads', 'mockups_meta', 'TEXT');
 ensureColumn('leads', 'chosen_mockup_html', 'TEXT');
+ensureColumn('leads', 'note_operateur', 'TEXT');
 
 const now = () => new Date().toISOString();
 
@@ -216,11 +218,12 @@ export function markRunFailed(runId, stage, message) {
   updateRun(runId, { status: `echec_${stage}`, error_stage: stage, error_message: String(message).slice(0, 500), completed_at: now() });
 }
 
-// Regen : compte les runs déclenchés aujourd'hui pour ce lead (cooldown/quota, ex-n8n MAX_REGEN_PER_DAY).
-export function countRunsToday(leadId) {
-  const since = new Date(); since.setHours(0, 0, 0, 0);
+// Regen : compte les runs des dernières 24 h pour ce lead (quota, ex-n8n MAX_REGEN_PER_DAY).
+// Fenêtre glissante : indépendante du fuseau du serveur, pas de burst à cheval sur minuit.
+export function countRunsLast24h(leadId) {
+  const since = new Date(Date.now() - 86400000).toISOString();
   return db.prepare('SELECT COUNT(*) n FROM runs WHERE lead_id = ? AND created_at >= ?')
-    .get(leadId, since.toISOString()).n;
+    .get(leadId, since).n;
 }
 
 // Reprise après crash : leads coincés dans une étape en cours sans run terminé.

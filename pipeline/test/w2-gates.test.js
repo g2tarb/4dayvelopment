@@ -60,12 +60,21 @@ test('extractHtmlAndNote : extrait la note et le HTML, lève GateError si invali
   assert.throws(() => w2.extractHtmlAndNote('texte sans balises html', 'D1'), w2.GateError);
 });
 
-test('lintHtml : scrub les tirets cadratins, signale les mentions IA (ne jette pas)', () => {
+test('lintHtml : scrub les tirets cadratins, signale les mentions/tells d\'IA (ne jette pas)', () => {
   const r = w2.lintHtml('<p>un site — sur mesure</p>');
   assert.equal(r.html, '<p>un site ,  sur mesure</p>');
   assert.deepEqual(r.warnings, []);
   const r2 = w2.lintHtml('<p>genere par ChatGPT</p>');
   assert.ok(r2.warnings.includes('html_mention_ia'));
+  const r3 = w2.lintHtml('<p>nous allons sublimer votre image</p>');
+  assert.ok(r3.warnings.includes('html_tell_ia'));
+});
+
+test('lintGate : signale les tournures IA françaises (tell_ia)', () => {
+  const b = { direction_id: 'D1', philosophie: 'Nous allons sublimer votre image et propulser votre marque' };
+  const w = w2.lintGate([b]);
+  assert.ok(w.some((x) => x.includes('tell_ia')), 'tell français détecté');
+  assert.deepEqual(w2.lintGate([{ direction_id: 'D2', philosophie: 'Un studio sobre, précis, incarné.' }]), [], 'texte sain non signalé');
 });
 
 test('diversiteGate : renvoie {verdict, warnings}, ne jette jamais', () => {
