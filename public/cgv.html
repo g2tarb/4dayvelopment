@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Conditions Generales de Vente | 4dayvelopment</title>
   <meta name="description" content="Conditions generales de vente de 4dayvelopment. Tarifs, modalites de paiement, delais de livraison, garanties et droit de retractation pour nos services de creation web.">
   <meta name="robots" content="noindex, follow">
@@ -15,9 +15,8 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.json">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/syne-var.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-var.woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -25,7 +24,7 @@
   <!-- NAV -->
   <nav id="navbar">
     <a href="/" class="nav-logo">
-      <img src="/logo/logo4day.png" alt="4dayvelopment, agence web Paris, sites livres en 4 jours" class="logo-img" width="160" height="40">
+      <img src="/logo/logo4day.webp" alt="4dayvelopment, agence web Paris, sites livres en 4 jours" class="logo-img" width="240" height="240">
     </a>
     <ul class="nav-links">
       <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
@@ -113,13 +112,11 @@
 
       <p style="margin-top:12px;">Le delai de livraison est garanti contractuellement. Il peut etre prolonge en cas de retard dans la transmission des contenus par le client ou de demandes de modifications majeures en cours de realisation.</p>
 
-      <h2 style="color:#e8e8e8;font-size:1.4rem;margin-top:36px;margin-bottom:12px;font-weight:700;">6. Garantie de livraison</h2>
+      <h2 style="color:#e8e8e8;font-size:1.4rem;margin-top:36px;margin-bottom:12px;font-weight:700;">6. Engagement de livraison</h2>
 
-      <p>4dayvelopment s'engage a livrer le site dans le delai de <strong style="color:#e8e8e8;">4 jours ouvres</strong> prevu a l'article 5.</p>
+      <p>4dayvelopment s'engage a livrer le site dans le delai de <strong style="color:#e8e8e8;">4 jours ouvres</strong> prevu a l'article 5. Ce delai figure au devis et constitue un engagement contractuel de 4dayvelopment.</p>
 
-      <p style="margin-top:12px;">En cas de non-respect de ce delai imputable a 4dayvelopment (hors retard du client dans la fourniture des contenus ou demandes de modifications majeures), le client beneficie d'un <strong style="color:#e8e8e8;">remboursement integral</strong> des sommes versees.</p>
-
-      <p style="margin-top:12px;">Cette garantie constitue un engagement central de 4dayvelopment envers ses clients.</p>
+      <p style="margin-top:12px;">En cas de retard imputable a 4dayvelopment (hors retard du client dans la fourniture des contenus ou demandes de modifications majeures), le client en est informe sans delai et une nouvelle date de livraison lui est communiquee.</p>
 
       <h2 style="color:#e8e8e8;font-size:1.4rem;margin-top:36px;margin-bottom:12px;font-weight:700;">7. Revisions et modifications</h2>
 
@@ -213,9 +210,9 @@
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="/" class="footer-logo">
-          <img src="/logo/logo4day.png" alt="4dayvelopment" class="logo-img" width="160" height="40">
+          <img src="/logo/logo4day.webp" alt="4dayvelopment" class="logo-img" width="240" height="240">
         </a>
-        <p>Un site qui vend, livre en 4 jours.<br>Garanti ou c'est gratuit.</p>
+        <p>Un site qui vend, livre en 4 jours.</p>
       </div>
       <div class="footer-links-group">
         <h4>Services</h4>
@@ -251,8 +248,6 @@
       </ul>
     </div>
   </footer>
-
-  <script src="/js/vendor/three-loader.js" defer></script>
   <script type="module" src="/js/main.js"></script>
 
 </body>

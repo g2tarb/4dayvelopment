@@ -1,7 +1,7 @@
 {
   "name": "4dayvelopment, agence web",
   "short_name": "4dayvelopment",
-  "description": "Création de sites internet livrés en 4 jours. Garanti ou remboursé.",
+  "description": "Création de sites internet livrés en 4 jours. Sur-mesure, codé à la main.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#080808",

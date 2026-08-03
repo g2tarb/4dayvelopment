@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Devis gratuit création de site web | 4dayvelopment</title>
   <meta name="description" content="Décrivez votre projet web et recevez un devis personnalisé gratuit sous 24h. Site vitrine, e-commerce, application web. Livraison en 4 jours garantie.">
   <meta name="robots" content="index, follow">
@@ -24,9 +24,12 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.json">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/syne-var.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-var.woff2" crossorigin>
+  <style>
+    @font-face { font-family: 'Syne'; font-style: normal; font-weight: 400 800; font-display: swap; src: url('/fonts/syne-var.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300 700; font-display: swap; src: url('/fonts/inter-var.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  </style>
 
   <style>
     /* ── Reset & Variables ── */
@@ -774,7 +777,7 @@
   <!-- ── Header ── -->
   <header class="lead-header">
     <a href="/" class="lead-logo">
-      <img src="logo/logo4day.webp" alt="4dayvelopment" width="160" height="40">
+      <img src="logo/logo4day.webp" alt="4dayvelopment" width="240" height="240">
     </a>
     <div class="lead-header-right">
       <button id="lang-btn" class="lang-btn-ext" type="button">🇬🇧 EN</button>

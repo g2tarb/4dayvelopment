@@ -1,7 +1,7 @@
 # CLAUDE.md — 4dayvelopment
 
 Site vitrine d'agence web. HTML statique servi par Express (`server.js`) depuis `public/`.
-Stack : vanilla JS + Three.js (fond décoratif uniquement). Contact via Nodemailer + webhook n8n.
+Stack : vanilla JS + fond WebGL maison (`public/js/modules/gl-bg.js`, zéro dépendance — ne pas réintroduire Three.js). Fonts variables auto-hébergées dans `public/fonts/` (Syne + Inter, pas de Google Fonts). Contact via Nodemailer + webhook n8n.
 Blog publié dynamiquement via `POST /api/blog/publish` (template `buildArticleHTML`).
 
 ## SEO 4DV
