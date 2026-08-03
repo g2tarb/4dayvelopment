@@ -3,6 +3,9 @@
 Site vitrine d'agence web. HTML statique servi par Express (`server.js`) depuis `public/`.
 Stack : vanilla JS + fond WebGL maison (`public/js/modules/gl-bg.js`, zéro dépendance — ne pas réintroduire Three.js). Fonts variables auto-hébergées dans `public/fonts/` (Syne + Inter, pas de Google Fonts). Contact via Nodemailer + webhook n8n.
 Blog publié dynamiquement via `POST /api/blog/publish` (template `buildArticleHTML`).
+Page portfolio remplacée par `/exemples` (301 depuis /portfolio) : 6 démos métier autonomes
+dans `public/exemples/` (JS externe obligatoire — la CSP interdit le script inline), montrées
+sur la home dans un mockup iPhone (section `#exemples`, module `js/modules/demos.js`).
 
 ## SEO 4DV
 

@@ -156,5 +156,17 @@
   "exit-cta": "🎯 Get my free audit",
   "exit-close": "No thanks, I'll manage on my own",
   "fcta-call": "Book a call",
-  "btn-loader": "Sending..."
+  "btn-loader": "Sending...",
+  "ex-tag": "Examples",
+  "ex-title": "And for <em class=\"gradient-text\">your business</em>,<br>what would it look like?",
+  "ex-sub": "Pick your line of work and try a real example site, live, just like your future clients would see it.",
+  "ex-chip-burger": "Food",
+  "ex-chip-ongles": "Beauty",
+  "ex-chip-borne": "EV charging",
+  "ex-chip-coach": "Fitness coach",
+  "ex-chip-barbier": "Barber",
+  "ex-chip-plombier": "Plumber",
+  "ex-open": "Open full screen ↗",
+  "ex-cta": "I want mine",
+  "ex-all": "All examples"
 }

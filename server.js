@@ -157,7 +157,7 @@ app.use(helmet({
       fontSrc:     ["'self'"],
       imgSrc:      ["'self'", 'data:', 'blob:'],
       connectSrc:  ["'self'", 'https://n8n.srv1263084.hstgr.cloud'],
-      frameSrc:    ["'none'"],
+      frameSrc:    ["'self'"],
       objectSrc:   ["'none'"],
       upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
     },
@@ -490,7 +490,7 @@ function buildArticleHTML(data) {
       <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
       <li><a href="https://4dayvelopment.fr/services/e-commerce">E-commerce</a></li>
       <li><a href="https://4dayvelopment.fr/services/referencement-seo">SEO</a></li>
-      <li><a href="https://4dayvelopment.fr/portfolio">Portfolio</a></li>
+      <li><a href="https://4dayvelopment.fr/exemples">Exemples</a></li>
       <li><a href="https://4dayvelopment.fr/#tarifs">Tarifs</a></li>
       <li><a href="https://4dayvelopment.fr/blog" class="active">Blog</a></li>
     </ul>
@@ -729,7 +729,7 @@ const cleanPages = {
   '/services/e-commerce':    'services/e-commerce.html',
   '/services/referencement-seo': 'services/referencement-seo.html',
   '/services/site-internet-restaurant': 'services/site-internet-restaurant.html',
-  '/portfolio':       'portfolio.html',
+  '/exemples':        'exemples/index.html',
   '/mentions-legales': 'mentions-legales.html',
   '/confidentialite': 'confidentialite.html',
   '/cgv':            'cgv.html',
@@ -748,6 +748,16 @@ for (const [route, file] of Object.entries(cleanPages)) {
     }
   });
 }
+
+/* ── Exemples : redirection de l'ancien portfolio + démos par métier ── */
+app.get('/portfolio', (req, res) => res.redirect(301, '/exemples'));
+app.get('/exemples/:slug', (req, res, next) => {
+  const { slug } = req.params;
+  if (!/^[a-z0-9-]+$/.test(slug)) return next();
+  const filePath = path.join(__dirname, 'public', 'exemples', `${slug}.html`);
+  if (fs.existsSync(filePath)) return res.sendFile(filePath);
+  return next();
+});
 
 /* ── Articles de blog : route propre generique (AVANT le catch-all 404) ── */
 // Sert public/blog/<slug>.html pour tout article (existant ou publie via l'API),

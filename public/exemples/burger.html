@@ -1,0 +1,424 @@
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, follow">
+<title>Gras Double — Burgers artisanaux livrés dans l'Est parisien</title>
+<meta name="description" content="Gras Double, le fast-food burger du 11e. Les mêmes burgers, moins chers, livrés chez toi en 25 minutes. Sans Uber, sans Deliveroo, sans surprise.">
+<style>
+@font-face{font-family:'Syne';src:url('/fonts/syne-var.woff2') format('woff2');font-weight:400 800;font-display:swap}
+@font-face{font-family:'Inter';src:url('/fonts/inter-var.woff2') format('woff2');font-weight:300 700;font-display:swap}
+:root{
+  --noir:#0b0806;--noir2:#14100b;--carte:#181209;--ligne:rgba(242,177,59,.14);
+  --or:#f2b13b;--or2:#ffd479;--brun:#8a5a2b;--sauce:#c93a2b;
+  --creme:#f5ead6;--muted:#b8a98f;
+  --titre:'Syne',-apple-system,'Arial Rounded MT Bold','Avenir Next',sans-serif;
+  --texte:'Inter',-apple-system,'Helvetica Neue',Arial,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+html,body{overflow-x:clip}
+body{
+  background:var(--noir);color:var(--creme);font-family:var(--texte);font-weight:400;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+/* vignettage + grain */
+body::before{
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(120% 90% at 50% 0%,rgba(242,177,59,.06),transparent 55%),
+             radial-gradient(140% 120% at 50% 55%,transparent 40%,rgba(0,0,0,.55) 100%);
+}
+body::after{
+  content:"";position:fixed;inset:-50%;pointer-events:none;z-index:0;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+main,header.nav,footer{position:relative;z-index:1}
+.wrap{max-width:640px;margin:0 auto;padding:0 20px}
+h1,h2,h3{font-family:var(--titre);font-weight:800;line-height:1.12;letter-spacing:-.01em}
+h2{font-size:clamp(26px,7vw,34px);margin-bottom:10px}
+.kicker{font-family:var(--titre);font-weight:700;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--or);margin-bottom:10px}
+.sub{color:var(--muted);max-width:46ch}
+section{padding:64px 0}
+/* ---------- NAV ---------- */
+header.nav{
+  position:sticky;top:0;z-index:10;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  background:rgba(11,8,6,.78);border-bottom:1px solid var(--ligne);
+  padding-top:env(safe-area-inset-top);
+}
+.nav-in{max-width:640px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{font-family:var(--titre);font-weight:800;font-size:20px;color:var(--creme);text-decoration:none;display:flex;align-items:center;gap:8px;min-height:44px}
+.logo em{font-style:normal;color:var(--or)}
+/* ---------- BOUTONS ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:48px;padding:12px 26px;border-radius:999px;border:0;cursor:pointer;
+  font-family:var(--titre);font-weight:700;font-size:16px;text-decoration:none;
+  background:linear-gradient(180deg,var(--or2),var(--or) 55%,#d99a25);color:#231603;
+  box-shadow:0 6px 24px rgba(242,177,59,.28),inset 0 1px 0 rgba(255,255,255,.5);
+  transition:transform .15s ease,box-shadow .15s ease;
+}
+.btn:active{transform:scale(.97)}
+.btn-sm{min-height:44px;padding:9px 20px;font-size:15px}
+.btn-ghost{
+  background:transparent;color:var(--or);border:1.5px solid rgba(242,177,59,.45);box-shadow:none;
+}
+/* ---------- HERO ---------- */
+.hero{padding:44px 0 60px;text-align:center}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:999px;
+  border:1px solid var(--ligne);background:rgba(242,177,59,.07);
+  font-size:13px;font-weight:500;color:var(--or2);letter-spacing:.02em;
+}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--or);box-shadow:0 0 10px var(--or)}
+.hero h1{font-size:clamp(34px,9.4vw,52px);margin:18px 0 12px}
+.hero h1 span{color:var(--or)}
+.hero p.pitch{font-size:17px;color:var(--muted);max-width:34ch;margin:0 auto 8px}
+.hero p.pitch strong{color:var(--creme);font-weight:600}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:24px}
+/* ---------- BURGER CSS ---------- */
+.burger-scene{position:relative;width:min(300px,78vw);margin:38px auto 6px}
+.burger{position:relative;display:flex;flex-direction:column;align-items:center;filter:drop-shadow(0 30px 34px rgba(0,0,0,.65))}
+.burger>div{position:relative;width:100%}
+.bun-top{
+  height:92px;border-radius:150px 150px 26px 26px;z-index:7;
+  background:
+    radial-gradient(9px 5px at 24% 38%,#f7dfae 60%,transparent 62%),
+    radial-gradient(8px 5px at 44% 22%,#f7dfae 60%,transparent 62%),
+    radial-gradient(9px 5px at 65% 34%,#f7dfae 60%,transparent 62%),
+    radial-gradient(8px 5px at 82% 52%,#f7dfae 60%,transparent 62%),
+    radial-gradient(8px 5px at 34% 62%,#f7dfae 60%,transparent 62%),
+    radial-gradient(9px 5px at 56% 55%,#f7dfae 60%,transparent 62%),
+    radial-gradient(8px 5px at 15% 60%,#f7dfae 60%,transparent 62%),
+    radial-gradient(120% 130% at 50% 0%,#f0bf6d 0%,#d99a3f 45%,#b06f24 85%,#94581b 100%);
+  box-shadow:inset 0 -10px 16px rgba(90,45,8,.45),inset 0 8px 14px rgba(255,236,190,.45);
+}
+.salade{
+  height:22px;z-index:6;margin-top:-8px;width:106%!important;left:-3%;
+  background:radial-gradient(14px 16px at 8% 100%,#7fae3c 96%,transparent),
+    radial-gradient(14px 18px at 22% 100%,#95c34a 96%,transparent),
+    radial-gradient(14px 15px at 36% 100%,#6f9c33 96%,transparent),
+    radial-gradient(14px 19px at 50% 100%,#8fbd45 96%,transparent),
+    radial-gradient(14px 15px at 64% 100%,#7fae3c 96%,transparent),
+    radial-gradient(14px 18px at 78% 100%,#95c34a 96%,transparent),
+    radial-gradient(14px 16px at 92% 100%,#6f9c33 96%,transparent),
+    linear-gradient(180deg,#a3cf58,#7fae3c);
+  border-radius:10px 10px 0 0;
+  box-shadow:inset 0 4px 6px rgba(230,255,180,.5),inset 0 -4px 6px rgba(40,70,10,.35);
+}
+.tomate{
+  height:16px;z-index:5;width:96%!important;border-radius:8px;margin-top:-3px;
+  background:linear-gradient(180deg,#e8604c,#c93a2b 55%,#a02417);
+  box-shadow:inset 0 3px 4px rgba(255,190,170,.55),inset 0 -4px 6px rgba(90,10,0,.5);
+}
+.cheddar{
+  height:14px;z-index:4;width:104%!important;left:-2%;margin-top:-2px;border-radius:6px;
+  background:linear-gradient(180deg,#ffcf57,#f5a623 70%,#e08e12);
+  box-shadow:inset 0 2px 3px rgba(255,240,180,.7),inset 0 -3px 4px rgba(150,80,0,.4);
+}
+.cheddar i{
+  position:absolute;top:100%;width:16px;background:linear-gradient(180deg,#f5a623,#e08e12);
+  border-radius:0 0 9px 9px;box-shadow:inset 0 -3px 4px rgba(150,80,0,.35);
+}
+.cheddar i:nth-child(1){left:9%;height:20px}
+.cheddar i:nth-child(2){left:46%;height:28px}
+.cheddar i:nth-child(3){left:80%;height:16px}
+.steak{
+  height:42px;z-index:3;width:99%!important;margin-top:-2px;border-radius:20px;
+  background:
+    radial-gradient(8px 5px at 20% 30%,rgba(30,12,4,.55) 60%,transparent 62%),
+    radial-gradient(9px 5px at 55% 60%,rgba(30,12,4,.5) 60%,transparent 62%),
+    radial-gradient(8px 5px at 80% 35%,rgba(30,12,4,.55) 60%,transparent 62%),
+    radial-gradient(7px 4px at 38% 72%,rgba(30,12,4,.45) 60%,transparent 62%),
+    linear-gradient(180deg,#6f3a1c,#53250e 60%,#3c1808);
+  box-shadow:inset 0 5px 8px rgba(150,90,50,.5),inset 0 -8px 10px rgba(0,0,0,.55);
+}
+.bun-bottom{
+  height:44px;z-index:2;margin-top:-4px;border-radius:14px 14px 60px 60px;
+  background:linear-gradient(180deg,#e8b45f,#c98932 55%,#9c6320);
+  box-shadow:inset 0 6px 8px rgba(255,230,180,.45),inset 0 -10px 12px rgba(80,40,5,.5);
+}
+/* vapeur */
+.steam{position:absolute;left:0;right:0;top:-58px;height:64px;pointer-events:none}
+.steam i{
+  position:absolute;bottom:0;width:9px;height:44px;border-radius:999px;
+  background:linear-gradient(180deg,transparent,rgba(245,234,214,.5));
+  filter:blur(4px);opacity:0;animation:vap 3.2s ease-in-out infinite;
+}
+.steam i:nth-child(1){left:32%;animation-delay:0s}
+.steam i:nth-child(2){left:49%;height:54px;animation-delay:1.1s}
+.steam i:nth-child(3){left:64%;animation-delay:2s}
+@keyframes vap{
+  0%{opacity:0;transform:translateY(12px) scaleY(.6)}
+  35%{opacity:.85}
+  100%{opacity:0;transform:translateY(-26px) scaleY(1.15) translateX(5px)}
+}
+.burger-halo{
+  position:absolute;inset:auto -14% -34px;height:56px;border-radius:50%;
+  background:radial-gradient(50% 100% at 50% 50%,rgba(242,177,59,.32),transparent 70%);
+  filter:blur(8px);z-index:0;
+}
+@media (prefers-reduced-motion:reduce){
+  .steam i{animation:none;opacity:.4}
+  html{scroll-behavior:auto}
+  .reveal{transition:none!important;transform:none!important;opacity:1!important}
+}
+/* ---------- MENU ---------- */
+.menu{background:linear-gradient(180deg,transparent,rgba(242,177,59,.03) 20%,transparent)}
+.grid{display:grid;gap:14px;margin-top:26px}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+.carte{
+  background:linear-gradient(160deg,rgba(242,177,59,.07),rgba(20,14,8,.6) 45%);
+  border:1px solid var(--ligne);border-radius:20px;padding:18px;
+  display:flex;gap:14px;align-items:flex-start;
+}
+.carte .ico{
+  flex:none;width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:26px;
+  background:radial-gradient(120% 120% at 30% 20%,rgba(255,212,121,.35),rgba(138,90,43,.25) 70%);
+  border:1px solid rgba(242,177,59,.25);
+}
+.carte h3{font-size:17px;display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.carte .prix{font-family:var(--titre);font-weight:700;color:var(--or);font-size:16px;white-space:nowrap}
+.carte p{font-size:13.5px;color:var(--muted);margin-top:4px}
+.carte .tag{
+  display:inline-block;margin-top:8px;font-size:11px;font-weight:600;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--sauce);background:rgba(201,58,43,.12);
+  border:1px solid rgba(201,58,43,.3);border-radius:999px;padding:3px 10px;
+}
+/* ---------- ÉTAPES ---------- */
+.etapes{display:grid;gap:14px;margin-top:26px}
+.etape{
+  border:1px solid var(--ligne);border-radius:20px;padding:20px;
+  background:rgba(24,18,9,.55);display:flex;gap:16px;align-items:flex-start;
+}
+.etape .num{
+  flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;
+  font-family:var(--titre);font-weight:800;font-size:18px;color:#231603;
+  background:linear-gradient(180deg,var(--or2),var(--or));
+}
+.etape h3{font-size:17px;margin-bottom:4px}
+.etape p{font-size:14px;color:var(--muted)}
+/* ---------- ZONES ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+.chip{
+  padding:10px 18px;min-height:44px;display:inline-flex;align-items:center;border-radius:999px;
+  border:1px solid var(--ligne);background:rgba(242,177,59,.06);font-size:14px;font-weight:500;
+}
+.chip.hot{border-color:rgba(242,177,59,.5);color:var(--or2)}
+.note{font-size:13px;color:var(--muted);margin-top:14px}
+/* ---------- HORAIRES ---------- */
+.horaires{border:1px solid var(--ligne);border-radius:22px;overflow:hidden;margin-top:24px;background:rgba(24,18,9,.55)}
+.horaires .ligne{display:flex;justify-content:space-between;gap:12px;padding:14px 20px;font-size:14.5px;border-bottom:1px solid rgba(242,177,59,.08)}
+.horaires .ligne:last-child{border-bottom:0}
+.horaires .jour{font-weight:600}
+.horaires .off{color:var(--sauce);font-weight:600}
+.horaires .h{color:var(--muted);text-align:right}
+/* ---------- CTA FINAL ---------- */
+.final{
+  text-align:center;border-radius:26px;padding:44px 24px;margin:0 0 8px;
+  border:1px solid rgba(242,177,59,.25);
+  background:radial-gradient(120% 140% at 50% 0%,rgba(242,177,59,.14),rgba(20,14,8,.7) 60%);
+}
+.final h2{font-size:clamp(26px,7.5vw,34px)}
+.final p{color:var(--muted);margin:8px auto 22px;max-width:38ch}
+/* ---------- FOOTER ---------- */
+footer{border-top:1px solid var(--ligne);padding:26px 0 calc(26px + env(safe-area-inset-bottom));background:rgba(0,0,0,.4)}
+.foot{max-width:640px;margin:0 auto;padding:0 20px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center}
+.foot small{color:var(--muted);font-size:13px}
+/* ---------- TOAST ---------- */
+.toast{
+  position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));z-index:50;
+  transform:translateX(-50%) translateY(20px);opacity:0;pointer-events:none;
+  background:linear-gradient(180deg,#241b0e,#171008);border:1px solid rgba(242,177,59,.45);
+  color:var(--creme);border-radius:999px;padding:13px 22px;font-size:14.5px;font-weight:500;
+  box-shadow:0 12px 34px rgba(0,0,0,.6);white-space:nowrap;max-width:calc(100vw - 32px);
+  transition:transform .3s cubic-bezier(.2,.9,.3,1.2),opacity .3s ease;
+}
+.toast.on{transform:translateX(-50%) translateY(0);opacity:1}
+.toast b{color:var(--or)}
+/* ---------- REVEAL ---------- */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
+.reveal.vu{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="logo" href="#haut">🍔 <span>Gras <em>Double</em></span></a>
+    <button class="btn btn-sm js-demo" type="button">Commander</button>
+  </div>
+</header>
+
+<main id="haut">
+
+  <!-- HERO -->
+  <section class="hero wrap">
+    <span class="badge">Sans Uber, sans Deliveroo, sans surprise</span>
+    <h1>Les mêmes burgers.<br><span>Moins chers.</span><br>Livrés chez toi.</h1>
+    <p class="pitch">Une petite faim ? Une grosse dalle ? <strong>On gère.</strong> Commande en direct au resto : zéro commission, prix cassés, burger encore chaud.</p>
+
+    <div class="burger-scene reveal vu" aria-hidden="true">
+      <div class="steam"><i></i><i></i><i></i></div>
+      <div class="burger">
+        <div class="bun-top"></div>
+        <div class="salade"></div>
+        <div class="tomate"></div>
+        <div class="cheddar"><i></i><i></i><i></i></div>
+        <div class="steak"></div>
+        <div class="bun-bottom"></div>
+      </div>
+      <div class="burger-halo"></div>
+    </div>
+
+    <div class="hero-cta">
+      <button class="btn js-demo" type="button">Je commande 🔥</button>
+      <a class="btn btn-sm btn-ghost" href="#menu">Voir la carte</a>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="menu" id="menu">
+    <div class="wrap">
+      <p class="kicker reveal">La carte</p>
+      <h2 class="reveal">Six burgers.<br>Zéro remplissage.</h2>
+      <p class="sub reveal">Pain brioché du matin, viande française marquée à la braise. Tout est fait maison, même la sauce qui coule sur ton t-shirt.</p>
+
+      <div class="grid">
+        <article class="carte reveal">
+          <div class="ico">🍔</div>
+          <div>
+            <h3>Le Gras Double <span class="prix">12,50 €</span></h3>
+            <p>Double steak, double cheddar, sauce secrète. Le patron. Celui qui a donné son nom à la boutique.</p>
+            <span class="tag">Best-seller</span>
+          </div>
+        </article>
+        <article class="carte reveal">
+          <div class="ico">🥓</div>
+          <div>
+            <h3>La Fumante <span class="prix">11,90 €</span></h3>
+            <p>Bacon grillé croustillant, oignons confits, barbecue maison. Ça sent le feu de camp, en mieux.</p>
+          </div>
+        </article>
+        <article class="carte reveal">
+          <div class="ico">🐐</div>
+          <div>
+            <h3>Le Chèvre qui pleure <span class="prix">11,50 €</span></h3>
+            <p>Chèvre fondu, miel, noix torréfiées, roquette. Sucré-salé qui met tout le monde d'accord.</p>
+          </div>
+        </article>
+        <article class="carte reveal">
+          <div class="ico">🌶️</div>
+          <div>
+            <h3>La Braise <span class="prix">10,90 €</span></h3>
+            <p>Jalapeños, cheddar fumé, sauce feu maison. Fourni sans extincteur, débrouille-toi.</p>
+            <span class="tag">Ça pique</span>
+          </div>
+        </article>
+        <article class="carte reveal">
+          <div class="ico">🌱</div>
+          <div>
+            <h3>Le Faux Départ <span class="prix">9,90 €</span></h3>
+            <p>Galette pois chiche &amp; herbes, avocat, sauce yaourt-citron. Véggie, mais personne ne s'en plaint.</p>
+          </div>
+        </article>
+        <article class="carte reveal">
+          <div class="ico">🧒</div>
+          <div>
+            <h3>Le P'tit Gras <span class="prix">8,50 €</span></h3>
+            <p>Simple steak, cheddar, ketchup maison. Pour les petites faims et les grands radins.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMENT ÇA MARCHE -->
+  <section>
+    <div class="wrap">
+      <p class="kicker reveal">Comment ça marche</p>
+      <h2 class="reveal">Trois étapes.<br>Vingt-cinq minutes.</h2>
+      <div class="etapes">
+        <div class="etape reveal">
+          <div class="num">1</div>
+          <div>
+            <h3>Tu commandes en direct</h3>
+            <p>Sur ce site, sans appli, sans compte, sans commission qui gonfle l'addition. Ce que tu vois, c'est ce que tu paies.</p>
+          </div>
+        </div>
+        <div class="etape reveal">
+          <div class="num">2</div>
+          <div>
+            <h3>Tu paies comme tu veux</h3>
+            <p>En ligne en deux tapotements, ou au livreur en carte ou en espèces. À l'ancienne, ça marche aussi.</p>
+          </div>
+        </div>
+        <div class="etape reveal">
+          <div class="num">3</div>
+          <div>
+            <h3>Livré en 25 min chrono</h3>
+            <p>Nos livreurs partent du resto, pas de l'autre bout de Paris. Le burger arrive chaud, le cheddar coule encore.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ZONE DE LIVRAISON -->
+  <section>
+    <div class="wrap">
+      <p class="kicker reveal">Zone de livraison</p>
+      <h2 class="reveal">On roule dans l'Est</h2>
+      <p class="sub reveal">Le QG est rue Oberkampf. Si t'es dans le coin, t'es servi.</p>
+      <div class="chips reveal">
+        <span class="chip hot">Paris 11e</span>
+        <span class="chip hot">Paris 20e</span>
+        <span class="chip">Paris 12e</span>
+        <span class="chip">Paris 3e</span>
+        <span class="chip">Bagnolet</span>
+        <span class="chip">Montreuil</span>
+        <span class="chip">Les Lilas</span>
+        <span class="chip">Saint-Mandé</span>
+      </div>
+      <p class="note reveal">Pas dans la liste ? Appelle-nous, si le scooter passe on trouve une solution.</p>
+    </div>
+  </section>
+
+  <!-- HORAIRES -->
+  <section>
+    <div class="wrap">
+      <p class="kicker reveal">Horaires</p>
+      <h2 class="reveal">Ouvert quand t'as faim</h2>
+      <div class="horaires reveal">
+        <div class="ligne"><span class="jour">Lundi</span><span class="off">Repos du gras</span></div>
+        <div class="ligne"><span class="jour">Mardi — Jeudi</span><span class="h">11h30–14h30 · 18h30–22h30</span></div>
+        <div class="ligne"><span class="jour">Vendredi — Samedi</span><span class="h">11h30–14h30 · 18h30–23h30</span></div>
+        <div class="ligne"><span class="jour">Dimanche</span><span class="h">18h30–22h30</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section>
+    <div class="wrap">
+      <div class="final reveal">
+        <h2>Bon, on te le prépare<br>ce burger ?</h2>
+        <p>Commande maintenant, dans 25 minutes tu remercies ton toi du passé.</p>
+        <button class="btn js-demo" type="button">Commander maintenant 🍔</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="foot">
+    <small>« Gras Double » est un restaurant fictif. Site de démonstration réalisé par <strong>4dayvelopment</strong> — votre site pro livré en 4 jours.</small>
+    <a class="btn btn-sm" href="/devis?metier=burger">Créer le mien en 4 jours</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">🍔 <b>Ceci est une démonstration</b> — mais le vôtre pourrait être réel.</div>
+
+<script src="/exemples/burger.js" defer></script>
+</body>
+</html>

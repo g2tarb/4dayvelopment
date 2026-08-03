@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, follow">
+<title>Rivière &amp; Fils — Plombier chauffagiste, dépannage en 2h (démo)</title>
+<meta name="description" content="Site de démonstration 4dayvelopment : plombier-chauffagiste fictif en proche banlieue est de Paris. Dépannage urgent 7j/7, rénovation, tarifs transparents.">
+<style>
+:root{
+  --bleu:#0b5cd6; --bleu-fonce:#0a3d8f; --bleu-pale:#e8f0fc;
+  --orange:#e8590c; --orange-fonce:#c94a06;
+  --acier:#3d4652; --gris:#6b7480; --ligne:#dde3ea;
+  --fond:#ffffff; --fond-alt:#f5f8fc;
+  --r:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Arial,sans-serif;
+  color:var(--acier);background:var(--fond);line-height:1.55;
+  overflow-x:hidden;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+img,svg{max-width:100%;display:block}
+a{color:var(--bleu)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+h1,h2,h3{color:#1a2230;line-height:1.15;letter-spacing:-.01em}
+h2{font-size:clamp(1.5rem,4.5vw,2.1rem);margin-bottom:.5rem}
+.sous{color:var(--gris);max-width:560px;margin-bottom:2rem}
+section{padding:56px 0}
+.alt{background:var(--fond-alt)}
+
+/* ---------- boutons ---------- */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.55em;
+  min-height:52px;padding:.85em 1.5em;border-radius:12px;border:0;
+  font-size:1.05rem;font-weight:700;text-decoration:none;cursor:pointer;
+  transition:transform .12s ease,box-shadow .12s ease;
+}
+.btn:active{transform:scale(.97)}
+.btn-orange{background:var(--orange);color:#fff;box-shadow:0 4px 14px rgba(232,89,12,.3)}
+.btn-orange:hover{background:var(--orange-fonce)}
+.btn-bleu{background:var(--bleu);color:#fff;box-shadow:0 4px 14px rgba(11,92,214,.25)}
+.btn-bleu:hover{background:var(--bleu-fonce)}
+.btn-ghost{background:#fff;color:var(--bleu);border:2px solid var(--bleu)}
+
+/* ---------- header ---------- */
+header{
+  position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--ligne);
+}
+.nav{display:flex;align-items:center;justify-content:space-between;min-height:64px;gap:12px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo strong{color:#1a2230;font-size:1.08rem;line-height:1.1}
+.logo small{display:block;color:var(--gris);font-size:.72rem;font-weight:500;letter-spacing:.04em;text-transform:uppercase}
+.tel-header{
+  display:inline-flex;align-items:center;gap:.5em;min-height:44px;padding:.4em 1em;
+  border-radius:10px;background:var(--orange);color:#fff;font-weight:800;
+  text-decoration:none;font-size:1rem;white-space:nowrap;
+}
+
+/* ---------- hero ---------- */
+.hero{padding:52px 0 60px;background:
+  linear-gradient(180deg,var(--bleu-pale) 0%,#fff 78%);}
+.hero-grid{display:grid;gap:36px;align-items:center}
+@media(min-width:860px){.hero-grid{grid-template-columns:1.15fr .85fr}}
+.hero h1{font-size:clamp(2rem,7vw,3.1rem);font-weight:800;margin-bottom:.6rem}
+.hero h1 em{font-style:normal;color:var(--bleu)}
+.hero p.lead{font-size:1.12rem;color:var(--gris);margin-bottom:1.6rem;max-width:30em}
+.tel-hero{
+  display:inline-flex;align-items:center;gap:.4em;text-decoration:none;
+  font-size:clamp(2rem,9vw,3.4rem);font-weight:900;color:var(--orange);
+  letter-spacing:-.02em;line-height:1.05;margin-bottom:.35rem;
+}
+.tel-hero:hover{color:var(--orange-fonce)}
+.tel-note{color:var(--gris);font-size:.9rem;margin-bottom:1.6rem}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px}
+.points{display:flex;flex-wrap:wrap;gap:.5rem 1.4rem;margin-top:1.6rem;padding:0;list-style:none}
+.points li{display:flex;align-items:center;gap:.45em;font-size:.92rem;font-weight:600;color:var(--acier)}
+.points svg{flex:none}
+
+/* macaron 2h */
+.hero-visu{display:flex;flex-direction:column;align-items:center;gap:18px}
+.macaron{
+  width:min(200px,52vw);aspect-ratio:1;border-radius:50%;
+  background:var(--orange);color:#fff;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;
+  box-shadow:0 10px 30px rgba(232,89,12,.35), inset 0 0 0 6px #fff, inset 0 0 0 9px var(--orange);
+  transform:rotate(-4deg);
+}
+.macaron b{font-size:2.6rem;font-weight:900;line-height:1}
+.macaron span{font-size:.82rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;max-width:9em}
+.camion{width:min(300px,80vw)}
+
+/* ---------- services ---------- */
+.cartes{display:grid;gap:18px}
+@media(min-width:600px){.cartes{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.cartes{grid-template-columns:repeat(4,1fr)}}
+.carte{
+  background:#fff;border:1px solid var(--ligne);border-radius:var(--r);
+  padding:26px 22px;transition:box-shadow .15s ease,transform .15s ease;
+}
+.carte:hover{box-shadow:0 10px 26px rgba(15,40,80,.09);transform:translateY(-2px)}
+.picto{
+  width:56px;height:56px;border-radius:14px;background:var(--bleu-pale);
+  display:flex;align-items:center;justify-content:center;margin-bottom:14px;
+}
+.carte h3{font-size:1.06rem;margin-bottom:.35rem}
+.carte p{font-size:.92rem;color:var(--gris)}
+
+/* ---------- tarifs ---------- */
+.tarifs{display:grid;gap:14px;max-width:680px}
+.tarif{
+  display:flex;align-items:baseline;justify-content:space-between;gap:16px;
+  background:#fff;border:1px solid var(--ligne);border-radius:var(--r);padding:18px 22px;
+}
+.tarif div b{display:block;color:#1a2230;font-size:1.02rem}
+.tarif div span{font-size:.86rem;color:var(--gris)}
+.prix{font-size:1.35rem;font-weight:900;color:var(--bleu);white-space:nowrap}
+.prix small{font-size:.7rem;font-weight:700;color:var(--gris);display:block;text-align:right}
+.mention{font-size:.82rem;color:var(--gris);margin-top:14px;max-width:680px}
+
+/* ---------- garanties ---------- */
+.garanties{display:grid;gap:16px}
+@media(min-width:600px){.garanties{grid-template-columns:1fr 1fr}}
+@media(min-width:960px){.garanties{grid-template-columns:repeat(4,1fr)}}
+.garantie{display:flex;gap:14px;align-items:flex-start}
+.garantie .picto{width:46px;height:46px;flex:none;margin:0;border-radius:12px}
+.garantie b{display:block;color:#1a2230;font-size:.98rem}
+.garantie span{font-size:.86rem;color:var(--gris)}
+
+/* ---------- avis ---------- */
+.avis-grid{display:grid;gap:16px}
+@media(min-width:820px){.avis-grid{grid-template-columns:repeat(3,1fr)}}
+.avis{background:#fff;border:1px solid var(--ligne);border-radius:var(--r);padding:22px}
+.etoiles{color:#f2a20c;letter-spacing:2px;font-size:1rem;margin-bottom:.4rem}
+.avis p{font-size:.94rem;margin-bottom:.7rem}
+.avis footer{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.avis footer b{font-size:.88rem;color:#1a2230}
+.tag-exemple{
+  font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  background:var(--bleu-pale);color:var(--bleu-fonce);padding:.25em .7em;border-radius:99px;
+}
+
+/* ---------- zone ---------- */
+.villes{display:flex;flex-wrap:wrap;gap:10px;list-style:none;max-width:720px}
+.villes li{
+  background:#fff;border:1px solid var(--ligne);border-radius:99px;
+  padding:.5em 1.1em;font-size:.92rem;font-weight:600;color:var(--acier);
+}
+.villes li.chef{background:var(--bleu);border-color:var(--bleu);color:#fff}
+
+/* ---------- devis / formulaire ---------- */
+.devis-grid{display:grid;gap:36px;align-items:start}
+@media(min-width:860px){.devis-grid{grid-template-columns:1fr 1.1fr}}
+.form{
+  background:#fff;border:1px solid var(--ligne);border-radius:var(--r);
+  padding:26px;box-shadow:0 12px 34px rgba(15,40,80,.07);
+}
+.champ{margin-bottom:16px}
+.champ label{display:block;font-size:.88rem;font-weight:700;color:#1a2230;margin-bottom:.35rem}
+.champ input,.champ select,.champ textarea{
+  width:100%;font-size:16px;font-family:inherit;color:var(--acier);
+  border:1.5px solid var(--ligne);border-radius:10px;padding:12px 14px;
+  min-height:48px;background:#fff;
+}
+.champ textarea{min-height:96px;resize:vertical}
+.champ input:focus,.champ select:focus,.champ textarea:focus{
+  outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(11,92,214,.15);
+}
+.form .btn{width:100%}
+.form-note{font-size:.8rem;color:var(--gris);text-align:center;margin-top:10px}
+
+/* toast */
+.toast{
+  position:fixed;left:50%;bottom:calc(96px + env(safe-area-inset-bottom));z-index:60;
+  transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  background:#1a2230;color:#fff;font-size:.95rem;font-weight:600;
+  padding:14px 22px;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.3);
+  max-width:calc(100vw - 32px);text-align:center;
+  transition:opacity .25s ease,transform .25s ease;
+}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+@media(min-width:860px){.toast{bottom:32px}}
+
+/* ---------- footer ---------- */
+.footer-main{background:#1a2230;color:#9aa5b1;padding:44px 0 36px;font-size:.9rem}
+.footer-main b{color:#fff}
+.footer-main a{color:#c9d6e6}
+.footer-cols{display:grid;gap:24px}
+@media(min-width:700px){.footer-cols{grid-template-columns:1.2fr 1fr 1fr}}
+.bandeau-demo{
+  background:#10161f;color:#8b96a3;padding:18px 0 calc(18px + 84px + env(safe-area-inset-bottom));
+  font-size:.86rem;
+}
+@media(min-width:860px){.bandeau-demo{padding-bottom:18px}}
+.bandeau-inner{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.btn-demo{
+  display:inline-flex;align-items:center;justify-content:center;min-height:44px;
+  padding:.6em 1.3em;border-radius:10px;background:var(--bleu);color:#fff !important;
+  font-weight:700;text-decoration:none;font-size:.92rem;
+}
+.btn-demo:hover{background:var(--bleu-fonce)}
+
+/* ---------- barre sticky mobile ---------- */
+.barre{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;display:flex;gap:10px;
+  padding:12px 14px calc(12px + env(safe-area-inset-bottom));
+  background:rgba(255,255,255,.96);backdrop-filter:blur(8px);
+  border-top:1px solid var(--ligne);
+}
+.barre .btn{flex:1;min-height:52px;font-size:1rem;padding:.7em .5em}
+@media(min-width:860px){.barre{display:none}}
+
+/* ---------- reveal ---------- */
+.rv{opacity:0;transform:translateY(18px);transition:opacity .5s ease,transform .5s ease}
+.rv.vu{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<!-- ======== HEADER ======== -->
+<header>
+  <div class="wrap nav">
+    <a class="logo" href="#haut" aria-label="Rivière et Fils, retour en haut">
+      <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
+        <rect width="36" height="36" rx="9" fill="#0b5cd6"/>
+        <path d="M18 7c4 5.2 7 8.9 7 12.6A7 7 0 0 1 11 19.6C11 15.9 14 12.2 18 7z" fill="#fff"/>
+        <path d="M15 21.5a3 3 0 0 0 3 3" stroke="#0b5cd6" stroke-width="1.8" stroke-linecap="round" fill="none"/>
+      </svg>
+      <strong>Rivière &amp; Fils<small>Plomberie · Chauffage — 94</small></strong>
+    </a>
+    <a class="tel-header" href="tel:+33199004712">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+      01 99 00 47 12
+    </a>
+  </div>
+</header>
+
+<!-- ======== HERO ======== -->
+<section class="hero" id="haut">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Dépannage <em>aujourd'hui</em>.<br>Devis gratuit.</h1>
+      <p class="lead">Plombier-chauffagiste dans le Val-de-Marne et l'Est parisien. Fuite, chauffe-eau en panne, WC bouché&nbsp;: on décroche, on se déplace, on répare.</p>
+      <a class="tel-hero" href="tel:+33199004712">01&nbsp;99&nbsp;00&nbsp;47&nbsp;12</a>
+      <p class="tel-note">Appel non surtaxé — 7j/7, de 7h à 22h</p>
+      <div class="hero-ctas">
+        <a class="btn btn-orange" href="tel:+33199004712">J'appelle maintenant</a>
+        <a class="btn btn-ghost" href="#devis">Devis en ligne</a>
+      </div>
+      <ul class="points">
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Devis signé avant travaux</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Assurance décennale</li>
+        <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg> Prix bloqué au devis</li>
+      </ul>
+    </div>
+    <div class="hero-visu rv">
+      <div class="macaron" role="img" aria-label="Intervention en 2 heures, 7 jours sur 7">
+        <span>Intervention en</span>
+        <b>2h</b>
+        <span>7 jours / 7</span>
+      </div>
+      <svg class="camion" viewBox="0 0 300 130" role="img" aria-label="Camionnette d'intervention Rivière et Fils">
+        <line x1="10" y1="112" x2="290" y2="112" stroke="#dde3ea" stroke-width="3" stroke-linecap="round"/>
+        <rect x="40" y="38" width="150" height="66" rx="8" fill="#0b5cd6"/>
+        <path d="M190 56h44l22 26v22h-66z" fill="#0a3d8f"/>
+        <path d="M198 62h30l16 20h-46z" fill="#e8f0fc"/>
+        <rect x="52" y="56" width="112" height="14" rx="7" fill="#fff"/>
+        <path d="M110 47c3.5 4.6 6 7.7 6 10.8a6 6 0 1 1-12 0c0-3.1 2.5-6.2 6-10.8z" fill="#e8590c" transform="translate(-52 3)"/>
+        <text x="76" y="67" font-family="-apple-system,Arial,sans-serif" font-size="10.5" font-weight="800" fill="#0a3d8f">RIVIÈRE &amp; FILS</text>
+        <rect x="52" y="80" width="80" height="8" rx="4" fill="#e8590c"/>
+        <circle cx="88" cy="108" r="14" fill="#1a2230"/><circle cx="88" cy="108" r="6" fill="#9aa5b1"/>
+        <circle cx="226" cy="108" r="14" fill="#1a2230"/><circle cx="226" cy="108" r="6" fill="#9aa5b1"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ======== SERVICES ======== -->
+<section id="services">
+  <div class="wrap">
+    <h2 class="rv">Nos interventions</h2>
+    <p class="sous rv">Du dépannage express à la salle de bain complète, une seule équipe, un seul interlocuteur.</p>
+    <div class="cartes">
+      <article class="carte rv">
+        <div class="picto">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3c3.2 4.2 6 7.3 6 10.5a6 6 0 0 1-12 0C6 10.3 8.8 7.2 12 3z"/><path d="M9.5 14.5a2.6 2.6 0 0 0 2.6 2.6"/></svg>
+        </div>
+        <h3>Recherche de fuite</h3>
+        <p>Localisation sans casse inutile, réparation immédiate quand c'est possible, rapport pour votre assurance.</p>
+      </article>
+      <article class="carte rv">
+        <div class="picto">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="3" width="10" height="15" rx="5"/><path d="M12 18v3M9 21h6"/><circle cx="12" cy="8" r="1.6"/></svg>
+        </div>
+        <h3>Chauffe-eau</h3>
+        <p>Dépannage, remplacement électrique ou thermodynamique, pose dans la journée si l'appareil est en stock.</p>
+      </article>
+      <article class="carte rv">
+        <div class="picto">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21c-3.5 0-6-2.4-6-5.8C6 11.5 9 8.5 12 3c3 5.5 6 8.5 6 12.2 0 3.4-2.5 5.8-6 5.8z"/><path d="M12 17.5c-1.4 0-2.4-1-2.4-2.4 0-1.5 1.2-2.7 2.4-4.6 1.2 1.9 2.4 3.1 2.4 4.6 0 1.4-1 2.4-2.4 2.4z" fill="#0b5cd6" stroke="none"/></svg>
+        </div>
+        <h3>Chaudière &amp; entretien</h3>
+        <p>Entretien annuel obligatoire, réglages, dépannage gaz. Attestation remise à chaque visite.</p>
+      </article>
+      <article class="carte rv">
+        <div class="picto">
+          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 21V6a3 3 0 0 1 6 0v1"/><path d="M10 7h4"/><path d="M14 5v4"/><path d="M8.5 12.5 7 14M12 13l-1.5 3M15.5 12.5 17 14"/><path d="M6 10h12"/></svg>
+        </div>
+        <h3>Salle de bain clé en main</h3>
+        <p>Douche à l'italienne, remplacement baignoire, rénovation complète. Plans, fournitures et pose coordonnés.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======== TARIFS ======== -->
+<section class="alt" id="tarifs">
+  <div class="wrap">
+    <h2 class="rv">Tarifs transparents</h2>
+    <p class="sous rv">Annoncés au téléphone, confirmés par devis signé. Aucun supplément découvert « une fois sur place ».</p>
+    <div class="tarifs">
+      <div class="tarif rv">
+        <div><b>Déplacement + diagnostic</b><span>Offert si les travaux sont réalisés par nos soins</span></div>
+        <div class="prix">49&nbsp;€<small>TTC</small></div>
+      </div>
+      <div class="tarif rv">
+        <div><b>Débouchage évier, WC, douche</b><span>Furet ou pompe manuelle, évacuation testée avant départ</span></div>
+        <div class="prix">dès 90&nbsp;€<small>TTC</small></div>
+      </div>
+      <div class="tarif rv">
+        <div><b>Remplacement chauffe-eau électrique</b><span>200&nbsp;L, pose comprise, reprise de l'ancien appareil</span></div>
+        <div class="prix">dès 690&nbsp;€<small>TTC pose comprise</small></div>
+      </div>
+      <div class="tarif rv">
+        <div><b>Entretien chaudière gaz</b><span>Contrat annuel, attestation d'entretien incluse</span></div>
+        <div class="prix">dès 129&nbsp;€<small>TTC / an</small></div>
+      </div>
+    </div>
+    <p class="mention rv">Tarifs indicatifs pour une intervention standard en journée. Le prix exact est fixé sur le devis, signé avant tout début de travaux, puis bloqué.</p>
+  </div>
+</section>
+
+<!-- ======== GARANTIES ======== -->
+<section id="garanties">
+  <div class="wrap">
+    <h2 class="rv">Nos engagements</h2>
+    <p class="sous rv">Une entreprise en règle, des travaux couverts, un prix qui ne bouge pas.</p>
+    <div class="garanties">
+      <div class="garantie rv">
+        <div class="picto">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v5c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10V6z"/><path d="M9 12l2 2 4-4"/></svg>
+        </div>
+        <div><b>Assurance décennale</b><span>Travaux couverts 10 ans, attestation fournie avec chaque devis.</span></div>
+      </div>
+      <div class="garantie rv">
+        <div class="picto">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M9.5 9l1.8 1.8L15 7.2"/><path d="M8.5 14 7 21l5-2.5L17 21l-1.5-7"/></svg>
+        </div>
+        <div><b>Certifié RGE</b><span>Éligible aux aides pour vos équipements de chauffage performants.</span></div>
+      </div>
+      <div class="garantie rv">
+        <div class="picto">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7z"/><path d="M15 3v4h4"/><path d="M8.5 13.5l1.7 1.7 3.3-3.4"/><path d="M8.5 18h7"/></svg>
+        </div>
+        <div><b>Devis signé avant travaux</b><span>Rien ne démarre sans votre accord écrit, même en urgence.</span></div>
+      </div>
+      <div class="garantie rv">
+        <div class="picto">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0b5cd6" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15" r="1.6"/></svg>
+        </div>
+        <div><b>Prix bloqué</b><span>Le montant du devis est le montant de la facture. Point final.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======== AVIS ======== -->
+<section class="alt" id="avis">
+  <div class="wrap">
+    <h2 class="rv">Ils nous ont fait confiance</h2>
+    <p class="sous rv">Sur un vrai site, cette section affiche vos avis Google authentiques, synchronisés automatiquement.</p>
+    <div class="avis-grid">
+      <article class="avis rv">
+        <div class="etoiles" aria-label="5 étoiles sur 5">★★★★★</div>
+        <p>«&nbsp;Fuite sous l'évier un dimanche matin, technicien arrivé en 1h30. Propre, rapide, prix annoncé respecté.&nbsp;»</p>
+        <footer><b>Nadia B. — Montreuil</b><span class="tag-exemple">Exemple d'avis</span></footer>
+      </article>
+      <article class="avis rv">
+        <div class="etoiles" aria-label="5 étoiles sur 5">★★★★★</div>
+        <p>«&nbsp;Chauffe-eau remplacé dans la journée. Devis clair par SMS avant l'intervention, aucune surprise à la facture.&nbsp;»</p>
+        <footer><b>Marc D. — Vincennes</b><span class="tag-exemple">Exemple d'avis</span></footer>
+      </article>
+      <article class="avis rv">
+        <div class="etoiles" aria-label="5 étoiles sur 5">★★★★★</div>
+        <p>«&nbsp;Salle de bain refaite en une semaine, chantier laissé nickel chaque soir. Je recommande à mes voisins.&nbsp;»</p>
+        <footer><b>Christiane L. — Nogent-sur-Marne</b><span class="tag-exemple">Exemple d'avis</span></footer>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ======== ZONE ======== -->
+<section id="zone">
+  <div class="wrap">
+    <h2 class="rv">Zone d'intervention</h2>
+    <p class="sous rv">Basés à Fontenay-sous-Bois, nous intervenons en moins de 2h dans tout l'Est parisien.</p>
+    <ul class="villes rv">
+      <li class="chef">Fontenay-sous-Bois</li>
+      <li>Montreuil</li>
+      <li>Vincennes</li>
+      <li>Nogent-sur-Marne</li>
+      <li>Le Perreux-sur-Marne</li>
+      <li>Saint-Mandé</li>
+      <li>Rosny-sous-Bois</li>
+      <li>Neuilly-Plaisance</li>
+      <li>Joinville-le-Pont</li>
+      <li>Champigny-sur-Marne</li>
+      <li>Paris 11ᵉ &amp; 12ᵉ</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ======== DEVIS ======== -->
+<section class="alt" id="devis">
+  <div class="wrap devis-grid">
+    <div>
+      <h2 class="rv">Un projet, une panne&nbsp;?</h2>
+      <p class="sous rv">Le plus rapide reste l'appel. Sinon, décrivez votre besoin&nbsp;: nous rappelons sous 1h ouvrée avec un premier chiffrage.</p>
+      <a class="tel-hero rv" href="tel:+33199004712" style="font-size:clamp(1.7rem,6vw,2.4rem)">01&nbsp;99&nbsp;00&nbsp;47&nbsp;12</a>
+      <p class="tel-note rv">7j/7 · déplacement + diagnostic 49&nbsp;€, offert si travaux</p>
+    </div>
+    <form class="form rv" id="form-devis" novalidate>
+      <div class="champ">
+        <label for="f-nom">Votre nom</label>
+        <input id="f-nom" name="nom" type="text" autocomplete="name" placeholder="Jean Dupont">
+      </div>
+      <div class="champ">
+        <label for="f-tel">Téléphone</label>
+        <input id="f-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" placeholder="06 12 34 56 78">
+      </div>
+      <div class="champ">
+        <label for="f-besoin">Type de besoin</label>
+        <select id="f-besoin" name="besoin">
+          <option>Urgence — fuite / panne</option>
+          <option>Chauffe-eau</option>
+          <option>Chaudière / entretien</option>
+          <option>Salle de bain / rénovation</option>
+          <option>Autre demande</option>
+        </select>
+      </div>
+      <div class="champ">
+        <label for="f-msg">Décrivez la situation</label>
+        <textarea id="f-msg" name="message" placeholder="Ex. : fuite sous l'évier de la cuisine, arrivée d'eau coupée…"></textarea>
+      </div>
+      <button class="btn btn-bleu" type="submit">Demander mon devis gratuit</button>
+      <p class="form-note">Réponse sous 1h ouvrée · sans engagement</p>
+    </form>
+  </div>
+</section>
+
+<!-- ======== FOOTER ======== -->
+<footer class="footer-main">
+  <div class="wrap footer-cols">
+    <div>
+      <b>Rivière &amp; Fils</b><br>
+      Plomberie &amp; chauffage depuis 1998<br>
+      12 rue des Moulins, 94120 Fontenay-sous-Bois<br>
+      <a href="tel:+33199004712">01 99 00 47 12</a> · 7j/7, 7h–22h
+    </div>
+    <div>
+      <b>Interventions</b><br>
+      Recherche de fuite · Chauffe-eau<br>
+      Chaudière &amp; entretien · Salle de bain
+    </div>
+    <div>
+      <b>Entreprise fictive</b><br>
+      SIRET, mentions légales et coordonnées<br>
+      sont illustratifs sur cette page de démonstration.
+    </div>
+  </div>
+</footer>
+<div class="bandeau-demo">
+  <div class="wrap bandeau-inner">
+    <span>Site de démonstration réalisé par <b style="color:#c9d6e6">4dayvelopment</b> — livré en 4 jours, à partir d'une simple conversation.</span>
+    <a class="btn-demo" href="/devis?metier=plombier">Créer le mien en 4 jours</a>
+  </div>
+</div>
+
+<!-- ======== BARRE STICKY MOBILE ======== -->
+<nav class="barre" aria-label="Actions rapides">
+  <a class="btn btn-orange" href="tel:+33199004712">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.13.96.36 1.9.7 2.8a2 2 0 0 1-.45 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.45c.9.34 1.84.57 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+    J'appelle
+  </a>
+  <a class="btn btn-bleu" href="#devis">Devis en ligne</a>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="/exemples/plombier.js" defer></script>
+</body>
+</html>
