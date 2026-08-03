@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, follow">
+<title>L'Atelier Nacre — Studio de prothésie ongulaire à Paris 17e (démo)</title>
+<meta name="description" content="Site de démonstration 4dayvelopment : L'Atelier Nacre, studio fictif de prothésie ongulaire aux Batignolles. Pose gel, semi-permanent, nail art sur rendez-vous.">
+<style>
+@font-face{
+  font-family:'Inter';
+  src:url('/fonts/inter-var.woff2') format('woff2');
+  font-weight:300 700;
+  font-style:normal;
+  font-display:swap;
+}
+:root{
+  --creme:#faf6f1;
+  --poudre:#f4ece4;
+  --nude:#e8c4b8;
+  --nude-fonce:#d9a99a;
+  --rose:#f0d8d0;
+  --or:#c2a878;
+  --or-clair:#e6d5b8;
+  --encre:#3d3330;
+  --encre-douce:#7a6d68;
+  --blanc:#fffdfb;
+  --serif:Didot,'Bodoni MT','Didot LT STD','Hoefler Text',Georgia,serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --ombre:0 18px 45px rgba(120,90,75,.10);
+  --ombre-douce:0 8px 24px rgba(120,90,75,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  font-weight:300;
+  background:var(--creme);
+  color:var(--encre);
+  line-height:1.65;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:.01em}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+.eyebrow{
+  display:inline-block;
+  font-size:.72rem;
+  letter-spacing:.28em;
+  text-transform:uppercase;
+  color:var(--or);
+  font-weight:500;
+  margin-bottom:14px;
+}
+section{padding:72px 0}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+/* ---------- NAV ---------- */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:rgba(250,246,241,.85);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(194,168,120,.18);
+}
+.nav-in{
+  max-width:1040px;margin:0 auto;padding:0 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  min-height:64px;
+}
+.logo{font-family:var(--serif);font-size:1.25rem;color:var(--encre);letter-spacing:.04em}
+.logo em{font-style:normal;color:var(--or)}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-height:48px;padding:0 26px;
+  border:none;border-radius:999px;
+  font-family:var(--sans);font-size:.9rem;font-weight:500;letter-spacing:.04em;
+  background:linear-gradient(120deg,var(--nude-fonce),var(--nude));
+  color:#fff;cursor:pointer;text-decoration:none;
+  box-shadow:0 8px 20px rgba(217,169,154,.35);
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(217,169,154,.45)}
+.btn-ghost{
+  background:transparent;color:var(--encre);
+  border:1px solid rgba(61,51,48,.25);box-shadow:none;
+}
+.btn-ghost:hover{border-color:var(--or);color:var(--or);box-shadow:none}
+nav .btn{min-height:44px;padding:0 20px;font-size:.85rem}
+/* ---------- HERO ---------- */
+.hero{
+  position:relative;
+  padding:84px 0 96px;
+  background:
+    radial-gradient(60% 50% at 80% 10%,rgba(240,216,208,.55),transparent 70%),
+    radial-gradient(50% 40% at 8% 85%,rgba(230,213,184,.4),transparent 70%),
+    var(--creme);
+  overflow:hidden;
+}
+.hero-grid{display:grid;gap:48px;align-items:center}
+.hero h1{
+  font-size:clamp(2.5rem,8vw,4.2rem);
+  line-height:1.12;
+  margin-bottom:20px;
+}
+.hero h1 em{font-style:italic;color:var(--nude-fonce)}
+.hero p.lede{
+  font-size:1.05rem;color:var(--encre-douce);
+  max-width:44ch;margin-bottom:32px;
+}
+.hero-cta{display:flex;gap:14px;flex-wrap:wrap}
+/* composition amande */
+.compo{
+  position:relative;
+  width:min(320px,78vw);
+  aspect-ratio:1/1.35;
+  margin:0 auto;
+}
+.amande{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  filter:drop-shadow(0 24px 40px rgba(194,150,130,.28));
+}
+.dot{
+  position:absolute;border-radius:50%;
+}
+.dot-1{width:74px;height:74px;right:-12px;top:8%;background:radial-gradient(circle at 30% 30%,#fff,var(--or-clair));opacity:.85}
+.dot-2{width:40px;height:40px;left:-6px;bottom:16%;background:radial-gradient(circle at 30% 30%,#fff,var(--rose));}
+.dot-3{width:18px;height:18px;right:14%;bottom:4%;background:var(--or);opacity:.5}
+.spark{position:absolute;color:var(--or);font-size:1.2rem;opacity:.8}
+.spark-1{top:2%;left:6%}
+.spark-2{bottom:26%;right:-4%}
+/* ---------- PRESTATIONS ---------- */
+.prestas{background:var(--blanc);border-top:1px solid rgba(194,168,120,.14);border-bottom:1px solid rgba(194,168,120,.14)}
+.sec-head{text-align:center;max-width:56ch;margin:0 auto 48px}
+.sec-head h2{font-size:clamp(1.9rem,5.5vw,2.7rem);margin-bottom:12px}
+.sec-head p{color:var(--encre-douce)}
+.presta-list{display:grid;gap:14px;max-width:640px;margin:0 auto}
+.presta{
+  display:flex;align-items:baseline;gap:14px;
+  background:var(--creme);
+  border:1px solid rgba(194,168,120,.16);
+  border-radius:18px;
+  padding:20px 24px;
+  transition:transform .25s ease,box-shadow .25s ease;
+}
+.presta:hover{transform:translateY(-2px);box-shadow:var(--ombre-douce)}
+.presta .nom{font-family:var(--serif);font-size:1.12rem}
+.presta .desc{display:block;font-size:.82rem;color:var(--encre-douce);margin-top:2px}
+.presta .fil{flex:1;border-bottom:1px dotted rgba(194,168,120,.5);transform:translateY(-4px)}
+.presta .prix{font-weight:500;color:var(--or);white-space:nowrap;font-size:1.02rem}
+/* ---------- GALERIE ---------- */
+.galerie-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+.nail-card{
+  background:var(--blanc);
+  border:1px solid rgba(194,168,120,.16);
+  border-radius:22px;
+  padding:26px 12px 18px;
+  text-align:center;
+  box-shadow:var(--ombre-douce);
+  transition:transform .25s ease;
+}
+.nail-card:hover{transform:translateY(-4px)}
+.nail-card svg{width:64px;height:auto;display:block;margin:0 auto 14px;filter:drop-shadow(0 10px 16px rgba(150,110,95,.18))}
+.nail-card .titre{font-family:var(--serif);font-size:1rem}
+.nail-card .tag{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--encre-douce)}
+/* ---------- À PROPOS ---------- */
+.apropos{background:linear-gradient(180deg,var(--poudre),var(--creme))}
+.apropos-grid{display:grid;gap:40px;align-items:center}
+.portrait{
+  width:min(240px,60vw);aspect-ratio:1;margin:0 auto;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 32% 28%,rgba(255,255,255,.9),transparent 45%),
+    linear-gradient(150deg,var(--rose),var(--nude) 55%,var(--nude-fonce));
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--ombre);
+  position:relative;
+}
+.portrait span{
+  font-family:var(--serif);font-size:3.4rem;color:#fff;
+  text-shadow:0 2px 10px rgba(150,100,85,.35);
+  letter-spacing:.06em;
+}
+.portrait::after{
+  content:"";position:absolute;inset:-12px;border-radius:50%;
+  border:1px solid rgba(194,168,120,.4);
+}
+.apropos h2{font-size:clamp(1.8rem,5vw,2.5rem);margin-bottom:14px}
+.apropos p{color:var(--encre-douce);margin-bottom:14px}
+.gages{list-style:none;display:grid;gap:10px;margin-top:20px}
+.gages li{display:flex;gap:12px;align-items:flex-start;font-size:.92rem}
+.gages .puce{
+  flex:none;width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,var(--or-clair),var(--or));
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;margin-top:1px;
+}
+/* ---------- AVIS ---------- */
+.avis-grid{display:grid;gap:16px}
+.avis{
+  background:var(--blanc);
+  border:1px solid rgba(194,168,120,.16);
+  border-radius:20px;padding:24px;
+  box-shadow:var(--ombre-douce);
+}
+.avis .etoiles{color:var(--or);letter-spacing:.2em;margin-bottom:8px;font-size:.85rem}
+.avis p{font-size:.94rem;color:var(--encre-douce);font-style:italic}
+.avis .qui{margin-top:12px;font-style:normal;font-size:.82rem;color:var(--encre)}
+.avis .demo-tag{
+  display:inline-block;margin-top:6px;font-size:.68rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--or);
+  border:1px solid rgba(194,168,120,.4);border-radius:999px;padding:2px 10px;
+}
+/* ---------- INFOS ---------- */
+.infos-grid{display:grid;gap:16px}
+.info-card{
+  background:var(--blanc);
+  border:1px solid rgba(194,168,120,.16);
+  border-radius:20px;padding:24px;
+}
+.info-card h3{font-size:1.15rem;margin-bottom:10px;color:var(--encre)}
+.info-card p,.info-card li{font-size:.92rem;color:var(--encre-douce)}
+.info-card ul{list-style:none;display:grid;gap:6px}
+.info-card ul li{display:flex;justify-content:space-between;gap:12px}
+.info-card ul li span:last-child{color:var(--encre);font-weight:400}
+/* ---------- CTA FINAL ---------- */
+.cta-final{
+  text-align:center;
+  background:
+    radial-gradient(70% 90% at 50% 0%,rgba(240,216,208,.6),transparent 75%),
+    var(--poudre);
+  border-top:1px solid rgba(194,168,120,.14);
+}
+.cta-final h2{font-size:clamp(2rem,6vw,3rem);margin-bottom:14px}
+.cta-final p{color:var(--encre-douce);max-width:42ch;margin:0 auto 30px}
+/* ---------- FOOTER ---------- */
+footer{background:var(--creme);border-top:1px solid rgba(194,168,120,.18)}
+.foot-studio{
+  text-align:center;padding:34px 22px 26px;
+  color:var(--encre-douce);font-size:.82rem;
+}
+.foot-studio .logo{display:block;margin-bottom:6px;font-size:1.05rem}
+.bandeau-demo{
+  background:var(--encre);color:#efe8e2;
+  padding:18px 22px calc(18px + env(safe-area-inset-bottom));
+  display:flex;flex-wrap:wrap;gap:14px;align-items:center;justify-content:center;
+  text-align:center;font-size:.85rem;
+}
+.bandeau-demo .btn{
+  background:linear-gradient(120deg,var(--or),var(--or-clair));
+  color:var(--encre);box-shadow:none;min-height:44px;font-weight:600;
+}
+/* ---------- TOAST ---------- */
+#toast{
+  position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom));
+  transform:translate(-50%,20px);
+  background:var(--encre);color:#f6efe9;
+  padding:14px 22px;border-radius:14px;
+  font-size:.88rem;max-width:calc(100vw - 44px);
+  box-shadow:0 14px 36px rgba(40,30,26,.35);
+  opacity:0;pointer-events:none;
+  transition:opacity .35s ease,transform .35s ease;
+  z-index:100;text-align:center;
+}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+/* ---------- DESKTOP ---------- */
+@media(min-width:760px){
+  section{padding:96px 0}
+  .hero-grid{grid-template-columns:1.1fr .9fr}
+  .galerie-grid{grid-template-columns:repeat(4,1fr)}
+  .apropos-grid{grid-template-columns:auto 1fr;gap:64px}
+  .avis-grid{grid-template-columns:repeat(3,1fr)}
+  .infos-grid{grid-template-columns:repeat(3,1fr)}
+  .presta{padding:22px 28px}
+}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  *{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <span class="logo">L'Atelier <em>Nacre</em></span>
+    <button class="btn js-book" type="button">Réserver</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="reveal in">
+      <span class="eyebrow">Studio de prothésie ongulaire · Paris 17e</span>
+      <h1>Votre moment <em>à vous</em></h1>
+      <p class="lede">Un écrin feutré aux Batignolles, une pose soignée dans les moindres détails. Gel, semi-permanent et nail art sur mesure, uniquement sur rendez-vous.</p>
+      <div class="hero-cta">
+        <button class="btn js-book" type="button">Je réserve mon créneau</button>
+        <a class="btn btn-ghost" href="#prestations">Voir les prestations</a>
+      </div>
+    </div>
+    <div class="compo reveal in" aria-hidden="true">
+      <svg class="amande" viewBox="0 0 200 270">
+        <defs>
+          <linearGradient id="heroNude" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f6ded4"/>
+            <stop offset=".55" stop-color="#e8c4b8"/>
+            <stop offset="1" stop-color="#d6a292"/>
+          </linearGradient>
+          <linearGradient id="heroShine" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity=".85"/>
+            <stop offset="1" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+        </defs>
+        <path d="M100 8 C138 52 176 122 176 188 C176 240 142 264 100 264 C58 264 24 240 24 188 C24 122 62 52 100 8 Z" fill="url(#heroNude)"/>
+        <path d="M78 40 C60 74 48 116 46 154 C45 176 52 186 62 184 C72 182 74 164 76 140 C79 106 88 70 96 46 C99 36 84 30 78 40 Z" fill="url(#heroShine)"/>
+        <ellipse cx="140" cy="210" rx="18" ry="26" fill="#fff" opacity=".25"/>
+      </svg>
+      <span class="dot dot-1"></span>
+      <span class="dot dot-2"></span>
+      <span class="dot dot-3"></span>
+      <span class="spark spark-1">✦</span>
+      <span class="spark spark-2">✧</span>
+    </div>
+  </div>
+</header>
+
+<!-- PRESTATIONS -->
+<section class="prestas" id="prestations">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">La carte</span>
+      <h2>Prestations &amp; tarifs</h2>
+      <p>Des poses durables, des produits professionnels, un résultat net qui tient.</p>
+    </div>
+    <div class="presta-list">
+      <div class="presta reveal">
+        <div><span class="nom">Pose gel complète</span><span class="desc">Capsules ou chablon, forme au choix</span></div>
+        <span class="fil"></span><span class="prix">55&nbsp;€</span>
+      </div>
+      <div class="presta reveal">
+        <div><span class="nom">Remplissage gel</span><span class="desc">Toutes les 3 à 4 semaines</span></div>
+        <span class="fil"></span><span class="prix">45&nbsp;€</span>
+      </div>
+      <div class="presta reveal">
+        <div><span class="nom">Semi-permanent</span><span class="desc">Mains, couleur unie, tenue 3 semaines</span></div>
+        <span class="fil"></span><span class="prix">35&nbsp;€</span>
+      </div>
+      <div class="presta reveal">
+        <div><span class="nom">Nail art</span><span class="desc">French, marbre, chrome, dessins fins…</span></div>
+        <span class="fil"></span><span class="prix">dès 5&nbsp;€/ongle</span>
+      </div>
+      <div class="presta reveal">
+        <div><span class="nom">Dépose</span><span class="desc">Gel ou semi-permanent, en douceur</span></div>
+        <span class="fil"></span><span class="prix">15&nbsp;€</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GALERIE -->
+<section id="galerie">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Inspirations</span>
+      <h2>La galerie</h2>
+      <p>Quelques signatures du studio — chaque pose est unique, comme vous.</p>
+    </div>
+    <div class="galerie-grid">
+      <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+        <defs>
+          <clipPath id="nailClip"><path d="M50 4 C69 28 88 66 88 106 C88 138 71 156 50 156 C29 156 12 138 12 106 C12 66 31 28 50 4 Z"/></clipPath>
+        </defs>
+      </svg>
+
+      <div class="nail-card reveal">
+        <svg viewBox="0 0 100 160" role="img" aria-label="Nail art french classique">
+          <defs><linearGradient id="g1" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#f2d4c9"/><stop offset="1" stop-color="#f9e7df"/>
+          </linearGradient></defs>
+          <g clip-path="url(#nailClip)">
+            <rect width="100" height="160" fill="url(#g1)"/>
+            <path d="M8 46 Q50 18 92 46 L92 -4 L8 -4 Z" fill="#fffdfa"/>
+            <path d="M20 60 Q30 30 44 16" stroke="#fff" stroke-opacity=".7" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="titre">French classique</div>
+        <div class="tag">Intemporelle</div>
+      </div>
+
+      <div class="nail-card reveal">
+        <svg viewBox="0 0 100 160" role="img" aria-label="Nail art babyboomer">
+          <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff"/><stop offset=".55" stop-color="#f6ded6"/><stop offset="1" stop-color="#ecc3b6"/>
+          </linearGradient></defs>
+          <g clip-path="url(#nailClip)">
+            <rect width="100" height="160" fill="url(#g2)"/>
+            <path d="M20 60 Q30 30 44 16" stroke="#fff" stroke-opacity=".6" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="titre">Babyboomer</div>
+        <div class="tag">Dégradé fondu</div>
+      </div>
+
+      <div class="nail-card reveal">
+        <svg viewBox="0 0 100 160" role="img" aria-label="Nail art chrome nacré">
+          <defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#f0e6f5"/><stop offset=".35" stop-color="#d8c9e8"/><stop offset=".6" stop-color="#f4d9dc"/><stop offset="1" stop-color="#cfe0ec"/>
+          </linearGradient></defs>
+          <g clip-path="url(#nailClip)">
+            <rect width="100" height="160" fill="url(#g3)"/>
+            <path d="M14 120 Q50 90 86 120 L86 60 Q50 92 14 60 Z" fill="#fff" opacity=".35"/>
+            <path d="M22 56 Q32 28 46 14" stroke="#fff" stroke-opacity=".9" stroke-width="6" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="titre">Chrome nacré</div>
+        <div class="tag">Effet miroir</div>
+      </div>
+
+      <div class="nail-card reveal">
+        <svg viewBox="0 0 100 160" role="img" aria-label="Nail art marbre blanc et or">
+          <g clip-path="url(#nailClip)">
+            <rect width="100" height="160" fill="#faf7f3"/>
+            <path d="M-5 40 Q30 55 45 30 T95 45" stroke="#d9cfc6" stroke-width="3" fill="none" opacity=".8"/>
+            <path d="M0 95 Q40 80 60 105 T105 92" stroke="#cfc3b8" stroke-width="2.5" fill="none" opacity=".7"/>
+            <path d="M10 135 Q45 150 80 128" stroke="#ddd2c8" stroke-width="2" fill="none" opacity=".7"/>
+            <path d="M28 68 Q50 62 66 74" stroke="#c2a878" stroke-width="1.6" fill="none" opacity=".9"/>
+            <circle cx="70" cy="40" r="2.4" fill="#c2a878" opacity=".85"/>
+            <circle cx="34" cy="112" r="1.8" fill="#c2a878" opacity=".7"/>
+            <path d="M20 60 Q30 30 44 16" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".8"/>
+          </g>
+        </svg>
+        <div class="titre">Marbre doré</div>
+        <div class="tag">Veines &amp; feuille d'or</div>
+      </div>
+
+      <div class="nail-card reveal">
+        <svg viewBox="0 0 100 160" role="img" aria-label="Nail art glazed">
+          <defs><radialGradient id="g5" cx=".4" cy=".3" r="1">
+            <stop offset="0" stop-color="#fff8f0"/><stop offset=".6" stop-color="#f3e3d3"/><stop offset="1" stop-color="#e9cdb9"/>
+          </radialGradient></defs>
+          <g clip-path="url(#nailClip)">
+            <rect width="100" height="160" fill="url(#g5)"/>
+            <ellipse cx="42" cy="52" rx="22" ry="34" fill="#fff" opacity=".55"/>
+            <path d="M22 58 Q32 30 46 15" stroke="#fff" stroke-width="6" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="titre">Glazed pearl</div>
+        <div class="tag">Voile lacté</div>
+      </div>
+
+      <div class="nail-card reveal">
+        <svg viewBox="0 0 100 160" role="img" aria-label="Nail art micro-french dorée">
+          <defs><linearGradient id="g6" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#f4ddd3"/><stop offset="1" stop-color="#fbeee7"/>
+          </linearGradient></defs>
+          <g clip-path="url(#nailClip)">
+            <rect width="100" height="160" fill="url(#g6)"/>
+            <path d="M10 40 Q50 14 90 40 L90 30 Q50 4 10 30 Z" fill="#c2a878"/>
+            <path d="M20 62 Q30 34 44 20" stroke="#fff" stroke-opacity=".7" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="titre">Micro-french or</div>
+        <div class="tag">Liseré précieux</div>
+      </div>
+
+      <div class="nail-card reveal">
+        <svg viewBox="0 0 100 160" role="img" aria-label="Nail art aura rose">
+          <defs><radialGradient id="g7" cx=".5" cy=".45" r=".75">
+            <stop offset="0" stop-color="#e79fb0"/><stop offset=".55" stop-color="#f3cfd2" stop-opacity=".9"/><stop offset="1" stop-color="#fbeee9"/>
+          </radialGradient></defs>
+          <g clip-path="url(#nailClip)">
+            <rect width="100" height="160" fill="#fbeee9"/>
+            <rect width="100" height="160" fill="url(#g7)"/>
+            <path d="M22 58 Q32 30 46 16" stroke="#fff" stroke-opacity=".7" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="titre">Aura rose</div>
+        <div class="tag">Halo vaporeux</div>
+      </div>
+
+      <div class="nail-card reveal">
+        <svg viewBox="0 0 100 160" role="img" aria-label="Nail art constellation">
+          <defs><linearGradient id="g8" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f7ece2"/><stop offset="1" stop-color="#ead7c4"/>
+          </linearGradient></defs>
+          <g clip-path="url(#nailClip)">
+            <rect width="100" height="160" fill="url(#g8)"/>
+            <path d="M50 34 l3 8 8 3 -8 3 -3 8 -3 -8 -8 -3 8 -3 Z" fill="#c2a878"/>
+            <circle cx="30" cy="80" r="2.2" fill="#c2a878"/>
+            <circle cx="68" cy="70" r="1.7" fill="#c2a878" opacity=".8"/>
+            <circle cx="56" cy="112" r="2.6" fill="#c2a878" opacity=".9"/>
+            <circle cx="36" cy="128" r="1.5" fill="#c2a878" opacity=".7"/>
+            <path d="M21 60 Q31 32 45 18" stroke="#fff" stroke-opacity=".7" stroke-width="5" fill="none" stroke-linecap="round"/>
+          </g>
+        </svg>
+        <div class="titre">Constellation</div>
+        <div class="tag">Étoiles dorées</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- À PROPOS -->
+<section class="apropos" id="apropos">
+  <div class="wrap apropos-grid">
+    <div class="portrait reveal" aria-hidden="true"><span>C.A</span></div>
+    <div class="reveal">
+      <span class="eyebrow">Votre praticienne</span>
+      <h2>Camille Aubert</h2>
+      <p>Prothésiste ongulaire certifiée, formée aux techniques gel et chablon, Camille a ouvert L'Atelier Nacre pour offrir ce qu'elle ne trouvait pas ailleurs&nbsp;: du temps, du calme, et une exigence de finition absolue.</p>
+      <p>Chaque rendez-vous est un moment en tête-à-tête, jamais deux clientes en même temps.</p>
+      <ul class="gages">
+        <li><span class="puce">✓</span><span><strong>Formation certifiée</strong> — techniques gel, chablon &amp; nail art, mise à jour chaque année.</span></li>
+        <li><span class="puce">✓</span><span><strong>Hygiène irréprochable</strong> — matériel stérilisé entre chaque cliente, limes à usage unique.</span></li>
+        <li><span class="puce">✓</span><span><strong>Produits professionnels</strong> — gels de qualité, sans HEMA, respectueux de l'ongle naturel.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- AVIS -->
+<section id="avis">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Elles en parlent</span>
+      <h2>Le mot des clientes</h2>
+    </div>
+    <div class="avis-grid">
+      <div class="avis reveal">
+        <div class="etoiles" aria-label="5 étoiles">★★★★★</div>
+        <p>«&nbsp;Trois semaines après, ma pose est toujours impeccable. Et le lieu est d'un calme…&nbsp;»</p>
+        <div class="qui">Léa, Batignolles</div>
+        <span class="demo-tag">Exemple d'avis</span>
+      </div>
+      <div class="avis reveal">
+        <div class="etoiles" aria-label="5 étoiles">★★★★★</div>
+        <p>«&nbsp;Camille prend vraiment le temps. Ma micro-french dorée fait son effet à chaque réunion.&nbsp;»</p>
+        <div class="qui">Inès, Paris 8e</div>
+        <span class="demo-tag">Exemple d'avis</span>
+      </div>
+      <div class="avis reveal">
+        <div class="etoiles" aria-label="5 étoiles">★★★★★</div>
+        <p>«&nbsp;Enfin un studio où l'hygiène est visible. Je ne vais plus nulle part ailleurs.&nbsp;»</p>
+        <div class="qui">Sarah, Levallois</div>
+        <span class="demo-tag">Exemple d'avis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INFOS PRATIQUES -->
+<section class="prestas" id="infos">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Infos pratiques</span>
+      <h2>Venir au studio</h2>
+    </div>
+    <div class="infos-grid">
+      <div class="info-card reveal">
+        <h3>Adresse</h3>
+        <p>12 rue des Moines<br>Quartier des Batignolles<br>75017 Paris</p>
+        <p style="margin-top:10px">Métro Brochant (ligne 13)<br>ou Rome (ligne 2)</p>
+      </div>
+      <div class="info-card reveal">
+        <h3>Horaires</h3>
+        <ul>
+          <li><span>Mardi – Vendredi</span><span>10h – 19h</span></li>
+          <li><span>Samedi</span><span>9h30 – 18h</span></li>
+          <li><span>Dimanche – Lundi</span><span>Fermé</span></li>
+        </ul>
+        <p style="margin-top:10px">Uniquement sur rendez-vous.</p>
+      </div>
+      <div class="info-card reveal">
+        <h3>Bon à savoir</h3>
+        <p>Comptez 1h30 pour une pose complète, 45&nbsp;min pour un semi-permanent. Venez les ongles au naturel, on s'occupe du reste.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="wrap reveal">
+    <span class="eyebrow">À très vite</span>
+    <h2>Offrez-vous une parenthèse</h2>
+    <p>Les créneaux du samedi partent vite — réservez le vôtre dès maintenant.</p>
+    <button class="btn js-book" type="button">Je réserve mon créneau</button>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-studio">
+    <span class="logo">L'Atelier <em>Nacre</em></span>
+    <span>Studio fictif — Paris 17e · Sur rendez-vous</span>
+  </div>
+  <div class="bandeau-demo">
+    <span>Site de démonstration réalisé par <strong>4dayvelopment</strong></span>
+    <a class="btn" href="/devis?metier=ongles">Créer le mien en 4 jours</a>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script src="/exemples/ongles.js" defer></script>
+</body>
+</html>

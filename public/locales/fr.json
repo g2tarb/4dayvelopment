@@ -156,5 +156,17 @@
   "exit-cta": "🎯 Obtenir mon audit gratuit",
   "exit-close": "Non merci, je peux me débrouiller seul",
   "fcta-call": "Réserver un appel",
-  "btn-loader": "Envoi en cours..."
+  "btn-loader": "Envoi en cours...",
+  "ex-tag": "Exemples",
+  "ex-title": "Et pour <em class=\"gradient-text\">votre métier</em>,<br>ça donne quoi ?",
+  "ex-sub": "Choisissez votre activité et testez un vrai site d'exemple, en direct, comme vos futurs clients le verraient.",
+  "ex-chip-burger": "Restauration",
+  "ex-chip-ongles": "Beauté",
+  "ex-chip-borne": "Borne de recharge",
+  "ex-chip-coach": "Coach sportif",
+  "ex-chip-barbier": "Barbier",
+  "ex-chip-plombier": "Plombier",
+  "ex-open": "Ouvrir en plein écran ↗",
+  "ex-cta": "Je veux le mien",
+  "ex-all": "Tous les exemples"
 }

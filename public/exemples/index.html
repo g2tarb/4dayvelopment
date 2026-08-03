@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Exemples de sites par métier | 4dayvelopment</title>
+  <meta name="description" content="Testez des sites d'exemple complets par métier : restaurant, beauté, artisan, coach sportif, barbier, plombier. Votre site sur-mesure, livré en 4 jours.">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <meta name="theme-color" content="#DA5426">
+  <link rel="canonical" href="https://4dayvelopment.fr/exemples">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="4dayvelopment">
+  <meta property="og:title" content="Exemples de sites par métier | 4dayvelopment">
+  <meta property="og:description" content="Des sites d'exemple complets et navigables par métier. Choisissez le vôtre, on le livre en 4 jours.">
+  <meta property="og:url" content="https://4dayvelopment.fr/exemples">
+  <meta property="og:image" content="https://4dayvelopment.fr/og-image.jpg">
+  <meta property="og:locale" content="fr_FR">
+
+  <!-- Favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/syne-var.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-var.woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+
+  <style>
+    .ex-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill, minmax(330px, 1fr));
+      gap:20px;
+    }
+    .pcard {
+      position:relative;
+      display:flex;
+      flex-direction:column;
+      min-height:300px;
+      border-radius:18px;
+      overflow:hidden;
+      background:#141414;
+      border:1px solid #222;
+      text-decoration:none;
+      color:inherit;
+      isolation:isolate;
+      transition:border-color .4s ease, transform .4s ease, box-shadow .4s ease;
+    }
+    .pcard:hover, .pcard:focus-visible {
+      transform:translateY(-4px);
+      border-color:color-mix(in srgb, var(--brand) 55%, transparent);
+      box-shadow:0 24px 60px -20px color-mix(in srgb, var(--brand) 45%, transparent);
+      outline:none;
+    }
+    .pcard-visual {
+      position:absolute; inset:0; z-index:0;
+      background:radial-gradient(120% 120% at 30% 18%, var(--brand), transparent 58%), #111;
+      filter:saturate(.8) brightness(.8);
+      transform:scale(1.04);
+      transition:filter .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);
+    }
+    .pcard-visual::after {
+      content:attr(data-ico);
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      font-size:6rem; opacity:.2;
+      filter:grayscale(.2);
+    }
+    .pcard:hover .pcard-visual, .pcard:focus-visible .pcard-visual {
+      filter:saturate(1.05) brightness(1);
+      transform:scale(1.1);
+    }
+    .pcard-overlay {
+      position:absolute; inset:0; z-index:1;
+      background:linear-gradient(to top,
+        rgba(8,8,8,.96) 0%, rgba(8,8,8,.8) 30%, rgba(8,8,8,.28) 60%, transparent 100%);
+    }
+    .pcard-body {
+      position:relative; z-index:2;
+      flex:1 1 auto;
+      display:flex; flex-direction:column; justify-content:flex-end;
+      padding:22px;
+    }
+    .pcard-top {
+      position:absolute; top:18px; left:22px; right:22px;
+      display:flex; justify-content:space-between; align-items:center;
+    }
+    .pcard-cat {
+      background:rgba(0,0,0,.42); backdrop-filter:blur(8px);
+      border:1px solid rgba(255,255,255,.14);
+      color:#fff; padding:5px 12px; border-radius:100px;
+      font-size:11px; font-weight:600; letter-spacing:.03em; text-transform:uppercase;
+    }
+    .pcard-num {
+      font-family:'JetBrains Mono',monospace; font-size:13px;
+      color:var(--brand); font-weight:600;
+      text-shadow:0 1px 6px rgba(0,0,0,.6);
+    }
+    .pcard-title {
+      font-family:'Syne',sans-serif; font-weight:700;
+      font-size:1.6rem; color:#fff; line-height:1.05; margin:0 0 8px;
+    }
+    .pcard-desc {
+      color:#c8c8c8; font-size:13.5px; line-height:1.6; margin:0 0 13px;
+    }
+    .pcard-cta {
+      font-size:13px; font-weight:600; color:var(--brand);
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .pcard, .pcard-visual { transition:none; }
+      .pcard:hover { transform:none; }
+    }
+    @media (max-width: 768px) {
+      .pcard { content-visibility:auto; contain-intrinsic-size:auto 320px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="/" class="nav-logo">
+      <img src="/logo/logo4day.webp" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="240">
+    </a>
+    <ul class="nav-links">
+      <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
+      <li><a href="https://4dayvelopment.fr/services/e-commerce">E-commerce</a></li>
+      <li><a href="https://4dayvelopment.fr/services/referencement-seo">SEO</a></li>
+      <li><a href="https://4dayvelopment.fr/exemples" class="active">Exemples</a></li>
+      <li><a href="https://4dayvelopment.fr/#tarifs">Tarifs</a></li>
+      <li><a href="https://4dayvelopment.fr/blog">Blog</a></li>
+    </ul>
+    <div class="nav-right">
+      <a href="https://4dayvelopment.fr/#contact" class="nav-cta">Devis gratuit →</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main>
+
+  <!-- HERO -->
+  <section class="hero" style="min-height:auto;padding:140px 0 50px;">
+    <div class="container">
+      <div class="badge reveal" style="margin-top:24px;">
+        <span class="badge-dot"></span>
+        <span>Des exemples concrets, navigables, par métier</span>
+      </div>
+      <h1 class="hero-title reveal" style="font-size:clamp(2.2rem,5vw,3.8rem);margin-top:20px;">
+        Votre métier mérite <em class="gradient-text">son site</em>.
+      </h1>
+      <p class="hero-desc reveal" style="max-width:640px;">
+        Chaque exemple ci-dessous est un vrai site complet, avec sa propre identité, pensé pour un métier précis.
+        Ouvrez celui qui vous ressemble, baladez-vous dedans, et imaginez le vôtre : on le livre en 4 jours ouvrés.
+      </p>
+    </div>
+  </section>
+
+  <!-- GRILLE -->
+  <section style="padding:30px 0 90px;">
+    <div class="container">
+      <div class="ex-grid">
+
+        <a class="pcard reveal" href="/exemples/burger" style="--brand:#f2b13b;" aria-label="Voir l'exemple restauration rapide">
+          <div class="pcard-visual" data-ico="🍔"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-top"><span class="pcard-cat">Restauration</span><span class="pcard-num">/01</span></div>
+          <div class="pcard-body">
+            <h2 class="pcard-title">Gras Double</h2>
+            <p class="pcard-desc">Fast-food qui vend en direct, sans commissions de plateformes : menu, commande, zones de livraison.</p>
+            <span class="pcard-cta">Tester ce site →</span>
+          </div>
+        </a>
+
+        <a class="pcard reveal" href="/exemples/ongles" style="--brand:#e8b4b8;" aria-label="Voir l'exemple prothésiste ongulaire">
+          <div class="pcard-visual" data-ico="💅"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-top"><span class="pcard-cat">Beauté</span><span class="pcard-num">/02</span></div>
+          <div class="pcard-body">
+            <h2 class="pcard-title">L'Atelier Nacre</h2>
+            <p class="pcard-desc">Studio de prothésie ongulaire : prestations tarifées, galerie de réalisations, prise de rendez-vous.</p>
+            <span class="pcard-cta">Tester ce site →</span>
+          </div>
+        </a>
+
+        <a class="pcard reveal" href="/exemples/borne-recharge" style="--brand:#22c55e;" aria-label="Voir l'exemple électricien bornes de recharge">
+          <div class="pcard-visual" data-ico="⚡"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-top"><span class="pcard-cat">Artisan IRVE</span><span class="pcard-num">/03</span></div>
+          <div class="pcard-body">
+            <h2 class="pcard-title">Voltéo Installations</h2>
+            <p class="pcard-desc">Électricien certifié IRVE : formules chiffrées, aides de l'État, étude gratuite en ligne.</p>
+            <span class="pcard-cta">Tester ce site →</span>
+          </div>
+        </a>
+
+        <a class="pcard reveal" href="/exemples/coach-sportif" style="--brand:#ff5f1f;" aria-label="Voir l'exemple coach sportif">
+          <div class="pcard-visual" data-ico="🥊"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-top"><span class="pcard-cat">Coaching</span><span class="pcard-num">/04</span></div>
+          <div class="pcard-body">
+            <h2 class="pcard-title">Forge Paris 11</h2>
+            <p class="pcard-desc">Coach sportif indépendant : offres par objectif, méthode, séance d'essai réservable en ligne.</p>
+            <span class="pcard-cta">Tester ce site →</span>
+          </div>
+        </a>
+
+        <a class="pcard reveal" href="/exemples/barbier" style="--brand:#b08d57;" aria-label="Voir l'exemple barbier">
+          <div class="pcard-visual" data-ico="✂️"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-top"><span class="pcard-cat">Barbier</span><span class="pcard-num">/05</span></div>
+          <div class="pcard-body">
+            <h2 class="pcard-title">Le Comptoir du Barbier</h2>
+            <p class="pcard-desc">Salon de quartier : tarifs clairs, équipe, horaires, réservation de créneau en deux clics.</p>
+            <span class="pcard-cta">Tester ce site →</span>
+          </div>
+        </a>
+
+        <a class="pcard reveal" href="/exemples/plombier" style="--brand:#2563eb;" aria-label="Voir l'exemple plombier-chauffagiste">
+          <div class="pcard-visual" data-ico="🔧"></div>
+          <div class="pcard-overlay"></div>
+          <div class="pcard-top"><span class="pcard-cat">Dépannage</span><span class="pcard-num">/06</span></div>
+          <div class="pcard-body">
+            <h2 class="pcard-title">Rivière &amp; Fils</h2>
+            <p class="pcard-desc">Plombier-chauffagiste : urgence 7j/7, tarifs transparents, garanties et devis en ligne.</p>
+            <span class="pcard-cta">Tester ce site →</span>
+          </div>
+        </a>
+
+      </div>
+
+      <div class="reveal" style="text-align:center;margin-top:56px;">
+        <p style="color:#888;font-size:15px;margin-bottom:22px;">Votre métier n'est pas dans la liste ? Aucun souci : chaque site est conçu sur-mesure, de zéro.</p>
+        <a href="/devis" class="btn-primary magnetic" style="text-decoration:none;">
+          Je veux le mien
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="footer-logo"><img src="/logo/logo4day.webp" alt="4dayvelopment" class="logo-img" width="240" height="240"></a>
+        <p>Un site qui vend, livré en 4 jours.</p>
+      </div>
+      <div class="footer-links-group">
+        <p class="footer-col-h">Services</p>
+        <ul>
+          <li><a href="/services/site-vitrine">Site Vitrine</a></li>
+          <li><a href="/services/e-commerce">E-commerce</a></li>
+          <li><a href="/services/referencement-seo">SEO &amp; Référencement</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-group">
+        <p class="footer-col-h">Agence</p>
+        <ul>
+          <li><a href="/#process">Notre Processus</a></li>
+          <li><a href="/#tarifs">Tarifs</a></li>
+          <li><a href="/#avis">Avis clients</a></li>
+          <li><a href="/exemples">Exemples</a></li>
+          <li><a href="/blog">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-links-group">
+        <p class="footer-col-h">Contact</p>
+        <ul>
+          <li><a href="/#contact">Prendre RDV</a></li>
+          <li><a href="mailto:contact@4dayvelopment.fr">contact@4dayvelopment.fr</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 4dayvelopment. Tous droits réservés.</p>
+      <ul class="footer-legal">
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/confidentialite">Confidentialité</a></li>
+        <li><a href="/cgv">CGV</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://4dayvelopment.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Exemples", "item": "https://4dayvelopment.fr/exemples" }
+    ]
+  }
+  </script>
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>
