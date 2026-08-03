@@ -3381,7 +3381,7 @@ footer {
   position: absolute;
   top: 10px; left: 50%;
   transform: translateX(-50%);
-  width: 32%; height: 24px;
+  width: 25%; height: 18px;
   background: #000;
   border-radius: var(--radius-full);
   z-index: 2;
@@ -3408,15 +3408,25 @@ footer {
   position: absolute;
   inset: 0;
   border-radius: 38px;
-  overflow: hidden;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   background: var(--bg2);
+  scrollbar-width: none;
 }
+.demo-screen::-webkit-scrollbar { display: none; }
 .demo-device.is-desktop .demo-screen { border-radius: 6px; }
 .demo-screen iframe {
   border: 0;
   display: block;
+  width: 100%;
+  height: 100%;
   transform-origin: 0 0;
   background: var(--bg2);
+}
+/* Tactile : la vue ordinateur (iframe mise à l'échelle) est fragile sur iOS — on ne propose que la vue mobile native */
+@media (hover: none) and (pointer: coarse) {
+  .demo-mode { display: none; }
 }
 
 .demo-actions {

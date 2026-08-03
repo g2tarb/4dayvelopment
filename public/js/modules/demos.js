@@ -39,12 +39,19 @@ export function initDemoViewer() {
   }
 
   function fit() {
-    // L'iframe rend un vrai viewport (390 ou 1200 px) réduit à la taille du cadre
     const desktop = device.classList.contains('is-desktop');
-    const vw = desktop ? 1200 : 390;
+    if (!desktop) {
+      // Vue mobile : iframe à la taille réelle de l'écran du mockup (vrai viewport
+      // mobile, aucune transformation — Safari iOS fige les iframes mises à l'échelle)
+      frame.style.width = '100%';
+      frame.style.height = '100%';
+      frame.style.transform = 'none';
+      return;
+    }
+    // Vue ordinateur : viewport 1200 px réduit à la taille du cadre
     const screen = device.querySelector('.demo-screen');
-    const scale = screen.clientWidth / vw;
-    frame.style.width  = vw + 'px';
+    const scale = screen.clientWidth / 1200;
+    frame.style.width  = '1200px';
     frame.style.height = Math.round(screen.clientHeight / scale) + 'px';
     frame.style.transform = `scale(${scale})`;
   }
