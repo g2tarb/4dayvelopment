@@ -38,20 +38,23 @@ export function initDemoViewer() {
     });
   }
 
+  const touch = matchMedia('(hover: none), (pointer: coarse)').matches;
+
   function fit() {
     const desktop = device.classList.contains('is-desktop');
-    if (!desktop) {
-      // Vue mobile : iframe à la taille réelle de l'écran du mockup (vrai viewport
-      // mobile, aucune transformation — Safari iOS fige les iframes mises à l'échelle)
+    if (!desktop && touch) {
+      // Tactile : iframe à la taille réelle de l'écran (Safari iOS fige les
+      // iframes mises à l'échelle — le viewport natif garde le scroll au doigt)
       frame.style.width = '100%';
       frame.style.height = '100%';
       frame.style.transform = 'none';
       return;
     }
-    // Vue ordinateur : viewport 1200 px réduit à la taille du cadre
+    // Desktop : viewport fidèle (390 px mobile / 1200 px ordinateur) réduit au cadre
+    const vw = desktop ? 1200 : 390;
     const screen = device.querySelector('.demo-screen');
-    const scale = screen.clientWidth / 1200;
-    frame.style.width  = '1200px';
+    const scale = screen.clientWidth / vw;
+    frame.style.width  = vw + 'px';
     frame.style.height = Math.round(screen.clientHeight / scale) + 'px';
     frame.style.transform = `scale(${scale})`;
   }

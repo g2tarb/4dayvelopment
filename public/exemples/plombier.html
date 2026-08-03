@@ -299,6 +299,22 @@ footer{background:var(--encre);color:rgba(244,242,237,.75);
   .maison__grid,.secteur__grid{gap:2.4rem}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ── Très petites largeurs (mockup téléphone ~280-320px) ── */
+@media(max-width:374px){
+  .topbar__inner{padding:.65rem .9rem;gap:.5rem}
+  .brand{white-space:nowrap;min-width:0}
+  .brand span{display:none}
+  .brand b,.brand strong{font-size:1rem}
+  .top-cta,.top-tel,.btn.btn--top{font-size:10.5px;padding:.45rem .85rem;min-height:40px;letter-spacing:.06em;white-space:nowrap}
+  .stamp{display:none}
+  h1{font-size:clamp(1.6rem,9vw,3.4rem)}
+  h2{font-size:clamp(1.35rem,8.4vw,2.6rem)}
+  .tampons{flex-wrap:wrap;min-width:0}
+  .tampons>*{min-width:0;font-size:11px;padding:.5rem .7rem;white-space:normal;text-align:center}
+  .formes{flex-wrap:wrap;justify-content:center}
+  .formes .forme,.formes button{min-width:0;padding:.5rem .7rem;font-size:12px}
+}
 </style>
 </head>
 <body>
