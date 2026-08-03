@@ -1,0 +1,28 @@
+# CLAUDE.md — 4dayvelopment
+
+Site vitrine d'agence web. HTML statique servi par Express (`server.js`) depuis `public/`.
+Stack : vanilla JS + Three.js (fond décoratif uniquement). Contact via Nodemailer + webhook n8n.
+Blog publié dynamiquement via `POST /api/blog/publish` (template `buildArticleHTML`).
+
+## SEO 4DV
+
+### Positionnement
+- Agence web Paris, sites livrés en 4 jours.
+- Cibles : solopreneurs, artisans, coachs, PME francophones.
+- Mot-clé pilier : « création site internet Paris ».
+
+### Règles SEO
+- Le HTML critique (title, meta, H1, contenu texte, liens) est TOUJOURS dans le HTML servi
+  par le serveur, jamais injecté en JS après chargement.
+- 1 page = 1 intention de recherche = 1 H1 unique.
+- title <= 60 caractères. meta description 140-160 caractères.
+- `robots.txt` ne doit JAMAIS bloquer : GPTBot, ChatGPT-User, PerplexityBot, ClaudeBot,
+  Google-Extended.
+
+### Interdits
+- Aucun faux avis, aucun témoignage / note inventés (droit FR : pratiques commerciales
+  trompeuses, art. L121-2 à L121-4 du Code de la consommation).
+- Pas d'`aggregateRating` self-serving sur `Organization` / `LocalBusiness` (ignoré par Google
+  depuis 2019, sous surveillance renforcée depuis mars 2026).
+- Pas de promesse type « garanti 1ère page ».
+- Pas d'em-dash, pas d'emoji dans le contenu rédactionnel du site.

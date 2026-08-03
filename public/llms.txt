@@ -1,0 +1,29 @@
+# 4dayvelopment
+
+> Agence web basee a Paris. Creation de sites internet (vitrine, e-commerce) livres en 4 jours ouvres, garantis contractuellement. Design sur-mesure, SEO inclus, hebergement et SSL 1 an inclus.
+
+## Offres et tarifs
+- [Essentiel](https://4dayvelopment.fr/essentiel): site vitrine jusqu'a 3 pages, design personnalise, SEO de base, hebergement 1 an inclus - 990 EUR
+- [Site Vitrine](https://4dayvelopment.fr/services/site-vitrine): 3 a 5 pages, design sur-mesure, SEO inclus - 1290 EUR
+- [Site Pro / PME](https://4dayvelopment.fr/#tarifs): jusqu'a 8-10 pages, SEO avance, maintenance incluse - a partir de 1990 EUR
+- [E-commerce](https://4dayvelopment.fr/services/e-commerce): boutique en ligne complete, paiement securise - a partir de 2990 EUR
+- Option WordPress livrable sur toutes les formules : +250 EUR, formation incluse. Paiement en 2 ou 3 fois sans frais.
+
+## Pages cles
+- [Accueil](https://4dayvelopment.fr/): presentation de l'agence, tarifs, processus, FAQ.
+- [Services / Site Vitrine](https://4dayvelopment.fr/services/site-vitrine)
+- [Services / E-commerce](https://4dayvelopment.fr/services/e-commerce)
+- [Services / Referencement SEO](https://4dayvelopment.fr/services/referencement-seo)
+- [Services / Site restaurant](https://4dayvelopment.fr/services/site-internet-restaurant)
+- [Blog / Combien coute un site internet en 2026](https://4dayvelopment.fr/blog/combien-coute-site-internet-2026): guide de prix comparatif (DIY, freelance, agence).
+- [Portfolio](https://4dayvelopment.fr/portfolio)
+
+## Zone d'intervention
+Paris, Ile-de-France, France (a distance sur toute la France).
+
+## Contact
+Email: contact@4dayvelopment.fr
+
+## Optional
+- [Mentions legales](https://4dayvelopment.fr/mentions-legales)
+- [CGV](https://4dayvelopment.fr/cgv)

@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Site Vitrine Professionnel dès 990€ | Livré en 4 Jours | 4dayvelopment</title>
+  <title>Site vitrine dès 990€, livré en 4 jours | 4dayvelopment</title>
   <meta name="description" content="Commandez votre site vitrine professionnel livré en 4 jours ouvrés dès 990€. Design sur-mesure, SEO inclus, responsive mobile. Devis gratuit sous 24h.">
   <meta name="robots" content="index, follow">
   <meta name="theme-color" content="#DA5426">
   <link rel="canonical" href="https://4dayvelopment.fr/essentiel">
-  <link rel="alternate" hreflang="fr" href="https://4dayvelopment.fr/essentiel.html">
+  <link rel="alternate" hreflang="fr" href="https://4dayvelopment.fr/essentiel">
 
   <!-- Open Graph -->
   <meta property="og:type" content="product">
@@ -320,6 +320,10 @@
       transform: rotate(45deg) translate(-1px,-1px);
       display: block;
     }
+    .wp-add-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; }
+    .wp-add-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .wp-add-item { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+    .wp-add-footer { font-size: 11px; color: var(--muted); padding-top: 10px; border-top: 1px solid rgba(136,64,131,0.15); }
 
     /* Timeline 4 jours */
     .timeline { display: flex; flex-direction: column; gap: 0; }
@@ -699,7 +703,7 @@
 <body>
 
   <header>
-    <a href="/"><img src="logo/logo4day.png" alt="4dayvelopment"></a>
+    <a href="/"><img src="logo/logo4day.webp" alt="4dayvelopment" width="160" height="40"></a>
     <div style="display:flex;align-items:center;gap:12px;">
       <button id="lang-btn" class="lang-btn-ext" onclick="toggleLang()">🇬🇧 EN</button>
       <a href="/" class="back-link">← Retour au site</a>
@@ -736,7 +740,7 @@
           <div class="inclus-item"><div class="inclus-check">✓</div>Formulaire de contact intégré</div>
           <div class="inclus-item"><div class="inclus-check">✓</div>SEO de base (balises, vitesse, indexation)</div>
           <div class="inclus-item"><div class="inclus-check">✓</div>Hébergement & nom de domaine 1 an offerts</div>
-          <div class="inclus-item"><div class="inclus-check">✓</div>Formation administration 1h incluse</div>
+          <div class="inclus-item"><div class="inclus-check">✓</div>Fichiers sources remis à la livraison</div>
           <div class="inclus-item"><div class="inclus-check">✓</div>⚡ Livraison garantie en <strong>4 jours</strong></div>
         </div>
       </div>
@@ -782,6 +786,34 @@
         </label>
       </div>
 
+      <!-- WordPress -->
+      <div class="maintenance-block">
+        <div class="mb-header">
+          <span class="mb-icon">🌐</span>
+          <div>
+            <div class="wp-add-title">Livraison sur WordPress</div>
+            <div class="wp-add-sub">Gardez la main sur votre site après la livraison</div>
+          </div>
+          <div class="mb-price">
+            <span class="mb-amount">+250€</span>
+          </div>
+        </div>
+        <div class="mb-items">
+          <div class="wp-add-item">📝 Modification en glisser-déposer</div>
+          <div class="wp-add-item">🎓 Formation à la prise en main incluse</div>
+          <div class="wp-add-item">⚡ Thème léger, performances surveillées</div>
+          <div class="wp-add-item">🎨 Toujours conçu sur-mesure</div>
+        </div>
+        <div class="wp-add-footer">
+          Supplément fixe sur la formule Essentiel · Licence Elementor Pro prise en charge par l'agence
+        </div>
+        <label class="mb-toggle">
+          <input type="checkbox" id="add-wordpress">
+          <span class="mb-toggle-box"></span>
+          <span>Livrer mon site sur WordPress (+250€)</span>
+        </label>
+      </div>
+
       <!-- Timeline -->
       <div>
         <div class="inclus-title">Les 4 jours en détail</div>
@@ -811,7 +843,7 @@
             <div class="tl-dot"><div class="tl-dot-circle">J4</div></div>
             <div class="tl-content">
               <div class="tl-day">Jour 4 : Mise en ligne ✅</div>
-              <div class="tl-desc">Votre site est en ligne. On vous forme à l'administration en 1h. C'est parti !</div>
+              <div class="tl-desc">Votre site est en ligne, fichiers sources remis. On reste disponibles pour la suite. C'est parti !</div>
             </div>
           </div>
         </div>
@@ -1024,8 +1056,10 @@
       const pages = [...document.querySelectorAll('input[name="pages"]:checked')].map(c => c.value).join(', ') || 'Non précisé';
 
       const avecMaintenance = document.getElementById('add-maintenance').checked;
+      const avecWordPress = document.getElementById('add-wordpress').checked;
+      const totalUnique = 990 + (avecWordPress ? 250 : 0);
       const message = `
-FORMULE ESSENTIEL · 990€ · Livraison 4 jours${avecMaintenance ? '\n+ MAINTENANCE 80€/mois (engagement 12 mois)' : ''}
+FORMULE ESSENTIEL · ${totalUnique}€ · Livraison 4 jours${avecWordPress ? '\n+ LIVRAISON WORDPRESS (+250€)' : ''}${avecMaintenance ? '\n+ MAINTENANCE 80€/mois (engagement 12 mois)' : ''}
 
 Prénom      : ${getVal('e-prenom')}
 Téléphone   : ${getVal('e-tel') || 'Non renseigné'}
@@ -1048,9 +1082,9 @@ ${getVal('e-description')}
             name:    getVal('e-prenom'),
             email:   getVal('e-email'),
             phone:   getVal('e-tel'),
-            subject: `[COMMANDE ESSENTIEL${avecMaintenance ? ' + MAINTENANCE' : ''} 990€] ${getVal('e-activite')}`,
+            subject: `[COMMANDE ESSENTIEL${avecWordPress ? ' + WORDPRESS' : ''}${avecMaintenance ? ' + MAINTENANCE' : ''} ${totalUnique}€] ${getVal('e-activite')}`,
             service: 'Formule Essentiel',
-            budget:  '990€',
+            budget:  `${totalUnique}€`,
             message,
           }),
         });
@@ -1103,7 +1137,7 @@ ${getVal('e-description')}
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>Formulaire de contact intégré', 3],
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>SEO de base (balises, vitesse, indexation)', 4],
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>Hébergement & nom de domaine 1 an offerts', 5],
-        ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>Formation administration 1h incluse', 6],
+        ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>Fichiers sources remis à la livraison', 6],
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>⚡ Livraison garantie en <strong>4 jours</strong>', 7],
         /* prix */
         ['.prix-detail',             'Paiement unique · Sans abonnement caché'],
@@ -1119,6 +1153,14 @@ ${getVal('e-description')}
         ['.mb-item',                 '📧 Support email sous 4h', 3],
         ['.mb-footer',               'Engagement 12 mois · <strong style="color:var(--text)">960€/an</strong> · Résiliable à l\'issue de l\'engagement'],
         ['.mb-toggle span:last-child','Ajouter la maintenance à ma commande'],
+        ['.wp-add-title',            'Livraison sur WordPress'],
+        ['.wp-add-sub',              'Gardez la main sur votre site après la livraison'],
+        ['.wp-add-item',             '📝 Modification en glisser-déposer', 0],
+        ['.wp-add-item',             '🎓 Formation à la prise en main incluse', 1],
+        ['.wp-add-item',             '⚡ Thème léger, performances surveillées', 2],
+        ['.wp-add-item',             '🎨 Toujours conçu sur-mesure', 3],
+        ['.wp-add-footer',           'Supplément fixe sur la formule Essentiel · Licence Elementor Pro prise en charge par l\'agence'],
+        ['.mb-toggle span:last-child','Livrer mon site sur WordPress (+250€)', 1],
         /* timeline */
         ['.inclus-title',            'Les 4 jours en détail', 1],
         ['.tl-day',                  'Jour 1 : Brief & Maquette', 0],
@@ -1128,7 +1170,7 @@ ${getVal('e-description')}
         ['.tl-day',                  'Jour 3 : Finalisation & Tests', 2],
         ['.tl-desc',                 'Tests sur tous les appareils, optimisation vitesse, ajustements finaux.', 2],
         ['.tl-day',                  'Jour 4 : Mise en ligne ✅', 3],
-        ['.tl-desc',                 'Votre site est en ligne. On vous forme à l\'administration en 1h. C\'est parti !', 3],
+        ['.tl-desc',                 'Votre site est en ligne, fichiers sources remis. On reste disponibles pour la suite. C\'est parti !', 3],
         /* form header */
         ['.form-title',              'Démarrez votre projet'],
         ['.form-subtitle',           'Remplissez ce formulaire · On vous répond sous 2h'],
@@ -1192,7 +1234,7 @@ ${getVal('e-description')}
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>Integrated contact form', 3],
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>Basic SEO (tags, speed, indexing)', 4],
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>Hosting & domain name for 1 year included', 5],
-        ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>1-hour admin training included', 6],
+        ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>Source files handed over at delivery', 6],
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>⚡ Delivery guaranteed in <strong>4 days</strong>', 7],
         /* prix */
         ['.prix-detail',             'One-time payment · No hidden subscription'],
@@ -1208,6 +1250,14 @@ ${getVal('e-description')}
         ['.mb-item',                 '📧 Email support within 4h', 3],
         ['.mb-footer',               '12-month commitment · <strong style="color:var(--text)">€960/yr</strong> · Cancellable after commitment'],
         ['.mb-toggle span:last-child','Add maintenance to my order'],
+        ['.wp-add-title',            'WordPress delivery'],
+        ['.wp-add-sub',              'Keep control of your website after delivery'],
+        ['.wp-add-item',             '📝 Drag-and-drop editing', 0],
+        ['.wp-add-item',             '🎓 Hands-on training included', 1],
+        ['.wp-add-item',             '⚡ Lightweight theme, performance monitored', 2],
+        ['.wp-add-item',             '🎨 Still designed tailor-made for you', 3],
+        ['.wp-add-footer',           'Fixed surcharge on the Essential plan · Elementor Pro license covered by the agency'],
+        ['.mb-toggle span:last-child','Deliver my site on WordPress (+250€)', 1],
         /* timeline */
         ['.inclus-title',            'The 4 days in detail', 1],
         ['.tl-day',                  'Day 1 : Brief & Mockup', 0],
@@ -1217,7 +1267,7 @@ ${getVal('e-description')}
         ['.tl-day',                  'Day 3 : Finalisation & Testing', 2],
         ['.tl-desc',                 'Testing on all devices, speed optimisation, final adjustments.', 2],
         ['.tl-day',                  'Day 4 : Go Live ✅', 3],
-        ['.tl-desc',                 'Your site is live. We provide 1-hour admin training. Off we go!', 3],
+        ['.tl-desc',                 'Your site is live, source files handed over. We stay available for what\'s next. Off we go!', 3],
         /* form header */
         ['.form-title',              'Start your project'],
         ['.form-subtitle',           'Fill in this form · We reply within 2h'],
@@ -1316,6 +1366,24 @@ ${getVal('e-description')}
       if (el) el.value = email;
     }
   })();
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "Création de site vitrine Essentiel",
+    "description": "Site vitrine professionnel jusqu'à 3 pages, livré en 4 jours ouvrés. Design personnalisé, responsive, SEO de base, hébergement et nom de domaine 1 an inclus.",
+    "provider": { "@type": "Organization", "name": "4dayvelopment", "url": "https://4dayvelopment.fr/" },
+    "areaServed": { "@type": "Country", "name": "France" },
+    "offers": {
+      "@type": "Offer",
+      "price": "990",
+      "priceCurrency": "EUR",
+      "availability": "https://schema.org/InStock",
+      "priceValidUntil": "2026-12-31"
+    }
+  }
   </script>
 </body>
 </html>

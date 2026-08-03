@@ -57,16 +57,61 @@ ensureLeadsFile();
 function saveLead(data) {
   try {
     const leads = JSON.parse(fs.readFileSync(LEADS_FILE, 'utf-8'));
-    leads.push({
+    const record = {
       ...data,
       receivedAt: new Date().toISOString(),
       id: `lead_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`,
-    });
+    };
+    leads.push(record);
     fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
     logger.info({ name: data.prenom }, 'Lead sauvegardé localement');
+    return record.id;
   } catch (err) {
     logger.error({ err: err.message }, 'Échec sauvegarde locale du lead');
+    return null;
   }
+}
+
+function markLeadForwarded(id) {
+  if (!id) return;
+  try {
+    const leads = JSON.parse(fs.readFileSync(LEADS_FILE, 'utf-8'));
+    const lead = leads.find((l) => l.id === id);
+    if (lead) {
+      lead.pipelineSentAt = new Date().toISOString();
+      fs.writeFileSync(LEADS_FILE, JSON.stringify(leads, null, 2), 'utf-8');
+    }
+  } catch (err) {
+    logger.warn({ err: err.message }, 'Échec marquage lead transmis');
+  }
+}
+
+/* ── Rejeu automatique : leads jamais transmis au pipeline (VPS injoignable au moment T).
+   Toutes les 10 min, on retente ceux sans pipelineSentAt. Filet anti-perte, zéro doublon. ── */
+if (process.env.PIPELINE_INTAKE_URL) {
+  setInterval(async () => {
+    let pending = [];
+    try {
+      pending = JSON.parse(fs.readFileSync(LEADS_FILE, 'utf-8')).filter((l) => !l.pipelineSentAt).slice(0, 10);
+    } catch { return; }
+    for (const lead of pending) {
+      try {
+        const res = await fetch(process.env.PIPELINE_INTAKE_URL, {
+          method:  'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            ...(process.env.PIPELINE_INTAKE_TOKEN ? { 'x-pipeline-token': process.env.PIPELINE_INTAKE_TOKEN } : {}),
+          },
+          body:    JSON.stringify(lead),
+          signal:  AbortSignal.timeout(8000),
+        });
+        if (res.ok) {
+          markLeadForwarded(lead.id);
+          logger.info({ id: lead.id, name: lead.prenom }, 'Lead rejoué vers le pipeline');
+        }
+      } catch { /* pipeline toujours injoignable, on retentera */ }
+    }
+  }, 10 * 60 * 1000).unref();
 }
 
 /* ── App ──────────────────────────────────────────────── */
@@ -83,6 +128,24 @@ if (process.env.NODE_ENV === 'production') {
     next();
   });
 }
+
+/* ── SEO : URLs canoniques (301) ───────────────────────────
+   .html et slash final -> version propre. DOIT précéder express.static,
+   qui sinon sert les .html en 200 (duplication de contenu indexable). */
+const HTML_RENAMES = { '/lead.html': '/devis' };
+app.use((req, res, next) => {
+  if (req.method !== 'GET' && req.method !== 'HEAD') return next();
+  const p = req.path;
+  const qs = req.originalUrl.slice(p.length);
+  if (HTML_RENAMES[p]) return res.redirect(301, HTML_RENAMES[p] + qs);
+  if (p.endsWith('.html')) {
+    let clean = p.slice(0, -5);
+    if (clean.endsWith('/index')) clean = clean.slice(0, -6) || '/';
+    return res.redirect(301, (clean || '/') + qs);
+  }
+  if (p.length > 1 && p.endsWith('/')) return res.redirect(301, p.slice(0, -1) + qs);
+  next();
+});
 
 /* ── Helmet avec CSP explicite ────────────────────────── */
 app.use(helmet({
@@ -121,11 +184,12 @@ app.use(cors({
 app.use(express.static(path.join(__dirname, 'public'), {
   maxAge: process.env.NODE_ENV === 'production' ? '7d' : 0,
   etag: true,
+  redirect: false, // pas de 301 /dir -> /dir/ : /blog et /portfolio servis directement par leurs routes propres
   setHeaders(res, filePath) {
     if (filePath.endsWith('.html')) {
       res.setHeader('Cache-Control', 'no-cache');
     }
-    if (/\.(js|css|svg|png|jpg|woff2?)$/.test(filePath)) {
+    if (/\.(js|css|svg|png|jpg|webp|woff2?)$/.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
     }
   },
@@ -196,7 +260,7 @@ function validateWith(schema) {
   return (req, res, next) => {
     const result = schema.safeParse(req.body);
     if (!result.success) {
-      const errors = result.error.errors.map(e => ({
+      const errors = result.error.issues.map(e => ({
         field:   e.path.join('.'),
         message: e.message,
       }));
@@ -272,33 +336,37 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
     return res.status(400).json({ success: false, message: 'Bot détecté.' });
   }
 
-  // Sauvegarde locale systématique (filet de sécurité)
-  saveLead(data);
+  // Sauvegarde locale systématique (filet de sécurité, anti-perte de lead)
+  const localId = saveLead(data);
 
-  // Appel webhook n8n (non bloquant, mais les échecs sont désormais visibles)
-  if (process.env.N8N_WEBHOOK_URL) {
+  // Émission du lead : nouveau pipeline en priorité (PIPELINE_INTAKE_URL + token),
+  // fallback n8n (N8N_WEBHOOK_URL) tant que la bascule n'est pas finie. Non bloquant.
+  const target = process.env.PIPELINE_INTAKE_URL || process.env.N8N_WEBHOOK_URL;
+  if (target) {
+    const isPipeline = Boolean(process.env.PIPELINE_INTAKE_URL);
     try {
-      const webhookRes = await fetch(process.env.N8N_WEBHOOK_URL, {
+      const webhookRes = await fetch(target, {
         method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          ...(isPipeline && process.env.PIPELINE_INTAKE_TOKEN ? { 'x-pipeline-token': process.env.PIPELINE_INTAKE_TOKEN } : {}),
+        },
         body:    JSON.stringify(data),
         signal:  AbortSignal.timeout(8000),
       });
       if (webhookRes.ok) {
-        logger.info({ name: data.prenom, status: webhookRes.status }, 'Webhook n8n déclenché');
+        if (isPipeline) markLeadForwarded(localId);
+        logger.info({ name: data.prenom, status: webhookRes.status, target: isPipeline ? 'pipeline' : 'n8n' }, 'Lead émis');
       } else {
         const detail = await webhookRes.text().catch(() => '');
-        logger.warn(
-          { name: data.prenom, status: webhookRes.status, detail: detail.slice(0, 200) },
-          'Webhook n8n a répondu en erreur (non bloquant) — vérifier N8N_WEBHOOK_URL et que le workflow est actif',
-        );
+        logger.warn({ name: data.prenom, status: webhookRes.status, detail: detail.slice(0, 200) }, 'Cible lead a répondu en erreur (non bloquant)');
       }
     } catch (webhookErr) {
       const reason = webhookErr.name === 'TimeoutError' ? 'timeout (8s)' : webhookErr.message;
-      logger.warn({ name: data.prenom, err: reason }, 'Webhook n8n injoignable (non bloquant)');
+      logger.warn({ name: data.prenom, err: reason }, 'Cible lead injoignable (non bloquant) — le lead reste dans data/leads.json');
     }
   } else {
-    logger.warn({ name: data.prenom }, 'Webhook n8n ignoré — N8N_WEBHOOK_URL non défini');
+    logger.warn({ name: data.prenom }, 'Aucune cible lead (ni PIPELINE_INTAKE_URL ni N8N_WEBHOOK_URL)');
   }
 
   const mailConfigured = process.env.MAIL_USER && !process.env.MAIL_USER.includes('ton-email');
@@ -345,32 +413,6 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
   return res.json({ success: true, message: 'Message envoyé avec succès ! Nous vous répondons sous 24h.' });
 });
 
-/* ── GET /api/stats ───────────────────────────────────── */
-app.get('/api/stats', apiLimiter, (req, res) => {
-  res.json({ sites: 152, satisfaction: 98, delai: 4, support: '24/7', avis: '4.9/5', clients: 150 });
-});
-
-/* ── GET /api/toasts ──────────────────────────────────── */
-app.get('/api/toasts', apiLimiter, (req, res) => {
-  const toasts = [
-    { emoji: '👀', name: '4 personnes regardent ce site',       detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '🇫🇷', name: 'Marie L. vient de commander',        detail: 'Site vitrine professionnel',    time: 'au cours du mois' },
-    { emoji: '👀', name: '7 personnes consultent nos tarifs',   detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '⭐', name: 'Thomas B. signe son contrat',         detail: 'Refonte complète e-commerce',   time: 'au cours du mois' },
-    { emoji: '👀', name: '2 personnes remplissent le brief',    detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '🚀', name: 'Sophie R. donne 5 étoiles',           detail: '"Résultat incroyable, merci !"',time: 'au cours du mois' },
-    { emoji: '👀', name: '5 personnes regardent ce site',       detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '💼', name: 'Karim D. réserve une démo',           detail: 'Application web sur-mesure',    time: 'au cours du mois' },
-    { emoji: '👀', name: '3 personnes consultent les services', detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '📈', name: 'Julie M., +340% de conv.',           detail: 'Site Pro + SEO avancé',         time: 'au cours du mois' },
-    { emoji: '👀', name: '6 personnes découvrent l\'agence',    detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '🎯', name: 'Amandine C., 3 000€/mois',           detail: 'Boutique e-commerce lancée',    time: 'au cours du mois' },
-    { emoji: '👀', name: '9 personnes regardent ce site',       detail: 'en ce moment même',             time: 'En direct' },
-    { emoji: '🇧🇪', name: 'Lucas V. démarre son projet',        detail: 'Site vitrine + blog',           time: 'au cours du mois' },
-  ];
-  res.json(toasts);
-});
-
 /* ═══════════════════════════════════════════════════════
    BLOG — Publication depuis n8n
 ═══════════════════════════════════════════════════════ */
@@ -386,13 +428,31 @@ const articleSchema = z.object({
   category:    z.string().trim().max(50).optional().default('Guide'),
   content:     z.string().trim().min(100),
   readTime:    z.string().trim().max(20).optional().default('5 min de lecture'),
+  faq:         z.array(z.object({
+    question: z.string().trim().min(3).max(300),
+    answer:   z.string().trim().min(3).max(2000),
+  })).max(20).optional(),
 });
 
 function buildArticleHTML(data) {
-  const { title, slug, description, category, content, readTime } = data;
+  const { title, slug, description, category, content, readTime, faq } = data;
   const date     = new Date().toISOString().split('T')[0];
   const dateFR   = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   const url      = `https://4dayvelopment.fr/blog/${slug}`;
+
+  const faqHtml = (faq && faq.length) ? `
+        <section style="margin-top:50px;">
+          <h2 style="color:#e8e8e8;font-size:1.8rem;margin-bottom:24px;">Questions fréquentes</h2>
+          ${faq.map(f => `<div style="margin-bottom:22px;">
+            <h3 style="color:#e8e8e8;font-size:1.2rem;margin-bottom:8px;">${escapeHtml(f.question)}</h3>
+            <p style="color:#bbb;line-height:1.8;">${escapeHtml(f.answer)}</p>
+          </div>`).join('')}
+        </section>` : '';
+
+  const faqJsonLd = (faq && faq.length) ? `
+  <script type="application/ld+json">
+  ${JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })) })}
+  </script>` : '';
 
   return `<!DOCTYPE html>
 <html lang="fr" dir="ltr">
@@ -410,13 +470,15 @@ function buildArticleHTML(data) {
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${escapeHtml(description)}">
   <meta property="og:url" content="${url}">
-  <meta property="og:image" content="https://4dayvelopment.fr/og-image.svg">
+  <meta property="og:image" content="https://4dayvelopment.fr/og-image.jpg">
   <meta property="og:locale" content="fr_FR">
   <meta property="article:published_time" content="${date}">
+  <meta property="article:modified_time" content="${date}">
 
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="${escapeHtml(title)}">
   <meta name="twitter:description" content="${escapeHtml(description)}">
+  <meta name="twitter:image" content="https://4dayvelopment.fr/og-image.jpg">
 
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -431,72 +493,81 @@ function buildArticleHTML(data) {
 
   <nav id="navbar">
     <a href="/" class="nav-logo">
-      <img src="/logo/logo4day.png" alt="4dayvelopment" class="logo-img" width="160" height="40">
+      <img src="/logo/logo4day.webp" alt="4dayvelopment" class="logo-img" width="160" height="40">
     </a>
     <ul class="nav-links">
-      <li><a href="/services/site-vitrine">Site Vitrine</a></li>
-      <li><a href="/services/e-commerce">E-commerce</a></li>
-      <li><a href="/services/referencement-seo">SEO</a></li>
-      <li><a href="/blog" class="active">Blog</a></li>
-      <li><a href="/#tarifs">Tarifs</a></li>
+      <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
+      <li><a href="https://4dayvelopment.fr/services/e-commerce">E-commerce</a></li>
+      <li><a href="https://4dayvelopment.fr/services/referencement-seo">SEO</a></li>
+      <li><a href="https://4dayvelopment.fr/portfolio">Portfolio</a></li>
+      <li><a href="https://4dayvelopment.fr/#tarifs">Tarifs</a></li>
+      <li><a href="https://4dayvelopment.fr/blog" class="active">Blog</a></li>
     </ul>
     <div class="nav-right">
-      <a href="/#contact" class="nav-cta">Devis gratuit →</a>
+      <a href="https://4dayvelopment.fr/#contact" class="nav-cta">Devis gratuit →</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
 
   <main>
-  <article style="max-width:800px;margin:0 auto;padding:140px 20px 80px;">
 
-    <nav aria-label="Fil d'Ariane" class="breadcrumb">
-      <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;gap:8px;list-style:none;padding:0;font-size:14px;color:#666;">
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a itemprop="item" href="/" style="color:#888;text-decoration:none;"><span itemprop="name">Accueil</span></a>
-          <meta itemprop="position" content="1"><span style="margin-left:8px;color:#444;">›</span>
-        </li>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <a itemprop="item" href="/blog" style="color:#888;text-decoration:none;"><span itemprop="name">Blog</span></a>
-          <meta itemprop="position" content="2"><span style="margin-left:8px;color:#444;">›</span>
-        </li>
-        <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
-          <span itemprop="name" style="color:#f2b13b;">${escapeHtml(title)}</span>
-          <meta itemprop="position" content="3">
-        </li>
-      </ol>
-    </nav>
+  <section class="hero" style="min-height:auto;padding:140px 24px 60px;">
+    <div class="container" style="max-width:800px;">
 
-    <div style="display:flex;gap:12px;align-items:center;margin:24px 0 20px;">
-      <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">${escapeHtml(category)}</span>
-      <time datetime="${date}" style="font-size:13px;color:#666;">${dateFR}</time>
-      <span style="font-size:13px;color:#666;">· ${escapeHtml(readTime)}</span>
+      <nav aria-label="Fil d'Ariane" class="breadcrumb" style="margin-top:24px;">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;font-size:14px;color:#666;">
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="/" style="color:#888;text-decoration:none;"><span itemprop="name">Accueil</span></a>
+            <meta itemprop="position" content="1"><span style="margin-left:8px;color:#444;">›</span>
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <a itemprop="item" href="/blog" style="color:#888;text-decoration:none;"><span itemprop="name">Blog</span></a>
+            <meta itemprop="position" content="2"><span style="margin-left:8px;color:#444;">›</span>
+          </li>
+          <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+            <span itemprop="name" style="color:#f2b13b;">${escapeHtml(title)}</span>
+            <meta itemprop="position" content="3">
+          </li>
+        </ol>
+      </nav>
+
+      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:20px;margin-bottom:20px;">
+        <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">${escapeHtml(category)}</span>
+        <time datetime="${date}" style="font-size:13px;color:#666;">${dateFR}</time>
+        <span style="font-size:13px;color:#666;">· ${escapeHtml(readTime)}</span>
+      </div>
+
+      <h1 class="hero-title reveal" style="font-size:clamp(2rem,5vw,3.2rem);margin-top:0;line-height:1.2;">${escapeHtml(title)}</h1>
+      <p class="hero-desc reveal" style="max-width:700px;">${escapeHtml(description)}</p>
     </div>
+  </section>
 
-    <h1 style="font-family:'Syne',sans-serif;font-size:clamp(2rem,4.5vw,3rem);font-weight:800;line-height:1.15;color:#e8e8e8;margin-bottom:24px;">${escapeHtml(title)}</h1>
+  <article style="padding:20px 0 80px;">
+    <div class="container" style="max-width:800px;">
+      <div style="color:#bbb;line-height:1.9;font-size:16px;">
+        ${content}
+      </div>
+${faqHtml}
+      <div style="background:rgba(218,84,38,0.08);border:1px solid rgba(218,84,38,0.2);border-radius:14px;padding:28px;margin:40px 0;text-align:center;">
+        <p style="font-size:18px;color:#e8e8e8;font-weight:700;margin-bottom:12px;">Un projet en tête ?</p>
+        <p style="font-size:14px;color:#888;margin-bottom:20px;">Devis gratuit sous 24h · Livraison en 4 jours · Sans engagement</p>
+        <a href="/#contact" class="btn-primary magnetic" style="display:inline-flex;">Demander mon devis gratuit →</a>
+      </div>
 
-    <div style="color:#bbb;line-height:1.9;font-size:16px;">
-      ${content}
+      <a href="/blog" style="color:#f2b13b;font-weight:600;font-size:14px;text-decoration:none;">← Retour au blog</a>
     </div>
-
-    <div style="background:rgba(218,84,38,0.08);border:1px solid rgba(218,84,38,0.2);border-radius:14px;padding:28px;margin:40px 0;text-align:center;">
-      <p style="font-size:18px;color:#e8e8e8;font-weight:700;margin-bottom:12px;">Un projet en tete ?</p>
-      <p style="font-size:14px;color:#888;margin-bottom:20px;">Devis gratuit sous 24h · Livraison en 4 jours · Sans engagement</p>
-      <a href="/#contact" class="btn-primary magnetic" style="display:inline-flex;">Demander mon devis gratuit →</a>
-    </div>
-
-    <a href="/blog" style="color:#f2b13b;font-weight:600;font-size:14px;text-decoration:none;">← Retour au blog</a>
-
   </article>
+
   </main>
 
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="/" class="footer-logo"><img src="/logo/logo4day.png" alt="4dayvelopment" class="logo-img" width="160" height="40"></a>
-        <p>Un site qui vend, livre en 4 jours.<br>Garanti ou c'est gratuit.</p>
+        <a href="/" class="footer-logo"><img src="/logo/logo4day.webp" alt="4dayvelopment" class="logo-img" width="160" height="40"></a>
+        <p>Un site qui vend, livré en 4 jours.<br>Garanti ou c'est gratuit.</p>
       </div>
       <div class="footer-links-group">
-        <h4>Services</h4>
+        <p class="footer-col-h">Services</p>
         <ul>
           <li><a href="/services/site-vitrine">Site Vitrine</a></li>
           <li><a href="/services/e-commerce">E-commerce</a></li>
@@ -504,7 +575,7 @@ function buildArticleHTML(data) {
         </ul>
       </div>
       <div class="footer-links-group">
-        <h4>Agence</h4>
+        <p class="footer-col-h">Agence</p>
         <ul>
           <li><a href="/#process">Processus</a></li>
           <li><a href="/#tarifs">Tarifs</a></li>
@@ -512,7 +583,7 @@ function buildArticleHTML(data) {
         </ul>
       </div>
       <div class="footer-links-group">
-        <h4>Contact</h4>
+        <p class="footer-col-h">Contact</p>
         <ul>
           <li><a href="/#contact">Prendre RDV</a></li>
           <li><a href="mailto:contact@4dayvelopment.fr">contact@4dayvelopment.fr</a></li>
@@ -520,7 +591,7 @@ function buildArticleHTML(data) {
       </div>
     </div>
     <div class="footer-bottom">
-      <p>&copy; 2026 4dayvelopment. Tous droits reserves.</p>
+      <p>&copy; 2026 4dayvelopment. Tous droits réservés.</p>
     </div>
   </footer>
 
@@ -541,6 +612,10 @@ function buildArticleHTML(data) {
     "mainEntityOfPage": { "@type": "WebPage", "@id": "${url}" }
   }
   </script>
+${faqJsonLd}
+
+  <script src="/js/vendor/three-loader.js" defer></script>
+  <script type="module" src="/js/main.js"></script>
 </body>
 </html>`;
 }
@@ -554,8 +629,6 @@ function addToSitemap(slug) {
   <url>
     <loc>${url}</loc>
     <lastmod>${new Date().toISOString().split('T')[0]}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
   </url>
 `;
     sitemap = sitemap.replace('</urlset>', entry + '</urlset>');
@@ -622,13 +695,8 @@ app.post('/api/blog/publish', apiLimiter, validateWith(articleSchema), (req, res
   try {
     fs.writeFileSync(filePath, buildArticleHTML(data), 'utf-8');
 
-    // Enregistrer la route propre
-    cleanPages[`/blog/${data.slug}`] = `blog/${data.slug}.html`;
-
-    // Ajouter dynamiquement la route Express
-    app.get(`/blog/${data.slug}`, (req, res) => {
-      res.sendFile(filePath);
-    });
+    // La route propre /blog/:slug (generique, enregistree avant le catch-all 404)
+    // sert automatiquement le fichier de l'article : aucun enregistrement dynamique necessaire.
 
     addToSitemap(data.slug);
     addToBlogIndex(data);
@@ -669,6 +737,7 @@ const cleanPages = {
   '/services/site-vitrine':  'services/site-vitrine.html',
   '/services/e-commerce':    'services/e-commerce.html',
   '/services/referencement-seo': 'services/referencement-seo.html',
+  '/services/site-internet-restaurant': 'services/site-internet-restaurant.html',
   '/portfolio':       'portfolio.html',
   '/mentions-legales': 'mentions-legales.html',
   '/confidentialite': 'confidentialite.html',
@@ -689,14 +758,22 @@ for (const [route, file] of Object.entries(cleanPages)) {
   });
 }
 
-// Redirection 301 des anciennes URLs .html vers URLs propres
-const htmlRedirects = {
-  '/lead.html':      '/devis',
-  '/essentiel.html': '/essentiel',
-};
-for (const [oldUrl, newUrl] of Object.entries(htmlRedirects)) {
-  app.get(oldUrl, (req, res) => res.redirect(301, newUrl));
-}
+/* ── Articles de blog : route propre generique (AVANT le catch-all 404) ── */
+// Sert public/blog/<slug>.html pour tout article (existant ou publie via l'API),
+// afin que /blog/:slug reponde 200 a son URL propre. Slug valide uniquement
+// (minuscules/chiffres/tirets) -> pas de traversee de repertoire.
+app.get('/blog/:slug', (req, res) => {
+  const { slug } = req.params;
+  if (slug === 'index' || !/^[a-z0-9-]+$/.test(slug)) {
+    return res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+  }
+  const filePath = path.join(BLOG_DIR, `${slug}.html`);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+  }
+});
 
 /* ── Fallback → 404 ──────────────────────────────────── */
 app.get('/{*splat}', (req, res) => {
