@@ -56,17 +56,10 @@
     }
     .pcard-visual {
       position:absolute; inset:0; z-index:0;
-      background:radial-gradient(120% 120% at 30% 18%, var(--brand), transparent 58%), #111;
-      filter:saturate(.8) brightness(.8);
+      background-size:cover; background-position:center;
+      filter:saturate(.85) brightness(.72);
       transform:scale(1.04);
       transition:filter .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);
-    }
-    .pcard-visual::after {
-      content:attr(data-ico);
-      position:absolute; inset:0;
-      display:flex; align-items:center; justify-content:center;
-      font-size:6rem; opacity:.2;
-      filter:grayscale(.2);
     }
     .pcard:hover .pcard-visual, .pcard:focus-visible .pcard-visual {
       filter:saturate(1.05) brightness(1);
@@ -163,7 +156,7 @@
       <div class="ex-grid">
 
         <a class="pcard reveal" href="/exemples/burger" style="--brand:#f2b13b;" aria-label="Voir l'exemple restauration rapide">
-          <div class="pcard-visual" data-ico="🍔"></div>
+          <div class="pcard-visual" style="background-image:url('/exemples/img/burger-hero.webp')"></div>
           <div class="pcard-overlay"></div>
           <div class="pcard-top"><span class="pcard-cat">Restauration</span><span class="pcard-num">/01</span></div>
           <div class="pcard-body">
@@ -174,7 +167,7 @@
         </a>
 
         <a class="pcard reveal" href="/exemples/ongles" style="--brand:#e8b4b8;" aria-label="Voir l'exemple prothésiste ongulaire">
-          <div class="pcard-visual" data-ico="💅"></div>
+          <div class="pcard-visual" style="background-image:url('/exemples/img/ongles-hero.webp')"></div>
           <div class="pcard-overlay"></div>
           <div class="pcard-top"><span class="pcard-cat">Beauté</span><span class="pcard-num">/02</span></div>
           <div class="pcard-body">
@@ -185,7 +178,7 @@
         </a>
 
         <a class="pcard reveal" href="/exemples/borne-recharge" style="--brand:#22c55e;" aria-label="Voir l'exemple électricien bornes de recharge">
-          <div class="pcard-visual" data-ico="⚡"></div>
+          <div class="pcard-visual" style="background-image:url('/exemples/img/borne-hero.webp')"></div>
           <div class="pcard-overlay"></div>
           <div class="pcard-top"><span class="pcard-cat">Artisan IRVE</span><span class="pcard-num">/03</span></div>
           <div class="pcard-body">
@@ -196,7 +189,7 @@
         </a>
 
         <a class="pcard reveal" href="/exemples/coach-sportif" style="--brand:#ff5f1f;" aria-label="Voir l'exemple coach sportif">
-          <div class="pcard-visual" data-ico="🥊"></div>
+          <div class="pcard-visual" style="background-image:url('/exemples/img/coach-hero.webp')"></div>
           <div class="pcard-overlay"></div>
           <div class="pcard-top"><span class="pcard-cat">Coaching</span><span class="pcard-num">/04</span></div>
           <div class="pcard-body">
@@ -207,7 +200,7 @@
         </a>
 
         <a class="pcard reveal" href="/exemples/barbier" style="--brand:#b08d57;" aria-label="Voir l'exemple barbier">
-          <div class="pcard-visual" data-ico="✂️"></div>
+          <div class="pcard-visual" style="background-image:url('/exemples/img/barbier-hero.webp')"></div>
           <div class="pcard-overlay"></div>
           <div class="pcard-top"><span class="pcard-cat">Barbier</span><span class="pcard-num">/05</span></div>
           <div class="pcard-body">
@@ -218,7 +211,7 @@
         </a>
 
         <a class="pcard reveal" href="/exemples/plombier" style="--brand:#2563eb;" aria-label="Voir l'exemple plombier-chauffagiste">
-          <div class="pcard-visual" data-ico="🔧"></div>
+          <div class="pcard-visual" style="background-image:url('/exemples/img/plombier-hero.webp')"></div>
           <div class="pcard-overlay"></div>
           <div class="pcard-top"><span class="pcard-cat">Dépannage</span><span class="pcard-num">/06</span></div>
           <div class="pcard-body">
@@ -284,6 +277,7 @@
       </ul>
     </div>
   </footer>
+  <!-- Photos des cartes : Unsplash (licence Unsplash) -->
 
   <script type="application/ld+json">
   {
