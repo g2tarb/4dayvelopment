@@ -1,3 +1,21 @@
+/* ── Fonts variables auto-hébergées (latin) — zéro requête tierce ── */
+@font-face {
+  font-family: 'Syne';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url('/fonts/syne-var.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('/fonts/inter-var.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* ================================================================
    4DAYVELOPMENT — MASTERCLASS 2026
    Dark Luxury · Maximum Conversion
@@ -397,7 +415,7 @@ nav.scrolled {
 
 /* Hero title */
 .hero-title {
-  font-family: 'Syne', 'Fredoka One', sans-serif;
+  font-family: 'Syne', sans-serif;
   font-size: clamp(3rem, 8vw, 6.5rem);
   font-weight: 800;
   line-height: 1.05;
@@ -3284,4 +3302,25 @@ footer {
   body { background: #fff; color: #111; }
   .hero { min-height: auto; padding: 40px 0; }
   section { padding: 30px 0; }
+}
+
+/* ── Ultra-mobile : rendu paresseux des sections below-fold ── */
+@media (max-width: 768px) {
+  #services, #process, #tarifs, #avis, #faq, #contact, footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 900px;
+  }
+  .pcard {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 380px;
+  }
+}
+
+/* ── Anti-zoom iOS : inputs a 16px minimum sur ecran tactile ── */
+@media (pointer: coarse) {
+  .form-group input,
+  .form-group select,
+  .form-group textarea {
+    font-size: 16px;
+  }
 }

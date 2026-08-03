@@ -152,16 +152,9 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc:  ["'self'"],
-      scriptSrc:   [
-        "'self'",
-        'cdnjs.cloudflare.com',
-      ],
-      styleSrc:    [
-        "'self'",
-        'fonts.googleapis.com',
-        "'unsafe-inline'",
-      ],
-      fontSrc:     ["'self'", 'fonts.googleapis.com', 'fonts.gstatic.com'],
+      scriptSrc:   ["'self'"],
+      styleSrc:    ["'self'", "'unsafe-inline'"],
+      fontSrc:     ["'self'"],
       imgSrc:      ["'self'", 'data:', 'blob:'],
       connectSrc:  ["'self'", 'https://n8n.srv1263084.hstgr.cloud'],
       frameSrc:    ["'none'"],
@@ -458,7 +451,7 @@ function buildArticleHTML(data) {
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>${escapeHtml(title)} | 4dayvelopment</title>
   <meta name="description" content="${escapeHtml(description)}">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -483,10 +476,8 @@ function buildArticleHTML(data) {
   <link rel="icon" href="/favicon.ico" sizes="32x32">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="/manifest.json">
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/syne-var.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-var.woff2" crossorigin>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
@@ -564,7 +555,7 @@ ${faqHtml}
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="/" class="footer-logo"><img src="/logo/logo4day.webp" alt="4dayvelopment" class="logo-img" width="160" height="40"></a>
-        <p>Un site qui vend, livré en 4 jours.<br>Garanti ou c'est gratuit.</p>
+        <p>Un site qui vend, livré en 4 jours.</p>
       </div>
       <div class="footer-links-group">
         <p class="footer-col-h">Services</p>

@@ -2,7 +2,7 @@
 <html lang="fr" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Site vitrine dès 990€, livré en 4 jours | 4dayvelopment</title>
   <meta name="description" content="Commandez votre site vitrine professionnel livré en 4 jours ouvrés dès 990€. Design sur-mesure, SEO inclus, responsive mobile. Devis gratuit sous 24h.">
   <meta name="robots" content="index, follow">
@@ -31,9 +31,12 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/manifest.json">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/syne-var.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-var.woff2" crossorigin>
+  <style>
+    @font-face { font-family: 'Syne'; font-style: normal; font-weight: 400 800; font-display: swap; src: url('/fonts/syne-var.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+    @font-face { font-family: 'Inter'; font-style: normal; font-weight: 300 700; font-display: swap; src: url('/fonts/inter-var.woff2') format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  </style>
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -703,7 +706,7 @@
 <body>
 
   <header>
-    <a href="/"><img src="logo/logo4day.webp" alt="4dayvelopment" width="160" height="40"></a>
+    <a href="/"><img src="logo/logo4day.webp" alt="4dayvelopment" width="240" height="240"></a>
     <div style="display:flex;align-items:center;gap:12px;">
       <button id="lang-btn" class="lang-btn-ext" onclick="toggleLang()">🇬🇧 EN</button>
       <a href="/" class="back-link">← Retour au site</a>
@@ -720,7 +723,7 @@
         <div class="badge-4j-icon">⚡</div>
         <div class="badge-4j-text">
           <span class="badge-4j-main">Livré en 4 jours</span>
-          <span class="badge-4j-sub">Garanti contractuellement · Délai respecté ou remboursé</span>
+          <span class="badge-4j-sub">Délai garanti contractuellement</span>
         </div>
       </div>
 
@@ -1125,7 +1128,7 @@ ${getVal('e-description')}
         ['.back-link',               '← Retour au site'],
         /* badge */
         ['.badge-4j-main',           'Livré en 4 jours'],
-        ['.badge-4j-sub',            'Garanti contractuellement · Délai respecté ou remboursé'],
+        ['.badge-4j-sub',            'Délai garanti contractuellement'],
         /* pitch */
         ['.pitch h1',                'Formule <span class="g">Essentiel</span><br>à 990€'],
         ['.pitch .desc',             'Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.'],
@@ -1222,7 +1225,7 @@ ${getVal('e-description')}
         ['.back-link',               '← Back to website'],
         /* badge */
         ['.badge-4j-main',           'Delivered in 4 days'],
-        ['.badge-4j-sub',            'Contractually guaranteed · Full refund if delayed'],
+        ['.badge-4j-sub',            'Contractually guaranteed delivery date'],
         /* pitch */
         ['.pitch h1',                '<span class="g">Essential</span> Plan<br>at €990'],
         ['.pitch .desc',             'Your professional showcase website, delivered in 4 days flat. Perfect for launching with an online presence that reassures your clients and generates leads.'],

@@ -8,7 +8,7 @@ import { initCursor, initGlow, initMagnetic, initScramble, initReveal, initCount
 import { initContactForm, initBudgetChips, initToasts, initExit } from './modules/form.js';
 import { initLang } from './modules/i18n.js';
 import { checkMotion, initFAQ } from './modules/ui.js';
-import { initThreeUniverse } from './modules/three-bg.js';
+import { initUniverse } from './modules/gl-bg.js';
 import { initConsent } from './modules/consent.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
@@ -83,8 +83,12 @@ async function init() {
     initScramble();
   }, 150);
 
-  // Three.js : attend que la lib CDN soit chargée
-  setTimeout(initThreeUniverse, 300);
+  // Fond WebGL maison (zéro dépendance) : après le premier paint, hors LCP
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(initUniverse, { timeout: 800 });
+  } else {
+    setTimeout(initUniverse, 300);
+  }
 
   // RGPD : bannière après 1s si pas de consentement enregistré
   initConsent();
