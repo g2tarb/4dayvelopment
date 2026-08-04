@@ -3549,8 +3549,10 @@ footer {
   margin-bottom: 34px;
 }
 
-.hero-stage { perspective: 1600px; }
+.hero-stage { position: relative; z-index: 1; }
 #hero { will-change: transform; }
+#hero.turning { z-index: 40; }
+html.is-peeking .hero-stage { z-index: 40; }
 #hero.peeking .hero-inner { visibility: hidden; pointer-events: none; }
 
 #hero .hero-peek {

@@ -39,7 +39,8 @@ export function initBilles() {
 
   function half(from, to, easing) {
     const a = hero.animate(
-      [{ transform: `rotateY(${from}deg)` }, { transform: `rotateY(${to}deg)` }],
+      [{ transform: `perspective(1500px) rotateY(${from}deg)` },
+       { transform: `perspective(1500px) rotateY(${to}deg)` }],
       { duration: HALF_MS, easing, fill: 'forwards' }
     );
     return a.finished.then(() => a);
@@ -48,11 +49,13 @@ export function initBilles() {
   /* Pièce qui tourne : 0 → 90 (tranche), échange de face, -90 → 0 */
   async function turn(swap) {
     if (reduced) { swap(); return; }
+    hero.classList.add('turning');
     const a1 = await half(0, 90, 'cubic-bezier(.5, 0, .85, .55)');
     swap();
     const a2 = await half(-90, 0, 'cubic-bezier(.15, .45, .3, 1)');
     a1.cancel();
     a2.cancel();
+    hero.classList.remove('turning');
   }
 
   function setContent(bille) {
