@@ -182,7 +182,10 @@ app.use(express.static(path.join(__dirname, 'public'), {
     if (filePath.endsWith('.html')) {
       res.setHeader('Cache-Control', 'no-cache');
     }
-    if (/\.(js|css|svg|png|jpg|webp|woff2?)$/.test(filePath)) {
+    if (/\.(js|css)$/.test(filePath)) {
+      // Site en itération active : revalidation à chaque visite (ETag -> 304)
+      res.setHeader('Cache-Control', 'no-cache');
+    } else if (/\.(svg|png|jpg|webp|woff2?)$/.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
     }
   },
