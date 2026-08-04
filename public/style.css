@@ -3549,15 +3549,9 @@ footer {
   margin-bottom: 34px;
 }
 
-.hero-stage { perspective: 1900px; }
-#hero {
-  transform-style: preserve-3d;
-  transition: transform .95s cubic-bezier(.68, -0.02, .27, 1);
-  will-change: transform;
-}
-#hero.peeking { transform: rotateY(180deg); }
-#hero .hero-inner { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
-#hero.peeking .hero-inner { pointer-events: none; }
+.hero-stage { perspective: 1600px; }
+#hero { will-change: transform; }
+#hero.peeking .hero-inner { visibility: hidden; pointer-events: none; }
 
 #hero .hero-peek {
   position: absolute;
@@ -3567,12 +3561,10 @@ footer {
   overflow: hidden;
   background: var(--bg2);
   text-decoration: none;
-  transform: rotateY(180deg);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+  visibility: hidden;
   pointer-events: none;
 }
-#hero.peeking .hero-peek { pointer-events: auto; }
+#hero.peeking .hero-peek { visibility: visible; pointer-events: auto; }
 .hero-peek img {
   position: absolute;
   inset: 0;
@@ -3642,16 +3634,14 @@ footer {
   transform-origin: left;
   transform: scaleX(0);
 }
-#hero.peeking .hero-peek__timer { animation: peek-timer 2s linear .95s forwards; }
+#hero.peeking .hero-peek__timer { animation: peek-timer 3s linear .78s forwards; }
 @keyframes peek-timer { to { transform: scaleX(1); } }
 .hero-peek:hover .hero-peek__timer { animation-play-state: paused; }
 @media (max-width: 768px) {
   .hero-peek__badge { gap: 8px; padding: 8px 10px 8px 14px; }
   .hero-peek__cat { display: none; }
 }
-@media (prefers-reduced-motion: reduce) {
-  #hero { transition: none; }
-}
+
 
 @media (max-width: 768px) {
   .hero-billes { gap: 13px; margin-top: 30px; flex-wrap: wrap; }

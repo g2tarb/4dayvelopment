@@ -1,7 +1,9 @@
-/* ── Billes du hero : flip 3D vers l'accueil réel d'un site d'exemple ──
-   Clic sur une bille → la page d'accueil pivote (rotateY) et laisse place
-   au vrai accueil du site d'exemple (iframe vivante, photo en fond le
-   temps du chargement), reste 2 s, puis pivote en sens inverse. */
+/* ── Billes du hero : la page tourne comme une pièce et change de face ──
+   Clic sur une bille → rotation 3D jusqu'à 90° (on voit la tranche),
+   échange de face, poursuite de -90° à 0 : l'accueil est devenu le VRAI
+   site d'exemple (iframe vivante). 3 s sur place, puis même mouvement
+   en sens inverse pour revenir. Aucun effet miroir : chaque face n'est
+   visible que du bon côté. */
 import { on } from './utils.js';
 
 const DEMOS = {
@@ -12,8 +14,8 @@ const DEMOS = {
   'barbier':        { name: 'Le Comptoir du Barbier', cat: 'Barbier',           img: 'barbier-hero' },
   'plombier':       { name: 'Rivière & Fils',         cat: 'Plombier',          img: 'plombier-hero' },
 };
-const FLIP_MS = 950;   // durée de la rotation (synchro avec le CSS)
-const HOLD_MS = 2000;  // temps passé sur le site d'exemple
+const HALF_MS = 750;   // demi-rotation (aller = 2 × 750 ms = 1,5 s)
+const HOLD_MS = 3000;  // temps passé sur le site d'exemple
 
 export function initBilles() {
   const hero = document.getElementById('hero');
@@ -25,25 +27,37 @@ export function initBilles() {
   const catEl   = peek.querySelector('.hero-peek__cat');
   const nameEl  = peek.querySelector('.hero-peek__name');
   const billes  = [...hero.querySelectorAll('.bille')];
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let timer = null;
+  let busy = false;
+  let open = false;
   let currentSlug = null;
 
   frame.addEventListener('load', () => {
     if (frame.src) frame.classList.add('ready');
   });
 
-  function hide() {
-    clearTimeout(timer);
-    hero.classList.remove('peeking');
-    document.documentElement.classList.remove('is-peeking');
-    peek.setAttribute('aria-hidden', 'true');
-    peek.tabIndex = -1;
+  function half(from, to, easing) {
+    const a = hero.animate(
+      [{ transform: `rotateY(${from}deg)` }, { transform: `rotateY(${to}deg)` }],
+      { duration: HALF_MS, easing, fill: 'forwards' }
+    );
+    return a.finished.then(() => a);
   }
 
-  function show(bille) {
+  /* Pièce qui tourne : 0 → 90 (tranche), échange de face, -90 → 0 */
+  async function turn(swap) {
+    if (reduced) { swap(); return; }
+    const a1 = await half(0, 90, 'cubic-bezier(.5, 0, .85, .55)');
+    swap();
+    const a2 = await half(-90, 0, 'cubic-bezier(.15, .45, .3, 1)');
+    a1.cancel();
+    a2.cancel();
+  }
+
+  function setContent(bille) {
     const slug = bille.dataset.demo;
     const d = DEMOS[slug];
-    if (!d) return;
     if (slug !== currentSlug) {
       currentSlug = slug;
       img.src = `/exemples/img/${d.img}.webp`;
@@ -55,12 +69,41 @@ export function initBilles() {
     nameEl.textContent = d.name;
     peek.href = `/exemples/${slug}`;
     peek.style.setProperty('--bc', getComputedStyle(bille).getPropertyValue('--bc').trim() || '#f2b13b');
-    peek.setAttribute('aria-hidden', 'false');
-    peek.tabIndex = 0;
-    hero.classList.add('peeking');
+  }
+
+  async function show(bille) {
+    if (busy) return;
+    if (open) { setContent(bille); armTimer(); return; }
+    busy = true;
+    setContent(bille);
     document.documentElement.classList.add('is-peeking');
+    await turn(() => {
+      hero.classList.add('peeking');
+      peek.setAttribute('aria-hidden', 'false');
+      peek.tabIndex = 0;
+    });
+    busy = false;
+    open = true;
+    armTimer();
+  }
+
+  async function hide() {
+    if (busy || !open) return;
     clearTimeout(timer);
-    timer = setTimeout(hide, FLIP_MS + HOLD_MS);
+    busy = true;
+    await turn(() => {
+      hero.classList.remove('peeking');
+      peek.setAttribute('aria-hidden', 'true');
+      peek.tabIndex = -1;
+    });
+    document.documentElement.classList.remove('is-peeking');
+    busy = false;
+    open = false;
+  }
+
+  function armTimer() {
+    clearTimeout(timer);
+    timer = setTimeout(hide, HOLD_MS);
   }
 
   billes.forEach(b => on(b, 'click', () => show(b)));
