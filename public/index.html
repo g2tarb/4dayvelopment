@@ -94,6 +94,7 @@
 
   <main>
   <!-- ── HERO ── -->
+  <div class="hero-stage">
   <section id="hero" class="hero">
     <div class="hero-inner">
       <div class="badge reveal">
@@ -133,11 +134,11 @@
     </div>
   </div>
 
-  <!-- Aperçu plein écran déclenché par les billes -->
+  <!-- Face arrière : le vrai accueil du site d'exemple (flip 3D) -->
   <a class="hero-peek" id="hero-peek" href="/exemples/burger" aria-hidden="true" tabindex="-1">
     <img alt="" decoding="async">
-    <span class="hero-peek__veil"></span>
-    <span class="hero-peek__body">
+    <iframe title="Aperçu du site d'exemple" tabindex="-1" scrolling="no"></iframe>
+    <span class="hero-peek__badge">
       <span class="hero-peek__cat"></span>
       <strong class="hero-peek__name"></strong>
       <span class="hero-peek__cta" data-i18n="billes-open">Voir cet exemple →</span>
@@ -145,6 +146,7 @@
     <span class="hero-peek__timer"></span>
   </a>
   </section>
+</div>
 
   <!-- ── LOGOS TICKER ── -->
   <div class="logos-section">

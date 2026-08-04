@@ -3549,78 +3549,90 @@ footer {
   margin-bottom: 34px;
 }
 
+.hero-stage { perspective: 1900px; }
+#hero {
+  transform-style: preserve-3d;
+  transition: transform .95s cubic-bezier(.68, -0.02, .27, 1);
+  will-change: transform;
+}
+#hero.peeking { transform: rotateY(180deg); }
+#hero .hero-inner { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+#hero.peeking .hero-inner { pointer-events: none; }
+
 #hero .hero-peek {
   position: absolute;
   inset: 0;
   z-index: 5;
   display: block;
-  opacity: 0;
-  pointer-events: none;
+  overflow: hidden;
+  background: var(--bg2);
   text-decoration: none;
-  transition: opacity .55s var(--ease-out);
+  transform: rotateY(180deg);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
 }
-#hero.peeking .hero-peek { opacity: 1; pointer-events: auto; }
+#hero.peeking .hero-peek { pointer-events: auto; }
 .hero-peek img {
   position: absolute;
   inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
-  filter: brightness(.7) saturate(1.05);
-  transform: scale(1.07);
-  transition: transform 2.8s var(--ease-out);
+  filter: brightness(.78);
 }
-.hero.peeking .hero-peek img { transform: scale(1.005); }
-.hero-peek__veil {
+.hero-peek iframe {
   position: absolute;
   inset: 0;
-  background:
-    linear-gradient(180deg, rgba(8,8,8,.55) 0%, transparent 34%, transparent 55%, rgba(8,8,8,.92) 100%),
-    radial-gradient(120% 90% at 50% 110%, color-mix(in srgb, var(--bc, #f2b13b) 22%, transparent), transparent 60%);
+  width: 100%; height: 100%;
+  border: 0;
+  background: transparent;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity .45s ease;
 }
-.hero-peek__body {
+.hero-peek iframe.ready { opacity: 1; }
+.hero-peek__badge {
   position: absolute;
-  left: 0; right: 0;
-  bottom: clamp(48px, 12vh, 120px);
+  left: 50%;
+  bottom: clamp(22px, 5vh, 46px);
+  transform: translateX(-50%);
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 10px;
-  text-align: center;
-  padding: 0 24px;
+  gap: 12px;
+  max-width: calc(100% - 32px);
+  padding: 10px 12px 10px 20px;
+  border-radius: var(--radius-full);
+  background: rgba(8,8,8,.62);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255,255,255,.16);
+  white-space: nowrap;
 }
 .hero-peek__cat {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  letter-spacing: .32em;
+  letter-spacing: .26em;
   text-transform: uppercase;
   color: var(--bc, #f2b13b);
 }
 .hero-peek__name {
   font-family: 'Syne', sans-serif;
-  font-weight: 800;
-  font-size: clamp(1.9rem, 5.4vw, 3.6rem);
-  line-height: 1.04;
+  font-weight: 700;
+  font-size: 15px;
   color: #fff;
-  text-shadow: 0 6px 30px rgba(0,0,0,.55);
 }
 .hero-peek__cta {
-  margin-top: 8px;
   display: inline-flex;
   align-items: center;
-  min-height: 44px;
-  padding: 10px 22px;
+  min-height: 34px;
+  padding: 6px 16px;
   border-radius: var(--radius-full);
-  border: 1px solid rgba(255,255,255,.35);
-  background: rgba(8,8,8,.35);
-  backdrop-filter: blur(8px);
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: .1em;
+  background: var(--bc, #f2b13b);
+  color: #0a0a0a;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
   text-transform: uppercase;
-  transition: background .3s, border-color .3s;
 }
-.hero-peek:hover .hero-peek__cta { background: var(--bc, #f2b13b); border-color: var(--bc, #f2b13b); color: #0a0a0a; }
 .hero-peek__timer {
   position: absolute;
   top: 0; left: 0;
@@ -3629,10 +3641,17 @@ footer {
   background: var(--bc, #f2b13b);
   transform-origin: left;
   transform: scaleX(0);
-  animation: peek-timer 2s linear forwards;
 }
+#hero.peeking .hero-peek__timer { animation: peek-timer 2s linear .95s forwards; }
 @keyframes peek-timer { to { transform: scaleX(1); } }
 .hero-peek:hover .hero-peek__timer { animation-play-state: paused; }
+@media (max-width: 768px) {
+  .hero-peek__badge { gap: 8px; padding: 8px 10px 8px 14px; }
+  .hero-peek__cat { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #hero { transition: none; }
+}
 
 @media (max-width: 768px) {
   .hero-billes { gap: 13px; margin-top: 30px; flex-wrap: wrap; }
@@ -3735,3 +3754,8 @@ footer {
   #hero .hero-title { font-size: clamp(2.1rem, 8.6vw, 2.9rem); }
   #hero .hero-billes { margin-top: 24px; }
 }
+
+/* Pendant l'aperçu : la nav et la barre de progression s'effacent */
+#navbar, #scroll-progress { transition: opacity .4s ease, transform .4s ease; }
+html.is-peeking #navbar { opacity: 0; transform: translateY(-12px); pointer-events: none; }
+html.is-peeking #scroll-progress { opacity: 0; }
