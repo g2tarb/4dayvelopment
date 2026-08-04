@@ -111,9 +111,10 @@ export function initBilles() {
 
   billes.forEach(b => on(b, 'click', () => show(b)));
 
-  // Survoler l'aperçu le fige (le temps de cliquer) ; sortir le referme
-  on(peek, 'mouseenter', () => clearTimeout(timer));
-  on(peek, 'mouseleave', () => { clearTimeout(timer); timer = setTimeout(hide, 500); });
+  // Le retour part toujours après 3 s ; seul le survol du badge le retient
+  const badge = peek.querySelector('.hero-peek__badge');
+  on(badge, 'mouseenter', () => clearTimeout(timer));
+  on(badge, 'mouseleave', () => { if (open) armTimer(); });
   on(document, 'keydown', e => { if (e.key === 'Escape') hide(); });
 
   // Précharge des visuels quand le navigateur respire
