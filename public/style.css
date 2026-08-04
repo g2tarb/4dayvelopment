@@ -3751,3 +3751,9 @@ html.is-peeking .hero-stage { z-index: 40; }
 #navbar, #scroll-progress { transition: opacity .4s ease, transform .4s ease; }
 html.is-peeking #navbar { opacity: 0; transform: translateY(-12px); pointer-events: none; }
 html.is-peeking #scroll-progress { opacity: 0; }
+
+/* Pendant la rotation : pas d'iframe ni de backdrop-filter dans la face
+   (Safari composite mal les iframes/verre sous transform 3D → mélange) */
+#hero.turning .hero-peek iframe { opacity: 0 !important; transition: none; }
+#hero.turning .hero-peek__badge { opacity: 0; }
+.hero-peek__badge { transition: opacity .35s ease .1s; }
