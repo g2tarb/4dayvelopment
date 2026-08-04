@@ -11,7 +11,6 @@ import { checkMotion, initFAQ } from './modules/ui.js';
 import { initUniverse } from './modules/gl-bg.js';
 import { initConsent } from './modules/consent.js';
 import { initDemoViewer } from './modules/demos.js';
-import { initBilles } from './modules/billes.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
    Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
@@ -78,7 +77,6 @@ async function init() {
   initBudgetChips();
   initContactForm();
   initDemoViewer();
-  initBilles();
 
   // Deferred : n'impacte pas le LCP
   setTimeout(() => {

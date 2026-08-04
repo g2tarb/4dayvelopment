@@ -3326,7 +3326,7 @@ footer {
 }
 
 /* ── Section Exemples métier : visionneuse iPhone ───────────── */
-#exemples { padding: 110px 0; position: relative; }
+
 
 .demo-chips {
   display: flex;
@@ -3474,186 +3474,41 @@ footer {
 }
 
 @media (max-width: 768px) {
-  #exemples { padding: 72px 0; content-visibility: auto; contain-intrinsic-size: auto 1100px; }
   .demo-chips { gap: 8px; margin-bottom: 32px; }
   .demo-chip { padding: 10px 14px; font-size: 13px; }
   .demo-device { width: min(320px, 88vw); }
   .demo-device.is-desktop { width: 92vw; }
 }
 
-/* ── Hero épuré : billes métier + aperçu plein écran ────────── */
+/* ── Hero split : texte + iPhone interactif ────────────────── */
 .hero { position: relative; overflow: hidden; }
-.hero-inner { position: relative; z-index: 2; transition: opacity .5s var(--ease-out), transform .5s var(--ease-out); }
-.hero.peeking .hero-inner { opacity: 0; transform: scale(.985); pointer-events: none; }
-
-.hero-billes {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin: 38px 0 14px;
-}
-.bille {
-  --bc: #f2b13b;
-  width: 52px; height: 52px;
-  border-radius: 50%;
-  border: 0;
-  cursor: pointer;
-  position: relative;
-  background:
-    radial-gradient(circle at 32% 28%, rgba(255,255,255,.55) 0 6%, rgba(255,255,255,0) 34%),
-    radial-gradient(circle at 50% 45%, var(--bc), color-mix(in srgb, var(--bc) 45%, #000) 92%);
-  box-shadow:
-    0 14px 30px -10px color-mix(in srgb, var(--bc) 70%, transparent),
-    inset 0 -8px 14px rgba(0,0,0,.35);
-  transition: transform .4s var(--ease-spring), box-shadow .3s;
-  animation: bille-float 5.5s ease-in-out infinite;
-}
-.bille:nth-child(2) { animation-delay: .5s; }
-.bille:nth-child(3) { animation-delay: 1.1s; }
-.bille:nth-child(4) { animation-delay: 1.6s; }
-.bille:nth-child(5) { animation-delay: 2.2s; }
-.bille:nth-child(6) { animation-delay: 2.8s; }
-@keyframes bille-float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-7px); }
-}
-.bille:hover, .bille:focus-visible {
-  animation-play-state: paused;
-  transform: translateY(-8px) scale(1.14);
-  box-shadow:
-    0 22px 44px -12px color-mix(in srgb, var(--bc) 85%, transparent),
-    inset 0 -8px 14px rgba(0,0,0,.3);
-  outline: none;
-}
-.bille span {
-  position: absolute;
-  top: calc(100% + 10px);
-  left: 50%;
-  transform: translateX(-50%) translateY(-4px);
-  white-space: nowrap;
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--muted);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity .25s, transform .25s;
-}
-.bille:hover span, .bille:focus-visible span { opacity: 1; transform: translateX(-50%) translateY(0); }
-.billes-hint {
-  font-size: 13.5px;
-  font-style: italic;
-  color: var(--muted);
-  margin-bottom: 34px;
-}
-
-.hero-stage { position: relative; z-index: 1; }
-#hero { will-change: transform; }
-#hero.turning { z-index: 40; }
-html.is-peeking .hero-stage { z-index: 40; }
-#hero.peeking .hero-inner { visibility: hidden; pointer-events: none; }
-
-#hero .hero-peek {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  display: block;
-  overflow: hidden;
-  background: var(--bg2);
-  text-decoration: none;
-  visibility: hidden;
-  pointer-events: none;
-}
-#hero.peeking .hero-peek { visibility: visible; pointer-events: auto; }
-.hero-peek img {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  filter: brightness(.78);
-}
-.hero-peek iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  border: 0;
-  background: transparent;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity .45s ease;
-}
-.hero-peek iframe.ready { opacity: 1; }
-.hero-peek__badge {
-  position: absolute;
-  left: 50%;
-  bottom: clamp(22px, 5vh, 46px);
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  max-width: calc(100% - 32px);
-  padding: 10px 12px 10px 20px;
-  border-radius: var(--radius-full);
-  background: rgba(8,8,8,.62);
-  backdrop-filter: blur(14px);
-  border: 1px solid rgba(255,255,255,.16);
-  white-space: nowrap;
-}
-.hero-peek__cat {
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: .26em;
-  text-transform: uppercase;
-  color: var(--bc, #f2b13b);
-}
-.hero-peek__name {
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  font-size: 15px;
-  color: #fff;
-}
-.hero-peek__cta {
-  display: inline-flex;
-  align-items: center;
-  min-height: 34px;
-  padding: 6px 16px;
-  border-radius: var(--radius-full);
-  background: var(--bc, #f2b13b);
-  color: #0a0a0a;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.hero-peek__timer {
-  position: absolute;
-  top: 0; left: 0;
-  height: 3px;
+.hero-split {
+  display: grid;
+  gap: 44px;
   width: 100%;
-  background: var(--bc, #f2b13b);
-  transform-origin: left;
-  transform: scaleX(0);
+  max-width: 1280px;
+  align-items: center;
+  justify-items: center;
 }
-#hero.peeking .hero-peek__timer { animation: peek-timer 3s linear .78s forwards; }
-@keyframes peek-timer { to { transform: scaleX(1); } }
-.hero-peek:hover .hero-peek__timer { animation-play-state: paused; }
-@media (max-width: 768px) {
-  .hero-peek__badge { gap: 8px; padding: 8px 10px 8px 14px; }
-  .hero-peek__cat { display: none; }
-}
+.hero-copy { max-width: 640px; }
+.hero-device { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.hero #exemples { padding: 0; content-visibility: visible; contain-intrinsic-size: none; }
+.hero .demo-chips { margin-bottom: 18px; gap: 7px; }
+.hero .demo-chip { padding: 10px 14px; font-size: 13px; }
+.hero .demo-device { width: min(264px, 78vw); }
+.hero .demo-actions { margin-top: 12px; }
 
-
-@media (max-width: 768px) {
-  .hero-billes { gap: 13px; margin-top: 30px; flex-wrap: wrap; }
-  .bille { width: 46px; height: 46px; }
-  .bille span { display: none; }
-  .billes-hint { font-size: 12.5px; padding: 0 18px; }
+@media (min-width: 1060px) {
+  .hero-split { grid-template-columns: 1.08fr .92fr; text-align: left; justify-items: start; }
+  .hero-copy .badge { margin-left: 0; }
+  .hero-copy .hero-desc { margin-left: 0; }
+  .hero-copy .hero-actions { justify-content: flex-start; }
+  .hero-device { align-items: center; }
+  .hero .demo-chips { justify-content: center; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .bille { animation: none; }
-  .hero-peek img { transition: none; transform: none; }
+@media (max-width: 1059px) {
+  .hero { padding-top: 120px; padding-bottom: 60px; }
+  .hero-split { gap: 34px; }
 }
 
 /* ── Formulaire v2 : carte verre + champs profonds ──────────── */
@@ -3746,14 +3601,3 @@ html.is-peeking .hero-stage { z-index: 40; }
   #hero .hero-title { font-size: clamp(2.1rem, 8.6vw, 2.9rem); }
   #hero .hero-billes { margin-top: 24px; }
 }
-
-/* Pendant l'aperçu : la nav et la barre de progression s'effacent */
-#navbar, #scroll-progress { transition: opacity .4s ease, transform .4s ease; }
-html.is-peeking #navbar { opacity: 0; transform: translateY(-12px); pointer-events: none; }
-html.is-peeking #scroll-progress { opacity: 0; }
-
-/* Pendant la rotation : pas d'iframe ni de backdrop-filter dans la face
-   (Safari composite mal les iframes/verre sous transform 3D → mélange) */
-#hero.turning .hero-peek iframe { opacity: 0 !important; transition: none; }
-#hero.turning .hero-peek__badge { opacity: 0; }
-.hero-peek__badge { transition: opacity .35s ease .1s; }

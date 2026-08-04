@@ -94,59 +94,58 @@
 
   <main>
   <!-- ── HERO ── -->
-  <div class="hero-stage">
   <section id="hero" class="hero">
-    <div class="hero-inner">
-      <div class="badge reveal">
-        <span class="badge-dot"></span>
-        <span data-i18n="hero-badge">Spécialistes solopreneurs · Paris · 2026</span>
+    <div class="hero-inner hero-split">
+      <div class="hero-copy">
+        <div class="badge reveal">
+          <span class="badge-dot"></span>
+          <span data-i18n="hero-badge">Spécialistes solopreneurs · Paris · 2026</span>
+        </div>
+
+        <h1 class="hero-title reveal">
+          <span data-i18n="hero-h1">Votre site internet,<br><em class="gradient-text">livré en 4 jours.</em></span>
+        </h1>
+
+        <p class="hero-desc reveal" data-i18n="hero-desc">
+          Des sites performants et sur-mesure pour coachs, artisans et indépendants qui veulent des clients pas un projet qui traîne 6 mois.
+        </p>
+
+        <div class="hero-actions reveal">
+          <a href="#contact" class="btn-primary magnetic">
+            <span data-i18n="hero-cta-pro">Obtenir mon site professionnel</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#tarifs" class="btn-secondary magnetic" data-i18n="hero-cta1">Voir les offres</a>
+        </div>
       </div>
 
-      <h1 class="hero-title reveal">
-        <span data-i18n="hero-h1">Votre site internet,<br><em class="gradient-text">livré en 4 jours.</em></span>
-      </h1>
+      <div class="hero-device reveal" id="exemples">
+        <div class="demo-chips" role="group" aria-label="Choisir un métier">
+          <button type="button" class="demo-chip active" data-demo="burger" aria-pressed="true"><span class="demo-chip-ico">🍔</span><span data-i18n="ex-chip-burger">Restauration</span></button>
+          <button type="button" class="demo-chip" data-demo="ongles" aria-pressed="false"><span class="demo-chip-ico">💅</span><span data-i18n="ex-chip-ongles">Beauté</span></button>
+          <button type="button" class="demo-chip" data-demo="borne-recharge" aria-pressed="false"><span class="demo-chip-ico">⚡</span><span data-i18n="ex-chip-borne">Borne</span></button>
+          <button type="button" class="demo-chip" data-demo="coach-sportif" aria-pressed="false"><span class="demo-chip-ico">🥊</span><span data-i18n="ex-chip-coach">Coach</span></button>
+          <button type="button" class="demo-chip" data-demo="barbier" aria-pressed="false"><span class="demo-chip-ico">✂️</span><span data-i18n="ex-chip-barbier">Barbier</span></button>
+          <button type="button" class="demo-chip" data-demo="plombier" aria-pressed="false"><span class="demo-chip-ico">🔧</span><span data-i18n="ex-chip-plombier">Plombier</span></button>
+        </div>
 
-      <p class="hero-desc reveal" data-i18n="hero-desc">
-        Des sites performants et sur-mesure pour coachs, artisans et indépendants qui veulent des clients pas un projet qui traîne 6 mois.
-      </p>
-
-      <div class="hero-billes reveal" role="group" aria-label="Aperçus de sites par métier">
-        <button type="button" class="bille" data-demo="burger" style="--bc:#f2b13b" aria-label="Aperçu restauration"><span data-i18n="ex-chip-burger">Restauration</span></button>
-        <button type="button" class="bille" data-demo="ongles" style="--bc:#e8b4b8" aria-label="Aperçu beauté"><span data-i18n="ex-chip-ongles">Beauté</span></button>
-        <button type="button" class="bille" data-demo="borne-recharge" style="--bc:#3dfb8a" aria-label="Aperçu borne de recharge"><span data-i18n="ex-chip-borne">Borne de recharge</span></button>
-        <button type="button" class="bille" data-demo="coach-sportif" style="--bc:#ff5f1f" aria-label="Aperçu coach sportif"><span data-i18n="ex-chip-coach">Coach sportif</span></button>
-        <button type="button" class="bille" data-demo="barbier" style="--bc:#c9955c" aria-label="Aperçu barbier"><span data-i18n="ex-chip-barbier">Barbier</span></button>
-        <button type="button" class="bille" data-demo="plombier" style="--bc:#2563eb" aria-label="Aperçu plombier"><span data-i18n="ex-chip-plombier">Plombier</span></button>
+        <div class="demo-stage">
+          <div class="demo-device">
+            <div class="demo-screen">
+              <iframe title="Site d'exemple par métier — faites défiler" loading="lazy"></iframe>
+            </div>
+          </div>
+          <div class="demo-actions">
+            <div class="demo-mode" role="group" aria-label="Format d'affichage">
+              <button type="button" class="active" data-mode="mobile" aria-label="Aperçu mobile">📱</button>
+              <button type="button" data-mode="desktop" aria-label="Aperçu ordinateur">💻</button>
+            </div>
+            <a class="demo-open" href="/exemples/burger" target="_blank" rel="noopener" data-i18n="ex-open">Ouvrir en plein écran ↗</a>
+          </div>
+        </div>
       </div>
-      <p class="billes-hint reveal" data-i18n="billes-hint">Touchez une couleur — et voyez le site que vous pourriez avoir.</p>
-
-      <div class="hero-actions reveal">
-        <a href="#contact" class="btn-primary magnetic">
-          <span data-i18n="hero-cta-pro">Obtenir mon site professionnel</span>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-        <a href="#tarifs" class="btn-secondary magnetic" data-i18n="hero-cta1">Voir les offres</a>
-      </div>
-
-    <!-- Scroll indicator -->
-    <div class="scroll-indicator">
-      <div class="scroll-dot"></div>
     </div>
-  </div>
-
-  <!-- Face arrière : le vrai accueil du site d'exemple (flip 3D) -->
-  <a class="hero-peek" id="hero-peek" href="/exemples/burger" aria-hidden="true" tabindex="-1">
-    <img alt="" decoding="async">
-    <iframe title="Aperçu du site d'exemple" tabindex="-1" scrolling="no"></iframe>
-    <span class="hero-peek__badge">
-      <span class="hero-peek__cat"></span>
-      <strong class="hero-peek__name"></strong>
-      <span class="hero-peek__cta" data-i18n="billes-open">Voir cet exemple →</span>
-    </span>
-    <span class="hero-peek__timer"></span>
-  </a>
   </section>
-</div>
 
   <!-- ── LOGOS TICKER ── -->
   <div class="logos-section">
@@ -321,48 +320,6 @@
   </section>
 
   <!-- ── PRICING ── -->
-  <!-- ── EXEMPLES MÉTIER ── -->
-  <section id="exemples">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-label reveal" data-i18n="ex-tag">Exemples</div>
-        <h2 class="section-title reveal" data-i18n="ex-title">Et pour <em class="gradient-text">votre métier</em>,<br>ça donne quoi ?</h2>
-        <p class="section-sub reveal" data-i18n="ex-sub">Choisissez votre activité et testez un vrai site d'exemple, en direct, comme vos futurs clients le verraient.</p>
-      </div>
-
-      <div class="demo-chips reveal" role="group" aria-label="Choisir un métier">
-        <button type="button" class="demo-chip active" data-demo="burger" aria-pressed="true"><span class="demo-chip-ico">🍔</span><span data-i18n="ex-chip-burger">Restauration</span></button>
-        <button type="button" class="demo-chip" data-demo="ongles" aria-pressed="false"><span class="demo-chip-ico">💅</span><span data-i18n="ex-chip-ongles">Beauté</span></button>
-        <button type="button" class="demo-chip" data-demo="borne-recharge" aria-pressed="false"><span class="demo-chip-ico">⚡</span><span data-i18n="ex-chip-borne">Borne de recharge</span></button>
-        <button type="button" class="demo-chip" data-demo="coach-sportif" aria-pressed="false"><span class="demo-chip-ico">🥊</span><span data-i18n="ex-chip-coach">Coach sportif</span></button>
-        <button type="button" class="demo-chip" data-demo="barbier" aria-pressed="false"><span class="demo-chip-ico">✂️</span><span data-i18n="ex-chip-barbier">Barbier</span></button>
-        <button type="button" class="demo-chip" data-demo="plombier" aria-pressed="false"><span class="demo-chip-ico">🔧</span><span data-i18n="ex-chip-plombier">Plombier</span></button>
-      </div>
-
-      <div class="demo-stage reveal">
-        <div class="demo-device">
-          <div class="demo-screen">
-            <iframe title="Site d'exemple par métier" loading="lazy" tabindex="-1"></iframe>
-          </div>
-        </div>
-        <div class="demo-actions">
-          <div class="demo-mode" role="group" aria-label="Format d'affichage">
-            <button type="button" class="active" data-mode="mobile" aria-label="Aperçu mobile">📱</button>
-            <button type="button" data-mode="desktop" aria-label="Aperçu ordinateur">💻</button>
-          </div>
-          <a class="demo-open" href="/exemples/burger" target="_blank" rel="noopener" data-i18n="ex-open">Ouvrir en plein écran ↗</a>
-        </div>
-        <div class="demo-cta-wrap">
-          <a href="/devis?metier=burger" class="btn-primary magnetic demo-cta">
-            <span data-i18n="ex-cta">Je veux le mien</span>
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </a>
-          <a href="/exemples" class="btn-secondary magnetic" data-i18n="ex-all">Tous les exemples</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section id="tarifs">
     <div class="container">
       <div class="section-header">
