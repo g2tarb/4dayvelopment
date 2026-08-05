@@ -131,8 +131,9 @@ export function initExit() {
     }
   });
   const close = () => overlay.classList.remove('show');
-  on($('#exit-backdrop'),   'click',   close);
-  on($('#exit-close-btn'),  'click',   close);
-  on($('#exit-cta-btn'),    'click',   close);
+  on($('#exit-backdrop'),    'click',   close);
+  on($('#exit-close-btn'),   'click',   close);
+  on($('#exit-close-icon'),  'click',   close);
+  on($('#exit-cta-btn'),     'click',   close);
   on(document, 'keydown', e => { if (e.key === 'Escape') close(); });
 }

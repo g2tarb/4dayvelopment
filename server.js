@@ -183,8 +183,8 @@ app.use(express.static(path.join(__dirname, 'public'), {
       res.setHeader('Cache-Control', 'no-cache');
     }
     if (/\.(js|css)$/.test(filePath)) {
-      // Site en itération active : revalidation à chaque visite (ETag -> 304)
-      res.setHeader('Cache-Control', 'no-cache');
+      // Assets avec hash de contenu : cache long (7 jours)
+      res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
     } else if (/\.(svg|png|jpg|webp|woff2?)$/.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
     }

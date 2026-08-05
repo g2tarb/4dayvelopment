@@ -53,6 +53,11 @@
   --ease-out:    cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* ── ACCESSIBILITY : prefers-reduced-motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+}
+
 /* ── TOGGLES NAV ── */
 .nav-toggle {
   background: rgba(255,255,255,0.06);
@@ -2109,6 +2114,22 @@ footer {
   box-shadow: 0 8px 32px rgba(218,84,38,0.4);
 }
 .exit-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(218,84,38,0.55); }
+.exit-close-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: none;
+  border: none;
+  color: var(--muted2);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color .2s;
+}
+.exit-close-icon:hover { color: var(--text); }
 .exit-close {
   display: block;
   color: var(--muted2);

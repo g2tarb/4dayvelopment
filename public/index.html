@@ -59,7 +59,7 @@
 
   <!-- ── NAV ── -->
   <nav id="navbar">
-    <a href="#" class="nav-logo">
+    <a href="/" class="nav-logo">
       <img src="logo/logo4day.webp" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="240">
     </a>
     <ul class="nav-links">
@@ -121,12 +121,12 @@
 
       <div class="hero-device reveal" id="exemples">
         <div class="demo-chips" role="group" aria-label="Choisir un métier">
-          <button type="button" class="demo-chip active" data-demo="burger" aria-pressed="true"><span class="demo-chip-ico">🍔</span><span data-i18n="ex-chip-burger">Restauration</span></button>
-          <button type="button" class="demo-chip" data-demo="ongles" aria-pressed="false"><span class="demo-chip-ico">💅</span><span data-i18n="ex-chip-ongles">Beauté</span></button>
-          <button type="button" class="demo-chip" data-demo="borne-recharge" aria-pressed="false"><span class="demo-chip-ico">⚡</span><span data-i18n="ex-chip-borne">Borne</span></button>
-          <button type="button" class="demo-chip" data-demo="coach-sportif" aria-pressed="false"><span class="demo-chip-ico">🥊</span><span data-i18n="ex-chip-coach">Coach</span></button>
-          <button type="button" class="demo-chip" data-demo="barbier" aria-pressed="false"><span class="demo-chip-ico">✂️</span><span data-i18n="ex-chip-barbier">Barbier</span></button>
-          <button type="button" class="demo-chip" data-demo="plombier" aria-pressed="false"><span class="demo-chip-ico">🔧</span><span data-i18n="ex-chip-plombier">Plombier</span></button>
+          <button type="button" class="demo-chip active" data-demo="burger" aria-pressed="true" aria-label="Afficher l'exemple Restauration"><span class="demo-chip-ico">🍔</span><span data-i18n="ex-chip-burger">Restauration</span></button>
+          <button type="button" class="demo-chip" data-demo="ongles" aria-pressed="false" aria-label="Afficher l'exemple Beauté"><span class="demo-chip-ico">💅</span><span data-i18n="ex-chip-ongles">Beauté</span></button>
+          <button type="button" class="demo-chip" data-demo="borne-recharge" aria-pressed="false" aria-label="Afficher l'exemple Borne de recharge"><span class="demo-chip-ico">⚡</span><span data-i18n="ex-chip-borne">Borne</span></button>
+          <button type="button" class="demo-chip" data-demo="coach-sportif" aria-pressed="false" aria-label="Afficher l'exemple Coach sportif"><span class="demo-chip-ico">🥊</span><span data-i18n="ex-chip-coach">Coach</span></button>
+          <button type="button" class="demo-chip" data-demo="barbier" aria-pressed="false" aria-label="Afficher l'exemple Barbier"><span class="demo-chip-ico">✂️</span><span data-i18n="ex-chip-barbier">Barbier</span></button>
+          <button type="button" class="demo-chip" data-demo="plombier" aria-pressed="false" aria-label="Afficher l'exemple Plombier"><span class="demo-chip-ico">🔧</span><span data-i18n="ex-chip-plombier">Plombier</span></button>
         </div>
 
         <div class="demo-stage">
@@ -682,9 +682,9 @@
           <form id="contact-form" novalidate>
 
             <!-- Honeypot anti-bot — masqué visuellement, présent dans le DOM -->
-            <label for="hp-website" class="sr-only">Ne pas remplir ce champ</label>
+            <label for="hp-website" class="sr-only" aria-hidden="true">Ne pas remplir ce champ</label>
             <input type="text" id="hp-website" name="website" class="sr-only"
-              tabindex="-1" autocomplete="off" aria-hidden="true">
+              tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none;">
 
             <div class="form-row">
               <div class="form-group">
@@ -696,6 +696,14 @@
                 <label for="f-email" data-i18n="form-email">Email *</label>
                 <input type="email" id="f-email" name="email" placeholder="jean@exemple.fr" required autocomplete="email">
                 <span class="form-error" id="err-email"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="f-phone" data-i18n="form-phone">Téléphone</label>
+                <input type="tel" id="f-phone" name="phone" placeholder="06 12 34 56 78" autocomplete="tel">
+                <span class="form-error" id="err-phone"></span>
               </div>
             </div>
 
@@ -759,14 +767,14 @@
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="#" class="footer-logo">
+        <a href="/" class="footer-logo">
           <img src="logo/logo4day.webp" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="240">
         </a>
         <p data-i18n="footer-tagline">Un site qui vend, livré en 4 jours.</p>
         <div class="footer-socials">
-          <a href="#" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank">in</a>
-          <a href="#" aria-label="Instagram" rel="noopener noreferrer" target="_blank">ig</a>
-          <a href="#" aria-label="Twitter / X" rel="noopener noreferrer" target="_blank">𝕏</a>
+          <a href="https://linkedin.com/company/4dayvelopment" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank">in</a>
+          <a href="https://instagram.com/4dayvelopment" aria-label="Instagram" rel="noopener noreferrer" target="_blank">ig</a>
+          <a href="https://twitter.com/4dayvelopment" aria-label="Twitter / X" rel="noopener noreferrer" target="_blank">𝕏</a>
         </div>
       </div>
 
@@ -829,11 +837,12 @@
   <!-- Toasts social proof desactives — a reactiver avec de vrais temoignages -->
 
   <!-- ── EXIT INTENT ── -->
-<div id="exit-overlay">
+<div id="exit-overlay" role="dialog" aria-labelledby="exit-title" aria-modal="true">
   <div id="exit-backdrop"></div>
   <div id="exit-modal">
+    <button class="exit-close-icon" id="exit-close-icon" aria-label="Fermer la pop-up" title="Fermer">✕</button>
     <div class="exit-emoji">⚡</div>
-    <div class="exit-title">Attendez !<br>Votre site en <span class="gradient-text">4 jours</span>, garanti.</div>
+    <div id="exit-title" class="exit-title">Attendez !<br>Votre site en <span class="gradient-text">4 jours</span>, garanti.</div>
     <p class="exit-desc">Si on ne livre pas en 4 jours ouvrés, vous ne payez pas. Simple.</p>
     <a href="#contact" class="exit-cta" id="exit-cta-btn">
       🚀 Démarrer mon projet →
