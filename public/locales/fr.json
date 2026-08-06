@@ -172,5 +172,10 @@
   "billes-hint": "Touchez une couleur — et voyez le site que vous pourriez avoir.",
   "billes-open": "Voir cet exemple →",
   "test-4": "\"Brief le lundi, site en ligne le jeudi. Ils ont compris le projet plus vite que je ne l'expliquais.\"",
-  "test-site": "Voir le site"
+  "test-site": "Voir le site",
+  "e404-badge": "Erreur 404",
+  "e404-title": "Page introuvable",
+  "e404-text": "Cette page a disparu dans l'univers, ou n'a jamais existé.<br>Pas d'inquiétude, on livre quand même votre site en <span class=\"gradient-text\" style=\"font-weight:700;\">4 jours</span>.",
+  "e404-home": "Retour à l'accueil",
+  "e404-cta": "Démarrer mon projet"
 }

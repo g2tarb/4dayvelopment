@@ -172,5 +172,10 @@
   "billes-hint": "Tap a colour — and see the website you could have.",
   "billes-open": "View this example →",
   "test-4": "\"Brief on Monday, site live on Thursday. They understood the project faster than I could explain it.\"",
-  "test-site": "View the site"
+  "test-site": "View the site",
+  "e404-badge": "Error 404",
+  "e404-title": "Page not found",
+  "e404-text": "This page vanished into the universe, or never existed.<br>No worries, we still deliver your site in <span class=\"gradient-text\" style=\"font-weight:700;\">4 days</span>.",
+  "e404-home": "Back to home",
+  "e404-cta": "Start my project"
 }

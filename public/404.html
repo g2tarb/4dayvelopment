@@ -40,7 +40,6 @@
       <li><a href="https://4dayvelopment.fr/blog">Blog</a></li>
     </ul>
     <div class="nav-right">
-      <button id="lang-toggle" class="nav-toggle lang-btn" aria-label="Langue" title="Switch language">🇬🇧 EN</button>
       <a href="https://4dayvelopment.fr/devis" class="nav-cta">Devis gratuit →</a>
     </div>
     <button class="hamburger" id="hamburger" aria-label="Menu">
@@ -76,7 +75,7 @@
 
       <div class="badge" style="justify-content: center; margin-bottom: 32px;">
         <span class="badge-dot"></span>
-        <span>Erreur 404</span>
+        <span data-i18n="e404-badge">Erreur 404</span>
       </div>
 
       <div class="gradient-text" style="
@@ -96,7 +95,7 @@
         letter-spacing: -0.5px;
         margin-bottom: 16px;
         color: var(--text);
-      ">Page introuvable</h1>
+      " data-i18n="e404-title">Page introuvable</h1>
 
       <p style="
         font-size: 17px;
@@ -104,20 +103,24 @@
         line-height: 1.75;
         margin-bottom: 48px;
       ">
-        Cette page a disparu dans l'univers… ou n'a jamais existé.<br>
-        Pas d'inquiétude, on livre quand même votre site en <span class="gradient-text" style="font-weight:700;">4 jours</span> 🚀
+        <span data-i18n="e404-text">Cette page a disparu dans l'univers, ou n'a jamais existé.<br>Pas d'inquiétude, on livre quand même votre site en <span class="gradient-text" style="font-weight:700;">4 jours</span>.</span>
       </p>
 
       <div class="hero-actions" style="justify-content: center;">
         <a href="/" class="btn-primary magnetic">
-          Retour à l'accueil
+          <span data-i18n="e404-home">Retour à l'accueil</span>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="/lead.html" class="btn-secondary magnetic">Démarrer mon projet</a>
+        <a href="/devis" class="btn-secondary magnetic" data-i18n="e404-cta">Démarrer mon projet</a>
       </div>
 
     </div>
   </main>
+
+  <!-- Sélecteur de langue, même emplacement flottant que sur l'accueil -->
+  <div id="floating-cta">
+    <button id="lang-toggle" class="lang-fab" aria-label="Langue" title="Switch language">🇬🇧 EN</button>
+  </div>
 
   <script type="module" src="/js/main.js"></script>
 
