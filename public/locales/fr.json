@@ -94,12 +94,11 @@
   "avis-label": "Avis clients",
   "avis-title": "Ils ont sauté le pas.<br><em class=\"gradient-text\">Voici ce qu'ils en pensent.</em>",
   "test-1": "\"Livraison en 4 jours, site magnifique, et mes clients me font régulièrement des compliments. Meilleur investissement de l'année.\"",
-  "test-1-role": "Coach bien-être · Site Pro",
+  "test-1-role": "Plateforme SaaS",
   "test-2": "\"J'avais peur que ce soit compliqué. Tout s'est passé sans accroc, ils ont su exactement ce dont j'avais besoin. Je recommande à 100%.\"",
-  "test-2-role": "Artisan menuisier · Site Essentiel",
+  "test-2-role": "Marketplace sportive",
   "test-3": "\"Notre boutique en ligne a généré <strong>3 000€ de chiffre d'affaires le premier mois</strong>. L'investissement a été rentabilisé en quelques semaines.\"",
-  "test-3-role": "Créatrice de bijoux · E-commerce",
-  "test-3-result": "📈 ROI en 3 semaines",
+  "test-3-role": "Maison d'objets",
   "faq-title": "Les questions<br><em class=\"gradient-text\">qu'on nous pose souvent</em>",
   "faq-1-q": "Comment fonctionne la livraison en 4 jours ?",
   "faq-1-a": "Dès réception de vos contenus et du premier acompte, on démarre immédiatement. <strong>Jour 1 :</strong> brief & maquette. <strong>Jour 2 :</strong> validation & développement. <strong>Jours 3 et 4 :</strong> finalisation, tests et mise en ligne. Simple, rapide, garanti contractuellement.",
@@ -171,5 +170,7 @@
   "ex-all": "Tous les exemples",
   "hero-cta-pro": "Obtenir mon site professionnel",
   "billes-hint": "Touchez une couleur — et voyez le site que vous pourriez avoir.",
-  "billes-open": "Voir cet exemple →"
+  "billes-open": "Voir cet exemple →",
+  "test-4": "\"Brief le lundi, site en ligne le jeudi. Ils ont compris le projet plus vite que je ne l'expliquais.\"",
+  "test-site": "Voir le site"
 }

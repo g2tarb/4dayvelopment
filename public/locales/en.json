@@ -94,12 +94,11 @@
   "avis-label": "Client reviews",
   "avis-title": "They took the leap.<br><em class=\"gradient-text\">Here's what they think.</em>",
   "test-1": "\"Delivered in 4 days, beautiful site, and my clients compliment it regularly. Best investment of the year.\"",
-  "test-1-role": "Wellness coach · Pro Website",
+  "test-1-role": "SaaS platform",
   "test-2": "\"I was afraid it would be complicated. Everything went smoothly, they knew exactly what I needed. 100% recommend.\"",
-  "test-2-role": "Carpenter craftsman · Essentiel Website",
+  "test-2-role": "Sports marketplace",
   "test-3": "\"Our online store generated <strong>€3,000 in revenue in the first month</strong>. The investment paid off within weeks.\"",
-  "test-3-role": "Jewelry creator · E-commerce",
-  "test-3-result": "📈 ROI in 3 weeks",
+  "test-3-role": "Design house",
   "faq-title": "Questions<br><em class=\"gradient-text\">we get asked often</em>",
   "faq-1-q": "How does the 4-day delivery work?",
   "faq-1-a": "As soon as we receive your content and first payment, we start immediately. <strong>Day 1:</strong> brief & mockup. <strong>Day 2:</strong> validation & development. <strong>Days 3 and 4:</strong> finalization, testing and launch. Simple, fast, contractually guaranteed.",
@@ -171,5 +170,7 @@
   "ex-all": "All examples",
   "hero-cta-pro": "Get my professional website",
   "billes-hint": "Tap a colour — and see the website you could have.",
-  "billes-open": "View this example →"
+  "billes-open": "View this example →",
+  "test-4": "\"Brief on Monday, site live on Thursday. They understood the project faster than I could explain it.\"",
+  "test-site": "View the site"
 }
