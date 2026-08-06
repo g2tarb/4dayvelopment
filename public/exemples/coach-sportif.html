@@ -288,6 +288,17 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
 
 /* ── Très petites largeurs (mockup téléphone ~280-320px) ── */
 @media(max-width:374px){
+  /* Le hero doit tenir dans le cadre : sinon on ouvre l'exemple sur une photo et du
+     vide, le titre et le bouton restant sous le bord de l'ecran du mockup. */
+  .hero{padding:3.2rem 0 1.4rem}
+  .hero__eyebrow,.eyebrow,.badge{margin-bottom:.8rem;font-size:9.5px;letter-spacing:.2em;line-height:1.5}
+  .hero__sub,.hero__hum{margin:.7rem 0 1.1rem;font-size:.88rem;line-height:1.55}
+  .hero__actions{gap:.55rem}
+  .hero__actions a,.hero__actions button{min-height:42px;padding:.6rem 1.1rem;font-size:11px;letter-spacing:.06em}
+  .stats{gap:1px;margin-top:.9rem;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .stat{padding:.7rem .35rem .65rem}
+  .stat b{font-size:1.05rem}
+  .stat span{font-size:8px;letter-spacing:.04em;line-height:1.25;margin-top:.3rem;hyphens:none;word-break:normal}
   /* Mockup telephone (~244 px de large) : les paddings de section restaient ceux
      du grand ecran, ce qui laissait un grand vide entre la derniere section et
      le pied de page au lieu de montrer la fin du site. */
@@ -297,10 +308,18 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
   .topbar__inner{padding:.65rem .9rem;gap:.5rem}
   .brand{white-space:nowrap;min-width:0}
   .brand span{display:none}
-  .brand b,.brand strong{font-size:1rem}
-  .top-cta,.top-tel,.btn.btn--top{font-size:10.5px;padding:.45rem .85rem;min-height:40px;letter-spacing:.06em;white-space:nowrap}
+  .brand b,.brand strong{font-size:.9rem}
+  /* la barre du haut s'etirait au-dela du cadre (contenu insecable) : on la borne */
+  .topbar{max-width:100%;overflow:hidden}
+  .topbar__inner{max-width:100%;min-width:0;gap:.4rem;padding:.55rem .8rem}
+  .brand{min-width:0;overflow:hidden;text-overflow:ellipsis}
+  .btn.btn--top{flex:0 0 auto}
+
+  .top-cta,.top-tel,.btn.btn--top{font-size:8px;padding:.35rem .6rem;min-height:34px;letter-spacing:.02em;white-space:nowrap}
   .stamp{display:none}
-  h1{font-size:clamp(1.6rem,9vw,3.4rem)}
+  h1 .h1a,h1 .h1c{white-space:normal;font-size:1.15rem;line-height:1.05}
+  h1 .h1b{font-size:1rem}
+
   h2{font-size:clamp(1.35rem,8.4vw,2.6rem)}
   .formes{flex-wrap:wrap;justify-content:center}
   .formes .forme,.formes button{min-width:0;padding:.5rem .7rem;font-size:12px}

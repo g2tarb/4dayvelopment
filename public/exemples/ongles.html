@@ -248,6 +248,13 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.8rem 1.4rem calc(2.2rem 
 
 /* ── Très petites largeurs (mockup téléphone ~280-320px) ── */
 @media(max-width:374px){
+  /* Le hero doit tenir dans le cadre : sinon on ouvre l'exemple sur une photo et du
+     vide, le titre et le bouton restant sous le bord de l'ecran du mockup. */
+  .hero{padding:3.2rem 0 1.4rem}
+  .hero__eyebrow,.eyebrow,.badge{margin-bottom:.8rem;font-size:9.5px;letter-spacing:.2em;line-height:1.5}
+  .hero__sub,.hero__hum{margin:.7rem 0 1.1rem;font-size:.88rem;line-height:1.55}
+  .hero__actions{gap:.55rem}
+  .hero__actions a,.hero__actions button{min-height:42px;padding:.6rem 1.1rem;font-size:11px;letter-spacing:.06em}
   /* Mockup telephone (~244 px de large) : les paddings de section restaient ceux
      du grand ecran, ce qui laissait un grand vide entre la derniere section et
      le pied de page au lieu de montrer la fin du site. */
