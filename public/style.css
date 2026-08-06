@@ -1958,6 +1958,35 @@ footer {
   align-items: flex-end;
   gap: 10px;
 }
+/* Sélecteur de langue : déplacé de la barre de navigation vers le bloc flottant,
+   juste au-dessus du bouton de contact. */
+.lang-fab {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 40px;
+  padding: 0 14px;
+  border-radius: var(--radius-full);
+  background: rgba(20,20,22,0.82);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.14);
+  color: var(--text);
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.35);
+  transition: color .2s, border-color .2s, background .2s, transform .2s;
+}
+.lang-fab:hover, .lang-fab:focus-visible {
+  color: var(--accent2);
+  border-color: rgba(218,84,38,0.4);
+  background: rgba(218,84,38,0.14);
+  transform: translateY(-1px);
+}
+
 #fcta-main {
   width: 60px; height: 60px;
   border-radius: 50%;
