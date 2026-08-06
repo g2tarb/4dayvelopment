@@ -41,8 +41,18 @@
       transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
     [data-rv].in{opacity:1;transform:none}
     @media (prefers-reduced-motion:reduce){[data-rv]{opacity:1;transform:none;transition:none}}
+    /* Dans le mockup telephone de la home : pas de barre de defilement, et le
+       scroll s'arrete net a la fin de la page (ni rebond au-dela, ni report du
+       geste sur la page qui contient le telephone). */
+    html.in-frame,html.in-frame body{scrollbar-width:none;overscroll-behavior:none}
+    html.in-frame::-webkit-scrollbar,html.in-frame body::-webkit-scrollbar{width:0;height:0;display:none}
   `;
   document.head.appendChild(style);
+
+  /* La demo tourne-t-elle dans le cadre du telephone plutot qu'en plein ecran ? */
+  try {
+    if (window.self !== window.top) document.documentElement.classList.add('in-frame');
+  } catch { document.documentElement.classList.add('in-frame'); }
 
   /* ── Grain ── */
   const grain = document.createElement('div');

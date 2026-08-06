@@ -3423,7 +3423,9 @@ footer {
   border-radius: 38px;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
+  /* none et pas contain : le geste ne repart pas sur la page une fois la fin
+     de la demo atteinte, et pas de rebond au-dela du bas du telephone. */
+  overscroll-behavior: none;
   background: var(--bg2);
   scrollbar-width: none;
 }
