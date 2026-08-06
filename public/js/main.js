@@ -3,7 +3,7 @@
    Orchestrateur ES6 modules · Sans bundler
    ================================================================ */
 
-import { initProgress, initNav, initSmoothScroll, initFloatingCTA, initPageTransition, initStickyCTA, initBottomSheetSwipe } from './modules/navigation.js';
+import { initProgress, initNav, initSmoothScroll, initPageTransition, initStickyCTA, initBottomSheetSwipe } from './modules/navigation.js';
 import { initCursor, initGlow, initMagnetic, initScramble, initReveal, initCounters } from './modules/animations.js';
 import { initContactForm, initBudgetChips, initToasts, initExit } from './modules/form.js';
 import { initLang } from './modules/i18n.js';
@@ -69,7 +69,6 @@ async function init() {
   initCounters();
   initFAQ();
   initSmoothScroll();
-  initFloatingCTA();
   initStickyCTA();
   initBottomSheetSwipe();
   initToasts();

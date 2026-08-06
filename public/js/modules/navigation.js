@@ -186,19 +186,3 @@ export function initBottomSheetSwipe() {
   }, { passive: true });
 }
 
-export function initFloatingCTA() {
-  const main = $('#fcta-main');
-  const menu = $('#fcta-menu');
-  if (!main || !menu) return;
-  let open = false;
-  on(main, 'click', () => {
-    open = !open;
-    menu.classList.toggle('open', open);
-    main.style.transform = open ? 'scale(1.1) rotate(135deg)' : '';
-  });
-  on(document, 'click', e => {
-    if (!e.target.closest('#floating-cta')) {
-      open = false; menu.classList.remove('open'); main.style.transform = '';
-    }
-  });
-}
