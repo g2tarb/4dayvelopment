@@ -945,11 +945,12 @@
 
       <!-- Budget -->
       <div class="form-group" style="margin-bottom:28px;">
-        <label>Budget estimé</label>
+        <label for="budget-range">Budget estimé</label>
         <div style="margin-top:10px;">
-          <div class="budget-display" id="budget-display">2 000 €</div>
+          <div class="budget-display" id="budget-display" aria-live="polite">2 000 €</div>
           <input type="range" class="budget-range" id="budget-range"
-                 min="0" max="10" step="1" value="2">
+                 min="0" max="10" step="1" value="2"
+                 aria-label="Budget estimé" aria-describedby="budget-display">
           <div class="budget-labels">
             <span>< 500 €</span>
             <span>5 000 €</span>
