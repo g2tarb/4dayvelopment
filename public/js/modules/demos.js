@@ -20,7 +20,6 @@ export function initDemoViewer() {
   const chips    = section.querySelectorAll('.demo-chip');
   const openLink = section.querySelector('.demo-open');
   const ctaLink  = section.querySelector('.demo-cta');
-  const toggles  = section.querySelectorAll('.demo-mode button');
   if (!frame || !device) return;
 
   let current = 'burger';
@@ -41,8 +40,7 @@ export function initDemoViewer() {
   const touch = matchMedia('(hover: none), (pointer: coarse)').matches;
 
   function fit() {
-    const desktop = device.classList.contains('is-desktop');
-    if (!desktop && touch) {
+    if (touch) {
       // Tactile : iframe à la taille réelle de l'écran (Safari iOS fige les
       // iframes mises à l'échelle — le viewport natif garde le scroll au doigt)
       frame.style.width = '100%';
@@ -50,8 +48,8 @@ export function initDemoViewer() {
       frame.style.transform = 'none';
       return;
     }
-    // Desktop : viewport fidèle (390 px mobile / 1200 px ordinateur) réduit au cadre
-    const vw = desktop ? 1200 : 390;
+    // Souris : viewport mobile fidèle (390 px) réduit au cadre du téléphone
+    const vw = 390;
     const screen = device.querySelector('.demo-screen');
     const scale = screen.clientWidth / vw;
     frame.style.width  = vw + 'px';
@@ -62,12 +60,6 @@ export function initDemoViewer() {
   chips.forEach(c => on(c, 'click', () => {
     current = c.dataset.demo;
     apply();
-  }));
-
-  toggles.forEach(b => on(b, 'click', () => {
-    toggles.forEach(x => x.classList.toggle('active', x === b));
-    device.classList.toggle('is-desktop', b.dataset.mode === 'desktop');
-    fit();
   }));
 
   on(window, 'resize', fit, { passive: true });
