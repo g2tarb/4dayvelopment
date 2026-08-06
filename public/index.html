@@ -66,7 +66,7 @@
       <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
       <li><a href="https://4dayvelopment.fr/services/e-commerce">E-commerce</a></li>
       <li><a href="https://4dayvelopment.fr/services/referencement-seo">SEO</a></li>
-      <li><a href="https://4dayvelopment.fr/exemples">Exemples</a></li>
+      <li><a href="https://4dayvelopment.fr/portfolio">Portfolio</a></li>
       <li><a href="https://4dayvelopment.fr/#tarifs">Tarifs</a></li>
       <li><a href="https://4dayvelopment.fr/blog">Blog</a></li>
     </ul>
@@ -85,7 +85,7 @@
       <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
       <li><a href="https://4dayvelopment.fr/services/e-commerce">E-commerce</a></li>
       <li><a href="https://4dayvelopment.fr/services/referencement-seo">SEO</a></li>
-      <li><a href="https://4dayvelopment.fr/exemples">Exemples</a></li>
+      <li><a href="https://4dayvelopment.fr/portfolio">Portfolio</a></li>
       <li><a href="https://4dayvelopment.fr/#tarifs">Tarifs</a></li>
       <li><a href="https://4dayvelopment.fr/blog">Blog</a></li>
       <li><a href="https://4dayvelopment.fr/#contact" class="mobile-cta">Devis gratuit →</a></li>
@@ -577,7 +577,7 @@
           </button>
           <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="">
             <div class="faq-answer-inner">
-              <p data-i18n="faq-3-a">On offre des allers-retours <strong>illimités</strong> pendant la phase de design jusqu'à ce que vous soyez 100% satisfait. Si malgré tout le site n'est pas livré en 4 jours ouvrés, <strong>vous ne payez pas.</strong></p>
+              <p data-i18n="faq-3-a">On offre des allers-retours <strong>illimités</strong> pendant la phase de design jusqu'à ce que vous soyez 100% satisfait. Et si malgré tout vous n'êtes pas content dans les <strong>14 jours</strong> suivant la livraison, on vous rembourse intégralement. Zéro risque pour vous.</p>
 
             </div>
           </div>
@@ -684,7 +684,7 @@
             <!-- Honeypot anti-bot — masqué visuellement, présent dans le DOM -->
             <label for="hp-website" class="sr-only" aria-hidden="true">Ne pas remplir ce champ</label>
             <input type="text" id="hp-website" name="website" class="sr-only"
-              tabindex="-1" autocomplete="off" aria-hidden="true" style="display:none;">
+              tabindex="-1" autocomplete="off" aria-hidden="true">
 
             <div class="form-row">
               <div class="form-group">
@@ -771,11 +771,7 @@
           <img src="logo/logo4day.webp" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="240">
         </a>
         <p data-i18n="footer-tagline">Un site qui vend, livré en 4 jours.</p>
-        <div class="footer-socials">
-          <a href="https://linkedin.com/company/4dayvelopment" aria-label="LinkedIn" rel="noopener noreferrer" target="_blank">in</a>
-          <a href="https://instagram.com/4dayvelopment" aria-label="Instagram" rel="noopener noreferrer" target="_blank">ig</a>
-          <a href="https://twitter.com/4dayvelopment" aria-label="Twitter / X" rel="noopener noreferrer" target="_blank">𝕏</a>
-        </div>
+        <!-- Réseaux sociaux : bloc retiré tant qu'il n'y a pas de comptes actifs (liens morts = perte de crédibilité) -->
       </div>
 
       <div class="footer-links-group">
@@ -794,7 +790,7 @@
           <li><a href="#process" data-i18n="footer-agen-1">Notre Processus</a></li>
           <li><a href="#tarifs" data-i18n="footer-agen-2">Tarifs</a></li>
           <li><a href="#avis" data-i18n="footer-agen-3">Avis clients</a></li>
-          <li><a href="/exemples">Exemples</a></li>
+          <li><a href="/portfolio">Portfolio</a></li>
           <li><a href="/blog">Blog</a></li>
         </ul>
       </div>
@@ -841,14 +837,14 @@
   <div id="exit-backdrop"></div>
   <div id="exit-modal">
     <button class="exit-close-icon" id="exit-close-icon" aria-label="Fermer la pop-up" title="Fermer">✕</button>
-    <div class="exit-emoji">⚡</div>
-    <div id="exit-title" class="exit-title">Attendez !<br>Votre site en <span class="gradient-text">4 jours</span>, garanti.</div>
-    <p class="exit-desc">Si on ne livre pas en 4 jours ouvrés, vous ne payez pas. Simple.</p>
-    <a href="#contact" class="exit-cta" id="exit-cta-btn">
-      🚀 Démarrer mon projet →
+    <div class="exit-emoji" aria-hidden="true">⚡</div>
+    <div id="exit-title" class="exit-title" data-i18n="exit-title">Attendez !<br>Un appel de 30 min, <span class="gradient-text">offert</span>.</div>
+    <p class="exit-desc" data-i18n="exit-desc">Avant de partir, parlons de votre projet : 30 minutes pour cadrer vos besoins et repartir avec un devis clair. Sans engagement.</p>
+    <a href="#contact" class="exit-cta" id="exit-cta-btn" data-i18n="exit-cta">
+      Réserver mon appel offert →
     </a>
-    <button class="exit-close" id="exit-close-btn">
-      Non merci, je n'ai pas besoin de clients
+    <button class="exit-close" id="exit-close-btn" data-i18n="exit-close">
+      Non merci, une autre fois
     </button>
   </div>
 </div>
@@ -990,7 +986,7 @@
             "name": "Et si je ne suis pas satisfait du résultat ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "On offre des allers-retours illimités pendant la phase de design jusqu'à ce que vous soyez 100% satisfait. Si malgré tout le site n'est pas livré en 4 jours ouvrés, vous ne payez pas."
+              "text": "On offre des allers-retours illimités pendant la phase de design jusqu'à ce que vous soyez 100% satisfait. Et si malgré tout vous n'êtes pas content dans les 14 jours suivant la livraison, on vous rembourse intégralement."
             }
           },
           {

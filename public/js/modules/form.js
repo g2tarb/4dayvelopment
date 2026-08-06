@@ -87,9 +87,10 @@ export function initContactForm() {
         body: JSON.stringify({
          prenom:    $('#f-name').value.trim(),
          email:     $('#f-email').value.trim(),
-         telephone: $('#f-phone').value.trim(),
+         telephone: $('#f-phone')?.value.trim() ?? '',
          secteur:   $('#f-service').value + ($('#f-budget').value ? ' · budget: ' + $('#f-budget').value : ''),
          message:   $('#f-message').value.trim(),
+         website:   $('#hp-website')?.value.trim() ?? '', // honeypot : rempli = bot
         }),
       });
       const data = await res.json();

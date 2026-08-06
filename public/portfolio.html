@@ -138,10 +138,25 @@
     }
     .pcard:hover .pcard-cta, .pcard:focus-visible .pcard-cta { opacity:1; transform:translateY(0); }
 
-    /* Tactile / mobile : pas de hover -> tout est révélé */
+    /* Tactile / mobile : sans survol, tout le texte s'affiche en meme temps et se
+       superposait a la capture (illisible). L'apercu passe en bandeau, le texte
+       en bloc plein juste dessous. */
     @media (hover: none), (max-width: 768px) {
-      .pcard-visual { filter:saturate(.95) brightness(.9); transform:scale(1.02); }
-      .pcard-desc { max-height:160px; opacity:1; margin-bottom:13px; }
+      .pf-grid { grid-template-columns:1fr; gap:16px; }
+      .pcard { min-height:0; }
+      .pcard-visual {
+        position:relative; inset:auto; width:100%; height:190px; flex:none;
+        filter:saturate(.95) brightness(.94); transform:none;
+      }
+      .pcard-overlay {
+        inset:0 0 auto; height:190px;
+        background:linear-gradient(to top, rgba(8,8,8,.86) 0%, rgba(8,8,8,.16) 48%, transparent 100%);
+      }
+      .pcard-body { justify-content:flex-start; padding:18px 20px 22px; background:#101010; }
+      /* le badge se referait au body (seul parent positionne) et retombait sur le titre :
+         on le remet dans le flux, au-dessus du titre. */
+      .pcard-top { position:static; margin-bottom:12px; }
+      .pcard-desc { max-height:200px; opacity:1; margin-bottom:13px; }
       .pcard-cta { opacity:1; transform:none; }
     }
     /* Accessibilité : mouvement réduit */
@@ -189,7 +204,7 @@
       </h1>
 
       <p class="hero-desc reveal" style="max-width:720px;">
-        Chaque projet a sa propre direction artistique. Survolez une carte pour découvrir l'univers du site : vitrines, e-commerces, plateformes et applications, tous conçus et livrés en 4 jours.
+        Chaque projet a sa propre direction artistique : vitrines, e-commerces, plateformes et applications, tous conçus et livrés en 4 jours. Ouvrez une carte, le site est en ligne.
       </p>
     </div>
   </section>

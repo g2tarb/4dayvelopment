@@ -226,7 +226,21 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.8rem 1.4rem calc(2.2rem 
 
 @media(max-width:768px){
   section{padding:4.8rem 1.2rem}
-  .scene svg{width:min(300px,86%)}
+  /* Hero : sur smartphone le voile plein cadre lavait toute la photo. On laisse le
+     haut de l'image nette et on ne densifie le creme que derriere le bloc de texte. */
+  .hero{min-height:94svh;padding:5.4rem 0 3.6rem}
+  .hero__media img{object-position:52% 20%}
+  .hero__veil{background:linear-gradient(180deg,
+      rgba(247,241,232,.10) 0%,rgba(247,241,232,.04) 20%,
+      rgba(247,241,232,.58) 40%,rgba(247,241,232,.92) 56%,
+      rgba(247,241,232,.99) 72%,var(--creme) 92%)}
+  .hero__sub{margin:1.2rem 0 2rem}
+  /* Essai de teinte : cadrage serre sur les ongles, la scene tient dans un ecran
+     avec la palette (sinon on choisit une teinte sans voir la main). */
+  .scene svg{width:min(266px,74%);aspect-ratio:340/392;margin:1.8rem auto 0}
+  .scene::after{content:'';position:absolute;left:0;right:0;bottom:0;height:70px;
+    background:linear-gradient(180deg,rgba(239,220,205,0),#efdccd);pointer-events:none}
+  .palette{gap:.7rem;margin-bottom:1.8rem}
   .atelier__grid,.maison__grid{gap:2.6rem}
   .rdv{padding:1.8rem 1.3rem}
   .rdv .btn-ink{padding:1rem 1.1rem;letter-spacing:.08em;white-space:nowrap}
@@ -298,7 +312,7 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.8rem 1.4rem calc(2.2rem 
         <span class="spark s1" aria-hidden="true">✦</span>
         <span class="spark s2" aria-hidden="true">✧</span>
         <span class="spark s3" aria-hidden="true">✦</span>
-        <svg viewBox="70 30 340 560" role="img" aria-label="Main stylisée sur laquelle s'appliquent les teintes choisies">
+        <svg viewBox="70 30 340 560" preserveAspectRatio="xMidYMin slice" role="img" aria-label="Main stylisée sur laquelle s'appliquent les teintes choisies">
           <defs>
             <linearGradient id="skin" gradientUnits="userSpaceOnUse" x1="90" y1="80" x2="380" y2="580">
               <stop offset="0" stop-color="#f7e4d7"/>

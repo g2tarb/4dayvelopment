@@ -183,8 +183,9 @@ app.use(express.static(path.join(__dirname, 'public'), {
       res.setHeader('Cache-Control', 'no-cache');
     }
     if (/\.(js|css)$/.test(filePath)) {
-      // Assets avec hash de contenu : cache long (7 jours)
-      res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
+      // Pas de hash de contenu dans les noms de fichiers : un cache long fige les
+      // correctifs cote navigateur. On revalide a chaque visite (ETag -> 304).
+      res.setHeader('Cache-Control', 'no-cache');
     } else if (/\.(svg|png|jpg|webp|woff2?)$/.test(filePath)) {
       res.setHeader('Cache-Control', 'public, max-age=604800, immutable');
     }
@@ -247,8 +248,10 @@ const contactSchema = z.object({
     .min(10, 'Le message doit contenir au moins 10 caractères.')
     .max(5000, 'Le message ne peut pas dépasser 5000 caractères.'),
 
-  // Honeypot — doit rester vide
-  website: z.literal('').optional(),
+  // Honeypot — doit rester vide. On accepte la valeur ici pour que la route puisse
+  // la traiter elle-meme (un rejet Zod renverrait un message qui apprend au bot qu'il
+  // est repere).
+  website: z.string().max(200).optional(),
 });
 
 /* ── Middleware de validation Zod ─────────────────────── */
@@ -329,7 +332,8 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
 
   if (data.website) {
     logger.warn({ ip: req.ip }, 'Honeypot déclenché');
-    return res.status(400).json({ success: false, message: 'Bot détecté.' });
+    // Faux succès : le bot croit avoir réussi, rien n'est enregistré ni transmis.
+    return res.json({ success: true, message: 'Message bien reçu, on vous répond sous 24h.' });
   }
 
   // Sauvegarde locale systématique (filet de sécurité, anti-perte de lead)
@@ -732,7 +736,8 @@ const cleanPages = {
   '/services/e-commerce':    'services/e-commerce.html',
   '/services/referencement-seo': 'services/referencement-seo.html',
   '/services/site-internet-restaurant': 'services/site-internet-restaurant.html',
-  '/exemples':        'exemples/index.html',
+  '/portfolio':       'portfolio.html',
+  '/exemples':        'exemples/index.html', // plus liee dans la nav : les demos passent par le mockup de la home
   '/mentions-legales': 'mentions-legales.html',
   '/confidentialite': 'confidentialite.html',
   '/cgv':            'cgv.html',
@@ -752,8 +757,7 @@ for (const [route, file] of Object.entries(cleanPages)) {
   });
 }
 
-/* ── Exemples : redirection de l'ancien portfolio + démos par métier ── */
-app.get('/portfolio', (req, res) => res.redirect(301, '/exemples'));
+/* ── Démos métier : servies pour le mockup téléphone de la home ── */
 app.get('/exemples/:slug', (req, res, next) => {
   const { slug } = req.params;
   if (!/^[a-z0-9-]+$/.test(slug)) return next();
