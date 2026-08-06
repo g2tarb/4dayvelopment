@@ -255,6 +255,11 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
 
 /* ── Très petites largeurs (mockup téléphone ~280-320px) ── */
 @media(max-width:374px){
+  /* Mockup telephone (~244 px de large) : les paddings de section restaient ceux
+     du grand ecran, ce qui laissait un grand vide entre la derniere section et
+     le pied de page au lieu de montrer la fin du site. */
+  section{padding:3.4rem 1rem}
+  footer{padding:2rem 1rem calc(1.6rem + env(safe-area-inset-bottom))}
   .topbar__inner{padding:.65rem .9rem;gap:.5rem}
   .brand{white-space:nowrap;min-width:0}
   .brand span{display:none}

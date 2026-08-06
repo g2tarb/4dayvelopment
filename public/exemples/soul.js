@@ -37,8 +37,8 @@
       transition:width .3s,height .3s,border-color .3s}
     .soul-ring.is-hover{width:56px;height:56px;border-color:rgba(${C2},.8)}
     @media (hover:none),(pointer:coarse){.soul-dot,.soul-ring{display:none}}
-    [data-rv]{opacity:0;transform:translateY(34px);
-      transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+    [data-rv]{opacity:0;transform:translateY(28px);
+      transition:opacity .6s cubic-bezier(.22,1,.36,1),transform .6s cubic-bezier(.22,1,.36,1)}
     [data-rv].in{opacity:1;transform:none}
     @media (prefers-reduced-motion:reduce){[data-rv]{opacity:1;transform:none;transition:none}}
   `;
@@ -56,12 +56,30 @@
       entries.forEach(e => {
         if (!e.isIntersecting) return;
         const el = e.target;
-        el.style.transitionDelay = (parseInt(el.dataset.rv || '0', 10) * 110) + 'ms';
+        el.style.transitionDelay = (parseInt(el.dataset.rv || '0', 10) * 80) + 'ms';
         el.classList.add('in');
         io.unobserve(el);
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+      // Bas de page atteint : plus rien ne doit rester invisible. Sans ce filet, un
+      // scroll rapide au doigt (ou dans le mockup de la home) amenait sur du vide
+      // en attendant que les derniers blocs veuillent bien se reveler.
+      if (scrollY + innerHeight >= document.documentElement.scrollHeight - 8) revelerTout();
+    // marge basse positive : le bloc est revele avant d'entrer dans l'ecran, pas apres
+    }, { threshold: 0, rootMargin: '0px 0px 20% 0px' });
+
+    function revelerTout() {
+      rvEls.forEach(el => {
+        if (el.classList.contains('in')) return;
+        el.style.transitionDelay = '0ms';
+        el.classList.add('in');
+        io.unobserve(el);
+      });
+    }
+
     rvEls.forEach(el => io.observe(el));
+    addEventListener('scroll', () => {
+      if (scrollY + innerHeight >= document.documentElement.scrollHeight - 8) revelerTout();
+    }, { passive: true });
   } else {
     rvEls.forEach(el => el.classList.add('in'));
   }
