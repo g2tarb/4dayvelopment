@@ -1,8 +1,9 @@
 BEGIN:VCARD
 VERSION:3.0
-N:;Erwin;;;
-FN:Erwin
+N:Yana;Erwin;;;
+FN:Erwin Yana
 ORG:4Dayvelopment
+TEL;TYPE=CELL:+33749884645
 EMAIL;TYPE=INTERNET:contact@4dayvelopment.com
 URL:https://4dayvelopment.fr
 NOTE:Sites web sur mesure livres en 4 jours ouvres, prix fixe affiche.
