@@ -120,22 +120,32 @@
       </div>
 
       <div class="hero-device reveal" id="exemples">
-        <div class="demo-chips" role="group" aria-label="Choisir un métier">
-          <button type="button" class="demo-chip active" data-demo="burger" aria-pressed="true" aria-label="Afficher l'exemple Restauration"><span class="demo-chip-ico">🍔</span><span data-i18n="ex-chip-burger">Restauration</span></button>
-          <button type="button" class="demo-chip" data-demo="ongles" aria-pressed="false" aria-label="Afficher l'exemple Beauté"><span class="demo-chip-ico">💅</span><span data-i18n="ex-chip-ongles">Beauté</span></button>
-          <button type="button" class="demo-chip" data-demo="borne-recharge" aria-pressed="false" aria-label="Afficher l'exemple Borne de recharge"><span class="demo-chip-ico">⚡</span><span data-i18n="ex-chip-borne">Borne</span></button>
-          <button type="button" class="demo-chip" data-demo="coach-sportif" aria-pressed="false" aria-label="Afficher l'exemple Coach sportif"><span class="demo-chip-ico">🥊</span><span data-i18n="ex-chip-coach">Coach</span></button>
-          <button type="button" class="demo-chip" data-demo="barbier" aria-pressed="false" aria-label="Afficher l'exemple Barbier"><span class="demo-chip-ico">✂️</span><span data-i18n="ex-chip-barbier">Barbier</span></button>
-          <button type="button" class="demo-chip" data-demo="plombier" aria-pressed="false" aria-label="Afficher l'exemple Plombier"><span class="demo-chip-ico">🔧</span><span data-i18n="ex-chip-plombier">Plombier</span></button>
-        </div>
-
         <div class="demo-stage">
           <div class="demo-device">
             <div class="demo-screen">
-              <iframe title="Site d'exemple par métier — faites défiler" loading="lazy"></iframe>
+              <!-- Deux iframes : la masquee charge le site suivant, la bascule
+                   se fait en fondu, sans ecran blanc. -->
+              <iframe class="demo-frame is-active" title="Exemple de site livré, le diaporama défile tout seul" loading="lazy"></iframe>
+              <iframe class="demo-frame" title="Chargement de l'exemple suivant" aria-hidden="true" tabindex="-1" loading="lazy"></iframe>
+              <!-- Interstitiel entre deux exemples -->
+              <div class="demo-splash" aria-hidden="true">
+                <img src="/logo/logo4day.webp" alt="" width="240" height="240" loading="lazy" decoding="async">
+              </div>
             </div>
           </div>
-          <div class="demo-actions">
+
+          <div class="demo-meta">
+            <p class="demo-now"><span class="demo-now-txt" aria-live="polite">Restauration</span></p>
+
+            <div class="demo-track" role="group" aria-label="Exemples de sites par métier">
+              <button type="button" class="demo-seg is-current" data-demo="burger"><span class="demo-seg-name" data-i18n="ex-chip-burger">Restauration</span><i></i></button>
+              <button type="button" class="demo-seg" data-demo="ongles"><span class="demo-seg-name" data-i18n="ex-chip-ongles">Beauté</span><i></i></button>
+              <button type="button" class="demo-seg" data-demo="coach-sportif"><span class="demo-seg-name" data-i18n="ex-chip-coach">Coach</span><i></i></button>
+              <button type="button" class="demo-seg" data-demo="barbier"><span class="demo-seg-name" data-i18n="ex-chip-barbier">Barbier</span><i></i></button>
+              <button type="button" class="demo-seg" data-demo="plombier"><span class="demo-seg-name" data-i18n="ex-chip-plombier">Plombier</span><i></i></button>
+              <button type="button" class="demo-seg" data-demo="borne-recharge"><span class="demo-seg-name" data-i18n="ex-chip-borne">Borne</span><i></i></button>
+            </div>
+
             <a class="demo-open" href="/exemples/burger" target="_blank" rel="noopener" data-i18n="ex-open">Ouvrir en plein écran ↗</a>
           </div>
         </div>
