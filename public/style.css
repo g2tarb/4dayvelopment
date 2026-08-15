@@ -3809,3 +3809,101 @@ footer {
   .browser-frame--back { display: none; }
   .browser-stack { padding: 0; }
 }
+
+/* ================================================================
+   HERO H1 — traitement signature
+   Une lumiere traverse le titre en continu : degrade argent sur la
+   ligne blanche, degrade de marque sur la punchline, halo qui respire
+   derriere, trait neon en dessous. Cible uniquement #hero, le
+   .gradient-text des autres sections garde son animation d'origine.
+   La regle globale prefers-reduced-motion fige tout ca proprement.
+   ================================================================ */
+#hero .hero-title {
+  position: relative;
+  isolation: isolate;      /* le halo reste derriere le texte, pas derriere le canvas WebGL */
+  padding-bottom: 16px;    /* place pour le trait */
+  margin-bottom: 8px;
+}
+
+/* Halo chaud qui respire derriere le titre */
+#hero .hero-title::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: -12%;
+  top: -28%;
+  width: 92%;
+  height: 165%;
+  background:
+    radial-gradient(45% 55% at 30% 45%, rgba(218,84,38,0.32), transparent 70%),
+    radial-gradient(40% 50% at 62% 62%, rgba(136,64,131,0.26), transparent 72%);
+  filter: blur(30px);
+  pointer-events: none;
+  animation: heroHalo 7s ease-in-out infinite;
+}
+@keyframes heroHalo {
+  0%, 100% { opacity: .75; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.06); }
+}
+
+/* Ligne blanche : degrade argent balaye par le meme mouvement que la punchline.
+   Le span est celui de data-i18n : son contenu change avec la langue, pas ses styles. */
+#hero .hero-title > span[data-i18n] {
+  display: inline-block;
+  max-width: 100%;
+  overflow-wrap: break-word;
+  background-image: linear-gradient(100deg,
+    #ffffff 0%, #c9c9c9 12%, #ffffff 22%, #ffffff 46%, #bdbdbd 64%, #ffffff 78%, #ffffff 100%);
+  background-size: 300% 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: heroShine 5s linear infinite;
+}
+
+/* Punchline : degrade de marque elargi, avec un eclat clair qui traverse.
+   Premiere et derniere couleur identiques : la boucle est invisible. */
+#hero .hero-title .gradient-text {
+  background-image: linear-gradient(100deg,
+    #DA5426 0%, #f2b13b 14%, #fff3d9 21%, #f2b13b 28%,
+    #884083 46%, #DA5426 64%, #f2b13b 82%, #DA5426 100%);
+  background-size: 300% 100%;
+  background-repeat: repeat;
+  animation: heroShine 5s linear infinite;
+}
+@keyframes heroShine {
+  from { background-position: 0% 50%; }
+  to   { background-position: -300% 50%; }
+}
+
+/* Trait neon sous le titre : il se dessine au chargement, puis pulse.
+   Element dedie dans le <h1> et hors du span data-i18n, donc il survit
+   au changement de langue. */
+#hero .hero-flare {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: min(360px, 52%);
+  border-radius: 3px;
+  background: linear-gradient(90deg, #DA5426, #f2b13b 45%, #884083 85%, transparent);
+  box-shadow: 0 0 18px rgba(242,177,59,0.55), 0 0 44px rgba(218,84,38,0.35);
+  transform-origin: left center;
+  animation: heroFlare 1.1s .25s cubic-bezier(.22,1,.36,1) both,
+             heroFlarePulse 3.4s 1.4s ease-in-out infinite;
+}
+@keyframes heroFlare {
+  from { transform: scaleX(0); opacity: 0; }
+  to   { transform: scaleX(1); opacity: 1; }
+}
+@keyframes heroFlarePulse {
+  0%, 100% { opacity: .8; }
+  50%      { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  #hero .hero-title::before { left: -14%; width: 110%; filter: blur(24px); }
+  #hero .hero-flare { height: 2px; width: min(220px, 62%); }
+}
