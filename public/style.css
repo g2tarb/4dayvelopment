@@ -3820,11 +3820,18 @@ footer {
 }
 
 /* Ligne blanche : degrade argent balaye par le meme mouvement que la punchline.
-   Le span est celui de data-i18n : son contenu change avec la langue, pas ses styles. */
+   Le span est celui de data-i18n : son contenu change avec la langue, pas ses styles.
+
+   will-change : sans lui, quand le mot qui explose bouge a cote, Chrome ne
+   repeint que sa zone et laisse le reste de la ligne sur une image
+   perimee. Le degrade ayant avance entre-temps, "Votre" reapparaissait
+   une fraction de seconde en double, decale. Annoncer la propriete animee
+   force le repeint de la ligne entiere a chaque image. */
 #hero .hero-title > span[data-i18n] {
   display: inline-block;
   max-width: 100%;
   overflow-wrap: break-word;
+  will-change: background-position;
   background-image: linear-gradient(100deg,
     #ffffff 0%, #c9c9c9 12%, #ffffff 22%, #ffffff 46%, #bdbdbd 64%, #ffffff 78%, #ffffff 100%);
   background-size: 300% 100%;
@@ -3845,6 +3852,7 @@ footer {
   background-size: 300% 100%;
   background-repeat: repeat;
   animation: heroShine 5s linear infinite;
+  will-change: background-position;   /* meme raison que la ligne du dessus */
 }
 @keyframes heroShine {
   from { background-position: 0% 50%; }
@@ -3895,22 +3903,16 @@ footer {
    --boom-c2, les durees suivent HOLD_MS / CHARGE_MS / OUT_MS / IN_MS.
    Le conteneur est masque tant que le JS n'a pas pris la main : sans lui
    le mot reste simplement en place, dans la couleur de la ligne. */
-/* Le bloc est fige a la largeur du mot le plus large : le titre garde le
-   meme nombre de lignes du debut a la fin, rien ne saute en dessous. */
+/* Le bloc est fige a la largeur du mot le plus large et ne bouge plus
+   jamais : le titre garde la meme mise en page du debut a la fin. C'est ce
+   qui evite le fantome, la ligne n'ayant plus rien a recomposer pendant que
+   son degrade est peint. La ponctuation est dans le mot, pas a cote. */
 #hero .boom {
+  position: relative;
   display: inline-block;
   white-space: nowrap;
   vertical-align: top;
 }
-
-/* Le mot, lui, glisse d'une largeur a l'autre, et la ponctuation suit. */
-#hero .boom-slot {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-  transition: width .42s cubic-bezier(.22,1,.36,1);
-}
-#hero .boom-tail { display: inline-block; }
 
 #hero .boom-word {
   display: inline-block;
@@ -3930,15 +3932,18 @@ footer {
   to   { background-position: -260% 50%; }
 }
 
-/* Les etats reprennent boomShine en premiere position : l'animation de
-   reflet garde sa progression, seule la seconde change. */
-#hero .boom-word.is-charge {
-  animation: boomShine 5s linear infinite,
-             boomCharge .28s linear;
-}
+/* La charge secoue le groupe entier, mot et ponctuation ensemble : faire
+   vibrer le seul mot le ferait cogner contre la virgule. */
+#hero .boom.is-charge { animation: boomCharge .28s linear; }
+
+/* Les etats du mot reprennent boomShine en premiere position : l'animation
+   de reflet garde sa progression, seule la seconde change. */
+/* `both` sur la sortie : le mot reste invisible apres l'animation, tout le
+   temps que la place se referme. Il occupe toujours la ligne, sinon le
+   titre perdrait sa hauteur. */
 #hero .boom-word.is-out {
   animation: boomShine 5s linear infinite,
-             boomOut .38s cubic-bezier(.3,0,.7,1) both;
+             boomOut .32s cubic-bezier(.3,0,.7,1) both;
 }
 #hero .boom-word.is-in {
   animation: boomShine 5s linear infinite,
@@ -3953,15 +3958,20 @@ footer {
   60%      { transform: translate3d(-1.4px, -1.2px, 0); }
   80%      { transform: translate3d(1.4px, 1.2px, 0); }
 }
+/* Le mot ne grossit pas : il se dissipe sur place en montant avec ses
+   cendres. Un mot qui se dilate mord sur la ponctuation et sur la ligne
+   du dessus, et c'est ce chevauchement qui se voyait. L'explosion, ce
+   sont les particules qui la portent. */
 @keyframes boomOut {
-  0%   { transform: scale(1);    opacity: 1;   filter: blur(0); }
-  32%  { transform: scale(1.16); opacity: .72; filter: blur(1px); }
-  100% { transform: scale(1.48); opacity: 0;   filter: blur(7px); }
+  0%   { transform: translateY(0);     opacity: 1;  filter: blur(0); }
+  45%  { transform: translateY(-4px);  opacity: .4; filter: blur(3px); }
+  100% { transform: translateY(-14px); opacity: 0;  filter: blur(8px); }
 }
+/* Le mot suivant se materialise en montant, sans jamais depasser sa
+   taille finale : la aussi, rien ne deborde sur ce qui l'entoure. */
 @keyframes boomIn {
-  0%   { transform: scale(.78); opacity: 0; filter: blur(5px); }
-  62%  { transform: scale(1.04); opacity: 1; filter: blur(0); }
-  100% { transform: scale(1);   opacity: 1; filter: blur(0); }
+  0%   { transform: scale(.94) translateY(8px); opacity: 0; filter: blur(5px); }
+  100% { transform: scale(1)   translateY(0);   opacity: 1; filter: blur(0); }
 }
 
 /* Couche des eclats : elle deborde du mot, sans jamais bloquer un clic */
@@ -3998,12 +4008,16 @@ footer {
 }
 
 /* Sonde de mesure : elle sert a connaitre la largeur d'un mot avant de
-   l'afficher, elle ne doit jamais peser dans la mise en page. */
+   l'afficher. Elle reste enfant du bloc pour heriter de la typographie du
+   titre, mais elle est envoyee hors de l'ecran en position fixe : meme si
+   une image de la page etait peinte pendant qu'elle existe, elle ne peut
+   pas y apparaitre. */
 #hero .boom-probe {
-  position: absolute;
-  left: 0;
-  top: 0;
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
   visibility: hidden;
+  opacity: 0;
   white-space: nowrap;
   pointer-events: none;
 }

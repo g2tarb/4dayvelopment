@@ -9,10 +9,14 @@
    donc l'effet sur mutation du titre plutot qu'une seule fois. */
 import { on } from './utils.js';
 
-const HOLD_MS   = 2600;   // temps de lecture du mot avant la charge
+/* Les quatre temps se suivent sans jamais se chevaucher : deux mots
+   visibles en meme temps au meme endroit, ca fait une bouillie. Les durees
+   sont celles des animations dans style.css. */
+const HOLD_MS   = 2200;   // lecture du mot
 const CHARGE_MS = 280;    // vibration : quelque chose va sauter
-const IN_DELAY  = 120;    // le mot suivant arrive dans la fumee
-const IN_MS     = 420;
+const OUT_MS    = 320;    // le mot se disperse, jusqu'a disparaitre
+const SETTLE_MS = 160;    // la place reste vide, les cendres flottent
+const IN_MS     = 420;    // le mot suivant se materialise
 
 /* Une paire de couleurs par mot, prise a tour de role. Le premier reste
    argente pour se fondre dans la ligne blanche du titre. */
@@ -46,8 +50,12 @@ function mount(title) {
   if (teardown) teardown();
   box.dataset.ready = '1';
 
-  // La ponctuation qui suit le mot voyage avec lui : elle reste collee
-  // quelle que soit la longueur du mot affiche.
+  /* La ponctuation fait partie du mot, elle n'est pas un element voisin
+     qui glisserait a chaque changement. C'est le point clef : le titre est
+     peint par un degrade anime decoupe au texte, et le moindre element qui
+     bouge a l'interieur oblige le navigateur a recomposer la ligne. Il n'en
+     repeignait qu'une partie et laissait un fantome de "Votre" par-dessus.
+     Ici plus rien ne bouge autour du mot. */
   const served = box.textContent.trim();
   const cut    = served.match(/^(.*?)([,.;:!?…]*)$/);
   const first  = cut[1];
@@ -55,7 +63,8 @@ function mount(title) {
 
   const words = [first, ...(box.dataset.boom || '').split('|')]
     .map(w => w.trim())
-    .filter(Boolean);
+    .filter(Boolean)
+    .map(w => w + tail);
   if (words.length < 2) return;
 
   box.textContent = '';
@@ -64,22 +73,18 @@ function mount(title) {
      ou un robot prend son instantane : le carrousel est pour l'oeil, la
      phrase lue et indexee ne bouge jamais. */
   const sr = el('span', 'sr-only');
-  sr.textContent = first;
+  sr.textContent = words[0];
 
-  const slot = el('span', 'boom-slot');
   const word = el('span', 'boom-word');
-  word.textContent = first;
+  word.textContent = words[0];
+  word.setAttribute('aria-hidden', 'true');
   const fx = el('span', 'boom-fx');
   fx.setAttribute('aria-hidden', 'true');
-  slot.setAttribute('aria-hidden', 'true');
-  slot.append(word, fx);
 
-  const tailEl = el('span', 'boom-tail');
-  tailEl.textContent = tail;
+  box.append(sr, word, fx);
 
-  box.append(sr, slot, tailEl);
-
-  let idx = 0, timer = null, alive = true, visible = true, onScreen = true;
+  let idx = 0, timer = null, seq = null, busy = false;
+  let alive = true, visible = true, onScreen = true;
   const sizes = new Map();
 
   paintColors(box, 0);
@@ -93,20 +98,20 @@ function mount(title) {
      - un mot plus long que la colonne ("automatisation") est ramene a
        l'echelle, il vaut mieux un mot un peu plus petit qu'un titre qui
        deborde ;
-     - le bloc entier est fige a la largeur du mot le plus large, sinon le
-       titre passerait de deux a trois lignes a chaque explosion et tout ce
-       qui suit sauterait. Seul le mot glisse a l'interieur. */
+     - le bloc est fige une fois pour toutes a la largeur du mot le plus
+       large. Le titre garde donc exactement la meme mise en page du debut
+       a la fin : rien ne saute en dessous, et surtout la ligne n'est jamais
+       recomposee pendant qu'elle est peinte. */
+  /* On ne libere jamais la largeur du bloc, pas meme une fraction de
+     seconde pour mesurer : la sonde est hors flux, elle donne la largeur
+     naturelle d'un mot sans que le conteneur ait besoin de s'ouvrir. Si on
+     l'ouvrait, un mot court remonterait sur la ligne de "Votre" et le
+     navigateur peindrait ce mot par-dessus, en blanc. */
   function remeasure() {
-    box.style.width = '';
-    slot.style.width = '';
-
     const probe = el('span', 'boom-probe');
     box.appendChild(probe);
 
-    probe.textContent = tail;
-    const tailPx = probe.getBoundingClientRect().width;
-    const avail  = title.clientWidth - tailPx - 4;
-
+    const avail = title.clientWidth - 4;
     let widest = 0;
     words.forEach(w => {
       probe.textContent = w;
@@ -118,55 +123,66 @@ function mount(title) {
     });
     probe.remove();
 
-    box.style.width = (widest + tailPx).toFixed(1) + 'px';
-    slotTo(words[idx]);
+    box.style.width = widest.toFixed(1) + 'px';
     styleWord(words[idx]);
   }
 
-  /* La largeur du mot bouge des l'explosion : la ponctuation glisse
-     pendant que le mot se disperse. */
-  function slotTo(w) {
-    slot.style.width = sizes.get(w).px.toFixed(1) + 'px';
-  }
-
-  /* Le corps du mot, lui, ne change qu'a l'apparition du suivant : sinon
-     le mot sortant changerait de taille en pleine explosion. */
+  /* Le corps du mot ne change qu'a l'apparition du suivant : sinon le mot
+     sortant changerait de taille en pleine explosion. */
   function styleWord(w) {
     const s = sizes.get(w).scale;
     word.style.fontSize = s === 1 ? '' : (s * 100).toFixed(1) + '%';
   }
 
+  /* busy : une sequence en cours va d'elle-meme jusqu'au bout et rappelle
+     schedule. Sans cette garde, un retour d'onglet en plein milieu lancerait
+     un second cycle par-dessus le premier. */
   function schedule(ms) {
     clearTimeout(timer);
-    if (!alive || !visible || !onScreen) return;
+    if (!alive || !visible || !onScreen || busy) return;
     timer = setTimeout(next, ms);
   }
 
+  /* Un temps par etape, et surtout jamais deux a la fois :
+       1. le mot vibre
+       2. il explose et s'efface completement
+       3. une fois la place vide, le texte est echange : il n'y a jamais
+          deux mots visibles au meme endroit
+       4. le mot suivant se materialise
+     Le texte reste dans le DOM pendant tout le vide, invisible : sans lui
+     la ligne perdrait sa hauteur et le titre sauterait. */
   function next() {
-    if (!alive) return;
+    if (!alive || busy) return;
     const to = (idx + 1) % words.length;
+    busy = true;
 
-    word.classList.add('is-charge');
-
-    setTimeout(() => {
-      if (!alive) return;
-      word.classList.remove('is-charge');
-      burst(fx, slot);
+    box.classList.add('is-charge');
+    step(CHARGE_MS, () => {
+      box.classList.remove('is-charge');
       word.classList.add('is-out');
-      slotTo(words[to]);
+      burst(fx, word);
 
-      setTimeout(() => {
-        if (!alive) return;
+      step(OUT_MS + SETTLE_MS, () => {
         idx = to;
         word.textContent = words[to];
         styleWord(words[to]);
         paintColors(box, to);
         word.classList.remove('is-out');
         word.classList.add('is-in');
-        setTimeout(() => word.classList.remove('is-in'), IN_MS);
-        schedule(HOLD_MS);
-      }, IN_DELAY);
-    }, CHARGE_MS);
+        step(IN_MS, () => {
+          word.classList.remove('is-in');
+          busy = false;
+          schedule(HOLD_MS);
+        });
+      });
+    });
+  }
+
+  /* Meme file d'attente que le cycle : un demontage en cours de route
+     (changement de langue) coupe la sequence net. */
+  function step(ms, fn) {
+    clearTimeout(seq);
+    seq = setTimeout(() => { if (alive) fn(); }, ms);
   }
 
   // Onglet en arriere-plan ou hero hors ecran : rien a animer pour personne
@@ -194,6 +210,7 @@ function mount(title) {
   teardown = () => {
     alive = false;
     clearTimeout(timer);
+    clearTimeout(seq);
     clearTimeout(rz);
     io.disconnect();
     document.removeEventListener('visibilitychange', onVis);
@@ -211,8 +228,8 @@ function paintColors(box, i) {
 
 /* Le mot part en morceaux : les eclats naissent sur toute sa largeur,
    filent en etoile et derivent vers le haut, comme des cendres. */
-function burst(fx, slot) {
-  const { width, height } = slot.getBoundingClientRect();
+function burst(fx, word) {
+  const { width, height } = word.getBoundingClientRect();
   if (!width) return;
 
   const shock = el('u', 'boom-shock');
