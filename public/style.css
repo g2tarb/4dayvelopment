@@ -3888,6 +3888,132 @@ footer {
   #hero .hero-flare { height: 2px; width: min(220px, 62%); }
 }
 
+/* ── Le mot qui explose ────────────────────────────────────────
+   Le mot cle du H1 vibre, part en eclats et laisse paraitre le suivant :
+   site internet, MVP, SaaS, automatisation, en boucle. Les couleurs du
+   mot courant sont posees par js/modules/wordboom.js dans --boom-c1 /
+   --boom-c2, les durees suivent HOLD_MS / CHARGE_MS / OUT_MS / IN_MS.
+   Le conteneur est masque tant que le JS n'a pas pris la main : sans lui
+   le mot reste simplement en place, dans la couleur de la ligne. */
+/* Le bloc est fige a la largeur du mot le plus large : le titre garde le
+   meme nombre de lignes du debut a la fin, rien ne saute en dessous. */
+#hero .boom {
+  display: inline-block;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+/* Le mot, lui, glisse d'une largeur a l'autre, et la ponctuation suit. */
+#hero .boom-slot {
+  position: relative;
+  display: inline-block;
+  white-space: nowrap;
+  transition: width .42s cubic-bezier(.22,1,.36,1);
+}
+#hero .boom-tail { display: inline-block; }
+
+#hero .boom-word {
+  display: inline-block;
+  background-image: linear-gradient(100deg,
+    var(--boom-c1, #ffffff) 0%, var(--boom-c2, #c9c9c9) 34%,
+    #fff3d9 50%, var(--boom-c2, #c9c9c9) 66%, var(--boom-c1, #ffffff) 100%);
+  background-size: 260% 100%;
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: boomShine 5s linear infinite;
+}
+@keyframes boomShine {
+  from { background-position: 0% 50%; }
+  to   { background-position: -260% 50%; }
+}
+
+/* Les etats reprennent boomShine en premiere position : l'animation de
+   reflet garde sa progression, seule la seconde change. */
+#hero .boom-word.is-charge {
+  animation: boomShine 5s linear infinite,
+             boomCharge .28s linear;
+}
+#hero .boom-word.is-out {
+  animation: boomShine 5s linear infinite,
+             boomOut .38s cubic-bezier(.3,0,.7,1) both;
+}
+#hero .boom-word.is-in {
+  animation: boomShine 5s linear infinite,
+             boomIn .42s cubic-bezier(.22,1,.36,1) both;
+}
+
+/* La charge : ca vibre juste avant de sauter */
+@keyframes boomCharge {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  20%      { transform: translate3d(-1.6px, 1px, 0); }
+  40%      { transform: translate3d(1.6px, -1px, 0); }
+  60%      { transform: translate3d(-1.4px, -1.2px, 0); }
+  80%      { transform: translate3d(1.4px, 1.2px, 0); }
+}
+@keyframes boomOut {
+  0%   { transform: scale(1);    opacity: 1;   filter: blur(0); }
+  32%  { transform: scale(1.16); opacity: .72; filter: blur(1px); }
+  100% { transform: scale(1.48); opacity: 0;   filter: blur(7px); }
+}
+@keyframes boomIn {
+  0%   { transform: scale(.78); opacity: 0; filter: blur(5px); }
+  62%  { transform: scale(1.04); opacity: 1; filter: blur(0); }
+  100% { transform: scale(1);   opacity: 1; filter: blur(0); }
+}
+
+/* Couche des eclats : elle deborde du mot, sans jamais bloquer un clic */
+#hero .boom-fx {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* Particules legeres : elles filent en etoile et derivent vers le haut.
+   La couleur est posee en JS, le halo la reprend via currentColor. */
+#hero .boom-spark {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  box-shadow: 0 0 7px currentColor;
+}
+
+/* Onde de choc au moment ou le mot cede */
+#hero .boom-shock {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 100%;
+  height: 130%;
+  translate: -50% -50%;
+  border-radius: 50%;
+  text-decoration: none;
+  pointer-events: none;
+  background: radial-gradient(closest-side,
+    rgba(255,243,217,0.5), rgba(242,177,59,0.3) 48%, rgba(218,84,38,0.16) 68%, transparent 80%);
+}
+
+/* Sonde de mesure : elle sert a connaitre la largeur d'un mot avant de
+   l'afficher, elle ne doit jamais peser dans la mise en page. */
+#hero .boom-probe {
+  position: absolute;
+  left: 0;
+  top: 0;
+  visibility: hidden;
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* Mouvement reduit : wordboom.js ne demarre pas, le mot servi reste en
+   place. On neutralise quand meme le reflet, qui lui est purement CSS. */
+@media (prefers-reduced-motion: reduce) {
+  #hero .boom-word { animation: none; }
+}
+
 /* ================================================================
    DIAPORAMA DU TELEPHONE (hero) — remplace les anciennes puces metier
    Les sites d'exemple defilent tout seuls : libelle du metier en cours,
@@ -3995,10 +4121,12 @@ footer {
   .demo-now { font-size: 12px; letter-spacing: 2px; }
 }
 
-/* ── Interstitiel au logo entre deux exemples ─────────────────
-   Il couvre l'ecran du telephone pendant la bascule : on ne voit
-   jamais un site se remplacer a nu. Les durees suivent SPLASH_IN /
-   SPLASH_HOLD dans js/modules/demos.js. */
+/* ── Interstitiel entre deux exemples ─────────────────────────
+   C'est l'ecran d'entree du site rejoue a l'echelle du telephone :
+   meme fond, meme logo qui respire, meme phrase qui tourne autour, meme
+   vitesse. Il couvre l'ecran pendant la bascule, on ne voit donc jamais
+   un site se remplacer a nu. Les durees suivent SPLASH_IN / SPLASH_HOLD
+   dans js/modules/demos.js. */
 .demo-splash {
   position: absolute;
   inset: 0;
@@ -4006,7 +4134,11 @@ footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(62% 50% at 50% 45%, #191410, var(--bg2) 72%);
+  /* meme composition que #preloader, posee sur le fond du telephone */
+  background:
+    radial-gradient(60% 50% at 50% 45%, rgba(218,84,38,0.16), transparent 70%),
+    radial-gradient(45% 40% at 62% 62%, rgba(136,64,131,0.14), transparent 72%),
+    var(--bg);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -4018,16 +4150,48 @@ footer {
   visibility: visible;
   transition: opacity .26s var(--ease-out), visibility 0s;
 }
-.demo-splash img {
-  width: 62%;
-  max-width: 155px;
-  height: auto;
-  opacity: .85;
-  transform: scale(.93);
-  filter: drop-shadow(0 0 26px rgba(218,84,38,0.35));
-  transition: transform .55s var(--ease-out), opacity .3s var(--ease-out);
+.demo-splash-core {
+  position: relative;
+  display: grid;
+  place-items: center;
 }
-.demo-splash.is-on img { opacity: 1; transform: scale(1); }
+/* Meme entree que .pre-core, rejouee a chaque interstitiel */
+.demo-splash.is-on .demo-splash-core { animation: preIn .5s var(--ease-out) both; }
+
+.demo-splash img {
+  grid-area: 1 / 1;
+  width: 42%;
+  max-width: 108px;
+  height: auto;
+  filter: drop-shadow(0 0 22px rgba(218,84,38,0.4));
+}
+/* preBreathe : la meme respiration que le logo de l'ecran d'entree */
+.demo-splash.is-on img { animation: preBreathe 3.4s ease-in-out infinite; }
+
+/* Meme cercle tournant que l'ecran d'entree, a la meme vitesse */
+.demo-ring {
+  grid-area: 1 / 1;
+  width: 92%;
+  max-width: 218px;
+  height: auto;
+  overflow: visible;
+  opacity: 0;
+  transition: opacity .3s var(--ease-out);
+  animation: preSpin 12s linear infinite;
+}
+.demo-splash.is-on .demo-ring { opacity: 1; }
+.demo-ring text {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;      /* unites du viewBox : identique a .pre-ring */
+  font-weight: 700;
+  fill: var(--accent2);
+  text-transform: uppercase;
+}
+/* Ici la langue peut changer en cours de visite : html[lang] est tenu a jour
+   par l'i18n, contrairement a l'ecran d'entree qui se decide avant lui. */
+.ring-en { display: none; }
+html[lang="en"] .ring-fr { display: none; }
+html[lang="en"] .ring-en { display: inline; }
 
 @media (prefers-reduced-motion: reduce) {
   .demo-splash, .demo-splash img { transition: none; }
@@ -4105,6 +4269,13 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   fill: var(--accent2);
   text-transform: uppercase;
 }
+
+/* Phrase du cercle : francais par defaut, anglais si boot.js a lu
+   localStorage.lang === 'en'. Le choix doit tenir avant le premier paint,
+   d'ou les deux <text> dans le SVG plutot qu'un remplacement en JS. */
+.pre-en { display: none; }
+.intro-en .pre-fr { display: none; }
+.intro-en .pre-en { display: inline; }
 
 @media (max-width: 480px) {
   .pre-ring text { font-size: 16px; }

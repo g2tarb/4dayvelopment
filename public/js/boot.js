@@ -22,5 +22,13 @@
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   } catch (e) { /* matchMedia absent : on joue l'intro */ }
 
+  // Langue de la phrase du cercle. L'intro est peinte bien avant que le module
+  // i18n (async, il va chercher les locales) n'ait applique quoi que ce soit :
+  // on lit donc directement le choix memorise, et le CSS bascule entre les deux
+  // <text> deja presents dans le SVG.
+  try {
+    if (localStorage.getItem('lang') === 'en') d.classList.add('intro-en');
+  } catch (e) { /* stockage refuse : on reste en francais */ }
+
   d.classList.add('has-intro', 'is-loading');
 })();

@@ -12,6 +12,7 @@ import { initUniverse } from './modules/gl-bg.js';
 import { initConsent } from './modules/consent.js';
 import { initDemoViewer } from './modules/demos.js';
 import { initPreloader } from './modules/preloader.js';
+import { initWordBoom } from './modules/wordboom.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
    Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
@@ -78,6 +79,7 @@ async function init() {
   initBudgetChips();
   initContactForm();
   initDemoViewer();
+  initWordBoom();    // apres initLang : le titre est deja dans la bonne langue
 
   // Deferred : n'impacte pas le LCP
   setTimeout(() => {

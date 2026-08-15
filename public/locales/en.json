@@ -9,7 +9,7 @@
   "nav-phone": "📞 Free call",
   "hero-badge": "Next-generation web agency · 2026",
   "hero-badge-guarantee": "⚡ Custom-built, hand-coded, delivered in 4 business days.",
-  "hero-h1": "Your professional website,<br><em class=\"gradient-text\">delivered in 4 days.</em>",
+  "hero-h1": "Your <span class=\"boom\" data-boom=\"MVP|SaaS|automation\">professional website,</span><br><em class=\"gradient-text\">delivered in 4 days.</em>",
   "hero-desc": "High-performance, modern, tailor-made websites for entrepreneurs, freelancers and SMBs who want to dominate their market online.",
   "hero-cta1": "See our offers",
   "hero-cta2": "How it works",

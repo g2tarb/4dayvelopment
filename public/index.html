@@ -66,8 +66,13 @@
                pour que la phrase fasse exactement le tour. -->
           <path id="pre-arc" fill="none" d="M150,150 m-118,0 a118,118 0 1,1 236,0 a118,118 0 1,1 -236,0"></path>
         </defs>
-        <text>
+        <!-- Les deux langues sont dans le SVG, boot.js pose .intro-en sur <html>
+             et le CSS choisit : l'i18n arrive trop tard pour cet écran. -->
+        <text class="pre-fr">
           <textPath href="#pre-arc" startOffset="0" textLength="741" lengthAdjust="spacing">VOTRE SITE EN 4 JOURS · VOTRE SITE EN 4 JOURS · VOTRE SITE EN 4 JOURS ·</textPath>
+        </text>
+        <text class="pre-en">
+          <textPath href="#pre-arc" startOffset="0" textLength="741" lengthAdjust="spacing">YOUR WEBSITE IN 4 DAYS · YOUR WEBSITE IN 4 DAYS · YOUR WEBSITE IN 4 DAYS ·</textPath>
         </text>
       </svg>
     </div>
@@ -124,7 +129,9 @@
         </div>
 
         <h1 class="hero-title reveal">
-          <span data-i18n="hero-h1">Votre site internet,<br><em class="gradient-text">livré en 4 jours.</em></span>
+          <!-- Le mot servi dans le HTML est celui qui compte pour le référencement :
+               les variantes de l'effet boom vivent dans data-boom, pas dans le texte. -->
+          <span data-i18n="hero-h1">Votre <span class="boom" data-boom="MVP|SaaS|automatisation">site internet,</span><br><em class="gradient-text">livré en 4 jours.</em></span>
           <span class="hero-flare" aria-hidden="true"></span>
         </h1>
 
@@ -149,9 +156,24 @@
                    se fait en fondu, sans ecran blanc. -->
               <iframe class="demo-frame is-active" title="Exemple de site livré, le diaporama défile tout seul" loading="lazy"></iframe>
               <iframe class="demo-frame" title="Chargement de l'exemple suivant" aria-hidden="true" tabindex="-1" loading="lazy"></iframe>
-              <!-- Interstitiel entre deux exemples -->
+              <!-- Interstitiel entre deux exemples : même traitement que
+                   l'écran d'entrée, logo et phrase qui tourne autour. Ici la
+                   langue suit html[lang], tenu à jour par l'i18n. -->
               <div class="demo-splash" aria-hidden="true">
-                <img src="/logo/logo4day.webp" alt="" width="240" height="240" loading="lazy" decoding="async">
+                <div class="demo-splash-core">
+                  <img src="/logo/logo4day.webp" alt="" width="240" height="240" loading="lazy" decoding="async">
+                  <svg class="demo-ring" viewBox="0 0 300 300" focusable="false" role="presentation">
+                    <defs>
+                      <path id="demo-arc" fill="none" d="M150,150 m-118,0 a118,118 0 1,1 236,0 a118,118 0 1,1 -236,0"></path>
+                    </defs>
+                    <text class="ring-fr">
+                      <textPath href="#demo-arc" startOffset="0" textLength="741" lengthAdjust="spacing">VOTRE SITE EN 4 JOURS · VOTRE SITE EN 4 JOURS · VOTRE SITE EN 4 JOURS ·</textPath>
+                    </text>
+                    <text class="ring-en">
+                      <textPath href="#demo-arc" startOffset="0" textLength="741" lengthAdjust="spacing">YOUR WEBSITE IN 4 DAYS · YOUR WEBSITE IN 4 DAYS · YOUR WEBSITE IN 4 DAYS ·</textPath>
+                    </text>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>

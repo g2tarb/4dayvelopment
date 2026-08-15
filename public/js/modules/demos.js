@@ -18,11 +18,13 @@ const ORDER    = Object.keys(DEMOS);
 const SLIDE_MS = 5500;   // doit rester aligne sur --demo-slide dans style.css
 const RESUME_MS = 9000;  // reprise apres une interaction tactile
 
-/* Interstitiel au logo entre deux exemples : il couvre l'ecran du telephone
-   le temps de la bascule, donc on ne voit jamais le site changer a nu.
-   Doit rester aligne sur les transitions de .demo-splash dans style.css. */
-const SPLASH_IN   = 260;
-const SPLASH_HOLD = 260;
+/* Interstitiel entre deux exemples : l'ecran d'entree du site rejoue a
+   l'echelle du telephone (meme logo, meme phrase qui tourne). Il couvre
+   l'ecran le temps de la bascule, on ne voit donc jamais le site changer
+   a nu. Doit rester aligne sur les transitions de .demo-splash dans
+   style.css. */
+const SPLASH_IN   = 300;
+const SPLASH_HOLD = 900;   // le temps de reconnaitre l'ecran de chargement
 
 export function initDemoViewer() {
   const section = document.getElementById('exemples');
