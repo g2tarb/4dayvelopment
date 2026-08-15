@@ -4032,3 +4032,80 @@ footer {
 @media (prefers-reduced-motion: reduce) {
   .demo-splash, .demo-splash img { transition: none; }
 }
+
+/* ================================================================
+   ECRAN D'ENTREE — logo + phrase qui tourne autour
+   Masque par defaut : il n'apparait que si js/boot.js a pose .has-intro
+   sur <html> (une fois par session, hors prefers-reduced-motion).
+   Pas de JS, pas d'ecran bloque.
+   ================================================================ */
+#preloader { display: none; }
+
+.has-intro #preloader {
+  display: flex;
+  position: fixed;
+  inset: 0;
+  /* au-dessus de tout : #page-transition monte deja a 9999999 */
+  z-index: 10000000;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(60% 50% at 50% 45%, rgba(218,84,38,0.16), transparent 70%),
+    radial-gradient(45% 40% at 62% 62%, rgba(136,64,131,0.14), transparent 72%),
+    var(--bg);
+  opacity: 1;
+  transition: opacity .65s var(--ease-out), transform .65s var(--ease-out);
+}
+.has-intro #preloader.is-out {
+  opacity: 0;
+  transform: scale(1.04);
+  pointer-events: none;
+}
+
+/* Le site ne defile pas tant que l'ecran d'entree est la */
+html.is-loading, html.is-loading body { overflow: hidden; }
+
+.pre-core {
+  position: relative;
+  display: grid;
+  place-items: center;
+  animation: preIn .8s var(--ease-out) both;
+}
+@keyframes preIn {
+  from { opacity: 0; transform: scale(.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.pre-logo {
+  grid-area: 1 / 1;
+  width: min(148px, 36vw);
+  height: auto;
+  filter: drop-shadow(0 0 30px rgba(218,84,38,0.4));
+  animation: preBreathe 3.4s ease-in-out infinite;
+}
+@keyframes preBreathe {
+  0%, 100% { transform: scale(1);    opacity: .94; }
+  50%      { transform: scale(1.04); opacity: 1; }
+}
+
+/* La phrase tourne autour du logo */
+.pre-ring {
+  grid-area: 1 / 1;
+  width: min(300px, 76vw);
+  height: auto;
+  overflow: visible;
+  animation: preSpin 12s linear infinite;
+}
+@keyframes preSpin { to { transform: rotate(360deg); } }
+
+.pre-ring text {
+  font-family: 'Syne', sans-serif;
+  font-size: 15px;      /* unites du viewBox : suit la taille du cercle */
+  font-weight: 700;
+  fill: var(--accent2);
+  text-transform: uppercase;
+}
+
+@media (max-width: 480px) {
+  .pre-ring text { font-size: 16px; }
+}

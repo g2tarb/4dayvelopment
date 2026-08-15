@@ -118,6 +118,8 @@ export function initConsent() {
     return;
   }
 
-  // Premier passage → affiche la bannière après 1s
-  setTimeout(buildBanner, 1000);
+  // Premier passage → affiche la bannière après 1s, ou après l'écran d'entrée
+  // s'il est joué (sinon elle surgit au moment même où l'intro s'efface).
+  const intro = document.documentElement.classList.contains('has-intro');
+  setTimeout(buildBanner, intro ? 2600 : 1000);
 }

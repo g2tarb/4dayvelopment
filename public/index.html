@@ -48,8 +48,30 @@
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Écran d'entrée : décidé avant le premier paint, donc script bloquant
+       et externe (la CSP du site interdit les scripts inline). -->
+  <script src="/js/boot.js"></script>
 </head>
 <body>
+
+  <!-- ── ÉCRAN D'ENTRÉE ──
+       Masqué par défaut : il ne s'affiche que si boot.js a posé .has-intro. -->
+  <div id="preloader" aria-hidden="true">
+    <div class="pre-core">
+      <img class="pre-logo" src="/logo/logo4day.webp" alt="" width="240" height="240" fetchpriority="high" decoding="async">
+      <svg class="pre-ring" viewBox="0 0 300 300" focusable="false" role="presentation">
+        <defs>
+          <!-- Cercle de rayon 118 : circonférence 741, reprise en textLength
+               pour que la phrase fasse exactement le tour. -->
+          <path id="pre-arc" fill="none" d="M150,150 m-118,0 a118,118 0 1,1 236,0 a118,118 0 1,1 -236,0"></path>
+        </defs>
+        <text>
+          <textPath href="#pre-arc" startOffset="0" textLength="741" lengthAdjust="spacing">VOTRE SITE EN 4 JOURS · VOTRE SITE EN 4 JOURS · VOTRE SITE EN 4 JOURS ·</textPath>
+        </text>
+      </svg>
+    </div>
+  </div>
 
   <!-- ── PAGE TRANSITION ── -->
   <div id="page-transition"></div>

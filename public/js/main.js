@@ -11,6 +11,7 @@ import { checkMotion, initFAQ } from './modules/ui.js';
 import { initUniverse } from './modules/gl-bg.js';
 import { initConsent } from './modules/consent.js';
 import { initDemoViewer } from './modules/demos.js';
+import { initPreloader } from './modules/preloader.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
    Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
@@ -56,6 +57,7 @@ function injectGlobalElements() {
 }
 
 async function init() {
+  initPreloader();   // en premier : il pilote la sortie de l'écran d'entrée
   injectGlobalElements();
 
   // Priorité haute — bloquant le rendu si absent
