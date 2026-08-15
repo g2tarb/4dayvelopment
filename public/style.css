@@ -3903,7 +3903,14 @@ footer {
   50%      { opacity: 1; }
 }
 
+/* Sous 1060px le hero passe en colonne centree : le trait suit,
+   et se dessine du centre vers les cotes. `translate` et pas `transform`,
+   qui est deja pris par l'animation scaleX. */
+@media (max-width: 1059px) {
+  #hero .hero-flare { left: 50%; translate: -50% 0; transform-origin: center; }
+  #hero .hero-title::before { left: 4%; width: 92%; }
+}
 @media (max-width: 768px) {
-  #hero .hero-title::before { left: -14%; width: 110%; filter: blur(24px); }
+  #hero .hero-title::before { left: -5%; width: 110%; filter: blur(24px); }
   #hero .hero-flare { height: 2px; width: min(220px, 62%); }
 }
