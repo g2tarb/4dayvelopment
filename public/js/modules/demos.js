@@ -46,7 +46,7 @@ export function initDemoViewer() {
   let idx = 0;          // index du slide affiche
   let front = 0;        // index de l'iframe visible dans frames[]
   let started = false;
-  let timer = null, resumeTimer = null, splashTimer = null;
+  let timer = null, resumeTimer = null, splashTimer = null, splashOff = null;
   let held = false;     // l'utilisateur explore : on ne bouge plus
 
   const urlAt   = i => DEMOS[ORDER[i]].url;
@@ -110,6 +110,7 @@ export function initDemoViewer() {
   function show(i, { user = false } = {}) {
     if (i === idx && started) return;
     clearTimeout(splashTimer);
+    clearTimeout(splashOff);
 
     if (reduced || !splash) {           // pas d'interstitiel : bascule directe
       swap(i);
@@ -118,21 +119,24 @@ export function initDemoViewer() {
       return;
     }
 
-    // Le logo couvre l'ecran, on echange dessous, puis il s'efface
     splash.classList.add('is-on');
+
+    // Des que le logo couvre l'ecran on echange dessous. Les sites d'exemple
+    // font apparaitre leurs blocs a l'entree dans le champ : en echangeant
+    // au dernier moment, le site se devoilait nu puis s'animait sous les
+    // yeux du visiteur. Il a maintenant le temps du logo pour se mettre en
+    // place. La bascule elle-meme est instantanee : en fondu croise, on
+    // apercevrait les deux sites l'un par-dessus l'autre.
     splashTimer = setTimeout(() => {
-      // Sous l'interstitiel la bascule est instantanee : en fondu croise, on
-      // apercevrait les deux sites l'un par-dessus l'autre au moment ou le
-      // logo s'efface.
       screenEl.classList.add('is-swapping');
       swap(i);
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        screenEl.classList.remove('is-swapping');
-        splash.classList.remove('is-on');
-      }));
+      requestAnimationFrame(() => requestAnimationFrame(() =>
+        screenEl.classList.remove('is-swapping')));
       restartFill();
       if (user) hold(); else schedule();
-    }, SPLASH_IN + SPLASH_HOLD);
+
+      splashOff = setTimeout(() => splash.classList.remove('is-on'), SPLASH_HOLD);
+    }, SPLASH_IN);
   }
 
   function schedule() {
