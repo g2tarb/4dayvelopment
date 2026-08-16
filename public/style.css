@@ -3812,6 +3812,24 @@ footer {
   object-fit: cover;
   object-position: top center;
 }
+
+/* Ruban d'apercus : il glisse dans la fenetre au rythme du defilement, un
+   site apres l'autre. La hauteur est fixee par le cadre, le ruban depasse
+   dessous et js/modules/reel.js le remonte. Sans JS il ne bouge pas et on
+   voit le premier apercu, ce qui reste la mise en page d'origine. */
+.browser-view {
+  position: relative;
+  aspect-ratio: 8 / 5;
+  overflow: hidden;
+}
+.browser-reel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  will-change: transform;
+}
+.browser-reel img { aspect-ratio: 8 / 5; }
 .browser-frame--back {
   position: absolute;
   top: 0; left: 0;

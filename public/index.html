@@ -492,9 +492,22 @@
             <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url">secoursparebrise.fr</span></div>
             <img src="/portfolio/da/secours-pare-brise.webp" alt="" width="800" height="500" loading="lazy" decoding="async">
           </div>
+          <!-- Les aperçus défilent dans la fenêtre au fur et à mesure qu'on
+               parcourt les étapes, et l'adresse suit le site affiché.
+               Sans JS, on voit le premier aperçu, immobile. -->
           <div class="browser-frame">
-            <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url">clara-martinez.fr</span></div>
-            <img src="/portfolio/da/clara-martinez.webp" alt="Aperçu d'un site livré par 4dayvelopment, affiché dans une fenêtre de navigateur" width="800" height="500" loading="lazy" decoding="async">
+            <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url" data-browser-url>clara-martinez.fr</span></div>
+            <div class="browser-view">
+              <div class="browser-reel" data-browser-reel>
+                <img src="/portfolio/da/clara-martinez.webp" alt="Aperçu d'un site livré par 4dayvelopment, affiché dans une fenêtre de navigateur" width="800" height="500" data-url="clara-martinez.fr" decoding="async">
+                <img data-src="/portfolio/da/thieps.webp" alt="" width="800" height="500" data-url="thiepsrestaurant.fr" decoding="async">
+                <img data-src="/portfolio/da/emoi-agency.webp" alt="" width="800" height="500" data-url="emoi-agency.fr" decoding="async">
+                <img data-src="/portfolio/da/secureats.webp" alt="" width="800" height="500" data-url="secureats.fr" decoding="async">
+                <img data-src="/portfolio/da/emon.webp" alt="" width="800" height="500" data-url="emonworldwide.com" decoding="async">
+                <img data-src="/portfolio/da/proprio-link.webp" alt="" width="800" height="500" data-url="propriolink.fr" decoding="async">
+                <img data-src="/portfolio/da/secours-pare-brise.webp" alt="" width="800" height="500" data-url="secoursparebrise.fr" decoding="async">
+              </div>
+            </div>
           </div>
         </div>
         <p class="process-visual-note">Jour 4 : votre site est en ligne, sur votre nom de domaine.</p>
