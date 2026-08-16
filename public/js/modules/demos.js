@@ -31,6 +31,7 @@ export function initDemoViewer() {
   if (!section) return;
 
   const device   = section.querySelector('.demo-device');
+  const screenEl = section.querySelector('.demo-screen');
   const splash   = section.querySelector('.demo-splash');
   const frames   = [...section.querySelectorAll('.demo-frame')];
   const segs     = [...section.querySelectorAll('.demo-seg')];
@@ -120,8 +121,15 @@ export function initDemoViewer() {
     // Le logo couvre l'ecran, on echange dessous, puis il s'efface
     splash.classList.add('is-on');
     splashTimer = setTimeout(() => {
+      // Sous l'interstitiel la bascule est instantanee : en fondu croise, on
+      // apercevrait les deux sites l'un par-dessus l'autre au moment ou le
+      // logo s'efface.
+      screenEl.classList.add('is-swapping');
       swap(i);
-      splash.classList.remove('is-on');
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        screenEl.classList.remove('is-swapping');
+        splash.classList.remove('is-on');
+      }));
       restartFill();
       if (user) hold(); else schedule();
     }, SPLASH_IN + SPLASH_HOLD);
@@ -154,22 +162,26 @@ export function initDemoViewer() {
     resumeTimer = setTimeout(resume, RESUME_MS);
   }
 
+  /* Le site est rendu dans un viewport de 390 px puis replie au cadre, sur
+     mobile comme sur ordinateur. Sans ca, le telephone du hero ne fait que
+     250 px de large : le site s'y affiche pour 250 px, donc tout parait
+     enorme et les barres de boutons mangent la moitie de l'ecran. Avec
+     l'ecran au format 390 x 844, l'iframe retrouve exactement le viewport
+     d'un iPhone. */
   function fit() {
+    const vw = 390;
+    const screen = device.querySelector('.demo-screen');
+    if (!screen.clientWidth) return;
+    const scale = screen.clientWidth / vw;
+
+    // Le site commence sous la barre d'etat, comme sur un telephone
+    const status = screen.querySelector('.demo-status');
+    const top = status ? status.offsetHeight : 0;
+
     frames.forEach(frame => {
-      if (touch) {
-        // Tactile : iframe a la taille reelle de l'ecran (Safari iOS fige les
-        // iframes mises a l'echelle — le viewport natif garde le scroll au doigt)
-        frame.style.width = '100%';
-        frame.style.height = '100%';
-        frame.style.transform = 'none';
-        return;
-      }
-      // Souris : viewport mobile fidele (390 px) reduit au cadre du telephone
-      const vw = 390;
-      const screen = device.querySelector('.demo-screen');
-      const scale = screen.clientWidth / vw;
+      frame.style.top    = top + 'px';
       frame.style.width  = vw + 'px';
-      frame.style.height = Math.round(screen.clientHeight / scale) + 'px';
+      frame.style.height = Math.round((screen.clientHeight - top) / scale) + 'px';
       frame.style.transform = `scale(${scale})`;
     });
   }

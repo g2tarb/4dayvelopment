@@ -151,7 +151,30 @@
       <div class="hero-device reveal" id="exemples">
         <div class="demo-stage">
           <div class="demo-device">
+            <!-- Détails de coque : boutons latéraux et barre d'accueil. -->
+            <span class="demo-btns" aria-hidden="true"></span>
+            <span class="demo-home" aria-hidden="true"></span>
             <div class="demo-screen">
+              <!-- Barre d'état : le site commence dessous, comme sur un vrai
+                   téléphone. Sans elle, l'îlot recouvrait le menu du site. -->
+              <div class="demo-status" aria-hidden="true">
+                <span class="demo-time">9:41</span>
+                <span class="demo-sys">
+                  <svg viewBox="0 0 78 24" fill="#fff" focusable="false" role="presentation">
+                    <!-- réseau -->
+                    <rect x="0"  y="15" width="4" height="6"  rx="1"></rect>
+                    <rect x="6"  y="11" width="4" height="10" rx="1"></rect>
+                    <rect x="12" y="7"  width="4" height="14" rx="1"></rect>
+                    <rect x="18" y="3"  width="4" height="18" rx="1"></rect>
+                    <!-- wifi -->
+                    <path d="M30 8.5a13 13 0 0 1 16 0l-2.4 3a9 9 0 0 0-11.2 0zM34.4 14a7 7 0 0 1 7.2 0L38 18.6z"></path>
+                    <!-- batterie -->
+                    <rect x="54" y="5" width="20" height="12" rx="3.4" fill="none" stroke="#fff" stroke-opacity=".5" stroke-width="1.4"></rect>
+                    <rect x="56" y="7" width="14" height="8" rx="2"></rect>
+                    <path d="M75.4 9.4v4.2a2.6 2.6 0 0 0 0-4.2z" fill-opacity=".5"></path>
+                  </svg>
+                </span>
+              </div>
               <!-- Deux iframes : la masquee charge le site suivant, la bascule
                    se fait en fondu, sans ecran blanc. -->
               <iframe class="demo-frame is-active" title="Exemple de site livré, le diaporama défile tout seul" loading="lazy"></iframe>

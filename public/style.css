@@ -3326,29 +3326,37 @@ footer {
 
 .demo-stage { display: flex; flex-direction: column; align-items: center; }
 
+/* La coque est un cadre en padding, et c'est l'ECRAN qui porte le format
+   d'un iPhone 15 (390 x 844). Avec une bordure, le format du boitier et
+   celui de l'ecran different : en le posant sur l'ecran, l'iframe se replie
+   sur exactement 390 x 844, le viewport d'un vrai telephone. */
 .demo-device {
   position: relative;
   width: min(340px, 88vw);
-  aspect-ratio: 390 / 800;
-  border-radius: 48px;
-  border: 10px solid #1c1c1e;
-  background: #000;
+  --coque: 9px;             /* epaisseur du chassis, reprise par les boutons */
+  padding: var(--coque);
+  border-radius: 46px;
+  background: linear-gradient(150deg, #2a2a2d, #131315 42%, #26262a);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.08),
+    0 0 0 1px rgba(255,255,255,0.10),
     0 24px 80px rgba(0,0,0,0.65),
     0 0 90px rgba(218,84,38,0.18);
-  transition: width .45s var(--ease-out), aspect-ratio .45s var(--ease-out), border-radius .45s var(--ease-out);
+  transition: width .45s var(--ease-out), border-radius .45s var(--ease-out);
 }
 .demo-device::before {
-  /* Dynamic island */
+  /* Dynamic island : proportions relevees sur l'appareil, 32 % de la
+     largeur de l'ecran et un peu moins de 10 % en hauteur. */
   content: '';
   position: absolute;
-  top: 10px; left: 50%;
+  top: 2.5%;
+  left: 50%;
   transform: translateX(-50%);
-  width: 25%; height: 18px;
+  width: 31%;
+  aspect-ratio: 125 / 36;   /* les proportions reelles de l'ilot */
   background: #000;
   border-radius: var(--radius-full);
-  z-index: 2;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+  z-index: 4;
   transition: opacity .3s;
 }
 .demo-device::after {
@@ -3360,19 +3368,83 @@ footer {
   z-index: -1;
   pointer-events: none;
 }
-.demo-screen {
+
+/* Boutons lateraux : silencieux et volume a gauche, veille a droite. */
+.demo-btns { position: absolute; inset: 0; pointer-events: none; }
+.demo-btns::before,
+.demo-btns::after {
+  content: '';
   position: absolute;
-  inset: 0;
+  width: 3px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #3a3a3e, #1a1a1c);
+}
+/* Ils affleurent le bord exterieur du chassis, d'ou le retrait de sa propre
+   epaisseur : .demo-btns est cale sur la boite interieure. */
+.demo-btns::before { left:  calc(-1px - var(--coque)); top: 17%; height: 15%; }   /* volume */
+.demo-btns::after  { right: calc(-1px - var(--coque)); top: 21%; height: 11%; }   /* veille */
+
+/* Barre d'accueil, au-dessus du site montre comme sur un vrai telephone */
+.demo-home {
+  position: absolute;
+  bottom: 2.2%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 34%;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255,255,255,.42);
+  z-index: 4;
+  pointer-events: none;
+}
+
+.demo-screen {
+  position: relative;
+  aspect-ratio: 390 / 844;
+  /* Tout ce qu'il y a dedans se mesure en cqw, donc en pourcentage de la
+     largeur de l'ecran : le telephone garde les memes proportions qu'il
+     fasse 250 ou 322 px de large. */
+  container-type: inline-size;
   border-radius: 38px;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-  /* none et pas contain : le geste ne repart pas sur la page une fois la fin
-     de la demo atteinte, et pas de rebond au-dela du bas du telephone. */
-  overscroll-behavior: none;
+  /* L'iframe est repliee a la taille exacte de l'ecran : il n'y a plus rien
+     a faire defiler dans le cadre, et le geste rend la main a la page. */
+  overflow: hidden;
   background: var(--bg2);
   scrollbar-width: none;
 }
 .demo-screen::-webkit-scrollbar { display: none; }
+
+/* Barre d'etat iOS. Sa hauteur est lue par fit() dans demos.js, qui cale
+   l'iframe juste en dessous : le site occupe alors la meme place que dans
+   un vrai navigateur mobile. */
+.demo-status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 12cqw;               /* 47 px sur 390 */
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.6cqw 7.2cqw 0;
+  color: #fff;
+  pointer-events: none;
+}
+.demo-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 4cqw;
+  font-weight: 600;
+  letter-spacing: 0;
+  text-shadow: 0 1px 3px rgba(0,0,0,.55);
+}
+.demo-sys svg {
+  display: block;
+  width: 17cqw;
+  height: auto;
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,.55));
+}
+
 .demo-screen .demo-frame {
   position: absolute;
   inset: 0;
@@ -3391,6 +3463,9 @@ footer {
   pointer-events: auto;
   z-index: 1;
 }
+/* Bascule sous l'interstitiel : elle doit etre instantanee, sinon le fondu
+   croise laisse voir les deux sites superposes quand le logo s'efface. */
+.demo-screen.is-swapping .demo-frame { transition: none; }
 .demo-actions {
   display: flex;
   align-items: center;
@@ -3420,6 +3495,14 @@ footer {
   .demo-device { width: min(320px, 88vw); }
 }
 
+/* Tactile : le site montre n'est pas explorable au doigt dans un cadre de
+   250 px, et une iframe mise a l'echelle capture mal le geste. Le doigt
+   fait donc defiler la page, et "Ouvrir en plein ecran" sert a visiter
+   l'exemple pour de vrai. */
+@media (hover: none), (pointer: coarse) {
+  .demo-screen .demo-frame.is-active { pointer-events: none; }
+}
+
 /* ── Hero split : texte + iPhone interactif ────────────────── */
 .hero { position: relative; overflow: hidden; }
 .hero-split {
@@ -3433,7 +3516,10 @@ footer {
 .hero-copy { max-width: 640px; }
 .hero-device { width: 100%; display: flex; flex-direction: column; align-items: center; }
 .hero #exemples { padding: 0; content-visibility: visible; contain-intrinsic-size: none; }
-.hero .demo-device { width: min(264px, 78vw); }
+/* Le telephone du hero est plus petit : coque et arrondis suivent, sinon
+   les coins paraissent trop ronds et le cadre trop epais. */
+.hero .demo-device { width: min(264px, 78vw); --coque: 7px; border-radius: 38px; }
+.hero .demo-screen { border-radius: 31px; }
 .hero .demo-actions { margin-top: 12px; }
 
 @media (min-width: 1060px) {
