@@ -3906,18 +3906,11 @@ footer {
 }
 
 /* Ligne blanche : degrade argent balaye par le meme mouvement que la punchline.
-   Le span est celui de data-i18n : son contenu change avec la langue, pas ses styles.
-
-   will-change : sans lui, quand le mot qui explose bouge a cote, Chrome ne
-   repeint que sa zone et laisse le reste de la ligne sur une image
-   perimee. Le degrade ayant avance entre-temps, "Votre" reapparaissait
-   une fraction de seconde en double, decale. Annoncer la propriete animee
-   force le repeint de la ligne entiere a chaque image. */
+   Le span est celui de data-i18n : son contenu change avec la langue, pas ses styles. */
 #hero .hero-title > span[data-i18n] {
   display: inline-block;
   max-width: 100%;
   overflow-wrap: break-word;
-  will-change: background-position;
   background-image: linear-gradient(100deg,
     #ffffff 0%, #c9c9c9 12%, #ffffff 22%, #ffffff 46%, #bdbdbd 64%, #ffffff 78%, #ffffff 100%);
   background-size: 300% 100%;
@@ -3938,7 +3931,6 @@ footer {
   background-size: 300% 100%;
   background-repeat: repeat;
   animation: heroShine 5s linear infinite;
-  will-change: background-position;   /* meme raison que la ligne du dessus */
 }
 @keyframes heroShine {
   from { background-position: 0% 50%; }
@@ -3980,138 +3972,6 @@ footer {
 @media (max-width: 768px) {
   #hero .hero-title::before { left: -5%; width: 110%; filter: blur(24px); }
   #hero .hero-flare { height: 2px; width: min(220px, 62%); }
-}
-
-/* ── Le mot qui explose ────────────────────────────────────────
-   Le mot cle du H1 vibre, part en eclats et laisse paraitre le suivant :
-   site internet, MVP, SaaS, automatisation, en boucle. Les couleurs du
-   mot courant sont posees par js/modules/wordboom.js dans --boom-c1 /
-   --boom-c2, les durees suivent HOLD_MS / CHARGE_MS / OUT_MS / IN_MS.
-   Le conteneur est masque tant que le JS n'a pas pris la main : sans lui
-   le mot reste simplement en place, dans la couleur de la ligne. */
-/* Le bloc est fige a la largeur du mot le plus large et ne bouge plus
-   jamais : le titre garde la meme mise en page du debut a la fin. C'est ce
-   qui evite le fantome, la ligne n'ayant plus rien a recomposer pendant que
-   son degrade est peint. La ponctuation est dans le mot, pas a cote. */
-#hero .boom {
-  position: relative;
-  display: inline-block;
-  white-space: nowrap;
-  vertical-align: top;
-}
-
-#hero .boom-word {
-  display: inline-block;
-  background-image: linear-gradient(100deg,
-    var(--boom-c1, #ffffff) 0%, var(--boom-c2, #c9c9c9) 34%,
-    #fff3d9 50%, var(--boom-c2, #c9c9c9) 66%, var(--boom-c1, #ffffff) 100%);
-  background-size: 260% 100%;
-  background-repeat: repeat;
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: boomShine 5s linear infinite;
-}
-@keyframes boomShine {
-  from { background-position: 0% 50%; }
-  to   { background-position: -260% 50%; }
-}
-
-/* La charge secoue le groupe entier, mot et ponctuation ensemble : faire
-   vibrer le seul mot le ferait cogner contre la virgule. */
-#hero .boom.is-charge { animation: boomCharge .28s linear; }
-
-/* Les etats du mot reprennent boomShine en premiere position : l'animation
-   de reflet garde sa progression, seule la seconde change. */
-/* `both` sur la sortie : le mot reste invisible apres l'animation, tout le
-   temps que la place se referme. Il occupe toujours la ligne, sinon le
-   titre perdrait sa hauteur. */
-#hero .boom-word.is-out {
-  animation: boomShine 5s linear infinite,
-             boomOut .32s cubic-bezier(.3,0,.7,1) both;
-}
-#hero .boom-word.is-in {
-  animation: boomShine 5s linear infinite,
-             boomIn .42s cubic-bezier(.22,1,.36,1) both;
-}
-
-/* La charge : ca vibre juste avant de sauter */
-@keyframes boomCharge {
-  0%, 100% { transform: translate3d(0, 0, 0); }
-  20%      { transform: translate3d(-1.6px, 1px, 0); }
-  40%      { transform: translate3d(1.6px, -1px, 0); }
-  60%      { transform: translate3d(-1.4px, -1.2px, 0); }
-  80%      { transform: translate3d(1.4px, 1.2px, 0); }
-}
-/* Le mot ne grossit pas : il se dissipe sur place en montant avec ses
-   cendres. Un mot qui se dilate mord sur la ponctuation et sur la ligne
-   du dessus, et c'est ce chevauchement qui se voyait. L'explosion, ce
-   sont les particules qui la portent. */
-@keyframes boomOut {
-  0%   { transform: translateY(0);     opacity: 1;  filter: blur(0); }
-  45%  { transform: translateY(-4px);  opacity: .4; filter: blur(3px); }
-  100% { transform: translateY(-14px); opacity: 0;  filter: blur(8px); }
-}
-/* Le mot suivant se materialise en montant, sans jamais depasser sa
-   taille finale : la aussi, rien ne deborde sur ce qui l'entoure. */
-@keyframes boomIn {
-  0%   { transform: scale(.94) translateY(8px); opacity: 0; filter: blur(5px); }
-  100% { transform: scale(1)   translateY(0);   opacity: 1; filter: blur(0); }
-}
-
-/* Couche des eclats : elle deborde du mot, sans jamais bloquer un clic */
-#hero .boom-fx {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  overflow: visible;
-  pointer-events: none;
-}
-
-/* Particules legeres : elles filent en etoile et derivent vers le haut.
-   La couleur est posee en JS, le halo la reprend via currentColor. */
-#hero .boom-spark {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  box-shadow: 0 0 7px currentColor;
-}
-
-/* Onde de choc au moment ou le mot cede */
-#hero .boom-shock {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 100%;
-  height: 130%;
-  translate: -50% -50%;
-  border-radius: 50%;
-  text-decoration: none;
-  pointer-events: none;
-  background: radial-gradient(closest-side,
-    rgba(255,243,217,0.5), rgba(242,177,59,0.3) 48%, rgba(218,84,38,0.16) 68%, transparent 80%);
-}
-
-/* Sonde de mesure : elle sert a connaitre la largeur d'un mot avant de
-   l'afficher. Elle reste enfant du bloc pour heriter de la typographie du
-   titre, mais elle est envoyee hors de l'ecran en position fixe : meme si
-   une image de la page etait peinte pendant qu'elle existe, elle ne peut
-   pas y apparaitre. */
-#hero .boom-probe {
-  position: fixed;
-  left: -9999px;
-  top: -9999px;
-  visibility: hidden;
-  opacity: 0;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-/* Mouvement reduit : wordboom.js ne demarre pas, le mot servi reste en
-   place. On neutralise quand meme le reflet, qui lui est purement CSS. */
-@media (prefers-reduced-motion: reduce) {
-  #hero .boom-word { animation: none; }
 }
 
 /* ================================================================
