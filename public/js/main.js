@@ -14,6 +14,7 @@ import { initDemoViewer } from './modules/demos.js';
 import { initPreloader } from './modules/preloader.js';
 import { initBrowserReel } from './modules/reel.js';
 import { initDuel } from './modules/duel.js';
+import { initSplitTitles, initTilt, initVelocityMarquee, initCursorFlair } from './modules/motion.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
    Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
@@ -69,6 +70,7 @@ async function init() {
   initPageTransition();
   initNav();
   initGlow();
+  initSplitTitles();   // avant initReveal : les masques sont en place quand .visible tombe
   initReveal();
   initCounters();
   initFAQ();
@@ -82,12 +84,15 @@ async function init() {
   initDemoViewer();
   initBrowserReel();
   initDuel();
+  initVelocityMarquee();
 
   // Deferred : n'impacte pas le LCP
   setTimeout(() => {
     initCursor();
+    initCursorFlair();   // apres initCursor : la fleche vit dans son anneau
     initMagnetic();
     initScramble();
+    initTilt();
   }, 150);
 
   // Fond WebGL maison (zéro dépendance) : après le premier paint, hors LCP
