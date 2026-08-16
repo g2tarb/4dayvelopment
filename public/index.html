@@ -525,51 +525,106 @@
         <p class="section-sub reveal" data-i18n="prix-sub">Choisissez la formule qui correspond à vos besoins. Paiement en 2× possible. Pas d'abonnement caché.</p>
       </div>
 
-<div class="pricing-grid pricing-grid--duo">
+<!-- ── Le duel : écran de sélection de personnage ──
+     Deux moitiés face à face, Site web contre Application. Le survol (ou le
+     tap) donne la main à une moitié : elle s'étend, révèle des idées à
+     pré-sélectionner, et le CTA emporte la sélection dans le formulaire.
+     Sans JS, les deux panneaux restent ouverts côte à côte. -->
+<div class="duel reveal" id="duel">
+  <p class="duel-hint" data-i18n="duel-hint">Choisissez votre camp — votre pré-sélection part avec votre demande.</p>
 
-  <div class="pricing-card featured reveal">
-    <div class="plan-popular" data-i18n="plan-popular">⭐ Le plus populaire</div>
-    <div class="plan-badge" data-i18n="plan-site-badge">Vitrine · E-commerce</div>
-    <div class="plan-name" data-i18n="plan-site-name">Site web</div>
-    <div class="plan-price-wrap">
-      <div class="plan-price"><sup data-i18n="plan-from">à partir de €</sup>890</div>
-      <div class="plan-paiement" data-i18n="plan-site-paiement">ou 2× 445€</div>
+  <div class="duel-arena">
+
+    <section class="duel-side duel-side--site" data-side="site" aria-label="Formule Site web">
+      <span class="duel-ghost" aria-hidden="true">SITE</span>
+      <div class="duel-core">
+        <div class="duel-topline">
+          <span class="duel-tag" data-i18n="plan-site-badge">Vitrine · E-commerce</span>
+          <span class="duel-pop" data-i18n="plan-popular">⭐ Le plus populaire</span>
+        </div>
+        <h3 class="duel-name" data-i18n="plan-site-name">Site web</h3>
+        <div class="duel-price">
+          <sup data-i18n="plan-from">à partir de €</sup><span class="duel-digits">890</span>
+        </div>
+        <p class="duel-pay" data-i18n="plan-site-paiement">ou 2× 445€</p>
+        <p class="duel-desc" data-i18n="plan-site-desc">Vitrine, portfolio ou boutique : un site sur-mesure qui inspire confiance et convertit.</p>
+        <ul class="duel-incl" data-i18n="duel-site-incl">
+          <li>Design premium sur-mesure</li>
+          <li>SEO + hébergement 1 an</li>
+          <li>⚡ Livré en 4 jours</li>
+        </ul>
+
+        <div class="duel-more">
+          <div class="duel-more-in">
+            <p class="duel-more-title" data-i18n="duel-site-more">Votre site, ce serait plutôt…</p>
+            <div class="duel-chips" role="group" aria-label="Idées de sites">
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-site-1">Vitrine</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-site-2">E-commerce</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-site-3">Portfolio</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-site-4">Restaurant</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-site-5">Prise de RDV</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-site-6">Immobilier</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-site-7">Landing page</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-site-8">Blog / média</button>
+            </div>
+            <p class="duel-wp"><span data-i18n="plan-wp-label">Livrable sur WordPress</span> · <strong data-i18n="wp-price-site">à partir de 1 140€ <em>(+250€)</em></strong></p>
+          </div>
+        </div>
+
+        <div class="duel-ctarow">
+          <a href="#contact" class="btn-plan btn-plan-filled magnetic duel-cta" data-i18n="plan-cta">Commencer →</a>
+          <span class="duel-count" hidden><b>0</b>&nbsp;<span data-i18n="duel-presel">pré-sélectionnée(s)</span></span>
+        </div>
+      </div>
+    </section>
+
+    <div class="duel-divider" aria-hidden="true">
+      <span class="duel-vs"><i>VS</i></span>
     </div>
-    <div class="plan-wp-option">
-      <span class="plan-wp-label" data-i18n="plan-wp-label">Livrable sur WordPress</span>
-      <span class="plan-wp-price" data-i18n="wp-price-site">à partir de 1 140€ <em>(+250€)</em></span>
-    </div>
-    <div class="plan-desc" data-i18n="plan-site-desc">Vitrine, portfolio ou boutique : un site sur-mesure qui inspire confiance et convertit.</div>
-    <ul class="plan-features" data-i18n="plan-site-features">
-      <li>Design premium sur-mesure</li>
-      <li>100% responsive</li>
-      <li>SEO inclus</li>
-      <li>Boutique en ligne possible</li>
-      <li>Hébergement + domaine 1 an</li>
-      <li>⚡ Livraison en 4 jours</li>
-    </ul>
-    <a href="#contact" class="btn-plan btn-plan-filled magnetic" data-i18n="plan-cta">Commencer →</a>
+
+    <section class="duel-side duel-side--app" data-side="app" aria-label="Formule Application">
+      <span class="duel-ghost" aria-hidden="true">APP</span>
+      <div class="duel-core">
+        <div class="duel-topline">
+          <span class="duel-tag" data-i18n="plan-app-badge">Web app · SaaS</span>
+        </div>
+        <h3 class="duel-name" data-i18n="plan-app-name">Application</h3>
+        <div class="duel-price">
+          <sup data-i18n="plan-from">à partir de €</sup><span class="duel-digits">990</span>
+        </div>
+        <p class="duel-pay" data-i18n="plan-app-paiement">ou 2× 495€</p>
+        <p class="duel-desc" data-i18n="plan-app-desc">MVP, outil métier ou plateforme : une application web prête à accueillir vos premiers utilisateurs.</p>
+        <ul class="duel-incl" data-i18n="duel-app-incl">
+          <li>Installable (PWA)</li>
+          <li>Base de données incluse</li>
+          <li>⚡ Livrée à partir de 4 jours</li>
+        </ul>
+
+        <div class="duel-more">
+          <div class="duel-more-in">
+            <p class="duel-more-title" data-i18n="duel-app-more">Votre app aurait besoin de…</p>
+            <div class="duel-chips" role="group" aria-label="Fonctionnalités possibles">
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-app-1">Comptes utilisateurs</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-app-2">Paiement en ligne</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-app-3">Tableau de bord</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-app-4">Réservations</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-app-5">Messagerie</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-app-6">Espace admin</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-app-7">Notifications</button>
+              <button type="button" class="duel-chip" aria-pressed="false" data-i18n="chip-app-8">IA intégrée</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="duel-ctarow">
+          <a href="#contact" class="btn-plan btn-plan-outline magnetic duel-cta" data-i18n="plan-cta">Commencer →</a>
+          <span class="duel-count" hidden><b>0</b>&nbsp;<span data-i18n="duel-presel">pré-sélectionnée(s)</span></span>
+        </div>
+      </div>
+    </section>
+
   </div>
-
-  <div class="pricing-card reveal">
-    <div class="plan-badge" data-i18n="plan-app-badge">Web app · SaaS</div>
-    <div class="plan-name" data-i18n="plan-app-name">Application</div>
-    <div class="plan-price-wrap">
-      <div class="plan-price"><sup data-i18n="plan-from">à partir de €</sup>990</div>
-      <div class="plan-paiement" data-i18n="plan-app-paiement">ou 2× 495€</div>
-    </div>
-    <div class="plan-desc" data-i18n="plan-app-desc">MVP, outil métier ou plateforme : une application web prête à accueillir vos premiers utilisateurs.</div>
-    <ul class="plan-features" data-i18n="plan-app-features">
-      <li>Application installable (PWA)</li>
-      <li>Comptes utilisateurs et espace admin</li>
-      <li>Base de données incluse</li>
-      <li>Paiement en ligne possible</li>
-      <li>Hébergement 1 an inclus</li>
-      <li>⚡ Livraison à partir de 4 jours</li>
-    </ul>
-    <a href="#contact" class="btn-plan btn-plan-outline magnetic" data-i18n="plan-cta">Commencer →</a>
-  </div>
-
+  <canvas class="duel-fx" aria-hidden="true"></canvas>
 </div>
 
 <!-- WordPress delivery option -->

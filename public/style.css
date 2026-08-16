@@ -1144,145 +1144,6 @@ section { padding: 100px 24px; }
 }
 
 /* ── PRICING ───────────────────────────────────────────────── */
-/* Deux formules : la grille se resserre et reste centree, chaque carte
-   garde une largeur de lecture confortable. */
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 24px;
-  margin-top: 60px;
-  align-items: start;
-  max-width: 860px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.pricing-card {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 40px;
-  transition: all .4s var(--ease-out);
-  position: relative;
-}
-.pricing-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
-
-.pricing-card.featured {
-  border-color: rgba(218,84,38,0.4);
-  background: linear-gradient(135deg, rgba(218,84,38,0.1), rgba(136,64,131,0.08));
-  box-shadow: 0 0 50px rgba(218,84,38,0.15);
-}
-
-.plan-popular {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent2);
-  margin-bottom: 16px;
-  letter-spacing: 0.5px;
-}
-
-.plan-badge {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--muted);
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-.plan-name {
-  font-family: 'Syne', sans-serif;
-  /* deux colonnes seulement : la place est revenue pour un nom bien gras */
-  font-size: 1.8rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  margin-bottom: 12px;
-  overflow-wrap: break-word;
-}
-.plan-price-wrap { margin-bottom: 12px; }
-.plan-price {
-  font-size: 3.5rem;
-  font-weight: 900;
-  letter-spacing: -2px;
-  line-height: 1;
-}
-.plan-price sup {
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0;
-  opacity: 0.7;
-  display: block;
-  margin-bottom: 2px;
-}
-.plan-paiement {
-  font-size: 12px;
-  color: var(--muted);
-  margin-top: 4px;
-}
-.plan-wp-option {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin: 16px 0 20px;
-  padding: 10px 14px;
-  background: rgba(136,64,131,0.10);
-  border: 1px solid rgba(136,64,131,0.28);
-  border-radius: var(--radius);
-}
-.plan-wp-label {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--muted);
-}
-.plan-wp-price {
-  font-family: 'Syne', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-  white-space: nowrap;
-}
-.plan-wp-price em {
-  font-style: normal;
-  font-weight: 600;
-  color: var(--accent2);
-}
-.plan-desc {
-  color: var(--muted);
-  font-size: 14px;
-  margin-bottom: 28px;
-  padding-bottom: 28px;
-  border-bottom: 1px solid var(--border);
-  line-height: 1.6;
-}
-.plan-features {
-  list-style: none;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-bottom: 36px;
-}
-.plan-features li {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 14px;
-  color: var(--text);
-}
-.plan-features li::before {
-  content: '✓';
-  width: 20px; height: 20px;
-  min-width: 20px;
-  background: rgba(218,84,38,0.15);
-  color: var(--accent2);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 900;
-}
-
 .btn-plan {
   display: block;
   text-align: center;
@@ -1310,6 +1171,386 @@ section { padding: 100px 24px; }
 .btn-plan-filled:hover {
   box-shadow: 0 8px 36px rgba(218,84,38,0.55);
   transform: translateY(-2px);
+}
+
+/* ================================================================
+   LE DUEL — ecran de selection de personnage (section Tarifs)
+   Deux moities face a face, Site web (chaud) contre Application
+   (violet). Le survol donne la main a une moitie : elle s'etend
+   (flex-grow anime), revele ses idees a pre-selectionner, et l'autre
+   se comprime en retrait. La logique vit dans js/modules/duel.js.
+   Sans JS les deux panneaux restent ouverts cote a cote.
+   ================================================================ */
+.duel { position: relative; margin-top: 56px; }
+
+.duel-hint {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--accent2);
+  margin-bottom: 22px;
+  opacity: .85;
+}
+
+.duel-arena {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  border: 1px solid var(--border);
+  border-radius: 26px;
+  overflow: hidden;
+  isolation: isolate;
+  background: #0b0910;
+}
+
+/* Eclair de fond au moment du clash (bascule d'un camp a l'autre) */
+.duel-arena::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(218,84,38,.22), rgba(255,243,217,.30) 50%, rgba(136,64,131,.22));
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+}
+.duel-arena.is-clash::after { animation: duelFlash .45s var(--ease-out); }
+@keyframes duelFlash { 0% { opacity: 0; } 18% { opacity: 1; } 100% { opacity: 0; } }
+
+/* ── Les deux camps ── */
+.duel-side {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 48px 42px 42px;
+  display: flex;
+  transition: flex-grow .62s cubic-bezier(.22,1,.36,1), filter .5s var(--ease-out), opacity .5s;
+}
+.duel-side--site {
+  background:
+    radial-gradient(120% 90% at 12% 0%, rgba(218,84,38,.17), transparent 58%),
+    radial-gradient(90% 70% at 80% 100%, rgba(242,177,59,.08), transparent 60%);
+}
+.duel-side--app {
+  background:
+    radial-gradient(120% 90% at 88% 0%, rgba(136,64,131,.22), transparent 58%),
+    radial-gradient(90% 70% at 15% 100%, rgba(218,84,38,.06), transparent 60%);
+}
+
+/* Le camp qui a la main s'etend, l'autre s'eteint a moitie mais reste
+   lisible : c'est le personnage non choisi, pas un panneau mort. */
+.duel-arena.has-lead .duel-side.is-lead { flex-grow: 2.35; }
+.duel-arena.has-lead .duel-side:not(.is-lead) {
+  filter: saturate(.5) brightness(.72);
+}
+.duel-arena.has-lead .duel-side:not(.is-lead) .duel-core { opacity: .78; }
+
+/* Nom du camp en filigrane geant, il derive au survol */
+.duel-ghost {
+  position: absolute;
+  top: 8px;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(96px, 15vw, 190px);
+  font-weight: 800;
+  letter-spacing: .02em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,.065);
+  pointer-events: none;
+  user-select: none;
+  transition: transform 1s var(--ease-out), -webkit-text-stroke-color .6s;
+  will-change: transform;
+  z-index: 0;
+}
+.duel-side--site .duel-ghost { right: -12px; }
+.duel-side--app  .duel-ghost { left: -12px; }
+.duel-side.is-lead .duel-ghost { -webkit-text-stroke-color: rgba(242,177,59,.14); }
+.duel-side--app.is-lead .duel-ghost { -webkit-text-stroke-color: rgba(176,106,173,.18); }
+
+.duel-core {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 440px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  transition: opacity .5s;
+}
+
+.duel-topline {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+.duel-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.duel-pop {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent2);
+  letter-spacing: .5px;
+  white-space: nowrap;
+}
+
+.duel-name {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(1.7rem, 2.6vw, 2.3rem);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 14px;
+}
+
+.duel-price { line-height: 1; margin-bottom: 8px; }
+.duel-price sup {
+  display: block;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.duel-digits {
+  display: inline-flex;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(3rem, 5vw, 4.2rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, #fff, #d8d2c4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.duel-side--app .duel-digits { background-image: linear-gradient(135deg, #fff, #d9b7d7); }
+/* Rouleau de chiffres construit par duel.js : chaque colonne 0-9 glisse
+   jusqu'au bon chiffre quand le camp prend la main. Le degrade est repeint
+   sur chaque chiffre : clippe sur le parent, il ignore les descendants
+   transformes et les chiffres disparaitraient. */
+.duel-digits .roll {
+  display: inline-block;
+  height: 1em;
+  overflow: hidden;
+}
+.duel-digits .roll > span {
+  display: block;
+  line-height: 1;
+  transition: transform .7s cubic-bezier(.22,1,.36,1);
+}
+.duel-digits .roll i {
+  display: block;
+  height: 1em;
+  font-style: normal;
+  background: linear-gradient(135deg, #fff, #d8d2c4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.duel-side--app .duel-digits .roll i { background-image: linear-gradient(135deg, #fff, #d9b7d7); }
+
+.duel-pay { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+
+.duel-desc {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--muted2);
+  margin-bottom: 16px;
+}
+
+.duel-incl {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-bottom: 6px;
+  padding: 0;
+}
+.duel-incl li {
+  font-size: 12.5px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.duel-incl li::before { content: '✓ '; color: var(--accent2); }
+.duel-side--app .duel-incl li::before { color: #b06aad; }
+
+/* ── Le panneau qui se revele quand le camp a la main ── */
+.duel-more {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .55s var(--ease-out) .06s, opacity .45s var(--ease-out) .12s;
+}
+.duel-more-in { overflow: hidden; min-height: 0; }
+.duel-side.is-lead .duel-more,
+html:not(.js-enabled) .duel-more {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.duel-more-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 14px 0 12px;
+}
+.duel-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.duel-chip {
+  --c: var(--accent2);
+  padding: 8px 13px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.04);
+  color: var(--muted2);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transform: translateY(6px);
+  opacity: 0;
+  transition: transform .45s var(--ease-out), opacity .4s,
+              background .25s, border-color .25s, color .25s, box-shadow .25s;
+}
+.duel-side--app .duel-chip { --c: #b06aad; }
+.duel-side.is-lead .duel-chip,
+html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
+/* apparition en cascade */
+.duel-chip:nth-child(2) { transition-delay: .04s, .04s, 0s, 0s, 0s, 0s; }
+.duel-chip:nth-child(3) { transition-delay: .08s, .08s, 0s, 0s, 0s, 0s; }
+.duel-chip:nth-child(4) { transition-delay: .12s, .12s, 0s, 0s, 0s, 0s; }
+.duel-chip:nth-child(5) { transition-delay: .16s, .16s, 0s, 0s, 0s, 0s; }
+.duel-chip:nth-child(6) { transition-delay: .20s, .20s, 0s, 0s, 0s, 0s; }
+.duel-chip:nth-child(7) { transition-delay: .24s, .24s, 0s, 0s, 0s, 0s; }
+.duel-chip:nth-child(8) { transition-delay: .28s, .28s, 0s, 0s, 0s, 0s; }
+
+.duel-chip:hover { border-color: var(--c); color: var(--text); }
+.duel-chip[aria-pressed="true"] {
+  border-color: var(--c);
+  background: color-mix(in srgb, var(--c) 18%, transparent);
+  color: #fff;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--c) 35%, transparent);
+}
+.duel-chip[aria-pressed="true"]::before { content: '✓ '; }
+.duel-chip:focus-visible { outline: 2px solid var(--c); outline-offset: 2px; }
+
+.duel-wp {
+  font-size: 12.5px;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+.duel-wp strong { color: var(--text); font-weight: 700; }
+.duel-wp em { color: var(--accent2); font-style: normal; }
+
+.duel-ctarow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: auto;
+  padding-top: 18px;
+}
+.duel-cta { flex: 1; max-width: 260px; }
+.duel-count {
+  font-size: 12px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.duel-count b {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 5px;
+  border-radius: 6px;
+  background: var(--gradient);
+  color: #fff;
+  font-size: 12px;
+}
+
+/* ── La ligne de front ── */
+.duel-divider {
+  position: relative;
+  flex: none;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(218,84,38,.8), rgba(242,177,59,.9) 50%, rgba(136,64,131,.85));
+  box-shadow: 0 0 18px rgba(242,177,59,.35);
+  transform: skewX(-7deg);
+  z-index: 3;
+}
+.duel-vs {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) skewX(7deg);
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #0d0b10;
+  border: 1px solid rgba(255,255,255,.16);
+  box-shadow:
+    0 0 0 5px rgba(13,11,16,.85),
+    0 0 26px rgba(218,84,38,.45),
+    0 0 46px rgba(136,64,131,.35);
+}
+.duel-vs i {
+  font-family: 'Syne', sans-serif;
+  font-style: italic;
+  font-weight: 800;
+  font-size: 17px;
+  background: linear-gradient(120deg, var(--accent), var(--accent2) 55%, #b06aad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.duel-arena.is-clash .duel-vs { animation: vsClash .5s var(--ease-out); }
+@keyframes vsClash {
+  0%   { transform: translate(-50%, -50%) skewX(7deg) scale(1); }
+  35%  { transform: translate(-50%, -50%) skewX(7deg) scale(1.45) rotate(-6deg); }
+  100% { transform: translate(-50%, -50%) skewX(7deg) scale(1); }
+}
+
+/* Etincelles le long de la ligne, dessinees par duel.js */
+.duel-fx {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* ── Mobile : les camps s'empilent, le tap donne la main ── */
+@media (max-width: 900px) {
+  .duel-arena { flex-direction: column; }
+  .duel-side { padding: 34px 24px 30px; }
+  .duel-divider {
+    width: auto;
+    height: 2px;
+    transform: skewY(-1.4deg);
+    background: linear-gradient(90deg, rgba(218,84,38,.8), rgba(242,177,59,.9) 50%, rgba(136,64,131,.85));
+  }
+  .duel-vs { transform: translate(-50%, -50%); width: 50px; height: 50px; }
+  .duel-arena.is-clash .duel-vs { animation: none; }
+  .duel-ghost { font-size: clamp(80px, 26vw, 120px); }
+  .duel-cta { max-width: none; }
+}
+
+/* Mouvement reduit : pas de course a l'expansion, tout est ouvert */
+@media (prefers-reduced-motion: reduce) {
+  .duel-more { grid-template-rows: 1fr; opacity: 1; }
+  .duel-chip { transform: none; opacity: 1; }
+  .duel-arena.has-lead .duel-side.is-lead { flex-grow: 1; }
+  .duel-arena.has-lead .duel-side:not(.is-lead) { filter: none; }
 }
 
 /* WordPress delivery option band */
@@ -2205,9 +2446,6 @@ footer {
 
   .services-grid { grid-template-columns: repeat(2, 1fr); }
 
-  .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
-  .pricing-card { padding: 32px 28px; }
-  .plan-price { font-size: 3rem; }
 
   .footer-inner { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 32px; }
 }
@@ -2245,8 +2483,6 @@ footer {
   .services-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
 
   /* Pricing */
-  .pricing-grid { grid-template-columns: 1fr; max-width: 520px; gap: 16px; }
-  .pricing-card.featured { transform: none; }
 
   /* Testimonials */
   .testimonials-grid { grid-template-columns: 1fr; max-width: 600px; }
@@ -2448,17 +2684,6 @@ footer {
     justify-content: center;
   }
 
-  /* ─ Pricing ─ */
-  .pricing-grid {
-    grid-template-columns: 1fr;
-    max-width: 100%;
-    gap: 16px;
-  }
-  .pricing-card { padding: 32px 24px; }
-  .pricing-card.featured { transform: none; }
-  .plan-price { font-size: 3rem; }
-  .plan-features li { font-size: 13px; }
-
   .guarantees {
     grid-template-columns: 1fr 1fr;
     display: grid;
@@ -2617,8 +2842,6 @@ footer {
   .step-connector { left: 19px; }
 
   /* ─ Pricing ─ */
-  .pricing-card { padding: 28px 20px; }
-  .plan-price { font-size: 2.6rem; letter-spacing: -1px; }
   .btn-plan { padding: 13px; font-size: 14px; }
 
   /* Guarantees → 1 colonne */
@@ -2675,7 +2898,6 @@ footer {
   .hero-desc { font-size: 0.9rem; }
   .btn-primary, .btn-secondary { font-size: 14px; padding: 13px 20px; }
   .section-title { font-size: 1.5rem; }
-  .plan-price { font-size: 2.3rem; }
   nav { padding: 12px 14px; }
   .logo-img { height: clamp(60px, 18vw, 78px); }
   .footer-brand .logo-img { height: clamp(52px, 16vw, 68px); }
@@ -2710,7 +2932,6 @@ footer {
 @media (hover: none) and (pointer: coarse) {
   .service-card:hover,
   .testimonial-card:hover,
-  .pricing-card:hover,
   .faq-item:hover {
     transform: none;
     box-shadow: none;
@@ -2933,7 +3154,6 @@ footer {
   }
 
   .service-card:active,
-  .pricing-card:active,
   .testimonial-card:active,
   .faq-question:active {
     transform: scale(0.985);
@@ -2962,7 +3182,7 @@ footer {
   /* Force compositing layer pour les elements animes */
   .reveal, .badge, .hero-title, .hero-desc,
   .hero-actions, .hero-stats, .service-card,
-  .step, .pricing-card, .testimonial-card,
+  .step, .testimonial-card,
   .faq-item, #floating-cta, #exit-modal,
   #page-transition, #scroll-progress {
     will-change: transform, opacity;
@@ -3118,29 +3338,6 @@ footer {
 
 /* ── Pricing cards — swipe horizontal mobile ─────────────── */
 @media (max-width: 768px) {
-  .pricing-grid {
-    display: flex;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    gap: 16px;
-    padding: 0 20px 16px;
-    margin: 0 -20px;
-    max-width: calc(100% + 40px);
-    scrollbar-width: none;
-  }
-  .pricing-grid::-webkit-scrollbar { display: none; }
-
-  .pricing-card {
-    flex: 0 0 min(320px, 85vw);
-    scroll-snap-align: center;
-  }
-
-  /* Indicateur de scroll (dots) */
-  .pricing-grid::after {
-    content: '';
-    flex: 0 0 4px; /* ghost padding a droite */
-  }
 }
 
 /* ── Testimonials — carousel swipe mobile ────────────────── */
