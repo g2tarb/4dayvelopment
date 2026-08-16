@@ -87,6 +87,21 @@
     }
 
     rvEls.forEach(el => io.observe(el));
+
+    /* Dans le cadre du telephone de la home, le premier ecran doit etre en
+       place tout de suite : la page est echangee derriere le logo, et une
+       apparition qui demarre au moment ou le logo s'efface se lit comme un
+       site qui rame. En plein ecran l'entree garde toute son animation. */
+    if (document.documentElement.classList.contains('in-frame')) {
+      rvEls.forEach(el => {
+        if (el.getBoundingClientRect().top < innerHeight) {
+          el.style.transitionDelay = '0ms';
+          el.classList.add('in');
+          io.unobserve(el);
+        }
+      });
+    }
+
     addEventListener('scroll', () => {
       if (scrollY + innerHeight >= document.documentElement.scrollHeight - 8) revelerTout();
     }, { passive: true });
