@@ -701,21 +701,43 @@ nav.scrolled {
 }
 
 /* ── LOGOS TICKER ──────────────────────────────────────────── */
+/* ── Bandeau de references ─────────────────────────────────────
+   Les noms etaient en #222 sur fond noir : ils se devinaient a peine.
+   Chacun est maintenant une pastille lisible, avec un point lumineux qui
+   prend a son tour une couleur de la marque. */
 .logos-section {
+  position: relative;
   padding: 40px 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   overflow: hidden;
-  background: var(--bg2);
+  background:
+    radial-gradient(70% 140% at 50% 50%, rgba(218,84,38,0.10), transparent 70%),
+    var(--bg2);
 }
+/* Un filet de marque souligne le bandeau en haut et en bas */
+.logos-section::before,
+.logos-section::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(218,84,38,.5) 25%, rgba(242,177,59,.6) 50%, rgba(136,64,131,.5) 75%, transparent);
+  pointer-events: none;
+}
+.logos-section::before { top: 0; }
+.logos-section::after  { bottom: 0; }
+
 .logos-label {
   text-align: center;
-  color: var(--muted2);
+  color: var(--accent2);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
   margin-bottom: 24px;
+  opacity: .9;
 }
 .logos-wrapper {
   overflow: hidden;
@@ -744,17 +766,46 @@ nav.scrolled {
 
 @keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
 
+/* Pastille : fond de verre, liseré teinté, texte creme bien lisible. */
 .logo-item {
-  font-size: 1rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: #222;
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 18px;
+  border-radius: var(--radius-full);
+  font-size: .95rem;
+  font-weight: 700;
+  letter-spacing: -0.2px;
+  color: #f2ebdd;
+  background: rgba(255,255,255,0.045);
+  border: 1px solid var(--teinte, rgba(242,177,59,.32));
   white-space: nowrap;
-  transition: color .3s;
+  transition: background .3s var(--ease-out), border-color .3s var(--ease-out), color .3s;
 }
-.logo-item:hover { color: var(--muted2); }
+/* Le point reprend la teinte du tour et s'allume autour */
+.logo-item::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex: none;
+  background: var(--teinte, var(--accent2));
+  box-shadow: 0 0 9px var(--teinte, var(--accent2));
+}
+/* Les trois couleurs de la marque a tour de role. Les noms occupent les
+   rangs impairs (un losange les separe), d'ou le pas de 6. */
+.logo-item:nth-child(6n+1) { --teinte: #DA5426; }
+.logo-item:nth-child(6n+3) { --teinte: #f2b13b; }
+.logo-item:nth-child(6n+5) { --teinte: #b06aad; }
+
+.logo-item:hover {
+  background: rgba(255,255,255,0.085);
+  border-color: var(--teinte, var(--accent2));
+  color: #fff;
+}
+
 .logo-plus { color: var(--accent); }
-.logo-dot { color: #1a1a1a; font-size: 8px; }
+.logo-dot { color: rgba(242,177,59,.45); font-size: 9px; }
 
 /* ── SECTIONS ──────────────────────────────────────────────── */
 section { padding: 100px 24px; }
@@ -2318,8 +2369,8 @@ footer {
   /* ─ Logos ticker ─ */
   .logos-section { padding: 28px 0; }
   .logos-label { font-size: 10px; margin-bottom: 18px; }
-  .logo-item { font-size: 0.85rem; }
-  .logos-track { gap: 28px; animation-duration: 16s; }
+  .logo-item { font-size: 0.85rem; padding: 7px 14px; gap: 7px; }
+  .logos-track { gap: 20px; animation-duration: 16s; }
 
   /* ─ Sections générales ─ */
   section { padding: 72px 20px; }
