@@ -172,8 +172,9 @@ export function initDuel() {
 
       const service = document.getElementById('f-service');
       if (service) {
-        service.value = isApp ? 'Application Web'
-          : picked.some(p => /e-?commerce/i.test(p)) ? 'E-commerce' : 'Site Vitrine';
+        // memes valeurs que les deux boutons du formulaire, qui ecoutent
+        // le change pour s'allumer
+        service.value = isApp ? 'Application' : 'Site web';
         service.dispatchEvent(new Event('change', { bubbles: true }));
       }
 

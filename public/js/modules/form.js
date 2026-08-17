@@ -1,38 +1,25 @@
-/* ── Forms : contact form, budget chips, toasts, exit intent ── */
+/* ── Forms : contact form, choix du projet, toasts, exit intent ── */
 import { $, $$, on, raf } from './utils.js';
 
-const BUDGET_REDIRECT = {
-  'Moins de 1 000€': '/essentiel',
-  '1 000 à 2 000€':  '/devis',
-  '2 000 à 5 000€':  '/devis',
-  '5 000€ et plus':  '/devis',
-};
+/* Deux boutons, comme les deux formules : Site web ou App. Le choix vit
+   dans le champ cache #f-service. Le duel des tarifs pre-remplit ce meme
+   champ et emet un change : on ecoute pour refleter le choix sur les
+   boutons. */
+export function initTypeChips() {
+  const input = $('#f-service');
+  if (!input) return;
 
-function savePrefill(budget) {
-  const name  = $('#f-name')?.value.trim()  || '';
-  const email = $('#f-email')?.value.trim() || '';
-  if (name)   sessionStorage.setItem('prefill_name',   name);
-  if (email)  sessionStorage.setItem('prefill_email',  email);
-  if (budget) sessionStorage.setItem('prefill_budget', budget);
-}
+  const reflete = () => $$('.type-chip').forEach(c =>
+    c.classList.toggle('active', c.dataset.value === input.value));
 
-export function initBudgetChips() {
-  $$('.budget-chip').forEach(chip => {
+  $$('.type-chip').forEach(chip => {
     on(chip, 'click', () => {
-      $$('.budget-chip').forEach(c => c.classList.remove('active'));
-      chip.classList.add('active');
-      const budget = chip.dataset.value;
-      const budgetInput = $('#f-budget');
-      if (budgetInput) budgetInput.value = budget;
-
-      savePrefill(budget);
-
-      const dest = BUDGET_REDIRECT[budget];
-      if (dest) {
-        setTimeout(() => { window.location.href = dest; }, 150);
-      }
+      input.value = chip.dataset.value;
+      reflete();
     });
   });
+
+  on(input, 'change', reflete);
 }
 
 export function initContactForm() {
@@ -88,7 +75,7 @@ export function initContactForm() {
          prenom:    $('#f-name').value.trim(),
          email:     $('#f-email').value.trim(),
          telephone: $('#f-phone')?.value.trim() ?? '',
-         secteur:   $('#f-service').value + ($('#f-budget').value ? ' · budget: ' + $('#f-budget').value : ''),
+         secteur:   $('#f-service').value,
          message:   $('#f-message').value.trim(),
          website:   $('#hp-website')?.value.trim() ?? '', // honeypot : rempli = bot
         }),
@@ -98,7 +85,7 @@ export function initContactForm() {
         feedback.className   = 'form-feedback success visible';
         feedback.textContent = '✅ ' + data.message;
         form.reset();
-        $$('.budget-chip').forEach(c => c.classList.remove('active'));
+        $$('.type-chip').forEach(c => c.classList.remove('active'));
       } else {
         const msg = data.errors ? data.errors.join(' ') : data.message;
         feedback.className   = 'form-feedback error visible';

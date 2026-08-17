@@ -5,7 +5,7 @@
 
 import { initProgress, initNav, initSmoothScroll, initPageTransition, initStickyCTA, initBottomSheetSwipe } from './modules/navigation.js';
 import { initCursor, initGlow, initMagnetic, initScramble, initReveal, initCounters } from './modules/animations.js';
-import { initContactForm, initBudgetChips, initToasts, initExit } from './modules/form.js';
+import { initContactForm, initTypeChips, initToasts, initExit } from './modules/form.js';
 import { initLang } from './modules/i18n.js';
 import { checkMotion, initFAQ } from './modules/ui.js';
 import { initUniverse } from './modules/gl-bg.js';
@@ -79,7 +79,7 @@ async function init() {
   initBottomSheetSwipe();
   initToasts();
   initExit();
-  initBudgetChips();
+  initTypeChips();
   initContactForm();
   initDemoViewer();
   initBrowserReel();

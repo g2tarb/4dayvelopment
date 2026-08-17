@@ -2035,12 +2035,12 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 }
 
 /* Budget chips */
-.budget-chips {
+.type-chips {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
 }
-.budget-chip {
+.type-chip {
   padding: 7px 16px;
   border: 1.5px solid var(--border);
   border-radius: var(--radius-full);
@@ -2051,11 +2051,11 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   cursor: pointer;
   transition: all .2s;
 }
-.budget-chip:hover {
+.type-chip:hover {
   border-color: rgba(218,84,38,0.4);
   color: var(--text);
 }
-.budget-chip.active {
+.type-chip.active {
   border-color: var(--accent);
   background: rgba(218,84,38,0.12);
   color: var(--accent2);
@@ -2869,8 +2869,8 @@ footer {
   .cta-section { padding: 56px 16px; }
   .contact-left h2 { font-size: clamp(1.5rem, 9vw, 2rem); }
   .contact-right { padding: 28px 18px; }
-  .budget-chips { gap: 6px; }
-  .budget-chip { padding: 8px 14px; font-size: 12px; min-height: 44px; display: flex; align-items: center; }
+  .type-chips { gap: 6px; }
+  .type-chip { padding: 8px 14px; font-size: 12px; min-height: 44px; display: flex; align-items: center; }
   .btn-submit { font-size: 15px; padding: 16px; min-height: 52px; }
   .cta-trust { font-size: 11px; }
 
@@ -3135,7 +3135,7 @@ footer {
 /* ── Touch targets minimum 48px (Google / Apple guidelines) ── */
 @media (pointer: coarse) {
   button, a, [role="button"], select,
-  .budget-chip, .faq-question, .nav-toggle,
+  .type-chip, .faq-question, .nav-toggle,
   .hamburger,
   .btn-primary, .btn-secondary, .btn-plan,
   .btn-submit, .mobile-cta, .exit-cta, .exit-close {
@@ -3160,13 +3160,13 @@ footer {
     transition: transform 0.1s;
   }
 
-  .budget-chip:active {
+  .type-chip:active {
     transform: scale(0.93);
     transition: transform 0.08s;
   }
 
   /* Espacement tactile entre elements interactifs */
-  .budget-chips { gap: 10px; }
+  .type-chips { gap: 10px; }
   .nav-links { gap: 4px; }
   .footer-links-group a { padding: 6px 0; }
   .footer-legal a { padding: 8px 4px; }
@@ -3435,12 +3435,12 @@ footer {
   }
 
   /* Budget chips — wrap propre */
-  .budget-chips {
+  .type-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
   }
-  .budget-chip {
+  .type-chip {
     flex: 1 1 calc(50% - 4px);
     min-height: 48px;
     display: flex;
@@ -3843,7 +3843,7 @@ footer {
 .form-group input:hover:not(:focus),
 .form-group select:hover:not(:focus),
 .form-group textarea:hover:not(:focus) { border-color: rgba(255,255,255,.16); }
-.budget-chip {
+.type-chip {
   border-radius: var(--radius-full);
   padding: 11px 19px;
   min-height: 44px;
@@ -3853,8 +3853,8 @@ footer {
   border: 1px solid var(--border);
   transition: border-color .25s, background .25s, transform .25s var(--ease-spring), box-shadow .25s;
 }
-.budget-chip:hover { transform: translateY(-2px); border-color: rgba(242,177,59,.4); }
-.budget-chip.active {
+.type-chip:hover { transform: translateY(-2px); border-color: rgba(242,177,59,.4); }
+.type-chip.active {
   background: var(--gradient);
   border-color: transparent;
   color: #fff;

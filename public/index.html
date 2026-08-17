@@ -917,30 +917,16 @@
               </div>
             </div>
 
-      <div class="form-row">
-  <div class="form-group">
-                <label for="f-service" data-i18n="form-service">Service souhaité</label>
-                <select id="f-service" name="service">
-                  <option value="">-- Choisir --</option>
-                  <option value="Site Vitrine">Site Vitrine</option>
-                  <option value="E-commerce">E-commerce</option>
-                  <option value="Refonte">Refonte de site</option>
-                  <option value="SEO">SEO & Référencement</option>
-                  <option value="Application Web">Application Web</option>
-                  <option value="Autre">Autre</option>
-                </select>
-              </div>
-            </div>
-
+            <!-- Deux choix, comme les deux formules : Site web ou App.
+                 La valeur vit dans le champ cache #f-service, que le duel
+                 des tarifs pré-remplit aussi. -->
             <div class="form-group">
-              <label data-i18n="form-budget">Budget approximatif</label>
-              <div class="budget-chips" id="budget-chips">
-                <button type="button" class="budget-chip" data-value="Moins de 1 000€">&lt; 1 000€</button>
-                <button type="button" class="budget-chip" data-value="1 000 à 2 000€">1 à 2k€</button>
-                <button type="button" class="budget-chip" data-value="2 000 à 5 000€">2 à 5k€</button>
-                <button type="button" class="budget-chip" data-value="5 000€ et plus">5k€+</button>
+              <label data-i18n="form-service">Votre projet</label>
+              <div class="type-chips" id="type-chips">
+                <button type="button" class="type-chip" data-value="Site web" data-i18n="plan-site-name">Site web</button>
+                <button type="button" class="type-chip" data-value="Application">App</button>
               </div>
-              <input type="hidden" id="f-budget" name="budget">
+              <input type="hidden" id="f-service" name="service">
             </div>
 
             <div class="form-group">
