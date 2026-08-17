@@ -1323,6 +1323,11 @@ section { padding: 100px 24px; }
   font-size: clamp(3rem, 5vw, 4.2rem);
   font-weight: 800;
   letter-spacing: -2px;
+  /* chiffres alignes : par defaut Syne sert des chiffres a l'ancienne, le
+     9 descend sous la ligne et le 0 est a hauteur d'x. Dans le rouleau, la
+     queue du chiffre voisin depassait dans la fenetre. */
+  font-variant-numeric: lining-nums;
+  font-feature-settings: 'lnum' 1;
   background: linear-gradient(135deg, #fff, #d8d2c4);
   -webkit-background-clip: text;
   background-clip: text;
