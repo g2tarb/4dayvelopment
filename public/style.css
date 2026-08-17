@@ -235,7 +235,7 @@ nav.scrolled {
 }
 
 .nav-logo { display: flex; align-items: center; }
-.logo-img { height: clamp(72px, 10vw, 113px); width: auto; object-fit: contain; transition: filter .3s; }
+.logo-img { height: clamp(34px, 4.5vw, 50px); width: auto; object-fit: contain; transition: filter .3s; }
 .nav-logo:hover .logo-img { filter: drop-shadow(0 0 12px rgba(242,177,59,0.4)); }
 
 .nav-links {
@@ -2215,7 +2215,7 @@ footer {
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: 48px;
 }
-.footer-brand .logo-img { height: clamp(60px, 8vw, 94px); margin-bottom: 16px; }
+.footer-brand .logo-img { height: clamp(28px, 3.5vw, 40px); margin-bottom: 16px; }
 .footer-brand p {
   font-size: 14px;
   color: var(--muted);
@@ -2752,7 +2752,7 @@ footer {
   .footer-brand {
     grid-column: 1 / -1;
   }
-  .footer-brand .logo-img { height: clamp(56px, 9vw, 78px); }
+  .footer-brand .logo-img { height: clamp(24px, 4vw, 32px); }
   .footer-brand p { font-size: 13px; }
   .footer-links-group h4, .footer-links-group .footer-col-h { font-size: 11px; margin-bottom: 14px; }
   .footer-links-group a { font-size: 13px; }
@@ -2913,8 +2913,8 @@ footer {
   .btn-primary, .btn-secondary { font-size: 14px; padding: 13px 20px; }
   .section-title { font-size: 1.5rem; }
   nav { padding: 12px 14px; }
-  .logo-img { height: clamp(60px, 18vw, 78px); }
-  .footer-brand .logo-img { height: clamp(52px, 16vw, 68px); }
+  .logo-img { height: clamp(28px, 8vw, 34px); }
+  .footer-brand .logo-img { height: clamp(24px, 7vw, 30px); }
   .cta-section h2, .contact-left h2 { font-size: clamp(1.4rem, 8vw, 1.7rem); }
   .exit-title { font-size: 1.2rem; }
   .exit-desc { font-size: 13px; }
@@ -3502,12 +3502,12 @@ footer {
 /* ── Logo img responsive ─────────────────────────────────── */
 @media (max-width: 768px) {
   .logo-img {
-    height: clamp(48px, 12vw, 72px);
+    height: clamp(26px, 6vw, 34px);
   }
 }
 @media (max-width: 375px) {
   .logo-img {
-    height: clamp(40px, 11vw, 56px);
+    height: clamp(22px, 6vw, 28px);
   }
 }
 
@@ -4422,8 +4422,8 @@ footer {
 
 .demo-splash img {
   grid-area: 1 / 1;
-  width: 42%;
-  max-width: 108px;
+  width: 52%;
+  max-width: 132px;
   height: auto;
   filter: drop-shadow(0 0 22px rgba(218,84,38,0.4));
 }
@@ -4504,7 +4504,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 
 .pre-logo {
   grid-area: 1 / 1;
-  width: min(148px, 36vw);
+  width: min(178px, 42vw);
   height: auto;
   filter: drop-shadow(0 0 30px rgba(218,84,38,0.4));
   animation: preBreathe 3.4s ease-in-out infinite;

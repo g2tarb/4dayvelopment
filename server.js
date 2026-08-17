@@ -491,7 +491,7 @@ function buildArticleHTML(data) {
 
   <nav id="navbar">
     <a href="/" class="nav-logo">
-      <img src="/logo/logo4day.webp" alt="4dayvelopment" class="logo-img" width="160" height="40">
+      <img src="/logo/logo4day.svg" alt="4dayvelopment" class="logo-img" width="160" height="42">
     </a>
     <ul class="nav-links">
       <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
@@ -561,7 +561,7 @@ ${faqHtml}
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="/" class="footer-logo"><img src="/logo/logo4day.webp" alt="4dayvelopment" class="logo-img" width="160" height="40"></a>
+        <a href="/" class="footer-logo"><img src="/logo/logo4day.svg" alt="4dayvelopment" class="logo-img" width="160" height="42"></a>
         <p>Un site qui vend, livré en 4 jours.</p>
       </div>
       <div class="footer-links-group">
