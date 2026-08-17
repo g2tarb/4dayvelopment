@@ -4681,3 +4681,43 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .service-card::after, .show-card::before, .testimonial-card::after { display: none; }
   .js-enabled .show-card.reveal:not(.visible) .show-visual img { transform: none; }
 }
+
+/* ================================================================
+   COMETES DU HERO — pilotees par js/modules/comets.js
+   Le canvas vit sous le contenu du hero ; la punchline s'embrase
+   quand une comete fusionne avec elle (.is-fused, 2 s).
+   ================================================================ */
+.hero > .comets-fx {
+  position: absolute !important;   /* .hero > *:not(...) force relative sinon */
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+/* le contenu du hero passe au-dessus du canvas */
+.hero-inner { position: relative; z-index: 1; }
+
+/* La fusion : le texte brille bien plus fort, gonfle et change de police
+   le temps de digerer la comete. La bascule de police est volontairement
+   seche : c'est l'impact. */
+#hero .hero-title .gradient-text {
+  transform-origin: left center;
+  transition: transform .38s cubic-bezier(.22,1,.36,1), filter .3s var(--ease-out);
+}
+#hero .hero-title .gradient-text.is-fused {
+  font-family: 'Inter', sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.5px;
+  transform: scale(1.10);
+  filter: drop-shadow(0 0 14px rgba(242,177,59,.85))
+          drop-shadow(0 0 42px rgba(218,84,38,.55))
+          brightness(1.3);
+}
+@media (max-width: 1059px) {
+  /* hero centre : le gonflement part du centre pour ne pas pousser a droite */
+  #hero .hero-title .gradient-text { transform-origin: center; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #hero .hero-title .gradient-text,
+  #hero .hero-title .gradient-text.is-fused { transform: none; filter: none; transition: none; }
+}

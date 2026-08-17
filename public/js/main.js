@@ -15,6 +15,7 @@ import { initPreloader } from './modules/preloader.js';
 import { initBrowserReel } from './modules/reel.js';
 import { initDuel } from './modules/duel.js';
 import { initSplitTitles, initTilt, initVelocityMarquee, initCursorFlair } from './modules/motion.js';
+import { initComets } from './modules/comets.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
    Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
@@ -85,6 +86,7 @@ async function init() {
   initBrowserReel();
   initDuel();
   initVelocityMarquee();
+  initComets();
 
   // Deferred : n'impacte pas le LCP
   setTimeout(() => {
