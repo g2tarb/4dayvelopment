@@ -787,6 +787,15 @@ app.get('/blog/:slug', (req, res) => {
   }
 });
 
+/* ── QR codes imprimes (cartes de visite, flyers) ────────
+ * /audit est l'URL imprimee sur les supports print : redirection vers la
+ * page de contact en conservant les utm (302 : pourra viser une vraie
+ * page /audit plus tard sans casser les QR deja imprimes). */
+app.get('/audit', (req, res) => {
+  const q = req.originalUrl.indexOf('?');
+  res.redirect(302, '/devis' + (q === -1 ? '' : req.originalUrl.slice(q)));
+});
+
 /* ── Fallback → 404 ──────────────────────────────────── */
 app.get('/{*splat}', (req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
