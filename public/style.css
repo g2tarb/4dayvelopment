@@ -4714,49 +4714,13 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 #hero .hero-title .gradient-text {
   transform-origin: left center;
 }
-/* La metamorphose : le vrai texte se fige invisible, sa place ne bouge
-   pas ; un calque a la taille du H1 prend le relais par-dessus et se
-   deploie librement avec "ou c'est gratuit". */
-#hero .hero-title .gradient-text.is-ghost { visibility: hidden; }
-
-/* un mot du suffixe ne se coupe jamais en deux */
-#hero .fusion-overlay .sfx-mot { white-space: nowrap; }
-
-/* pendant que la phrase se deploie par-dessus, la description s'efface */
-#hero .hero-copy:has(.fusion-overlay) .hero-desc {
-  opacity: .1;
-  transition: opacity .5s var(--ease-out);
-}
-#hero .hero-desc { transition: opacity .5s var(--ease-out); }
-
-#hero .hero-title .fusion-overlay {
-  position: absolute;
-  z-index: 2;
-  display: block;
-  padding-bottom: 0.12em;
-  pointer-events: none;
+/* Pendant la roulette et la pose sur "ou c'est gratuit", la phrase
+   s'embrase. Rien d'autre ne change : meme police, meme taille, meme
+   place. */
+#hero .hero-title .gradient-text { transition: filter .5s var(--ease-out); }
+#hero .hero-title .gradient-text.is-fused {
   filter: drop-shadow(0 0 16px rgba(242,177,59,.6))
           drop-shadow(0 0 44px rgba(218,84,38,.38));
-  animation: fusionEntre .5s var(--ease-out) both;
-}
-@keyframes fusionEntre {
-  from { filter: none; }
-  to   { filter: drop-shadow(0 0 16px rgba(242,177,59,.6))
-                 drop-shadow(0 0 44px rgba(218,84,38,.38)); }
-}
-
-/* Les lettres du suffixe : couleurs pleines posees par comets.js (le
-   degrade decoupe du parent les rendrait transparentes), apparition une a
-   une avec un leger eclat qui fond. */
-#hero .gradient-text .sfx {
-  -webkit-text-fill-color: currentColor;
-  opacity: 0;
-  transition: opacity .32s var(--ease-out), text-shadow .32s var(--ease-out);
-  text-shadow: 0 0 0 rgba(255,243,217,0);
-}
-#hero .gradient-text .sfx.on {
-  opacity: 1;
-  text-shadow: 0 0 12px rgba(255,243,217,.4), 0 0 26px currentColor;
 }
 /* Choc intermediaire : la punchline encaisse la comete, breve pulsation */
 #hero .hero-title .gradient-text.is-hit {

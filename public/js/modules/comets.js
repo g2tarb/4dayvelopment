@@ -10,13 +10,11 @@
 import { on } from './utils.js';
 
 const COULEURS = ['#DA5426', '#f2b13b', '#b06aad', '#fff3d9'];
-/* Les trois couleurs qui chargent la punchline : il faut un impact de
-   chacune pour declencher la grande fusion. */
-const CHARGES = ['#DA5426', '#f2b13b', '#b06aad'];
+const IMPACTS_REQUIS = 15;         // d'explosions avant la roulette
 const MAX_COMETES = 11;
 const SPAWN_MS    = [450, 980];    // intervalle entre deux naissances
-const SEEKER_MS   = [1800, 4800];  // timing aleatoire entre deux chercheuses
-const FUSED_MS    = 3400;          // le temps de lire "ou c'est gratuit"
+const SEEKER_MS   = [650, 1500];   // les chercheuses s'enchainent
+const FUSED_MS    = 3000;          // le temps de lire "ou c'est gratuit"
 const TRAINE      = 26;            // points de trainee memorises
 
 export function initComets() {
@@ -47,7 +45,8 @@ export function initComets() {
   let visible = false, raf = null, last = 0;
   let prochaineNaissance = 0, prochaineChercheuse = 2200;
   let fusedTimer = null, hitTimer = null;
-  const touches = new Set();   // couleurs ayant deja percute depuis la derniere fusion
+  let impacts = 0;             // explosions encaissees depuis la derniere roulette
+  let enRoulette = false;
 
   /* La cible : le centre de la punchline, en coordonnees du hero.
      Relue a chaque fusion : l'i18n peut reecrire le H1 a tout moment. */
@@ -67,12 +66,7 @@ export function initComets() {
     const y = depuisHaut ? -30 : Math.random() * H * 0.5;
     const vx = (gauche ? 1 : -1) * (1.1 + Math.random() * 1.6);
     const vy = 0.7 + Math.random() * 1.1;
-    // une chercheuse porte une des couleurs qui manquent encore a la charge
-    let couleur = COULEURS[(Math.random() * COULEURS.length) | 0];
-    if (seeker) {
-      const restantes = CHARGES.filter(c => !touches.has(c));
-      couleur = restantes[(Math.random() * restantes.length) | 0] || CHARGES[0];
-    }
+    const couleur = COULEURS[(Math.random() * COULEURS.length) | 0];
     cometes.push({
       x, y, vx, vy,
       taille: seeker ? 2.2 + Math.random() : 1.4 + Math.random() * 1.8,
@@ -98,23 +92,13 @@ export function initComets() {
     }
   }
 
-  /* Un impact charge la punchline de sa couleur : petit choc a chaque
-     fois, et quand les trois couleurs ont frappe, la grande fusion. */
+  /* Chaque comete avalee explose sur la punchline : petite gerbe et
+     pulsation. A la quinzieme, la roulette de lettres se declenche. */
   function impact(couleur) {
     const c = cible();
-    if (!c) return;
-    touches.add(couleur);
+    if (!c || enRoulette) return;
+    impacts++;
 
-    if (touches.size >= CHARGES.length) {
-      touches.clear();
-      eclate(c.x, c.y);
-      clearTimeout(fusedTimer);
-      c.em.classList.remove('is-hit');
-      metamorphose(c.em);
-      return;
-    }
-
-    // choc intermediaire : mini gerbe et pulsation breve
     anneaux.push({ x: c.x, y: c.y, r: 4, vie: 0, ttl: 340 });
     for (let i = 0; i < 14; i++) {
       const a = Math.random() * Math.PI * 2;
@@ -122,78 +106,65 @@ export function initComets() {
       sparks.push({ x: c.x, y: c.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 0.4,
         vie: 0, ttl: 380 + Math.random() * 420, taille: 1 + Math.random() * 2, couleur });
     }
-    if (!c.em.classList.contains('is-fused')) {
-      clearTimeout(hitTimer);
-      c.em.classList.add('is-hit');
-      hitTimer = setTimeout(() => c.em.classList.remove('is-hit'), 380);
+
+    if (impacts >= IMPACTS_REQUIS) {
+      impacts = 0;
+      eclate(c.x, c.y);
+      roulette(c.em);
+      return;
     }
+
+    clearTimeout(hitTimer);
+    c.em.classList.add('is-hit');
+    hitTimer = setTimeout(() => c.em.classList.remove('is-hit'), 380);
   }
 
-  /* La metamorphose, version sobre : le texte d'origine ne change ni de
-     police ni de lettres. Il retrecit en douceur pour faire de la place,
-     s'illumine, et "ou c'est gratuit" s'ecrit a sa suite lettre par
-     lettre, dans les couleurs de la marque, avant de s'effacer. */
-  const PALIERS = [[242,177,59],[255,243,217],[218,84,38],[176,106,173]];
-  function nuance(t) {
-    const p = Math.min(0.9999, Math.max(0, t)) * (PALIERS.length - 1);
-    const i = p | 0, f = p - i;
-    const a = PALIERS[i], b = PALIERS[i + 1];
-    return `rgb(${(a[0]+(b[0]-a[0])*f)|0},${(a[1]+(b[1]-a[1])*f)|0},${(a[2]+(b[2]-a[2])*f)|0})`;
-  }
+  /* La roulette de lettres : chaque position tourne sur des caracteres au
+     hasard puis se pose, de gauche a droite, sur "ou c'est gratuit."
+     — exactement 17 caracteres, comme "livré en 4 jours.". Le texte tient
+     la pose le temps d'etre lu, puis la roulette le ramene a l'original.
+     Aucun enfant, aucune transformation : on ne reecrit que du texte, le
+     degrade decoupe du H1 reste hors de danger. */
+  const ALPHABET = "abcdefghijklmnopqrstuvwxyzé'4.";
 
-  function metamorphose(em) {
-    const suffixe = document.documentElement.lang === 'en' ? " or it's free." : " ou c'est gratuit.";
-    const titre = em.closest('.hero-title') || em.parentElement;
-
-    /* Le vrai texte se fige, invisible mais present : sa place ne bouge
-       pas d'un pixel. Un calque en surimpression, a la meme taille que le
-       H1, prend le relais et peut se deployer sur plusieurs lignes sans
-       toucher a la mise en page. */
-    const calque = document.createElement('span');
-    calque.className = 'gradient-text fusion-overlay is-fused';
-    calque.setAttribute('aria-hidden', 'true');
-    calque.style.left = em.offsetLeft + 'px';
-    calque.style.top = em.offsetTop + 'px';
-    calque.style.width = Math.max(120, titre.clientWidth - em.offsetLeft) + 'px';
-    calque.textContent = em.textContent.replace(/\.\s*$/, '');
-
-    // lettre par lettre, mais groupees par mot : la ligne ne se coupe
-    // qu'entre les mots, jamais au milieu de "c'est"
-    const lettres = [];
-    const n = suffixe.length;
-    suffixe.split(' ').forEach((mot, m) => {
-      if (m > 0) calque.appendChild(document.createTextNode(' '));
-      if (!mot) return;
-      const grp = document.createElement('span');
-      grp.className = 'sfx-mot';
-      [...mot].forEach(ch => {
-        const sp = document.createElement('span');
-        sp.className = 'sfx';
-        sp.textContent = ch;
-        sp.style.color = nuance(lettres.length / (n - 1));
-        lettres.push(sp);
-        grp.appendChild(sp);
-      });
-      calque.appendChild(grp);
+  function deroule(em, cibleTxt, duree) {
+    return new Promise(fin => {
+      const n = Math.max(em.textContent.length, cibleTxt.length);
+      const depart = performance.now();
+      (function tour(now) {
+        const t = (now - depart) / duree;
+        let txt = '';
+        for (let i = 0; i < n; i++) {
+          const posee = t * n > i + 1;             // la vague se pose de gauche a droite
+          const vise = cibleTxt[i] || '';
+          if (posee || vise === ' ') txt += vise;
+          else txt += ALPHABET[(Math.random() * ALPHABET.length) | 0];
+        }
+        em.textContent = txt;
+        if (t < 1) requestAnimationFrame(tour);
+        else { em.textContent = cibleTxt; fin(); }
+      })(depart);
     });
-    titre.appendChild(calque);
-    em.classList.add('is-ghost');
+  }
 
-    // la phrase s'ecrit lettre a lettre
-    const PAS = 55;
-    lettres.forEach((sp, i) => sp.__t = setTimeout(() => sp.classList.add('on'), 350 + i * PAS));
+  async function roulette(em) {
+    if (enRoulette) return;
+    enRoulette = true;
+    const original = em.textContent;
+    const alternative = document.documentElement.lang === 'en' ? "or it's free." : "ou c'est gratuit.";
 
-    // effacement en vague inverse puis restauration exacte
-    fusedTimer = setTimeout(() => {
-      lettres.forEach((sp, i) => {
-        clearTimeout(sp.__t);
-        sp.__t = setTimeout(() => sp.classList.remove('on'), (lettres.length - i) * 18);
-      });
-      setTimeout(() => {
-        calque.remove();
-        em.classList.remove('is-ghost');
-      }, lettres.length * 18 + 380);
-    }, FUSED_MS);
+    // le titre garde sa hauteur meme si un tirage intermediaire replie
+    // differemment la ligne
+    const h1 = em.closest('h1');
+    if (h1) h1.style.minHeight = h1.offsetHeight + 'px';
+
+    em.classList.add('is-fused');
+    await deroule(em, alternative, 1100);
+    await new Promise(ok => { fusedTimer = setTimeout(ok, FUSED_MS); });
+    await deroule(em, original, 900);
+    em.classList.remove('is-fused');
+    if (h1) h1.style.minHeight = '';
+    enRoulette = false;
   }
 
   function frame(now) {
