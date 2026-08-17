@@ -109,14 +109,6 @@ export function initComets() {
       touches.clear();
       eclate(c.x, c.y);
       clearTimeout(fusedTimer);
-      // La mise en page change pendant la metamorphose : sans verrou, le
-      // titre perdrait une ligne et le centrage du hero deplacerait tout,
-      // premiere ligne comprise. On fige la hauteur du H1.
-      const h1 = c.em.closest('h1');
-      if (h1) {
-        h1.style.minHeight = h1.offsetHeight + 'px';
-        setTimeout(() => { h1.style.minHeight = ''; }, FUSED_MS + 900);
-      }
       c.em.classList.remove('is-hit');
       metamorphose(c.em);
       return;
@@ -151,24 +143,41 @@ export function initComets() {
 
   function metamorphose(em) {
     const suffixe = document.documentElement.lang === 'en' ? " or it's free." : " ou c'est gratuit.";
-    // le point final du texte d'origine s'ecarte pour laisser la phrase filer
-    const noeudFin = [...em.childNodes].reverse().find(n => n.nodeType === 3 && /\.\s*$/.test(n.textContent));
-    const finOriginale = noeudFin ? noeudFin.textContent : null;
-    if (noeudFin) noeudFin.textContent = noeudFin.textContent.replace(/\.\s*$/, '');
+    const titre = em.closest('.hero-title') || em.parentElement;
 
-    const bloc = document.createElement('span');
-    bloc.className = 'sfx-bloc';
+    /* Le vrai texte se fige, invisible mais present : sa place ne bouge
+       pas d'un pixel. Un calque en surimpression, a la meme taille que le
+       H1, prend le relais et peut se deployer sur plusieurs lignes sans
+       toucher a la mise en page. */
+    const calque = document.createElement('span');
+    calque.className = 'gradient-text fusion-overlay is-fused';
+    calque.setAttribute('aria-hidden', 'true');
+    calque.style.left = em.offsetLeft + 'px';
+    calque.style.top = em.offsetTop + 'px';
+    calque.style.width = Math.max(120, titre.clientWidth - em.offsetLeft) + 'px';
+    calque.textContent = em.textContent.replace(/\.\s*$/, '');
+
+    // lettre par lettre, mais groupees par mot : la ligne ne se coupe
+    // qu'entre les mots, jamais au milieu de "c'est"
     const lettres = [];
-    [...suffixe].forEach((ch, i) => {
-      const sp = document.createElement('span');
-      sp.className = 'sfx';
-      sp.textContent = ch === ' ' ? '\u00A0' : ch;
-      sp.style.color = nuance(i / (suffixe.length - 1));
-      lettres.push(sp);
-      bloc.appendChild(sp);
+    const n = suffixe.length;
+    suffixe.split(' ').forEach((mot, m) => {
+      if (m > 0) calque.appendChild(document.createTextNode(' '));
+      if (!mot) return;
+      const grp = document.createElement('span');
+      grp.className = 'sfx-mot';
+      [...mot].forEach(ch => {
+        const sp = document.createElement('span');
+        sp.className = 'sfx';
+        sp.textContent = ch;
+        sp.style.color = nuance(lettres.length / (n - 1));
+        lettres.push(sp);
+        grp.appendChild(sp);
+      });
+      calque.appendChild(grp);
     });
-    em.appendChild(bloc);
-    em.classList.add('is-fused');
+    titre.appendChild(calque);
+    em.classList.add('is-ghost');
 
     // la phrase s'ecrit lettre a lettre
     const PAS = 55;
@@ -181,9 +190,8 @@ export function initComets() {
         sp.__t = setTimeout(() => sp.classList.remove('on'), (lettres.length - i) * 18);
       });
       setTimeout(() => {
-        em.classList.remove('is-fused');
-        bloc.remove();
-        if (noeudFin && finOriginale !== null) noeudFin.textContent = finOriginale;
+        calque.remove();
+        em.classList.remove('is-ghost');
       }, lettres.length * 18 + 380);
     }, FUSED_MS);
   }

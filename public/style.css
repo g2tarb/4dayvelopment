@@ -4714,20 +4714,35 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 #hero .hero-title .gradient-text {
   transform-origin: left center;
 }
-/* La metamorphose, version sobre : la phrase garde sa police et son
-   degrade, retrecit en douceur pour faire de la place, s'illumine, et
-   "ou c'est gratuit" s'ecrit a sa suite. */
-#hero .hero-title .gradient-text.is-fused {
-  white-space: nowrap;
-  /* cale sur le viewport : la phrase etendue ne mord jamais le telephone
-     a droite, ni le bord de l'ecran sur mobile */
-  font-size: clamp(15px, 2.55vw, 40px);
+/* La metamorphose : le vrai texte se fige invisible, sa place ne bouge
+   pas ; un calque a la taille du H1 prend le relais par-dessus et se
+   deploie librement avec "ou c'est gratuit". */
+#hero .hero-title .gradient-text.is-ghost { visibility: hidden; }
+
+/* un mot du suffixe ne se coupe jamais en deux */
+#hero .fusion-overlay .sfx-mot { white-space: nowrap; }
+
+/* pendant que la phrase se deploie par-dessus, la description s'efface */
+#hero .hero-copy:has(.fusion-overlay) .hero-desc {
+  opacity: .1;
+  transition: opacity .5s var(--ease-out);
+}
+#hero .hero-desc { transition: opacity .5s var(--ease-out); }
+
+#hero .hero-title .fusion-overlay {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  padding-bottom: 0.12em;
+  pointer-events: none;
   filter: drop-shadow(0 0 16px rgba(242,177,59,.6))
           drop-shadow(0 0 44px rgba(218,84,38,.38));
+  animation: fusionEntre .5s var(--ease-out) both;
 }
-/* le retrecissement et le halo s'installent en douceur */
-#hero .hero-title .gradient-text {
-  transition: filter .6s var(--ease-out), font-size .8s cubic-bezier(.22,1,.36,1);
+@keyframes fusionEntre {
+  from { filter: none; }
+  to   { filter: drop-shadow(0 0 16px rgba(242,177,59,.6))
+                 drop-shadow(0 0 44px rgba(218,84,38,.38)); }
 }
 
 /* Les lettres du suffixe : couleurs pleines posees par comets.js (le
