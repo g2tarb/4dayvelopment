@@ -137,11 +137,10 @@ export function initComets() {
     }
   }
 
-  /* La metamorphose : pas de pop. Le texte retrecit en douceur, et une
-     vague parcourt les lettres une a une : chacune s'allume, prend sa
-     couleur sur le degrade de la marque et bascule de police ; puis
-     "ou c'est gratuit" s'ecrit a la suite, lettre apres lettre. A la fin,
-     vague inverse et retour a l'exact etat d'origine. */
+  /* La metamorphose, version sobre : le texte d'origine ne change ni de
+     police ni de lettres. Il retrecit en douceur pour faire de la place,
+     s'illumine, et "ou c'est gratuit" s'ecrit a sa suite lettre par
+     lettre, dans les couleurs de la marque, avant de s'effacer. */
   const PALIERS = [[242,177,59],[255,243,217],[218,84,38],[176,106,173]];
   function nuance(t) {
     const p = Math.min(0.9999, Math.max(0, t)) * (PALIERS.length - 1);
@@ -151,38 +150,41 @@ export function initComets() {
   }
 
   function metamorphose(em) {
-    const original = em.innerHTML;
-    const base = em.textContent.replace(/\s*\.?\s*$/, '');
-    const suffixe = document.documentElement.lang === 'en' ? " or it's free." : ' ou c\'est gratuit.';
-    const cibleTxt = base + suffixe;
+    const suffixe = document.documentElement.lang === 'en' ? " or it's free." : " ou c'est gratuit.";
+    // le point final du texte d'origine s'ecarte pour laisser la phrase filer
+    const noeudFin = [...em.childNodes].reverse().find(n => n.nodeType === 3 && /\.\s*$/.test(n.textContent));
+    const finOriginale = noeudFin ? noeudFin.textContent : null;
+    if (noeudFin) noeudFin.textContent = noeudFin.textContent.replace(/\.\s*$/, '');
 
-    em.textContent = '';
+    const bloc = document.createElement('span');
+    bloc.className = 'sfx-bloc';
     const lettres = [];
-    [...cibleTxt].forEach((ch, i) => {
-      if (ch === ' ') { em.appendChild(document.createTextNode(' ')); return; }
+    [...suffixe].forEach((ch, i) => {
       const sp = document.createElement('span');
-      sp.className = 'fz' + (i >= base.length ? ' fz-new' : '');
-      sp.textContent = ch;
-      sp.style.color = nuance(i / (cibleTxt.length - 1));
-      em.appendChild(sp);
+      sp.className = 'sfx';
+      sp.textContent = ch === ' ' ? '\u00A0' : ch;
+      sp.style.color = nuance(i / (suffixe.length - 1));
       lettres.push(sp);
+      bloc.appendChild(sp);
     });
+    em.appendChild(bloc);
     em.classList.add('is-fused');
 
-    // la vague : chaque lettre s'allume a son tour
-    const PAS = 34;
-    lettres.forEach((sp, i) => sp.__t = setTimeout(() => sp.classList.add('on'), 120 + i * PAS));
+    // la phrase s'ecrit lettre a lettre
+    const PAS = 55;
+    lettres.forEach((sp, i) => sp.__t = setTimeout(() => sp.classList.add('on'), 350 + i * PAS));
 
-    // vague inverse puis restauration exacte
+    // effacement en vague inverse puis restauration exacte
     fusedTimer = setTimeout(() => {
       lettres.forEach((sp, i) => {
         clearTimeout(sp.__t);
-        sp.__t = setTimeout(() => sp.classList.remove('on'), (lettres.length - i) * 12);
+        sp.__t = setTimeout(() => sp.classList.remove('on'), (lettres.length - i) * 18);
       });
       setTimeout(() => {
         em.classList.remove('is-fused');
-        em.innerHTML = original;
-      }, lettres.length * 12 + 320);
+        bloc.remove();
+        if (noeudFin && finOriginale !== null) noeudFin.textContent = finOriginale;
+      }, lettres.length * 18 + 380);
     }, FUSED_MS);
   }
 

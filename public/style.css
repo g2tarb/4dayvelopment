@@ -89,7 +89,12 @@
 }
 /* ── RESET ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
+html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased;
+  /* clip et pas hidden : aucun defilement horizontal ne peut naitre (le
+     menu mobile hors champ en creait 26 px), et clip ne cree pas de
+     conteneur de scroll, donc les position sticky continuent de vivre. */
+  overflow-x: clip;
+}
 
 body {
   font-family: 'Inter', sans-serif;
@@ -4371,6 +4376,7 @@ footer {
 }
 .demo-seg {
   flex: 1 1 0;
+  min-width: 0;   /* six segments a 320 px : aucun ne doit imposer sa largeur */
   position: relative;
   height: 22px;              /* zone de clic confortable */
   padding: 0;
@@ -4708,44 +4714,35 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 #hero .hero-title .gradient-text {
   transform-origin: left center;
 }
-/* La metamorphose : pas de pop brutal. Le degrade decoupe s'efface, les
-   lettres portent leurs couleurs pleines (posees par comets.js le long du
-   degrade de la marque), le corps retrecit en douceur pour accueillir
-   "ou c'est gratuit", et un halo s'installe progressivement. */
+/* La metamorphose, version sobre : la phrase garde sa police et son
+   degrade, retrecit en douceur pour faire de la place, s'illumine, et
+   "ou c'est gratuit" s'ecrit a sa suite. */
 #hero .hero-title .gradient-text.is-fused {
-  background: none;
-  animation: none;
-  -webkit-text-fill-color: currentColor;
-  color: #f2ebdd;
   white-space: nowrap;
-  font-size: .56em;
-  letter-spacing: -0.5px;
-  transform: scale(1.04);
-  filter: drop-shadow(0 0 16px rgba(242,177,59,.65))
-          drop-shadow(0 0 44px rgba(218,84,38,.4));
+  /* cale sur le viewport : la phrase etendue ne mord jamais le telephone
+     a droite, ni le bord de l'ecran sur mobile */
+  font-size: clamp(15px, 2.55vw, 40px);
+  filter: drop-shadow(0 0 16px rgba(242,177,59,.6))
+          drop-shadow(0 0 44px rgba(218,84,38,.38));
 }
 /* le retrecissement et le halo s'installent en douceur */
 #hero .hero-title .gradient-text {
-  transition: transform .38s cubic-bezier(.22,1,.36,1), filter .6s var(--ease-out),
-              font-size .8s cubic-bezier(.22,1,.36,1);
+  transition: filter .6s var(--ease-out), font-size .8s cubic-bezier(.22,1,.36,1);
 }
 
-/* Chaque lettre : eteinte en Syne, elle s'allume et bascule en Inter quand
-   la vague la touche. La police n'est pas transitionnable, mais la vague
-   rend le passage progressif ; l'eclat, lui, fond sur 350 ms. */
-#hero .gradient-text .fz {
-  font-family: 'Syne', sans-serif;
-  transition: text-shadow .35s var(--ease-out), opacity .3s var(--ease-out);
+/* Les lettres du suffixe : couleurs pleines posees par comets.js (le
+   degrade decoupe du parent les rendrait transparentes), apparition une a
+   une avec un leger eclat qui fond. */
+#hero .gradient-text .sfx {
+  -webkit-text-fill-color: currentColor;
+  opacity: 0;
+  transition: opacity .32s var(--ease-out), text-shadow .32s var(--ease-out);
   text-shadow: 0 0 0 rgba(255,243,217,0);
 }
-#hero .gradient-text .fz.on {
-  font-family: 'Inter', sans-serif;
-  font-weight: 900;
-  font-style: italic;
-  text-shadow: 0 0 14px rgba(255,243,217,.55), 0 0 30px currentColor;
+#hero .gradient-text .sfx.on {
+  opacity: 1;
+  text-shadow: 0 0 12px rgba(255,243,217,.4), 0 0 26px currentColor;
 }
-#hero .gradient-text .fz-new { opacity: 0; }
-#hero .gradient-text .fz-new.on { opacity: 1; }
 /* Choc intermediaire : la punchline encaisse la comete, breve pulsation */
 #hero .hero-title .gradient-text.is-hit {
   animation: fuseHit .38s cubic-bezier(.22,1,.36,1);

@@ -16,6 +16,7 @@ import { initBrowserReel } from './modules/reel.js';
 import { initDuel } from './modules/duel.js';
 import { initSplitTitles, initTilt, initVelocityMarquee, initCursorFlair } from './modules/motion.js';
 import { initComets } from './modules/comets.js';
+import { initInertia } from './modules/inertia.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
    Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
@@ -76,6 +77,7 @@ async function init() {
   initCounters();
   initFAQ();
   initSmoothScroll();
+  initInertia();
   initStickyCTA();
   initBottomSheetSwipe();
   initToasts();
