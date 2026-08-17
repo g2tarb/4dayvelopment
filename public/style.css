@@ -1343,6 +1343,8 @@ section { padding: 100px 24px; }
   height: 1em;
   overflow: hidden;
 }
+/* espace des milliers de "1 990" */
+.duel-digits .gap { display: inline-block; width: .09em; }
 .duel-digits .roll > span {
   display: block;
   line-height: 1;

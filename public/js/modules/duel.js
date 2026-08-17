@@ -80,11 +80,19 @@ export function initDuel() {
   sides.forEach(side => {
     const el = side.querySelector('.duel-digits');
     if (!el) return;
-    const digits = [...el.textContent.trim()].filter(c => /\d/.test(c));
+    const chars = [...el.textContent.trim()];
+    const digits = chars.filter(c => /\d/.test(c));
     if (!digits.length) return;
     el.textContent = '';
     el.dataset.digits = digits.join('');
-    digits.forEach(() => {
+    chars.forEach(c => {
+      // l'espace des milliers de "1 990" reste un espaceur fixe entre rouleaux
+      if (!/\d/.test(c)) {
+        const gap = document.createElement('span');
+        gap.className = 'gap';
+        el.appendChild(gap);
+        return;
+      }
       const roll = document.createElement('span');
       roll.className = 'roll';
       const strip = document.createElement('span');
