@@ -16,7 +16,7 @@ const CHARGES = ['#DA5426', '#f2b13b', '#b06aad'];
 const MAX_COMETES = 11;
 const SPAWN_MS    = [450, 980];    // intervalle entre deux naissances
 const SEEKER_MS   = [1800, 4800];  // timing aleatoire entre deux chercheuses
-const FUSED_MS    = 2000;          // le texte reste embrase 2 s
+const FUSED_MS    = 3400;          // le temps de lire "ou c'est gratuit"
 const TRAINE      = 26;            // points de trainee memorises
 
 export function initComets() {
@@ -109,18 +109,16 @@ export function initComets() {
       touches.clear();
       eclate(c.x, c.y);
       clearTimeout(fusedTimer);
-      // La punchline passe de deux lignes en Syne a une seule en Inter :
-      // sans verrou, le titre perdrait une ligne et le centrage du hero
-      // deplacerait tout, premiere ligne comprise. On fige la hauteur du
-      // H1 le temps de la fusion.
+      // La mise en page change pendant la metamorphose : sans verrou, le
+      // titre perdrait une ligne et le centrage du hero deplacerait tout,
+      // premiere ligne comprise. On fige la hauteur du H1.
       const h1 = c.em.closest('h1');
       if (h1) {
         h1.style.minHeight = h1.offsetHeight + 'px';
-        setTimeout(() => { h1.style.minHeight = ''; }, FUSED_MS + 450);
+        setTimeout(() => { h1.style.minHeight = ''; }, FUSED_MS + 900);
       }
       c.em.classList.remove('is-hit');
-      c.em.classList.add('is-fused');
-      fusedTimer = setTimeout(() => c.em.classList.remove('is-fused'), FUSED_MS);
+      metamorphose(c.em);
       return;
     }
 
@@ -137,6 +135,55 @@ export function initComets() {
       c.em.classList.add('is-hit');
       hitTimer = setTimeout(() => c.em.classList.remove('is-hit'), 380);
     }
+  }
+
+  /* La metamorphose : pas de pop. Le texte retrecit en douceur, et une
+     vague parcourt les lettres une a une : chacune s'allume, prend sa
+     couleur sur le degrade de la marque et bascule de police ; puis
+     "ou c'est gratuit" s'ecrit a la suite, lettre apres lettre. A la fin,
+     vague inverse et retour a l'exact etat d'origine. */
+  const PALIERS = [[242,177,59],[255,243,217],[218,84,38],[176,106,173]];
+  function nuance(t) {
+    const p = Math.min(0.9999, Math.max(0, t)) * (PALIERS.length - 1);
+    const i = p | 0, f = p - i;
+    const a = PALIERS[i], b = PALIERS[i + 1];
+    return `rgb(${(a[0]+(b[0]-a[0])*f)|0},${(a[1]+(b[1]-a[1])*f)|0},${(a[2]+(b[2]-a[2])*f)|0})`;
+  }
+
+  function metamorphose(em) {
+    const original = em.innerHTML;
+    const base = em.textContent.replace(/\s*\.?\s*$/, '');
+    const suffixe = document.documentElement.lang === 'en' ? " or it's free." : ' ou c\'est gratuit.';
+    const cibleTxt = base + suffixe;
+
+    em.textContent = '';
+    const lettres = [];
+    [...cibleTxt].forEach((ch, i) => {
+      if (ch === ' ') { em.appendChild(document.createTextNode(' ')); return; }
+      const sp = document.createElement('span');
+      sp.className = 'fz' + (i >= base.length ? ' fz-new' : '');
+      sp.textContent = ch;
+      sp.style.color = nuance(i / (cibleTxt.length - 1));
+      em.appendChild(sp);
+      lettres.push(sp);
+    });
+    em.classList.add('is-fused');
+
+    // la vague : chaque lettre s'allume a son tour
+    const PAS = 34;
+    lettres.forEach((sp, i) => sp.__t = setTimeout(() => sp.classList.add('on'), 120 + i * PAS));
+
+    // vague inverse puis restauration exacte
+    fusedTimer = setTimeout(() => {
+      lettres.forEach((sp, i) => {
+        clearTimeout(sp.__t);
+        sp.__t = setTimeout(() => sp.classList.remove('on'), (lettres.length - i) * 12);
+      });
+      setTimeout(() => {
+        em.classList.remove('is-fused');
+        em.innerHTML = original;
+      }, lettres.length * 12 + 320);
+    }, FUSED_MS);
   }
 
   function frame(now) {
@@ -163,26 +210,45 @@ export function initComets() {
       const k = cometes[i];
 
       if (k.seeker && c) {
-        // pilotage doux vers la punchline, de plus en plus ferme en approche
         const dx = c.x - k.x, dy = c.y - k.y;
         const d = Math.hypot(dx, dy) || 1;
-        const pull = d < 200 ? 0.10 : 0.035;
-        k.vx += (dx / d) * pull * dt * 2.4;
-        k.vy += (dy / d) * pull * dt * 2.4;
-        const v = Math.hypot(k.vx, k.vy);
-        const vmax = 4.2;
-        if (v > vmax) { k.vx = k.vx / v * vmax; k.vy = k.vy / v * vmax; }
-        if (d < 26) {                      // contact
-          impact(k.couleur);
-          cometes.splice(i, 1);
-          continue;
+
+        if (d < 110) {
+          // zone d'absorption : plus de balistique, la comete est aspiree
+          // en ligne droite, retrecit et s'eteint DANS la phrase, sans
+          // jamais pouvoir la traverser ni ressortir.
+          k.absorbee = true;
+          k.x += dx * 0.16 * dt;
+          k.y += dy * 0.16 * dt;
+          k.taille *= Math.pow(0.94, dt);
+          if (k.traine.length > 6) k.traine.splice(0, 4);   // la trainee se resorbe
+          if (d < 12 || k.taille < 0.5) {   // avalee : impact
+            impact(k.couleur);
+            cometes.splice(i, 1);
+            continue;
+          }
+        } else {
+          // pilotage doux vers la punchline
+          const pull = d < 200 ? 0.10 : 0.035;
+          k.vx += (dx / d) * pull * dt * 2.4;
+          k.vy += (dy / d) * pull * dt * 2.4;
+          const v = Math.hypot(k.vx, k.vy);
+          const vmax = 4.2;
+          if (v > vmax) { k.vx = k.vx / v * vmax; k.vy = k.vy / v * vmax; }
         }
       }
+
+      if (k.absorbee) {
+        // la position est deja pilotee par l'aspiration
+        k.traine.push(k.x, k.y);
+        if (k.traine.length > TRAINE * 2) k.traine.splice(0, 2);
+      } else {
 
       k.x += k.vx * dt;
       k.y += k.vy * dt;
       k.traine.push(k.x, k.y);
       if (k.traine.length > TRAINE * 2) k.traine.splice(0, 2);
+      }
 
       if (k.x < -80 || k.x > W + 80 || k.y > H + 80) { cometes.splice(i, 1); continue; }
 

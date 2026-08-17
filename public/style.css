@@ -4707,19 +4707,45 @@ html.is-loading, html.is-loading body { overflow: hidden; }
    seche : c'est l'impact. */
 #hero .hero-title .gradient-text {
   transform-origin: left center;
-  transition: transform .38s cubic-bezier(.22,1,.36,1), filter .3s var(--ease-out);
 }
-/* L'impact : flash blanc, surgonflement avec rebond, halo double, et le
-   reflet du degrade s'emballe. Deux secondes, alignees sur FUSED_MS. */
+/* La metamorphose : pas de pop brutal. Le degrade decoupe s'efface, les
+   lettres portent leurs couleurs pleines (posees par comets.js le long du
+   degrade de la marque), le corps retrecit en douceur pour accueillir
+   "ou c'est gratuit", et un halo s'installe progressivement. */
 #hero .hero-title .gradient-text.is-fused {
+  background: none;
+  animation: none;
+  -webkit-text-fill-color: currentColor;
+  color: #f2ebdd;
+  white-space: nowrap;
+  font-size: .56em;
+  letter-spacing: -0.5px;
+  transform: scale(1.04);
+  filter: drop-shadow(0 0 16px rgba(242,177,59,.65))
+          drop-shadow(0 0 44px rgba(218,84,38,.4));
+}
+/* le retrecissement et le halo s'installent en douceur */
+#hero .hero-title .gradient-text {
+  transition: transform .38s cubic-bezier(.22,1,.36,1), filter .6s var(--ease-out),
+              font-size .8s cubic-bezier(.22,1,.36,1);
+}
+
+/* Chaque lettre : eteinte en Syne, elle s'allume et bascule en Inter quand
+   la vague la touche. La police n'est pas transitionnable, mais la vague
+   rend le passage progressif ; l'eclat, lui, fond sur 350 ms. */
+#hero .gradient-text .fz {
+  font-family: 'Syne', sans-serif;
+  transition: text-shadow .35s var(--ease-out), opacity .3s var(--ease-out);
+  text-shadow: 0 0 0 rgba(255,243,217,0);
+}
+#hero .gradient-text .fz.on {
   font-family: 'Inter', sans-serif;
   font-weight: 900;
   font-style: italic;
-  letter-spacing: -0.5px;
-  white-space: nowrap;   /* une seule ligne en Inter, toujours le meme pli */
-  animation: fusePop 2s cubic-bezier(.22,1,.36,1) both,
-             gradient-shift .8s linear infinite;
+  text-shadow: 0 0 14px rgba(255,243,217,.55), 0 0 30px currentColor;
 }
+#hero .gradient-text .fz-new { opacity: 0; }
+#hero .gradient-text .fz-new.on { opacity: 1; }
 /* Choc intermediaire : la punchline encaisse la comete, breve pulsation */
 #hero .hero-title .gradient-text.is-hit {
   animation: fuseHit .38s cubic-bezier(.22,1,.36,1);
@@ -4730,29 +4756,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   100% { transform: scale(1);    filter: brightness(1); }
 }
 
-@keyframes fusePop {
-  0% {
-    transform: scale(1);
-    filter: brightness(2.4) drop-shadow(0 0 30px rgba(255,243,217,.95))
-            drop-shadow(0 0 70px rgba(218,84,38,.8));
-  }
-  12% {
-    transform: scale(1.26) rotate(-1.6deg);
-    filter: brightness(1.9) drop-shadow(0 0 24px rgba(242,177,59,.95))
-            drop-shadow(0 0 60px rgba(218,84,38,.7));
-  }
-  30% { transform: scale(1.12) rotate(.7deg); }
-  50% {
-    transform: scale(1.18) rotate(0);
-    filter: brightness(1.45) drop-shadow(0 0 16px rgba(242,177,59,.85))
-            drop-shadow(0 0 46px rgba(218,84,38,.55));
-  }
-  100% {
-    transform: scale(1.15);
-    filter: brightness(1.35) drop-shadow(0 0 14px rgba(242,177,59,.8))
-            drop-shadow(0 0 40px rgba(136,64,131,.5));
-  }
-}
+
 @media (max-width: 1059px) {
   /* hero centre : le gonflement part du centre pour ne pas pousser a droite */
   #hero .hero-title .gradient-text { transform-origin: center; }
