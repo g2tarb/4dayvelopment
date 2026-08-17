@@ -11,7 +11,7 @@
 import { on } from './utils.js';
 
 const CLASH_MS = 500;      // duree de l'eclair, alignee sur duelFlash/vsClash
-const AMBIENT  = 90;       // particules maximum en regime de croisiere
+const AMBIENT  = 60;       // particules maximum en regime de croisiere
 
 export function initDuel() {
   const root = document.getElementById('duel');
@@ -251,11 +251,17 @@ export function initDuel() {
   let last = 0;
   function frame(now) {
     raf = null;
-    const dt = Math.min(34, now - last || 16);
+    // 30 images par seconde suffisent a des etincelles : on rend une image
+    // sur deux et on laisse le reste de la page respirer
+    if (now - last < 30) {
+      if (visible && !document.hidden) raf = requestAnimationFrame(frame);
+      return;
+    }
+    const dt = Math.min(67, now - last || 16);
     last = now;
 
     // crepitement ambiant le long de la ligne
-    if (parts.length < AMBIENT && Math.random() < 0.5) {
+    if (parts.length < AMBIENT && Math.random() < 0.4) {
       const p = pointOnFront();
       spawn(p.x, p.y, ALL, 0.9);
     }

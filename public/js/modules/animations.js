@@ -8,8 +8,12 @@ export function initCursor() {
   document.body.append(dot, ring);
 
   let mx = -200, my = -200, rx = -200, ry = -200, hover = false;
+  let anime = false;   // la boucle s'endort quand l'anneau a rejoint la souris
 
-  on(document, 'mousemove', e => { mx = e.clientX; my = e.clientY; });
+  on(document, 'mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if (!anime) { anime = true; raf(tick); }
+  }, { passive: true });
   on(document, 'mouseover', e => {
     if (e.target.closest('a,button,[class*="card"],[class*="btn"]') && !hover) {
       ring.classList.add('hover'); hover = true;
@@ -24,10 +28,14 @@ export function initCursor() {
   on(document, 'mouseup',   () => ring.classList.remove('click'));
 
   function tick() {
+    anime = true;   // une seule boucle a la fois, meme si un mousemove arrive en plein vol
     dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
     rx += (mx - rx) * 0.11;
     ry += (my - ry) * 0.11;
     ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+    // l'anneau a rattrape la souris : plus rien a animer jusqu'au prochain
+    // mouvement, on rend la main au lieu de tourner a vide toute la visite
+    if (Math.abs(mx - rx) + Math.abs(my - ry) < 0.2) { anime = false; return; }
     raf(tick);
   }
   raf(tick);
@@ -35,18 +43,21 @@ export function initCursor() {
 
 export function initGlow() {
   const glow = document.createElement('div');
+  // transform et pas left/top : le halo suit la souris sur le compositeur,
+  // sans relancer la mise en page a chaque mouvement
   glow.style.cssText = `
-    position:fixed;width:350px;height:350px;
+    position:fixed;left:0;top:0;width:350px;height:350px;
     background:radial-gradient(circle,rgba(218,84,38,0.06) 0%,transparent 70%);
-    border-radius:50%;pointer-events:none;transform:translate(-50%,-50%);
-    transition:left .6s cubic-bezier(.23,1,.32,1),top .6s cubic-bezier(.23,1,.32,1);
+    border-radius:50%;pointer-events:none;
+    transform:translate(-50%,-50%);
+    transition:transform .6s cubic-bezier(.23,1,.32,1);
+    will-change:transform;
     z-index:0;
   `;
   document.body.appendChild(glow);
   on(document, 'mousemove', e => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top  = e.clientY + 'px';
-  });
+    glow.style.transform = `translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
+  }, { passive: true });
 }
 
 export function initMagnetic() {

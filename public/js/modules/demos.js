@@ -207,8 +207,19 @@ export function initDemoViewer() {
   // Onglet en arriere-plan : inutile de charger des pages pour personne
   on(document, 'visibilitychange', () => {
     if (document.hidden) { clearTimeout(timer); }
-    else if (!held && started) { restartFill(); schedule(); }
+    else if (!held && started && enVue) { restartFill(); schedule(); }
   });
+
+  /* Telephone sorti de l'ecran : le diaporama s'arrete net. Sans ce garde,
+     il continuait a charger un site complet toutes les 5 secondes pendant
+     toute la visite, meme au pied de page — c'etait le premier poste de
+     lenteur de la page. */
+  let enVue = true;
+  new IntersectionObserver(entries => {
+    enVue = entries.some(e => e.isIntersecting);
+    if (!enVue) { clearTimeout(timer); clearTimeout(splashTimer); }
+    else if (!held && started && !document.hidden) { restartFill(); schedule(); }
+  }, { rootMargin: '120px' }).observe(device);
 
   on(window, 'resize', fit, { passive: true });
 

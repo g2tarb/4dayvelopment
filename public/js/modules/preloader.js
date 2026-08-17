@@ -4,8 +4,8 @@
    de charger, avec un temps d'affichage minimum pour que l'animation ait le
    temps d'exister, et un plafond pour ne jamais retenir le visiteur. */
 
-const MIN_MS = 1500;   // temps d'affichage minimum
-const MAX_MS = 3200;   // filet de securite si `load` n'arrive jamais
+const MIN_MS = 1150;   // temps d'affichage minimum
+const MAX_MS = 2600;   // filet de securite si `load` n'arrive jamais
 const OUT_MS = 650;    // duree du fondu de sortie, alignee sur style.css
 
 export function initPreloader() {

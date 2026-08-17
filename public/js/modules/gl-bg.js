@@ -116,7 +116,8 @@ export function initUniverse() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const isMobile = matchMedia('(max-width: 768px)').matches;
-  const isLowEnd = (navigator.hardwareConcurrency || 4) <= 2;
+  const isLowEnd = (navigator.hardwareConcurrency || 4) <= 4
+                || (navigator.deviceMemory || 8) <= 4;
   const lite     = isMobile || isLowEnd;
 
   const canvas = document.createElement('canvas');
@@ -136,7 +137,14 @@ export function initUniverse() {
   const progLine  = program(gl, FS_LINE);
   if (!progPoint || !progLine) return;
 
-  const DPR = isMobile ? 1 : Math.min(devicePixelRatio || 1, 1.5);
+  /* Qualite adaptative : on part de la definition confortable, et si la
+     machine ne suit pas la cadence en conditions reelles (autres onglets,
+     memoire sous pression), on degrade par paliers plutot que de laisser
+     tout le site ramer : definition reduite, puis moitie des points, puis
+     le fond s'efface completement. */
+  let DPR = isMobile ? 1 : Math.min(devicePixelRatio || 1, 1.5);
+  let qualite = 0;           // 0 plein, 1 def reduite, 2 allege, 3 retire
+  let densite = 1;           // fraction des points dessines
   let W = 0, H = 0;
   function resize() {
     W = innerWidth; H = innerHeight;
@@ -145,6 +153,24 @@ export function initUniverse() {
     gl.viewport(0, 0, canvas.width, canvas.height);
   }
   resize();
+
+  let lentes = 0, jauge = 0;
+  function surveiller(elapsed) {
+    // une image qui depasse largement le budget des 30 i/s est une image lente
+    jauge++;
+    if (elapsed > 55) lentes++;
+    if (jauge < 90) return;                  // fenetre de ~3 s
+    if (lentes > jauge * 0.4 && qualite < 3) {
+      qualite++;
+      if (qualite === 1) { DPR = 1; resize(); }
+      if (qualite === 2) { densite = 0.5; }
+      if (qualite === 3) {                   // la page passe avant le decor
+        canvas.style.opacity = '0';
+        setTimeout(() => { paused = true; canvas.remove(); }, 2600);
+      }
+    }
+    jauge = 0; lentes = 0;
+  }
 
   gl.disable(gl.DEPTH_TEST);
   gl.enable(gl.BLEND);
@@ -292,6 +318,7 @@ export function initUniverse() {
     raf(animate);
     const elapsed = now - lastTime;
     if (elapsed < FPS_INTERVAL) return;
+    surveiller(elapsed);
     lastTime = now - (elapsed % FPS_INTERVAL);
 
     frame++;
@@ -334,7 +361,7 @@ export function initUniverse() {
 
     // Étoiles : fondu normal
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
-    drawPoints(starBuf, null, 1.4, 1, 1, 1, 0.5, t * 0.015, t * 0.035, 0, starCount);
+    drawPoints(starBuf, null, 1.4, 1, 1, 1, 0.5, t * 0.015, t * 0.035, 0, (starCount * densite) | 0);
 
     // Nébuleuse + nœuds : fondu additif (lueur)
     gl.blendFunc(gl.SRC_ALPHA, gl.ONE);
