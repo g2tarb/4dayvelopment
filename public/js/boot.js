@@ -31,4 +31,16 @@
   } catch (e) { /* stockage refuse : on reste en francais */ }
 
   d.classList.add('has-intro', 'is-loading');
+
+  // Filet de securite : si les modules ne demarrent jamais (fichier en
+  // cours de deploiement, erreur d'import, reseau), l'ecran d'entree ne
+  // doit pas retenir le visiteur en otage. Ce script-ci est un classique
+  // independant du graphe de modules : il survit a leur mort.
+  setTimeout(function () {
+    if (!d.classList.contains('is-loading')) return;
+    d.classList.remove('is-loading');
+    var p = document.getElementById('preloader');
+    if (p) { p.style.transition = 'opacity .5s'; p.style.opacity = '0'; }
+    setTimeout(function () { if (p) p.remove(); }, 600);
+  }, 4000);
 })();
