@@ -460,7 +460,7 @@ function buildArticleHTML(data) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>${escapeHtml(title)} | 4dayvelopment</title>
-  <meta name="description" content="${escapeHtml(description)}">
+  <meta name="description" content="${escapeHtml(String(description || '').slice(0, 160))}">
   <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
   <meta name="theme-color" content="#DA5426">
   <link rel="canonical" href="${url}">
