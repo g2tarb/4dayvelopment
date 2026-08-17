@@ -77,7 +77,7 @@
 
       const avecMaintenance = document.getElementById('add-maintenance').checked;
       const avecWordPress = document.getElementById('add-wordpress').checked;
-      const totalUnique = 990 + (avecWordPress ? 250 : 0);
+      const totalUnique = 890 + (avecWordPress ? 250 : 0);
       const message = `
 FORMULE ESSENTIEL · ${totalUnique}€ · Livraison 4 jours${avecWordPress ? '\n+ LIVRAISON WORDPRESS (+250€)' : ''}${avecMaintenance ? '\n+ MAINTENANCE 80€/mois (engagement 12 mois)' : ''}
 
@@ -147,7 +147,7 @@ ${getVal('e-description')}
         ['.badge-4j-main',           'Livré en 4 jours'],
         ['.badge-4j-sub',            'Délai garanti contractuellement'],
         /* pitch */
-        ['.pitch h1',                'Formule <span class="g">Essentiel</span><br>à 990€'],
+        ['.pitch h1',                'Formule <span class="g">Essentiel</span><br>à 890€'],
         ['.pitch .desc',             'Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.'],
         /* inclus */
         ['.inclus-title',            'Ce qui est inclus', 0],
@@ -161,7 +161,7 @@ ${getVal('e-description')}
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>⚡ Livraison garantie en <strong>4 jours</strong>', 7],
         /* prix */
         ['.prix-detail',             'Paiement unique · Sans abonnement caché'],
-        ['.prix-paiement',           'ou 3× 330€'],
+        ['.prix-paiement',           'ou 2× 445€'],
         ['#prix-secure',             'Paiement sécurisé'],
         /* maintenance */
         ['.mb-title',                'Ajoutez la maintenance'],
@@ -244,7 +244,7 @@ ${getVal('e-description')}
         ['.badge-4j-main',           'Delivered in 4 days'],
         ['.badge-4j-sub',            'Contractually guaranteed delivery date'],
         /* pitch */
-        ['.pitch h1',                '<span class="g">Essential</span> Plan<br>at €990'],
+        ['.pitch h1',                '<span class="g">Essential</span> Plan<br>at €890'],
         ['.pitch .desc',             'Your professional showcase website, delivered in 4 days flat. Perfect for launching with an online presence that reassures your clients and generates leads.'],
         /* inclus */
         ['.inclus-title',            "What's included", 0],
@@ -258,7 +258,7 @@ ${getVal('e-description')}
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>⚡ Delivery guaranteed in <strong>4 days</strong>', 7],
         /* prix */
         ['.prix-detail',             'One-time payment · No hidden subscription'],
-        ['.prix-paiement',           'or 3× €330'],
+        ['.prix-paiement',           'or 2× €445'],
         ['#prix-secure',             'Secure payment'],
         /* maintenance */
         ['.mb-title',                'Add maintenance'],
