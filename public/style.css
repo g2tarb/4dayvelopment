@@ -1347,12 +1347,15 @@ section { padding: 100px 24px; }
   display: block;
   height: 1em;
   font-style: normal;
-  background: linear-gradient(135deg, #fff, #d8d2c4);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  /* couleur pleine, pas de degrade decoupe au texte : a l'interieur du
+     rouleau transforme, Safari iOS peut ne pas peindre le clip et le prix
+     disparaissait derriere son "a partir de €". Le rendu est quasi
+     identique, et fiable partout. */
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: #efe9db;
 }
-.duel-side--app .duel-digits .roll i { background-image: linear-gradient(135deg, #fff, #d9b7d7); }
+.duel-side--app .duel-digits .roll i { color: #ecd9ea; }
 
 .duel-pay { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
 
@@ -1520,6 +1523,11 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   35%  { transform: translate(-50%, -50%) skewX(7deg) scale(1.45) rotate(-6deg); }
   100% { transform: translate(-50%, -50%) skewX(7deg) scale(1); }
 }
+@keyframes vsClashTap {
+  0%   { transform: translate(-50%, -50%) scale(1); }
+  35%  { transform: translate(-50%, -50%) scale(1.45) rotate(-6deg); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
 
 /* Etincelles le long de la ligne, dessinees par duel.js */
 .duel-fx {
@@ -1540,7 +1548,8 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
     background: linear-gradient(90deg, rgba(218,84,38,.8), rgba(242,177,59,.9) 50%, rgba(136,64,131,.85));
   }
   .duel-vs { transform: translate(-50%, -50%); width: 50px; height: 50px; }
-  .duel-arena.is-clash .duel-vs { animation: none; }
+  /* le clash vit aussi au tap : meme pulsation, sans le skew du bureau */
+  .duel-arena.is-clash .duel-vs { animation: vsClashTap .5s var(--ease-out); }
   .duel-ghost { font-size: clamp(80px, 26vw, 120px); }
   .duel-cta { max-width: none; }
 }
