@@ -4259,6 +4259,12 @@ footer {
   display: inline-block;
   max-width: 100%;
   overflow-wrap: break-word;
+}
+/* Le clip vit sur la ligne seule, jamais sur un anctre de la punchline :
+   quand l'em se transforme pendant la fusion, un degrade decoupe au texte
+   sur son parent repeignait mal la premiere ligne, qui se dedoublait. */
+#hero .hero-l1 {
+  display: inline-block;
   background-image: linear-gradient(100deg,
     #ffffff 0%, #c9c9c9 12%, #ffffff 22%, #ffffff 46%, #bdbdbd 64%, #ffffff 78%, #ffffff 100%);
   background-size: 300% 100%;
@@ -4703,15 +4709,49 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   transform-origin: left center;
   transition: transform .38s cubic-bezier(.22,1,.36,1), filter .3s var(--ease-out);
 }
+/* L'impact : flash blanc, surgonflement avec rebond, halo double, et le
+   reflet du degrade s'emballe. Deux secondes, alignees sur FUSED_MS. */
 #hero .hero-title .gradient-text.is-fused {
   font-family: 'Inter', sans-serif;
   font-weight: 900;
   font-style: italic;
   letter-spacing: -0.5px;
-  transform: scale(1.10);
-  filter: drop-shadow(0 0 14px rgba(242,177,59,.85))
-          drop-shadow(0 0 42px rgba(218,84,38,.55))
-          brightness(1.3);
+  white-space: nowrap;   /* une seule ligne en Inter, toujours le meme pli */
+  animation: fusePop 2s cubic-bezier(.22,1,.36,1) both,
+             gradient-shift .8s linear infinite;
+}
+/* Choc intermediaire : la punchline encaisse la comete, breve pulsation */
+#hero .hero-title .gradient-text.is-hit {
+  animation: fuseHit .38s cubic-bezier(.22,1,.36,1);
+}
+@keyframes fuseHit {
+  0%   { transform: scale(1);    filter: brightness(1); }
+  30%  { transform: scale(1.05); filter: brightness(1.6) drop-shadow(0 0 18px rgba(242,177,59,.7)); }
+  100% { transform: scale(1);    filter: brightness(1); }
+}
+
+@keyframes fusePop {
+  0% {
+    transform: scale(1);
+    filter: brightness(2.4) drop-shadow(0 0 30px rgba(255,243,217,.95))
+            drop-shadow(0 0 70px rgba(218,84,38,.8));
+  }
+  12% {
+    transform: scale(1.26) rotate(-1.6deg);
+    filter: brightness(1.9) drop-shadow(0 0 24px rgba(242,177,59,.95))
+            drop-shadow(0 0 60px rgba(218,84,38,.7));
+  }
+  30% { transform: scale(1.12) rotate(.7deg); }
+  50% {
+    transform: scale(1.18) rotate(0);
+    filter: brightness(1.45) drop-shadow(0 0 16px rgba(242,177,59,.85))
+            drop-shadow(0 0 46px rgba(218,84,38,.55));
+  }
+  100% {
+    transform: scale(1.15);
+    filter: brightness(1.35) drop-shadow(0 0 14px rgba(242,177,59,.8))
+            drop-shadow(0 0 40px rgba(136,64,131,.5));
+  }
 }
 @media (max-width: 1059px) {
   /* hero centre : le gonflement part du centre pour ne pas pousser a droite */

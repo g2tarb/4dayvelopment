@@ -10,9 +10,12 @@
 import { on } from './utils.js';
 
 const COULEURS = ['#DA5426', '#f2b13b', '#b06aad', '#fff3d9'];
-const MAX_COMETES = 8;
-const SPAWN_MS    = [650, 1400];   // intervalle entre deux naissances
-const FUSION_MS   = 7000;          // une fusion environ toutes les 7 s
+/* Les trois couleurs qui chargent la punchline : il faut un impact de
+   chacune pour declencher la grande fusion. */
+const CHARGES = ['#DA5426', '#f2b13b', '#b06aad'];
+const MAX_COMETES = 11;
+const SPAWN_MS    = [450, 980];    // intervalle entre deux naissances
+const SEEKER_MS   = [1800, 4800];  // timing aleatoire entre deux chercheuses
 const FUSED_MS    = 2000;          // le texte reste embrase 2 s
 const TRAINE      = 26;            // points de trainee memorises
 
@@ -40,9 +43,11 @@ export function initComets() {
   new ResizeObserver(resize).observe(hero);
   resize();
 
-  const cometes = [], sparks = [];
+  const cometes = [], sparks = [], anneaux = [];
   let visible = false, raf = null, last = 0;
-  let prochaineNaissance = 0, prochaineFusion = 2600, fusedTimer = null;
+  let prochaineNaissance = 0, prochaineChercheuse = 2200;
+  let fusedTimer = null, hitTimer = null;
+  const touches = new Set();   // couleurs ayant deja percute depuis la derniere fusion
 
   /* La cible : le centre de la punchline, en coordonnees du hero.
      Relue a chaque fusion : l'i18n peut reecrire le H1 a tout moment. */
@@ -62,17 +67,24 @@ export function initComets() {
     const y = depuisHaut ? -30 : Math.random() * H * 0.5;
     const vx = (gauche ? 1 : -1) * (1.1 + Math.random() * 1.6);
     const vy = 0.7 + Math.random() * 1.1;
+    // une chercheuse porte une des couleurs qui manquent encore a la charge
+    let couleur = COULEURS[(Math.random() * COULEURS.length) | 0];
+    if (seeker) {
+      const restantes = CHARGES.filter(c => !touches.has(c));
+      couleur = restantes[(Math.random() * restantes.length) | 0] || CHARGES[0];
+    }
     cometes.push({
       x, y, vx, vy,
-      taille: 1.4 + Math.random() * 1.8,
-      couleur: COULEURS[(Math.random() * COULEURS.length) | 0],
+      taille: seeker ? 2.2 + Math.random() : 1.4 + Math.random() * 1.8,
+      couleur,
       traine: [],
       seeker: !!seeker,
     });
   }
 
   function eclate(x, y) {
-    for (let i = 0; i < 30; i++) {
+    anneaux.push({ x, y, r: 6, vie: 0, ttl: 520 });
+    for (let i = 0; i < 48; i++) {
       const a = Math.random() * Math.PI * 2;
       const v = 1 + Math.random() * 3.2;
       sparks.push({
@@ -86,13 +98,45 @@ export function initComets() {
     }
   }
 
-  function fusionne() {
+  /* Un impact charge la punchline de sa couleur : petit choc a chaque
+     fois, et quand les trois couleurs ont frappe, la grande fusion. */
+  function impact(couleur) {
     const c = cible();
     if (!c) return;
-    eclate(c.x, c.y);
-    clearTimeout(fusedTimer);
-    c.em.classList.add('is-fused');
-    fusedTimer = setTimeout(() => c.em.classList.remove('is-fused'), FUSED_MS);
+    touches.add(couleur);
+
+    if (touches.size >= CHARGES.length) {
+      touches.clear();
+      eclate(c.x, c.y);
+      clearTimeout(fusedTimer);
+      // La punchline passe de deux lignes en Syne a une seule en Inter :
+      // sans verrou, le titre perdrait une ligne et le centrage du hero
+      // deplacerait tout, premiere ligne comprise. On fige la hauteur du
+      // H1 le temps de la fusion.
+      const h1 = c.em.closest('h1');
+      if (h1) {
+        h1.style.minHeight = h1.offsetHeight + 'px';
+        setTimeout(() => { h1.style.minHeight = ''; }, FUSED_MS + 450);
+      }
+      c.em.classList.remove('is-hit');
+      c.em.classList.add('is-fused');
+      fusedTimer = setTimeout(() => c.em.classList.remove('is-fused'), FUSED_MS);
+      return;
+    }
+
+    // choc intermediaire : mini gerbe et pulsation breve
+    anneaux.push({ x: c.x, y: c.y, r: 4, vie: 0, ttl: 340 });
+    for (let i = 0; i < 14; i++) {
+      const a = Math.random() * Math.PI * 2;
+      const v = 0.8 + Math.random() * 2.2;
+      sparks.push({ x: c.x, y: c.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 0.4,
+        vie: 0, ttl: 380 + Math.random() * 420, taille: 1 + Math.random() * 2, couleur });
+    }
+    if (!c.em.classList.contains('is-fused')) {
+      clearTimeout(hitTimer);
+      c.em.classList.add('is-hit');
+      hitTimer = setTimeout(() => c.em.classList.remove('is-hit'), 380);
+    }
   }
 
   function frame(now) {
@@ -105,10 +149,10 @@ export function initComets() {
       nait(false);
       prochaineNaissance = now + SPAWN_MS[0] + Math.random() * (SPAWN_MS[1] - SPAWN_MS[0]);
     }
-    // et regulierement, une chercheuse part fusionner avec la punchline
-    if (now >= prochaineFusion) {
+    // et a intervalle aleatoire, une chercheuse part frapper la punchline
+    if (now >= prochaineChercheuse) {
       nait(true);
-      prochaineFusion = now + FUSION_MS + Math.random() * 2000;
+      prochaineChercheuse = now + SEEKER_MS[0] + Math.random() * (SEEKER_MS[1] - SEEKER_MS[0]);
     }
 
     ctx.clearRect(0, 0, W, H);
@@ -128,8 +172,8 @@ export function initComets() {
         const v = Math.hypot(k.vx, k.vy);
         const vmax = 4.2;
         if (v > vmax) { k.vx = k.vx / v * vmax; k.vy = k.vy / v * vmax; }
-        if (d < 26) {                      // contact : fusion
-          fusionne();
+        if (d < 26) {                      // contact
+          impact(k.couleur);
           cometes.splice(i, 1);
           continue;
         }
@@ -177,6 +221,21 @@ export function initComets() {
       ctx.globalAlpha = 1 - p.vie / p.ttl;
       ctx.fillStyle = p.couleur;
       ctx.fillRect(p.x, p.y, p.taille, p.taille);
+    }
+
+    // anneaux de choc de la fusion
+    for (let i = anneaux.length - 1; i >= 0; i--) {
+      const a = anneaux[i];
+      a.vie += dt * 16;
+      if (a.vie >= a.ttl) { anneaux.splice(i, 1); continue; }
+      const p = a.vie / a.ttl;
+      a.r = 6 + p * 150;
+      ctx.globalAlpha = (1 - p) * 0.55;
+      ctx.lineWidth = 2.5 * (1 - p) + 0.5;
+      ctx.strokeStyle = p < 0.4 ? '#fff3d9' : '#f2b13b';
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, a.r, 0, Math.PI * 2);
+      ctx.stroke();
     }
 
     ctx.globalAlpha = 1;

@@ -9,7 +9,7 @@
   "nav-phone": "📞 Appel gratuit",
   "hero-badge": "Agence web nouvelle génération · 2026",
   "hero-badge-guarantee": "⚡ Sur-mesure, codé à la main, livré en 4 jours ouvrés.",
-  "hero-h1": "Votre site internet,<br><em class=\"gradient-text\">livré en 4 jours.</em>",
+  "hero-h1": "<span class=\"hero-l1\">Votre site internet,</span><br><em class=\"gradient-text\">livré en 4 jours.</em>",
   "hero-desc": "Des sites performants, modernes et sur-mesure pour entrepreneurs, freelances et PME qui veulent dominer leur marché en ligne.",
   "hero-cta1": "Voir les offres",
   "hero-cta2": "Comment ça marche",
