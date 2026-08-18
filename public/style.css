@@ -4809,7 +4809,9 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   #three-bg,
   .comets-fx {
     filter: blur(var(--voile, 9px)) saturate(var(--voile-sat, .75));
-    transition: filter .7s var(--ease-out);
+    /* meme courbe et meme duree que la cascade : le voile, le halo et les
+       elements qui se levent forment un seul mouvement, pas trois */
+    transition: filter .75s cubic-bezier(.22,1,.36,1);
   }
   /* des le premier geste, le voile se leve pour de bon */
   body.a-defile .hero-device,
@@ -4825,7 +4827,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     pointer-events: none;
     background: radial-gradient(58% 44% at 50% 46%, transparent 40%, rgba(6,5,9,.72) 100%);
     opacity: 1;
-    transition: opacity .8s var(--ease-out);
+    transition: opacity .75s cubic-bezier(.22,1,.36,1);
   }
   body.a-defile .hero-copy::after { opacity: 0; }
   .hero-copy { position: relative; }
@@ -4834,34 +4836,30 @@ html.is-loading, html.is-loading body { overflow: hidden; }
      Le badge, la phrase et le bouton attendent en retrait sous le pli du
      regard, et se levent en cascade au premier geste. Le titre, lui, est
      la des la premiere image : c'est la promesse, elle ne se merite pas. */
+  /* Les elements en attente gardent leur place dans la mise en page : ils
+     sont seulement transparents et decales. Les replier en hauteur faisait
+     bondir le titre de 71 pixels en une image au moment de l'ouverture —
+     c'etait l'effet pop. Aucune hauteur n'est animee ici, uniquement
+     l'opacite et une translation, qui vivent sur le compositeur. */
   body:not(.a-defile) .hero-copy .badge,
   body:not(.a-defile) .hero-copy .hero-desc,
   body:not(.a-defile) .hero-copy .hero-actions {
     opacity: 0;
-    transform: translateY(18px);
+    transform: translateY(22px);
     pointer-events: none;
-    /* elles se replient pour de bon : sans cela, leur place vide
-       repousserait l'invitation hors de l'ecran */
-    max-height: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-    overflow: hidden;
   }
-  .hero-copy .badge,
-  .hero-copy .hero-desc,
-  .hero-copy .hero-actions { max-height: 40vh; }
   .hero-copy .badge,
   .hero-copy .hero-desc,
   .hero-copy .hero-actions {
-    transition: opacity .6s var(--ease-out), transform .7s cubic-bezier(.22,1,.36,1);
+    transition: opacity .55s var(--ease-out), transform .75s cubic-bezier(.22,1,.36,1);
+    will-change: transform, opacity;
   }
   /* la cascade : la phrase suit le badge, le bouton ferme la marche */
-  body.a-defile .hero-copy .hero-desc { transition-delay: .08s; }
-  body.a-defile .hero-copy .hero-actions { transition-delay: .16s; }
+  body.a-defile .hero-copy .hero-desc { transition-delay: .10s; }
+  body.a-defile .hero-copy .hero-actions { transition-delay: .20s; }
 
-  /* le titre respire seul pendant l'attente, puis se pose */
-  body:not(.a-defile) .hero-title { transform: scale(1.04); }
-  .hero-title { transition: transform .9s cubic-bezier(.22,1,.36,1); }
+  /* Le titre ne change plus d'echelle : sa place est la meme avant et
+     apres, seule la scene autour de lui s'allume. */
 
   /* L'amorce : le haut d'un iPhone qui pointe sous l'affiche et bondit */
   .hero-peek {
@@ -4871,7 +4869,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     gap: 9px;
     margin-top: 16px;
     animation: peekBond 2.4s cubic-bezier(.5,0,.35,1) infinite;
-    transition: opacity .45s var(--ease-out), transform .45s var(--ease-out);
+    transition: opacity .5s var(--ease-out), transform .75s cubic-bezier(.22,1,.36,1);
+    will-change: transform, opacity;
   }
   .hero-peek-label {
     font-size: 11px;
@@ -4908,7 +4907,11 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     46%           { transform: translateY(-4px); }
   }
   /* au premier geste, l'amorce s'efface : elle a fait son travail */
-  body.a-defile .hero-peek { opacity: 0; transform: translateY(14px); animation: none; }
+  body.a-defile .hero-peek {
+    opacity: 0;
+    transform: translateY(26px) scale(.94);
+    animation: none;
+  }
 
   /* Le telephone : deuxieme ecran a part entiere, il ne partage plus
      l'espace du pre-accueil. */
