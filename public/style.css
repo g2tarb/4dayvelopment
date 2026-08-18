@@ -4748,31 +4748,43 @@ html.is-loading, html.is-loading body { overflow: hidden; }
    ================================================================ */
 @media (max-width: 900px) {
 
-  /* ── Premier ecran : une affiche, rien de plus ──
-     Le hero occupe la hauteur reelle du navigateur (dvh suit la barre
-     d'adresse d'iOS), tout est centre, et un seul appel a l'action. */
+  /* ── Pre-accueil : un ecran entier pour la promesse ──
+     Le premier ecran ne montre que le titre, la phrase et le bouton, en
+     gros plan et centres verticalement. Le telephone n'arrive qu'apres,
+     quand on defile. Hauteur en svh : elle suit la barre d'adresse d'iOS
+     sans jamais sauter. */
   .hero {
     min-height: 100svh;
-    justify-content: center;
-    padding-top: 92px;
-    padding-bottom: 26px;
+    justify-content: flex-start;
+    padding-top: 0;
+    padding-bottom: 0;
   }
-  .hero-split { gap: 22px; }
-  .hero-copy { text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .hero-split { gap: 0; }
+
+  .hero-copy {
+    /* le pre-accueil, exactement un ecran */
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 92px 0 26px;
+  }
 
   .hero-title {
-    font-size: clamp(2.5rem, 12.5vw, 3.6rem);
-    line-height: 1.02;
-    margin-bottom: 14px;
+    font-size: clamp(2.7rem, 13.5vw, 4rem);
+    line-height: 1;
+    margin-bottom: 16px;
   }
   #hero .hero-flare { left: 50%; translate: -50% 0; }
 
   .hero-desc {
-    font-size: .98rem;
+    font-size: 1.02rem;
     line-height: 1.55;
-    max-width: 34ch;
-    margin: 0 auto 22px;
-    color: var(--muted);
+    max-width: 32ch;
+    margin: 0 auto 26px;
+    color: var(--muted2);
   }
 
   /* Un seul bouton dans l'affiche : le second part dans la barre d'action */
@@ -4788,7 +4800,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   /* Indice de defilement : un trait qui respire sous l'affiche */
   .hero-scroll {
     width: 2px; height: 46px;
-    margin: 2px auto 0;
+    margin: 10px auto 0;
+    transition: opacity .4s var(--ease-out);
     border-radius: 2px;
     background: linear-gradient(180deg, transparent, rgba(242,177,59,.55) 45%, transparent);
     overflow: hidden;
@@ -4807,8 +4820,29 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     100% { transform: translateY(46px); opacity: 0; }
   }
 
-  /* Le telephone devient le deuxieme ecran : il n'encombre plus l'affiche */
-  .hero-device { margin-top: 8px; }
+  /* Le telephone : deuxieme ecran a part entiere, il ne partage plus
+     l'espace du pre-accueil. */
+  .hero-device {
+    min-height: 100svh;
+    justify-content: center;
+    /* le cadre entier tient dans l'ecran, libelle et segments compris */
+    padding: 18px 0 30px;
+  }
+  .hero .demo-device { width: min(240px, 66vw); }
+
+  /* Le mouvement d'accompagnement : au defilement, le pre-accueil s'eleve
+     et s'estompe pendant que le telephone monte a sa rencontre. Les deux
+     valeurs sont posees par js/modules/heroscroll.js. */
+  .hero-copy {
+    transform: translate3d(0, calc(var(--hp, 0) * -34px), 0);
+    opacity: calc(1 - var(--hp, 0) * 0.85);
+    will-change: transform, opacity;
+  }
+  .hero-device {
+    transform: translate3d(0, calc((1 - var(--hp, 0)) * 46px), 0);
+    opacity: calc(.25 + var(--hp, 0) * 0.75);
+    will-change: transform, opacity;
+  }
 
   /* ── Barre d'action, facon barre d'onglets ── */
   .appbar {

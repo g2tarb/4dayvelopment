@@ -18,6 +18,7 @@ import { initSplitTitles, initTilt, initVelocityMarquee, initCursorFlair } from 
 import { initComets } from './modules/comets.js';
 import { initInertia } from './modules/inertia.js';
 import { initAppBar } from './modules/appbar.js';
+import { initHeroScroll } from './modules/heroscroll.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
    Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
@@ -81,6 +82,7 @@ async function init() {
   initInertia();
   initStickyCTA();
   initAppBar();
+  initHeroScroll();
   initBottomSheetSwipe();
   initToasts();
   initExit();
