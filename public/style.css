@@ -4763,21 +4763,27 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 
   .hero-copy {
     /* le pre-accueil, exactement un ecran. Le haut degage la barre de
-       navigation : au moment ou le badge se revele, il ne doit pas glisser
-       dessous. */
+       navigation, et les marges suivent la hauteur reelle du telephone :
+       sur un SE, 116 px fixes poussaient l'invitation hors de l'ecran. */
     min-height: 100svh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 116px 0 26px;
+    padding: clamp(84px, 15svh, 120px) 0 clamp(14px, 3svh, 26px);
   }
+  /* L'alignement ne change jamais entre l'attente et l'ouverture : toute
+     variation de la mise en page se paie par un saut du titre au moment
+     du premier geste. Le vide sous le titre est la place que les elements
+     caches reprendront — c'est le prix, assume, du "titre seul". */
 
+  /* Le titre se mesure a la fois sur la largeur et sur la hauteur : sur un
+     SE, seule la largeur donnait un titre trop haut pour l'ecran. */
   .hero-title {
-    font-size: clamp(2.7rem, 13.5vw, 4rem);
+    font-size: clamp(2.2rem, min(13.5vw, 7.2svh), 4rem);
     line-height: 1;
-    margin-bottom: 16px;
+    margin-bottom: clamp(8px, 2svh, 16px);
   }
   #hero .hero-flare { left: 50%; translate: -50% 0; }
 
@@ -4848,6 +4854,10 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     transform: translateY(22px);
     pointer-events: none;
   }
+  /* L'invitation reste ancree en bas du pre-accueil, a distance constante
+     du bord : c'est la sa place naturelle, et rien ne bouge a l'ouverture.
+     Le vide au-dessus est l'espace des elements qui vont se lever. */
+  .hero-peek { margin-top: auto; }
   .hero-copy .badge,
   .hero-copy .hero-desc,
   .hero-copy .hero-actions {
@@ -4866,8 +4876,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 9px;
-    margin-top: 16px;
+    gap: clamp(5px, 1.2svh, 9px);
+    margin-top: clamp(8px, 2.4svh, 18px);
     animation: peekBond 2.4s cubic-bezier(.5,0,.35,1) infinite;
     transition: opacity .5s var(--ease-out), transform .75s cubic-bezier(.22,1,.36,1);
     will-change: transform, opacity;
@@ -4884,8 +4894,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hero-peek-phone {
     position: relative;
     display: block;
-    width: 86px;
-    height: 34px;
+    width: clamp(64px, 22vw, 86px);
+    height: clamp(24px, 5svh, 34px);
     border: 2px solid rgba(255,255,255,.22);
     border-bottom: 0;
     border-radius: 16px 16px 0 0;
@@ -4918,10 +4928,14 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hero-device {
     min-height: 100svh;
     justify-content: center;
-    /* le cadre entier tient dans l'ecran, libelle et segments compris */
-    padding: 18px 0 30px;
+    padding: clamp(10px, 2svh, 20px) 0 clamp(16px, 3svh, 30px);
   }
-  .hero .demo-device { width: min(240px, 66vw); }
+  /* Le cadre se mesure a la hauteur disponible autant qu'a la largeur : le
+     telephone fait 844/390 de haut, donc sa largeur ne peut pas depasser
+     environ 46 % de la hauteur libre une fois le libelle et les segments
+     retires. Sans cette borne, il etait coupe en haut sur tout ce qui est
+     plus court qu'un Plus. */
+  .hero .demo-device { width: min(240px, 66vw, 30svh); }
 
   /* Le mouvement d'accompagnement : au defilement, le pre-accueil s'eleve
      et s'estompe pendant que le telephone monte a sa rencontre. Les deux
