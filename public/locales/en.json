@@ -207,5 +207,8 @@
   "real-6-cat": "Showcase site",
   "real-6-kpi": "Marketing agency, Paris",
   "real-6-desc": "Service pages structured by search intent, with a form that qualifies incoming leads.",
-  "real-visit": "View the site ↗"
+  "real-visit": "View the site ↗",
+  "appbar-offres": "Pricing",
+  "appbar-travaux": "Work",
+  "appbar-cta": "Free quote"
 }

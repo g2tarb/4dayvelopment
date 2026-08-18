@@ -78,6 +78,24 @@
     </div>
   </div>
 
+  <!-- ── BARRE D'ACTION MOBILE ──
+       Apparait quand le hero est passe, façon barre d'onglets d'une app.
+       Masquee sur ordinateur par le CSS, et retiree si le JS ne tourne pas. -->
+  <div class="appbar" id="appbar" hidden>
+    <a class="appbar-item" href="#tarifs">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 6h18M3 12h18M3 18h12"/></svg>
+      <span data-i18n="appbar-offres">Offres</span>
+    </a>
+    <a class="appbar-item" href="#realisations">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 9h18"/></svg>
+      <span data-i18n="appbar-travaux">Réalisations</span>
+    </a>
+    <a class="appbar-cta" href="#contact">
+      <span data-i18n="appbar-cta">Devis gratuit</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+
   <!-- ── PAGE TRANSITION ── -->
   <div id="page-transition"></div>
 
@@ -144,6 +162,10 @@
           </a>
           <a href="#tarifs" class="btn-secondary magnetic" data-i18n="hero-cta1">Voir les offres</a>
         </div>
+
+        <!-- Indice de défilement : le premier écran mobile est une affiche,
+             ce trait invite à découvrir la suite. Décoratif. -->
+        <div class="hero-scroll" aria-hidden="true"><i></i></div>
       </div>
 
       <div class="hero-device reveal" id="exemples">

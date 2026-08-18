@@ -17,6 +17,7 @@ import { initDuel } from './modules/duel.js';
 import { initSplitTitles, initTilt, initVelocityMarquee, initCursorFlair } from './modules/motion.js';
 import { initComets } from './modules/comets.js';
 import { initInertia } from './modules/inertia.js';
+import { initAppBar } from './modules/appbar.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
    Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
@@ -79,6 +80,7 @@ async function init() {
   initSmoothScroll();
   initInertia();
   initStickyCTA();
+  initAppBar();
   initBottomSheetSwipe();
   initToasts();
   initExit();

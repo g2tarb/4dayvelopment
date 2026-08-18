@@ -207,5 +207,8 @@
   "real-6-cat": "Site vitrine",
   "real-6-kpi": "Agence marketing, Paris",
   "real-6-desc": "Site de présentation d'offres avec formulaire de contact qualifiant les demandes entrantes.",
-  "real-visit": "Voir le site ↗"
+  "real-visit": "Voir le site ↗",
+  "appbar-offres": "Offres",
+  "appbar-travaux": "Réalisations",
+  "appbar-cta": "Devis gratuit"
 }
