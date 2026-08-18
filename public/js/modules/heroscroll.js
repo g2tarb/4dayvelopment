@@ -15,8 +15,23 @@ export function initHeroScroll() {
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const copy = hero.querySelector('.hero-copy');
-  const indice = hero.querySelector('.hero-scroll');
   if (!copy) return;
+
+  /* Le portail : tant qu'on n'a pas defile, le fond reste flou et
+     l'amorce bondit. Au premier geste, la classe tombe pour de bon et la
+     page redevient une page normale — on ne remet jamais le voile, un
+     visiteur qui remonte n'a pas a repasser une porte deja franchie. */
+  const ouvre = () => {
+    if (document.body.classList.contains('a-defile')) return;
+    document.body.classList.add('a-defile');
+  };
+  if (scrollY > 4) ouvre();          // rechargement en cours de page
+  on(window, 'scroll', () => { if (scrollY > 4) ouvre(); }, { passive: true, once: false });
+  on(window, 'wheel', ouvre, { passive: true });
+  on(window, 'touchmove', ouvre, { passive: true });
+  on(window, 'keydown', e => {
+    if ([' ', 'PageDown', 'ArrowDown', 'End'].includes(e.key)) ouvre();
+  });
 
   let visible = true, attendu = false;
 
@@ -27,7 +42,6 @@ export function initHeroScroll() {
     const course = copy.offsetHeight || innerHeight;
     const p = Math.max(0, Math.min(1, (scrollY - hero.offsetTop) / course));
     hero.style.setProperty('--hp', p.toFixed(3));
-    if (indice) indice.style.opacity = p > 0.04 ? '0' : '';
   }
 
   function demander() {

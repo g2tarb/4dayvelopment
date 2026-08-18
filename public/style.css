@@ -4797,28 +4797,83 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     box-shadow: 0 10px 34px -10px rgba(218,84,38,.75);
   }
 
-  /* Indice de defilement : un trait qui respire sous l'affiche */
-  .hero-scroll {
-    width: 2px; height: 46px;
-    margin: 10px auto 0;
-    transition: opacity .4s var(--ease-out);
-    border-radius: 2px;
-    background: linear-gradient(180deg, transparent, rgba(242,177,59,.55) 45%, transparent);
-    overflow: hidden;
-    position: relative;
+  /* ── Le portail : tant qu'on n'a pas defile, le site attend derriere
+     un voile flou. L'amorce du telephone bondit pour montrer la suite. ── */
+
+  /* Tout ce qui n'est pas l'affiche est flou et assourdi. Le filtre porte
+     sur les couches de fond et sur le second ecran, jamais sur le texte de
+     l'affiche : un titre flou puis net se relit mal. */
+  .hero-device,
+  #three-bg,
+  .comets-fx {
+    filter: blur(var(--voile, 9px)) saturate(var(--voile-sat, .75));
+    transition: filter .7s var(--ease-out);
   }
-  .hero-scroll i {
+  /* des le premier geste, le voile se leve pour de bon */
+  body.a-defile .hero-device,
+  body.a-defile #three-bg,
+  body.a-defile .comets-fx { --voile: 0px; --voile-sat: 1; }
+
+  /* Halo sombre qui concentre le regard sur l'affiche, et se dissipe */
+  .hero-copy::after {
+    content: '';
     position: absolute;
-    left: 0; right: 0; height: 14px;
-    border-radius: 2px;
-    background: linear-gradient(180deg, transparent, var(--accent2), transparent);
-    animation: heroScroll 2.1s cubic-bezier(.6,0,.4,1) infinite;
+    inset: -10vh -12vw;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(58% 44% at 50% 46%, transparent 40%, rgba(6,5,9,.72) 100%);
+    opacity: 1;
+    transition: opacity .8s var(--ease-out);
   }
-  @keyframes heroScroll {
-    0%   { transform: translateY(-16px); opacity: 0; }
-    40%  { opacity: 1; }
-    100% { transform: translateY(46px); opacity: 0; }
+  body.a-defile .hero-copy::after { opacity: 0; }
+  .hero-copy { position: relative; }
+
+  /* L'amorce : le haut d'un iPhone qui pointe sous l'affiche et bondit */
+  .hero-peek {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    margin-top: 16px;
+    animation: peekBond 2.4s cubic-bezier(.5,0,.35,1) infinite;
+    transition: opacity .45s var(--ease-out), transform .45s var(--ease-out);
   }
+  .hero-peek-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    opacity: .85;
+  }
+  /* le haut du telephone : cadre, encoche, et une lueur d'ecran dedans */
+  .hero-peek-phone {
+    position: relative;
+    display: block;
+    width: 86px;
+    height: 34px;
+    border: 2px solid rgba(255,255,255,.22);
+    border-bottom: 0;
+    border-radius: 16px 16px 0 0;
+    background: linear-gradient(180deg, rgba(218,84,38,.30), rgba(136,64,131,.10));
+    box-shadow: 0 -8px 30px -8px rgba(242,177,59,.6);
+    overflow: hidden;
+  }
+  .hero-peek-phone i {
+    position: absolute;
+    top: 7px; left: 50%;
+    transform: translateX(-50%);
+    width: 28px; height: 5px;
+    border-radius: 99px;
+    background: rgba(0,0,0,.75);
+  }
+  @keyframes peekBond {
+    0%, 62%, 100% { transform: translateY(0); }
+    30%           { transform: translateY(-11px); }
+    46%           { transform: translateY(-4px); }
+  }
+  /* au premier geste, l'amorce s'efface : elle a fait son travail */
+  body.a-defile .hero-peek { opacity: 0; transform: translateY(14px); animation: none; }
 
   /* Le telephone : deuxieme ecran a part entiere, il ne partage plus
      l'espace du pre-accueil. */
@@ -4925,9 +4980,12 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 
 /* Ordinateur : aucune barre, aucun indice de defilement */
 @media (min-width: 901px) {
-  .appbar, .hero-scroll { display: none !important; }
+  .appbar, .hero-peek { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-scroll i { animation: none; opacity: .6; }
+  .hero-peek { animation: none; }
+  /* mouvement reduit : pas de voile a lever, la page est nette d'emblee */
+  .hero-device, #three-bg, .comets-fx { filter: none !important; }
+  .hero-copy::after { opacity: 0 !important; }
   .appbar { transition: none; }
 }
