@@ -4762,14 +4762,16 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hero-split { gap: 0; }
 
   .hero-copy {
-    /* le pre-accueil, exactement un ecran */
+    /* le pre-accueil, exactement un ecran. Le haut degage la barre de
+       navigation : au moment ou le badge se revele, il ne doit pas glisser
+       dessous. */
     min-height: 100svh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 92px 0 26px;
+    padding: 116px 0 26px;
   }
 
   .hero-title {
@@ -4827,6 +4829,39 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   }
   body.a-defile .hero-copy::after { opacity: 0; }
   .hero-copy { position: relative; }
+
+  /* ── L'entree : au chargement, seuls le titre et l'invitation existent.
+     Le badge, la phrase et le bouton attendent en retrait sous le pli du
+     regard, et se levent en cascade au premier geste. Le titre, lui, est
+     la des la premiere image : c'est la promesse, elle ne se merite pas. */
+  body:not(.a-defile) .hero-copy .badge,
+  body:not(.a-defile) .hero-copy .hero-desc,
+  body:not(.a-defile) .hero-copy .hero-actions {
+    opacity: 0;
+    transform: translateY(18px);
+    pointer-events: none;
+    /* elles se replient pour de bon : sans cela, leur place vide
+       repousserait l'invitation hors de l'ecran */
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    overflow: hidden;
+  }
+  .hero-copy .badge,
+  .hero-copy .hero-desc,
+  .hero-copy .hero-actions { max-height: 40vh; }
+  .hero-copy .badge,
+  .hero-copy .hero-desc,
+  .hero-copy .hero-actions {
+    transition: opacity .6s var(--ease-out), transform .7s cubic-bezier(.22,1,.36,1);
+  }
+  /* la cascade : la phrase suit le badge, le bouton ferme la marche */
+  body.a-defile .hero-copy .hero-desc { transition-delay: .08s; }
+  body.a-defile .hero-copy .hero-actions { transition-delay: .16s; }
+
+  /* le titre respire seul pendant l'attente, puis se pose */
+  body:not(.a-defile) .hero-title { transform: scale(1.04); }
+  .hero-title { transition: transform .9s cubic-bezier(.22,1,.36,1); }
 
   /* L'amorce : le haut d'un iPhone qui pointe sous l'affiche et bondit */
   .hero-peek {
