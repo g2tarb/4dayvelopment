@@ -853,7 +853,7 @@ const cleanPages = {
   '/cgv':            'cgv.html',
   '/blog':           'blog/index.html',
   '/blog/combien-coute-site-internet-2026': 'blog/combien-coute-site-internet-2026.html',
-  // Cartes de visite digitales (QR scanne en face a face) : indexables
+  // Cartes de visite digitales (QR scanne en face a face) : hors index (noindex) : leur trafic vient du QR imprime, pas de la recherche
   '/sirven':         'sirven/index.html',
   '/erwin':          'erwin/index.html',
   '/carte':          'carte/index.html',
