@@ -4617,3 +4617,90 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hero-copy::after { opacity: 0 !important; }
   .appbar { transition: none; }
 }
+
+/* ================================================================
+   FINITIONS NATIVES — pilotees par js/modules/native.js
+   Ce qui separe un site d'une application : la page qui se fond au lieu
+   de clignoter, l'onglet qui sait ou l'on est, les cartes qui arrivent
+   avec de la profondeur, et l'absence des tics du navigateur.
+   ================================================================ */
+
+/* ── Changement de page en fondu ── */
+@view-transition { navigation: auto; }
+
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vtSortie .28s cubic-bezier(.4,0,1,1) both;
+  }
+  ::view-transition-new(root) {
+    animation: vtEntree .36s cubic-bezier(0,0,.2,1) both;
+  }
+  @keyframes vtSortie { to { opacity: 0; transform: scale(.985); } }
+  @keyframes vtEntree { from { opacity: 0; transform: scale(1.008); } }
+}
+
+@media (max-width: 900px) {
+
+  /* ── L'onglet courant s'allume ── */
+  .appbar-item {
+    position: relative;
+    transition: color .3s var(--ease-out), background .25s;
+  }
+  .appbar-item.is-here {
+    color: var(--text);
+    background: rgba(255,255,255,.07);
+  }
+  .appbar-item.is-here svg { color: var(--accent2); }
+  /* le point sous l'onglet, comme une barre d'onglets d'application */
+  .appbar-item::after {
+    content: '';
+    position: absolute;
+    bottom: 2px; left: 50%;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--accent2);
+    transform: translateX(-50%) scale(0);
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  .appbar-item.is-here::after { transform: translateX(-50%) scale(1); }
+
+  /* ── Profondeur : les cartes se rapprochent en arrivant ──
+     On enrichit le mouvement de revelation existant plutot que d'en
+     superposer un second, qui se serait dispute l'opacite avec lui. */
+  .js-enabled .service-card.reveal:not(.visible),
+  .js-enabled .show-card.reveal:not(.visible),
+  .js-enabled .testimonial-card.reveal:not(.visible),
+  .js-enabled .duel.reveal:not(.visible),
+  .js-enabled .wp-option-band.reveal:not(.visible) {
+    transform: translate3d(0, 30px, 0) scale(.962);
+  }
+  .service-card.reveal, .show-card.reveal, .testimonial-card.reveal,
+  .duel.reveal, .wp-option-band.reveal {
+    transition: opacity .6s var(--ease-out), transform .8s cubic-bezier(.22,1,.36,1);
+  }
+
+  /* ── Les tics du navigateur ── */
+  /* rebond de fin de page : une application ne rebondit pas sur son fond */
+  html, body { overscroll-behavior-y: none; }
+  /* surbrillance bleue au toucher, remplacee par nos propres etats actifs */
+  * { -webkit-tap-highlight-color: transparent; }
+  /* on ne selectionne pas le texte de l'interface en appuyant longuement,
+     mais on le laisse pour le contenu lisible */
+  .appbar, .nav-logo, .hero-peek, .demo-track, .duel-chip, .type-chip,
+  .btn-primary, .btn-secondary, .btn-plan, .appbar-cta {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+  }
+  /* les zones tactiles suivent l'encoche et la barre d'accueil */
+  body { padding-left: env(safe-area-inset-left); padding-right: env(safe-area-inset-right); }
+
+  /* ── Retour tactile : tout ce qui se touche s'enfonce ── */
+  .btn-primary:active, .btn-secondary:active, .btn-plan:active,
+  .service-card:active, .show-card:active, .duel-chip:active, .type-chip:active {
+    transform: scale(.975);
+    transition: transform .12s var(--ease-out);
+  }
+}
+
+

@@ -19,6 +19,7 @@ import { initComets } from './modules/comets.js';
 import { initInertia } from './modules/inertia.js';
 import { initAppBar } from './modules/appbar.js';
 import { initHeroScroll } from './modules/heroscroll.js';
+import { initNative } from './modules/native.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
    Fallback no-JS : sans cette classe, le contenu .reveal reste visible. */
@@ -75,6 +76,7 @@ async function init() {
   initInertia();
   initAppBar();
   initHeroScroll();
+  initNative();
   initBottomSheetSwipe();
   initExit();
   initTypeChips();
