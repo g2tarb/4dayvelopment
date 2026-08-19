@@ -14,6 +14,8 @@ const compression = require('compression');
 const path        = require('path');
 const fs          = require('fs');
 const { z }      = require('zod');
+const sanitizeHtml = require('sanitize-html');
+const crypto = require('crypto');
 const pino       = require('pino');
 
 /* ── Logger Pino ──────────────────────────────────────── */
@@ -93,7 +95,11 @@ if (process.env.PIPELINE_INTAKE_URL) {
     let pending = [];
     try {
       pending = JSON.parse(fs.readFileSync(LEADS_FILE, 'utf-8')).filter((l) => !l.pipelineSentAt).slice(0, 10);
-    } catch { return; }
+    } catch (err) {
+      // fichier absent au premier demarrage : normal. Corrompu : on doit le savoir.
+      if (err.code !== 'ENOENT') logger.error({ err: err.message }, 'Rejeu : fichier de leads illisible');
+      return;
+    }
     for (const lead of pending) {
       try {
         const res = await fetch(process.env.PIPELINE_INTAKE_URL, {
@@ -108,8 +114,13 @@ if (process.env.PIPELINE_INTAKE_URL) {
         if (res.ok) {
           markLeadForwarded(lead.id);
           logger.info({ id: lead.id, name: lead.prenom }, 'Lead rejoué vers le pipeline');
+        } else {
+          logger.warn({ id: lead.id, statut: res.status }, 'Rejeu refuse par le pipeline');
         }
-      } catch { /* pipeline toujours injoignable, on retentera */ }
+      } catch (err) {
+        // un pipeline durablement injoignable doit etre visible en supervision
+        logger.warn({ id: lead.id, err: err.message }, 'Rejeu : pipeline injoignable');
+      }
     }
   }, 10 * 60 * 1000).unref();
 }
@@ -119,11 +130,16 @@ const app  = express();
 app.set('trust proxy', 1);
 const PORT = process.env.PORT || 3000;
 
+/* Domaine canonique fige : req.hostname derive de X-Forwarded-Host derriere
+   un proxy de confiance, donc d'un en-tete que le client peut poser. Une
+   redirection 301 construite dessus enverrait le visiteur chez l'attaquant. */
+const CANONICAL_HOST = process.env.CANONICAL_HOST || '4dayvelopment.fr';
+
 /* ── Redirection HTTPS en production ──────────────────── */
 if (process.env.NODE_ENV === 'production') {
   app.use((req, res, next) => {
     if (req.headers['x-forwarded-proto'] !== 'https') {
-      return res.redirect(301, `https://${req.hostname}${req.originalUrl}`);
+      return res.redirect(301, `https://${CANONICAL_HOST}${req.originalUrl}`);
     }
     next();
   });
@@ -156,7 +172,10 @@ app.use(helmet({
       styleSrc:    ["'self'", "'unsafe-inline'"],
       fontSrc:     ["'self'"],
       imgSrc:      ["'self'", 'data:', 'blob:'],
-      connectSrc:  ["'self'", 'https://n8n.srv1263084.hstgr.cloud'],
+      // aucun code client n'appelle n8n : les formulaires postent sur /api/contact,
+      // et le webhook part du serveur. Autoriser ce domaine publiait le nom
+      // d'hote d'infrastructure dans un en-tete, sur chaque reponse.
+      connectSrc:  ["'self'"],
       frameSrc:    ["'self'"],
       objectSrc:   ["'none'"],
       upgradeInsecureRequests: process.env.NODE_ENV === 'production' ? [] : null,
@@ -169,8 +188,11 @@ app.use(compression());
 app.use(express.json({ limit: '50kb' }));
 app.use(express.urlencoded({ extended: true, limit: '50kb' }));
 
+/* Sans ALLOWED_ORIGIN, `origin: undefined` fait retomber le paquet cors sur
+   son defaut, c'est-a-dire l'etoile : le site s'ouvrait a tous les domaines
+   des que la variable manquait. On se replie sur le domaine de production. */
 app.use(cors({
-  origin:  process.env.ALLOWED_ORIGIN,
+  origin:  process.env.ALLOWED_ORIGIN || 'https://4dayvelopment.fr',
   methods: ['GET', 'POST'],
 }));
 
@@ -204,6 +226,18 @@ const contactLimiter = rateLimit({
 const apiLimiter = rateLimit({
   windowMs: 60 * 1000,
   max: 60,
+  standardHeaders: true,
+  legacyHeaders:   false,
+});
+
+/* La publication ecrit des fichiers sur le disque et n'est protegee que par
+   un secret statique : 60 essais par minute laissaient 86 000 tentatives par
+   jour pour le deviner. Le pipeline legitime publie quelques articles par
+   semaine, dix par heure suffisent largement. */
+const publishLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 10,
+  message: { success: false, message: 'Trop de publications. Reessayez plus tard.' },
   standardHeaders: true,
   legacyHeaders:   false,
 });
@@ -434,8 +468,74 @@ const articleSchema = z.object({
   })).max(20).optional(),
 });
 
+/* Un bloc JSON-LD vit dans un <script> : JSON.stringify n'echappe ni
+   </script>, qui ferait sortir du bloc, ni U+2028/2029, qui cassent le
+   parseur. On neutralise les trois avant insertion. */
+function jsonLdSafe(obj) {
+  return JSON.stringify(obj)
+    .replace(/</g, '\\u003c')
+    .replace(/>/g, '\\u003e')
+    .replace(/\u2028/g, '\\u2028')
+    .replace(/\u2029/g, '\\u2029');
+}
+
+/* Le corps d'article est du HTML mis en forme, il ne peut donc pas etre
+   simplement echappe. Il vient d'un modele de langage via n8n : une
+   injection de prompt en amont, ou une fuite du jeton, permettrait d'ecrire
+   n'importe quoi sur une page du domaine. On ne garde donc que la mise en
+   forme editoriale, et on jette tout le reste — balises actives, cadres,
+   formulaires, evenements et protocoles exotiques. */
+const ARTICLE_SANITIZE = {
+  allowedTags: [
+    'h2', 'h3', 'h4', 'p', 'br', 'hr', 'strong', 'b', 'em', 'i', 'u',
+    'ul', 'ol', 'li', 'blockquote', 'a', 'img', 'figure', 'figcaption',
+    'table', 'thead', 'tbody', 'tr', 'th', 'td', 'code', 'pre', 'span', 'div', 'sup', 'sub',
+  ],
+  allowedAttributes: {
+    a: ['href', 'title', 'target', 'rel', 'id'],
+    img: ['src', 'alt', 'width', 'height', 'loading', 'decoding'],
+    '*': ['style', 'class', 'id'],
+  },
+  allowedSchemes: ['https', 'mailto'],          // ni javascript:, ni data:
+  allowedSchemesAppliedToAttributes: ['href', 'src'],
+  allowedStyles: {
+    '*': {
+      color: [/^#[0-9a-fA-F]{3,8}$/, /^rgba?\(/],
+      'background-color': [/^#[0-9a-fA-F]{3,8}$/, /^rgba?\(/],
+      'text-align': [/^(left|right|center|justify)$/],
+      'font-size': [/^\d+(\.\d+)?(px|rem|em)$/],
+      'font-weight': [/^(normal|bold|[1-9]00)$/],
+      'font-style': [/^(normal|italic)$/],
+      margin: [/^[\d.\s a-z%]+$/], 'margin-top': [/^[\d.]+(px|rem|em)$/], 'margin-bottom': [/^[\d.]+(px|rem|em)$/],
+      padding: [/^[\d.\s a-z%]+$/],
+      'line-height': [/^[\d.]+(px|rem|em)?$/],
+      'max-width': [/^[\d.]+(px|rem|em|%)$/], width: [/^[\d.]+(px|rem|em|%)$/],
+      'border-radius': [/^[\d.]+(px|rem|em|%)$/],
+      border: [/^[\d.]+px solid (#[0-9a-fA-F]{3,8}|rgba?\()/],
+      'border-top': [/^[\d.]+px solid (#[0-9a-fA-F]{3,8}|rgba?\()/],
+      'border-bottom': [/^[\d.]+px solid (#[0-9a-fA-F]{3,8}|rgba?\()/],
+      background: [/^(#[0-9a-fA-F]{3,8}|rgba?\(|linear-gradient\()/],
+      display: [/^(block|inline|inline-block|flex|grid|none)$/],
+      'grid-template-columns': [/^[\w\s().,%-]+$/],
+      gap: [/^[\d.]+(px|rem|em)$/],
+    },
+  },
+  // tout lien externe s'ouvre en securite
+  transformTags: {
+    a: (tagName, attribs) => {
+      if (attribs.href && /^https?:\/\//i.test(attribs.href) && !attribs.href.includes('4dayvelopment.fr')) {
+        attribs.target = '_blank';
+        attribs.rel = 'noopener noreferrer';
+      }
+      return { tagName, attribs };
+    },
+  },
+  disallowedTagsMode: 'discard',
+};
+
 function buildArticleHTML(data) {
-  const { title, slug, description, category, content, readTime, faq } = data;
+  const { title, slug, description, category, readTime, faq } = data;
+  const content = sanitizeHtml(data.content, ARTICLE_SANITIZE);
   const date     = new Date().toISOString().split('T')[0];
   const dateFR   = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
   const url      = `https://4dayvelopment.fr/blog/${slug}`;
@@ -451,7 +551,7 @@ function buildArticleHTML(data) {
 
   const faqJsonLd = (faq && faq.length) ? `
   <script type="application/ld+json">
-  ${JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })) })}
+  ${jsonLdSafe({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.question, acceptedAnswer: { '@type': 'Answer', text: f.answer } })) })}
   </script>` : '';
 
   return `<!DOCTYPE html>
@@ -612,7 +712,6 @@ ${faqHtml}
   </script>
 ${faqJsonLd}
 
-  <script src="/js/vendor/three-loader.js" defer></script>
   <script type="module" src="/js/main.js"></script>
 </body>
 </html>`;
@@ -662,6 +761,10 @@ function addToBlogIndex(data) {
     // Inserer apres le premier <div class="container"> de la section articles
     const marker = '<div class="container" style="max-width:900px;">';
     const insertPos = html.indexOf(marker);
+    if (insertPos === -1) {
+      // le gabarit de l'index a change : l'article est publie mais invisible
+      logger.error({ slug: data.slug, marker }, 'Index blog : repere introuvable, article non liste');
+    }
     if (insertPos !== -1) {
       const afterMarker = insertPos + marker.length;
       html = html.slice(0, afterMarker) + '\n' + card + html.slice(afterMarker);
@@ -674,14 +777,21 @@ function addToBlogIndex(data) {
 }
 
 /* ── POST /api/blog/publish ──────────────────────────── */
-app.post('/api/blog/publish', apiLimiter, validateWith(articleSchema), (req, res) => {
-  // Auth par token partage
-  const token = req.headers['x-blog-token'] || req.query.token || '';
-  if (!BLOG_TOKEN || token !== BLOG_TOKEN) {
+/* L'authentification passe avant la validation : sinon un anonyme reçoit les
+   messages d'erreur detailles du schema et cartographie l'API sans jamais
+   s'authentifier. Le jeton n'est plus accepte en parametre d'URL, ou il
+   finissait dans les journaux du proxy et dans l'en-tete Referer. */
+function authBlog(req, res, next) {
+  const token = req.headers['x-blog-token'] || '';
+  if (!BLOG_TOKEN || token.length !== BLOG_TOKEN.length ||
+      !crypto.timingSafeEqual(Buffer.from(token), Buffer.from(BLOG_TOKEN))) {
     logger.warn({ ip: req.ip }, 'Blog publish — token invalide');
     return res.status(401).json({ success: false, message: 'Token invalide.' });
   }
+  next();
+}
 
+app.post('/api/blog/publish', publishLimiter, authBlog, validateWith(articleSchema), (req, res) => {
   const data = req.validatedBody;
   const filePath = path.join(BLOG_DIR, `${data.slug}.html`);
 
@@ -797,8 +907,40 @@ app.get('/audit', (req, res) => {
 });
 
 /* ── Fallback → 404 ──────────────────────────────────── */
-app.get('/{*splat}', (req, res) => {
+/* app.use et non app.get : un POST vers une URL inconnue tombait sur le 404
+   HTML par defaut d'Express au lieu de notre page. */
+app.use((req, res) => {
   res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
+/* ── Erreurs non rattrapees ──────────────────────────────
+   Sans ce filet, un JSON malforme sur /api/contact partait au gestionnaire
+   par defaut d'Express : reponse HTML a un appelant qui attend du JSON,
+   aucune trace dans les journaux, et la pile renvoyee au client hors
+   production. Signature a quatre arguments obligatoire pour qu'Express le
+   reconnaisse comme gestionnaire d'erreur. */
+app.use((err, req, res, _next) => {
+  const json = req.path.startsWith('/api/');
+  if (err && err.type === 'entity.parse.failed') {
+    logger.warn({ path: req.path, ip: req.ip }, 'Corps de requete illisible');
+    return json
+      ? res.status(400).json({ success: false, message: 'Requete illisible.' })
+      : res.status(400).send('Requete illisible.');
+  }
+  logger.error({ err: err && err.message, stack: err && err.stack, path: req.path }, 'Erreur non rattrapee');
+  return json
+    ? res.status(500).json({ success: false, message: 'Erreur serveur.' })
+    : res.status(500).sendFile(path.join(__dirname, 'public', '404.html'));
+});
+
+/* Une promesse rejetee sans gestionnaire tuait le processus en silence sous
+   Node 15 et plus : on la trace avant de laisser la plateforme redemarrer. */
+process.on('unhandledRejection', (raison) => {
+  logger.error({ err: raison && raison.message, stack: raison && raison.stack }, 'Promesse rejetee sans gestionnaire');
+});
+process.on('uncaughtException', (err) => {
+  logger.fatal({ err: err.message, stack: err.stack }, 'Exception non rattrapee, arret');
+  process.exit(1);
 });
 
 /* ── Démarrage ────────────────────────────────────────── */
