@@ -362,9 +362,13 @@ ${getVal('e-description')}
       localStorage.setItem('lang', lang);
     }
 
-    window.toggleLang = function () {
+    function toggleLang() {
       applyLang(localStorage.getItem('lang') === 'en' ? 'fr' : 'en');
-    };
+    }
+    /* L'attribut onclick inline du bouton violait la CSP (script-src-attr
+       'none' pose par Helmet) : le bouton ne faisait rien. Meme correction
+       que dans lead.js, qui l'avait recue mais jamais reportee ici. */
+    document.getElementById('lang-btn')?.addEventListener('click', toggleLang);
 
     const saved = localStorage.getItem('lang') || 'fr';
     const btn = document.getElementById('lang-btn');

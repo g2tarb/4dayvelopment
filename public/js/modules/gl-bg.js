@@ -166,7 +166,7 @@ export function initUniverse() {
       if (qualite === 2) { densite = 0.5; }
       if (qualite === 3) {                   // la page passe avant le decor
         canvas.style.opacity = '0';
-        setTimeout(() => { paused = true; canvas.remove(); }, 2600);
+        setTimeout(() => { arrete = true; paused = true; canvas.remove(); }, 2600);
       }
     }
     jauge = 0; lentes = 0;
@@ -274,9 +274,18 @@ export function initUniverse() {
   }, { passive: true });
 
   let paused = false;
-  document.addEventListener('visibilitychange', () => {
+  let arrete = false;        // arret definitif : le decor a ete retire
+  let enVol = false;         // une boucle est deja planifiee
+  on(document, 'visibilitychange', () => {
+    /* Deux pieges ici. Sans le drapeau d'arret, la degradation de qualite
+       qui retire le canvas etait annulee au premier changement d'onglet et
+       la boucle repartait dans un element detache du DOM. Et sans le
+       drapeau de vol, le rappel deja en attente pendant le masquage et
+       celui-ci se replanifiaient tous les deux : le nombre de boucles
+       doublait a chaque aller-retour. */
+    if (arrete) return;
     paused = document.hidden;
-    if (!paused) raf(animate);
+    if (!paused && !enVol) { enVol = true; raf(animate); }
   });
 
   const proj  = mat4Identity();
@@ -314,7 +323,8 @@ export function initUniverse() {
   let lastTime = 0, frame = 0, lineTimer = 0;
 
   function animate(now = 0) {
-    if (paused) return;
+    if (paused || arrete) { enVol = false; return; }
+    enVol = true;
     raf(animate);
     const elapsed = now - lastTime;
     if (elapsed < FPS_INTERVAL) return;

@@ -3,9 +3,9 @@
    Orchestrateur ES6 modules · Sans bundler
    ================================================================ */
 
-import { initProgress, initNav, initSmoothScroll, initPageTransition, initStickyCTA, initBottomSheetSwipe } from './modules/navigation.js';
-import { initCursor, initGlow, initMagnetic, initScramble, initReveal, initCounters } from './modules/animations.js';
-import { initContactForm, initTypeChips, initToasts, initExit } from './modules/form.js';
+import { initProgress, initNav, initSmoothScroll, initPageTransition, initBottomSheetSwipe } from './modules/navigation.js';
+import { initCursor, initGlow, initMagnetic, initReveal } from './modules/animations.js';
+import { initContactForm, initTypeChips, initExit } from './modules/form.js';
 import { initLang } from './modules/i18n.js';
 import { checkMotion, initFAQ } from './modules/ui.js';
 import { initUniverse } from './modules/gl-bg.js';
@@ -33,12 +33,6 @@ function injectGlobalElements() {
     document.body.insertBefore(pt, document.body.firstChild);
   }
 
-  // Scroll progress
-  if (!document.getElementById('scroll-progress')) {
-    const sp = document.createElement('div');
-    sp.id = 'scroll-progress';
-    document.body.insertBefore(sp, document.body.firstChild);
-  }
 
   // Mobile menu (si hamburger existe mais pas le menu)
   if (document.getElementById('hamburger') && !document.getElementById('mobile-menu')) {
@@ -76,15 +70,12 @@ async function init() {
   initGlow();
   initSplitTitles();   // avant initReveal : les masques sont en place quand .visible tombe
   initReveal();
-  initCounters();
   initFAQ();
   initSmoothScroll();
   initInertia();
-  initStickyCTA();
   initAppBar();
   initHeroScroll();
   initBottomSheetSwipe();
-  initToasts();
   initExit();
   initTypeChips();
   initContactForm();
@@ -99,7 +90,6 @@ async function init() {
     initCursor();
     initCursorFlair();   // apres initCursor : la fleche vit dans son anneau
     initMagnetic();
-    initScramble();
     initTilt();
   }, 150);
 

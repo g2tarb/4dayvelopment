@@ -77,29 +77,6 @@ export function initMagnetic() {
   });
 }
 
-export function initScramble() {
-  if (matchMedia('(max-width: 768px)').matches) return;
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#@$%';
-  $$('.section-title').forEach(el => {
-    // Les titres a HTML interne (em.gradient-text, <br>) ne sont jamais scrambles :
-    // reecrire leur contenu en texte detruirait le degrade et les sauts de ligne.
-    if (el.children.length > 0) return;
-    const orig = el.innerHTML;            // sauvegarde/restauration par innerHTML, pas textContent
-    const text = el.textContent;
-    let frame, iv;
-    on(el, 'mouseenter', () => {
-      clearInterval(iv);
-      frame = 0;
-      iv = setInterval(() => {
-        el.textContent = text.split('').map((c, i) =>
-          c === ' ' ? ' ' : i < frame ? text[i] : chars[Math.floor(Math.random() * chars.length)]
-        ).join('');
-        if (++frame > text.length) { el.innerHTML = orig; clearInterval(iv); }
-      }, 32);
-    });
-    on(el, 'mouseleave', () => { clearInterval(iv); el.innerHTML = orig; });
-  });
-}
 
 export function initReveal() {
   const els = $$('.reveal');
@@ -121,26 +98,4 @@ export function initReveal() {
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
   els.forEach(el => io.observe(el));
-}
-
-export function initCounters() {
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      const el  = entry.target;
-      const end = parseFloat(el.dataset.target);
-      const suf = el.dataset.suffix || '';
-      const dur = 1800;
-      const t0  = performance.now();
-      function step(now) {
-        const p = Math.min((now - t0) / dur, 1);
-        const e = 1 - Math.pow(1 - p, 3);
-        el.textContent = (Number.isInteger(end) ? Math.round(e * end) : (e * end).toFixed(0)) + suf;
-        if (p < 1) raf(step);
-      }
-      raf(step);
-      io.unobserve(el);
-    });
-  }, { threshold: 0.5 });
-  $$('[data-target]').forEach(el => io.observe(el));
 }

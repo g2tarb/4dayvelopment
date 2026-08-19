@@ -20,29 +20,49 @@ export function initPageTransition() {
 }
 
 export function initProgress() {
-  const bar = document.createElement('div');
-  bar.id = 'scroll-progress';
-  document.body.prepend(bar);
+  /* L'element existe deja statiquement sur certaines pages, et main.js en
+     injecte un autre : on en creait un troisieme, donc trois elements pour
+     un meme identifiant. On reprend celui qui est la, sinon on le cree. */
+  let bar = document.getElementById('scroll-progress');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'scroll-progress';
+    document.body.prepend(bar);
+  }
+  /* Une image au maximum : ces deux ecouteurs ecrivaient des styles a chaque
+     evenement de defilement, plusieurs dizaines de fois entre deux rendus. */
+  let attenduP = false;
   on(window, 'scroll', () => {
-    const pct = window.scrollY / (document.body.scrollHeight - innerHeight) * 100;
-    bar.style.width = Math.min(pct, 100) + '%';
+    if (attenduP) return;
+    attenduP = true;
+    requestAnimationFrame(() => {
+      attenduP = false;
+      const pct = window.scrollY / (document.body.scrollHeight - innerHeight) * 100;
+      bar.style.width = Math.min(pct, 100) + '%';
+    });
   }, { passive: true });
 }
 
 export function initNav() {
   const nav = $('#navbar');
   if (!nav) return;
-  let lastY = 0;
+  // la transition est posee une fois, pas a chaque image
+  nav.style.transition = 'transform .4s cubic-bezier(0.4,0,0.2,1)';
+  let lastY = 0, attenduN = false;
   on(window, 'scroll', () => {
-    const y = window.scrollY;
-    nav.classList.toggle('scrolled', y > 60);
-    if (y > 350) {
-      nav.style.transform = y > lastY + 5 ? 'translateY(-110%)' : 'translateY(0)';
-    } else {
-      nav.style.transform = 'translateY(0)';
-    }
-    nav.style.transition = 'transform .4s cubic-bezier(0.4,0,0.2,1), all .4s cubic-bezier(0.4,0,0.2,1)';
-    lastY = y;
+    if (attenduN) return;
+    attenduN = true;
+    requestAnimationFrame(() => {
+      attenduN = false;
+      const y = window.scrollY;
+      nav.classList.toggle('scrolled', y > 60);
+      if (y > 350) {
+        nav.style.transform = y > lastY + 5 ? 'translateY(-110%)' : 'translateY(0)';
+      } else {
+        nav.style.transform = 'translateY(0)';
+      }
+      lastY = y;
+    });
   }, { passive: true });
 
   const ham = $('#hamburger');
@@ -71,11 +91,21 @@ export function initNav() {
   on(overlay, 'click', closeMenu);
   on(document, 'keydown', e => { if (e.key === 'Escape') closeMenu(); });
 
+  /* Le bouton rebondit toutes les six secondes. L'ecouteur etait pose a
+     chaque battement : sous 480 px le bouton est en display none, son
+     animation ne joue donc jamais, animationend ne se declenche pas, et
+     chaque ecouteur {once} restait attache a vie — dix par minute, sans
+     plafond. Un seul ecouteur pose une fois, et un minuteur qui ne demarre
+     pas si le bouton n'est pas affiche. */
   const cta = $('.nav-cta');
-  if (cta) setInterval(() => {
-    cta.classList.add('bounce');
-    on(cta, 'animationend', () => cta.classList.remove('bounce'), { once: true });
-  }, 6000);
+  if (cta) {
+    on(cta, 'animationend', () => cta.classList.remove('bounce'));
+    const battement = setInterval(() => {
+      if (!cta.isConnected) return clearInterval(battement);
+      if (!cta.offsetParent) return;          // masque : rien a animer
+      cta.classList.add('bounce');
+    }, 6000);
+  }
 }
 
 export function initSmoothScroll() {
@@ -90,52 +120,7 @@ export function initSmoothScroll() {
 }
 
 /* ── Sticky CTA mobile (apparait apres hero) ──────────── */
-const STICKY_BUDGET_REDIRECT = {
-  'Moins de 1 000€': '/essentiel',
-  '1 000 à 2 000€':  '/devis',
-  '2 000 à 5 000€':  '/devis',
-  '5 000€ et plus':  '/devis',
-};
 
-export function initStickyCTA() {
-  const sticky = $('#sticky-cta');
-  const hero = $('#hero');
-  if (!sticky || !hero || !matchMedia('(max-width: 768px)').matches) return;
-
-  document.body.classList.add('has-sticky-cta');
-
-  const observer = new IntersectionObserver(([entry]) => {
-    sticky.classList.toggle('visible', !entry.isIntersecting);
-  }, { threshold: 0.1 });
-
-  observer.observe(hero);
-
-  // Budget chips dans le sticky
-  $$('.sticky-chip').forEach(chip => {
-    on(chip, 'click', () => {
-      const budget = chip.dataset.budget;
-
-      // Visual feedback
-      $$('.sticky-chip').forEach(c => c.classList.remove('selected'));
-      chip.classList.add('selected');
-
-      // Sauvegarder dans sessionStorage pour pre-remplir le vrai form
-      sessionStorage.setItem('prefill_budget', budget);
-
-      // Capturer le nom/email si deja remplis dans le form principal
-      const name  = $('#f-name')?.value.trim()  || '';
-      const email = $('#f-email')?.value.trim() || '';
-      if (name)  sessionStorage.setItem('prefill_name', name);
-      if (email) sessionStorage.setItem('prefill_email', email);
-
-      // Redirection vers le bon formulaire
-      const dest = STICKY_BUDGET_REDIRECT[budget];
-      if (dest) {
-        setTimeout(() => { window.location.href = dest; }, 200);
-      }
-    });
-  });
-}
 
 /* ── Bottom sheet swipe-to-close ──────────────────────── */
 export function initBottomSheetSwipe() {

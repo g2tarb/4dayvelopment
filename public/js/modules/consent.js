@@ -1,7 +1,11 @@
 /* ── RGPD Consent Manager ─────────────────────────────────── */
 
 const STORAGE_KEY  = 'rgpd_consent';
-const ANALYTICS_ID = typeof GTAG_ID !== 'undefined' ? GTAG_ID : null; // fourni via window.GTAG_ID si besoin
+/* GTAG_ID n'est defini nulle part aujourd'hui : aucun traceur n'est charge,
+   et la banniere ne recueille donc un consentement pour rien. On la garde en
+   place — la retirer est une decision de conformite, pas technique — et tout
+   se branche des que la variable est fournie. */
+const ANALYTICS_ID = typeof GTAG_ID !== 'undefined' ? GTAG_ID : null;
 
 function getConsent() {
   try { return JSON.parse(localStorage.getItem(STORAGE_KEY)); } catch { return null; }

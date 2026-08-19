@@ -1,5 +1,5 @@
 /* ── Forms : contact form, choix du projet, toasts, exit intent ── */
-import { $, $$, on, raf } from './utils.js';
+import { $, $$, on } from './utils.js';
 
 /* Deux boutons, comme les deux formules : Site web ou App. Le choix vit
    dans le champ cache #f-service. Le duel des tarifs pre-remplit ce meme
@@ -102,9 +102,6 @@ export function initContactForm() {
   });
 }
 
-export function initToasts() {
-  // Desactive — les faux toasts social proof degradent la confiance
-}
 
 export function initExit() {
   if (sessionStorage.getItem('exit-shown')) return;
