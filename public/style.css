@@ -73,6 +73,13 @@
 /* ── RESET ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased;
+  /* Les webviews Android (Instagram, Facebook, TikTok) grossissent d'office
+     les textes qu'elles jugent trop petits : un paragraphe pouvait sortir
+     plus gros que le bouton d'a cote. La regle existait, mais seulement
+     sous 768 px — donc jamais sur les tablettes ni sur les grands mobiles
+     en paysage. Elle vaut pour tout le site. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   /* clip et pas hidden : aucun defilement horizontal ne peut naitre (le
      menu mobile hors champ en creait 26 px), et clip ne cree pas de
      conteneur de scroll, donc les position sticky continuent de vivre. */
@@ -743,11 +750,12 @@ section { padding: 100px 24px; }
 /* L'etat masque n'est applique QUE si le JS a demarre (html.js-enabled).
    Sans JS, ou si le JS echoue a charger, le contenu .reveal reste visible. */
 .reveal {
-  transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+  transition: opacity .8s var(--ease-out),
+              transform .95s cubic-bezier(.22, 1, .36, 1);
 }
 .js-enabled .reveal:not(.visible) {
   opacity: 0;
-  transform: translateY(36px);
+  transform: translateY(26px);
 }
 .reveal.visible {
   opacity: 1;
@@ -939,7 +947,22 @@ section { padding: 100px 24px; }
 }
 
 /* ── PROCESS ───────────────────────────────────────────────── */
-.process { background: var(--bg2); }
+/* ── Raccord entre sections ──────────────────────────────────
+   Les sections alternent deux fonds tres proches (#080808 et #0f0f0f). A
+   bord franc, ce demi-ton se lit comme une arete horizontale qui coupe
+   l'ecran en deux au moment ou elle passe. Les fonds ne changent pas : on
+   fond seulement les premiers et les derniers pixels de la section. Le
+   changement se sent encore, il ne se coupe plus.
+   Une variable pour que les quatre sections concernees respirent pareil. */
+:root { --couture: clamp(48px, 7vh, 110px); }
+
+.process {
+  background: linear-gradient(180deg,
+    var(--bg) 0,
+    var(--bg2) var(--couture),
+    var(--bg2) calc(100% - var(--couture)),
+    var(--bg) 100%);
+}
 
 .process-steps {
   display: flex;
@@ -1589,7 +1612,13 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 .g-icon { font-size: 16px; }
 
 /* ── TESTIMONIALS ──────────────────────────────────────────── */
-.testimonials { background: var(--bg2); }
+.testimonials {
+  background: linear-gradient(180deg,
+    var(--bg) 0,
+    var(--bg2) var(--couture),
+    var(--bg2) calc(100% - var(--couture)),
+    var(--bg) 100%);
+}
 
 .testimonials-grid {
   display: grid;
@@ -1838,7 +1867,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   padding: 100px 24px;
   position: relative;
   overflow: hidden;
-  background: var(--bg2);
+  background: linear-gradient(180deg, var(--bg) 0, var(--bg2) var(--couture));
 }
 .cta-section::before {
   content: '';
@@ -3571,6 +3600,25 @@ footer {
   filter: saturate(1.05) brightness(1);
   transform: scale(1.08);
 }
+/* Repli quand le site n'a pas de capture exploitable (accueil anime) :
+   degrade de la couleur de marque et monogramme, comme sur /portfolio. */
+.show-visual--ph {
+  background: radial-gradient(120% 120% at 30% 18%, var(--brand), transparent 58%), #111;
+}
+.show-visual--ph::before {
+  content: attr(data-letter);
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: 7rem;
+  color: #fff;
+  opacity: .12;
+}
+
 /* Voile bas : raccorde l'image au corps de la carte */
 .show-visual::after {
   content: '';
@@ -4314,40 +4362,32 @@ html.is-loading, html.is-loading body { overflow: hidden; }
    Regler le mobile du hero ICI. */
 @media (max-width: 900px) {
 
-  /* ── Pre-accueil : un ecran entier pour la promesse ──
-     Le premier ecran ne montre que le titre, la phrase et le bouton, en
-     gros plan et centres verticalement. Le telephone n'arrive qu'apres,
-     quand on defile. Hauteur en svh : elle suit la barre d'adresse d'iOS
-     sans jamais sauter. */
+  /* ── Accueil mobile : une seule scene ──
+     Titre, phrase, bouton et telephone se suivent dans le meme ecran, sans
+     porte a franchir. La hauteur est bornee en svh (petite hauteur) : elle
+     tient compte des barres qui restent affichees dans les navigateurs
+     integres — Instagram, Messenger, TikTok — la ou 100vh depasse et fait
+     sortir le bas du contenu de l'ecran. */
   .hero {
     min-height: 100svh;
-    justify-content: flex-start;
-    padding-top: 0;
-    padding-bottom: 0;
+    justify-content: center;
+    padding-top: clamp(92px, 13svh, 128px);
+    padding-bottom: clamp(28px, 5svh, 56px);
   }
-  .hero-split { gap: 0; }
+  .hero-split { gap: clamp(22px, 4svh, 40px); }
 
   .hero-copy {
-    /* le pre-accueil, exactement un ecran. Le haut degage la barre de
-       navigation, et les marges suivent la hauteur reelle du telephone :
-       sur un SE, 116 px fixes poussaient l'invitation hors de l'ecran. */
-    min-height: 100svh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: clamp(84px, 15svh, 120px) 0 clamp(14px, 3svh, 26px);
   }
-  /* L'alignement ne change jamais entre l'attente et l'ouverture : toute
-     variation de la mise en page se paie par un saut du titre au moment
-     du premier geste. Le vide sous le titre est la place que les elements
-     caches reprendront — c'est le prix, assume, du "titre seul". */
 
   /* Le titre se mesure a la fois sur la largeur et sur la hauteur : sur un
      SE, seule la largeur donnait un titre trop haut pour l'ecran. */
   .hero-title {
-    font-size: clamp(2.2rem, min(13.5vw, 7.2svh), 4rem);
+    font-size: clamp(2rem, min(12vw, 6svh), 3.4rem);
     line-height: 1;
     letter-spacing: -1px;
     margin-bottom: clamp(8px, 2svh, 16px);
@@ -4381,151 +4421,18 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     box-shadow: 0 10px 34px -10px rgba(218,84,38,.75);
   }
 
-  /* ── Le portail : tant qu'on n'a pas defile, le site attend derriere
-     un voile flou. L'amorce du telephone bondit pour montrer la suite. ── */
-
-  /* Tout ce qui n'est pas l'affiche est flou et assourdi. Le filtre porte
-     sur les couches de fond et sur le second ecran, jamais sur le texte de
-     l'affiche : un titre flou puis net se relit mal. */
-  .hero-device,
-  #three-bg,
-  .comets-fx {
-    filter: blur(var(--voile, 9px)) saturate(var(--voile-sat, .75));
-    /* meme courbe et meme duree que la cascade : le voile, le halo et les
-       elements qui se levent forment un seul mouvement, pas trois */
-    transition: filter .75s cubic-bezier(.22,1,.36,1);
-  }
-  /* des le premier geste, le voile se leve pour de bon */
-  body.a-defile .hero-device,
-  body.a-defile #three-bg,
-  body.a-defile .comets-fx { --voile: 0px; --voile-sat: 1; }
-
-  /* Halo sombre qui concentre le regard sur l'affiche, et se dissipe */
-  .hero-copy::after {
-    content: '';
-    position: absolute;
-    inset: -10vh -12vw;
-    z-index: -1;
-    pointer-events: none;
-    background: radial-gradient(58% 44% at 50% 46%, transparent 40%, rgba(6,5,9,.72) 100%);
-    opacity: 1;
-    transition: opacity .75s cubic-bezier(.22,1,.36,1);
-  }
-  body.a-defile .hero-copy::after { opacity: 0; }
-  .hero-copy { position: relative; }
-
-  /* ── L'entree : au chargement, seuls le titre et l'invitation existent.
-     Le badge, la phrase et le bouton attendent en retrait sous le pli du
-     regard, et se levent en cascade au premier geste. Le titre, lui, est
-     la des la premiere image : c'est la promesse, elle ne se merite pas. */
-  /* Les elements en attente gardent leur place dans la mise en page : ils
-     sont seulement transparents et decales. Les replier en hauteur faisait
-     bondir le titre de 71 pixels en une image au moment de l'ouverture —
-     c'etait l'effet pop. Aucune hauteur n'est animee ici, uniquement
-     l'opacite et une translation, qui vivent sur le compositeur. */
-  body:not(.a-defile) .hero-copy .badge,
-  body:not(.a-defile) .hero-copy .hero-desc,
-  body:not(.a-defile) .hero-copy .hero-actions {
-    opacity: 0;
-    transform: translateY(22px);
-    pointer-events: none;
-  }
-  /* L'invitation reste ancree en bas du pre-accueil, a distance constante
-     du bord : c'est la sa place naturelle, et rien ne bouge a l'ouverture.
-     Le vide au-dessus est l'espace des elements qui vont se lever. */
-  .hero-peek { margin-top: auto; }
-  .hero-copy .badge,
-  .hero-copy .hero-desc,
-  .hero-copy .hero-actions {
-    transition: opacity .55s var(--ease-out), transform .75s cubic-bezier(.22,1,.36,1);
-    will-change: transform, opacity;
-  }
-  /* la cascade : la phrase suit le badge, le bouton ferme la marche */
-  body.a-defile .hero-copy .hero-desc { transition-delay: .10s; }
-  body.a-defile .hero-copy .hero-actions { transition-delay: .20s; }
-
-  /* Le titre ne change plus d'echelle : sa place est la meme avant et
-     apres, seule la scene autour de lui s'allume. */
-
-  /* L'amorce : le haut d'un iPhone qui pointe sous l'affiche et bondit */
-  .hero-peek {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: clamp(5px, 1.2svh, 9px);
-    margin-top: clamp(8px, 2.4svh, 18px);
-    animation: peekBond 2.4s cubic-bezier(.5,0,.35,1) infinite;
-    transition: opacity .5s var(--ease-out), transform .75s cubic-bezier(.22,1,.36,1);
-    will-change: transform, opacity;
-  }
-  .hero-peek-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: .16em;
-    text-transform: uppercase;
-    color: var(--accent2);
-    opacity: .85;
-  }
-  /* le haut du telephone : cadre, encoche, et une lueur d'ecran dedans */
-  .hero-peek-phone {
-    position: relative;
-    display: block;
-    width: clamp(64px, 22vw, 86px);
-    height: clamp(24px, 5svh, 34px);
-    border: 2px solid rgba(255,255,255,.22);
-    border-bottom: 0;
-    border-radius: 16px 16px 0 0;
-    background: linear-gradient(180deg, rgba(218,84,38,.30), rgba(136,64,131,.10));
-    box-shadow: 0 -8px 30px -8px rgba(242,177,59,.6);
-    overflow: hidden;
-  }
-  .hero-peek-phone i {
-    position: absolute;
-    top: 7px; left: 50%;
-    transform: translateX(-50%);
-    width: 28px; height: 5px;
-    border-radius: 99px;
-    background: rgba(0,0,0,.75);
-  }
-  @keyframes peekBond {
-    0%, 62%, 100% { transform: translateY(0); }
-    30%           { transform: translateY(-11px); }
-    46%           { transform: translateY(-4px); }
-  }
-  /* au premier geste, l'amorce s'efface : elle a fait son travail */
-  body.a-defile .hero-peek {
-    opacity: 0;
-    transform: translateY(26px) scale(.94);
-    animation: none;
-  }
-
-  /* Le telephone : deuxieme ecran a part entiere, il ne partage plus
-     l'espace du pre-accueil. */
+  /* Le telephone suit l'affiche dans le meme defilement : il n'est plus un
+     second ecran a atteindre, mais la suite immediate de la promesse. */
   .hero-device {
-    min-height: 100svh;
     justify-content: center;
-    padding: clamp(10px, 2svh, 20px) 0 clamp(16px, 3svh, 30px);
+    padding: clamp(4px, 1svh, 12px) 0 clamp(10px, 2svh, 22px);
   }
   /* Le cadre se mesure a la hauteur disponible autant qu'a la largeur : le
      telephone fait 844/390 de haut, donc sa largeur ne peut pas depasser
      environ 46 % de la hauteur libre une fois le libelle et les segments
      retires. Sans cette borne, il etait coupe en haut sur tout ce qui est
      plus court qu'un Plus. */
-  .hero .demo-device { width: min(240px, 66vw, 30svh); }
-
-  /* Le mouvement d'accompagnement : au defilement, le pre-accueil s'eleve
-     et s'estompe pendant que le telephone monte a sa rencontre. Les deux
-     valeurs sont posees par js/modules/heroscroll.js. */
-  .hero-copy {
-    transform: translate3d(0, calc(var(--hp, 0) * -34px), 0);
-    opacity: calc(1 - var(--hp, 0) * 0.85);
-    will-change: transform, opacity;
-  }
-  .hero-device {
-    transform: translate3d(0, calc((1 - var(--hp, 0)) * 46px), 0);
-    opacity: calc(.25 + var(--hp, 0) * 0.75);
-    will-change: transform, opacity;
-  }
+  .hero .demo-device { width: min(240px, 66vw, 34svh); }
 
   /* ── Barre d'action, facon barre d'onglets ── */
   .appbar {
@@ -4608,13 +4515,9 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 
 /* Ordinateur : aucune barre, aucun indice de defilement */
 @media (min-width: 901px) {
-  .appbar, .hero-peek { display: none !important; }
+  .appbar { display: none !important; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-peek { animation: none; }
-  /* mouvement reduit : pas de voile a lever, la page est nette d'emblee */
-  .hero-device, #three-bg, .comets-fx { filter: none !important; }
-  .hero-copy::after { opacity: 0 !important; }
   .appbar { transition: none; }
 }
 
@@ -4686,7 +4589,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   * { -webkit-tap-highlight-color: transparent; }
   /* on ne selectionne pas le texte de l'interface en appuyant longuement,
      mais on le laisse pour le contenu lisible */
-  .appbar, .nav-logo, .hero-peek, .demo-track, .duel-chip, .type-chip,
+  .appbar, .nav-logo, .demo-track, .duel-chip, .type-chip,
   .btn-primary, .btn-secondary, .btn-plan, .appbar-cta {
     -webkit-user-select: none;
     user-select: none;

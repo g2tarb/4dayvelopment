@@ -18,7 +18,6 @@ import { initSplitTitles, initTilt, initVelocityMarquee, initCursorFlair } from 
 import { initComets } from './modules/comets.js';
 import { initInertia } from './modules/inertia.js';
 import { initAppBar } from './modules/appbar.js';
-import { initHeroScroll } from './modules/heroscroll.js';
 import { initNative } from './modules/native.js';
 
 /* Active les etats animes (reveal) uniquement quand le JS tourne.
@@ -75,7 +74,6 @@ async function init() {
   initSmoothScroll();
   initInertia();
   initAppBar();
-  initHeroScroll();
   initNative();
   initBottomSheetSwipe();
   initExit();
