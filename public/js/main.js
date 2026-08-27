@@ -14,6 +14,7 @@ import { initDemoViewer } from './modules/demos.js';
 import { initPreloader } from './modules/preloader.js';
 import { initBrowserReel } from './modules/reel.js';
 import { initDuel } from './modules/duel.js';
+import { initCarouselDots } from './modules/carousel.js';
 import { initSplitTitles, initTilt, initVelocityMarquee, initCursorFlair } from './modules/motion.js';
 import { initPunchline } from './modules/punchline.js';
 import { initInertia } from './modules/inertia.js';
@@ -82,6 +83,7 @@ async function init() {
   initDemoViewer();
   initBrowserReel();
   initDuel();
+  initCarouselDots();
   initVelocityMarquee();
   initPunchline();
 

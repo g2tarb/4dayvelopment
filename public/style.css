@@ -4594,3 +4594,111 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 }
 
 
+
+/* ================================================================
+   FINITIONS — ce qui separe un site d'une application
+   Ce bloc ferme le fichier : il gagne donc sur les blocs mobiles
+   ecrits au-dessus. C'est voulu, chaque regle ici corrige un defaut
+   mesure sur telephone, jamais un choix de mise en page.
+   ================================================================ */
+
+/* ── 1. Pas de mot seul en fin de paragraphe ──
+   Mesure faite avant d'ecrire cette regle : sur la page d'accueil elle ne
+   change quasiment rien, les textes y sont deja calibres (largeurs
+   contraintes, 32ch sur la phrase du hero). text-wrap: balance a ete
+   ecarte pour la meme raison, aggravee : les titres du site portent des
+   <br> ecrits a la main, donc rien a equilibrer.
+   Ce qui reste vaut pour les articles de blog, ou les paragraphes sont
+   longs, ecrits par un modele, et jamais relus au pixel. */
+p { text-wrap: pretty; }
+
+/* ── 2. La selection reste dans la charte ──
+   Sans cette regle, surligner un paragraphe sortait le bleu du systeme au
+   milieu d'une page qui n'a pas une seule touche de bleu. */
+::selection { background: rgba(218,84,38,.9); color: #fff; }
+
+/* ── 3. Le carrousel ne rend plus la main au navigateur ──
+   Arrive au bout des temoignages, le geste continuait dans le navigateur :
+   sur iOS un balayage de trop declenchait le retour a la page precedente,
+   on quittait le site en croyant faire defiler des avis. contain garde le
+   geste dans le carrousel. scroll-padding aligne en prime la carte sur la
+   marge du texte, et non sur le bord de l'ecran. */
+@media (max-width: 768px) {
+  .testimonials-grid {
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 20px;
+  }
+}
+
+/* ── 4. Tout ce qui se touche s'enfonce ──
+   La surbrillance native est retiree plus haut (-webkit-tap-highlight-color)
+   et les gros boutons ont deja leur etat actif. Les petits controles n'en
+   avaient aucun : sous le doigt, ils passaient pour morts. */
+@media (pointer: coarse) {
+  .demo-seg:active,
+  .t-link:active,
+  .lang-fab:active,
+  .mo-cta:active,
+  .appbar-cta:active,
+  .nav-cta:active {
+    transform: scale(.94);
+    transition: transform .1s var(--ease-out);
+  }
+  .appbar-item:active { transform: scale(.92); }
+}
+
+/* ── 5. Des filets a la finesse de l'ecran ──
+   Un trait d'un pixel CSS occupe deux ou trois pixels physiques sur un
+   telephone : il se lit comme une barre alors qu'il ne devrait etre
+   qu'une limite. Sur les ecrans denses, on le ramene au demi-pixel, le
+   filet des interfaces natives. */
+@media (min-resolution: 2dppx) {
+  nav.scrolled, footer, .mobile-menu, .logos-section { border-width: 0.5px; }
+}
+
+/* ── 6. Les pastilles du carrousel d'avis ──
+   Pilotees par js/modules/carousel.js, qui ne les pose que si la piste
+   defile reellement. La pastille courante s'allonge en pilule au lieu de
+   changer de couleur : la position se lit d'un coup d'oeil, sans compter.
+   La cible tactile fait 44 px, l'ecart entre deux pastilles n'en fait
+   que 8 : c'est la zone qui est large, pas le point. */
+.car-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  margin-top: 14px;
+}
+.car-dot {
+  position: relative;
+  width: 22px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.car-dot::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 99px;
+  background: rgba(255,255,255,.22);
+  transition: width .35s var(--ease-spring), background .35s var(--ease-out);
+}
+.car-dot.is-here::before {
+  width: 20px;
+  background: var(--accent2);
+}
+.car-dot:active::before { background: rgba(255,255,255,.4); }
+.car-dot.is-here:active::before { background: var(--accent2); }
+.car-dot:focus-visible { outline: 2px solid var(--accent2); outline-offset: -8px; border-radius: 10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .car-dot::before { transition: none; }
+}
