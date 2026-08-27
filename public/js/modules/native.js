@@ -55,6 +55,29 @@ function ongletActif() {
   const barre = $('#appbar');
   if (!barre) return;
 
+  /* La pilule : un seul indicateur qui glisse d'un onglet a l'autre,
+     au lieu d'un fond qui apparait et disparait. Elle est mesuree sur
+     l'onglet gagnant et deplacee en transform : tout vit sur le
+     compositeur. Le premier placement se fait sans transition, sinon
+     elle traverserait la barre au chargement. */
+  const pilule = document.createElement('span');
+  pilule.className = 'appbar-pill';
+  pilule.setAttribute('aria-hidden', 'true');
+  barre.prepend(pilule);
+
+  function placer(a) {
+    if (!a || !a.classList.contains('appbar-item')) {
+      pilule.classList.remove('is-visible');
+      return;
+    }
+    pilule.style.transform = `translateX(${a.offsetLeft}px)`;
+    pilule.style.width = a.offsetWidth + 'px';
+    if (!pilule.classList.contains('is-visible')) {
+      // position posee AVANT d'activer la transition : pas de traversee
+      requestAnimationFrame(() => pilule.classList.add('is-visible'));
+    }
+  }
+
   const liens = [...barre.querySelectorAll('a[href^="#"]')];
   const cibles = liens
     .map(a => ({ a, section: document.querySelector(a.getAttribute('href')) }))
@@ -72,9 +95,13 @@ function ongletActif() {
     if (!gagnant || gagnant.a === courant) return;
     cibles.forEach(c => c.a.classList.toggle('is-here', c === gagnant));
     courant = gagnant.a;
+    placer(courant);
   }, { rootMargin: '-45% 0px -45% 0px', threshold: [0, 0.25, 0.5] });
 
   cibles.forEach(c => io.observe(c.section));
+
+  // rotation d'ecran ou barre redimensionnee : la pilule se recale
+  new ResizeObserver(() => placer(courant)).observe(barre);
 }
 
 /* ── 3. La profondeur des cartes ─────────────────────────────

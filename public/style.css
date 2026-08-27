@@ -2422,14 +2422,38 @@ footer {
   .mobile-menu-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(10px) saturate(.85);
+    -webkit-backdrop-filter: blur(10px) saturate(.85);
     z-index: 8998;
     opacity: 0;
     pointer-events: none;
-    transition: opacity .3s ease;
+    transition: opacity .35s ease;
   }
   .mobile-menu-overlay.open { opacity: 1; pointer-events: all; }
+
+  /* Le bouton de langue (z-index 9500) flottait au-dessus du panneau et
+     recouvrait son bouton d'appel : quand une feuille est posee, elle est
+     seule au premier plan. */
+  body.sheet-ouverte #floating-cta {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .25s ease;
+  }
+
+  /* ── La page recule quand le panneau se pose dessus ──
+     Le geste des feuilles natives : le contenu s'eloigne d'un cran, le
+     panneau devient le premier plan sans ambiguite. Uniquement main et
+     footer : les elements fixes (nav, barre d'onglets) vivent hors de
+     main, un transform sur eux casserait leur position. */
+  @media (prefers-reduced-motion: no-preference) {
+    main, footer {
+      transition: transform .45s cubic-bezier(.32,.72,0,1);
+      transform-origin: 50% 0;
+    }
+    body.sheet-ouverte main,
+    body.sheet-ouverte footer { transform: scale(.965); }
+  }
 
   /* ─ Hero ─ */
   .hero {
@@ -2841,7 +2865,8 @@ footer {
     border-radius: 24px 24px 0 0;
     padding: 16px 24px 32px;
     transform: translateY(100%);
-    transition: transform 0.4s var(--ease-spring);
+    /* la courbe des feuilles natives : partie vive, pose amortie */
+    transition: transform .45s cubic-bezier(.32,.72,0,1);
     box-shadow: 0 -16px 60px rgba(0,0,0,0.6);
     overflow-y: auto;
     overscroll-behavior: contain;
@@ -4429,23 +4454,44 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     position: relative;
     transition: color .3s var(--ease-out), background .25s;
   }
-  .appbar-item.is-here {
-    color: var(--text);
-    background: rgba(255,255,255,.07);
-  }
+  .appbar-item.is-here { color: var(--text); }
   .appbar-item.is-here svg { color: var(--accent2); }
-  /* le point sous l'onglet, comme une barre d'onglets d'application */
-  .appbar-item::after {
-    content: '';
-    position: absolute;
-    bottom: 2px; left: 50%;
-    width: 4px; height: 4px;
-    border-radius: 50%;
-    background: var(--accent2);
-    transform: translateX(-50%) scale(0);
-    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  /* l'icone marque l'arrivee d'un petit rebond, comme un onglet natif */
+  @media (prefers-reduced-motion: no-preference) {
+    .appbar-item.is-here svg { animation: onglet-pop .4s cubic-bezier(.34,1.56,.64,1); }
   }
-  .appbar-item.is-here::after { transform: translateX(-50%) scale(1); }
+  @keyframes onglet-pop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.18); }
+    100% { transform: scale(1); }
+  }
+
+  /* ── La pilule : un seul indicateur, qui glisse ──
+     Posee par js/modules/native.js sous l'onglet courant. transform et
+     width animes au ressort : le deplacement se lit comme un objet qui
+     voyage, pas comme deux etats qui permutent. Sous les onglets
+     (z-index), au-dessus du verre de la barre. */
+  .appbar-pill {
+    position: absolute;
+    top: 8px;
+    bottom: 8px;
+    left: 0;
+    width: 0;
+    border-radius: 13px;
+    background: rgba(255,255,255,.09);
+    border: 1px solid rgba(255,255,255,.06);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .5s cubic-bezier(.3,1.25,.4,1),
+                width .5s cubic-bezier(.3,1.25,.4,1),
+                opacity .25s ease;
+  }
+  .appbar-pill.is-visible { opacity: 1; }
+  .appbar-item, .appbar-cta { position: relative; z-index: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .appbar-pill { transition: opacity .25s ease; }
+    .appbar-item.is-here svg { animation: none; }
+  }
 
   /* ── Profondeur : les cartes se rapprochent en arrivant ──
      On enrichit le mouvement de revelation existant plutot que d'en

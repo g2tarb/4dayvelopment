@@ -82,12 +82,15 @@ export function initNav() {
     ham.classList.add('open');
     menu.classList.add('open');
     overlay.classList.add('open');
+    // la page recule derriere le panneau, comme une feuille posee dessus
+    document.body.classList.add('sheet-ouverte');
     document.body.style.overflow = 'hidden';
   }
   function closeMenu() {
     ham.classList.remove('open');
     menu.classList.remove('open');
     overlay.classList.remove('open');
+    document.body.classList.remove('sheet-ouverte');
     document.body.style.overflow = '';
   }
 
@@ -133,8 +136,12 @@ export function initBottomSheetSwipe() {
   const ham = $('#hamburger');
   if (!menu || !matchMedia('(max-width: 768px)').matches) return;
 
-  let startY = 0;
-  let currentY = 0;
+  /* La physique d'un panneau natif tient a trois choses :
+     - il suit le doigt vers le bas, exactement ;
+     - vers le haut il resiste, comme un elastique, au lieu de s'arreter net ;
+     - une pichenette rapide le ferme meme si le trajet est court, la ou un
+       seuil fixe en pixels obligeait a le trainer sur 80 points. */
+  let startY = 0, currentY = 0, lastY = 0, lastT = 0, velocite = 0;
   let isDragging = false;
 
   on(menu, 'touchstart', e => {
@@ -142,7 +149,9 @@ export function initBottomSheetSwipe() {
     const rect = menu.getBoundingClientRect();
     const touchY = e.touches[0].clientY - rect.top;
     if (touchY > 50 && menu.scrollTop > 0) return;
-    startY = e.touches[0].clientY;
+    startY = currentY = lastY = e.touches[0].clientY;
+    lastT = performance.now();
+    velocite = 0;
     isDragging = true;
     menu.style.transition = 'none';
   }, { passive: true });
@@ -150,9 +159,16 @@ export function initBottomSheetSwipe() {
   on(menu, 'touchmove', e => {
     if (!isDragging) return;
     currentY = e.touches[0].clientY;
+    const t = performance.now();
+    if (t > lastT) velocite = (currentY - lastY) / (t - lastT);   // px/ms, signe vers le bas
+    lastY = currentY; lastT = t;
+
     const diff = currentY - startY;
     if (diff > 0) {
       menu.style.transform = `translateY(${diff}px)`;
+    } else {
+      // vers le haut : resistance elastique, le panneau vit sous le doigt
+      menu.style.transform = `translateY(${diff * 0.15}px)`;
     }
   }, { passive: true });
 
@@ -162,12 +178,13 @@ export function initBottomSheetSwipe() {
     menu.style.transition = '';
     const diff = currentY - startY;
 
-    if (diff > 80) {
-      // Swipe down assez long → fermer
+    // fermer : un tiers de la hauteur parcouru, ou une pichenette franche
+    if (diff > menu.offsetHeight * 0.33 || (diff > 20 && velocite > 0.55)) {
       menu.classList.remove('open');
       ham && ham.classList.remove('open');
       const overlay = document.querySelector('.mobile-menu-overlay');
       if (overlay) overlay.classList.remove('open');
+      document.body.classList.remove('sheet-ouverte');
       document.body.style.overflow = '';
     }
     menu.style.transform = '';
