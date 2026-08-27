@@ -4602,14 +4602,24 @@ html.is-loading, html.is-loading body { overflow: hidden; }
    mesure sur telephone, jamais un choix de mise en page.
    ================================================================ */
 
-/* ── 1. Pas de mot seul en fin de paragraphe ──
-   Mesure faite avant d'ecrire cette regle : sur la page d'accueil elle ne
-   change quasiment rien, les textes y sont deja calibres (largeurs
-   contraintes, 32ch sur la phrase du hero). text-wrap: balance a ete
-   ecarte pour la meme raison, aggravee : les titres du site portent des
-   <br> ecrits a la main, donc rien a equilibrer.
-   Ce qui reste vaut pour les articles de blog, ou les paragraphes sont
-   longs, ecrits par un modele, et jamais relus au pixel. */
+/* ── 1. Aucun mot seul en fin de titre ──
+   La plupart des titres du site portent des <br> ecrits a la main : rien a
+   equilibrer, la ligne est deja decidee. Restent ceux qui coulent librement,
+   et la le defaut se voyait : "Vous preferez garder la main sur votre
+   site ?" laissait le point d'interrogation seul sur sa ligne, a cinq pour
+   cent de la largeur. Mesure sur iPhone 13 : cette derniere ligne passe a
+   quatre-vingt-dix-huit pour cent, deux titres corriges sur les quatorze
+   qui coulent librement.
+   Les paragraphes se contentent de pretty, sans effet visible sur
+   l'accueil mais utile aux articles de blog, longs et jamais relus au
+   pixel. */
+/* Le titre du hero est exclu : la roulette de la punchline reecrit son
+   texte a chaque image, et un equilibrage recalcule soixante fois par
+   seconde se paierait sur la fluidite. Il porte de toute facon un <br>. */
+h1:not(.hero-title), h2, h3, h4,
+.section-title, .duel-title, .mo-title, .faq-question {
+  text-wrap: balance;
+}
 p { text-wrap: pretty; }
 
 /* ── 2. La selection reste dans la charte ──
@@ -4667,11 +4677,19 @@ p { text-wrap: pretty; }
   justify-content: center;
   align-items: center;
   gap: 2px;
-  margin-top: 14px;
+  margin-top: 10px;
 }
 .car-dot {
   position: relative;
+  /* La regle tactile globale impose 48 px de large a tout bouton. Ici elle
+     se retournait contre nous : huit pastilles a 48 px depassent la largeur
+     d'un telephone, le navigateur les comprimait, et la rangee s'etalait
+     d'un bord a l'autre au lieu de rester un petit groupe centre. La base
+     flex fige la largeur, min-width la defend, et la hauteur de 44 px suffit
+     a tenir la regle du pouce. */
+  flex: 0 0 22px;
   width: 22px;
+  min-width: 22px;
   height: 44px;
   padding: 0;
   border: 0;
