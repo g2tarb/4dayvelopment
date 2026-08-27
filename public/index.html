@@ -55,6 +55,10 @@
 </head>
 <body>
 
+  <!-- Un visiteur au clavier ne doit pas traverser toute la navigation pour
+       atteindre le contenu : premier element focusable de la page. -->
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
+
   <!-- ── ÉCRAN D'ENTRÉE ──
        Masqué par défaut : il ne s'affiche que si boot.js a posé .has-intro. -->
   <div id="preloader" aria-hidden="true">
@@ -136,7 +140,7 @@
     </ul>
   </div>
 
-  <main>
+  <main id="contenu">
   <!-- ── HERO ── -->
   <section id="hero" class="hero">
     <div class="hero-inner hero-split">
@@ -940,12 +944,12 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="f-name" data-i18n="form-name">Nom complet *</label>
-                <input type="text" id="f-name" name="name" placeholder="Jean Dupont" required autocomplete="name">
+                <input type="text" id="f-name" name="name" placeholder="Jean Dupont" required autocomplete="name" enterkeyhint="next">
                 <span class="form-error" id="err-name"></span>
               </div>
               <div class="form-group">
                 <label for="f-email" data-i18n="form-email">Email *</label>
-                <input type="email" id="f-email" name="email" placeholder="jean@exemple.fr" required autocomplete="email">
+                <input type="email" id="f-email" name="email" placeholder="jean@exemple.fr" required autocomplete="email" enterkeyhint="next">
                 <span class="form-error" id="err-email"></span>
               </div>
             </div>
@@ -953,7 +957,7 @@
             <div class="form-row">
               <div class="form-group">
                 <label for="f-phone" data-i18n="form-phone">Téléphone</label>
-                <input type="tel" id="f-phone" name="phone" placeholder="06 12 34 56 78" autocomplete="tel">
+                <input type="tel" id="f-phone" name="phone" placeholder="06 12 34 56 78" autocomplete="tel" enterkeyhint="next">
                 <span class="form-error" id="err-phone"></span>
               </div>
             </div>

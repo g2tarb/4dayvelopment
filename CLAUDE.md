@@ -29,3 +29,9 @@ sur la home dans un mockup iPhone (section `#exemples`, module `js/modules/demos
   depuis 2019, sous surveillance renforcée depuis mars 2026).
 - Pas de promesse type « garanti 1ère page ».
 - Pas d'em-dash, pas d'emoji dans le contenu rédactionnel du site.
+
+## Charte qualité (obligatoire)
+Toute intervention sur ce repo suit `.claude/charte-qualite.md` : cible Awwwards
+Mobile Excellence, cascade intrinsèque avant media queries, budget de perf
+opposable, protocole de vérification par matrice avant de dire « terminé »,
+format de réponse plan / code / rapport / auto-critique / dette.
