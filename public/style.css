@@ -3453,7 +3453,7 @@ footer {
 }
 
 /* ── Hero épuré : tout tient dans l'écran ── */
-#hero .hero-title { font-size: clamp(2.3rem, 5.8vw, 4.7rem); margin-bottom: 18px; }
+#hero .hero-title { font-size: clamp(2.6rem, 5.9vi, 4.8rem); line-height: 1.02; margin-bottom: 18px; }
 #hero .hero-desc { font-size: clamp(0.98rem, 1.3vw, 1.12rem); margin-bottom: 4px; max-width: 560px; }
 #hero .badge { margin-bottom: 22px; }
 
@@ -3791,6 +3791,32 @@ footer {
   max-width: 100%;
   overflow-wrap: break-word;
 }
+/* ── L'entree du titre : deux lignes qui sortent de leur masque ──
+   Le titre ne se contente plus d'un fondu en bloc : la ligne d'argent se
+   leve la premiere, la punchline la suit d'un temps, chacune essuyee de
+   bas en haut par son clip-path pendant qu'elle se redresse. Uniquement
+   clip-path et transform : tout vit sur le compositeur. L'etat d'attente
+   n'existe que sous .js-enabled : sans JS, le titre est simplement la. */
+@media (prefers-reduced-motion: no-preference) {
+  #hero .hero-l1,
+  #hero .hero-title .gradient-text {
+    transition: clip-path .85s cubic-bezier(.22,1,.36,1),
+                transform .85s cubic-bezier(.22,1,.36,1),
+                filter .5s var(--ease-out);
+  }
+  #hero .hero-title .gradient-text { transition-delay: .14s, .14s, 0s; }
+  .js-enabled #hero .hero-title.reveal:not(.visible) .hero-l1,
+  .js-enabled #hero .hero-title.reveal:not(.visible) .gradient-text {
+    clip-path: inset(-0.2em 0 100% 0);
+    transform: translateY(.45em) skewY(2.2deg);
+  }
+  .js-enabled #hero .hero-title.reveal.visible .hero-l1,
+  .js-enabled #hero .hero-title.reveal.visible .gradient-text {
+    clip-path: inset(-0.2em 0 -0.35em 0);   /* marge : jambages et oblique de l'italique */
+    transform: translateY(0) skewY(0deg);
+  }
+}
+
 /* Le clip vit sur la ligne seule, jamais sur un anctre de la punchline :
    quand l'em se transforme pendant la fusion, un degrade decoupe au texte
    sur son parent repeignait mal la premiere ligne, qui se dedoublait. */
@@ -3836,8 +3862,16 @@ footer {
   box-shadow: 0 0 18px rgba(242,177,59,0.55), 0 0 44px rgba(218,84,38,0.35);
   transform-origin: left center;
   will-change: transform, opacity;   /* la pulsation reste sur le compositeur */
+  /* sans JS : le trait se dessine au chargement, comme avant */
   animation: heroFlare 1.1s .25s cubic-bezier(.22,1,.36,1) both,
              heroFlarePulse 3.4s 1.4s ease-in-out infinite;
+}
+/* Avec JS, il ferme la choregraphie : il ne se dessine qu'une fois les
+   deux lignes posees, sinon il soulignait un titre encore invisible. */
+.js-enabled #hero .hero-title.reveal:not(.visible) .hero-flare { animation: none; opacity: 0; }
+.js-enabled #hero .hero-title.reveal.visible .hero-flare {
+  animation: heroFlare 1.1s .6s cubic-bezier(.22,1,.36,1) both,
+             heroFlarePulse 3.4s 1.9s ease-in-out infinite;
 }
 @keyframes heroFlare {
   from { transform: scaleX(0); opacity: 0; }
@@ -3858,6 +3892,44 @@ footer {
 @media (max-width: 768px) {
   #hero .hero-title::before { left: -5%; width: 110%; filter: blur(24px); }
   #hero .hero-flare { height: 2px; width: min(220px, 62%); }
+}
+
+/* L'arrivee du telephone : il se pose, leger recul d'echelle compris,
+   un ton plus lent que le texte — c'est l'objet lourd de la scene. */
+@media (prefers-reduced-motion: no-preference) {
+  .js-enabled #hero .hero-device.reveal { transition-duration: 1.05s; }
+  .js-enabled #hero .hero-device.reveal:not(.visible) {
+    transform: translateY(42px) scale(.955);
+  }
+}
+
+/* ── La sortie : le hero se demonte en parallaxe au defilement ──
+   Pilote par le defilement lui-meme (view-timeline), donc sur le
+   compositeur : l'affiche s'eleve et s'eteint plus vite que le telephone,
+   les deux plans se separent au lieu de sortir d'un bloc. Les animations
+   vivent sur .hero-copy et .hero-device, jamais sur leurs enfants : les
+   entrees (transitions) et la sortie (animation) ne se disputent aucun
+   element. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .hero { view-timeline-name: --hero-vue; }
+    #hero .hero-copy {
+      animation: heroSortieCopy linear both;
+      animation-timeline: --hero-vue;
+      animation-range: exit 0% exit 85%;
+    }
+    #hero .hero-device {
+      animation: heroSortieDevice linear both;
+      animation-timeline: --hero-vue;
+      animation-range: exit 0% exit 100%;
+    }
+    @keyframes heroSortieCopy {
+      to { transform: translateY(-72px); opacity: .12; }
+    }
+    @keyframes heroSortieDevice {
+      to { transform: translateY(-26px) scale(.965); opacity: .45; }
+    }
+  }
 }
 
 /* ================================================================
@@ -4240,7 +4312,9 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 /* Pendant la roulette et la pose sur "ou c'est gratuit", la phrase
    s'embrase. Rien d'autre ne change : meme police, meme taille, meme
    place. */
-#hero .hero-title .gradient-text { transition: filter .5s var(--ease-out); }
+/* la transition du filtre (embrasement .is-fused) vit dans le bloc
+   d'entree du titre : une regle isolee ici ecrasait clip-path et
+   transform, et la punchline apparaissait d'un coup. */
 #hero .hero-title .gradient-text.is-fused {
   filter: drop-shadow(0 0 16px rgba(242,177,59,.6))
           drop-shadow(0 0 44px rgba(218,84,38,.38));
