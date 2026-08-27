@@ -15,7 +15,7 @@ import { initPreloader } from './modules/preloader.js';
 import { initBrowserReel } from './modules/reel.js';
 import { initDuel } from './modules/duel.js';
 import { initSplitTitles, initTilt, initVelocityMarquee, initCursorFlair } from './modules/motion.js';
-import { initComets } from './modules/comets.js';
+import { initPunchline } from './modules/punchline.js';
 import { initInertia } from './modules/inertia.js';
 import { initAppBar } from './modules/appbar.js';
 import { initNative } from './modules/native.js';
@@ -83,7 +83,7 @@ async function init() {
   initBrowserReel();
   initDuel();
   initVelocityMarquee();
-  initComets();
+  initPunchline();
 
   // Deferred : n'impacte pas le LCP
   setTimeout(() => {

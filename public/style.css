@@ -4303,11 +4303,11 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 }
 
 /* ================================================================
-   COMETES DU HERO — pilotees par js/modules/comets.js
-   Le canvas vit sous le contenu du hero ; la punchline s'embrase
-   quand une comete fusionne avec elle (.is-fused, 2 s).
+   BASCULE DE LA PUNCHLINE — pilotee par js/modules/punchline.js
+   Le canvas vit sous le contenu du hero et ne sert qu'a l'eclat qui
+   accompagne le passage a "ou c'est gratuit." (.is-fused).
    ================================================================ */
-.hero > .comets-fx {
+.hero > .punchline-fx {
   position: absolute !important;   /* .hero > *:not(...) force relative sinon */
   inset: 0;
   z-index: 0;
@@ -4316,9 +4316,6 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 /* le contenu du hero passe au-dessus du canvas */
 .hero-inner { position: relative; z-index: 1; }
 
-/* La fusion : le texte brille bien plus fort, gonfle et change de police
-   le temps de digerer la comete. La bascule de police est volontairement
-   seche : c'est l'impact. */
 #hero .hero-title .gradient-text {
   transform-origin: left center;
 }
@@ -4330,16 +4327,6 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   filter: drop-shadow(0 0 16px rgba(242,177,59,.6))
           drop-shadow(0 0 44px rgba(218,84,38,.38));
 }
-/* Choc intermediaire : la punchline encaisse la comete, breve pulsation */
-#hero .hero-title .gradient-text.is-hit {
-  animation: fuseHit .38s cubic-bezier(.22,1,.36,1);
-}
-@keyframes fuseHit {
-  0%   { transform: scale(1);    filter: brightness(1); }
-  30%  { transform: scale(1.05); filter: brightness(1.6) drop-shadow(0 0 18px rgba(242,177,59,.7)); }
-  100% { transform: scale(1);    filter: brightness(1); }
-}
-
 
 @media (max-width: 1059px) {
   /* hero centre : le gonflement part du centre pour ne pas pousser a droite */
