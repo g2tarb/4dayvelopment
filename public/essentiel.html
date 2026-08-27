@@ -78,9 +78,9 @@
       top: 0;
       z-index: 100;
     }
-    header img { height: 113px; }
+    header img { height: auto; width: min(26rem, 55vi); max-height: 113px; }
     .back-link {
-      font-size: 13px;
+      font-size: 0.8125rem;
       color: var(--muted);
       text-decoration: none;
       display: flex;
@@ -122,11 +122,11 @@
       0%, 100% { box-shadow: 0 0 0 0 rgba(218,84,38,0); }
       50%       { box-shadow: 0 0 0 8px rgba(218,84,38,0.12); }
     }
-    .badge-4j-icon { font-size: 22px; }
+    .badge-4j-icon { font-size: 1.375rem; }
     .badge-4j-text { display: flex; flex-direction: column; }
     .badge-4j-main {
       font-family: 'Syne', sans-serif;
-      font-size: 18px;
+      font-size: 1.125rem;
       font-weight: 800;
       background: linear-gradient(135deg, var(--orange), var(--amber));
       -webkit-background-clip: text;
@@ -135,7 +135,7 @@
       letter-spacing: -0.5px;
     }
     .badge-4j-sub {
-      font-size: 11px;
+      font-size: 0.6875rem;
       color: var(--muted);
       letter-spacing: 0.5px;
     }
@@ -155,7 +155,7 @@
       background-clip: text;
     }
     .pitch p.desc {
-      font-size: 16px;
+      font-size: 1rem;
       color: var(--muted);
       line-height: 1.7;
       max-width: 460px;
@@ -164,7 +164,7 @@
     /* Ce que comprend la formule */
     .inclus-title {
       font-family: 'Syne', sans-serif;
-      font-size: 11px;
+      font-size: 0.6875rem;
       font-weight: 700;
       letter-spacing: 2px;
       text-transform: uppercase;
@@ -180,7 +180,7 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      font-size: 14px;
+      font-size: 0.875rem;
       color: var(--text);
     }
     .inclus-check {
@@ -190,7 +190,7 @@
       border: 1px solid rgba(218,84,38,0.3);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      font-size: 11px;
+      font-size: 0.6875rem;
       color: var(--amber);
     }
 
@@ -216,9 +216,9 @@
       background-clip: text;
       line-height: 1;
     }
-    .prix-detail { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .prix-detail { font-size: 0.8125rem; color: var(--muted); line-height: 1.6; }
     .prix-paiement {
-      font-size: 12px;
+      font-size: 0.75rem;
       background: rgba(218,84,38,0.1);
       border: 1px solid rgba(218,84,38,0.2);
       color: var(--amber);
@@ -241,15 +241,19 @@
     .mb-header {
       display: flex;
       align-items: center;
+      /* la ligne icone + titre + prix exige 280px d'un bloc : sur les
+         ecrans les plus etroits, le prix passe dessous au lieu de pousser
+         la page. Aucun breakpoint : la ligne decide selon sa place. */
+      flex-wrap: wrap;
       gap: 12px;
     }
-    .mb-icon { font-size: 24px; flex-shrink: 0; }
+    .mb-icon { font-size: 1.5rem; flex-shrink: 0; }
     .mb-title {
       font-family: 'Syne', sans-serif;
-      font-size: 15px;
+      font-size: 0.9375rem;
       font-weight: 700;
     }
-    .mb-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .mb-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
     .mb-price {
       margin-left: auto;
       display: flex;
@@ -268,21 +272,24 @@
       letter-spacing: -1px;
       line-height: 1;
     }
-    .mb-per { font-size: 12px; color: var(--muted); }
+    .mb-per { font-size: 0.75rem; color: var(--muted); }
     .mb-items {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      /* deux colonnes quand la place existe, une seule sinon : la grille
+         decide elle-meme, aucun breakpoint. min(100%, 10rem) garantit
+         qu'une colonne ne peut jamais exiger plus que son conteneur. */
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
       gap: 6px;
     }
     .mb-item {
-      font-size: 12px;
+      font-size: 0.75rem;
       color: var(--muted);
       display: flex;
       align-items: center;
       gap: 6px;
     }
     .mb-footer {
-      font-size: 11px;
+      font-size: 0.6875rem;
       color: var(--muted);
       padding-top: 10px;
       border-top: 1px solid rgba(136,64,131,0.15);
@@ -292,7 +299,7 @@
       align-items: center;
       gap: 10px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 0.8125rem;
       font-weight: 600;
       color: var(--text);
       padding: 10px 14px;
@@ -323,10 +330,10 @@
       transform: rotate(45deg) translate(-1px,-1px);
       display: block;
     }
-    .wp-add-title { font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 700; }
-    .wp-add-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-    .wp-add-item { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-    .wp-add-footer { font-size: 11px; color: var(--muted); padding-top: 10px; border-top: 1px solid rgba(136,64,131,0.15); }
+    .wp-add-title { font-family: 'Syne', sans-serif; font-size: 0.9375rem; font-weight: 700; }
+    .wp-add-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .wp-add-item { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
+    .wp-add-footer { font-size: 0.6875rem; color: var(--muted); padding-top: 10px; border-top: 1px solid rgba(136,64,131,0.15); }
 
     /* Timeline 4 jours */
     .timeline { display: flex; flex-direction: column; gap: 0; }
@@ -360,21 +367,21 @@
       background: rgba(218,84,38,0.15);
       border: 2px solid var(--orange);
       display: flex; align-items: center; justify-content: center;
-      font-size: 9px;
+      font-size: 0.5625rem;
       font-weight: 800;
       color: var(--orange);
       font-family: 'Syne', sans-serif;
     }
     .tl-content { padding-top: 2px; }
     .tl-day {
-      font-size: 11px;
+      font-size: 0.6875rem;
       font-weight: 700;
       color: var(--orange);
       letter-spacing: 1px;
       text-transform: uppercase;
       margin-bottom: 2px;
     }
-    .tl-desc { font-size: 13px; color: var(--muted); line-height: 1.5; }
+    .tl-desc { font-size: 0.8125rem; color: var(--muted); line-height: 1.5; }
 
     /* ── Colonne droite : formulaire ── */
     .form-side {
@@ -384,13 +391,13 @@
     }
     .form-title {
       font-family: 'Syne', sans-serif;
-      font-size: 18px;
+      font-size: 1.125rem;
       font-weight: 800;
       letter-spacing: -0.5px;
       margin-bottom: 6px;
     }
     .form-subtitle {
-      font-size: 13px;
+      font-size: 0.8125rem;
       color: var(--muted);
       margin-bottom: 32px;
     }
@@ -398,7 +405,7 @@
     /* Champs */
     .field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
     .field label {
-      font-size: 11px;
+      font-size: 0.6875rem;
       font-weight: 700;
       letter-spacing: 1.5px;
       text-transform: uppercase;
@@ -413,7 +420,7 @@
       border-radius: 10px;
       padding: 13px 16px;
       font-family: 'Inter', sans-serif;
-      font-size: 14px;
+      font-size: 0.875rem;
       color: var(--text);
       outline: none;
       transition: border-color .2s, box-shadow .2s;
@@ -431,7 +438,7 @@
     }
     .field input.err { border-color: #ef4444; }
     .field textarea { resize: vertical; min-height: 90px; }
-    .field-error { font-size: 11px; color: #ef4444; display: none; }
+    .field-error { font-size: 0.6875rem; color: #ef4444; display: none; }
     .field-error.show { display: block; }
 
     @keyframes shake {
@@ -460,7 +467,7 @@
       border-radius: 8px;
       padding: 10px 12px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 0.8125rem;
       transition: all .2s;
       user-select: none;
     }
@@ -504,7 +511,7 @@
       border: 1px solid var(--border);
       background: #181818;
       color: var(--muted);
-      font-size: 12px;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
       text-align: center;
@@ -527,7 +534,7 @@
       background: linear-gradient(135deg, var(--orange), #b83d1c);
       color: #fff;
       font-family: 'Syne', sans-serif;
-      font-size: 15px;
+      font-size: 0.9375rem;
       font-weight: 800;
       padding: 18px;
       border-radius: 12px;
@@ -567,7 +574,7 @@
     @keyframes spin { to { transform: rotate(360deg); } }
 
     .form-legal {
-      font-size: 11px;
+      font-size: 0.6875rem;
       color: #333;
       text-align: center;
       margin-top: 12px;
@@ -578,7 +585,7 @@
     .feedback {
       padding: 12px 16px;
       border-radius: 10px;
-      font-size: 13px;
+      font-size: 0.8125rem;
       margin-top: 12px;
       display: none;
     }
@@ -600,10 +607,10 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      font-size: 12px;
+      font-size: 0.75rem;
       color: var(--muted);
     }
-    .garantie-icon { font-size: 14px; }
+    .garantie-icon { font-size: 0.875rem; }
 
     /* Succès */
     .success {
@@ -615,12 +622,12 @@
     .success-svg { width: 80px; height: 80px; margin: 0 auto 24px; }
     .success h2 {
       font-family: 'Syne', sans-serif;
-      font-size: 22px;
+      font-size: 1.375rem;
       font-weight: 800;
       letter-spacing: -0.5px;
       margin-bottom: 12px;
     }
-    .success p { font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+    .success p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
     .btn-retour {
       display: inline-flex;
       align-items: center;
@@ -630,7 +637,7 @@
       border: 1px solid var(--border);
       color: var(--text);
       text-decoration: none;
-      font-size: 13px;
+      font-size: 0.8125rem;
       font-weight: 600;
       transition: all .2s;
     }
@@ -646,7 +653,7 @@
       color: var(--muted);
       padding: 6px 14px;
       border-radius: 100px;
-      font-size: 12px;
+      font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
       transition: all .2s;
@@ -657,7 +664,6 @@
 
     /* ── Mobile UX fondamentaux ── */
     * { -webkit-tap-highlight-color: transparent; }
-    body { overflow-x: hidden; }
     button, a, label { touch-action: manipulation; }
 
     /* ── Responsive ── */
@@ -673,29 +679,29 @@
 
     @media (max-width: 600px) {
       header { padding: 10px 16px; }
-      header img { height: 64px; }
-      .back-link { font-size: 12px; }
+      header img { max-height: 64px; }
+      .back-link { font-size: 0.75rem; }
       .pitch { padding: 28px 16px; gap: 24px; }
       .pitch h1 { font-size: clamp(1.6rem, 7vw, 2.2rem); letter-spacing: -1px; }
-      .pitch p.desc { font-size: 14px; }
+      .pitch p.desc { font-size: 0.875rem; }
       .prix-block { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 16px; }
       .prix-montant { font-size: 2.2rem; }
       .maintenance-block { padding: 16px; }
       .form-side { padding: 24px 16px; }
-      .form-title { font-size: 16px; }
-      .form-subtitle { font-size: 12px; margin-bottom: 20px; }
+      .form-title { font-size: 1rem; }
+      .form-subtitle { font-size: 0.75rem; margin-bottom: 20px; }
       .field { margin-bottom: 14px; }
       /* iOS : évite le zoom auto au focus */
       .field input,
       .field select,
-      .field textarea { font-size: 16px; padding: 12px 14px; }
+      .field textarea { font-size: 1rem; padding: 12px 14px; }
       .urg-btns { flex-direction: column; }
       .urg-btn { width: 100%; justify-content: center; padding: 14px; min-height: 50px; }
       .btn-submit-wrap { position: sticky; bottom: 0; background: var(--card); padding: 12px 0 0; }
     }
 
     @media (max-width: 400px) {
-      header img { height: 52px; }
+      header img { max-height: 52px; }
       .pitch { padding: 20px 14px; }
       .form-side { padding: 20px 14px; }
       .pages-grid { grid-template-columns: 1fr; }
@@ -756,7 +762,7 @@
         </div>
         <div style="text-align:right;">
           <div class="prix-paiement">ou 2× 445€</div>
-          <div id="prix-secure" style="font-size:11px;color:var(--muted);margin-top:6px;">Paiement sécurisé</div>
+          <div id="prix-secure" style="font-size: 0.6875rem;color:var(--muted);margin-top:6px;">Paiement sécurisé</div>
         </div>
       </div>
 

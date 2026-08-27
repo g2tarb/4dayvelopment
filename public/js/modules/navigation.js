@@ -29,6 +29,11 @@ export function initProgress() {
     bar.id = 'scroll-progress';
     document.body.prepend(bar);
   }
+  /* La barre est pilotee en CSS par animation-timeline: scroll(), sur le
+     compositeur. Ce qui suit n'est que le repli des navigateurs qui ne la
+     connaissent pas encore. */
+  if (CSS.supports('animation-timeline: scroll()')) return;
+
   /* Une image au maximum : ces deux ecouteurs ecrivaient des styles a chaque
      evenement de defilement, plusieurs dizaines de fois entre deux rendus. */
   let attenduP = false;

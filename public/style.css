@@ -226,6 +226,21 @@ body::after {
   box-shadow: 0 0 10px var(--accent);
   transition: width .1s linear;
 }
+/* Pilotage par le defilement lui-meme, sur le compositeur : aucun ecouteur
+   JS, aucune image manquee quand le main thread est occupe. scaleX et non
+   width : pas de layout. Le JS ne sert plus que de repli aux navigateurs
+   sans animation-timeline (navigation.js teste CSS.supports). */
+@supports (animation-timeline: scroll()) {
+  #scroll-progress {
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: none;
+    animation: barre-avance linear both;
+    animation-timeline: scroll(root block);
+  }
+  @keyframes barre-avance { to { transform: scaleX(1); } }
+}
 
 /* ── NAV ───────────────────────────────────────────────────── */
 nav {
@@ -2705,15 +2720,11 @@ footer {
   #floating-cta {
     bottom: calc(28px + env(safe-area-inset-bottom));
   }
-  #rgpd-banner {
-    bottom: calc(24px + env(safe-area-inset-bottom));
-  }
   @media (max-width: 768px) {
     #floating-cta { bottom: calc(20px + env(safe-area-inset-bottom)); }
   }
   @media (max-width: 480px) {
     #floating-cta { bottom: calc(16px + env(safe-area-inset-bottom)); }
-    #rgpd-banner  { bottom: calc(16px + env(safe-area-inset-bottom)); }
   }
 }
 
@@ -2743,154 +2754,6 @@ footer {
   }
 
 
-}
-
-/* ═══════════════════════════════════════════════════════════
-   RGPD — Bannière de consentement
-═══════════════════════════════════════════════════════════ */
-#rgpd-banner {
-  position: fixed;
-  bottom: 24px;
-  left: 50%;
-  transform: translateX(-50%) translateY(120px);
-  width: min(680px, calc(100vw - 32px));
-  background: rgba(14,14,14,0.96);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 20px;
-  padding: 20px 24px;
-  z-index: 999999;
-  box-shadow: 0 16px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(218,84,38,0.15);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  opacity: 0;
-  transition: transform .4s cubic-bezier(.34,1.56,.64,1), opacity .35s ease;
-  will-change: transform, opacity;
-}
-#rgpd-banner.rgpd-visible {
-  transform: translateX(-50%) translateY(0);
-  opacity: 1;
-}
-#rgpd-banner.rgpd-hiding {
-  transform: translateX(-50%) translateY(120px);
-  opacity: 0;
-}
-
-.rgpd-inner {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.rgpd-text { flex: 1; min-width: 200px; }
-.rgpd-title {
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: #f0f0f0;
-  margin: 0 0 4px;
-}
-.rgpd-desc {
-  font-size: 0.75rem;
-  color: #888;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.rgpd-actions {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-  flex-shrink: 0;
-}
-
-.rgpd-btn {
-  padding: 8px 16px;
-  border-radius: 100px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  cursor: pointer;
-  border: none;
-  transition: opacity .2s, transform .2s;
-}
-.rgpd-btn:hover { opacity: .85; transform: translateY(-1px); }
-
-.rgpd-refuse {
-  background: transparent;
-  color: #666;
-  border: 1px solid #333;
-}
-.rgpd-refuse:hover { color: #aaa; border-color: #555; }
-
-.rgpd-custom {
-  background: rgba(255,255,255,0.07);
-  color: #ccc;
-  border: 1px solid #333;
-}
-
-.rgpd-accept {
-  background: linear-gradient(135deg, #DA5426, #f2b13b);
-  color: #fff;
-}
-
-/* ── Panneau personnalisation ── */
-.rgpd-panel {
-  margin-top: 16px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(255,255,255,0.08);
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-.rgpd-panel[hidden] { display: none; }
-.rgpd-panel-title {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  color: #ccc;
-  margin: 0 0 4px;
-}
-
-.rgpd-toggle {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-}
-.rgpd-toggle input[type="checkbox"] {
-  position: absolute;
-  opacity: 0;
-  width: 0; height: 0;
-}
-.rgpd-slider {
-  position: relative;
-  display: inline-block;
-  width: 36px;
-  height: 20px;
-  background: #333;
-  border-radius: 100px;
-  flex-shrink: 0;
-  transition: background .25s;
-}
-.rgpd-slider::after {
-  content: '';
-  position: absolute;
-  top: 3px; left: 3px;
-  width: 14px; height: 14px;
-  background: #fff;
-  border-radius: 50%;
-  transition: transform .25s;
-}
-.rgpd-toggle input:checked + .rgpd-slider { background: linear-gradient(135deg, #DA5426, #f2b13b); }
-.rgpd-toggle input:checked + .rgpd-slider::after { transform: translateX(16px); }
-.rgpd-toggle input:disabled + .rgpd-slider { opacity: 0.5; cursor: not-allowed; }
-
-.rgpd-toggle-label { font-size: 0.8125rem; color: #ccc; line-height: 1.4; }
-.rgpd-required { font-size: 0.6875rem; color: #555; margin-left: 4px; }
-.rgpd-hint     { font-size: 0.6875rem; color: #666; margin-left: 4px; }
-
-@media (max-width: 480px) {
-  #rgpd-banner { bottom: 16px; padding: 16px; }
-  .rgpd-inner { flex-direction: column; align-items: flex-start; }
-  .rgpd-actions { width: 100%; justify-content: flex-end; }
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -3255,7 +3118,7 @@ footer {
 @media print {
   nav, #floating-cta, #toast-container, #exit-overlay,
   #scroll-progress, #three-bg,
-  .mobile-menu, .sticky-mobile-cta, #rgpd-banner,
+  .mobile-menu, .sticky-mobile-cta,
   body::after { display: none !important; }
   body { background: #fff; color: #111; }
   .hero { min-height: auto; padding: 40px 0; }
