@@ -24,7 +24,7 @@ export function initNative() {
    le doigt. Des que la rangee est a l'ecran, on revele tout son contenu. */
 function carrouselsEntiers() {
   if (!('IntersectionObserver' in window)) return;
-  const rangees = [...document.querySelectorAll('.testimonials-grid, .pricing-grid')];
+  const rangees = [...document.querySelectorAll('.testimonials-grid, .pricing-grid, .show-grid')];
   if (!rangees.length) return;
 
   const io = new IntersectionObserver(entrees => {

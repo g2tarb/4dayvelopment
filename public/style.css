@@ -4702,3 +4702,31 @@ p { text-wrap: pretty; }
 @media (prefers-reduced-motion: reduce) {
   .car-dot::before { transition: none; }
 }
+
+/* ── 7. Les realisations defilent au lieu de s'empiler ──
+   Huit cartes en colonne, c'est un mur de trois mille pixels a remonter
+   avant d'atteindre la suite de la page. Meme traitement que les avis :
+   une piste horizontale a accroche, une carte a la fois, et les pastilles
+   du module carousel.js pour dire combien il en reste. La grille revient
+   des la tablette. */
+@media (max-width: 768px) {
+  .show-grid {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scroll-padding-inline: 20px;
+    gap: 14px;
+    /* la piste deborde des marges du conteneur : la carte suivante se
+       devine au bord de l'ecran, c'est ce qui donne envie de balayer */
+    padding: 0 20px 12px;
+    margin: 0 -20px;
+    max-width: calc(100% + 40px);
+    scrollbar-width: none;
+  }
+  .show-grid::-webkit-scrollbar { display: none; }
+  .show-card {
+    flex: 0 0 min(320px, 84vw);
+    scroll-snap-align: center;
+  }
+}
