@@ -78,6 +78,12 @@ export function initNav() {
   overlay.className = 'mobile-menu-overlay';
   document.body.appendChild(overlay);
 
+  /* Panneau ouvert : le reste de la page devient inerte. Sans cela, Tab
+     sortait du panneau et le focus se promenait dans un contenu recouvert.
+     La nav reste vivante : elle porte le bouton de fermeture. inert coupe
+     focus ET clics, et le lecteur d'ecran saute ces zones. */
+  const zonesInertes = () => ['main', 'footer', '#appbar', '#floating-cta']
+    .map(sel => document.querySelector(sel)).filter(Boolean);
   function openMenu() {
     ham.classList.add('open');
     menu.classList.add('open');
@@ -85,6 +91,8 @@ export function initNav() {
     // la page recule derriere le panneau, comme une feuille posee dessus
     document.body.classList.add('sheet-ouverte');
     document.body.style.overflow = 'hidden';
+    zonesInertes().forEach(el => { el.inert = true; });
+    ham.setAttribute('aria-expanded', 'true');
   }
   function closeMenu() {
     ham.classList.remove('open');
@@ -92,7 +100,11 @@ export function initNav() {
     overlay.classList.remove('open');
     document.body.classList.remove('sheet-ouverte');
     document.body.style.overflow = '';
+    zonesInertes().forEach(el => { el.inert = false; });
+    ham.setAttribute('aria-expanded', 'false');
   }
+  ham.setAttribute('aria-expanded', 'false');
+  ham.setAttribute('aria-controls', 'mobile-menu');
 
   on(ham, 'click', () => menu.classList.contains('open') ? closeMenu() : openMenu());
   $$('.mobile-menu a').forEach(a => on(a, 'click', closeMenu));
@@ -186,6 +198,11 @@ export function initBottomSheetSwipe() {
       if (overlay) overlay.classList.remove('open');
       document.body.classList.remove('sheet-ouverte');
       document.body.style.overflow = '';
+      ['main', 'footer', '#appbar', '#floating-cta'].forEach(sel => {
+        const el = document.querySelector(sel);
+        if (el) el.inert = false;
+      });
+      ham && ham.setAttribute('aria-expanded', 'false');
     }
     menu.style.transform = '';
     startY = 0;

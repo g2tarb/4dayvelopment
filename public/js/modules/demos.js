@@ -231,16 +231,37 @@ export function initDemoViewer() {
       .observe(names, { childList: true, subtree: true, characterData: true });
   }
 
-  // Chargement paresseux : rien ne part tant que le hero est hors ecran
-  const io = new IntersectionObserver(entries => {
-    if (!entries.some(e => e.isIntersecting)) return;
+  /* Chargement paresseux, en deux verrous :
+     - la section doit etre a l'ecran (comme avant) ;
+     - ET la page doit avoir fini de charger, plus un temps d'accalmie.
+     Sans le second, le hero etant le premier ecran, le site de demo
+     partait immediatement : 45 requetes et 830 Ko en concurrence avec le
+     LCP, dont Fraunces chargee pour un mockup de 240 px. Le splash au
+     logo tourne dans le telephone pendant l'attente : rien ne parait
+     casse, le diaporama commence simplement une respiration plus tard.
+     Le prechargement du site suivant attend, lui, que le premier soit
+     affiche : deux sites complets partaient d'un coup. */
+  let enVueDemarrage = false, pageCalme = document.readyState === 'complete';
+  const demarrer = () => {
+    if (started || !enVueDemarrage || !pageCalme) return;
     started = true;
     frames[front].src = urlAt(idx);
-    preloadNext();
+    on(frames[front], 'load', preloadNext, { once: true });
     fit();
     restartFill();
     schedule();
-    io.disconnect();
+  };
+  if (!pageCalme) {
+    on(window, 'load', () => {
+      const calme = () => { pageCalme = true; demarrer(); };
+      'requestIdleCallback' in window ? requestIdleCallback(calme, { timeout: 1200 }) : setTimeout(calme, 600);
+    }, { once: true });
+  }
+  const io = new IntersectionObserver(entries => {
+    if (!entries.some(e => e.isIntersecting)) return;
+    enVueDemarrage = true;
+    demarrer();
+    if (started) io.disconnect();
   }, { rootMargin: '300px' });
   io.observe(section);
 
