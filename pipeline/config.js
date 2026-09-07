@@ -5,6 +5,7 @@ export const config = {
   telegramToken: process.env.TELEGRAM_BOT_TOKEN,
   adminChatId: Number(process.env.TELEGRAM_ADMIN_CHAT_ID || 1436812162),
   intakePort: Number(process.env.PIPELINE_PORT || 4100),
+  intakeHost: process.env.PIPELINE_HOST || '0.0.0.0',
   intakeToken: process.env.PIPELINE_INTAKE_TOKEN,
 
   anthropicKey: process.env.ANTHROPIC_API_KEY,

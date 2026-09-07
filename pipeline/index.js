@@ -76,7 +76,7 @@ registerCallbacks(bot);  // GO, A/R/T, CONFIRM/CANCEL/SIGNE, diag
 
 /* ── Démarrage ── */
 require_('telegramToken'); // fail-fast lisible si le token manque
-server.listen(config.intakePort, () => console.log(`[intake] écoute sur :${config.intakePort}`));
+server.listen(config.intakePort, config.intakeHost, () => console.log(`[intake] écoute sur :${config.intakePort}`));
 
 const stuck = dbMod.findStuckLeads();
 if (stuck.length) {
