@@ -1,6 +1,6 @@
 # 4dayvelopment
 
-> Agence web basée à Paris. Création de sites internet (vitrine, portfolio, e-commerce) livrés en 4 jours ouvrés, et d'applications web livrées à partir de 4 jours, à prix affiché. Délai de 4 jours ouvrés garanti contractuellement (CGV, article 5), décompté à partir de la réception des contenus, du versement de l'acompte et de la validation du devis et du brief.
+> Agence web basée à Paris. Création de sites internet (vitrine, portfolio, e-commerce) livrés en 4 jours ouvrés, et d'applications web livrées à partir de 4 jours, à prix affiché. Livré en 4 jours ouvrés, ou c'est gratuit, dès lors que les contenus sont fournis, l'acompte encaissé et le périmètre validé au brief (CGV, articles 5 et 6).
 
 ## Offres et tarifs
 - [Site web](https://4dayvelopment.fr/#tarifs) : vitrine, portfolio ou boutique, design sur-mesure, SEO et hébergement 1 an inclus, livré en 4 jours. À partir de 890 €, ou 2 fois 445 €.

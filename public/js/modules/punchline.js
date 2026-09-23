@@ -1,6 +1,7 @@
 /* ── La punchline qui se retourne ──
    A intervalle regulier, "livre en 4 jours." se change en "ou c'est
-   gratuit." : une roulette de lettres se pose de gauche a droite, la
+   gratuit*." : l'asterisque renvoie aux conditions de la note sous les
+   boutons du hero (CGV, article 6). Une roulette de lettres se pose de gauche a droite, la
    phrase s'embrase le temps d'etre lue, puis la roulette la ramene a
    l'original. Un eclat de particules marque la bascule.
 
@@ -108,7 +109,7 @@ export function initPunchline() {
 
     const em = c.em;
     const original = em.textContent;
-    const alternative = document.documentElement.lang === 'en' ? "or it's free." : "ou c'est gratuit.";
+    const alternative = document.documentElement.lang === 'en' ? "or it's free*." : "ou c'est gratuit*.";
 
     // le titre garde sa hauteur meme si un tirage intermediaire replie
     // differemment la ligne

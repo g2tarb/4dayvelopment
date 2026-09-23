@@ -511,6 +511,16 @@ p.maj {
   justify-content: center;
   margin-bottom: 64px;
 }
+/* Conditions de « 4 jours ou c'est gratuit* » (punchline du H1) : sur sa
+   propre ligne sous les boutons, sans marge a compenser */
+.hero-note {
+  flex-basis: 100%;
+  margin: 0;
+  font-size: clamp(0.75rem, 0.72rem + 0.1vi, 0.8125rem);
+  line-height: 1.5;
+  color: var(--muted);
+}
+.hero-note a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 
 /* ── BUTTONS ───────────────────────────────────────────────── */
 .btn-primary {
