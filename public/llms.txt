@@ -6,7 +6,7 @@
 - [Site web](https://4dayvelopment.fr/#tarifs) : vitrine, portfolio ou boutique, design sur-mesure, SEO et hébergement 1 an inclus, livré en 4 jours. À partir de 890 €, ou 2 fois 445 €.
 - [Formule Essentiel](https://4dayvelopment.fr/essentiel) : site vitrine jusqu'à 3 pages, 890 €.
 - [Application web](https://4dayvelopment.fr/#tarifs) : MVP, outil métier ou plateforme, installable (PWA), base de données incluse, livrée à partir de 4 jours. À partir de 1 990 €, ou 2 fois 995 €.
-- Maintenance : 80 € par mois, engagement 12 mois.
+- Maintenance : mises à jour de sécurité, correction de bugs, sauvegardes régulières et support technique par email. 80 € par mois, engagement 12 mois, résiliable à l'échéance avec un préavis de 30 jours (CGV, article 9).
 - Option WordPress sur toutes les formules : +250 €, formation à la prise en main incluse.
 - Paiement : 50 % à la commande, 50 % à la livraison, paiement en 2 fois sans frais (CGV, article 4).
 
