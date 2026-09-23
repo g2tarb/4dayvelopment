@@ -838,6 +838,14 @@ app.get('/api/blog/list', apiLimiter, (req, res) => {
   }
 });
 
+/* ── GET /api/version ─────────────────────────────────────
+   Commit servi (variable fournie par Render). Le workflow IndexNow l'attend
+   avant de signaler les URLs : pinguer avant la fin du déploiement ferait
+   recrawler l'ancienne version. */
+app.get('/api/version', apiLimiter, (req, res) => {
+  res.json({ commit: process.env.RENDER_GIT_COMMIT || null });
+});
+
 /* ── URLs propres (sans .html) ────────────────────────── */
 const cleanPages = {
   '/essentiel':      'essentiel.html',
