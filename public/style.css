@@ -1710,8 +1710,10 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 
 .testimonials-grid {
   display: grid;
-  /* trois avis : une seule rangee */
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* une seule rangee quel que soit le nombre d'avis (deux en attente de
+     validation ecrite, voir docs/geo/05-validation-avis.md) : les pistes
+     vides s'effacent, les cartes occupent toute la largeur */
+  grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
   gap: 20px;
   margin-top: 60px;
   max-width: 1140px;
