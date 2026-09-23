@@ -476,6 +476,14 @@ nav.scrolled {
   100%{background-position:0% 50%}
 }
 
+/* Date de mise a jour visible : moteurs et assistants IA jugent la
+   fraicheur d'une page a une date lisible, pas au seul sitemap. Meme date
+   que le lastmod du sitemap (npm run check:seo). */
+p.maj {
+  font-size: clamp(0.8rem, 0.78rem + 0.1vi, 0.875rem);
+  color: var(--muted);
+  margin-block: 0 1rem;
+}
 .hero-desc {
   font-size: clamp(1rem, 2vw, 1.2rem);
   color: var(--muted);

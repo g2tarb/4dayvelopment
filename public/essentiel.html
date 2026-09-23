@@ -154,6 +154,9 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+    /* date de mise a jour visible : #888 et non --muted (#666, contraste 3,6:1 sur ce fond) */
+    .maj { font-size: clamp(0.8rem, 0.78rem + 0.1vi, 0.875rem); color: #888; margin-block-start: 0.75rem; }
+
     .pitch p.desc {
       font-size: 1rem;
       color: var(--muted);
@@ -736,6 +739,7 @@
       <!-- Titre -->
       <div>
         <h1>Formule <span class="g">Essentiel</span><br>à 890€</h1>
+        <p class="maj">Mis à jour le <time datetime="2026-08-17">17 août 2026</time></p>
         <p class="desc" style="margin-top:16px;">Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.</p>
       </div>
 

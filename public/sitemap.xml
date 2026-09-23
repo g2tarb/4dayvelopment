@@ -1,60 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- lastmod = date « Mis à jour le » visible sur la page, soit la dernière
+     modification réelle du contenu (npm run check:seo vérifie l'égalité). -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
   <url>
     <loc>https://4dayvelopment.fr/</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-08-28</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/essentiel</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-08-17</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/devis</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-07-23</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/services/site-vitrine</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-08-17</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/services/e-commerce</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-08-17</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/services/referencement-seo</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-08-15</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/services/site-internet-restaurant</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-08-17</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/blog</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-08-06</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/portfolio</loc>
-    <lastmod>2026-06-27</lastmod>
+    <lastmod>2026-08-06</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/blog/combien-coute-site-internet-2026</loc>
-    <lastmod>2026-07-02</lastmod>
+    <lastmod>2026-08-17</lastmod>
   </url>
 
   <url>
     <loc>https://4dayvelopment.fr/exemples</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-08-06</lastmod>
   </url>
+
 </urlset>
