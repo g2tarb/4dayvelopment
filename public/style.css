@@ -448,6 +448,13 @@ nav.scrolled {
 @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
 
 /* Hero title */
+/* 320 px : item d'un flex centre, le conteneur du hero prenait la largeur du
+   plus long mot du H1 (« Référencement » : 436 px) puis etait rogne par le
+   overflow:hidden du hero. Il prend la largeur disponible, et les titres
+   coupent aux syllabes (lang="fr") quand un mot ne tient pas. */
+.hero > .container { width: 100%; }
+.hero-title, .section-title { hyphens: auto; }
+
 .hero-title {
   font-family: 'Syne', sans-serif;
   font-size: clamp(3rem, 8vw, 6.5rem);
