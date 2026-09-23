@@ -228,9 +228,8 @@ ${getVal('e-description')}
         /* submit & garanties */
         ['.btn-label',               '⚡ Commander ma formule Essentiel →'],
         ['.garanties .garantie',     '<span class="garantie-icon">🔒</span>Paiement 100% sécurisé', 0],
-        ['.garanties .garantie',     '<span class="garantie-icon">↩️</span>Satisfait ou remboursé sous 14 jours', 1],
-        ['.garanties .garantie',     '<span class="garantie-icon">⚡</span>Livraison en 4 jours garantie contractuellement', 2],
-        ['.garanties .garantie',     '<span class="garantie-icon">💬</span>Réponse sous 2h par email ou WhatsApp', 3],
+        ['.garanties .garantie',     '<span class="garantie-icon">⚡</span>Livraison en 4 jours garantie contractuellement', 1],
+        ['.garanties .garantie',     '<span class="garantie-icon">💬</span>Réponse sous 2h par email ou WhatsApp', 2],
         ['.form-legal',              'En soumettant ce formulaire, vous acceptez que vos données soient utilisées pour traiter votre commande. Aucun spam.'],
         /* success */
         ['#success h2',              'Commande reçue ! <span class="g">⚡</span>'],
@@ -325,9 +324,8 @@ ${getVal('e-description')}
         /* submit & garanties */
         ['.btn-label',               '⚡ Order my Essential plan →'],
         ['.garanties .garantie',     '<span class="garantie-icon">🔒</span>100% secure payment', 0],
-        ['.garanties .garantie',     '<span class="garantie-icon">↩️</span>Satisfied or refunded within 14 days', 1],
-        ['.garanties .garantie',     '<span class="garantie-icon">⚡</span>4-day delivery contractually guaranteed', 2],
-        ['.garanties .garantie',     '<span class="garantie-icon">💬</span>Reply within 2h by email or WhatsApp', 3],
+        ['.garanties .garantie',     '<span class="garantie-icon">⚡</span>4-day delivery contractually guaranteed', 1],
+        ['.garanties .garantie',     '<span class="garantie-icon">💬</span>Reply within 2h by email or WhatsApp', 2],
         ['.form-legal',              'By submitting this form, you agree that your data will be used to process your order. No spam.'],
         /* success */
         ['#success h2',              'Order received! <span class="g">⚡</span>'],
