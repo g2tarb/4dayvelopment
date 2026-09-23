@@ -19,6 +19,9 @@
 - [Combien coûte un site internet en 2026](https://4dayvelopment.fr/blog/combien-coute-site-internet-2026) : guide des prix comparant plateformes, freelances et agences.
 - [Réalisations](https://4dayvelopment.fr/portfolio) : projets livrés, avec lien vers chaque site en ligne.
 - [Exemples par métier](https://4dayvelopment.fr/exemples) : six démos (restauration, beauté, électricien IRVE, coach sportif, barbier, plombier). Ce sont des sites de démonstration, pas des sites de clients.
+- [Application web et MVP](https://4dayvelopment.fr/services/application-web) : PWA, MVP, outil métier ou plateforme, dès 1 990 € [À FOURNIR : HT ou TTC].
+- [Méthode 4 jours](https://4dayvelopment.fr/methode-4-jours) : conditions de départ, déroulé jour par jour, contenus à préparer, garantie.
+- [L'agence](https://4dayvelopment.fr/agence) : associés, localisation, informations légales.
 - [Demande de devis](https://4dayvelopment.fr/devis)
 
 ## Zone d'intervention

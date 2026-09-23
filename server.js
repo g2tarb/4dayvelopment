@@ -864,6 +864,9 @@ const cleanPages = {
   '/services/e-commerce':    'services/e-commerce.html',
   '/services/referencement-seo': 'services/referencement-seo.html',
   '/services/site-internet-restaurant': 'services/site-internet-restaurant.html',
+  '/services/application-web': 'services/application-web.html',
+  '/methode-4-jours': 'methode-4-jours.html',
+  '/agence':         'agence.html',
   '/portfolio':       'portfolio.html',
   '/exemples':        'exemples/index.html', // plus liee dans la nav : les demos passent par le mockup de la home
   '/mentions-legales': 'mentions-legales.html',
