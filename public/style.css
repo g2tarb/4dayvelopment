@@ -1311,6 +1311,9 @@ section { padding: 100px var(--gutter-x); }
   -webkit-text-fill-color: currentColor;
   color: #efe9db;
 }
+/* le chiffre est dessine, pas ecrit : le texte du prix reste "890" (span
+   .sr-only pose par duel.js) au lieu de trente chiffres par rouleau */
+.duel-digits .roll i::before { content: attr(data-n); }
 .duel-side--app .duel-digits .roll i { color: #ecd9ea; }
 
 .duel-pay { font-size: 0.8125rem; color: var(--muted); margin-bottom: 16px; }
