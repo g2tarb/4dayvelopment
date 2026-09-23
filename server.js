@@ -17,6 +17,7 @@ const { z }      = require('zod');
 const sanitizeHtml = require('sanitize-html');
 const crypto = require('crypto');
 const pino       = require('pino');
+const { createIaLog } = require('./ia-log');
 
 /* ── Logger Pino ──────────────────────────────────────── */
 const logger = pino(
@@ -134,6 +135,15 @@ const PORT = process.env.PORT || 3000;
    un proxy de confiance, donc d'un en-tete que le client peut poser. Une
    redirection 301 construite dessus enverrait le visiteur chez l'attaquant. */
 const CANONICAL_HOST = process.env.CANONICAL_HOST || '4dayvelopment.fr';
+
+/* ── Suivi GEO (ia-log.js) : monté avant les redirections pour compter aussi
+   les 301 servies aux robots IA. */
+const iaLog = createIaLog({
+  logger,
+  webhookUrl: process.env.IA_LOG_WEBHOOK_URL,
+  token:      process.env.IA_LOG_TOKEN,
+});
+app.use(iaLog.middleware);
 
 /* ── Redirection HTTPS en production ──────────────────── */
 if (process.env.NODE_ENV === 'production') {
@@ -949,6 +959,11 @@ process.on('unhandledRejection', (raison) => {
 process.on('uncaughtException', (err) => {
   logger.fatal({ err: err.message, stack: err.stack }, 'Exception non rattrapee, arret');
   process.exit(1);
+});
+/* Render envoie SIGTERM a chaque deploiement : on envoie le dernier lot du
+   suivi IA avant de s'arreter (le fetch est borne a 8 s). */
+process.once('SIGTERM', () => {
+  iaLog.flush().finally(() => process.exit(0));
 });
 
 /* ── Démarrage ────────────────────────────────────────── */
