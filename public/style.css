@@ -453,7 +453,10 @@ nav.scrolled {
    overflow:hidden du hero. Il prend la largeur disponible, et les titres
    coupent aux syllabes (lang="fr") quand un mot ne tient pas. */
 .hero > .container { width: 100%; }
-.hero-title, .section-title { hyphens: auto; }
+.hero-title, .section-title {
+  hyphens: auto;
+  hyphenate-limit-chars: 10 4 4; /* seuls les mots longs se coupent : pas de « mé-thode » */
+}
 
 .hero-title {
   font-family: 'Syne', sans-serif;
