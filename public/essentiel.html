@@ -1001,9 +1001,10 @@
   {
     "@context": "https://schema.org",
     "@type": "Service",
+    "url": "https://4dayvelopment.fr/essentiel",
     "name": "Création de site vitrine Essentiel",
     "description": "Site vitrine professionnel jusqu'à 3 pages, livré en 4 jours ouvrés. Design personnalisé, responsive, SEO de base, hébergement et nom de domaine 1 an inclus.",
-    "provider": { "@type": "Organization", "name": "4dayvelopment", "url": "https://4dayvelopment.fr/" },
+    "provider": { "@id": "https://4dayvelopment.fr/#organization", "@type": "Organization", "name": "4dayvelopment", "url": "https://4dayvelopment.fr/" },
     "areaServed": { "@type": "Country", "name": "France" },
     "offers": {
       "@type": "Offer",
@@ -1012,6 +1013,16 @@
       "availability": "https://schema.org/InStock",
       "priceValidUntil": "2026-12-31"
     }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://4dayvelopment.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Formule Essentiel", "item": "https://4dayvelopment.fr/essentiel" }
+    ]
   }
   </script>
   <script src="/js/essentiel.js" defer></script>
