@@ -199,7 +199,7 @@ export function initDuel() {
       const message = document.getElementById('f-message');
       if (message && !message.value.trim() && picked.length) {
         const nom = side.querySelector('.duel-name');
-        message.value = `${nom ? nom.textContent.trim() : ''} — ${picked.join(', ')}.\n`;
+        message.value = `${nom ? nom.textContent.trim() : ''} : ${picked.join(', ')}.\n`;
       }
     });
   });

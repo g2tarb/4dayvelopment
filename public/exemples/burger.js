@@ -81,7 +81,7 @@
   }
 
   document.getElementById('orderBtn').addEventListener('click', () => {
-    say('Ceci est une démonstration — mais ton burger à ' + fmt(displayed).replace(' €', ' €') + ' avait de l’allure.');
+    say('Ceci est une démonstration, mais ton burger à ' + fmt(displayed).replace(' €', ' €') + ' avait de l’allure.');
   });
 
   const topbar = document.getElementById('topbar');

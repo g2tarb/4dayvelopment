@@ -60,13 +60,13 @@
   /* ── Récap en Fraunces italique ── */
   function majRecap() {
     if (!creneau) {
-      recapEl.innerHTML = 'Le carnet est ouvert — choisissez votre jour et votre heure.';
+      recapEl.innerHTML = 'Le carnet est ouvert : choisissez votre jour et votre heure.';
       return;
     }
     const d = jourActif.date;
     const quand = NOMS[jourActif.wd] + ' ' + d.getDate() + ' ' + MOIS_LONG[d.getMonth()] + ', ' + creneau.label;
     const quoi = presta.dataset.nom + ', <b>' + presta.dataset.prix + ' €</b>';
-    recapEl.innerHTML = '« ' + quand + ' — ' + quoi + '. On vous attend. »';
+    recapEl.innerHTML = '« ' + quand + ' : ' + quoi + '. On vous attend. »';
   }
 
   /* ── Sélecteur de jour ── */
@@ -109,15 +109,15 @@
       if (midi) {
         b.className = 'slot midi';
         b.disabled = true;
-        b.title = 'Sans rendez-vous le midi — passez nous voir';
+        b.title = 'Sans rendez-vous le midi : passez nous voir';
       } else if (pris) {
         b.className = 'slot pris';
         b.disabled = true;
-        b.setAttribute('aria-label', fmtH(c) + ' — déjà pris');
+        b.setAttribute('aria-label', fmtH(c) + ', déjà pris');
       } else {
         b.className = 'slot libre';
         b.setAttribute('aria-pressed', 'false');
-        b.setAttribute('aria-label', fmtH(c) + ' — libre');
+        b.setAttribute('aria-label', fmtH(c) + ', libre');
         libres++;
         b.addEventListener('click', () => choisir(b, c));
       }
@@ -167,10 +167,10 @@
   /* ── Confirmation ── */
   document.getElementById('confirmer').addEventListener('click', () => {
     if (!creneau) {
-      say('Choisissez d’abord un jour et une heure — le carnet a horreur du vide.');
+      say('Choisissez d’abord un jour et une heure : le carnet a horreur du vide.');
       return;
     }
-    say('Ceci est une démonstration — mais le fauteuil vous irait bien.');
+    say('Ceci est une démonstration, mais le fauteuil vous irait bien.');
   });
 
   rendreJours();

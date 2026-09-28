@@ -137,7 +137,7 @@
   }
   $('lead').addEventListener('submit', e => {
     e.preventDefault();
-    say('Ceci est une démonstration — aucun message n’a été envoyé.');
+    say('Ceci est une démonstration : aucun message n’a été envoyé.');
   });
 
   paintSlider();

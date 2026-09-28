@@ -147,6 +147,6 @@
     }
     const prenom = f.prenom.value.trim();
     f.reset();
-    say('Ceci est une démonstration — mais ' + prenom + ', ta séance d’essai aurait été bien réelle.');
+    say('Ceci est une démonstration, mais ' + prenom + ', ta séance d’essai aurait été bien réelle.');
   });
 })();
