@@ -3673,6 +3673,14 @@ footer {
   justify-content: center;
   margin-top: 44px;
 }
+/* Phrase d'accompagnement d'une grille de réalisations : centrée, en second plan. */
+.show-note {
+  margin-top: 20px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
 
 @media (max-width: 768px) {
   .show-grid { grid-template-columns: 1fr; gap: 18px; }
