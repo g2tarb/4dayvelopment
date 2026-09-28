@@ -5,17 +5,31 @@ export function initPageTransition() {
   const overlay = $('#page-transition');
   if (!overlay) return;
 
-  // Sélectionne tous les liens vers les formes externes
-  const formLinks = $$('a[href="/essentiel.html"], a[href="/lead.html"], a[href="/essentiel"], a[href="/devis"]');
+  // Liens vers les formulaires autonomes : le voile glisse avant la navigation.
+  // Un seul écouteur sur le document : les liens réécrits par applyLang
+  // (innerHTML) au changement de langue restent interceptés.
+  const formLinks = 'a[href="/essentiel.html"], a[href="/lead.html"], a[href="/essentiel"], a[href="/devis"]';
+  on(document, 'click', e => {
+    const link = e.target.closest(formLinks);
+    // Touche de modification (nouvel onglet, fenêtre) ou autre bouton :
+    // le navigateur garde la main.
+    if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    e.preventDefault();
+    overlay.style.pointerEvents = 'all';
+    overlay.classList.add('active');
+    setTimeout(() => { window.location.href = link.getAttribute('href'); }, 460);
+  });
 
-  formLinks.forEach(link => {
-    on(link, 'click', e => {
-      e.preventDefault();
-      const target = link.getAttribute('href');
-      overlay.style.pointerEvents = 'all';
-      overlay.classList.add('active');
-      setTimeout(() => { window.location.href = target; }, 460);
-    });
+  // Retour arrière restauré depuis le cache du navigateur (bfcache, surtout
+  // Safari iOS) : la page revient voile compris, et plus rien n'est cliquable.
+  // On le retire sans transition, sinon il reste visible le temps du glissement.
+  on(window, 'pageshow', e => {
+    if (!e.persisted) return;
+    overlay.style.transition = 'none';
+    overlay.classList.remove('active');
+    overlay.style.pointerEvents = '';
+    void overlay.offsetWidth;
+    overlay.style.transition = '';
   });
 }
 
