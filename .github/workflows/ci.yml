@@ -1,0 +1,26 @@
+# CI : tests et contrôle SEO sur chaque PR. check:seo échoue sur une page
+# orpheline, un tiret long ou un emoji dans le texte, un lien ou une ancre
+# cassés, un placeholder, ou une dérive entre le HTML et les fichiers de langue.
+# Pour bloquer un merge, le propriétaire du dépôt déclare le job « required check ».
+
+name: CI
+
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - run: npm run check:seo
