@@ -933,7 +933,7 @@ section { padding: 100px var(--gutter-x); }
   color: var(--muted);
   font-weight: 500;
 }
-/* Mention HT ou TTC a cote d'un prix affiche en grand (duel, maintenance) :
+/* Mention TTC a cote d'un prix affiche en grand (duel, maintenance) :
    petite, sur sa propre ligne, jamais peinte par le degrade du chiffre */
 .taxe {
   display: block;

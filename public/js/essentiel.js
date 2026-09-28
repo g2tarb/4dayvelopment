@@ -147,7 +147,7 @@ ${getVal('e-description')}
         ['.badge-4j-main',           'Livré en 4 jours'],
         ['.badge-4j-sub',            'Délai garanti contractuellement'],
         /* pitch */
-        ['.pitch h1',                'Formule <span class="g">Essentiel</span><br>à 890€ <span class="taxe">[À FOURNIR : HT ou TTC]</span>'],
+        ['.pitch h1',                'Formule <span class="g">Essentiel</span><br>à 890€ <span class="taxe">TTC</span>'],
         ['.pitch .desc',             'Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.'],
         /* inclus */
         ['.inclus-title',            'Ce qui est inclus', 0],
@@ -161,7 +161,7 @@ ${getVal('e-description')}
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>⚡ Livraison garantie en <strong>4 jours</strong>', 7],
         /* prix */
         ['.prix-detail',             'Paiement unique · Sans abonnement caché'],
-        ['.prix-paiement',           'ou 2× 445€ [À FOURNIR : HT ou TTC]'],
+        ['.prix-paiement',           'ou 2× 445€ TTC'],
         ['#prix-secure',             'Paiement sécurisé'],
         /* maintenance */
         ['.mb-title',                'Ajoutez la maintenance'],
@@ -171,7 +171,7 @@ ${getVal('e-description')}
         ['.mb-item',                 '🐛 Correction de bugs', 1],
         ['.mb-item',                 '💾 Sauvegardes régulières', 2],
         ['.mb-item',                 '📧 Support technique par email', 3],
-        ['.mb-footer',               'Engagement 12 mois · <strong style="color:var(--text)">960€/an</strong> [À FOURNIR : HT ou TTC] · Résiliable à l\'échéance avec un préavis de 30 jours'],
+        ['.mb-footer',               'Engagement 12 mois · <strong style="color:var(--text)">960€/an</strong> TTC · Résiliable à l\'échéance avec un préavis de 30 jours'],
         ['.mb-toggle span:last-child','Ajouter la maintenance à ma commande'],
         ['.wp-add-title',            'Livraison sur WordPress'],
         ['.wp-add-sub',              'Gardez la main sur votre site après la livraison'],
@@ -180,7 +180,7 @@ ${getVal('e-description')}
         ['.wp-add-item',             '⚡ Thème léger, performances surveillées', 2],
         ['.wp-add-item',             '🎨 Toujours conçu sur-mesure', 3],
         ['.wp-add-footer',           'Supplément fixe sur la formule Essentiel · Licence Elementor Pro prise en charge par l\'agence'],
-        ['.mb-toggle span:last-child','Livrer mon site sur WordPress (+250€ [À FOURNIR : HT ou TTC])', 1],
+        ['.mb-toggle span:last-child','Livrer mon site sur WordPress (+250€ TTC)', 1],
         /* timeline */
         ['.inclus-title',            'Les 4 jours en détail', 1],
         ['.tl-day',                  'Jour 1 : Échange initial', 0],
@@ -243,7 +243,7 @@ ${getVal('e-description')}
         ['.badge-4j-main',           'Delivered in 4 days'],
         ['.badge-4j-sub',            'Contractually guaranteed delivery date'],
         /* pitch */
-        ['.pitch h1',                '<span class="g">Essential</span> Plan<br>at €890 <span class="taxe">[À FOURNIR : HT ou TTC]</span>'],
+        ['.pitch h1',                '<span class="g">Essential</span> Plan<br>at €890 <span class="taxe">incl. VAT</span>'],
         ['.pitch .desc',             'Your professional showcase website, delivered in 4 days flat. Perfect for launching with an online presence that reassures your clients and generates leads.'],
         /* inclus */
         ['.inclus-title',            "What's included", 0],
@@ -257,7 +257,7 @@ ${getVal('e-description')}
         ['.inclus-list .inclus-item','<div class="inclus-check">✓</div>⚡ Delivery guaranteed in <strong>4 days</strong>', 7],
         /* prix */
         ['.prix-detail',             'One-time payment · No hidden subscription'],
-        ['.prix-paiement',           'or 2× €445 [À FOURNIR : HT ou TTC]'],
+        ['.prix-paiement',           'or 2× €445 incl. VAT'],
         ['#prix-secure',             'Secure payment'],
         /* maintenance */
         ['.mb-title',                'Add maintenance'],
@@ -267,7 +267,7 @@ ${getVal('e-description')}
         ['.mb-item',                 '🐛 Bug fixes', 1],
         ['.mb-item',                 '💾 Regular backups', 2],
         ['.mb-item',                 '📧 Technical support by email', 3],
-        ['.mb-footer',               '12-month commitment · <strong style="color:var(--text)">€960/yr</strong> [À FOURNIR : HT ou TTC] · Cancellable at term with 30 days\' notice'],
+        ['.mb-footer',               '12-month commitment · <strong style="color:var(--text)">€960/yr</strong> incl. VAT · Cancellable at term with 30 days\' notice'],
         ['.mb-toggle span:last-child','Add maintenance to my order'],
         ['.wp-add-title',            'WordPress delivery'],
         ['.wp-add-sub',              'Keep control of your website after delivery'],
@@ -276,7 +276,7 @@ ${getVal('e-description')}
         ['.wp-add-item',             '⚡ Lightweight theme, performance monitored', 2],
         ['.wp-add-item',             '🎨 Still designed tailor-made for you', 3],
         ['.wp-add-footer',           'Fixed surcharge on the Essential plan · Elementor Pro license covered by the agency'],
-        ['.mb-toggle span:last-child','Deliver my site on WordPress (+250€ [À FOURNIR : HT ou TTC])', 1],
+        ['.mb-toggle span:last-child','Deliver my site on WordPress (+250€ incl. VAT)', 1],
         /* timeline */
         ['.inclus-title',            'The 4 days in detail', 1],
         ['.tl-day',                  'Day 1 : Kick-off', 0],
