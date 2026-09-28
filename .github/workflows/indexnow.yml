@@ -1,0 +1,56 @@
+# IndexNow : après chaque déploiement du site, signale les URLs du sitemap à
+# Bing, Yandex, Seznam, Naver et Yep (ChatGPT et Copilot s'appuient sur l'index
+# Bing). Render déploie main tout seul : on attend que la prod serve le commit
+# poussé (GET /api/version) avant de pinguer, sinon on signalerait l'ancienne
+# version des pages.
+#
+# Secret requis : INDEXNOW_KEY, identique au nom du fichier public/<clé>.txt.
+
+name: IndexNow
+
+on:
+  push:
+    branches: [main]
+    paths: ['public/**', 'server.js']
+  workflow_dispatch:
+
+# Deux pushes rapprochés : Render ne déploie que le dernier, l'attente du
+# premier ne finirait jamais. On annule l'exécution précédente.
+concurrency:
+  group: indexnow
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    env:
+      SITE: https://4dayvelopment.fr
+      KEY: ${{ secrets.INDEXNOW_KEY }}
+    steps:
+      - name: Attendre que la prod serve ce commit
+        run: |
+          for i in $(seq 1 40); do
+            served=$(curl -fsS "$SITE/api/version" | jq -r '.commit // empty' || true)
+            if [ "$served" = "$GITHUB_SHA" ]; then echo "Prod sur $GITHUB_SHA"; exit 0; fi
+            echo "Prod sur '${served:-?}', attente ($i/40)"
+            sleep 30
+          done
+          echo "::error::La prod ne sert pas $GITHUB_SHA après 20 min"; exit 1
+
+      - name: Vérifier la clé servie
+        run: |
+          test -n "$KEY" || { echo "::error::Secret INDEXNOW_KEY absent"; exit 1; }
+          test "$(curl -fsS "$SITE/$KEY.txt")" = "$KEY" || { echo "::error::$SITE/$KEY.txt ne contient pas la clé"; exit 1; }
+
+      - name: Pinguer IndexNow avec les URLs du sitemap
+        run: |
+          urls=$(curl -fsS "$SITE/sitemap.xml" | grep -o '<loc>[^<]*</loc>' | sed 's/<[^>]*>//g' | jq -R . | jq -s .)
+          echo "$urls"
+          jq -n --arg key "$KEY" --argjson urls "$urls" \
+            '{host: "4dayvelopment.fr", key: $key, keyLocation: ("https://4dayvelopment.fr/" + $key + ".txt"), urlList: $urls}' > payload.json
+          code=$(curl -sS -o resp.txt -w '%{http_code}' -X POST https://api.indexnow.org/indexnow \
+            -H 'Content-Type: application/json; charset=utf-8' --data @payload.json)
+          echo "IndexNow HTTP $code"; cat resp.txt
+          # 200 : reçu ; 202 : reçu, clé en cours de validation
+          [ "$code" = 200 ] || [ "$code" = 202 ]

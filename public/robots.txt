@@ -1,10 +1,27 @@
-# 4dayvelopment — robots.txt
+# robots.txt 4dayvelopment.fr
+# Tous les robots sont autorisés : moteurs de recherche, assistants IA
+# (recherche, citation, lecture à la demande) et collecte pour
+# l'entraînement. Seule l'API est exclue.
+# Les robots IA sont nommés pour que l'intention soit explicite : un robot
+# nommé dans ce groupe applique ces règles et aucune autre.
+
 User-agent: *
+User-agent: Googlebot
+User-agent: Google-Extended
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: ClaudeBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: MistralAI-User
+User-agent: CCBot
 Allow: /
-
-# Sitemap
-Sitemap: https://4dayvelopment.fr/sitemap.xml
-
-# Block admin/API paths
 Disallow: /api/
-Disallow: /data/
+
+Sitemap: https://4dayvelopment.fr/sitemap.xml

@@ -476,6 +476,14 @@ nav.scrolled {
   100%{background-position:0% 50%}
 }
 
+/* Date de mise a jour visible : moteurs et assistants IA jugent la
+   fraicheur d'une page a une date lisible, pas au seul sitemap. Meme date
+   que le lastmod du sitemap (npm run check:seo). */
+p.maj {
+  font-size: clamp(0.8rem, 0.78rem + 0.1vi, 0.875rem);
+  color: var(--muted);
+  margin-block: 0 1rem;
+}
 .hero-desc {
   font-size: clamp(1rem, 2vw, 1.2rem);
   color: var(--muted);
@@ -1303,6 +1311,9 @@ section { padding: 100px var(--gutter-x); }
   -webkit-text-fill-color: currentColor;
   color: #efe9db;
 }
+/* le chiffre est dessine, pas ecrit : le texte du prix reste "890" (span
+   .sr-only pose par duel.js) au lieu de trente chiffres par rouleau */
+.duel-digits .roll i::before { content: attr(data-n); }
 .duel-side--app .duel-digits .roll i { color: #ecd9ea; }
 
 .duel-pay { font-size: 0.8125rem; color: var(--muted); margin-bottom: 16px; }

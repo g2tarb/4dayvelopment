@@ -49,6 +49,10 @@ export function initSplitTitles() {
       w.style.setProperty('--std', (i++ * 110) + 'ms');
       tampon.forEach(n => w.appendChild(n));
       mask.appendChild(w);
+      // le <br> retire, les lignes se collaient dans le texte rendu ("Les
+      // questionsqu'on nous pose") ; entre deux masques en bloc, l'espace ne
+      // se voit pas
+      if (el.firstChild) el.appendChild(document.createTextNode(' '));
       el.appendChild(mask);
       tampon = [];
     };

@@ -80,25 +80,35 @@ export function initDuel() {
   sides.forEach(side => {
     const el = side.querySelector('.duel-digits');
     if (!el) return;
-    const chars = [...el.textContent.trim()];
+    const prix = el.textContent.trim();
+    const chars = [...prix];
     const digits = chars.filter(c => /\d/.test(c));
     if (!digits.length) return;
     el.textContent = '';
     el.dataset.digits = digits.join('');
+    // Le prix reste lisible tel quel dans le DOM rendu (robots qui executent
+    // le JS, lecteurs d'ecran) : les rouleaux ne sont qu'un decor, leurs
+    // chiffres sont dessines en CSS (attr(data-n)) et n'entrent pas dans le texte.
+    const lu = document.createElement('span');
+    lu.className = 'sr-only';
+    lu.textContent = prix;
+    el.appendChild(lu);
     chars.forEach(c => {
       // l'espace des milliers de "1 990" reste un espaceur fixe entre rouleaux
       if (!/\d/.test(c)) {
         const gap = document.createElement('span');
         gap.className = 'gap';
+        gap.setAttribute('aria-hidden', 'true');
         el.appendChild(gap);
         return;
       }
       const roll = document.createElement('span');
       roll.className = 'roll';
+      roll.setAttribute('aria-hidden', 'true');
       const strip = document.createElement('span');
       for (let t = 0; t < 3; t++) for (let n = 0; n <= 9; n++) {
         const d = document.createElement('i');
-        d.textContent = n;
+        d.dataset.n = n;
         strip.appendChild(d);
       }
       roll.appendChild(strip);

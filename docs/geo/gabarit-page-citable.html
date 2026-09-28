@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<!--
+  Gabarit de page citable (docs/geo/02-strategie.md, section 2.3).
+
+  Usage : copier dans public/ (ex. public/services/application-web.html),
+  remplacer chaque [...], ajouter la route dans cleanPages (server.js) et
+  l'URL dans public/sitemap.xml avec lastmod = date « Mis à jour le ».
+  Puis : npm run check:seo (FAQ visible = FAQPage, prix affichés, date = lastmod).
+
+  Règles de rédaction :
+  - L'essentiel répond en 2 ou 3 phrases à : qui, quoi, pour qui, combien, en combien de temps.
+  - Chaque H2 est une vraie question ; chaque paragraphe se comprend s'il est cité seul
+    (il nomme son sujet, porte son chiffre et sa date).
+  - Au moins un tableau. Chaque chiffre externe a sa source en lien et sa date.
+  - Vouvoiement, pas de tiret long, pas d'emoji, aucun avis ni chiffre inventé.
+  - Une démo de public/exemples/ est toujours présentée comme une démo, jamais comme un client.
+-->
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>[Titre = la requête, 60 caractères max] | 4dayvelopment</title>
+  <meta name="description" content="[140 à 160 caractères : réponse directe, prix, délai]">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+  <meta name="theme-color" content="#DA5426">
+  <link rel="canonical" href="https://4dayvelopment.fr/[chemin]">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="4dayvelopment">
+  <meta property="og:title" content="[Titre]">
+  <meta property="og:description" content="[Description]">
+  <meta property="og:url" content="https://4dayvelopment.fr/[chemin]">
+  <meta property="og:image" content="https://4dayvelopment.fr/og-image.jpg">
+  <meta property="og:locale" content="fr_FR">
+
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/syne-var.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-var.woff2" crossorigin>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+  <!-- NAV : copier celle de public/services/site-vitrine.html -->
+
+  <main>
+
+  <section class="hero" style="min-height:auto;padding:140px 24px 60px;">
+    <div class="container" style="max-width:800px;">
+
+      <nav aria-label="Fil d'Ariane" class="breadcrumb">
+        <a href="/">Accueil</a> › <a href="/[parent]">[Parent]</a> › <span>[Page]</span>
+      </nav>
+
+      <h1 class="hero-title reveal" style="font-size:clamp(2.2rem,5vw,3.8rem);margin-top:20px;">
+        [H1 formulé comme la requête]
+      </h1>
+      <p class="maj">Mis à jour le <time datetime="[AAAA-MM-JJ]">[JJ mois AAAA]</time> par <a href="/agence">[Prénom Nom]</a></p>
+
+      <!-- L'essentiel : ce qu'un assistant IA doit pouvoir citer tel quel -->
+      <p class="hero-desc reveal" style="max-width:700px;">
+        <strong>L'essentiel :</strong> [Qui fait quoi, pour qui.] [Combien : prix affiché.] [En combien de temps, et à partir de quand.]
+      </p>
+
+      <div class="hero-actions reveal">
+        <a href="/devis" class="btn-primary magnetic">Demander un devis gratuit</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding:20px 24px 60px;">
+    <div class="container" style="max-width:800px;color:#bbb;line-height:1.8;">
+
+      <h2 class="section-title reveal" style="font-size:2rem;text-align:left;">[Question réelle n°1 ?]</h2>
+      <p>[Réponse autoportante : sujet nommé, chiffre, date, source.] <a href="[URL source]" rel="noopener">[Source, date]</a></p>
+
+      <h2 class="section-title reveal" style="font-size:2rem;text-align:left;margin-top:50px;">[Combien coûte ... ?]</h2>
+      <table style="width:100%;border-collapse:collapse;margin-top:16px;">
+        <caption style="text-align:left;color:#888;padding-bottom:8px;">[Ce que compare le tableau], au <time datetime="[AAAA-MM-JJ]">[JJ mois AAAA]</time></caption>
+        <thead>
+          <tr><th scope="col">[Option]</th><th scope="col">[Prix]</th><th scope="col">[Délai]</th><th scope="col">[Quand c'est le bon choix]</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>[...]</td><td>[...]</td><td>[...]</td><td>[...]</td></tr>
+        </tbody>
+      </table>
+
+      <h2 class="section-title reveal" style="font-size:2rem;text-align:left;margin-top:50px;">[Question réelle n°3 ?]</h2>
+      <p>[Réponse autoportante.]</p>
+
+      <!-- FAQ : texte visible = FAQPage mot pour mot (npm run check:seo) -->
+      <h2 class="section-title reveal" style="font-size:2rem;text-align:left;margin-top:50px;">Questions fréquentes</h2>
+      <h3 style="color:#e8e8e8;font-size:1.3rem;margin-top:30px;">[Question 1 ?]</h3>
+      <p style="margin-top:12px;">[Réponse 1.]</p>
+      <h3 style="color:#e8e8e8;font-size:1.3rem;margin-top:30px;">[Question 2 ?]</h3>
+      <p style="margin-top:12px;">[Réponse 2.]</p>
+
+      <h2 class="section-title reveal" style="font-size:2rem;text-align:left;margin-top:50px;">Sources</h2>
+      <ul>
+        <li><a href="[URL]" rel="noopener">[Titre de la source]</a>, [éditeur], [date de consultation]</li>
+      </ul>
+
+      <p style="margin-top:40px;"><a href="/devis" class="btn-primary magnetic">Demander un devis gratuit</a></p>
+    </div>
+  </section>
+
+  </main>
+
+  <!-- FOOTER : copier celui de public/services/site-vitrine.html -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebPage",
+        "@id": "https://4dayvelopment.fr/[chemin]#webpage",
+        "url": "https://4dayvelopment.fr/[chemin]",
+        "name": "[Titre]",
+        "dateModified": "[AAAA-MM-JJ]",
+        "inLanguage": "fr-FR",
+        "isPartOf": { "@id": "https://4dayvelopment.fr/#website" },
+        "author": { "@type": "Person", "name": "[Prénom Nom]", "url": "https://4dayvelopment.fr/agence", "sameAs": ["[URL LinkedIn]"] }
+      },
+      {
+        "@type": "Service",
+        "url": "https://4dayvelopment.fr/[chemin]",
+        "name": "[Nom du service]",
+        "provider": { "@id": "https://4dayvelopment.fr/#organization", "@type": "Organization", "name": "4dayvelopment", "url": "https://4dayvelopment.fr/" },
+        "areaServed": { "@type": "Country", "name": "France" },
+        "offers": {
+          "@type": "Offer",
+          "price": "[prix affiché, sans espace]",
+          "priceCurrency": "EUR",
+          "priceSpecification": { "@type": "PriceSpecification", "minPrice": "[prix affiché]", "priceCurrency": "EUR" }
+        }
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "[Question 1 ?]", "acceptedAnswer": { "@type": "Answer", "text": "[Réponse 1.]" } },
+          { "@type": "Question", "name": "[Question 2 ?]", "acceptedAnswer": { "@type": "Answer", "text": "[Réponse 2.]" } }
+        ]
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://4dayvelopment.fr/" },
+          { "@type": "ListItem", "position": 2, "name": "[Parent]", "item": "https://4dayvelopment.fr/[parent]" },
+          { "@type": "ListItem", "position": 3, "name": "[Page]", "item": "https://4dayvelopment.fr/[chemin]" }
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <script type="module" src="/js/main.js"></script>
+</body>
+</html>

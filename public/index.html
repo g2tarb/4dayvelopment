@@ -569,6 +569,7 @@
         <div class="section-label reveal">Tarifs</div>
         <h2 class="section-title reveal" data-i18n="prix-title">Des prix clairs,<br><em class="gradient-text">sans mauvaise surprise</em></h2>
         <p class="section-sub reveal" data-i18n="prix-sub">Choisissez la formule qui correspond à vos besoins. Paiement en 2× possible. Pas d'abonnement caché.</p>
+        <p class="maj reveal">Mis à jour le <time datetime="2026-08-28">28 août 2026</time></p>
       </div>
 
 <!-- ── Le duel : écran de sélection de personnage ──
@@ -1110,6 +1111,14 @@
         },
         "image": "https://4dayvelopment.fr/og-image.jpg",
         "email": "contact@4dayvelopment.fr",
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "customer service",
+          "email": "contact@4dayvelopment.fr",
+          "url": "https://4dayvelopment.fr/devis",
+          "availableLanguage": ["fr", "en"],
+          "areaServed": "FR"
+        },
         "address": {
           "@type": "PostalAddress",
           "addressLocality": "Paris",
@@ -1136,6 +1145,7 @@
               },
               "price": "890",
               "priceCurrency": "EUR",
+              "priceSpecification": { "@type": "PriceSpecification", "minPrice": "890", "priceCurrency": "EUR" },
               "availability": "https://schema.org/InStock"
             },
             {
@@ -1148,7 +1158,24 @@
               },
               "price": "1990",
               "priceCurrency": "EUR",
+              "priceSpecification": { "@type": "PriceSpecification", "minPrice": "1990", "priceCurrency": "EUR" },
               "availability": "https://schema.org/InStock"
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Maintenance",
+                "description": "Mises à jour de sécurité, correction de bugs, sauvegardes et support par email après la mise en ligne. Engagement 12 mois.",
+                "provider": { "@id": "https://4dayvelopment.fr/#organization" }
+              },
+              "priceSpecification": {
+                "@type": "UnitPriceSpecification",
+                "price": "80",
+                "priceCurrency": "EUR",
+                "unitCode": "MON",
+                "referenceQuantity": { "@type": "QuantitativeValue", "value": 1, "unitCode": "MON" }
+              }
             }
           ]
         }
@@ -1187,7 +1214,7 @@
             "name": "Que comprend exactement la maintenance ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "La maintenance couvre les mises à jour de sécurité, correction de bugs sous 24h, sauvegardes quotidiennes, surveillance des performances 24/7, support réactif par email sous 4h, et mises à jour des plugins et du CMS. 80€/mois avec engagement 12 mois."
+              "text": "Notre maintenance couvre tout ce dont votre site a besoin pour rester performant et sécurisé : mises à jour de sécurité régulières, correction de bugs sous 24h, sauvegardes quotidiennes automatiques, surveillance des performances 24/7, support réactif par email sous 4h, mises à jour des plugins et du CMS. 80€/mois · Engagement 12 mois · Sans surprise · Résiliable à l'issue de l'engagement."
             }
           },
           {
@@ -1195,7 +1222,7 @@
             "name": "Et si je ne suis pas satisfait du résultat ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "On offre des allers-retours illimités pendant la phase de design jusqu'à ce que vous soyez 100% satisfait. Et si malgré tout vous n'êtes pas content dans les 14 jours suivant la livraison, on vous rembourse intégralement."
+              "text": "On offre des allers-retours illimités pendant la phase de design jusqu'à ce que vous soyez 100% satisfait. Et si malgré tout vous n'êtes pas content dans les 14 jours suivant la livraison, on vous rembourse intégralement. Zéro risque pour vous."
             }
           },
           {
@@ -1203,7 +1230,7 @@
             "name": "Je n'ai pas de textes ni de photos, vous pouvez m'aider ?",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Absolument. On propose un service de rédaction (copywriting) et de sélection d'images libres de droits. On peut partir de zéro et construire tout votre contenu de marque."
+              "text": "Absolument. On propose un service de rédaction (copywriting) et de sélection d'images libres de droits. On peut partir de zéro et construire tout votre contenu de marque. Mentionnez-le lors de votre brief et on intègre tout ça dans le devis."
             }
           },
           {

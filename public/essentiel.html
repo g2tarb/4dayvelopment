@@ -154,6 +154,9 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
+    /* date de mise a jour visible : #888 et non --muted (#666, contraste 3,6:1 sur ce fond) */
+    .maj { font-size: clamp(0.8rem, 0.78rem + 0.1vi, 0.875rem); color: #888; margin-block-start: 0.75rem; }
+
     .pitch p.desc {
       font-size: 1rem;
       color: var(--muted);
@@ -736,6 +739,7 @@
       <!-- Titre -->
       <div>
         <h1>Formule <span class="g">Essentiel</span><br>à 890€</h1>
+        <p class="maj">Mis à jour le <time datetime="2026-08-17">17 août 2026</time></p>
         <p class="desc" style="margin-top:16px;">Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.</p>
       </div>
 
@@ -997,9 +1001,10 @@
   {
     "@context": "https://schema.org",
     "@type": "Service",
+    "url": "https://4dayvelopment.fr/essentiel",
     "name": "Création de site vitrine Essentiel",
     "description": "Site vitrine professionnel jusqu'à 3 pages, livré en 4 jours ouvrés. Design personnalisé, responsive, SEO de base, hébergement et nom de domaine 1 an inclus.",
-    "provider": { "@type": "Organization", "name": "4dayvelopment", "url": "https://4dayvelopment.fr/" },
+    "provider": { "@id": "https://4dayvelopment.fr/#organization", "@type": "Organization", "name": "4dayvelopment", "url": "https://4dayvelopment.fr/" },
     "areaServed": { "@type": "Country", "name": "France" },
     "offers": {
       "@type": "Offer",
@@ -1008,6 +1013,16 @@
       "availability": "https://schema.org/InStock",
       "priceValidUntil": "2026-12-31"
     }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Accueil", "item": "https://4dayvelopment.fr/" },
+      { "@type": "ListItem", "position": 2, "name": "Formule Essentiel", "item": "https://4dayvelopment.fr/essentiel" }
+    ]
   }
   </script>
   <script src="/js/essentiel.js" defer></script>
