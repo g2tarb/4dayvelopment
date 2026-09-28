@@ -359,7 +359,7 @@ ${d.description}
       /* header */
       ['#secure-text',   'Données sécurisées · Sans engagement'],
       /* hero */
-      ['.lead-badge',    '🚀 Devis personnalisé sous 24h'],
+      ['.lead-badge',    'Devis personnalisé sous 24h'],
       ['.lead-hero h1',  'Démarrons votre<br><span class="g">projet ensemble</span>'],
       ['.lead-hero p',   'Remplissez ce formulaire en 3 minutes et recevez une proposition sur-mesure.'],
       /* steps */
@@ -408,11 +408,11 @@ ${d.description}
       ['#type-grid .card-label', 'Landing page', 5],
       ['#type-grid .card-sub',   'Page de conversion', 5],
       /* section 1 — délai tags */
-      ['#delai-tags .tag-btn', '⚡ Urgent', 0],
-      ['#delai-tags .tag-btn', '📅 Ce mois-ci', 1],
-      ['#delai-tags .tag-btn', '🗓️ 1 à 3 mois', 2],
-      ['#delai-tags .tag-btn', '🔭 + de 3 mois', 3],
-      ['#delai-tags .tag-btn', '🤷 Pas encore défini', 4],
+      ['#delai-tags .tag-btn', 'Urgent', 0],
+      ['#delai-tags .tag-btn', 'Ce mois-ci', 1],
+      ['#delai-tags .tag-btn', '1 à 3 mois', 2],
+      ['#delai-tags .tag-btn', '+ de 3 mois', 3],
+      ['#delai-tags .tag-btn', 'Pas encore défini', 4],
       /* section 1 — errors */
       ['#err-type',  'Veuillez choisir un type de site.'],
       ['#err-delai', 'Veuillez sélectionner un délai.'],
@@ -441,21 +441,21 @@ ${d.description}
       ['[data-section="2"] .check-label', 'FAQ', 7],
       ['[data-section="2"] .check-sub',   'Questions fréquentes', 7],
       /* section 2 — fonctionnalités card labels */
-      ['[data-section="2"] .card-grid .card-label', '💬 Formulaire de contact', 0],
-      ['[data-section="2"] .card-grid .card-label', '📅 Prise de rendez-vous', 1],
-      ['[data-section="2"] .card-grid .card-label', '💳 Paiement en ligne', 2],
-      ['[data-section="2"] .card-grid .card-label', '🔐 Espace membre', 3],
-      ['[data-section="2"] .card-grid .card-label', '🌍 Multilingue', 4],
-      ['[data-section="2"] .card-grid .card-label', '📈 SEO avancé', 5],
-      ['[data-section="2"] .card-grid .card-label', '💬 Chat / Support', 6],
-      ['[data-section="2"] .card-grid .card-label', '📊 Dashboard admin', 7],
+      ['[data-section="2"] .card-grid .card-label', 'Formulaire de contact', 0],
+      ['[data-section="2"] .card-grid .card-label', 'Prise de rendez-vous', 1],
+      ['[data-section="2"] .card-grid .card-label', 'Paiement en ligne', 2],
+      ['[data-section="2"] .card-grid .card-label', 'Espace membre', 3],
+      ['[data-section="2"] .card-grid .card-label', 'Multilingue', 4],
+      ['[data-section="2"] .card-grid .card-label', 'SEO avancé', 5],
+      ['[data-section="2"] .card-grid .card-label', 'Chat / Support', 6],
+      ['[data-section="2"] .card-grid .card-label', 'Dashboard admin', 7],
       /* section 2 — style tags */
-      ['#style-tags .tag-btn', '✨ Moderne & épuré', 0],
-      ['#style-tags .tag-btn', '💎 Luxe & premium', 1],
-      ['#style-tags .tag-btn', '🎨 Coloré & dynamique', 2],
-      ['#style-tags .tag-btn', '🏛️ Corporatif', 3],
+      ['#style-tags .tag-btn', 'Moderne & épuré', 0],
+      ['#style-tags .tag-btn', 'Luxe & premium', 1],
+      ['#style-tags .tag-btn', 'Coloré & dynamique', 2],
+      ['#style-tags .tag-btn', 'Corporatif', 3],
       ['#style-tags .tag-btn', '◯ Minimaliste', 4],
-      ['#style-tags .tag-btn', '⚡ Bold & audacieux', 5],
+      ['#style-tags .tag-btn', 'Bold & audacieux', 5],
       /* section 2 — hint & error */
       ['.section-hint', '<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>Plus vous donnez de détails, plus notre devis sera précis.'],
       ['#err-description', 'Veuillez décrire votre projet (min. 20 caractères).'],
@@ -468,20 +468,20 @@ ${d.description}
       ['.btn-next-sec', 'Continuer <span>→</span>', 1],
       ['.btn-next-sec', 'Voir le récapitulatif <span>→</span>', 2],
       /* section 3 */
-      ['.btn-label',       '✉️ Envoyer ma demande'],
+      ['.btn-label',       'Envoyer ma demande'],
       ['.recap-header h3', 'Résumé de votre demande'],
       ['#lead-legal',      'En soumettant ce formulaire, vous acceptez que vos données soient utilisées pour vous recontacter. Aucun spam.'],
       /* success */
       ['#success-screen h2', 'Demande envoyée <span class="g">avec succès !</span>'],
       ['#success-screen p',  'Notre équipe analyse votre projet et vous contactera <strong style="color:var(--c-text)">sous 24h</strong> avec une proposition personnalisée.'],
       ['.success-actions .btn-outline', '← Retour au site', 0],
-      ['.success-actions .btn-outline', '💬 Discuter sur WhatsApp', 1],
+      ['.success-actions .btn-outline', 'Discuter sur WhatsApp', 1],
     ],
     en: [
       /* header */
       ['#secure-text',   'Secured data · No commitment'],
       /* hero */
-      ['.lead-badge',    '🚀 Personalised quote within 24h'],
+      ['.lead-badge',    'Personalised quote within 24h'],
       ['.lead-hero h1',  'Let\'s build your<br><span class="g">project together</span>'],
       ['.lead-hero p',   'Fill in this form in 3 minutes and receive a tailor-made proposal.'],
       /* steps */
@@ -530,11 +530,11 @@ ${d.description}
       ['#type-grid .card-label', 'Landing page', 5],
       ['#type-grid .card-sub',   'Conversion page', 5],
       /* section 1 — délai tags */
-      ['#delai-tags .tag-btn', '⚡ Urgent', 0],
-      ['#delai-tags .tag-btn', '📅 This month', 1],
-      ['#delai-tags .tag-btn', '🗓️ 1 to 3 months', 2],
-      ['#delai-tags .tag-btn', '🔭 3+ months', 3],
-      ['#delai-tags .tag-btn', '🤷 Not yet decided', 4],
+      ['#delai-tags .tag-btn', 'Urgent', 0],
+      ['#delai-tags .tag-btn', 'This month', 1],
+      ['#delai-tags .tag-btn', '1 to 3 months', 2],
+      ['#delai-tags .tag-btn', '3+ months', 3],
+      ['#delai-tags .tag-btn', 'Not yet decided', 4],
       /* section 1 — errors */
       ['#err-type',  'Please choose a site type.'],
       ['#err-delai', 'Please select a timeline.'],
@@ -563,21 +563,21 @@ ${d.description}
       ['[data-section="2"] .check-label', 'FAQ', 7],
       ['[data-section="2"] .check-sub',   'Frequently asked questions', 7],
       /* section 2 — fonctionnalités card labels */
-      ['[data-section="2"] .card-grid .card-label', '💬 Contact form', 0],
-      ['[data-section="2"] .card-grid .card-label', '📅 Online booking', 1],
-      ['[data-section="2"] .card-grid .card-label', '💳 Online payment', 2],
-      ['[data-section="2"] .card-grid .card-label', '🔐 Member area', 3],
-      ['[data-section="2"] .card-grid .card-label', '🌍 Multilingual', 4],
-      ['[data-section="2"] .card-grid .card-label', '📈 Advanced SEO', 5],
-      ['[data-section="2"] .card-grid .card-label', '💬 Chat / Support', 6],
-      ['[data-section="2"] .card-grid .card-label', '📊 Admin dashboard', 7],
+      ['[data-section="2"] .card-grid .card-label', 'Contact form', 0],
+      ['[data-section="2"] .card-grid .card-label', 'Online booking', 1],
+      ['[data-section="2"] .card-grid .card-label', 'Online payment', 2],
+      ['[data-section="2"] .card-grid .card-label', 'Member area', 3],
+      ['[data-section="2"] .card-grid .card-label', 'Multilingual', 4],
+      ['[data-section="2"] .card-grid .card-label', 'Advanced SEO', 5],
+      ['[data-section="2"] .card-grid .card-label', 'Chat / Support', 6],
+      ['[data-section="2"] .card-grid .card-label', 'Admin dashboard', 7],
       /* section 2 — style tags */
-      ['#style-tags .tag-btn', '✨ Modern & clean', 0],
-      ['#style-tags .tag-btn', '💎 Luxury & premium', 1],
-      ['#style-tags .tag-btn', '🎨 Colourful & dynamic', 2],
-      ['#style-tags .tag-btn', '🏛️ Corporate', 3],
+      ['#style-tags .tag-btn', 'Modern & clean', 0],
+      ['#style-tags .tag-btn', 'Luxury & premium', 1],
+      ['#style-tags .tag-btn', 'Colourful & dynamic', 2],
+      ['#style-tags .tag-btn', 'Corporate', 3],
       ['#style-tags .tag-btn', '◯ Minimalist', 4],
-      ['#style-tags .tag-btn', '⚡ Bold & daring', 5],
+      ['#style-tags .tag-btn', 'Bold & daring', 5],
       /* section 2 — hint & error */
       ['.section-hint', '<svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>The more details you provide, the more accurate our quote.'],
       ['#err-description', 'Please describe your project (min. 20 characters).'],
@@ -590,14 +590,14 @@ ${d.description}
       ['.btn-next-sec', 'Continue <span>→</span>', 1],
       ['.btn-next-sec', 'View summary <span>→</span>', 2],
       /* section 3 */
-      ['.btn-label',       '✉️ Send my request'],
+      ['.btn-label',       'Send my request'],
       ['.recap-header h3', 'Summary of your request'],
       ['#lead-legal',      'By submitting this form, you agree that your data will be used to contact you back. No spam.'],
       /* success */
       ['#success-screen h2', 'Request sent <span class="g">successfully!</span>'],
       ['#success-screen p',  'Our team will analyse your project and contact you <strong style="color:var(--c-text)">within 24h</strong> with a personalised proposal.'],
       ['.success-actions .btn-outline', '← Back to website', 0],
-      ['.success-actions .btn-outline', '💬 Chat on WhatsApp', 1],
+      ['.success-actions .btn-outline', 'Chat on WhatsApp', 1],
     ],
   };
 
