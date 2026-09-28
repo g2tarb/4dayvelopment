@@ -157,6 +157,9 @@
     /* date de mise a jour visible : #888 et non --muted (#666, contraste 3,6:1 sur ce fond) */
     .maj { font-size: clamp(0.8rem, 0.78rem + 0.1vi, 0.875rem); color: #888; margin-block-start: 0.75rem; }
 
+    /* mention TTC a cote des prix, discrete dans les titres */
+    .taxe { font-family: 'Inter', sans-serif; font-size: clamp(0.75rem, 0.72rem + 0.1vi, 0.8125rem); font-weight: 500; letter-spacing: 0; color: #888; -webkit-text-fill-color: #888; vertical-align: middle; }
+
     .pitch p.desc {
       font-size: 1rem;
       color: var(--muted);
@@ -738,8 +741,8 @@
 
       <!-- Titre -->
       <div>
-        <h1>Formule <span class="g">Essentiel</span><br>à 890€</h1>
-        <p class="maj">Mis à jour le <time datetime="2026-08-17">17 août 2026</time></p>
+        <h1>Formule <span class="g">Essentiel</span><br>à 890€ <span class="taxe">TTC</span></h1>
+        <p class="maj">Mis à jour le <time datetime="2026-09-23">23 septembre 2026</time></p>
         <p class="desc" style="margin-top:16px;">Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.</p>
       </div>
 
@@ -761,11 +764,11 @@
       <!-- Prix -->
       <div class="prix-block">
         <div>
-          <div class="prix-montant">890€</div>
+          <div class="prix-montant">890€ <span class="taxe">TTC</span></div>
           <div class="prix-detail">Paiement unique · Sans abonnement caché</div>
         </div>
         <div style="text-align:right;">
-          <div class="prix-paiement">ou 2× 445€</div>
+          <div class="prix-paiement">ou 2× 445€ TTC</div>
           <div id="prix-secure" style="font-size: 0.6875rem;color:var(--muted);margin-top:6px;">Paiement sécurisé</div>
         </div>
       </div>
@@ -780,17 +783,17 @@
           </div>
           <div class="mb-price">
             <span class="mb-amount">80€</span>
-            <span class="mb-per">/mois</span>
+            <span class="mb-per">/mois</span> <span class="taxe">TTC</span>
           </div>
         </div>
         <div class="mb-items">
           <div class="mb-item">🔒 Mises à jour de sécurité</div>
-          <div class="mb-item">🐛 Correction de bugs sous 24h</div>
-          <div class="mb-item">💾 Sauvegardes quotidiennes</div>
-          <div class="mb-item">📧 Support email sous 4h</div>
+          <div class="mb-item">🐛 Correction de bugs</div>
+          <div class="mb-item">💾 Sauvegardes régulières</div>
+          <div class="mb-item">📧 Support technique par email</div>
         </div>
         <div class="mb-footer">
-          Engagement 12 mois · <strong style="color:var(--text)">960€/an</strong> · Résiliable à l'issue de l'engagement
+          Engagement 12 mois · <strong style="color:var(--text)">960€/an</strong> TTC · Résiliable à l'échéance avec un préavis de 30 jours
         </div>
         <label class="mb-toggle">
           <input type="checkbox" id="add-maintenance">
@@ -808,7 +811,7 @@
             <div class="wp-add-sub">Gardez la main sur votre site après la livraison</div>
           </div>
           <div class="mb-price">
-            <span class="mb-amount">+250€</span>
+            <span class="mb-amount">+250€</span> <span class="taxe">TTC</span>
           </div>
         </div>
         <div class="mb-items">
@@ -823,7 +826,7 @@
         <label class="mb-toggle">
           <input type="checkbox" id="add-wordpress">
           <span class="mb-toggle-box"></span>
-          <span>Livrer mon site sur WordPress (+250€)</span>
+          <span>Livrer mon site sur WordPress (+250€ TTC)</span>
         </label>
       </div>
 
@@ -834,29 +837,29 @@
           <div class="tl-item">
             <div class="tl-dot"><div class="tl-dot-circle">J1</div></div>
             <div class="tl-content">
-              <div class="tl-day">Jour 1 : Brief & Maquette</div>
-              <div class="tl-desc">On analyse votre brief, on crée la maquette visuelle et on vous la soumet pour validation.</div>
+              <div class="tl-day">Jour 1 : Échange initial</div>
+              <div class="tl-desc">Un appel de 30 min sur votre projet, vos objectifs et votre cible.</div>
             </div>
           </div>
           <div class="tl-item">
             <div class="tl-dot"><div class="tl-dot-circle">J2</div></div>
             <div class="tl-content">
-              <div class="tl-day">Jour 2 : Validation & Développement</div>
-              <div class="tl-desc">Après votre accord, on développe le site complet avec votre contenu.</div>
+              <div class="tl-day">Jour 2 : Maquette & Design</div>
+              <div class="tl-desc">Une maquette complète, que vous validez avant qu'on développe une seule ligne.</div>
             </div>
           </div>
           <div class="tl-item">
             <div class="tl-dot"><div class="tl-dot-circle">J3</div></div>
             <div class="tl-content">
-              <div class="tl-day">Jour 3 : Finalisation & Tests</div>
-              <div class="tl-desc">Tests sur tous les appareils, optimisation vitesse, ajustements finaux.</div>
+              <div class="tl-day">Jours 3 et 4 : Développement</div>
+              <div class="tl-desc">On code votre site et on vous envoie un lien de prévisualisation à chaque étape.</div>
             </div>
           </div>
           <div class="tl-item">
             <div class="tl-dot"><div class="tl-dot-circle">J4</div></div>
             <div class="tl-content">
               <div class="tl-day">Jour 4 : Mise en ligne ✅</div>
-              <div class="tl-desc">Votre site est en ligne, fichiers sources remis. On reste disponibles pour la suite. C'est parti !</div>
+              <div class="tl-desc">Votre site est publié, testé et optimisé, fichiers sources remis. On reste disponibles pour la suite.</div>
             </div>
           </div>
         </div>
@@ -965,7 +968,6 @@
 
           <div class="garanties" style="margin-top:16px;">
             <div class="garantie"><span class="garantie-icon">🔒</span>Paiement 100% sécurisé</div>
-            <div class="garantie"><span class="garantie-icon">↩️</span>Satisfait ou remboursé sous 14 jours</div>
             <div class="garantie"><span class="garantie-icon">⚡</span>Livraison en 4 jours garantie contractuellement</div>
             <div class="garantie"><span class="garantie-icon">💬</span>Réponse sous 2h par email ou WhatsApp</div>
           </div>

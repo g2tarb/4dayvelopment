@@ -16,3 +16,4 @@ data/
 
 # Sources d'images brutes (non servies par le site)
 /image/
+.gstack/
