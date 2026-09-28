@@ -21,7 +21,7 @@
 - [Exemples par métier](https://4dayvelopment.fr/exemples) : six démos (restauration, beauté, électricien IRVE, coach sportif, barbier, plombier). Ce sont des sites de démonstration, pas des sites de clients.
 - [Application web et MVP](https://4dayvelopment.fr/services/application-web) : PWA, MVP, outil métier ou plateforme, dès 1 990 € TTC.
 - [Méthode 4 jours](https://4dayvelopment.fr/methode-4-jours) : conditions de départ, déroulé jour par jour, contenus à préparer, garantie.
-- [L'agence](https://4dayvelopment.fr/agence) : associés, localisation, informations légales.
+- [L'agence](https://4dayvelopment.fr/agence) : agence web à Paris fondée par trois associés, zone d'intervention, méthode de travail et contact.
 - [Demande de devis](https://4dayvelopment.fr/devis)
 
 ## Zone d'intervention
