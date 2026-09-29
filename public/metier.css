@@ -168,7 +168,9 @@
 .lp .footer-col-h { text-transform: none; letter-spacing: 0; font-size: 0.9375rem; }
 .lp .hamburger { min-width: 2.75rem; min-height: 2.75rem; justify-content: center; align-items: center; }
 .lp .nav-logo { min-height: 2.75rem; display: inline-flex; align-items: center; }
-.lp .lp-menu-cta { display: flex; margin-top: 1.5rem; }
+/* .mobile-menu a (style.css) l'emporte sur .lp-btn : texte gris #888 sur l'or
+   (1,9:1), padding et filet de lien de menu. On rend au bouton son aspect. */
+.lp .lp-menu-cta, .lp .lp-menu-cta:hover { display: flex; margin-top: 1.5rem; color: #0b0b0b; padding: 0.9rem 1.5rem; border: 2px solid transparent; }
 .lp .skip-link { background: var(--accent2); color: #0b0b0b; }
 @media (max-width: 56.25rem) {
   /* les barres fixes du bas ne doivent pas recouvrir un champ qui prend le focus */
