@@ -102,8 +102,9 @@ img { max-width: 100%; display: block; }
 button { border: none; background: none; }
 /* Titres : interligne serre par defaut. Sans cette base, un titre sans
    classe heritait de l'interligne du texte (1,65, et 1,9 dans les blocs de
-   contenu des pages services et du blog) : ses lignes flottaient. */
-h1, h2, h3, h4, h5, h6 { line-height: 1.2; text-wrap: balance; }
+   contenu des pages services et du blog) : ses lignes flottaient.
+   L'equilibrage (text-wrap) est regle plus bas, hors du titre anime du hero. */
+h1, h2, h3, h4, h5, h6 { line-height: 1.2; }
 
 /* ── Skip-link : hors ecran jusqu'au focus clavier ── */
 .skip-link {
