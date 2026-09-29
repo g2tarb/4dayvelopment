@@ -33,6 +33,17 @@ export async function initLang() {
   const btn = $('#lang-toggle');
   if (!btn) return;
 
+  // Téléphone : dans le coin bas, le bouton passait par-dessus le contenu
+  // (boutons de la FAQ, liens des avis) en plus de la barre d'onglets. Il
+  // rejoint la barre du haut, à gauche du menu, et se masque avec elle.
+  const nav = $('#navbar'), burger = $('#hamburger'), bloc = btn.parentElement;
+  if (nav && burger) {
+    const mobile = matchMedia('(max-width: 900px)');
+    const place = () => (mobile.matches ? nav.insertBefore(btn, burger) : bloc.appendChild(btn));
+    place();
+    mobile.addEventListener('change', place);
+  }
+
   let lang = localStorage.getItem('lang') || 'fr';
 
   // Précharger les deux locales en arrière-plan dès le démarrage

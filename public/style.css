@@ -4651,6 +4651,14 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     transform: translateY(-76px);
   }
 }
+/* Sur telephone, i18n.js place le bouton de langue dans la barre du haut,
+   a gauche du menu : il ne suit plus la barre d'onglets. */
+#navbar .lang-fab {
+  margin-inline-start: auto;
+  margin-inline-end: 8px;
+  height: 44px;
+  transform: none;
+}
 
 /* Ordinateur : aucune barre, aucun indice de defilement */
 @media (min-width: 901px) {
