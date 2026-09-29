@@ -91,6 +91,9 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.65;
+  /* Syne sert par defaut des chiffres a l'ancienne : le 0 a hauteur de
+     minuscule, le 9 qui descend. « 80€ » se lisait « 8o€ » dans les prix. */
+  font-variant-numeric: lining-nums;
   /* cursor natif conservé par défaut — remplacé uniquement sur dispositifs pointeurs précis */
 }
 
