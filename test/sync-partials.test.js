@@ -14,8 +14,8 @@ const read = rel => fs.readFileSync(path.join(PUB, rel), 'utf8');
 
 test('synchronisation : les pages portent déjà les partiels, une seconde passe ne change rien', () => {
   const targets = sp.targetFiles();
-  assert.equal(targets.filter(rel => read(rel).includes('id="navbar"')).length, 16);
-  assert.equal(targets.filter(rel => /<footer[\s>]/.test(read(rel))).length, 15);
+  assert.equal(targets.filter(rel => read(rel).includes('id="navbar"')).length, 25);
+  assert.equal(targets.filter(rel => /<footer[\s>]/.test(read(rel))).length, 24);
   for (const rel of targets) {
     const html = read(rel);
     const once = sp.syncHtml(html, rel, sp.routeOf(rel), partials);

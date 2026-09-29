@@ -10,6 +10,7 @@ import { initLang } from './modules/i18n.js';
 import { checkMotion, initFAQ } from './modules/ui.js';
 import { initUniverse } from './modules/gl-bg.js';
 import { initDemoViewer } from './modules/demos.js';
+import { initPhoneFrames } from './modules/phone.js';
 import { initPreloader } from './modules/preloader.js';
 import { initBrowserReel } from './modules/reel.js';
 import { initDuel } from './modules/duel.js';
@@ -68,7 +69,9 @@ async function init() {
   initProgress();
   initPageTransition();
   initNav();
-  initGlow();
+  // Pages métier : ni halo qui suit la souris ni curseur remplacé (décor hérité)
+  const sobre = document.body.classList.contains('lp');
+  if (!sobre) initGlow();
   initSplitTitles();   // avant initReveal : les masques sont en place quand .visible tombe
   initReveal();
   initFAQ();
@@ -81,6 +84,7 @@ async function init() {
   initTypeChips();
   initContactForm();
   initDemoViewer();
+  initPhoneFrames();
   initBrowserReel();
   initDuel();
   initCarouselDots();
@@ -89,8 +93,10 @@ async function init() {
 
   // Deferred : n'impacte pas le LCP
   setTimeout(() => {
-    initCursor();
-    initCursorFlair();   // apres initCursor : la fleche vit dans son anneau
+    if (!sobre) {
+      initCursor();
+      initCursorFlair();   // apres initCursor : la fleche vit dans son anneau
+    }
     initMagnetic();
     initTilt();
   }, 150);

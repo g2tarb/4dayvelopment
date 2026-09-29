@@ -313,6 +313,31 @@ const contactSchema = z.object({
   website: z.string().max(200).optional(),
 });
 
+/* ── Réponse du formulaire de contact ─────────────────────
+   Avec JS, le formulaire poste du JSON et lit du JSON. Sans JS, il poste un
+   formulaire classique : on répond alors par une page lisible (et plus par du
+   JSON brut), avec un lien de retour vers la page d'origine du même site. */
+function repondreContact(req, res, status, payload) {
+  if (req.is('application/json')) return res.status(status).json(payload);
+  // Le site envoie Referrer-Policy: no-referrer : le formulaire transmet donc
+  // son chemin dans un champ caché. On n'accepte qu'un chemin interne simple
+  // (pas de « // », pas de schéma) pour ne jamais renvoyer vers un autre site.
+  const demande = typeof req.body?.retour === 'string' ? req.body.retour : '';
+  const retour = /^\/(?!\/)[\w\-./#]*$/.test(demande) ? demande : '/';
+  const ok = payload.success;
+  const lignes = ok ? [payload.message] : (payload.errors || []).map(e => e.message || String(e));
+  const titre = ok ? 'Message bien reçu' : 'Il manque quelque chose';
+  return res.status(status).type('html').send(`<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>${titre} | 4dayvelopment</title>
+<link rel="stylesheet" href="/style.css"></head>
+<body><main style="max-width:36rem;margin:0 auto;padding:6rem 1.25rem">
+<h1 style="font-family:'Syne',sans-serif;font-size:2rem">${titre}</h1>
+<ul style="margin:1.5rem 0;padding-left:1.25rem;line-height:1.7">${lignes.map(l => `<li>${escapeHtml(l)}</li>`).join('')}</ul>
+<p><a href="${escapeHtml(retour)}" style="color:#f2b13b;text-decoration:underline">${ok ? 'Revenir à la page' : 'Revenir au formulaire'}</a></p>
+</main></body></html>`);
+}
+
 /* ── Middleware de validation Zod ─────────────────────── */
 function validateWith(schema) {
   return (req, res, next) => {
@@ -323,7 +348,7 @@ function validateWith(schema) {
         message: e.message,
       }));
       logger.warn({ errors, ip: req.ip }, 'Validation échouée');
-      return res.status(400).json({ success: false, errors });
+      return repondreContact(req, res, 400, { success: false, errors });
     }
     req.validatedBody = result.data;
     next();
@@ -392,7 +417,7 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
   if (data.website) {
     logger.warn({ ip: req.ip }, 'Honeypot déclenché');
     // Faux succès : le bot croit avoir réussi, rien n'est enregistré ni transmis.
-    return res.json({ success: true, message: 'Message bien reçu, on vous répond sous 24h.' });
+    return repondreContact(req, res, 200, { success: true, message: 'Message bien reçu, on vous répond sous 24h.' });
   }
 
   // Sauvegarde locale systématique (filet de sécurité, anti-perte de lead)
@@ -469,7 +494,7 @@ app.post('/api/contact', contactLimiter, validateWith(contactSchema), async (req
     logger.info({ name: data.prenom }, 'Email non configuré — skipped');
   }
 
-  return res.json({ success: true, message: 'Message envoyé avec succès ! Nous vous répondons sous 24h.' });
+  return repondreContact(req, res, 200, { success: true, message: 'Message envoyé avec succès ! Nous vous répondons sous 24h.' });
 });
 
 /* ═══════════════════════════════════════════════════════

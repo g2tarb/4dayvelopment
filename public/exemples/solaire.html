@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Cabanel Solaire, photovoltaïque dans le Biterrois | Démo 4dayvelopment</title>
+<meta name="description" content="Démo : installateur photovoltaïque RGE à Béziers. Étude de toiture gratuite, dimensionnement sur votre consommation, démarches mairie, Enedis et Consuel prises en charge.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#15202E">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/saira-var.woff2" crossorigin>
+<style>
+@font-face{font-family:'Saira';font-style:normal;font-weight:100 900;font-stretch:50% 125%;font-display:swap;src:url('/fonts/saira-var.woff2') format('woff2')}
+
+:root{
+  --blanc:#F7F8F8;       /* fond : blanc froid d'un cadre anodisé */
+  --alu:#E4E8EB;         /* bandes : aluminium des rails de fixation */
+  --cellule:#15202E;     /* texte et bande sombre : cellule monocristalline */
+  --cellule-2:#3B4858;   /* texte secondaire */
+  --cable:#B3261E;       /* l'unique accent : câble courant continu, pôle + */
+  --fil:#C3CAD0;         /* filets */
+  --mesure:62ch;
+  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  font-family:'Saira',system-ui,sans-serif;font-stretch:100%;font-weight:400;
+  font-size:1.0625rem;line-height:1.55;color:var(--cellule);background:var(--blanc);
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto;background:var(--alu)} /* fond visible pendant le chargement ou si l'image manque */
+a{color:inherit;text-underline-offset:.2em}
+:focus-visible{outline:3px solid var(--cable);outline-offset:3px}
+h1,h2,h3{font-stretch:78%;font-weight:720;line-height:1.06;letter-spacing:-.005em;text-wrap:balance}
+h2{font-size:clamp(1.65rem,1.15rem + 2.2vi,2.6rem)}
+p{text-wrap:pretty}
+small{font-size:.8125rem}
+sup{font-size:.7em;line-height:0}
+.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
+.skip{position:absolute;inset-inline-start:-999px}
+.skip:focus{inset-inline-start:1rem;inset-block-start:1rem;background:var(--cellule);color:var(--blanc);padding:.6rem 1rem;z-index:10}
+
+/* Barre du haut : le nom et le numéro, ce que cherche un client pressé */
+.top{border-block-end:1px solid var(--fil)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-block-size:3.75rem}
+.marque{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;min-block-size:2.75rem}
+.marque b{font-stretch:62%;font-weight:820;font-size:1.5rem;letter-spacing:.01em}
+.marque span{font-size:.8125rem;color:var(--cellule-2);margin-block-start:.25rem}
+.tel{font-stretch:85%;font-weight:650;font-size:1.0625rem;text-decoration:none;white-space:nowrap;
+  font-variant-numeric:tabular-nums;padding:.55rem .15rem;border-block-end:2px solid var(--cable)}
+
+/* Ouverture */
+.ouv{padding-block:var(--pas) calc(var(--pas)*1.75)}
+.ouv .wrap{display:grid;gap:var(--pas)}
+.ouv h1{font-size:clamp(2.1rem,1.25rem + 3.8vi,3.9rem);font-stretch:74%;font-weight:760;line-height:1;max-width:15ch}
+.ouv .chapo{font-size:1.125rem;max-width:44ch;margin-block-start:1rem;color:var(--cellule-2)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-block-start:1.5rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-block-size:3rem;padding:.8rem 1.35rem;
+  background:var(--cable);color:#fff;border:2px solid transparent;border-radius:4px;font:inherit;font-weight:650;
+  font-stretch:90%;text-decoration:none;cursor:pointer;transition:background-color .15s}
+.btn:active{transform:translateY(1px)}
+/* survol réservé aux pointeurs fins : au doigt, il resterait collé */
+@media (hover:hover) and (pointer:fine){.btn:hover{background:#8F1D17}}
+.discret{font-size:.9375rem;color:var(--cellule-2);max-width:34ch}
+.ouv figure img{inline-size:100%;aspect-ratio:4/3;object-fit:cover;object-position:30% 70%;border-radius:3px}
+figcaption{font-size:.8125rem;color:var(--cellule-2);margin-block-start:.5rem}
+/* ordinateur : texte et photo côte à côte, la photo reprend son cadrage d'origine */
+@media (min-width:60rem){
+  .ouv .wrap{grid-template-columns:1fr 1.1fr;align-items:center;gap:3.5rem}
+  .ouv figure img{aspect-ratio:1200/709}
+}
+/* téléphone en paysage : titre réduit et photo à côté, pour garder le bouton dans l'écran */
+@media (max-height:30rem) and (orientation:landscape){
+  .ouv .wrap{grid-template-columns:1.3fr 1fr;align-items:start;gap:1.5rem}
+  .ouv h1{font-size:1.9rem;max-width:none}
+  .ouv .chapo{font-size:1rem;margin-block-start:.6rem}
+  .actions{margin-block-start:1rem}
+}
+
+/* Signature : les démarches dans l'ordre, montées sur un rail. Chaque étape est
+   un <details> natif (lisible sans JS) ; name="demarche" n'en garde qu'une ouverte. */
+.dossier{background:var(--cellule);color:#E6EAEE;padding-block:calc(var(--pas)*2.25)}
+.dossier .wrap{display:grid;gap:1.75rem}
+.dossier .intro p{max-width:48ch;margin-block-start:.85rem;color:#B7C1CC}
+.dossier .note{max-width:48ch;font-size:.875rem;color:#A9B4C0}
+.dossier .note small{display:block;margin-block-start:.35rem;font-size:.8125rem}
+.rail{list-style:none;padding:0;position:relative;counter-reset:etape}
+/* le rail : une ligne continue derrière les numéros */
+.rail::before{content:"";position:absolute;inset-block:.5rem;inset-inline-start:calc(1.25rem - 1px);inline-size:2px;background:#566677}
+.rail li{counter-increment:etape;position:relative}
+.rail summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:2.5rem 1fr 1.25rem;gap:.1rem 1rem;
+  align-items:start;padding-block:.85rem;min-block-size:2.75rem}
+.rail summary::-webkit-details-marker{display:none}
+/* la patte de fixation : le numéro serré sur le rail */
+.rail summary::before{content:counter(etape);grid-row:span 2;display:grid;place-items:center;block-size:2.5rem;
+  background:var(--cellule);border:2px solid #8A99A8;border-radius:3px;font-stretch:62%;font-weight:800;font-size:1.35rem;
+  font-variant-numeric:tabular-nums;transition:background-color .2s,border-color .2s}
+.rail summary::after{content:"+";grid-column:3;grid-row:1;font-size:1.4rem;line-height:1.1;color:#A9B4C0;text-align:center}
+.rail details[open] summary::after{content:"\2212"}
+.rail details[open] summary::before{background:var(--cable);border-color:var(--cable);color:#fff}
+.rail h3{font-size:1.25rem;font-stretch:84%;font-weight:680;line-height:1.2;grid-column:2}
+.rail .qui{grid-column:2 / span 2;font-size:.9375rem;color:#A9B4C0}
+.rail summary:hover h3{text-decoration:underline;text-decoration-color:#8A99A8}
+.rail summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
+.rail .dedans{padding:0 0 1.25rem 3.5rem;max-width:calc(var(--mesure) + 3.5rem)}
+.rail .dedans p + p{margin-block-start:.6rem}
+.rail .dedans b{color:#fff;font-weight:620}
+.rail .dedans small{display:block;color:#A9B4C0;margin-block-start:.6rem}
+/* le seul mouvement de la page : la patte se serre, le détail s'ouvre */
+@media (prefers-reduced-motion:no-preference){
+  .rail details[open] .dedans{animation:serre .28s ease-out}
+}
+@keyframes serre{from{opacity:0;transform:translateY(-.35rem)}to{opacity:1;transform:none}}
+/* ordinateur : l'explication et la note à gauche, le rail à droite */
+@media (min-width:60rem){
+  .dossier .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);grid-template-rows:auto 1fr;gap:1.75rem 4rem;align-items:start}
+  .dossier .intro{grid-column:1;grid-row:1}
+  .dossier .rail{grid-column:2;grid-row:1 / span 2}
+  .dossier .note{grid-column:1;grid-row:2}
+}
+
+/* Sur le toit : ce que la visite technique vérifie */
+.toit{padding-block:calc(var(--pas)*2.25)}
+.toit .wrap{display:grid;gap:var(--pas)}
+.toit img{inline-size:100%;aspect-ratio:1200/720;object-fit:cover;border-radius:3px}
+.toit dl{margin-block-start:1.25rem;display:grid;gap:1rem;max-width:var(--mesure)}
+.toit dt{font-weight:680;font-stretch:88%;font-size:1.0625rem}
+.toit dd{margin:0;color:var(--cellule-2)}
+/* photo et liste côte à côte quand la liste garde une ligne lisible */
+@media (min-width:60rem){
+  .toit .wrap{grid-template-columns:1fr 1fr;gap:3.5rem;align-items:start}
+  .toit figure{position:sticky;inset-block-start:2rem}
+}
+
+/* Ce qu'on ne promet pas */
+.franc{background:var(--alu);padding-block:calc(var(--pas)*2.25)}
+.franc h2{max-width:22ch}
+.franc p{max-width:var(--mesure);margin-block-start:.9rem}
+/* ordinateur : le titre à gauche, l'explication à droite, comme les démarches */
+@media (min-width:60rem){
+  .franc .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);column-gap:4rem;align-items:start}
+  .franc h2{grid-row:span 3}
+  .franc h2 ~ p{grid-column:2}
+  .franc h2 + p{margin-block-start:0}
+}
+.franc .lien{display:inline-flex;align-items:center;min-block-size:2.75rem;font-weight:650;text-decoration-color:var(--cable);text-decoration-thickness:2px}
+
+/* Qui monte sur votre toit */
+.nous{padding-block:calc(var(--pas)*2.25)}
+.nous .wrap{display:grid;gap:var(--pas)}
+.nous .wrap > div{min-width:0}
+.nous p{max-width:var(--mesure);margin-block-start:.85rem}
+.avert{border:2px solid var(--cellule);padding:1rem 1.1rem;border-radius:3px;font-weight:620;font-stretch:92%}
+.nous h3{font-size:1.25rem;font-stretch:84%}
+.communes{list-style:none;padding:0;margin-block-start:.9rem;column-gap:1.5rem}
+.communes li{padding-block:.2rem;break-inside:avoid}
+/* autant de colonnes que la largeur en permet, chacune assez large pour le nom le plus long */
+.communes{columns:auto 12rem}
+/* présentation et communes côte à côte */
+@media (min-width:60rem){.nous .wrap{grid-template-columns:1.1fr 1fr;gap:3.5rem}}
+
+/* Demande d'étude */
+.etude{background:var(--alu);padding-block:calc(var(--pas)*2.25)}
+.etude > .wrap > p{max-width:var(--mesure);margin-block-start:.75rem}
+.cote{margin-block-start:2rem;display:grid;gap:.5rem;align-content:start}
+.cote b{font-stretch:85%;font-size:1.125rem}
+.cote a{font-stretch:85%;font-weight:700;font-size:1.5rem;font-variant-numeric:tabular-nums;min-block-size:2.75rem;display:inline-flex;align-items:center}
+/* sur ordinateur : le formulaire à gauche, le téléphone en regard */
+@media (min-width:60rem){.etude .grille{display:grid;grid-template-columns:minmax(0,36rem) 1fr;gap:4rem;align-items:start}}
+form{margin-block-start:1.5rem;display:grid;gap:1rem;max-width:36rem}
+label{display:block;font-weight:600;margin-block-end:.35rem}
+.aide{display:block;font-size:.875rem;color:var(--cellule-2);margin-block-start:.35rem}
+input,select{inline-size:100%;font:inherit;font-size:1rem;color:var(--cellule);background:#fff;
+  border:1.5px solid #6E7A86;border-radius:4px;padding:.75rem .8rem;block-size:3.2rem}
+input:focus-visible,select:focus-visible{outline:3px solid var(--cable);outline-offset:1px;border-color:var(--cellule)}
+.deux{display:grid;gap:1rem}
+/* deux champs par ligne dès qu'ils ont la place */
+@media (min-width:36rem){.deux{grid-template-columns:1fr 1fr}}
+.merci{display:none;padding:1rem 1.1rem;border:2px solid var(--cellule);border-radius:4px;background:#fff;font-weight:600}
+form.envoye .merci{display:block}
+
+footer{background:var(--cellule);color:#B7C1CC;padding-block:2.5rem;font-size:.875rem}
+footer .wrap{display:grid;gap:.75rem}
+footer b{color:#fff;font-stretch:62%;font-weight:820;font-size:1.25rem}
+footer a{color:#fff}
+
+/* Barre d'appel sous le pouce, en mobile et en paysage téléphone : on appelle un
+   installateur plus qu'on ne lui écrit. Rangée quand le formulaire est à l'écran. */
+.pouce{display:none}
+@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-block-end:6rem}
+  .pouce{display:grid;grid-template-columns:1fr 1.4fr;gap:.5rem;position:fixed;inset-inline:0;inset-block-end:0;z-index:5;
+    padding:.6rem .75rem max(.6rem,env(safe-area-inset-bottom));background:var(--blanc);border-block-start:1px solid var(--fil);
+    transition:transform .2s ease-out}
+  .pouce a{display:flex;align-items:center;justify-content:center;min-block-size:2.75rem;border-radius:4px;font-weight:650;font-stretch:90%;text-decoration:none}
+  .pouce .appel{border:2px solid var(--cellule)}
+  .pouce .demande{background:var(--cable);color:#fff;border:2px solid transparent}
+  .pouce.cache{transform:translateY(110%)}
+  footer{padding-block-end:calc(5.5rem + env(safe-area-inset-bottom))}
+}
+/* mouvement réduit : ni animation ni transition */
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#etude">Aller à la demande d’étude</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="#">
+      <b>Cabanel Solaire</b>
+      <span>Électricité et photovoltaïque, Biterrois</span>
+    </a>
+    <a class="tel" href="tel:+33465710318" aria-label="Appeler Cabanel Solaire au 04 65 71 03 18">04 65 71 03 18</a>
+  </div>
+</header>
+
+<main>
+  <section class="ouv">
+    <div class="wrap">
+      <div>
+        <h1>Des panneaux solaires sur votre toit, démarches comprises</h1>
+        <p class="chapo">On vient voir votre toiture et vos factures, on dimensionne sur ce que vous consommez, on pose, et on s’occupe de la mairie, d’Enedis et du Consuel.</p>
+        <div class="actions">
+          <a class="btn" href="#etude">Demander une étude de toiture</a>
+          <p class="discret">Visite gratuite et sans engagement, de Béziers à Agde et Pézenas.</p>
+        </div>
+      </div>
+      <figure>
+        <img src="/exemples/img/solaire-toit-800.webp"
+             srcset="/exemples/img/solaire-toit-480.webp 480w, /exemples/img/solaire-toit-800.webp 800w, /exemples/img/solaire-toit-1200.webp 1200w"
+             sizes="(min-width: 60rem) 38rem, calc(100vi - 2rem)"
+             width="1200" height="709" fetchpriority="high"
+             alt="Deux rangées de panneaux photovoltaïques fixées sur rails au-dessus d’une couverture en tuiles canal couvertes de lichen">
+        <figcaption>Panneaux sur rails, au-dessus d’une couverture en tuiles canal.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="dossier" aria-labelledby="dossier-t">
+    <div class="wrap">
+      <div class="intro">
+        <h2 id="dossier-t">Les démarches, dans l’ordre, et qui s’en occupe</h2>
+        <p>Un projet solaire, c’est une ou deux journées sur le toit et plusieurs semaines de papiers. Voici lesquels. Ouvrez une étape pour savoir ce qu’elle demande.</p>
+      </div>
+
+      <ol class="rail">
+        <li>
+          <details name="demarche" open>
+            <summary><h3>Visite technique et devis</h3><span class="qui">Chez vous, une heure environ.</span></summary>
+            <div class="dedans">
+              <p>On regarde la couverture, l’orientation, les ombres, la charpente, le tableau électrique et le compteur.</p>
+              <p><b>De votre côté :</b> vos factures d’électricité des douze derniers mois. Le devis détaille le nombre de panneaux, l’onduleur, la pose et chacune des démarches ci-dessous.</p>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="demarche">
+            <summary><h3>Déclaration préalable en mairie</h3><span class="qui">Déposée par nous. Instruction : 1 mois, 2 en secteur protégé.</span></summary>
+            <div class="dedans">
+              <p>Les panneaux changent l’aspect du toit : la mairie doit être consultée avant la pose. On prépare le dossier (plans, photos, insertion dans le paysage) et on le dépose.</p>
+              <p>Sans réponse au bout d’un mois, c’est en principe un accord tacite. Aux abords d’un monument historique, l’architecte des Bâtiments de France donne son avis et le délai passe en général à deux mois.</p>
+              <p><b>De votre côté :</b> une signature sur le formulaire.</p>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="demarche">
+            <summary><h3>Demande de raccordement à Enedis</h3><span class="qui">Faite par nous, en votre nom. Délai : variable.</span></summary>
+            <div class="dedans">
+              <p>On déclare l’installation à Enedis et on choisit avec vous : tout consommer vous-même, ou revendre ce que vous ne consommez pas.</p>
+              <p>Aucun courant ne doit partir sur le réseau avant la mise en service, même si les panneaux sont posés.</p>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="demarche">
+            <summary><h3>La pose</h3><span class="qui">Par nos poseurs. En général une à deux journées.</span></summary>
+            <div class="dedans">
+              <p>On soulève les tuiles, on visse les crochets dans la charpente, on remet les tuiles en place. Puis viennent les rails en aluminium, les panneaux, et l’onduleur près de votre tableau électrique.</p>
+              <p>Une tuile qui casse est remplacée le jour même.</p>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="demarche">
+            <summary><h3>Attestation du Consuel</h3><span class="qui">Demandée par nous. Délai : variable.</span></summary>
+            <div class="dedans">
+              <p>Le Consuel vérifie que l’installation respecte les règles de sécurité électrique, sur dossier et parfois sur place.</p>
+              <p>Sans son attestation, Enedis ne met pas l’installation en service.</p>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="demarche">
+            <summary><h3>Mise en service</h3><span class="qui">Par Enedis. Délai : variable.</span></summary>
+            <div class="dedans">
+              <p>Enedis valide le raccordement et met l’installation en service. À partir de là, vos panneaux alimentent la maison.</p>
+              <p>On revient vérifier la production avec vous pendant le premier mois.</p>
+            </div>
+          </details>
+        </li>
+        <li>
+          <details name="demarche">
+            <summary><h3>Contrat d’achat du surplus</h3><span class="qui">Si vous revendez. Signé par vous, préparé avec nous.</span></summary>
+            <div class="dedans">
+              <p>Le surplus est acheté par EDF OA, l’acheteur obligé désigné par la loi. Pour une installation de 9 kWc ou moins, il est payé 1,1 c€ HT le kWh.</p>
+              <p>C’est peu : l’intérêt du solaire est surtout dans ce que vous consommez vous-même. On en tient compte dès le devis.</p>
+              <small>Tarif fixé par l’arrêté du 1<sup>er</sup> juin 2026, publié au Journal officiel du 4 juin 2026.</small>
+            </div>
+          </details>
+        </li>
+      </ol>
+      <p class="note">Le délai de la mairie est fixé par le code de l’urbanisme. Les autres dépendent d’Enedis, du Consuel et de la saison : on ne vous promet pas de date qu’on ne tiendrait pas, on vous appelle à chaque étape franchie.<small>Délais d’instruction : service-public.gouv.fr, fiche « Déclaration préalable de travaux », vérifiée le 28 septembre 2026.</small></p>
+    </div>
+  </section>
+
+  <section class="toit" aria-labelledby="toit-t">
+    <div class="wrap">
+      <figure>
+        <img src="/exemples/img/solaire-rails-800.webp"
+             srcset="/exemples/img/solaire-rails-480.webp 480w, /exemples/img/solaire-rails-800.webp 800w, /exemples/img/solaire-rails-1200.webp 1200w"
+             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
+             width="1200" height="720" loading="lazy" decoding="async"
+             alt="Trois rangées de rails en aluminium fixées sur une toiture en tuiles mécaniques, avant la pose des panneaux">
+        <figcaption>Rails en aluminium sur crochets, avant la pose des panneaux.</figcaption>
+      </figure>
+      <div>
+        <h2 id="toit-t">Ce qu’on regarde sur votre toit</h2>
+        <dl>
+          <div><dt>La couverture</dt><dd>Tuile canal, tuile mécanique, ardoise ou bac acier : chacune a sa fixation, et une tuile abîmée se change avant la pose, pas après.</dd></div>
+          <div><dt>L’orientation et la pente</dt><dd>Plein sud n’est pas une obligation. Un toit est‑ouest produit plus tôt le matin et plus tard le soir.</dd></div>
+          <div><dt>Les ombres</dt><dd>Cheminée, antenne, arbre du voisin : une ombre sur un seul panneau peut freiner toute la rangée.</dd></div>
+          <div><dt>La charpente</dt><dd>Elle doit porter les panneaux, les rails et le vent. On la regarde depuis les combles quand c’est possible.</dd></div>
+          <div><dt>Le tableau et le compteur</dt><dd>La place de l’onduleur, les protections à ajouter, et votre compteur Linky.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="franc" aria-labelledby="franc-t">
+    <div class="wrap">
+      <h2 id="franc-t">Pas d’économies annoncées avant d’avoir vu vos factures</h2>
+      <p>Ce que vos panneaux produiront dépend de votre toit. On le calcule avec PVGIS, l’outil gratuit de la Commission européenne, et on vous montre le calcul.</p>
+      <p>Ce que vous économiserez dépend de la part que vous consommez vous-même, en journée. Revendre le surplus rapporte peu : on dimensionne sur votre consommation, pas sur la taille du toit.</p>
+      <p><a class="lien" href="https://re.jrc.ec.europa.eu/pvg_tools/fr/" target="_blank" rel="noopener">Essayer PVGIS sur votre adresse</a></p>
+    </div>
+  </section>
+
+  <section class="nous" aria-labelledby="nous-t">
+    <div class="wrap">
+      <div>
+        <h2 id="nous-t">Qui monte sur votre toit</h2>
+        <p>Des électriciens installés à Béziers depuis 2009. Les poseurs sont nos salariés, formés au travail en hauteur. Qualification QualiPV 36, module électricité : l’une de celles qu’exige l’arrêté du 6 octobre 2021 pour le contrat d’achat du surplus.</p>
+        <p>Notre attestation d’assurance décennale est jointe à chaque devis. Du lundi au vendredi, de 8 h à 18 h.</p>
+        <p class="avert">Nous ne démarchons jamais, ni par téléphone ni à domicile. Si quelqu’un se présente de notre part sans rendez-vous, ce n’est pas nous.</p>
+      </div>
+      <div>
+        <h3>Les communes où nous intervenons</h3>
+        <ul class="communes">
+          <li>Béziers</li><li>Villeneuve‑lès‑Béziers</li><li>Sérignan</li><li>Valras‑Plage</li>
+          <li>Sauvian</li><li>Vendres</li><li>Portiragnes</li><li>Vias</li>
+          <li>Agde</li><li>Servian</li><li>Pézenas</li><li>Capestang</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="etude" id="etude" aria-labelledby="etude-t">
+    <div class="wrap">
+      <h2 id="etude-t">Demander une étude de toiture</h2>
+      <p>On vous rappelle sous 24 heures ouvrées pour fixer la visite. Elle est gratuite et ne vous engage à rien.</p>
+      <div class="grille">
+      <form id="demande" action="#etude" novalidate>
+        <div class="deux">
+          <div><label for="nom">Nom *</label><input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required></div>
+          <div><label for="tel">Téléphone *</label><input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" required></div>
+        </div>
+        <div class="deux">
+          <div><label for="commune">Commune *</label><input id="commune" name="commune" list="liste-communes" autocomplete="address-level2" enterkeyhint="next" required></div>
+          <div>
+            <label for="couverture">Couverture</label>
+            <select id="couverture" name="couverture">
+              <option>Tuile canal</option><option>Tuile mécanique</option><option>Ardoise</option><option>Bac acier</option><option>Toit plat</option><option>Je ne sais pas</option>
+            </select>
+          </div>
+        </div>
+        <div class="deux">
+          <div>
+            <label for="orientation">Orientation du toit</label>
+            <select id="orientation" name="orientation">
+              <option>Sud</option><option>Sud-est ou sud-ouest</option><option>Est et ouest</option><option>Je ne sais pas</option>
+            </select>
+          </div>
+          <div>
+            <label for="conso">Consommation annuelle, en kWh</label>
+            <input id="conso" name="conso" inputmode="numeric" pattern="[0-9 ]*" enterkeyhint="send" aria-describedby="conso-aide">
+            <p class="aide" id="conso-aide">Elle figure sur votre facture annuelle et dans votre espace client Enedis. Vous pouvez la laisser vide.</p>
+          </div>
+        </div>
+        <datalist id="liste-communes">
+          <option value="Béziers"></option><option value="Sérignan"></option><option value="Agde"></option><option value="Pézenas"></option><option value="Vias"></option><option value="Servian"></option>
+        </datalist>
+        <p class="discret">* obligatoire</p>
+        <div><button class="btn" type="submit">Demander l’étude</button></div>
+        <p class="merci" role="status">Demande enregistrée. Dans la version en ligne, Cabanel Solaire vous rappelle sous 24 heures ouvrées pour fixer la visite.</p>
+      </form>
+      <aside class="cote" aria-label="Nous joindre">
+        <b>Vous préférez appeler ?</b>
+        <a href="tel:+33465710318">04 65 71 03 18</a>
+        <p>Du lundi au vendredi, de 8 h à 18 h. Hors de ces horaires, laissez votre demande : on vous rappelle le jour ouvré suivant.</p>
+      </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Cabanel Solaire</b>
+    <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-installateur-solaire" target="_top">4dayvelopment</a>. L’entreprise, son numéro et ses qualifications sont fictifs.</p>
+    <p>Photos : « Rooftop solar photovoltaic installation », Marta Victoria, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr"><span style="white-space:nowrap">CC BY-SA 4.0</span></a>, et « Installation of solar PV panels, support bars », David Hawgood, sous licence <a href="https://creativecommons.org/licenses/by-sa/2.0/deed.fr"><span style="white-space:nowrap">CC BY-SA 2.0</span></a>, via Wikimedia Commons. Photos recadrées.</p>
+  </div>
+</footer>
+
+<nav class="pouce" aria-label="Contact rapide">
+  <a class="appel" href="tel:+33465710318">Appeler</a>
+  <a class="demande" href="#etude">Demander une étude</a>
+</nav>
+
+<script src="/exemples/solaire.js" defer></script>
+</body>
+</html>

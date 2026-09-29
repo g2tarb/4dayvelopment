@@ -25,6 +25,9 @@ export function initTypeChips() {
 export function initContactForm() {
   const form = $('#contact-form');
   if (!form) return;
+  // Sans JS, la validation native du navigateur s'applique ; avec JS, on la
+  // remplace par nos messages sous chaque champ.
+  form.noValidate = true;
 
   const btnText   = $('#btn-text');
   const btnLoader = $('#btn-loader');
@@ -51,8 +54,10 @@ export function initContactForm() {
 
   ['f-name', 'f-email', 'f-message'].forEach(id => {
     const el = document.getElementById(id);
-    if (el) on(el, 'blur',  () => validateField(el));
-    if (el) on(el, 'input', () => { if (el.classList.contains('error')) validateField(el); });
+    // On ne juge un champ qu'une fois qu'on y a écrit : traverser un champ vide
+    // au clavier ne doit pas l'afficher en erreur.
+    if (el) on(el, 'input', () => { el.dataset.touche = '1'; if (el.classList.contains('error')) validateField(el); });
+    if (el) on(el, 'blur',  () => { if (el.dataset.touche) validateField(el); });
   });
 
   on(form, 'submit', async e => {
@@ -83,17 +88,17 @@ export function initContactForm() {
       const data = await res.json();
       if (data.success) {
         feedback.className   = 'form-feedback success visible';
-        feedback.textContent = '✅ ' + data.message;
+        feedback.textContent = data.message;
         form.reset();
         $$('.type-chip').forEach(c => c.classList.remove('active'));
       } else {
-        const msg = data.errors ? data.errors.join(' ') : data.message;
+        const msg = data.errors ? data.errors.map(e => e.message || e).join(' ') : data.message;
         feedback.className   = 'form-feedback error visible';
-        feedback.textContent = '❌ ' + msg;
+        feedback.textContent = msg;
       }
     } catch {
       feedback.className   = 'form-feedback error visible';
-      feedback.textContent = '❌ Erreur réseau. Vérifiez votre connexion et réessayez.';
+      feedback.textContent = 'Erreur réseau. Vérifiez votre connexion et réessayez.';
     } finally {
       btnSubmit.disabled = false;
       btnText.hidden     = false;

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Deûle Électricité, bornes de recharge à Lille | Démo 4dayvelopment</title>
+<meta name="description" content="Démo : électricien qualifié IRVE dans la métropole lilloise. Bornes de recharge en maison, copropriété et entreprise, visite technique gratuite, devis complet.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#D4D9D4">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/barlow-condensed-700.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/barlow-400.woff2" crossorigin>
+<style>
+@font-face{font-family:'Barlow';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/barlow-400.woff2') format('woff2')}
+@font-face{font-family:'Barlow';font-style:normal;font-weight:600;font-display:swap;src:url('/fonts/barlow-600.woff2') format('woff2')}
+@font-face{font-family:'Barlow Condensed';font-style:normal;font-weight:700;font-display:swap;src:url('/fonts/barlow-condensed-700.woff2') format('woff2')}
+
+/* Direction : le coffret électrique. Gris des armoires (RAL 7035), blanc des
+   modules, anthracite des bornes, et un seul accent : le rouge des gaines TPC
+   enterrées et du voyant « I » d'un disjoncteur enclenché. Typo de repérage
+   (Barlow, parente du DIN des étiquettes de tableau). */
+:root{
+  --coffret:#D4D9D4;     /* fond : gris des coffrets et armoires électriques */
+  --coffret-2:#C5CCC6;   /* le coffret du simulateur, un ton plus sombre */
+  --module:#F7F8F5;      /* surfaces : blanc des disjoncteurs */
+  --anthracite:#1F2528;  /* texte : anthracite des bornes murales */
+  --anthracite-2:#434B4F;
+  --gaine:#5F6863;       /* bords de champs et de modules, lisibles (3:1 et plus) */
+  --tpc:#B1261D;         /* l'unique accent : gaine TPC rouge, voyant « I » */
+  --trait:#AEB6B0;       /* filets */
+  --mesure:62ch;
+  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:'Barlow',system-ui,sans-serif;font-size:1.0625rem;line-height:1.55;color:var(--anthracite);
+  background:var(--coffret);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto;background:var(--coffret-2)} /* fond visible pendant le chargement ou si l'image manque */
+a{color:inherit}
+:focus-visible{outline:3px solid var(--tpc);outline-offset:3px}
+h1,h2,h3,.marque b{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;line-height:1.02;letter-spacing:-.005em;text-wrap:balance}
+h2{font-size:clamp(1.9rem,1.3rem + 2.6vi,3rem)}
+p{text-wrap:pretty}
+sup{font-size:.7em;line-height:0}
+.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
+.skip{position:absolute;left:-999px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip:focus{left:1rem;top:1rem;background:var(--anthracite);color:var(--module);padding:.6rem 1rem;z-index:10}
+
+/* Barre du haut : le nom et le numéro, ce que cherche un client pressé */
+.top{border-bottom:1px solid var(--trait)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.75rem}
+.marque{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;min-height:2.75rem}
+.marque b{font-size:clamp(1.25rem,.9rem + 1.6vi,1.5rem)}
+.marque span{font-size:.8125rem;color:var(--anthracite-2);margin-top:.2rem}
+.tel{font-weight:600;text-decoration:none;white-space:nowrap;font-variant-numeric:tabular-nums;
+  padding:.55rem .15rem;border-bottom:2px solid var(--tpc)}
+
+/* Ouverture */
+.ouv{padding-block:var(--pas) calc(var(--pas)*1.5)}
+.ouv .wrap{display:grid;gap:var(--pas)}
+.ouv h1{font-size:clamp(2.5rem,1.6rem + 4.2vi,4.6rem);line-height:.98;max-width:17ch}
+.chapo{font-size:1.125rem;max-width:44ch;margin-top:1rem;color:var(--anthracite-2)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.5rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.8rem 1.35rem;
+  background:var(--tpc);color:#fff;border:2px solid transparent;border-radius:4px;font:inherit;font-weight:600;
+  text-decoration:none;cursor:pointer;transition:background-color .15s}
+.btn:active{transform:translateY(1px)}
+.discret{font-size:.9375rem;color:var(--anthracite-2);max-width:34ch}
+figure{margin:0}
+/* recadrage sur le point de recharge : portrait au téléphone, presque carré dès qu'il y a la place */
+.ouv img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:0 50%;border-radius:3px} /* téléphone : image entière, le point de recharge reste dans le premier écran */
+figcaption{font-size:.8125rem;color:var(--anthracite-2);margin-top:.5rem;max-width:52ch}
+/* tablette et au-delà : calé à gauche, la place 50 reste dans le cadre, le sol peint et les taches en sortent */
+@media (min-width:36rem){.ouv img{aspect-ratio:9/10;object-position:0 50%}}
+/* ordinateur : texte et photo côte à côte */
+@media (min-width:60rem){.ouv .wrap{grid-template-columns:1fr 1fr;align-items:center;gap:3rem}}
+/* téléphone en paysage : le titre rétrécit pour laisser voir la promesse et le bouton */
+@media (max-height:30rem) and (orientation:landscape){.ouv h1{font-size:2.1rem;max-width:none}.chapo{margin-top:.5rem}.actions{margin-top:1rem}}
+
+/* Signature : le choix de la puissance, un disjoncteur par puissance sur un
+   rail DIN. La largeur des modules dit la vérité : 2 modules en monophasé,
+   4 en triphasé. Tout en CSS (:has), sans JS. */
+.puissance{background:var(--module);padding-block:calc(var(--pas)*2)}
+.puissance h2{max-width:20ch}
+.puissance .intro{max-width:var(--mesure);margin-top:.75rem;color:var(--anthracite-2)}
+.sim{margin-top:1.75rem;display:grid;gap:1.75rem}
+.coffret{background:var(--coffret-2);border:1px solid var(--trait);border-radius:.5rem;padding:1rem .5rem 1.1rem;container-type:inline-size;isolation:isolate;align-self:start}
+.rail{border:0;padding:0;min-width:0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:1px;position:relative}
+.rail legend{font-weight:600;padding:0;margin-bottom:.8rem}
+.dj{grid-column:span 2;position:relative;display:grid;gap:.35rem;cursor:pointer}
+.dj.tri{grid-column:span 4}
+.dj input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;z-index:1}
+/* les modules grandissent avec le coffret (cqi) : proportions d'un vrai disjoncteur */
+.corps{position:relative;display:flex;flex-direction:column;align-items:center;gap:clamp(.5rem,2.5cqi,.9rem);min-height:clamp(7.25rem,36cqi,12rem);padding:.5rem .15rem .6rem;
+  background:#FBFBF9;border:1px solid var(--gaine);border-radius:3px;transition:border-color .15s}
+/* le rail DIN, derrière les modules, d'un bord à l'autre du coffret */
+.corps::before{content:"";position:absolute;z-index:-1;inset-inline:-.2rem;top:36%;height:clamp(1.6rem,7cqi,2.6rem);background:#9AA29C;border-block:1px solid #7F8781}
+.dj:first-of-type .corps::before{inset-inline-start:-.5rem}
+.dj:last-of-type .corps::before{inset-inline-end:-.5rem}
+.kw{font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:clamp(.75rem,5cqi,1.6rem);line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums}
+.fente{position:relative;width:clamp(1.2rem,5cqi,1.9rem);height:clamp(2.9rem,14cqi,5rem);background:#2B3134;border-radius:2px;overflow:hidden}
+.tri .fente{width:clamp(3rem,13cqi,5rem)}
+.fente::before{content:"";position:absolute;inset-inline:.15rem;bottom:.15rem;height:calc(50% - .15rem);background:#6B7479;border-radius:1px;transition:transform .2s ease-out}
+.voyant{width:clamp(.9rem,4cqi,1.4rem);height:clamp(.4rem,1.6cqi,.6rem);border-radius:1px;background:#B9C0BA;border:1px solid #8C948E}
+.etiquette{display:block;text-align:center;background:#fff;border:1px solid #9EA6A0;border-radius:2px;padding:.2rem 0;
+  font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:clamp(.75rem,4.2cqi,1.3rem);white-space:nowrap;font-variant-numeric:tabular-nums}
+.dj:has(input:checked) .corps{border-color:var(--anthracite);box-shadow:inset 0 0 0 1px var(--anthracite)}
+.dj:has(input:checked) .fente::before{transform:translateY(calc(-100% - .3rem));background:#E4E7E4}
+.dj:has(input:checked) .voyant{background:var(--tpc);border-color:var(--tpc)}
+.dj:has(input:focus-visible) .corps{outline:3px solid var(--tpc);outline-offset:2px}
+/* le regroupement monophasé / triphasé, sous les modules concernés */
+.phases{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:1px;margin-top:.6rem;font-size:.8125rem;color:var(--anthracite-2)}
+.phases span{grid-column:span 4;border-top:1px solid var(--gaine);padding-top:.3rem}
+.phases span+span{grid-column:span 8}
+/* le survol n'existe qu'à la souris */
+@media (hover:hover) and (pointer:fine){.dj:hover .corps{border-color:var(--anthracite)} .btn:hover{background:#8F1C15}}
+
+.res .temps{display:none}
+.temps strong{display:block;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:clamp(3.75rem,2.6rem + 5.5vi,6.5rem);
+  line-height:.9;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.temps > p{margin-top:.5rem;max-width:34ch;color:var(--anthracite-2)}
+.temps dl{margin-top:1.25rem;border-top:1px solid var(--trait)}
+.temps dl div{display:grid;grid-template-columns:6.75rem 1fr;gap:.75rem;padding:.6rem 0;border-bottom:1px solid var(--trait)}
+.temps dt{font-weight:600}
+.temps dd{margin:0}
+.sim:has(#p37:checked) .t37,.sim:has(#p74:checked) .t74,.sim:has(#p11:checked) .t11,.sim:has(#p22:checked) .t22{display:block;animation:enclenche .3s ease-out}
+@keyframes enclenche{from{opacity:0;transform:translateY(.35rem)}to{opacity:1;transform:none}}
+.base{font-size:.875rem;color:var(--anthracite-2);margin-top:1.25rem;max-width:var(--mesure)}
+/* assez large pour mettre le coffret et le résultat côte à côte */
+@media (min-width:56rem){.sim{grid-template-columns:1.2fr 1fr;gap:3rem;align-items:start}}
+
+/* Maison, copropriété, entreprise */
+.cas{padding-block:calc(var(--pas)*2)}
+.lieux{list-style:none;padding:0;margin-top:1.25rem}
+.lieux li{padding-block:1.1rem;border-top:1px solid var(--trait);max-width:var(--mesure)}
+.lieux li:last-child{border-bottom:1px solid var(--trait)}
+.lieux h3{font-size:1.5rem}
+.lieux p{margin-top:.4rem}
+.lieux small{display:block;font-size:.8125rem;color:var(--anthracite-2);margin-top:.35rem}
+/* sur ordinateur : le titre en regard des trois cas */
+@media (min-width:60rem){.cas .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:3.5rem;align-items:start}.cas .lieux{margin-top:0}}
+
+/* Déroulé : une vraie séquence, d'où les numéros */
+.etapes{padding-block:calc(var(--pas)*2);border-top:1px solid var(--trait)}
+.etapes ol{list-style:none;padding:0;margin-top:1.5rem;display:grid;gap:1.4rem;counter-reset:e}
+.etapes li{counter-increment:e;display:grid;grid-template-columns:2.75rem 1fr;gap:.25rem 1rem;max-width:var(--mesure)}
+.etapes li::before{content:counter(e);grid-row:span 2;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-weight:700;font-size:1.35rem;line-height:1;
+  display:grid;place-items:center;height:2.4rem;background:#fff;border:1px solid var(--gaine);border-radius:2px}
+.etapes h3{font-size:1.4rem;align-self:center}
+/* les quatre étapes sur deux colonnes */
+@media (min-width:60rem){.etapes ol{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:3rem}}
+
+/* Qui vient chez vous */
+.nous{padding-block:calc(var(--pas)*2);border-top:1px solid var(--trait)}
+.nous .wrap{display:grid;gap:var(--pas)}
+.nous .wrap > div{min-width:0}
+.nous p{max-width:var(--mesure);margin-top:.85rem}
+.nous h3{font-size:1.4rem}
+.avert{background:var(--module);padding:1rem 1.1rem;border-radius:3px;font-weight:600}
+.communes{list-style:none;padding:0;margin-top:.9rem;column-gap:1.5rem}
+.communes li{padding:.2rem 0;break-inside:avoid}
+/* deux puis trois colonnes dès que les noms les plus longs y tiennent */
+@media (min-width:24rem){.communes{columns:2}}
+@media (min-width:40rem){.communes{columns:3}}
+/* présentation et communes côte à côte */
+@media (min-width:60rem){.nous .wrap{grid-template-columns:1.1fr 1fr;gap:3rem}}
+
+/* Demande de visite technique */
+.visite{background:var(--module);padding-block:calc(var(--pas)*2)}
+.visite > .wrap > p{max-width:var(--mesure);margin-top:.75rem}
+.cote{margin-top:2rem;display:grid;gap:.5rem;align-content:start}
+.cote b{font-size:1.125rem}
+.cote a{font-weight:600;font-size:1.5rem;font-variant-numeric:tabular-nums}
+/* sur ordinateur : le formulaire à gauche, le téléphone en regard */
+@media (min-width:60rem){.visite .grille{display:grid;grid-template-columns:minmax(0,36rem) 1fr;gap:4rem;align-items:start}.cote{margin-top:1.5rem}}
+form{margin-top:1.5rem;display:grid;gap:1rem;max-width:36rem}
+label,legend{display:block;font-weight:600;margin-bottom:.35rem}
+input,select{width:100%;font:inherit;font-size:1rem;color:var(--anthracite);background:#fff;
+  border:1.5px solid var(--gaine);border-radius:4px;padding:.75rem .8rem;height:3.2rem}
+input:focus-visible,select:focus-visible{outline:3px solid var(--tpc);outline-offset:1px;border-color:var(--anthracite)}
+.lieu{border:0;padding:0;min-width:0}
+.lieu legend{padding:0}
+.choix{display:grid;grid-template-columns:repeat(auto-fit,minmax(11.5rem,1fr));gap:.5rem}
+.choix label{position:relative;display:flex;align-items:center;gap:.6rem;margin:0;min-height:3rem;padding:.5rem .8rem;
+  font-weight:400;background:#fff;border:1.5px solid var(--gaine);border-radius:4px;cursor:pointer}
+.choix input{width:1.1rem;height:1.1rem;padding:0;margin:0;flex:none;accent-color:var(--tpc)}
+.choix label:has(:checked){border-color:var(--anthracite);box-shadow:inset 0 0 0 1px var(--anthracite);font-weight:600}
+.deux{display:grid;gap:1rem}
+/* deux champs par ligne dès qu'ils ont la place */
+@media (min-width:36rem){.deux{grid-template-columns:1fr 1fr}}
+.merci{display:none;padding:1rem 1.1rem;border:1.5px solid var(--anthracite);border-radius:4px;background:#fff;font-weight:600}
+form.envoye .merci{display:block}
+
+footer{background:var(--anthracite);color:#C9CFCB;padding-block:2.5rem;font-size:.875rem}
+footer .wrap{display:grid;gap:.75rem}
+footer b{color:#fff;font-family:'Barlow Condensed','Arial Narrow',sans-serif;font-size:1.3rem}
+footer a{color:#fff}
+footer p{max-width:70ch}
+
+/* Barre d'appel sous le pouce, en mobile et en paysage téléphone : on appelle un
+   électricien plus qu'on ne lui écrit. Rangée quand le formulaire est à l'écran. */
+.pouce{display:none}
+@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-bottom:6rem}
+  .pouce{display:grid;grid-template-columns:1fr 1.6fr;gap:.5rem;position:fixed;left:0;right:0;bottom:0;z-index:5;
+    padding:.6rem .75rem max(.6rem,env(safe-area-inset-bottom));background:var(--coffret);border-top:1px solid var(--trait);transition:transform .2s ease-out}
+  .pouce a{display:flex;align-items:center;justify-content:center;min-height:2.75rem;border-radius:4px;font-size:1rem;font-weight:600;text-decoration:none;white-space:nowrap}
+  .pouce .appel{border:1.5px solid var(--anthracite)}
+  .pouce .demande{background:var(--tpc);color:#fff;border:1.5px solid transparent}
+  .pouce.cache{transform:translateY(110%)}
+  footer{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
+}
+/* mouvement réduit : ni animation ni transition */
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#visite">Aller au formulaire de visite</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="#">
+      <b>Deûle Électricité</b>
+      <span>Bornes de recharge, métropole lilloise</span>
+    </a>
+    <a class="tel" href="tel:+33353012759" aria-label="Appeler Deûle Électricité au 03 53 01 27 59">03 53 01 27 59</a>
+  </div>
+</header>
+
+<main>
+  <section class="ouv">
+    <div class="wrap">
+      <div>
+        <h1>Votre borne de recharge, du tableau électrique à la place de parking</h1>
+        <p class="chapo">Maison, copropriété ou entreprise : on vient voir votre tableau, on mesure le trajet du câble, et le devis compte tout, tranchée comprise.</p>
+        <div class="actions">
+          <a class="btn" href="#visite">Choisir un créneau de visite</a>
+          <p class="discret">Visite technique gratuite. Un électricien passe sous huit jours, partout dans la métropole lilloise.</p>
+        </div>
+      </div>
+      <figure>
+        <img src="/exemples/img/borne-irve-parking-800.webp"
+             srcset="/exemples/img/borne-irve-parking-480.webp 480w, /exemples/img/borne-irve-parking-800.webp 800w, /exemples/img/borne-irve-parking-1200.webp 1200w"
+             sizes="(min-width: 60rem) 51rem, (min-width: 36rem) calc(148vi - 4.1rem), calc(100vi - 2rem)"
+             width="1200" height="899" fetchpriority="high"
+             alt="Parking souterrain : un boîtier de recharge blanc fixé au mur de la place 50, alimenté par un conduit qui descend le long du mur, à côté d’une grille d’aération">
+        <figcaption>En parking collectif, un point de recharge par place, alimenté par un conduit fixé au mur.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="puissance" aria-labelledby="puissance-t">
+    <div class="wrap">
+      <h2 id="puissance-t">Quelle puissance pour votre borne ?</h2>
+      <p class="intro">Choisissez un disjoncteur : vous voyez le temps de recharge et ce que cette puissance demande à votre installation. Au-delà de 3,7 kW, la pose est réservée à un électricien qualifié IRVE.</p>
+      <div class="sim">
+        <div class="coffret">
+          <fieldset class="rail">
+            <legend>Puissance de la borne</legend>
+            <label class="dj"><input type="radio" name="kw" id="p37" value="3,7 kW"><span class="corps" aria-hidden="true"><span class="kw">3,7 kW</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="sr">3,7 kW, </span>16 A</span></label>
+            <label class="dj"><input type="radio" name="kw" id="p74" value="7,4 kW" checked><span class="corps" aria-hidden="true"><span class="kw">7,4 kW</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="sr">7,4 kW, </span>32 A</span></label>
+            <label class="dj tri"><input type="radio" name="kw" id="p11" value="11 kW"><span class="corps" aria-hidden="true"><span class="kw">11 kW</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="sr">11 kW, </span>3 × 16 A</span></label>
+            <label class="dj tri"><input type="radio" name="kw" id="p22" value="22 kW"><span class="corps" aria-hidden="true"><span class="kw">22 kW</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="sr">22 kW, </span>3 × 32 A</span></label>
+          </fieldset>
+          <p class="phases" aria-hidden="true"><span>Monophasé</span><span>Triphasé</span></p>
+        </div>
+        <div class="res" aria-live="polite">
+          <div class="temps t37">
+            <strong>16 h 13</strong>
+            <p>pour recharger une batterie de 60 kWh, de vide à pleine.</p>
+            <dl>
+              <div><dt>Réseau</dt><dd>Monophasé, 230 V, 16 A.</dd></div>
+              <div><dt>Abonnement</dt><dd>Votre puissance souscrite actuelle suffit souvent.</dd></div>
+              <div><dt>Pose</dt><dd>En logement privé, la qualification IRVE n’est pas exigée à cette puissance. Elle l’est en entreprise, et pour toucher la prime ADVENIR. On pose avec le même soin.</dd></div>
+            </dl>
+          </div>
+          <div class="temps t74">
+            <strong>8 h 06</strong>
+            <p>pour recharger une batterie de 60 kWh, de vide à pleine. Une nuit suffit.</p>
+            <dl>
+              <div><dt>Réseau</dt><dd>Monophasé, 230 V, 32 A.</dd></div>
+              <div><dt>Abonnement</dt><dd>Souvent à augmenter, sauf si la borne module sa charge selon la consommation de la maison.</dd></div>
+              <div><dt>Pose</dt><dd>Par un électricien qualifié IRVE, obligatoire.</dd></div>
+            </dl>
+          </div>
+          <div class="temps t11">
+            <strong>5 h 27</strong>
+            <p>pour recharger une batterie de 60 kWh, de vide à pleine.</p>
+            <dl>
+              <div><dt>Réseau</dt><dd>Triphasé, 400 V, 3 × 16 A.</dd></div>
+              <div><dt>Abonnement</dt><dd>Il faut un compteur triphasé. Si le vôtre est monophasé, le passage se demande à votre fournisseur d’électricité, qui transmet à Enedis.</dd></div>
+              <div><dt>Pose</dt><dd>Par un électricien qualifié IRVE, obligatoire.</dd></div>
+            </dl>
+          </div>
+          <div class="temps t22">
+            <strong>2 h 44</strong>
+            <p>pour recharger une batterie de 60 kWh, de vide à pleine.</p>
+            <dl>
+              <div><dt>Réseau</dt><dd>Triphasé, 400 V, 3 × 32 A.</dd></div>
+              <div><dt>Abonnement</dt><dd>Triphasé, avec une forte puissance souscrite. Rare en maison, courant en parking d’entreprise.</dd></div>
+              <div><dt>Pose</dt><dd>Par un électricien qualifié IRVE, obligatoire.</dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <p class="base">Estimation théorique, hors pertes : 60 kWh divisés par la puissance de la borne. 16 A et 32 A : courant de charge. Le disjoncteur de la ligne a un calibre supérieur, 40 A courbe C pour une borne de 7,4 kW. Votre voiture ne charge jamais plus vite que son chargeur embarqué : pendant la visite, on regarde sa fiche technique et votre dernière facture d’électricité.</p>
+    </div>
+  </section>
+
+  <section class="cas" aria-labelledby="cas-t">
+    <div class="wrap">
+      <h2 id="cas-t">Maison, copropriété ou entreprise</h2>
+        <ul class="lieux">
+          <li>
+            <h3>En maison</h3>
+            <p>On part de votre tableau, on ajoute la protection dédiée à la borne et on tire le câble jusqu’au garage ou à l’allée. S’il faut passer sous une cour ou un chemin, la tranchée est mesurée pendant la visite et chiffrée dans le devis.</p>
+            <p>En maison individuelle, pas de prime ADVENIR, et le crédit d’impôt pour une borne est supprimé pour les dépenses payées depuis le 1<sup>er</sup> janvier 2026 : le prix du devis est celui que vous payez.</p>
+          </li>
+          <li>
+            <h3>En copropriété</h3>
+            <p>Le droit à la prise vous permet d’équiper votre place à vos frais. Vous le notifiez au syndic par lettre recommandée avec accusé de réception, avec une description détaillée des travaux et un plan ou un schéma : on vous les prépare.</p>
+            <p>La prime ADVENIR prend en charge 50 % d’une borne individuelle en immeuble collectif, jusqu’à 1 000 € HT par point de recharge. On monte le dossier et on le suit jusqu’au versement.<small>Source : advenir.mobi, montants d’aides par type de prime, consulté le 28 septembre 2026.</small></p>
+          </li>
+          <li>
+            <h3>En entreprise</h3>
+            <p>Parking de salariés, de visiteurs ou flotte de véhicules : on dimensionne l’alimentation pour plusieurs points de recharge, avec un pilotage qui partage la puissance disponible entre les voitures branchées.</p>
+          </li>
+        </ul>
+    </div>
+  </section>
+
+  <section class="etapes" aria-labelledby="etapes-t">
+    <div class="wrap">
+      <h2 id="etapes-t">De la visite à la première charge</h2>
+      <ol>
+        <li><h3>La visite sur place</h3><p>Comptez une heure : on regarde l’état du tableau et la puissance souscrite, on choisit l’emplacement de la borne, on mesure le trajet du câble.</p></li>
+        <li><h3>Le devis complet</h3><p>Borne, câble, protections, tranchée s’il en faut une : tout est chiffré. Aucune ligne « à prévoir » découverte le jour de la pose.</p></li>
+        <li><h3>La pose</h3><p>Le plus souvent en une journée, tableau compris. On protège le passage et on repart en laissant propre.</p></li>
+        <li><h3>La mise en service et les papiers</h3><p>Essai de charge avec votre voiture, départ étiqueté au tableau. Si une attestation Consuel est nécessaire, on la demande nous-mêmes.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="nous" aria-labelledby="nous-t">
+    <div class="wrap">
+      <div>
+        <h2 id="nous-t">Qui pose votre borne</h2>
+        <p>Quatre électriciens salariés, installés à Marcq‑en‑Barœul depuis 2009 : celui qui fait la visite revient poser la borne. Qualification IRVE délivrée par Qualifelec.</p>
+        <p>Du lundi au vendredi, de 7 h 30 à 17 h 30.</p>
+        <p class="avert">On ne vous appellera jamais pour vous vendre une borne : c’est vous qui nous écrivez.</p>
+      </div>
+      <div>
+        <h3>Nos communes d’intervention</h3>
+        <ul class="communes">
+          <li>Lille</li><li>Marcq‑en‑Barœul</li><li>Roubaix</li><li>Tourcoing</li>
+          <li>Villeneuve‑d’Ascq</li><li>Lambersart</li><li>La Madeleine</li><li>Wasquehal</li>
+          <li>Croix</li><li>Mons‑en‑Barœul</li><li>Wambrechies</li><li>Ronchin</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="visite" id="visite" aria-labelledby="visite-t">
+    <div class="wrap">
+      <h2 id="visite-t">Choisir un créneau de visite</h2>
+      <p>Trois questions pour préparer la visite technique. Vous recevez une réponse dans la minute, avec deux créneaux au choix.</p>
+      <div class="grille">
+      <form id="demande" action="#visite" novalidate>
+        <fieldset class="lieu">
+          <legend>Où sera la borne ?</legend>
+          <div class="choix">
+            <label><input type="radio" name="lieu" value="Maison" checked>Maison</label>
+            <label><input type="radio" name="lieu" value="Copropriété">Copropriété</label>
+            <label><input type="radio" name="lieu" value="Entreprise">Entreprise</label>
+          </div>
+        </fieldset>
+        <div class="deux">
+          <div>
+            <label for="kw">Puissance souhaitée</label>
+            <select id="kw" name="puissance">
+              <option value="">Je ne sais pas encore</option><option value="3,7 kW">3,7 kW</option><option value="7,4 kW">7,4 kW</option><option value="11 kW">11 kW</option><option value="22 kW">22 kW</option>
+            </select>
+          </div>
+          <div>
+            <label for="distance">Du tableau à la place</label>
+            <select id="distance" name="distance">
+              <option>Je ne sais pas</option><option>Moins de 10 m</option><option>De 10 à 25 m</option><option>Plus de 25 m</option>
+            </select>
+          </div>
+        </div>
+        <div class="deux">
+          <div><label for="nom">Nom *</label><input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required></div>
+          <div><label for="tel">Téléphone *</label><input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" required></div>
+        </div>
+        <div>
+          <label for="commune">Commune *</label>
+          <input id="commune" name="commune" list="liste-communes" autocomplete="address-level2" enterkeyhint="send" required>
+          <datalist id="liste-communes">
+            <option value="Lille"></option><option value="Marcq-en-Barœul"></option><option value="Roubaix"></option><option value="Tourcoing"></option><option value="Villeneuve-d’Ascq"></option><option value="Lambersart"></option>
+          </datalist>
+        </div>
+        <p class="discret">* obligatoire</p>
+        <div><button class="btn" type="submit">Recevoir mes deux créneaux</button></div>
+        <p class="merci" role="status">C’est noté. Sur le site réel, Deûle Électricité vous enverrait dans la minute un SMS avec deux créneaux de visite.</p>
+      </form>
+      <aside class="cote" aria-label="Par téléphone">
+        <b>Vous préférez appeler ?</b>
+        <a href="tel:+33353012759">03 53 01 27 59</a>
+        <p>Du lundi au vendredi, de 7 h 30 à 17 h 30. Le soir et le week-end, le formulaire répond à notre place : vos deux créneaux arrivent par SMS.</p>
+      </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Deûle Électricité</b>
+    <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-borne-recharge" target="_top">4dayvelopment</a>. L’entreprise, son numéro et ses qualifications sont fictifs.</p>
+    <p>Photo : <a href="https://commons.wikimedia.org/wiki/File:Halensee_Seesener_Stra%C3%9Fe_Tiefgarage-003.jpg">« Halensee Seesener Straße Tiefgarage-003 »</a>, Fridolin freudenfett, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>, via Wikimedia Commons. Marques retirées, couleurs atténuées.</p>
+  </div>
+</footer>
+
+<nav class="pouce" aria-label="Joindre Deûle Électricité">
+  <a class="appel" href="tel:+33353012759">Appeler</a>
+  <a class="demande" href="#visite">Choisir un créneau</a>
+</nav>
+
+<script src="/exemples/borne-irve.js" defer></script>
+</body>
+</html>
