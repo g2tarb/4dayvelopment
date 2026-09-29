@@ -601,6 +601,9 @@
       border: 1px solid rgba(239,68,68,.3);
       color: #fca5a5;
     }
+    /* la classe err est posee d'avance dans le HTML : vide, le cadre rouge
+       s'affichait au-dessus du bouton de commande avant toute erreur */
+    .feedback.err:empty { display: none; }
 
     /* Garanties */
     .garanties {
