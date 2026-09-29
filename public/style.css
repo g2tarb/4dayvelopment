@@ -3259,9 +3259,15 @@ footer {
   section { padding: 30px 0; }
 }
 
-/* ── Ultra-mobile : rendu paresseux des sections below-fold ── */
+/* ── Ultra-mobile : rendu paresseux sous la ligne de flottaison ──
+   Pas sur les sections de la home : ce sont des cibles d'ancre (onglets
+   Offres et Réalisations, « Voir les offres », /#tarifs depuis les autres
+   pages). Rendues seulement à l'approche, avec une hauteur estimée à 900 px
+   pour 1 000 à 2 600 px réels, elles grandissaient pendant et après le saut
+   et l'ancre s'arrêtait 700 à 1 800 px avant sa cible. Le pied de page,
+   qu'aucune ancre ne franchit, garde le rendu paresseux. */
 @media (max-width: 768px) {
-  #services, #process, #tarifs, #avis, #faq, #contact, footer {
+  footer {
     content-visibility: auto;
     contain-intrinsic-size: auto 900px;
   }
