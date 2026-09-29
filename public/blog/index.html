@@ -28,6 +28,8 @@
 <body>
 
   <!-- partial:nav -->
+  <!-- Premier element focusable : au clavier, on saute la navigation. -->
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
   <nav id="navbar">
     <a href="/" class="nav-logo">
       <img src="/logo/logo4day.svg" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="89">
@@ -47,16 +49,16 @@
   </nav>
   <!-- /partial:nav -->
 
-  <main>
+  <main id="contenu">
 
-  <section class="hero" style="min-height:auto;padding:140px 0 60px;">
+  <section class="hero" style="min-height:auto;padding-block:140px 60px;">
     <div class="container">
       <div class="badge reveal">
         <span class="badge-dot"></span>
         <span>Ressources & Conseils</span>
       </div>
       <h1 class="hero-title reveal" style="font-size:clamp(2.2rem,5vw,3.5rem);margin-top:20px;">
-        Le blog <em class="gradient-text">4dayvelopment</em>
+        Le blog <em class="gradient-text brand-word">4day<wbr>velopment</em>
       </h1>
       <p class="hero-desc reveal" style="max-width:650px;">
         Conseils pratiques, guides et analyses pour créer votre site web, améliorer votre SEO et développer votre activité en ligne.
@@ -64,15 +66,15 @@
     </div>
   </section>
 
-  <section style="padding:40px 0 80px;">
+  <section style="padding-block:40px 80px;">
     <div class="container" style="max-width:900px;">
 
       <!-- Article 1 -->
       <article style="background:#141414;border:1px solid #222;border-radius:16px;padding:32px;margin-bottom:24px;">
         <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;">
           <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">Guide</span>
-          <time datetime="2026-07-02" style="font-size:13px;color:#666;">2 juillet 2026</time>
-          <span style="font-size:13px;color:#666;">· 8 min de lecture</span>
+          <time datetime="2026-07-02" style="font-size:13px;color:var(--muted2);">2 juillet 2026</time>
+          <span style="font-size:13px;color:var(--muted2);">· 8 min de lecture</span>
         </div>
         <h2 style="font-size:1.5rem;margin-bottom:12px;">
           <a href="/blog/combien-coute-site-internet-2026" style="color:#e8e8e8;text-decoration:none;">Combien coûte un site internet en 2026 ? Guide complet des prix</a>
@@ -80,7 +82,7 @@
         <p style="color:#888;line-height:1.7;margin-bottom:16px;">
           De 500 euros à 50 000 euros : pourquoi les prix varient autant et comment choisir la bonne option pour votre budget. Comparatif freelance, agence, plateforme DIY.
         </p>
-        <a href="/blog/combien-coute-site-internet-2026" style="color:#f2b13b;font-weight:600;font-size:14px;text-decoration:none;">Lire l'article →</a>
+        <a href="/blog/combien-coute-site-internet-2026" class="blog-more" style="color:#f2b13b;font-weight:600;font-size:14px;text-decoration:none;">Lire l'article →</a>
       </article>
 
     </div>

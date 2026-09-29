@@ -180,6 +180,8 @@ footer a{color:#fff}
 sup{font-size:.7em;line-height:0}
 /* mouvement réduit : ni animation ni transition */
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* cibles tactiles : 44 px minimum au doigt (liens d'appel et logo trop bas) */
+@media (pointer: coarse) { .cote a { display: flex; align-items: center; min-height: 44px; } }
 </style>
 </head>
 <body>
