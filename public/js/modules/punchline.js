@@ -22,7 +22,9 @@ const POSE_MS   = 3000;            // le temps de lire "ou c'est gratuit"
 
 export function initPunchline() {
   const hero = document.getElementById('hero');
-  if (!hero) return;
+  // L'effet vise la punchline du hero de l'accueil : sans elle (pages métier,
+  // qui ont aussi un #hero pour la barre d'action), pas de canvas du tout.
+  if (!hero || !hero.querySelector('.hero-title .gradient-text')) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const canvas = document.createElement('canvas');

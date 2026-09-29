@@ -358,6 +358,11 @@ nav.scrolled {
 .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .hamburger.open span:nth-child(2) { opacity: 0; transform: translateX(-8px); }
 .hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
+/* Couleurs forcées (contraste élevé) : les traits sont des fonds, que le
+   navigateur efface ; on les peint dans la couleur de texte du système. */
+@media (forced-colors: active) {
+  .hamburger span { forced-color-adjust: none; background: CanvasText; }
+}
 
 /* Mobile menu */
 .mobile-menu {

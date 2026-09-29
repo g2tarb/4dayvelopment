@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Kerleau Rénovation, appartements anciens | Démo 4dayvelopment</title>
+<meta name="description" content="Démo : rénovation d’appartements anciens à Paris est et Montreuil. Salle de bains, cuisine, sols ou appartement entier, visite et métré gratuits.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#24272B">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/sofia-sans-var.woff2" crossorigin>
+<style>
+@font-face{font-family:'Sofia Sans';font-style:normal;font-weight:1 1000;font-display:swap;src:url('/fonts/sofia-sans-var.woff2') format('woff2')}
+
+:root{
+  --platre:#E4E0DA;     /* fond : plâtre sec, gris froid */
+  --platre-2:#D9D4CC;   /* bandes et fonds d'images en chargement */
+  --papier:#F5F4F1;     /* la feuille du plan, les champs */
+  --graphite:#24272B;   /* texte, murs du plan, boutons : la mine du crayon */
+  --zinc:#545F66;       /* texte secondaire : les toits d'en face */
+  --carreau:#2D5B4F;    /* l'unique accent : le vert des carreaux de ciment */
+  --joint:#B9B3AA;      /* joints et filets */
+  --chene:#DDC7A1;      /* parquet chêne vitrifié, uniquement dans le plan */
+  --chene-2:#A6865A;
+  --mesure:62ch;
+  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  font-family:'Sofia Sans',system-ui,sans-serif;font-weight:400;font-size:1.0625rem;line-height:1.55;
+  color:var(--graphite);background:var(--platre);-webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto;background:var(--platre-2)} /* fond visible pendant le chargement */
+a{color:inherit}
+:focus-visible{outline:3px solid var(--carreau);outline-offset:3px}
+h1,h2,h3{font-weight:780;line-height:1.05;letter-spacing:-.018em;text-wrap:balance}
+h2{font-size:clamp(1.7rem,1.15rem + 2.4vi,2.7rem)}
+p{text-wrap:pretty}
+sup{font-size:.68em;line-height:0}
+.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:1rem;top:1rem;background:var(--graphite);color:var(--papier);padding:.6rem 1rem;z-index:10}
+.discret{font-size:.9375rem;color:var(--zinc)}
+
+/* Barre du haut : le nom et le numéro, rien d'autre */
+.top{background:var(--platre);border-bottom:1px solid var(--joint)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.75rem}
+.marque{text-decoration:none;display:flex;flex-direction:column;justify-content:center;min-height:2.75rem;line-height:1.1}
+.marque b{font-weight:820;font-size:1.3rem;letter-spacing:-.02em}
+.marque span{font-size:.8125rem;color:var(--zinc)}
+.tel{font-weight:680;font-size:1.0625rem;white-space:nowrap;text-decoration:none;font-variant-numeric:tabular-nums;
+  padding:.55rem .1rem;border-bottom:2px solid var(--carreau)}
+
+/* Ouverture */
+.ouv{padding-block:calc(var(--pas)*1.25) calc(var(--pas)*2)}
+.ouv .wrap{display:grid;gap:calc(var(--pas)*1.25)}
+.ouv h1{font-size:clamp(2.2rem,1.25rem + 4vi,4rem);max-width:15ch}
+.chapo{font-size:1.1875rem;line-height:1.5;max-width:40ch;margin-top:1rem}
+.zone{margin-top:.9rem;color:var(--zinc);max-width:44ch}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.6rem}
+.actions .discret{max-width:26ch}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.8rem 1.4rem;
+  background:var(--graphite);color:var(--papier);border:2px solid transparent;border-radius:4px;
+  font:inherit;font-weight:680;text-decoration:none;cursor:pointer;transition:background-color .15s}
+.btn:hover{background:#3A3F45}
+.btn:active{transform:translateY(1px)}
+.ouv figure img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px}
+figcaption{font-size:.875rem;color:var(--zinc);margin-top:.5rem;max-width:44ch}
+/* téléphone en paysage : titre réduit pour garder le chapô et le bouton à l'écran */
+@media (max-height:30rem) and (orientation:landscape){
+  .ouv h1{font-size:2rem;max-width:none}
+  .chapo{font-size:1.0625rem;margin-top:.6rem}
+}
+/* ordinateur : texte à gauche, photo à droite */
+@media (min-width:56rem){
+  .ouv .wrap{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:4rem;align-items:center}
+}
+
+/* Signature : le tri de la demande de devis, en CSS (:has). Les deux choix
+   appartiennent au formulaire de devis plus bas (attribut form), le plan
+   montre les pièces concernées et ses cotes suivent la surface choisie. */
+.tri{background:var(--papier);border-block:1px solid var(--joint);padding-block:calc(var(--pas)*2)}
+.tri .intro{max-width:var(--mesure);margin-top:.75rem}
+.tri .grille{display:grid;gap:1.75rem;margin-top:1.75rem}
+.tri fieldset{border:0;padding:0;min-width:0}
+.tri fieldset + fieldset{margin-top:1.4rem}
+.tri legend{font-weight:720;font-size:1.125rem;padding:0;margin-bottom:.6rem}
+/* les choix posés comme des carreaux : joints d'un pixel, pas de cartes */
+.tuiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,8.75rem),1fr));gap:1px;background:var(--joint);border:1px solid var(--joint)}
+.c{position:relative;margin:0;display:flex;align-items:center;gap:.6rem;min-height:3.25rem;padding:.7rem .75rem;
+  background:var(--papier);font-weight:600;line-height:1.2;cursor:pointer;transition:background-color .15s,color .15s}
+.c input{position:absolute;inset:0;width:100%;height:100%;margin:0;opacity:0;cursor:pointer}
+.c::before{content:"";flex:none;width:.6rem;height:.6rem;margin-inline:.1rem;border:1.5px solid var(--zinc);transform:rotate(45deg)}
+.c:hover{background:#ECEAE5}
+.c:has(input:checked){background:var(--carreau);color:var(--papier)}
+.c:has(input:checked)::before{background:var(--papier);border-color:var(--papier)}
+.c:has(input:focus-visible){outline:3px solid var(--graphite);outline-offset:-3px;z-index:1}
+
+.plan{margin:0;width:100%;max-width:32rem;justify-self:center}
+.plan svg{display:block;width:100%;height:auto;background:var(--papier)}
+.plan .bois{fill:var(--chene)}
+.plan .fil{fill:none;stroke:var(--chene-2);stroke-width:.9}
+.plan .fond{fill:var(--papier)}
+.plan .losange{fill:#9DB9AD}
+.plan .pastille{fill:var(--carreau)}
+.plan .joint{fill:none;stroke:var(--joint);stroke-width:.7}
+.plan .murs{fill:none;stroke:var(--graphite);stroke-linecap:square}
+.plan .ext{stroke-width:6}
+.plan .int{stroke-width:3}
+.plan .fin{fill:none;stroke:var(--zinc);stroke-width:1}
+.plan .fen{fill:var(--papier);stroke:var(--graphite);stroke-width:1}
+.plan .equip{fill:var(--papier);stroke:var(--graphite);stroke-width:1.2}
+.plan .cote{fill:none;stroke:var(--graphite);stroke-width:1}
+.plan text{fill:var(--graphite);font-family:'Sofia Sans',sans-serif;font-weight:620;
+  paint-order:stroke;stroke:var(--papier);stroke-width:3;stroke-linejoin:round}
+.plan .k{display:none;font-weight:540}
+.tri:not(:has([name=surface]:checked)) .k0{display:inline}
+.pq,.cx{opacity:0;transition:opacity .35s ease-out}
+.tri:has(#t-sols:checked) .pq,.tri:has(#t-tout:checked) .pq,
+.tri:has(#t-sdb:checked) :is(.cx-bains,.cx-wc),.tri:has(#t-cui:checked) .cx-cuisine,.tri:has(#t-tout:checked) .cx{opacity:1}
+.tri:has(#s1:checked) .k1,.tri:has(#s2:checked) .k2,.tri:has(#s3:checked) .k3,.tri:has(#s4:checked) .k4{display:inline}
+
+.sortie h3{font-size:1.25rem;letter-spacing:-.01em}
+.sortie h3 + p{margin-top:.4rem}
+.sortie p{max-width:52ch}
+.sortie .bloc + .bloc{margin-top:1.25rem;padding-top:1.25rem;border-top:1px solid var(--joint)}
+.v,.e{display:none}
+/* rien de choisi : on invite à choisir ; une pièce seule : délai fixe ; sols ou appartement entier : le délai suit la surface */
+.tri:not(:has([name=travaux]:checked)) :is(.v-0,.e-0),
+.tri:has(#t-sdb:checked) .v-sdb,.tri:has(#t-cui:checked) .v-cui,.tri:has(#t-sols:checked) .v-sols,.tri:has(#t-tout:checked) .v-tout,
+.tri:has(:is(#t-sdb,#t-cui):checked) .e-piece,
+.tri:has(:is(#t-sols,#t-tout):checked):not(:has([name=surface]:checked)) .e-0s,
+.tri:has(:is(#t-sols,#t-tout):checked):has(#s1:checked) .e-1,.tri:has(:is(#t-sols,#t-tout):checked):has(#s2:checked) .e-2,
+.tri:has(:is(#t-sols,#t-tout):checked):has(#s3:checked) .e-3,.tri:has(:is(#t-sols,#t-tout):checked):has(#s4:checked) .e-4{display:block}
+.sortie .note{font-size:.9375rem;color:var(--zinc);margin-top:.75rem}
+.suite{margin-top:1.5rem}
+/* ordinateur : les choix et la réponse à gauche, le plan en regard */
+@media (min-width:56rem){
+  .tri .grille{grid-template-columns:minmax(0,26rem) minmax(0,1fr);grid-template-areas:"choix plan" "sortie plan";column-gap:clamp(2.5rem,5vi,4.5rem);align-items:start}
+  .choix{grid-area:choix}
+  .sortie{grid-area:sortie}
+  .plan{grid-area:plan;position:sticky;top:1.5rem}
+}
+
+/* Existant : ce qu'on trouve en ouvrant */
+.existant{padding-block:calc(var(--pas)*2)}
+.existant .wrap{display:grid;gap:calc(var(--pas)*1.25)}
+.existant p{max-width:var(--mesure);margin-top:.85rem}
+.duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;align-items:start}
+.duo img{width:100%;border-radius:3px}
+.duo .port{aspect-ratio:3/4;object-fit:cover}
+.duo .carre{aspect-ratio:1;object-fit:cover}
+.duo figcaption{font-size:.8125rem}
+/* texte et photos côte à côte dès que le texte garde une ligne lisible */
+@media (min-width:56rem){.existant .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4rem;align-items:center}}
+
+/* Déroulé : une vraie séquence, d'où les numéros */
+.etapes{background:var(--platre-2);padding-block:calc(var(--pas)*2)}
+.etapes ol{list-style:none;padding:0;margin-top:1.5rem;display:grid;gap:1.4rem;counter-reset:e}
+.etapes li{counter-increment:e;display:grid;align-content:start;grid-template-columns:2.5rem minmax(0,1fr);gap:.2rem .9rem;max-width:var(--mesure)}
+.etapes li::before{content:counter(e);grid-row:span 2;font-weight:300;font-size:2.4rem;line-height:.95;color:var(--carreau);font-variant-numeric:tabular-nums}
+.etapes h3{font-size:1.2rem;letter-spacing:-.01em}
+/* les quatre étapes sur deux colonnes quand elles tiennent */
+@media (min-width:56rem){.etapes ol{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:3.5rem;row-gap:2rem}}
+
+/* Qui vient chez vous */
+.nous{padding-block:calc(var(--pas)*2)}
+.nous .wrap{display:grid;gap:calc(var(--pas)*1.25)}
+.nous .wrap > div{min-width:0}
+.nous p{max-width:var(--mesure);margin-top:.85rem}
+.avert{background:var(--papier);border:1px solid var(--joint);padding:1rem 1.1rem;border-radius:3px;font-weight:620}
+.nous h3{font-size:1.25rem}
+.lieux{list-style:none;padding:0;margin-top:.8rem;column-gap:1.5rem}
+.lieux li{padding:.2rem 0;break-inside:avoid}
+/* deux puis trois colonnes de communes dès que « Fontenay-sous-Bois » y tient */
+@media (min-width:22.5rem){.lieux{columns:2}}
+@media (min-width:40rem){.lieux{columns:3}}
+/* présentation et zone côte à côte */
+@media (min-width:56rem){.nous .wrap{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:4rem}}
+
+/* Demande de devis */
+.devis{background:var(--papier);border-top:1px solid var(--joint);padding-block:calc(var(--pas)*2)}
+.devis > .wrap > p{max-width:var(--mesure);margin-top:.75rem}
+form{display:grid;gap:1rem;max-width:36rem;margin-top:1.5rem}
+.rappel{background:var(--platre);padding:.85rem 1rem;border-radius:3px}
+.rappel b{font-weight:720}
+.rappel .r{display:none}
+main:has(#t-sdb:checked) .r-sdb,main:has(#t-cui:checked) .r-cui,main:has(#t-sols:checked) .r-sols,main:has(#t-tout:checked) .r-tout,
+main:has(#s1:checked) .r-1,main:has(#s2:checked) .r-2,main:has(#s3:checked) .r-3,main:has(#s4:checked) .r-4,
+main:not(:has([name=travaux]:checked)) .r-0,main:not(:has([name=surface]:checked)) .r-0s{display:inline}
+.rappel a{font-weight:620;margin-left:.35rem;display:inline-block;padding-block:.6rem;margin-block:-.6rem}
+label{display:block;font-weight:620;margin-bottom:.35rem}
+input,select,textarea{width:100%;font:inherit;font-size:1rem;color:var(--graphite);background:#fff;
+  border:1.5px solid var(--zinc);border-radius:4px;padding:.75rem .8rem}
+input,select{height:3.2rem}
+textarea{min-height:6.5rem;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--carreau);outline-offset:1px;border-color:var(--graphite)}
+.deux{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:1rem}
+.merci{display:none;padding:1rem 1.1rem;border:1.5px solid var(--carreau);border-radius:4px;background:#fff;font-weight:620}
+form.envoye .merci{display:block}
+.cote-tel{margin-top:2rem;display:grid;gap:.4rem;align-content:start}
+.cote-tel b{font-size:1.125rem}
+.cote-tel a{font-weight:720;font-size:1.5rem;font-variant-numeric:tabular-nums;justify-self:start;display:inline-flex;align-items:center;min-height:2.75rem}
+.cote-tel p{max-width:38ch;color:var(--zinc)}
+/* sur ordinateur : le formulaire, et le téléphone en regard */
+@media (min-width:56rem){.devis .grille{display:grid;grid-template-columns:minmax(0,36rem) minmax(0,1fr);gap:4rem;align-items:start}.cote-tel{margin-top:1.5rem}}
+
+footer{background:var(--graphite);color:#C9CCCF;padding-block:2.5rem;font-size:.875rem}
+footer .wrap{display:grid;gap:.75rem}
+footer b{color:#fff;font-weight:820;font-size:1.2rem;letter-spacing:-.02em}
+footer a{color:#fff}
+footer p{max-width:70ch}
+
+/* Barre d'appel sous le pouce, en mobile et en paysage téléphone : la plupart
+   des clients appellent. Rangée quand le formulaire de devis est à l'écran. */
+.pouce{display:none}
+@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-bottom:6rem}
+  .pouce{display:grid;grid-template-columns:1fr 1.4fr;gap:.5rem;position:fixed;inset-inline:0;bottom:0;z-index:5;
+    padding:.6rem .75rem max(.6rem,env(safe-area-inset-bottom));background:var(--platre);border-top:1px solid var(--joint);transition:transform .2s ease-out}
+  .pouce a{display:flex;align-items:center;justify-content:center;min-height:2.75rem;border-radius:4px;font-weight:680;text-decoration:none}
+  .pouce .appel{border:2px solid var(--graphite)}
+  .pouce .demande{background:var(--graphite);color:var(--papier);border:2px solid transparent}
+  .pouce.cache{transform:translateY(110%)}
+  footer{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
+}
+/* couleurs forcées : le carreau choisi garde une marque visible */
+@media (forced-colors:active){
+  .c:has(input:checked){outline:3px solid CanvasText;outline-offset:-3px}
+  .c:has(input:checked)::before{background:CanvasText}
+}
+/* mouvement réduit : ni fondu ni glissement */
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#tri">Aller à la demande de devis</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="#">
+      <b>Kerleau Rénovation</b>
+      <span>Appartements anciens, Paris est et Montreuil</span>
+    </a>
+    <a class="tel" href="tel:+33199002764" aria-label="Appeler Kerleau Rénovation au 01 99 00 27 64">01 99 00 27 64</a>
+  </div>
+</header>
+
+<main>
+  <section class="ouv">
+    <div class="wrap">
+      <div>
+        <h1>Rénover un appartement ancien, pièce par pièce</h1>
+        <p class="chapo">Salle de bains, cuisine, sols ou appartement entier : on mesure tout sur place, on chiffre poste par poste, et le même chef de chantier suit vos travaux du premier au dernier jour.</p>
+        <p class="zone">Paris 3<sup>e</sup>, 4<sup>e</sup>, 10<sup>e</sup>, 11<sup>e</sup>, 12<sup>e</sup>, 19<sup>e</sup> et 20<sup>e</sup>, Montreuil, Vincennes et les communes voisines.</p>
+        <div class="actions">
+          <a class="btn" href="#tri">Décrire mes travaux</a>
+          <p class="discret">Visite et métré gratuits. On vous rappelle sous 48 h ouvrées.</p>
+        </div>
+      </div>
+      <figure>
+        <img src="/exemples/img/renovation-hongrie-800.webp"
+             srcset="/exemples/img/renovation-hongrie-480.webp 480w, /exemples/img/renovation-hongrie-800.webp 800w, /exemples/img/renovation-hongrie-1200.webp 1200w"
+             sizes="(min-width: 56rem) 30rem, calc(100vi - 2rem)"
+             width="1200" height="1500" fetchpriority="high"
+             alt="Parquet de chêne en point de Hongrie : des lames coupées en biais qui se rejoignent en chevrons le long de lignes droites">
+        <figcaption>Parquet en point de Hongrie, courant dans les appartements anciens de Paris.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="tri" id="tri" aria-labelledby="tri-t">
+    <div class="wrap">
+      <h2 id="tri-t">Dites-nous ce que vous voulez refaire</h2>
+      <p class="intro">Deux choix suffisent pour préparer la visite. Vous voyez ce qu’on viendra regarder, et quand vous aurez votre devis.</p>
+      <div class="grille">
+        <div class="choix">
+          <fieldset>
+            <legend>Les travaux *</legend>
+            <div class="tuiles">
+              <label class="c"><input type="radio" name="travaux" id="t-sdb" value="Salle de bains" form="demande" required>Salle de bains</label>
+              <label class="c"><input type="radio" name="travaux" id="t-cui" value="Cuisine" form="demande">Cuisine</label>
+              <label class="c"><input type="radio" name="travaux" id="t-sols" value="Sols et peinture" form="demande">Sols et peinture</label>
+              <label class="c"><input type="radio" name="travaux" id="t-tout" value="Tout l’appartement" form="demande">Tout l’appartement</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend>La surface de l’appartement *</legend>
+            <div class="tuiles">
+              <label class="c"><input type="radio" name="surface" id="s1" value="Moins de 30 m²" form="demande" required>Moins de 30 m²</label>
+              <label class="c"><input type="radio" name="surface" id="s2" value="30 à 60 m²" form="demande">30 à 60 m²</label>
+              <label class="c"><input type="radio" name="surface" id="s3" value="60 à 100 m²" form="demande">60 à 100 m²</label>
+              <label class="c"><input type="radio" name="surface" id="s4" value="Plus de 100 m²" form="demande">Plus de 100 m²</label>
+            </div>
+          </fieldset>
+        </div>
+
+        <figure class="plan">
+          <svg viewBox="0 0 420 300" aria-hidden="true" focusable="false">
+            <defs>
+              <pattern id="p-parquet" width="28" height="14" patternUnits="userSpaceOnUse">
+                <rect class="bois" width="28" height="14"/>
+                <path class="fil" d="M0 7 L14 0 L28 7 M0 14 L14 7 L28 14 M0 0 V14 M14 0 V14"/>
+              </pattern>
+              <pattern id="p-carreaux" width="16" height="16" patternUnits="userSpaceOnUse">
+                <rect class="fond" width="16" height="16"/>
+                <path class="losange" d="M8 1.6 L14.4 8 L8 14.4 L1.6 8 Z"/>
+                <circle class="pastille" cx="8" cy="8" r="2.1"/>
+                <path class="joint" d="M0 0 H16 M0 0 V16"/>
+              </pattern>
+            </defs>
+            <!-- revêtements, révélés selon le type de travaux -->
+            <rect class="pq" x="40" y="40" width="190" height="120" fill="url(#p-parquet)"/>
+            <rect class="pq" x="230" y="40" width="170" height="120" fill="url(#p-parquet)"/>
+            <path class="pq" d="M40 160 H400 V280 H285 V188 H40 Z" fill="url(#p-parquet)"/>
+            <rect class="cx cx-cuisine" x="40" y="188" width="110" height="92" fill="url(#p-carreaux)"/>
+            <rect class="cx cx-bains" x="150" y="188" width="95" height="92" fill="url(#p-carreaux)"/>
+            <rect class="cx cx-wc" x="245" y="188" width="40" height="92" fill="url(#p-carreaux)"/>
+            <!-- fenêtres sur rue et sur cour -->
+            <rect class="fen" x="75" y="36" width="40" height="8"/>
+            <rect class="fen" x="155" y="36" width="40" height="8"/>
+            <rect class="fen" x="295" y="36" width="40" height="8"/>
+            <rect class="fen" x="75" y="276" width="40" height="8"/>
+            <rect class="fen" x="180" y="276" width="30" height="8"/>
+            <!-- murs -->
+            <path class="murs ext" d="M40 40 H75 M115 40 H155 M195 40 H295 M335 40 H400 V280 H365 M330 280 H210 M180 280 H115 M75 280 H40 V40"/>
+            <path class="murs int" d="M230 40 V160 M40 160 H185 M215 160 H330 M360 160 H400 M40 188 H100 M128 188 H200 M226 188 H252 M278 188 H285 M150 188 V280 M245 188 V280 M285 188 V280"/>
+            <!-- portes -->
+            <path class="fin" d="M215 160 V130 A30 30 0 0 0 185 160 M360 160 V130 A30 30 0 0 0 330 160 M100 188 V216 A28 28 0 0 1 128 188 M200 188 V214 A26 26 0 0 1 226 188 M252 188 V214 A26 26 0 0 1 278 188 M365 280 V245 A35 35 0 0 0 330 280"/>
+            <!-- cheminées, baignoire, plan de travail -->
+            <rect class="equip" x="43" y="82" width="9" height="38"/>
+            <rect class="equip" x="388" y="82" width="9" height="38"/>
+            <rect class="equip" x="158" y="248" width="70" height="28" rx="6"/>
+            <rect class="equip" x="44" y="200" width="18" height="76"/>
+            <g font-size="16" text-anchor="middle">
+              <text x="135" y="108">Séjour</text>
+              <text x="315" y="108">Chambre</text>
+              <text x="106" y="240">Cuisine</text>
+              <text x="197" y="238">Bains</text>
+              <text x="265" y="262" font-size="13">WC</text>
+              <text x="342" y="226">Entrée</text>
+            </g>
+            <!-- cotes : elles suivent la surface choisie -->
+            <path class="cote" d="M40 18 H400 M40 12 V26 M400 12 V26 M35 23 L45 13 M395 23 L405 13 M18 40 V280 M12 40 H26 M12 280 H26 M13 45 L23 35 M13 285 L23 275"/>
+            <g font-size="14" text-anchor="middle">
+              <text class="k k0" x="220" y="14">à préciser</text><text class="k k1" x="220" y="14">6,60 m</text><text class="k k2" x="220" y="14">9,00 m</text>
+              <text class="k k3" x="220" y="14">11,40 m</text><text class="k k4" x="220" y="14">13,20 m</text>
+              <g transform="translate(14 160) rotate(-90)">
+                <text class="k k0">à préciser</text><text class="k k1">4,40 m</text><text class="k k2">6,00 m</text>
+                <text class="k k3">7,60 m</text><text class="k k4">8,80 m</text>
+              </g>
+            </g>
+          </svg>
+          <figcaption>Plan de principe d’un appartement ancien. Les cotes suivent la surface choisie.</figcaption>
+        </figure>
+
+        <div class="sortie" aria-live="polite">
+          <div class="bloc">
+            <h3>Ce que comprendra la visite</h3>
+            <p class="v v-0">Choisissez le type de travaux : on vous dit ce qu’on viendra regarder.</p>
+            <p class="v v-sdb">On relève les arrivées d’eau et les évacuations, on vérifie si le plancher permet une douche de plain-pied et par où l’air sera extrait.</p>
+            <p class="v v-cui">On relève les arrivées d’eau, les évacuations et la puissance du tableau électrique, on cherche la sortie de la hotte et on mesure pour l’implantation des meubles.</p>
+            <p class="v v-sols">On mesure pièce par pièce, on regarde sous les revêtements si le parquet d’origine peut être poncé, et on repère les fissures et moulures à reprendre au plâtre.</p>
+            <p class="v v-tout">Métré complet de l’existant, état de l’électricité et de la plomberie, murs porteurs, et règles de votre copropriété : horaires de travaux, ascenseur, évacuation des gravats.</p>
+          </div>
+          <div class="bloc">
+            <h3>Notre engagement</h3>
+            <p class="e e-0">Choisissez le type de travaux : on vous dit combien de temps dure la visite et quand vous aurez le devis.</p>
+            <p class="e e-piece">Une visite d’environ 45 minutes. Votre devis détaillé sous 5 jours ouvrés.</p>
+            <p class="e e-0s">Indiquez la surface de l’appartement : la durée de la visite et le délai du devis en dépendent.</p>
+            <p class="e e-1">Une visite d’environ 45 minutes. Votre devis détaillé sous 5 jours ouvrés.</p>
+            <p class="e e-2">Une visite d’environ 1 heure. Votre devis détaillé sous 7 jours ouvrés.</p>
+            <p class="e e-3">Une visite d’environ 1 h 30. Votre devis détaillé sous 10 jours ouvrés.</p>
+            <p class="e e-4">Deux passages : le relevé, puis le métré détaillé. Votre devis sous 15 jours ouvrés.</p>
+            <p class="note">Des délais que nous tenons, pas des moyennes. Si une période chargée les allonge, on vous le dit dès le premier appel.</p>
+          </div>
+          <p class="suite"><a class="btn" href="#devis">Continuer ma demande</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="existant" aria-labelledby="existant-t">
+    <div class="wrap">
+      <div>
+        <h2 id="existant-t">Un appartement ancien se mesure sur place</h2>
+        <p>Dans un immeuble ancien, rien n’est tout à fait d’équerre et beaucoup se découvre en ouvrant : un parquet chêne sous un revêtement collé, des canalisations en plomb derrière un doublage, une cloison en carreaux de plâtre là où on attendait de la brique. C’est pour ça qu’on ne chiffre jamais sur photo.</p>
+        <p>On s’occupe aussi du syndic : horaires de travaux, protection des parties communes, réservation de l’ascenseur, et accord de l’assemblée générale quand un mur porteur ou une colonne commune est concerné.</p>
+      </div>
+      <div class="duo">
+        <figure>
+          <img class="port" src="/exemples/img/renovation-evacuation-480.webp"
+               srcset="/exemples/img/renovation-evacuation-480.webp 480w, /exemples/img/renovation-evacuation-800.webp 800w, /exemples/img/renovation-evacuation-1200.webp 1200w"
+               sizes="(min-width: 56rem) 17rem, calc(50vi - 1.5rem)"
+               width="1200" height="1600" loading="lazy" decoding="async"
+               alt="Salle de bains déposée jusqu’au mur de parpaings : un tuyau d’arrivée d’eau le long du mur, le tuyau d’évacuation posé sur la chape">
+          <figcaption>Une salle de bains déposée jusqu’au mur : on voit enfin par où passent l’eau et l’évacuation.</figcaption>
+        </figure>
+        <figure>
+          <img class="carre" src="/exemples/img/renovation-carreaux-480.webp"
+               srcset="/exemples/img/renovation-carreaux-480.webp 480w, /exemples/img/renovation-carreaux-690.webp 690w"
+               sizes="(min-width: 56rem) 17rem, calc(50vi - 1.5rem)"
+               width="690" height="690" loading="lazy" decoding="async"
+               alt="Carreaux de ciment anciens à motif octogonal gris, anthracite et ocre, avec une fleur rouge au centre">
+          <figcaption>Des carreaux de ciment qu’on dépose un par un quand ils peuvent être reposés.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="etapes" aria-labelledby="etapes-t">
+    <div class="wrap">
+      <h2 id="etapes-t">Comment se passe un chantier</h2>
+      <ol>
+        <li><h3>La visite et le métré</h3><p>On mesure chaque pièce et on note ce qui se garde. Vous repartez avec la date à laquelle vous aurez le devis.</p></li>
+        <li><h3>Le devis poste par poste</h3><p>Dépose, plâtrerie, électricité, plomberie, sols, peinture : chaque poste chiffré à part, avec les quantités mesurées. Vous pouvez en retirer un sans tout refaire.</p></li>
+        <li><h3>Le chantier et son carnet</h3><p>Le même chef de chantier du premier au dernier jour. Chaque vendredi, un message avec ce qui a été fait, ce qui vient la semaine suivante, et des photos.</p></li>
+        <li><h3>La réception</h3><p>On fait le tour ensemble, pièce par pièce. Ce qui reste à reprendre est écrit, daté, puis repris.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="nous" aria-labelledby="nous-t">
+    <div class="wrap">
+      <div>
+        <h2 id="nous-t">Qui vient chez vous</h2>
+        <p>Une équipe de sept, installée à Montreuil depuis 2009 : plâtriers, menuisier, électricien et plombier salariés de l’entreprise. Seuls le marbre et la vitrerie sont confiés à des artisans partenaires, toujours les mêmes.</p>
+        <p>Attestation d’assurance décennale jointe à chaque devis, comme la loi l’impose. Du lundi au vendredi, de 8 h à 18 h.</p>
+        <p class="avert">Nous ne faisons aucun démarchage, ni par téléphone ni à domicile. Si quelqu’un se présente de notre part sans rendez-vous, ce n’est pas nous.</p>
+      </div>
+      <div>
+        <h3>Où nous intervenons</h3>
+        <ul class="lieux">
+          <li>Paris 3<sup>e</sup></li><li>Paris 4<sup>e</sup></li><li>Paris 10<sup>e</sup></li><li>Paris 11<sup>e</sup></li>
+          <li>Paris 12<sup>e</sup></li><li>Paris 19<sup>e</sup></li><li>Paris 20<sup>e</sup></li><li>Montreuil</li>
+          <li>Vincennes</li><li>Saint‑Mandé</li><li>Bagnolet</li><li>Les Lilas</li>
+          <li>Romainville</li><li>Fontenay‑sous‑Bois</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="devis" id="devis" aria-labelledby="devis-t">
+    <div class="wrap">
+      <h2 id="devis-t">Demander un devis</h2>
+      <p>Encore quatre informations et on vous rappelle sous 48 h ouvrées pour fixer la visite.</p>
+      <div class="grille">
+      <form id="demande" action="#devis" novalidate>
+        <p class="rappel"><b>Vos travaux :</b>
+          <span class="r r-0">à préciser</span><span class="r r-sdb">salle de bains</span><span class="r r-cui">cuisine</span><span class="r r-sols">sols et peinture</span><span class="r r-tout">tout l’appartement</span>,
+          <span class="r r-0s">surface à préciser</span><span class="r r-1">moins de 30 m²</span><span class="r r-2">30 à 60 m²</span><span class="r r-3">60 à 100 m²</span><span class="r r-4">plus de 100 m²</span>.
+          <a href="#tri">Modifier</a></p>
+        <div class="deux">
+          <div>
+            <label for="delai">Vous aimeriez commencer</label>
+            <select id="delai" name="delai">
+              <option>Dès que possible</option><option>D’ici 3 mois</option><option>D’ici 6 mois</option><option>Pas encore de date</option>
+            </select>
+          </div>
+          <div>
+            <label for="budget">Budget envisagé</label>
+            <select id="budget" name="budget">
+              <option>Je ne sais pas encore</option><option>Moins de 10 000 €</option><option>10 000 à 30 000 €</option><option>30 000 à 60 000 €</option><option>Plus de 60 000 €</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="lieu">Arrondissement ou commune *</label>
+          <input id="lieu" name="lieu" list="liste-lieux" autocomplete="address-level2" enterkeyhint="next" required>
+          <datalist id="liste-lieux">
+            <option value="Paris 11e"></option><option value="Paris 12e"></option><option value="Paris 20e"></option><option value="Montreuil"></option><option value="Vincennes"></option><option value="Bagnolet"></option>
+          </datalist>
+        </div>
+        <div class="deux">
+          <div><label for="nom">Nom *</label><input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required></div>
+          <div><label for="tel">Téléphone *</label><input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" required></div>
+        </div>
+        <div>
+          <label for="precisions">Ce qu’il faut savoir avant la visite</label>
+          <textarea id="precisions" name="precisions" rows="3" enterkeyhint="done" placeholder="Étage, ascenseur, ce que vous voulez garder (parquet, moulures, cheminée)"></textarea>
+        </div>
+        <p class="discret">* obligatoire</p>
+        <div><button class="btn" type="submit">Envoyer ma demande</button></div>
+        <p class="merci" role="status">Demande enregistrée. Dans la version en ligne, Kerleau Rénovation vous rappelle sous 48 h ouvrées pour fixer la visite.</p>
+      </form>
+      <aside class="cote-tel" aria-label="Nous joindre">
+        <b>Vous préférez appeler ?</b>
+        <a href="tel:+33199002764">01 99 00 27 64</a>
+        <p>Du lundi au vendredi, de 8 h à 18 h. Les jours de chantier, on rappelle entre 17 h 30 et 19 h.</p>
+      </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Kerleau Rénovation</b>
+    <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-artisan-renovation" target="_top">4dayvelopment</a>. L’entreprise, son équipe, son numéro et ses qualifications sont fictifs.</p>
+    <p>Photos : « Parquet motif point de Hongrie », Mini.fb, <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.fr">CC BY-SA 3.0</a> ; « Onze Woning apartment renovation, Hillegersberg, Rotterdam (2020) 48 », Donald Trung Quoc Don, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a> ; « Carreaux de ciment des escaliers de l’hôtel Vialètes de Mortarieu », Aristidedumay, <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a> ; via Wikimedia Commons. Photos recadrées.</p>
+  </div>
+</footer>
+
+<nav class="pouce" aria-label="Contact rapide">
+  <a class="appel" href="tel:+33199002764">Appeler</a>
+  <a class="demande" href="#tri">Demander un devis</a>
+</nav>
+
+<script src="/exemples/renovation.js" defer></script>
+</body>
+</html>

@@ -102,7 +102,11 @@ export function initNav() {
      focus ET clics, et le lecteur d'ecran saute ces zones. */
   const zonesInertes = () => ['main', 'footer', '#appbar', '#floating-cta']
     .map(sel => document.querySelector(sel)).filter(Boolean);
+  // Fermé, le panneau est hors écran mais ses liens restaient atteignables au
+  // clavier (arrêts Tab invisibles) : il est inerte tant qu'il n'est pas ouvert.
+  menu.inert = true;
   function openMenu() {
+    menu.inert = false;
     ham.classList.add('open');
     menu.classList.add('open');
     overlay.classList.add('open');
@@ -113,6 +117,7 @@ export function initNav() {
     ham.setAttribute('aria-expanded', 'true');
   }
   function closeMenu() {
+    menu.inert = true;
     ham.classList.remove('open');
     menu.classList.remove('open');
     overlay.classList.remove('open');
