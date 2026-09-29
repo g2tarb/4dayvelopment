@@ -3,9 +3,21 @@
 Site vitrine d'agence web. HTML statique servi par Express (`server.js`) depuis `public/`.
 Stack : vanilla JS + fond WebGL maison (`public/js/modules/gl-bg.js`, zéro dépendance — ne pas réintroduire Three.js). Fonts variables auto-hébergées dans `public/fonts/` (Syne + Inter, pas de Google Fonts). Contact via Nodemailer + webhook n8n.
 Blog publié dynamiquement via `POST /api/blog/publish` (template `buildArticleHTML`).
-Page portfolio remplacée par `/exemples` (301 depuis /portfolio) : 6 démos métier autonomes
-dans `public/exemples/` (JS externe obligatoire — la CSP interdit le script inline), montrées
-sur la home dans un mockup iPhone (section `#exemples`, module `js/modules/demos.js`).
+`/portfolio` présente les réalisations clients réelles ; `/exemples` présente les démos métier
+d'entreprises fictives, autonomes dans `public/exemples/` (JS externe obligatoire — la CSP
+interdit le script inline), montrées sur la home dans un mockup iPhone (section `#exemples`,
+module `js/modules/demos.js`). Les deux pages coexistent : la nav pointe vers /portfolio.
+
+## Nav et pied de page : une seule source
+- La nav et le pied de page viennent de `partials/nav.html` et `partials/footer.html`.
+  Ne jamais les modifier dans une page : modifier le partiel, puis lancer
+  `npm run sync:partials`, qui les recopie entre les marqueurs `<!-- partial:nav -->` et
+  `<!-- partial:footer -->` de chaque page, et pose `aria-current="page"` selon la table
+  `ACTIVE` de `scripts/sync-partials.js`.
+- `server.js` lit les partiels au démarrage pour les articles générés (Blog actif) et refuse
+  de démarrer s'ils manquent.
+- `npm run check:seo` échoue si une page diverge des partiels.
+- Une nouvelle page avec nav ou pied de page : poser les deux marqueurs, puis lancer la synchronisation.
 
 ## SEO 4DV
 

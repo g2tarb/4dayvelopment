@@ -107,9 +107,10 @@
   <div id="scroll-progress"></div>
 
   <!-- ── NAV ── -->
+  <!-- partial:nav -->
   <nav id="navbar">
     <a href="/" class="nav-logo">
-      <img src="logo/logo4day.svg" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="89">
+      <img src="/logo/logo4day.svg" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="89">
     </a>
     <ul class="nav-links">
       <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
@@ -122,23 +123,10 @@
     <div class="nav-right">
       <a href="https://4dayvelopment.fr/devis" class="nav-cta">Devis gratuit →</a>
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </nav>
+  <!-- /partial:nav -->
 
-  <!-- Mobile menu -->
-  <div class="mobile-menu" id="mobile-menu">
-    <ul>
-      <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
-      <li><a href="https://4dayvelopment.fr/services/e-commerce">E-commerce</a></li>
-      <li><a href="https://4dayvelopment.fr/services/referencement-seo">SEO</a></li>
-      <li><a href="https://4dayvelopment.fr/portfolio">Portfolio</a></li>
-      <li><a href="https://4dayvelopment.fr/#tarifs">Tarifs</a></li>
-      <li><a href="https://4dayvelopment.fr/blog">Blog</a></li>
-      <li><a href="https://4dayvelopment.fr/devis" class="mobile-cta">Devis gratuit →</a></li>
-    </ul>
-  </div>
 
   <main id="contenu">
   <!-- ── HERO ── -->
@@ -971,59 +959,59 @@
   </main>
 
   <!-- ── FOOTER ── -->
+  <!-- partial:footer -->
   <footer>
     <div class="footer-inner">
       <div class="footer-brand">
         <a href="/" class="footer-logo">
-          <img src="logo/logo4day.svg" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="89">
+          <img src="/logo/logo4day.svg" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="89">
         </a>
         <p data-i18n="footer-tagline">Un site qui vend, livré en 4 jours.</p>
-        <!-- Réseaux sociaux : bloc retiré tant qu'il n'y a pas de comptes actifs (liens morts = perte de crédibilité) -->
       </div>
-
       <div class="footer-links-group">
         <p class="footer-col-h" data-i18n="footer-srv-h">Services</p>
         <ul>
-          <li><a href="/services/site-vitrine">Site Vitrine</a></li>
+          <li><a href="/services/site-vitrine">Site vitrine</a></li>
           <li><a href="/services/e-commerce">E-commerce</a></li>
-          <li><a href="/services/referencement-seo">SEO & Referencement</a></li>
           <li><a href="/services/application-web">Application web</a></li>
-          <li><a href="#services" data-i18n="footer-srv-4">Maintenance</a></li>
+          <li><a href="/services/referencement-seo">SEO & Référencement</a></li>
+          <li><a href="/services/site-internet-restaurant">Site restaurant</a></li>
+          <li><a href="/essentiel" data-i18n="footer-essentiel">Formule Essentiel</a></li>
+          <li><a href="/#services" data-i18n="footer-srv-4">Maintenance</a></li>
         </ul>
       </div>
-
       <div class="footer-links-group">
         <p class="footer-col-h" data-i18n="footer-agen-h">Agence</p>
         <ul>
           <li><a href="/agence">L'agence</a></li>
           <li><a href="/methode-4-jours">Méthode 4 jours</a></li>
-          <li><a href="#process" data-i18n="footer-agen-1">Notre Processus</a></li>
-          <li><a href="#tarifs" data-i18n="footer-agen-2">Tarifs</a></li>
-          <li><a href="#avis" data-i18n="footer-agen-3">Avis clients</a></li>
-          <li><a href="/portfolio">Portfolio</a></li>
+          <li><a href="/#process" data-i18n="footer-agen-1">Notre processus</a></li>
+          <li><a href="/portfolio">Réalisations clients</a></li>
+          <li><a href="/exemples">Démos par métier</a></li>
+          <li><a href="/#avis" data-i18n="footer-agen-3">Avis clients</a></li>
+          <li><a href="/#tarifs" data-i18n="footer-agen-2">Tarifs</a></li>
           <li><a href="/blog">Blog</a></li>
         </ul>
       </div>
-
-      <div class="footer-links-group">
+      <div class="footer-links-group footer-contact">
         <p class="footer-col-h" data-i18n="footer-cont-h">Contact</p>
         <ul>
-          <li><a href="#contact" data-i18n="footer-cont-1">Prendre RDV</a></li>
-          <li><a href="/devis">Demander un devis</a></li>
+          <li><a href="/devis" data-i18n="footer-devis">Demander un devis</a></li>
+          <li><a href="/#contact" data-i18n="footer-cont-1">Prendre RDV</a></li>
           <li><a href="mailto:contact@4dayvelopment.fr">contact@4dayvelopment.fr</a></li>
         </ul>
       </div>
     </div>
-
     <div class="footer-bottom">
       <p data-i18n="footer-copy">© 2026 4dayvelopment. Tous droits réservés.</p>
       <ul class="footer-legal">
-        <li><a href="/mentions-legales">Mentions legales</a></li>
-        <li><a href="/confidentialite">Confidentialite</a></li>
+        <li><a href="/mentions-legales">Mentions légales</a></li>
+        <li><a href="/confidentialite">Confidentialité</a></li>
         <li><a href="/cgv">CGV</a></li>
       </ul>
     </div>
   </footer>
+  <!-- /partial:footer -->
 
   <!-- Sticky mobile CTA desactive -->
 

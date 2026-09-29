@@ -45,7 +45,8 @@ function injectGlobalElements() {
     links.forEach(a => {
       const href = a.getAttribute('href');
       const text = a.textContent;
-      html += `<li><a href="${href}">${text}</a></li>`;
+      const current = a.getAttribute('aria-current') ? ' aria-current="page"' : '';
+      html += `<li><a href="${href}"${current}>${text}</a></li>`;
     });
     const ctaLink = nav ? nav.querySelector('.nav-cta') : null;
     if (ctaLink) {
