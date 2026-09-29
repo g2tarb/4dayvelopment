@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Maison Tixier, chambres d’hôtes à Coudes | Démo 4dayvelopment</title>
+<meta name="description" content="Démo : chambres d’hôtes dans une maison de pierre à Coudes, au bord de l’Allier. Disponibilités à jour, 95 € la nuit pour deux avec le petit-déjeuner.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#212428">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/besley-var.woff2" crossorigin>
+<style>
+/* Besley : Clarendon des enseignes peintes et des almanachs, OFL (Owen Earl) */
+@font-face{font-family:'Besley';font-style:normal;font-weight:400 900;font-display:swap;src:url('/fonts/besley-var.woff2') format('woff2')}
+
+:root{
+  --linge:#F3F5F4;       /* fond : draps blancs, fenêtres ouvertes du calendrier */
+  --linge-2:#E4E9E7;
+  --lave:#212428;        /* texte et bande du calendrier : andésite de Volvic */
+  --lave-2:#50565C;
+  --lave-3:#B7BEC2;      /* texte secondaire sur la lave */
+  --volet:#2A7E91;       /* peinture des volets : nuits prises */
+  --volet-f:#1C5F6E;     /* bouton */
+  --volet-c:#8CC3CE;
+  --arkose:#C99A55;      /* pierre dorée du pays : le séjour choisi */
+  --trait:#C5CCCA;
+  --mesure:62ch;
+  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  font-family:'Besley',Georgia,serif;font-weight:400;font-size:1.0625rem;line-height:1.6;
+  color:var(--lave);background:var(--linge);-webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto;background:var(--linge-2)} /* fond visible pendant le chargement ou si l'image manque */
+a{color:inherit}
+:focus-visible{outline:3px solid var(--volet);outline-offset:3px}
+h1,h2,h3{font-weight:700;line-height:1.1;letter-spacing:-.01em;text-wrap:balance}
+p{text-wrap:pretty}
+sup{font-size:.7em;line-height:0}
+.nw{white-space:nowrap}
+.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:1rem;top:1rem;background:var(--lave);color:var(--linge);padding:.6rem 1rem;z-index:10}
+
+/* Barre du haut : le nom de la maison et le numéro */
+.top{border-bottom:1px solid var(--trait)}
+.top .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.25rem 1rem;min-height:3.75rem;padding-block:.5rem}
+.marque{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1.1;min-height:2.75rem}
+.marque b{font-weight:800;font-size:1.375rem}
+.marque span{font-size:.8125rem;color:var(--lave-2);margin-top:.15rem}
+.tel{font-weight:600;text-decoration:none;white-space:nowrap;font-variant-numeric:lining-nums;
+  padding:.55rem .1rem;border-bottom:2px solid var(--volet)}
+
+/* Ouverture */
+.ouv{padding-block:var(--pas) calc(var(--pas)*1.75)}
+.ouv .wrap{display:grid;gap:calc(var(--pas)*1.25)}
+.ouv h1{font-size:clamp(2rem,1.3rem + 3.2vi,3.4rem);max-width:15ch}
+.chapo{font-size:1.125rem;max-width:40ch;margin-top:1rem;color:var(--lave-2)}
+.nuit{margin-top:1rem;font-weight:600;max-width:40ch}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.5rem}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.8rem 1.35rem;
+  background:var(--volet-f);color:#fff;border:2px solid transparent;border-radius:4px;
+  font:inherit;font-weight:700;text-decoration:none;cursor:pointer;transition:background-color .15s}
+.btn:active{transform:translateY(1px)}
+@media (hover:hover){.btn:hover{background:#164C58}} /* survol : seulement avec une souris */
+.discret{font-size:.9375rem;color:var(--lave-2);max-width:34ch}
+figure{margin:0}
+figcaption{font-size:.8125rem;color:var(--lave-2);margin-top:.5rem}
+.ouv img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:75% 50%;border-radius:3px}
+/* ordinateur : le texte et la photo côte à côte */
+@media (min-width:60rem){
+  .ouv .wrap{grid-template-columns:1.1fr 1fr;align-items:center;gap:4rem}
+  .ouv img{aspect-ratio:1}
+}
+
+/* Signature : le calendrier des nuits libres. Chaque nuit est une fenêtre :
+   volet fermé, elle est prise. Mois et séjour se choisissent sans script. */
+.dispos{background:var(--lave);color:var(--linge);padding-block:calc(var(--pas)*2)}
+.dispos :focus-visible{outline-color:var(--arkose)}
+.dispos h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
+.dispos .intro{max-width:var(--mesure);margin-top:.75rem;color:var(--lave-3)}
+.cal{margin-top:1.75rem;max-width:30rem}
+.onglets{border:0;padding:0;display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:.375rem}
+.onglets label{position:relative;display:flex;align-items:center;justify-content:center;min-height:2.75rem;padding:.25rem;
+  border:1.5px solid #7A838A;border-radius:4px;cursor:pointer;font-weight:600;
+  font-size:clamp(.8125rem,.7rem + .5vi,1rem);transition:background-color .15s,border-color .15s}
+.onglets input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.onglets label:has(input:checked){background:var(--linge);color:var(--lave);border-color:var(--linge)}
+.onglets label:has(input:focus-visible){outline:3px solid var(--arkose);outline-offset:2px}
+.mois{border:0;padding:0;margin-top:1.25rem;min-width:0}
+.mois legend{padding:0;font-weight:700;font-size:1.125rem;margin-bottom:.6rem}
+.jours,.sem{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.1875rem}
+.jours{font-size:.75rem;color:var(--lave-3);margin-bottom:.3rem;padding-inline:.3rem}
+.sem{position:relative;border-radius:3px}
+.sem + .sem{margin-top:.1875rem}
+.n{position:relative;isolation:isolate;min-height:2.5rem;padding:.15rem .3rem;border-radius:2px;
+  background:var(--linge);color:var(--lave);font-size:.875rem;font-variant-numeric:lining-nums;line-height:1.4}
+.n.p{background:repeating-linear-gradient(180deg,var(--volet) 0 .3rem,#1D6475 .3rem .4rem);color:#fff}
+.n.v{background:transparent}
+/* séjour libre : les nuits de semaine (lundi à jeudi) ou le week-end (vendredi
+   et samedi) se choisissent d'un geste ; la case du dimanche reste à part */
+.seg{position:relative;display:grid;gap:.1875rem;cursor:pointer;border-radius:3px}
+.s4{grid-column:span 4;grid-template-columns:repeat(4,minmax(0,1fr))}
+.s2{grid-column:span 2;grid-template-columns:repeat(2,minmax(0,1fr))}
+.seg .n{box-shadow:inset 0 -.25rem 0 var(--arkose)} /* trait doré : ce séjour se choisit */
+.seg input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
+.seg:has(input:focus-visible){outline:3px solid var(--arkose);outline-offset:3px}
+@media (hover:hover){.seg:hover .n{box-shadow:inset 0 0 0 2px var(--arkose)}} /* survol : le séjour qu'on va choisir */
+.seg input:checked ~ .n{box-shadow:none} /* survol : la rangée qu'on va choisir */
+.n::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--arkose);transform:scaleY(0);transform-origin:50% 100%}
+.seg input:checked ~ .n::before{transform:none}
+.seg input:checked ~ .n{font-weight:700}
+.recap{display:none;grid-column:1/-1;padding:.55rem .1rem .35rem;font-size:.9375rem;line-height:1.45}
+.recap b{color:var(--arkose)}
+.sem:has(.s4 input:checked) .r4,.sem:has(.s2 input:checked) .r2{display:block}
+.legende{display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;margin-top:1rem;font-size:.8125rem;color:var(--lave-3)}
+.legende span{display:inline-flex;align-items:center;gap:.45rem}
+.legende i{width:1.1rem;height:1.1rem;border-radius:2px;background:var(--linge)}
+.legende .l-p{background:repeating-linear-gradient(180deg,var(--volet) 0 .22rem,#1D6475 .22rem .3rem)}
+.legende .l-l{box-shadow:inset 0 -.2rem 0 var(--arkose)}
+.legende .l-c{background:var(--arkose)}
+.autres{margin-top:1rem;font-size:.9375rem;color:var(--lave-3);max-width:44ch}
+/* sans :has, les trois mois restent affichés l'un sous l'autre */
+@supports selector(:has(*)){
+  .onglets{display:grid}
+  .cal .mois{display:none}
+  .cal:has(#m-oct:checked) #g-oct,.cal:has(#m-nov:checked) #g-nov,.cal:has(#m-dec:checked) #g-dec{display:block}
+}
+/* la nuitée : prix et ce qu'il comprend */
+.nuitee{margin-top:2.25rem;border-top:1.5px solid #3E444A;padding-top:1.5rem;max-width:30rem}
+.prix strong{display:block;font-weight:800;font-size:clamp(2.6rem,2rem + 3vi,3.75rem);line-height:1;color:#fff;font-variant-numeric:lining-nums}
+.prix{color:var(--lave-3)}
+.prix + p{margin-top:.5rem;color:var(--lave-3)}
+.nuitee h3{font-size:1.125rem;margin-top:1.5rem}
+.nuitee ul{padding-left:1.1rem;margin-top:.5rem;color:var(--lave-3)}
+.nuitee li + li{margin-top:.3rem}
+.nuitee li::marker{color:var(--arkose)}
+/* ordinateur : le calendrier à gauche, la nuitée en regard */
+@media (min-width:60rem){
+  .dispos .grille{display:grid;grid-template-columns:minmax(0,30rem) minmax(0,26rem);gap:5rem;align-items:start}
+  .nuitee{margin-top:1.75rem}
+  .n{min-height:3.25rem;font-size:1rem;padding:.25rem .45rem}
+}
+
+/* La demande de réservation */
+.demande{background:var(--linge-2);padding-block:calc(var(--pas)*2)}
+.demande h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
+.demande .wrap > p{max-width:var(--mesure);margin-top:.75rem}
+.choisie{margin-top:1.25rem;padding:.85rem 1rem;border-radius:4px;background:var(--linge);border:1.5px solid var(--trait);max-width:36rem}
+.choisie p{display:none;font-weight:600}
+.choisie .aucune{display:block;font-weight:400;color:var(--lave-2)}
+@supports selector(:has(*)){
+  body:has([name=sejour]:checked) .choisie .aucune{display:none}
+  body:has([name=sejour]:checked) .choisie .une{display:block}
+  body:has([name=sejour]:checked) .choisie{border-color:var(--arkose);border-width:2px}
+}
+form{margin-top:1.5rem;display:grid;gap:1rem;max-width:36rem}
+label{display:block;font-weight:600;margin-bottom:.35rem}
+input,select,textarea{width:100%;font:inherit;font-size:1rem;color:var(--lave);background:#fff;
+  border:1.5px solid #6E7679;border-radius:4px;padding:.7rem .8rem}
+input,select{height:3.2rem}
+textarea{min-height:6.5rem;resize:vertical}
+input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--volet);outline-offset:1px;border-color:var(--lave)}
+.deux{display:grid;gap:1rem}
+/* deux champs par ligne dès qu'ils ont la place */
+@media (min-width:36rem){.deux{grid-template-columns:1fr 1fr}}
+.note{font-size:.9375rem;color:var(--lave-2)}
+.merci{display:none;padding:1rem 1.1rem;border:1.5px solid var(--lave);border-radius:4px;background:#fff;font-weight:600}
+form.envoye .merci{display:block}
+.cote{margin-top:2rem;display:grid;gap:.5rem;align-content:start}
+.cote b{font-size:1.125rem}
+.cote a{font-weight:700;font-size:1.5rem;font-variant-numeric:lining-nums}
+/* ordinateur : le formulaire à gauche, le téléphone en regard */
+@media (min-width:60rem){.demande .grille{display:grid;grid-template-columns:minmax(0,36rem) 1fr;gap:4rem;align-items:start}.cote{margin-top:1.5rem}}
+
+/* Les chambres, le petit-déjeuner, les alentours : texte et photo */
+.piece{padding-block:calc(var(--pas)*2)}
+.piece + .piece{border-top:1px solid var(--trait)}
+.piece .wrap{display:grid;gap:var(--pas)}
+.piece h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
+.piece p{max-width:var(--mesure);margin-top:.85rem}
+.piece img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:3px}
+.loin{margin-top:1.25rem;max-width:30rem}
+.loin div{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-top:1px solid var(--trait)}
+.loin div:last-child{border-bottom:1px solid var(--trait)}
+.loin dd{margin:0;font-weight:600;white-space:nowrap}
+.avert{background:var(--linge-2);padding:1rem 1.1rem;border-radius:3px;font-weight:600}
+/* ordinateur : photo et texte côte à côte, la photo des chambres à gauche */
+@media (min-width:60rem){
+  .piece .wrap{grid-template-columns:1fr 1fr;align-items:center;gap:4rem}
+  .chambres figure{grid-column:1;grid-row:1}
+}
+
+footer{background:var(--lave);color:var(--lave-3);padding-block:2.5rem;font-size:.875rem}
+footer .wrap{display:grid;gap:.75rem}
+footer b{color:#fff;font-weight:800;font-size:1.25rem}
+footer a{color:#fff}
+
+/* Barre sous le pouce, en mobile et en paysage téléphone : appeler ou voir les
+   nuits libres. Rangée quand le calendrier ou la demande sont à l'écran. */
+.pouce{display:none}
+@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-bottom:6rem}
+  .pouce{display:grid;grid-template-columns:1fr 1.5fr;gap:.5rem;position:fixed;left:0;right:0;bottom:0;z-index:5;
+    padding:.6rem .75rem max(.6rem,env(safe-area-inset-bottom));background:var(--linge);border-top:1px solid var(--trait);
+    transition:transform .2s ease-out}
+  .pouce a{display:flex;align-items:center;justify-content:center;min-height:2.75rem;border-radius:4px;font-weight:700;text-decoration:none}
+  .pouce .appel{border:1.5px solid var(--lave)}
+  .pouce .voir{background:var(--volet-f);color:#fff;border:1.5px solid transparent}
+  .pouce.cache{transform:translateY(110%)}
+  footer{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
+}
+
+/* Le seul mouvement : les fenêtres du séjour choisi s'éclairent l'une
+   après l'autre, puis le récapitulatif apparaît. */
+@media (prefers-reduced-motion:no-preference){
+  .n::before{transition:transform .22s ease-out}
+  /* span 1 = texte lu par les lecteurs d'écran, les nuits suivent */
+  .sem input:checked ~ .n:nth-of-type(3)::before{transition-delay:40ms}
+  .sem input:checked ~ .n:nth-of-type(4)::before{transition-delay:80ms}
+  .sem input:checked ~ .n:nth-of-type(5)::before{transition-delay:120ms}
+  .sem input:checked ~ .n:nth-of-type(6)::before{transition-delay:160ms}
+  .sem input:checked ~ .n:nth-of-type(7)::before{transition-delay:200ms}
+  .sem input:checked ~ .n:nth-of-type(8)::before{transition-delay:240ms}
+  .sem:has(.s4 input:checked) .r4,.sem:has(.s2 input:checked) .r2{animation:monte .3s ease-out .2s both}
+  @keyframes monte{from{opacity:0;transform:translateY(.3rem)}to{opacity:1;transform:none}}
+}
+/* mouvement réduit : ni transition ni animation, l'état final directement */
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#dispos">Aller aux disponibilités</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="#">
+      <b>Maison Tixier</b>
+      <span>Chambres d’hôtes à Coudes</span>
+    </a>
+    <a class="tel" href="tel:+33465712318" aria-label="Appeler la Maison Tixier au 04 65 71 23 18">04 65 71 23 18</a>
+  </div>
+</header>
+
+<main>
+  <section class="ouv">
+    <div class="wrap">
+      <div>
+        <h1>Chambres d’hôtes à Coudes, au bord de l’Allier</h1>
+        <p class="chapo">Deux chambres qui communiquent, dans une maison de pierre du village. Nous ne prenons qu’une réservation à la fois : la salle d’eau et la table du <span class="nw">petit-déjeuner</span> sont pour vous seuls.</p>
+        <p class="nuit">95 € la nuit pour deux, <span class="nw">petit-déjeuner</span> compris.</p>
+        <div class="actions">
+          <a class="btn" href="#dispos">Voir les nuits libres</a>
+          <p class="discret">Arrivée de 17 h à 20 h, départ avant 11 h.</p>
+        </div>
+      </div>
+      <figure>
+        <img src="/exemples/img/gite-riviere-800.webp"
+             srcset="/exemples/img/gite-riviere-480.webp 480w, /exemples/img/gite-riviere-800.webp 800w, /exemples/img/gite-riviere-1200.webp 1200w"
+             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
+             width="1200" height="1500" fetchpriority="high"
+             alt="L’Allier entre deux rives boisées aux couleurs d’automne">
+        <figcaption>L’Allier au pied du village, en octobre.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="dispos" id="dispos" aria-labelledby="dispos-t">
+    <div class="wrap">
+      <h2 id="dispos-t">Les nuits libres</h2>
+      <p class="intro">Choisissez un mois, puis un séjour libre : un week-end, ou des nuits en semaine. Un volet fermé, c’est une nuit déjà prise.</p>
+      <div class="grille">
+        <div class="cal">
+          <fieldset class="onglets">
+            <legend class="sr">Mois affiché</legend>
+            <label><input type="radio" name="mois" id="m-oct" checked>Octobre</label>
+            <label><input type="radio" name="mois" id="m-nov">Novembre</label>
+            <label><input type="radio" name="mois" id="m-dec">Décembre</label>
+          </fieldset>
+
+          <fieldset class="mois" id="g-oct">
+            <legend>Octobre 2026</legend>
+            <div class="jours" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+            <div class="sem"><span class="sr">Du 1<sup>er</sup> au 4 octobre : nuits du 2 et du 3 prises.</span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n" aria-hidden="true">1</span><span class="n p" aria-hidden="true">2</span><span class="n p" aria-hidden="true">3</span><span class="n" aria-hidden="true">4</span></div>
+            <div class="sem"><span class="sr">Du 5 au 11 octobre : toutes les nuits libres.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1005" value="des nuits en semaine, entre le lundi 5 et le vendredi 9 octobre 2026" form="resa"><span class="sr">En semaine, du lundi 5 au vendredi 9 octobre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">5</span><span class="n" aria-hidden="true">6</span><span class="n" aria-hidden="true">7</span><span class="n" aria-hidden="true">8</span></label><label class="seg s2"><input type="radio" name="sejour" id="w-1009" value="le week-end du vendredi 9 au dimanche 11 octobre 2026" form="resa"><span class="sr">Week-end du vendredi 9 au dimanche 11 octobre : deux nuits.</span><span class="n" aria-hidden="true">9</span><span class="n" aria-hidden="true">10</span></label><span class="n" aria-hidden="true">11</span><span class="recap r4">Du lundi 5 au vendredi 9 octobre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span><span class="recap r2">Arrivée le vendredi 9, départ le dimanche 11 octobre. <b>2 nuits pour deux : 190 €</b>, <span class="nw">petits-déjeuners</span> compris.</span></div>
+            <div class="sem"><span class="sr">Du 12 au 18 octobre : nuits du 16 et du 17 prises.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1012" value="des nuits en semaine, entre le lundi 12 et le vendredi 16 octobre 2026" form="resa"><span class="sr">En semaine, du lundi 12 au vendredi 16 octobre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">12</span><span class="n" aria-hidden="true">13</span><span class="n" aria-hidden="true">14</span><span class="n" aria-hidden="true">15</span></label><span class="n p" aria-hidden="true">16</span><span class="n p" aria-hidden="true">17</span><span class="n" aria-hidden="true">18</span><span class="recap r4">Du lundi 12 au vendredi 16 octobre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span></div>
+            <div class="sem"><span class="sr">Du 19 au 25 octobre : complet.</span><span class="n p" aria-hidden="true">19</span><span class="n p" aria-hidden="true">20</span><span class="n p" aria-hidden="true">21</span><span class="n p" aria-hidden="true">22</span><span class="n p" aria-hidden="true">23</span><span class="n p" aria-hidden="true">24</span><span class="n p" aria-hidden="true">25</span></div>
+            <div class="sem"><span class="sr">Du 26 au 31 octobre : nuits du 26 au 30 prises.</span><span class="n p" aria-hidden="true">26</span><span class="n p" aria-hidden="true">27</span><span class="n p" aria-hidden="true">28</span><span class="n p" aria-hidden="true">29</span><span class="n p" aria-hidden="true">30</span><span class="n" aria-hidden="true">31</span><span class="n v" aria-hidden="true"></span></div>
+          </fieldset>
+
+          <fieldset class="mois" id="g-nov">
+            <legend>Novembre 2026</legend>
+            <div class="jours" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+            <div class="sem"><span class="sr">Dimanche 1<sup>er</sup> novembre : nuit libre.</span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n" aria-hidden="true">1</span></div>
+            <div class="sem"><span class="sr">Du 2 au 8 novembre : toutes les nuits libres.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1102" value="des nuits en semaine, entre le lundi 2 et le vendredi 6 novembre 2026" form="resa"><span class="sr">En semaine, du lundi 2 au vendredi 6 novembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">2</span><span class="n" aria-hidden="true">3</span><span class="n" aria-hidden="true">4</span><span class="n" aria-hidden="true">5</span></label><label class="seg s2"><input type="radio" name="sejour" id="w-1106" value="le week-end du vendredi 6 au dimanche 8 novembre 2026" form="resa"><span class="sr">Week-end du vendredi 6 au dimanche 8 novembre : deux nuits.</span><span class="n" aria-hidden="true">6</span><span class="n" aria-hidden="true">7</span></label><span class="n" aria-hidden="true">8</span><span class="recap r4">Du lundi 2 au vendredi 6 novembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span><span class="recap r2">Arrivée le vendredi 6, départ le dimanche 8 novembre. <b>2 nuits pour deux : 190 €</b>, <span class="nw">petits-déjeuners</span> compris.</span></div>
+            <div class="sem"><span class="sr">Du 9 au 15 novembre : nuits du 13 et du 14 prises.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1109" value="des nuits en semaine, entre le lundi 9 et le vendredi 13 novembre 2026" form="resa"><span class="sr">En semaine, du lundi 9 au vendredi 13 novembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">9</span><span class="n" aria-hidden="true">10</span><span class="n" aria-hidden="true">11</span><span class="n" aria-hidden="true">12</span></label><span class="n p" aria-hidden="true">13</span><span class="n p" aria-hidden="true">14</span><span class="n" aria-hidden="true">15</span><span class="recap r4">Du lundi 9 au vendredi 13 novembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span></div>
+            <div class="sem"><span class="sr">Du 16 au 22 novembre : toutes les nuits libres.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1116" value="des nuits en semaine, entre le lundi 16 et le vendredi 20 novembre 2026" form="resa"><span class="sr">En semaine, du lundi 16 au vendredi 20 novembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">16</span><span class="n" aria-hidden="true">17</span><span class="n" aria-hidden="true">18</span><span class="n" aria-hidden="true">19</span></label><label class="seg s2"><input type="radio" name="sejour" id="w-1120" value="le week-end du vendredi 20 au dimanche 22 novembre 2026" form="resa"><span class="sr">Week-end du vendredi 20 au dimanche 22 novembre : deux nuits.</span><span class="n" aria-hidden="true">20</span><span class="n" aria-hidden="true">21</span></label><span class="n" aria-hidden="true">22</span><span class="recap r4">Du lundi 16 au vendredi 20 novembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span><span class="recap r2">Arrivée le vendredi 20, départ le dimanche 22 novembre. <b>2 nuits pour deux : 190 €</b>, <span class="nw">petits-déjeuners</span> compris.</span></div>
+            <div class="sem"><span class="sr">Du 23 au 29 novembre : nuits du 24, du 25, du 27 et du 28 prises.</span><span class="n" aria-hidden="true">23</span><span class="n p" aria-hidden="true">24</span><span class="n p" aria-hidden="true">25</span><span class="n" aria-hidden="true">26</span><span class="n p" aria-hidden="true">27</span><span class="n p" aria-hidden="true">28</span><span class="n" aria-hidden="true">29</span></div>
+            <div class="sem"><span class="sr">Lundi 30 novembre : nuit libre.</span><span class="n" aria-hidden="true">30</span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span></div>
+          </fieldset>
+
+          <fieldset class="mois" id="g-dec">
+            <legend>Décembre 2026</legend>
+            <div class="jours" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+            <div class="sem"><span class="sr">Du 1<sup>er</sup> au 6 décembre : nuits du 4 et du 5 prises.</span><span class="n v" aria-hidden="true"></span><span class="n" aria-hidden="true">1</span><span class="n" aria-hidden="true">2</span><span class="n" aria-hidden="true">3</span><span class="n p" aria-hidden="true">4</span><span class="n p" aria-hidden="true">5</span><span class="n" aria-hidden="true">6</span></div>
+            <div class="sem"><span class="sr">Du 7 au 13 décembre : toutes les nuits libres.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1207" value="des nuits en semaine, entre le lundi 7 et le vendredi 11 décembre 2026" form="resa"><span class="sr">En semaine, du lundi 7 au vendredi 11 décembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">7</span><span class="n" aria-hidden="true">8</span><span class="n" aria-hidden="true">9</span><span class="n" aria-hidden="true">10</span></label><label class="seg s2"><input type="radio" name="sejour" id="w-1211" value="le week-end du vendredi 11 au dimanche 13 décembre 2026" form="resa"><span class="sr">Week-end du vendredi 11 au dimanche 13 décembre : deux nuits.</span><span class="n" aria-hidden="true">11</span><span class="n" aria-hidden="true">12</span></label><span class="n" aria-hidden="true">13</span><span class="recap r4">Du lundi 7 au vendredi 11 décembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span><span class="recap r2">Arrivée le vendredi 11, départ le dimanche 13 décembre. <b>2 nuits pour deux : 190 €</b>, <span class="nw">petits-déjeuners</span> compris.</span></div>
+            <div class="sem"><span class="sr">Du 14 au 20 décembre : nuits du 18 et du 19 prises.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1214" value="des nuits en semaine, entre le lundi 14 et le vendredi 18 décembre 2026" form="resa"><span class="sr">En semaine, du lundi 14 au vendredi 18 décembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">14</span><span class="n" aria-hidden="true">15</span><span class="n" aria-hidden="true">16</span><span class="n" aria-hidden="true">17</span></label><span class="n p" aria-hidden="true">18</span><span class="n p" aria-hidden="true">19</span><span class="n" aria-hidden="true">20</span><span class="recap r4">Du lundi 14 au vendredi 18 décembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span></div>
+            <div class="sem"><span class="sr">Du 21 au 27 décembre : complet.</span><span class="n p" aria-hidden="true">21</span><span class="n p" aria-hidden="true">22</span><span class="n p" aria-hidden="true">23</span><span class="n p" aria-hidden="true">24</span><span class="n p" aria-hidden="true">25</span><span class="n p" aria-hidden="true">26</span><span class="n p" aria-hidden="true">27</span></div>
+            <div class="sem"><span class="sr">Du 28 au 31 décembre : complet.</span><span class="n p" aria-hidden="true">28</span><span class="n p" aria-hidden="true">29</span><span class="n p" aria-hidden="true">30</span><span class="n p" aria-hidden="true">31</span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span></div>
+          </fieldset>
+
+          <p class="legende" aria-hidden="true"><span><i></i>Nuit libre</span><span><i class="l-p"></i>Nuit prise, volet fermé</span><span><i class="l-l"></i>Séjour libre, à choisir</span><span><i class="l-c"></i>Votre séjour</span></p>
+          <p class="autres">Une autre date vous convient ? Toutes les nuits libres se demandent : notez-les dans le message.</p>
+        </div>
+
+        <div class="nuitee">
+          <p class="prix"><strong>95 €</strong> la nuit pour deux personnes, <span class="nw">petit-déjeuner</span> compris.</p>
+          <p>30 € la nuit par personne en plus, dans la petite chambre. Le week-end, deux nuits pour deux : 190 €.</p>
+          <h3>Compris dans la nuitée</h3>
+          <ul>
+            <li>Le <span class="nw">petit-déjeuner</span>, servi de 8 h à 10 h.</li>
+            <li>Les draps et le linge de toilette, les lits faits à votre arrivée.</li>
+            <li>La salle d’eau, rien que pour vous.</li>
+            <li>Le parking dans la cour et le wifi.</li>
+          </ul>
+          <h3>En plus, si vous le souhaitez</h3>
+          <ul>
+            <li>La table d’hôtes, 28 € par personne, à demander la veille.</li>
+            <li>La taxe de séjour, au tarif fixé par la communauté de communes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="demande" id="demande" aria-labelledby="demande-t">
+    <div class="wrap">
+      <h2 id="demande-t">Demander ces nuits</h2>
+      <p>Rien n’est payé en ligne. Nous vous répondons dans la journée ; un acompte de 30 % confirme la réservation, le solde se règle sur place. Pas de frais de réservation : vous payez le prix de la maison.</p>
+      <div class="choisie" aria-live="polite">
+        <p class="aucune">Aucun séjour choisi. Choisissez-en un dans le calendrier, ou écrivez vos dates dans le message.</p>
+        <p class="une">Votre séjour : <span id="sejour-choisi">celui choisi dans le calendrier</span>.</p>
+      </div>
+      <div class="grille">
+        <form id="resa" action="#demande" novalidate>
+          <div class="deux">
+            <div><label for="nom">Nom *</label><input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required></div>
+            <div><label for="email">Email *</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" enterkeyhint="next" required></div>
+          </div>
+          <div class="deux">
+            <div><label for="tel">Téléphone</label><input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next"></div>
+            <div>
+              <label for="personnes">Personnes</label>
+              <select id="personnes" name="personnes"><option>2 personnes</option><option>1 personne</option><option>3 personnes</option><option>4 personnes</option></select>
+            </div>
+          </div>
+          <div>
+            <label for="nuits">Nuits</label>
+            <select id="nuits" name="nuits"><option>Selon le séjour choisi</option><option>1 nuit</option><option>2 nuits</option><option>3 nuits</option><option>4 nuits</option><option>D’autres dates, notées dans le message</option></select>
+          </div>
+          <div>
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="3" enterkeyhint="send" placeholder="Vos dates, l’heure d’arrivée prévue, une question"></textarea>
+          </div>
+          <p class="note">* obligatoire</p>
+          <div><button class="btn" type="submit">Envoyer ma demande</button></div>
+          <p class="merci" role="status">Demande enregistrée. Dans la version en ligne, la Maison Tixier vous répond dans la journée avec la confirmation et le montant de l’acompte.</p>
+        </form>
+        <aside class="cote" aria-label="Nous appeler">
+          <b>Vous préférez appeler ?</b>
+          <a href="tel:+33465712318">04 65 71 23 18</a>
+          <p>Tous les jours, de 9 h à 19 h. Hors de ces horaires, laissez votre demande : nous répondons le lendemain matin.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="piece chambres" aria-labelledby="chambres-t">
+    <div class="wrap">
+      <div>
+        <h2 id="chambres-t">Les chambres</h2>
+        <p>La grande chambre donne sur la cour : deux lits de 90 accolés, ou séparés si vous le demandez. La petite, à côté, a deux lits simples pour des enfants ou un ami.</p>
+        <p>Au bout du couloir, une salle d’eau avec douche à l’italienne. Les murs de pierre gardent la fraîcheur l’été ; l’hiver, le chauffage est allumé avant votre arrivée.</p>
+      </div>
+      <figure>
+        <img src="/exemples/img/gite-chambre-800.webp"
+             srcset="/exemples/img/gite-chambre-480.webp 480w, /exemples/img/gite-chambre-800.webp 800w, /exemples/img/gite-chambre-1200.webp 1200w"
+             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
+             width="1200" height="800" loading="lazy" decoding="async"
+             alt="Chambre aux murs gris-bleu, deux lits accolés faits de draps blancs, table de chevet et miroir ancien">
+        <figcaption>La grande chambre, lits accolés.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="piece matin" aria-labelledby="matin-t">
+    <div class="wrap">
+      <div>
+        <h2 id="matin-t">Le <span class="nw">petit-déjeuner</span></h2>
+        <p>Servi dans la salle du bas, de 8 h à 10 h : pain du boulanger, confitures de la maison, beurre, fromage blanc, fruits de saison, café, thé ou chocolat.</p>
+        <p>Le soir, sur demande la veille, la table d’hôtes : un dîner de saison avec nous, 28 € par personne.</p>
+      </div>
+      <figure>
+        <img src="/exemples/img/gite-table-800.webp"
+             srcset="/exemples/img/gite-table-480.webp 480w, /exemples/img/gite-table-800.webp 800w, /exemples/img/gite-table-1200.webp 1200w"
+             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
+             width="1200" height="800" loading="lazy" decoding="async"
+             alt="Tartines beurrées à la confiture d’abricot et de fraise, baguette, bol de café, pots de confiture">
+        <figcaption>Tartines, confitures et bol de café.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="piece autour" aria-labelledby="autour-t">
+    <div class="wrap">
+      <div>
+        <h2 id="autour-t">Autour de la maison</h2>
+        <p>Coudes est au bord de l’Allier. On part à pied le long de la rivière dès la sortie du village.</p>
+        <dl class="loin">
+          <div><dt>Issoire</dt><dd>15 minutes</dd></div>
+          <div><dt>Clermont-Ferrand</dt><dd>30 minutes</dd></div>
+          <div><dt>Les monts Dore</dt><dd>1 heure</dd></div>
+        </dl>
+        <p>L’adresse exacte vous est envoyée avec la confirmation. La clé vous attend dans une boîte à code si vous arrivez après 20 h.</p>
+        <p class="avert">Nous ne vous demanderons jamais de payer par un lien reçu par SMS ou par message. Un doute ? Appelez-nous.</p>
+      </div>
+      <figure>
+        <img src="/exemples/img/gite-puy-800.webp"
+             srcset="/exemples/img/gite-puy-480.webp 480w, /exemples/img/gite-puy-800.webp 800w, /exemples/img/gite-puy-1200.webp 1200w"
+             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
+             width="1200" height="795" loading="lazy" decoding="async"
+             alt="Le puy de l’Angle, volcan couvert d’herbe, au-dessus d’une prairie de fauche sous un ciel bleu">
+        <figcaption>Le puy de l’Angle, dans les monts Dore, à une heure de route.</figcaption>
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Maison Tixier</b>
+    <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-gite-chambre-hotes" target="_top">4dayvelopment</a>. L’entreprise, son numéro et ses disponibilités sont fictifs.</p>
+    <p>Photos via Wikimedia Commons, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a> : « Allier river in Coudes (1) », Krzysztof Golik, recadrée ; « Chambre secondaire (Bouvaincourt-sur-Bresle) », Gzen92, couleurs réchauffées ; « Petit déjeuner français », Nat ; « PNR Volcans Auvergne Puy Angle Col Cx St Robert », Bruno Cagnon.</p>
+  </div>
+</footer>
+
+<nav class="pouce" aria-label="Contact rapide">
+  <a class="appel" href="tel:+33465712318">Appeler</a>
+  <a class="voir" href="#dispos">Réserver</a>
+</nav>
+
+<script src="/exemples/gite.js" defer></script>
+</body>
+</html>
