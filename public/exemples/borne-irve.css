@@ -1,0 +1,452 @@
+/* Deûle Électricité (démo 4dayvelopment), direction « l'entreprise régionale établie ».
+   Palette : vert canal de la Deûle #0E3B3A, ambre du voyant de charge #F2B632, ciment #EEF2EF, blanc.
+   Rayon 6 px, un peu plus sec que la moyenne : c'est un métier de coffrets et de rails DIN.
+   Police auto-hébergée (SIL OFL 1.1) : Archivo variable, étroite pour les titres, normale pour le texte. */
+@font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;
+  src:url("/fonts/archivo-var.woff2") format("woff2")}
+/* repli Arial calé sur les métriques d'Archivo : le texte ne saute pas quand la police arrive */
+@font-face{font-family:"Archivo repli";src:local("Arial"),local("ArialMT");
+  size-adjust:101%;ascent-override:87%;descent-override:21%;line-gap-override:0%}
+:root{
+  --canal:#0E3B3A;
+  --canal-2:#0A2B2A;
+  --ambre:#F2B632;
+  --ambre-2:#E3A41E;
+  --ambre-pale:#FFF6DC;
+  --ciment:#EEF2EF;
+  --blanc:#FFFFFF;
+  --texte:#132E2D;
+  --texte-2:#4A5E5C;
+  --trait:#D6DEDB;
+  --trait-2:#B7C3BF;
+  --erreur:#B3261E;
+  --r:6px;
+  --gut:clamp(1rem, 0.4rem + 3vi, 2.5rem);
+  --max:76rem;
+  --carte:27rem;
+  --section:clamp(3.5rem, 2rem + 5vi, 6.5rem);
+  --ombre:0 1px 2px rgb(14 59 58 / .08), 0 20px 44px -14px rgb(10 43 42 / .42);
+  --police:"Archivo","Archivo repli",system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:5.5rem}
+body{font-family:var(--police);font-size:1.0625rem;line-height:1.6;color:var(--texte);background:var(--blanc);
+  -webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit}
+button,input,select{font:inherit;color:inherit}
+/* titres : Archivo resserrée, grasse, qui tient les longs mots français sans casser */
+h1,h2,h3{font-weight:760;font-stretch:84%;line-height:1.06;letter-spacing:-.012em;text-wrap:balance}
+p{text-wrap:pretty}
+sup{font-size:.7em;line-height:0}
+:focus-visible{outline:3px solid var(--canal);outline-offset:3px}
+.wrap{width:min(100% - 2*var(--gut), var(--max));margin-inline:auto}
+.visuel-seul{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:1rem;top:-4rem;z-index:50;background:var(--canal);color:#fff;padding:.7rem 1rem;border-radius:var(--r);font-weight:600}
+.skip:focus{top:1rem}
+.ico{width:1.25rem;height:1.25rem;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.nombre{font-variant-numeric:tabular-nums}
+
+/* Boutons : l'ambre du voyant de charge, texte sombre (contraste 9:1) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:3rem;padding:.75rem 1.35rem;
+  border-radius:var(--r);border:2px solid transparent;background:var(--ambre);color:var(--canal-2);
+  font-weight:700;font-size:1rem;letter-spacing:.005em;text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:background-color .15s, border-color .15s, color .15s}
+.btn:active{transform:translateY(1px)}
+.btn-contour{background:transparent;border-color:currentColor;color:var(--canal)}
+.btn-clair{background:transparent;border-color:rgb(255 255 255 / .8);color:#fff}
+/* le survol n'existe qu'à la souris */
+@media (hover:hover) and (pointer:fine){
+  .btn:hover{background:var(--ambre-2)}
+  .btn-contour:hover{background:var(--ciment)}
+  .btn-clair:hover{background:rgb(255 255 255 / .12)}
+}
+
+/* Barre supérieure */
+.topbar{background:var(--canal);color:#DCE8E5;font-size:.875rem}
+.topbar .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.75rem;min-height:2.5rem;padding-block:.35rem}
+.topbar a,.topbar span{display:inline-flex;align-items:center;gap:.45rem;text-decoration:none}
+.topbar a{font-weight:600;color:#fff}
+.topbar a:hover{text-decoration:underline;text-underline-offset:.2em}
+.topbar .ico{width:1rem;height:1rem;color:var(--ambre)}
+.topbar .zone{margin-left:auto}
+:is(.topbar,.hero,.resultat,.pied) :focus-visible{outline-color:var(--ambre)}
+/* téléphone : la zone d'intervention cède la place au numéro et aux horaires */
+@media (max-width:47.99rem){ .topbar .zone{display:none} .topbar .wrap{justify-content:space-between} }
+
+/* En-tête */
+.entete{position:sticky;top:0;z-index:30;background:var(--blanc);border-bottom:1px solid var(--trait)}
+.entete .wrap{display:flex;align-items:center;gap:1rem;min-height:4.75rem}
+.logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;min-width:0;margin-right:auto}
+.logo svg{width:2.9rem;height:2.9rem;flex:none}
+.logo-txt{display:flex;flex-direction:column;line-height:1.15;min-width:0}
+.logo-nom{font-weight:800;font-stretch:88%;font-size:1.3rem;letter-spacing:-.015em;white-space:nowrap}
+.logo-sig{font-size:.8125rem;color:var(--texte-2);white-space:nowrap}
+.logo-sig .court{display:none}
+/* sous 26rem : signature raccourcie, elle tient sur une ligne */
+@media (max-width:26rem){ .logo-sig .long{display:none} .logo-sig .court{display:inline} }
+.nav ul{list-style:none;padding:0;display:flex;align-items:center;gap:.25rem}
+.nav a{display:block;white-space:nowrap;padding:.6rem .7rem;border-radius:var(--r);text-decoration:none;font-weight:600;font-size:.975rem}
+.nav a:hover{background:var(--ciment)}
+.nav .nav-plus{display:none}
+.entete-tel{display:none}
+.burger{display:none}
+@media (min-width:75rem){ .entete .btn{margin-left:.5rem} }
+/* téléphone : la barre d'appel du bas remplace le bouton de visite de l'en-tête */
+@media (max-width:47.99rem){ .entete .btn-visite{display:none} }
+/* jusqu'au grand écran : menu replié derrière le bouton burger */
+@media (max-width:74.99rem){
+  .entete .wrap{min-height:4.25rem;gap:.5rem}
+  .entete-tel,.burger{display:inline-grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:var(--r);
+    border:1.5px solid var(--trait-2);background:var(--blanc);color:var(--canal);cursor:pointer;text-decoration:none}
+  .entete-tel .ico,.burger .ico{width:1.35rem;height:1.35rem}
+  .burger .ico-fermer{display:none}
+  .burger[aria-expanded="true"] .ico-ouvrir{display:none}
+  .burger[aria-expanded="true"] .ico-fermer{display:block}
+  .nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--blanc);border-bottom:1px solid var(--trait);
+    box-shadow:0 24px 32px -24px rgb(10 43 42 / .4);max-height:calc(100dvh - 4.25rem);overflow-y:auto}
+  .nav.ouvert{display:block}
+  .nav ul{flex-direction:column;align-items:stretch;gap:0;padding:.5rem var(--gut) 1.25rem}
+  .nav li{border-bottom:1px solid var(--trait)}
+  .nav a{padding:1rem .25rem;font-size:1.125rem;font-weight:700;border-radius:0}
+  .nav .nav-plus{display:block;border:0;padding-top:1rem}
+  .nav a.btn{display:flex;padding:.85rem 1.35rem;font-size:1.0625rem;border-radius:var(--r)}
+  .nav a.btn:hover{background:var(--ambre-2)}
+  .nav .nav-info a{display:inline;padding:0;font:inherit;font-weight:700;color:var(--canal)}
+  .nav .nav-info{color:var(--texte-2);font-size:.9375rem;padding-top:.75rem}
+}
+/* téléphone : l'appel passe par la barre du bas */
+@media (max-width:47.99rem){ .entete .entete-tel,.hero-actions .btn-clair{display:none} }
+/* très petit écran : logo resserré */
+@media (max-width:23rem){
+  .logo-sig{font-size:.75rem} .logo-nom{font-size:1.125rem} .logo{gap:.5rem}
+  .logo svg{width:2.5rem;height:2.5rem}
+  .entete-tel,.burger{width:2.6rem;height:2.6rem}
+}
+
+/* Hero : photo plein cadre, texte à gauche, demande de visite posée à droite et à cheval sur le bandeau */
+.hero{display:grid;background:var(--ciment);
+  grid-template-columns:[full-start] var(--gut) [texte-start carte-start] minmax(0,1fr) [texte-end carte-end] var(--gut) [full-end]}
+.hero-media{grid-column:full;grid-row:1;position:relative;min-height:34rem;background:#7C4A34}
+.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:48% 30%}
+.hero-media::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg, rgb(8 36 35 / .94) 0%, rgb(8 36 35 / .8) 40%, rgb(8 36 35 / .5) 70%, rgb(8 36 35 / .32) 100%)}
+.hero-texte{grid-column:texte;grid-row:1;align-self:end;position:relative;z-index:1;color:#fff;padding-block:8rem 2.5rem}
+.hero h1{font-size:clamp(2.4rem, 1.5rem + 3.4vi, 4rem);font-weight:780;font-stretch:80%;letter-spacing:-.02em;line-height:1;max-width:15ch}
+.hero-sous{margin-top:1.1rem;font-size:clamp(1.0625rem, 1rem + .3vi, 1.2rem);line-height:1.55;max-width:42ch;color:#E9F1EF}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
+.hero-vignette{display:flex;align-items:center;gap:.9rem;margin:1.75rem 0 0;max-width:30rem}
+.hero-vignette img{flex:none;width:6.5rem;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);border:2px solid rgb(255 255 255 / .9)}
+.hero-vignette figcaption{font-size:.9375rem;line-height:1.45;color:#D9E6E3}
+.hero-vignette strong{display:flex;align-items:center;gap:.4rem;color:#fff;font-weight:700;font-size:1rem}
+.hero-vignette strong .ico{width:1.1rem;height:1.1rem;color:var(--ambre);stroke-width:2.4}
+.devis{grid-column:carte;grid-row:2;margin-block:1.5rem 0;position:relative;z-index:2}
+/* ordinateur : texte à gauche, demande de visite à droite, à cheval sur le bandeau */
+@media (min-width:64rem){
+  .hero{background:none;
+    grid-template-columns:[full-start] minmax(var(--gut),1fr) [texte-start] minmax(0, calc(var(--max) - var(--carte) - 4rem)) [texte-end] 4rem [carte-start] var(--carte) [carte-end] minmax(var(--gut),1fr) [full-end]}
+  .hero-media{min-height:37rem}
+  .hero-media::after{background:linear-gradient(90deg, rgb(8 36 35 / .9) 0%, rgb(8 36 35 / .7) 36%, rgb(8 36 35 / .16) 64%, rgb(8 36 35 / 0) 80%)}
+  .hero-media img{object-position:50% 40%}
+  .hero-texte{align-self:center;padding-block:4rem 6.5rem}
+  .devis{grid-row:1;align-self:end;margin-block:2.5rem -5rem}
+}
+
+/* Carte « demande de visite » en plusieurs étapes */
+.devis-carte{display:flex;flex-direction:column;background:var(--blanc);border-radius:var(--r);box-shadow:var(--ombre);
+  border:1px solid rgb(14 59 58 / .1);container-type:inline-size}
+.devis-tete{padding:1.4rem 1.5rem 0}
+.devis-tete h2{font-size:1.6rem}
+.devis-tete p{font-size:.9375rem;color:var(--texte-2);margin-top:.25rem}
+.progression{margin-top:1.1rem;display:flex;align-items:center;gap:.75rem;font-size:.8125rem;font-weight:600;color:var(--texte-2)}
+.progression-barre{flex:1;height:6px;border-radius:3px;background:#E3E9E6;overflow:hidden}
+.progression-barre span{display:block;height:100%;width:100%;background:var(--canal);border-radius:3px;transform-origin:left;transform:scaleX(.25);transition:transform .3s ease}
+.etape{border:0;padding:1.25rem 1.5rem .25rem;min-width:0}
+.etape[hidden]{display:none}
+.etape legend{float:left;width:100%}
+.etape legend + *{clear:both}
+.etape legend,.etape .titre-etape{font-weight:760;font-stretch:88%;font-size:1.2rem;padding:0;margin-bottom:.9rem;line-height:1.2}
+.etape legend:focus,.etape .titre-etape:focus{outline:none}
+.tuiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.tuile{position:relative;display:flex;flex-direction:column;justify-content:center;gap:.35rem;min-height:3.6rem;padding:.7rem .8rem;
+  border:1.5px solid var(--trait-2);border-radius:var(--r);background:var(--blanc);cursor:pointer;line-height:1.25;
+  font-weight:600;font-size:.9375rem;transition:border-color .15s, background-color .15s, box-shadow .15s}
+.tuile input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.tuile .ico{width:1.75rem;height:1.75rem;color:var(--canal);stroke-width:1.5}
+.tuile small{display:block;font-weight:400;font-size:.8125rem;color:var(--texte-2)}
+.tuile:hover{border-color:var(--canal)}
+.tuile:has(input:checked){border-color:var(--canal);background:var(--ambre-pale);box-shadow:inset 0 0 0 1px var(--canal)}
+.tuile:has(input:checked)::after{content:"";position:absolute;top:-.45rem;right:-.45rem;width:1.2rem;height:1.2rem;border-radius:50%;box-shadow:0 0 0 2px var(--blanc);
+  background:var(--canal) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.2l2.6 2.6L12 5.4' fill='none' stroke='%23F2B632' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.tuile:has(input:focus-visible){outline:3px solid var(--canal);outline-offset:2px}
+/* lieu de la borne : trois tuiles en ligne dès que la carte a la place, sinon en liste */
+.tuiles-lieu{grid-template-columns:1fr}
+.tuiles-lieu .tuile{flex-direction:row;align-items:center;justify-content:flex-start;gap:.8rem}
+@container (min-width:22rem){
+  .tuiles-lieu{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .tuiles-lieu .tuile{flex-direction:column;align-items:flex-start;justify-content:center;min-height:7.25rem;gap:.55rem}
+  .tuiles-lieu .tuile .ico{width:2.1rem;height:2.1rem}
+}
+/* puissances : quatre disjoncteurs côte à côte, « je ne sais pas » en dessous */
+.tuiles-kw{grid-template-columns:repeat(2,minmax(0,1fr))}
+.tuiles-kw .tuile{align-items:center;text-align:center;font-size:1.0625rem;font-weight:760;font-stretch:88%;font-variant-numeric:tabular-nums}
+.tuiles-kw .tuile small{font-stretch:100%;font-weight:400}
+.tuiles-kw .tuile.large{grid-column:1/-1;min-height:3rem;font-size:.9375rem;font-weight:600;font-stretch:100%}
+@container (min-width:22rem){ .tuiles-kw{grid-template-columns:repeat(4,minmax(0,1fr))} }
+.tuiles-jours{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tuiles-jours .tuile{align-items:center;text-align:center;gap:0;min-height:3.9rem;padding:.5rem .3rem;font-variant-numeric:tabular-nums}
+.tuiles-jours .tuile small{font-size:.8125rem}
+.sous-groupe{border:0;padding:0;margin-top:1.1rem;min-width:0}
+.sous-groupe:first-of-type{margin-top:0}
+.sous-groupe legend{font-weight:600;font-size:.9375rem;margin-bottom:.55rem;padding:0}
+.indice{font-size:.8125rem;color:var(--texte-2);margin-top:.5rem}
+.indice a{color:var(--canal);font-weight:600;text-underline-offset:.2em}
+.champ{display:grid;gap:.35rem;margin-bottom:.85rem}
+.champ label{font-weight:600;font-size:.9375rem}
+.champ input{width:100%;height:3rem;padding:.6rem .8rem;border:1.5px solid var(--trait-2);border-radius:var(--r);background:var(--blanc);font-size:1rem}
+.champ input:focus-visible{outline:3px solid var(--canal);outline-offset:1px;border-color:var(--canal)}
+.champ input[aria-invalid="true"]{border-color:var(--erreur)}
+.champ .err-champ{font-size:.875rem;color:var(--erreur);font-weight:600}
+.champ .err-champ:empty{display:none}
+.deux-champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:0 .75rem}
+.erreur{display:flex;gap:.5rem;align-items:flex-start;margin-top:.75rem;padding:.6rem .75rem;border-radius:var(--r);background:#FBECEA;color:var(--erreur);font-size:.9rem;font-weight:600}
+.erreur:empty{display:none}
+.rgpd{font-size:.8125rem;color:var(--texte-2);margin-top:.25rem}
+.recap{display:grid;gap:0;margin:0}
+.recap div{display:grid;grid-template-columns:1fr auto;gap:0 .75rem;padding:.55rem 0;border-bottom:1px solid var(--trait)}
+.recap dt{font-size:.8125rem;color:var(--texte-2);grid-column:1}
+.recap dd{margin:0;font-weight:600;grid-column:1}
+.recap button{grid-column:2;grid-row:1/3;align-self:center;background:none;border:0;padding:.5rem .25rem;color:var(--canal);font-weight:600;
+  font-size:.875rem;text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
+.fini .ico-ok{width:3rem;height:3rem;color:var(--canal);stroke-width:1.6;margin-bottom:.75rem}
+.fini p{margin-top:.5rem;font-size:.9375rem;color:var(--texte-2)}
+.fini p strong{color:var(--texte)}
+.devis-nav{display:flex;gap:.6rem;padding:1.1rem 1.5rem 1.5rem;margin-top:auto}
+.devis-nav .btn{flex:1}
+.devis-nav .btn-contour{flex:0 0 auto}
+.devis-nav [hidden],.devis-nav[hidden]{display:none}
+
+/* Bandeau de confiance */
+.confiance{background:var(--blanc);border-bottom:1px solid var(--trait)}
+.confiance .wrap{display:grid;padding-block:1.75rem}
+.confiance ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));gap:1.25rem 2rem}
+.confiance li{display:flex;gap:.8rem;align-items:flex-start;line-height:1.35}
+.confiance .ico{width:2rem;height:2rem;color:var(--canal);stroke-width:1.5}
+.confiance strong{display:block;font-weight:760;font-stretch:88%;font-size:1.125rem}
+.confiance span{font-size:.875rem;color:var(--texte-2)}
+/* ordinateur : les engagements laissent la colonne de droite à la carte de visite */
+@media (min-width:64rem){
+  .confiance .wrap{grid-template-columns:minmax(0,1fr) var(--carte);column-gap:4rem;padding-block:2rem}
+  .confiance ul{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* grand écran : les quatre engagements sur une ligne */
+@media (min-width:80rem){ .confiance ul{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5rem} .confiance li{flex-direction:column;gap:.6rem} }
+
+/* Sections */
+.section{padding-block:var(--section)}
+.section-ciment{background:var(--ciment)}
+.entete-section{max-width:46rem;margin-bottom:clamp(2rem,1.5rem + 2vi,3rem)}
+.entete-section h2,.h2{font-size:clamp(1.95rem, 1.3rem + 2.4vi, 3rem)}
+.entete-section p{margin-top:.9rem;color:var(--texte-2);font-size:1.125rem;max-width:58ch}
+
+/* Maison, copropriété, entreprise */
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:2.75rem 2rem}
+.service{display:flex;flex-direction:column}
+.service img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+.service h3{font-size:1.55rem;margin-top:1.25rem}
+.service p{margin-top:.6rem;color:var(--texte-2)}
+.service ul{list-style:none;padding:0;margin-top:1rem;display:grid;gap:.45rem;font-size:.9375rem}
+.service li{display:flex;gap:.55rem;align-items:flex-start}
+.service li .ico{width:1.1rem;height:1.1rem;color:var(--canal);margin-top:.25rem;stroke-width:2.2}
+.a-savoir{margin-top:1.1rem;padding:.9rem 1rem;border-left:3px solid var(--ambre);background:var(--ciment);border-radius:0 var(--r) var(--r) 0;font-size:.9375rem}
+.service .a-savoir{color:var(--texte)}
+.a-savoir small{display:block;margin-top:.35rem;font-size:.8125rem;color:var(--texte-2)}
+
+/* Signature : le choix de la puissance, un disjoncteur par puissance sur un rail DIN.
+   La largeur des modules dit la vérité : 2 modules en monophasé, 4 en triphasé.
+   Le choix et le résultat sont en CSS (:has) ; le script ne fait que préremplir la demande. */
+.puissance{display:grid;grid-template-columns:minmax(0,1fr);gap:2.5rem;align-items:start}
+/* ordinateur : le coffret à gauche, le résultat à droite */
+@media (min-width:60rem){ .puissance{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:2rem 4rem} }
+.puissance .entete-section{margin-bottom:1.75rem}
+.coffret{background:#DDE4E1;border:1px solid var(--trait-2);border-radius:var(--r);padding:1.1rem .6rem 1.1rem;container-type:inline-size;isolation:isolate}
+.rail{border:0;padding:0;min-width:0;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:1px;position:relative}
+.rail legend{font-weight:700;padding:0 0 0 .2rem;margin-bottom:.85rem}
+.dj{grid-column:span 2;position:relative;display:grid;gap:.35rem;cursor:pointer}
+.dj.tri{grid-column:span 4}
+.dj input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;z-index:1}
+/* les modules grandissent avec le coffret (cqi) : proportions d'un vrai disjoncteur */
+.corps{position:relative;display:flex;flex-direction:column;align-items:center;gap:clamp(.5rem,2.5cqi,.9rem);min-height:clamp(7.25rem,36cqi,12rem);padding:.5rem .15rem .6rem;
+  background:#FBFCFB;border:1px solid #7A8884;border-radius:3px;transition:border-color .15s, box-shadow .15s}
+/* le rail DIN, derrière les modules, d'un bord à l'autre du coffret */
+.corps::before{content:"";position:absolute;z-index:-1;inset-inline:-.2rem;top:36%;height:clamp(1.6rem,7cqi,2.6rem);background:#9EAAA6;border-block:1px solid #83908C}
+.dj:first-of-type .corps::before{inset-inline-start:-.6rem}
+.dj:last-of-type .corps::before{inset-inline-end:-.6rem}
+.kw{font-weight:780;font-stretch:80%;font-size:clamp(.8rem,5.2cqi,1.7rem);line-height:1;white-space:nowrap;font-variant-numeric:tabular-nums}
+.fente{position:relative;width:clamp(1.2rem,5cqi,1.9rem);height:clamp(2.9rem,14cqi,5rem);background:#22302F;border-radius:2px;overflow:hidden}
+.tri .fente{width:clamp(3rem,13cqi,5rem)}
+.fente::before{content:"";position:absolute;inset-inline:.15rem;bottom:.15rem;height:calc(50% - .15rem);background:#65736F;border-radius:1px;transition:transform .2s ease-out}
+.voyant{width:clamp(.9rem,4cqi,1.4rem);height:clamp(.4rem,1.6cqi,.6rem);border-radius:1px;background:#BCC5C2;border:1px solid #8E9A96}
+.etiquette{display:block;text-align:center;background:#fff;border:1px solid #9FABA7;border-radius:2px;padding:.2rem 0;
+  font-weight:700;font-stretch:84%;font-size:clamp(.75rem,4.2cqi,1.3rem);white-space:nowrap;font-variant-numeric:tabular-nums}
+.dj:has(input:checked) .corps{border-color:var(--canal);box-shadow:inset 0 0 0 1px var(--canal)}
+.dj:has(input:checked) .fente::before{transform:translateY(calc(-100% - .3rem));background:#E6EBE9}
+.dj:has(input:checked) .voyant{background:var(--ambre);border-color:#B98509;box-shadow:0 0 .6rem rgb(242 182 50 / .8)}
+.dj:has(input:focus-visible) .corps{outline:3px solid var(--canal);outline-offset:2px}
+@media (hover:hover) and (pointer:fine){ .dj:hover .corps{border-color:var(--canal)} }
+/* le regroupement monophasé / triphasé, sous les modules concernés */
+.phases{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:1px;margin-top:.6rem;font-size:.8125rem;color:var(--texte-2)}
+.phases span{grid-column:span 4;border-top:1px solid #7A8884;padding-top:.3rem}
+.phases span+span{grid-column:span 8}
+.base{margin-top:0;font-size:.875rem;color:var(--texte-2);max-width:62ch}
+
+/* Résultat : temps de charge et conditions de la puissance choisie */
+.resultat{background:var(--canal);color:#fff;border-radius:var(--r);padding:clamp(1.5rem,1rem + 2vi,2.5rem)}
+.temps{display:none}
+.puissance:has(#p37:checked) .t37,.puissance:has(#p74:checked) .t74,
+.puissance:has(#p11:checked) .t11,.puissance:has(#p22:checked) .t22{display:block;animation:enclenche .3s ease-out}
+@keyframes enclenche{from{opacity:0;transform:translateY(.35rem)}to{opacity:1;transform:none}}
+.temps .etiq{font-size:.9375rem;color:#BFD3CF}
+.temps strong{display:block;font-weight:800;font-stretch:78%;font-size:clamp(3.6rem, 2.5rem + 5vi, 6rem);line-height:.95;
+  letter-spacing:-.02em;margin-top:.4rem;font-variant-numeric:tabular-nums}
+.temps > p:not(.etiq){margin-top:.6rem;color:#E1ECEA;max-width:36ch}
+.temps dl{margin-top:1.4rem;border-top:1px solid rgb(255 255 255 / .2)}
+.temps dl div{display:grid;grid-template-columns:minmax(0,6.5rem) minmax(0,1fr);gap:.75rem;padding:.65rem 0;border-bottom:1px solid rgb(255 255 255 / .2);font-size:.9375rem}
+.temps dt{font-weight:700;color:#fff}
+.temps dd{margin:0;color:#E1ECEA}
+.resultat .btn{margin-top:1.6rem;white-space:normal;text-align:center;line-height:1.2}
+
+/* De la visite à la première charge : une vraie séquence, d'où les numéros */
+.etapes{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,15rem),1fr));gap:2rem 2.5rem;counter-reset:e}
+.etapes li{counter-increment:e;border-top:2px solid var(--canal);padding-top:1.1rem}
+.etapes li::before{content:counter(e);display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--ambre);color:var(--canal-2);
+  font-weight:800;font-size:1.15rem;margin-bottom:.9rem;font-variant-numeric:tabular-nums}
+.etapes h3{font-size:1.35rem}
+.etapes p{margin-top:.5rem;color:var(--texte-2);font-size:.9875rem}
+
+/* Réalisations */
+.chantiers{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,18rem),1fr));gap:2rem 1.5rem}
+.chantier img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+.chantier h3{font-size:1.3rem;margin-top:.35rem}
+.chantier p{margin-top:.3rem;font-size:.9375rem;color:var(--texte-2);line-height:1.5}
+.chantier .type{display:inline-block;margin-top:.8rem;font-size:.8125rem;font-weight:600;color:var(--canal);background:var(--ambre-pale);border:1px solid #EAD08A;border-radius:4px;padding:.12rem .5rem}
+
+/* L'entreprise */
+.entreprise{display:grid;gap:3rem;align-items:center}
+/* ordinateur : histoire et photos côte à côte */
+@media (min-width:60rem){ .entreprise{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:4.5rem} }
+.entreprise-texte p{margin-top:1rem;max-width:58ch}
+.entreprise-texte .h2{margin-bottom:.25rem}
+.chiffres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--trait-2)}
+.chiffres div{display:flex;flex-direction:column;gap:.2rem}
+.chiffres dt{font-size:.875rem;color:var(--texte-2);order:2;line-height:1.35}
+.chiffres dd{margin:0;font-weight:800;font-stretch:80%;font-size:clamp(1.8rem,1.3rem + 1.6vi,2.5rem);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.avertissement{display:flex;gap:.75rem;margin-top:2rem;padding:1rem 1.1rem;border-radius:var(--r);background:var(--ciment);border:1px solid var(--trait-2);font-size:.9375rem}
+.avertissement .ico{width:1.4rem;height:1.4rem;color:var(--canal);margin-top:.1rem}
+.photos{position:relative}
+.photos figure{margin:0}
+.photos .principale img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+.photos figcaption{font-size:.8125rem;color:var(--texte-2);margin-top:.5rem}
+.photos .seconde{margin-top:1.25rem}
+.photos .seconde img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r)}
+/* dès la tablette : la photo du tableau chevauche celle de l'électricien */
+@media (min-width:40rem){
+  .photos{padding-bottom:5rem}
+  .photos .principale{width:84%;margin-left:auto}
+  .photos .seconde{position:absolute;left:0;bottom:0;width:46%;margin:0}
+  .photos .seconde img{border:6px solid var(--blanc);border-radius:10px}
+  .photos .principale figcaption{padding-left:48%}
+}
+
+/* Zone d'intervention et contact */
+.contact{display:grid;gap:2.5rem;align-items:start}
+/* ordinateur : carte et coordonnées côte à côte */
+@media (min-width:60rem){ .contact{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:4rem} }
+.carte{background:var(--blanc);border-radius:var(--r);padding:clamp(1rem,.5rem + 2vi,2rem)}
+.carte-svg{width:100%;height:auto;overflow:visible}
+.carte-svg .eau{fill:none;stroke:#8FB3AE;stroke-linecap:round;stroke-linejoin:round}
+.carte-svg .deule{stroke-width:6}
+.carte-svg .canal-rx{stroke-width:3.5}
+.carte-svg .eau-nom{font-family:var(--police);font-style:italic;font-size:12.5px;fill:#4E7A74}
+.carte-svg text{paint-order:stroke;stroke:var(--blanc);stroke-width:4px;stroke-linejoin:round}
+.carte-svg .villes circle{fill:var(--canal)}
+.carte-svg .villes text{font-family:var(--police);font-size:13.5px;font-weight:500;fill:var(--canal)}
+.carte-svg .villes text.grande{font-weight:800;font-stretch:88%;font-size:18px}
+.carte-svg .siege rect{fill:var(--ambre);stroke:var(--canal);stroke-width:2.5}
+.carte-svg .siege text{font-family:var(--police);font-weight:760;font-stretch:88%;font-size:14.5px;fill:var(--canal)}
+/* téléphone : noms agrandis, communes secondaires masquées */
+@media (max-width:40rem){
+  .carte-svg .villes text{font-size:18px}
+  .carte-svg .villes text.grande{font-size:22px}
+  .carte-svg .villes .mineure{display:none}
+  .carte-svg .siege text{font-size:18px}
+  .carte-svg .eau-nom{font-size:16px}
+}
+.carte-legende{font-size:.875rem;color:var(--texte-2);margin-top:1rem;display:flex;align-items:center;gap:.5rem}
+.carre-atelier{flex:none;width:.85rem;height:.85rem;border-radius:2px;background:var(--ambre);border:2px solid var(--canal)}
+.communes-t{margin-top:1.75rem;font-weight:700}
+.communes{list-style:none;padding:0;margin-top:1rem;columns:3 9.5rem;column-gap:1.5rem;font-size:.9375rem}
+.communes li{padding:.2rem 0;break-inside:avoid}
+.coord h3{font-size:1.35rem;margin-top:2rem}
+.coord h3:first-child{margin-top:0}
+.coord address{font-style:normal;margin-top:.6rem}
+.tel-grand{display:inline-flex;align-items:center;gap:.6rem;margin-top:.75rem;font-weight:800;font-stretch:84%;font-size:clamp(1.7rem,1.3rem + 1.3vi,2.25rem);
+  letter-spacing:-.01em;text-decoration:none;color:var(--canal);font-variant-numeric:tabular-nums}
+.tel-grand .ico{width:1.6rem;height:1.6rem;color:var(--canal)}
+.tel-grand:hover{text-decoration:underline;text-underline-offset:.15em}
+.horaires{margin-top:.6rem;border-collapse:collapse;width:100%;max-width:26rem;font-size:.9375rem}
+.horaires th,.horaires td{text-align:left;padding:.45rem 0;border-bottom:1px solid var(--trait);font-weight:400}
+.horaires td{text-align:right;font-weight:600;white-space:nowrap}
+.note{margin-top:1rem;font-size:.875rem;color:var(--texte-2);max-width:48ch}
+.coord .btn{margin-top:1.75rem}
+
+/* Pied de page */
+.pied{background:var(--canal);color:#C3D5D1;font-size:.9375rem;padding-block:3.5rem 2rem}
+.pied a{color:#fff}
+.pied-grille{display:grid;gap:2.5rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr))}
+.pied .logo{margin:0}
+.pied .logo-nom{color:#fff}
+.pied .logo-sig{color:#A9C2BD}
+.pied h2{font-size:1.05rem;font-weight:760;color:#fff;letter-spacing:0;margin-bottom:.8rem}
+.pied ul{list-style:none;padding:0;display:grid;gap:.35rem}
+.pied ul a{text-decoration:none}
+.pied ul a:hover{text-decoration:underline;text-underline-offset:.2em}
+.pied address{font-style:normal;margin-top:1.1rem;line-height:1.7}
+.badges{display:flex;flex-wrap:wrap;gap:.5rem}
+.badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgb(255 255 255 / .35);border-radius:4px;padding:.35rem .6rem;color:#fff;font-weight:600;font-size:.875rem}
+.badge .ico{width:1rem;height:1rem;color:var(--ambre)}
+.pied-bas{margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgb(255 255 255 / .16);display:grid;gap:.5rem;font-size:.875rem;color:#A9C2BD}
+
+/* Barre d'appel sous le pouce (téléphone, et téléphone en paysage) : on appelle un
+   électricien plus qu'on ne lui écrit. Elle se range quand la demande de visite est à l'écran. */
+.pouce{display:none}
+@media (max-width:47.99rem),(max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-bottom:5.5rem}
+  .pouce{display:grid;grid-template-columns:auto 1fr;gap:.5rem;position:fixed;inset-inline:0;bottom:0;z-index:25;
+    padding:.6rem var(--gut) calc(.6rem + env(safe-area-inset-bottom));background:var(--blanc);
+    border-top:1px solid var(--trait);box-shadow:0 -10px 24px -14px rgb(10 43 42 / .4);transition:transform .25s ease}
+  .pouce .btn{min-height:2.9rem;padding-inline:1rem;white-space:normal;text-align:center;line-height:1.15}
+  .pouce.range{transform:translateY(110%)}
+  .pied{padding-bottom:calc(6.5rem + env(safe-area-inset-bottom))}
+}
+/* téléphone en paysage : la hauteur manque, l'en-tête défile avec la page
+   et la barre d'appel s'amincit */
+@media (max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-top:1rem}
+  .entete{position:static}
+  .entete .entete-tel{display:none}
+  .hero-media{min-height:0}
+  .hero-texte{padding-block:2.5rem 2rem}
+  .hero h1{font-size:2.2rem;max-width:none}
+  .hero-sous{margin-top:.6rem}
+  .hero-actions,.hero-vignette{margin-top:1rem}
+  .pouce{padding-block:.4rem calc(.4rem + env(safe-area-inset-bottom))}
+  .pouce .btn{min-height:2.6rem}
+}
+/* mouvement réduit : ni défilement doux, ni animation, ni transition */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}

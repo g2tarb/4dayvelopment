@@ -1,0 +1,443 @@
+/* Cabanel Solaire (démo 4dayvelopment), direction « l'entreprise régionale établie ».
+   Palette : bleu cellule #13294A, or occitan #F2B134, ciel #EEF3F8, blanc. Rayon 6 px.
+   Police auto-hébergée (SIL OFL 1.1) : Saira variable, son axe de chasse fait les titres
+   (étroits, comme une fiche technique de panneau) et le texte (chasse normale). */
+@font-face{font-family:"Saira";font-style:normal;font-weight:100 900;font-stretch:50% 125%;font-display:swap;
+  src:url("/fonts/saira-var.woff2") format("woff2")}
+/* repli Arial calé sur la largeur de Saira : la ligne ne saute pas quand la police arrive */
+@font-face{font-family:"Saira repli";src:local("Arial"),local("ArialMT");size-adjust:102.6%}
+:root{
+  --nuit:#13294A;
+  --nuit-2:#0C1D36;
+  --or:#F2B134;
+  --or-2:#DE9C16;
+  --ciel:#EEF3F8;
+  --blanc:#FFFFFF;
+  --texte:#13294A;
+  --texte-2:#4B5B6E;
+  --trait:#D8E0E9;
+  --trait-2:#B7C4D2;
+  --azur:#245FA3;
+  --alu:#8FA2B8;
+  --erreur:#A3281F;
+  --r:6px;
+  --r-grand:12px;
+  --gut:clamp(1rem, 0.4rem + 3vi, 2.5rem);
+  --max:76rem;
+  --carte:27rem;
+  --section:clamp(3.5rem, 2rem + 5vi, 6.5rem);
+  --ombre:0 1px 2px rgb(19 41 74 / .1), 0 22px 44px -14px rgb(19 41 74 / .45);
+  --police:"Saira","Saira repli",system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:5.5rem}
+body{font-family:var(--police);font-size:1.0625rem;line-height:1.6;color:var(--texte);background:var(--blanc);
+  -webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+img{height:auto;background:var(--ciel)}
+a{color:inherit}
+button,input{font:inherit;color:inherit}
+h1,h2,h3{font-stretch:76%;font-weight:720;line-height:1.02;letter-spacing:-.005em;text-wrap:balance}
+p{text-wrap:pretty}
+sup{font-size:.7em;line-height:0}
+:focus-visible{outline:3px solid var(--azur);outline-offset:3px}
+.wrap{width:min(100% - 2*var(--gut), var(--max));margin-inline:auto}
+.visuel-seul{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:1rem;top:-4rem;z-index:50;background:var(--nuit);color:#fff;padding:.7rem 1rem;border-radius:var(--r);font-weight:600}
+.skip:focus{top:1rem}
+.ico{width:1.25rem;height:1.25rem;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* Boutons : l'or porte l'action, texte bleu nuit (contraste 8:1) */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:3rem;padding:.7rem 1.35rem;
+  border-radius:var(--r);border:2px solid transparent;background:var(--or);color:var(--nuit);font-stretch:88%;
+  font-weight:700;font-size:1.0625rem;text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:background-color .15s, border-color .15s, color .15s}
+.btn:hover{background:var(--or-2)}
+.btn:active{transform:translateY(1px)}
+.btn-contour{background:transparent;border-color:currentColor;color:var(--nuit)}
+.btn-contour:hover{background:var(--ciel)}
+.btn-clair{background:transparent;border-color:rgb(255 255 255 / .75);color:#fff}
+.btn-clair:hover{background:rgb(255 255 255 / .12)}
+.lien{color:var(--azur);font-weight:600;text-underline-offset:.2em}
+
+/* Barre supérieure */
+.topbar{background:var(--nuit);color:#DCE5EF;font-size:.875rem}
+.topbar .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.75rem;min-height:2.5rem;padding-block:.35rem}
+.topbar a,.topbar span{display:inline-flex;align-items:center;gap:.45rem;text-decoration:none}
+.topbar a{font-weight:650;color:#fff}
+.topbar a:hover{text-decoration:underline;text-underline-offset:.2em}
+.topbar .ico{width:1rem;height:1rem;color:var(--or)}
+.topbar .zone{margin-left:auto}
+/* téléphone : la zone d’intervention cède la place au numéro et aux horaires */
+@media (max-width:47.99rem){ .topbar .zone{display:none} .topbar .wrap{justify-content:space-between} }
+
+/* En-tête */
+.entete{position:sticky;top:0;z-index:30;background:var(--blanc);border-bottom:1px solid var(--trait)}
+.entete .wrap{display:flex;align-items:center;gap:1rem;min-height:4.75rem}
+.logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;min-width:0;margin-right:auto}
+.logo svg{width:2.9rem;height:2.9rem;flex:none}
+.logo-txt{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+.logo-nom{font-stretch:70%;font-weight:780;font-size:1.45rem;letter-spacing:.005em;white-space:nowrap}
+.logo-sig{font-size:.8125rem;color:var(--texte-2);white-space:nowrap}
+.logo-sig .court{display:none}
+/* sous 26rem : signature raccourcie, elle tient sur une ligne */
+@media (max-width:26rem){ .logo-sig .long{display:none} .logo-sig .court{display:inline} }
+.nav ul{list-style:none;padding:0;display:flex;align-items:center;gap:.25rem}
+.nav a{display:block;white-space:nowrap;padding:.6rem .7rem;border-radius:var(--r);text-decoration:none;font-weight:600;font-size:1rem}
+.nav a:hover{background:var(--ciel)}
+.nav .nav-plus{display:none}
+.entete-tel{display:none}
+.burger{display:none}
+@media (min-width:75rem){ .entete .btn{margin-left:.5rem} }
+/* téléphone : la barre d’appel du bas remplace le bouton d’étude de l’en-tête */
+@media (max-width:47.99rem){ .entete .btn-etude{display:none} }
+/* jusqu’au grand écran : menu replié derrière le bouton burger */
+@media (max-width:74.99rem){
+  .entete .wrap{min-height:4.25rem;gap:.5rem}
+  .entete-tel,.burger{display:inline-grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:var(--r);
+    border:1.5px solid var(--trait-2);background:var(--blanc);color:var(--nuit);cursor:pointer;text-decoration:none}
+  .entete-tel .ico,.burger .ico{width:1.35rem;height:1.35rem}
+  .burger .ico-fermer{display:none}
+  .burger[aria-expanded="true"] .ico-ouvrir{display:none}
+  .burger[aria-expanded="true"] .ico-fermer{display:block}
+  .nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--blanc);border-bottom:1px solid var(--trait);
+    box-shadow:0 24px 32px -24px rgb(19 41 74 / .4);max-height:calc(100dvh - 4.25rem);overflow-y:auto}
+  .nav.ouvert{display:block}
+  .nav ul{flex-direction:column;align-items:stretch;gap:0;padding:.5rem var(--gut) 1.25rem}
+  .nav li{border-bottom:1px solid var(--trait)}
+  .nav a{padding:1rem .25rem;font-size:1.1875rem;font-stretch:84%;font-weight:700;border-radius:0}
+  .nav .nav-plus{display:block;border:0;padding-top:1rem}
+  .nav a.btn{display:flex;width:100%;padding:.85rem 1.35rem;font-size:1.0625rem;border-radius:var(--r)}
+  .nav a.btn:hover{background:var(--or-2)}
+  .nav .nav-info a{display:inline;padding:0;font:inherit;font-weight:700;color:var(--nuit)}
+  .nav .nav-info{color:var(--texte-2);font-size:.9375rem;padding-top:.75rem}
+}
+/* téléphone : l’appel passe par la barre du bas */
+@media (max-width:47.99rem){ .entete .entete-tel,.hero-actions .btn-clair{display:none} }
+/* très petit écran : logo resserré */
+@media (max-width:23rem){
+  .logo-sig{font-size:.75rem} .logo-nom{font-size:1.25rem} .logo{gap:.5rem}
+  .logo svg{width:2.5rem;height:2.5rem}
+  .entete-tel,.burger{width:2.6rem;height:2.6rem}
+}
+
+/* Hero : photo plein cadre, texte à gauche, étude posée à droite et à cheval sur le bandeau */
+.hero{display:grid;background:var(--ciel);
+  grid-template-columns:[full-start] var(--gut) [texte-start carte-start] minmax(0,1fr) [texte-end carte-end] var(--gut) [full-end]}
+.hero-media{grid-column:full;grid-row:1;position:relative;min-height:34rem;background:#4d5f73}
+.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:62% 55%}
+.hero-media::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg, rgb(10 25 46 / .94) 0%, rgb(10 25 46 / .8) 45%, rgb(10 25 46 / .38) 80%, rgb(10 25 46 / .15) 100%)}
+.hero-texte{grid-column:texte;grid-row:1;align-self:end;position:relative;z-index:1;color:#fff;padding-block:8rem 2.5rem}
+.hero h1{font-size:clamp(2.5rem, 1.45rem + 4.2vi, 4.6rem);font-stretch:70%;font-weight:740;line-height:.98;letter-spacing:0;max-width:16ch}
+.hero-sous{margin-top:1.1rem;font-size:clamp(1.0625rem, 1rem + .3vi, 1.2rem);line-height:1.55;max-width:42ch;color:#EAF0F6}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
+.hero-preuve{display:flex;align-items:center;gap:.55rem;margin-top:1.4rem;font-weight:600;color:#fff}
+.hero-preuve .ico{width:1.35rem;height:1.35rem;color:var(--or);stroke-width:2.4}
+.etude{grid-column:carte;grid-row:2;margin-block:1.5rem 0;position:relative;z-index:2}
+/* ordinateur : texte à gauche, étude posée à droite, à cheval sur le bandeau */
+@media (min-width:64rem){
+  .hero{background:none;
+    grid-template-columns:[full-start] minmax(var(--gut),1fr) [texte-start] minmax(0, calc(var(--max) - var(--carte) - 4rem)) [texte-end] 4rem [carte-start] var(--carte) [carte-end] minmax(var(--gut),1fr) [full-end]}
+  .hero-media{min-height:37rem}
+  .hero-media::after{background:linear-gradient(90deg, rgb(10 25 46 / .88) 0%, rgb(10 25 46 / .66) 34%, rgb(10 25 46 / .14) 62%, rgb(10 25 46 / 0) 80%)}
+  .hero-media img{object-position:50% 50%}
+  .hero-texte{align-self:center;padding-block:4rem 6.5rem}
+  .etude{grid-row:1;align-self:end;margin-block:2.5rem -5rem}
+  .tuiles-toit .tuile{min-height:6.25rem}
+}
+
+/* Carte d'étude en plusieurs étapes */
+.etude-carte{display:flex;flex-direction:column;background:var(--blanc);border-radius:var(--r-grand);box-shadow:var(--ombre);border:1px solid rgb(19 41 74 / .1);overflow:hidden}
+/* le bandeau de tête : l'étude a son propre en-tête, comme un bon de commande */
+.etude-tete{padding:1.2rem 1.5rem 1rem;background:var(--nuit);color:#fff}
+.etude-tete h2{font-size:1.6rem;font-stretch:74%}
+.etude-tete p{font-size:.9375rem;color:#C9D6E4;margin-top:.15rem}
+.progression{margin-top:.9rem;display:flex;align-items:center;gap:.75rem;font-size:.8125rem;font-weight:600;color:#C9D6E4}
+.progression-barre{flex:1;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;height:6px}
+/* quatre segments, comme quatre panneaux d'une rangée : chacun s'allume à son étape */
+.progression-barre span{border-radius:2px;background:rgb(255 255 255 / .2);transition:background-color .25s}
+.progression-barre span.fait{background:var(--or)}
+.etape{border:0;padding:1.25rem 1.5rem .25rem;min-width:0}
+.etape[hidden]{display:none}
+.etape legend{float:left;width:100%}
+.etape legend + *{clear:both}
+.etape legend,.etape .titre-etape{font-stretch:84%;font-weight:700;font-size:1.1875rem;padding:0;margin-bottom:.9rem;line-height:1.25}
+.etape legend:focus,.etape .titre-etape:focus{outline:none}
+.tuiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.tuile{position:relative;display:flex;flex-direction:column;justify-content:center;gap:.35rem;min-height:4.4rem;padding:.75rem .85rem;
+  border:1.5px solid var(--trait-2);border-radius:var(--r);background:var(--blanc);cursor:pointer;line-height:1.25;
+  font-weight:600;font-size:.9375rem;transition:border-color .15s, background-color .15s, box-shadow .15s}
+.tuile input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.tuile .ico{width:2rem;height:2rem;color:var(--nuit);stroke-width:1.5}
+.tuile small{display:block;font-weight:400;font-size:.8125rem;color:var(--texte-2)}
+.tuile:hover{border-color:var(--nuit)}
+.tuile:has(input:checked){border-color:var(--nuit);background:#FDF5E3;box-shadow:inset 0 0 0 1px var(--nuit)}
+.tuile:has(input:checked)::after{content:"";position:absolute;top:-.45rem;right:-.45rem;width:1.2rem;height:1.2rem;border-radius:50%;box-shadow:0 0 0 2px var(--blanc);
+  background:var(--nuit) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.2l2.6 2.6L12 5.4' fill='none' stroke='%23F2B134' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.tuile:has(input:focus-visible){outline:3px solid var(--azur);outline-offset:2px}
+.tuiles-texte .tuile{min-height:3.6rem}
+/* orientation : la boussole à gauche du libellé */
+.tuiles-orient .tuile{flex-direction:row;align-items:center;justify-content:flex-start;gap:.7rem;min-height:4.6rem}
+.tuiles-orient .ico{width:2.4rem;height:2.4rem}
+.sous-groupe{border:0;padding:0;margin-top:1.25rem;min-width:0}
+.sous-groupe legend{font-stretch:100%;font-weight:600;font-size:.9375rem;margin-bottom:.6rem}
+.curseur{display:grid;grid-template-columns:1fr auto;align-items:baseline;gap:.25rem 1rem}
+.curseur label{font-weight:600;font-size:.9375rem}
+.curseur output{font-stretch:70%;font-weight:760;font-size:1.75rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.curseur input[type="range"]{grid-column:1/-1;width:100%;accent-color:var(--nuit);height:2.25rem;cursor:pointer}
+.curseur input:disabled{opacity:.4;cursor:not-allowed}
+.curseur .bornes{grid-column:1/-1;display:flex;justify-content:space-between;font-size:.8125rem;color:var(--texte-2);margin-top:-.25rem}
+.curseur .aide{grid-column:1/-1}
+.case{display:flex;align-items:center;gap:.6rem;margin-top:.5rem;min-height:2.75rem;font-size:.9375rem;font-weight:600;cursor:pointer}
+.case input{width:1.25rem;height:1.25rem;accent-color:var(--nuit);flex:none;margin:0}
+.aide{font-size:.8125rem;color:var(--texte-2)}
+.champ{display:grid;gap:.35rem;margin-bottom:.85rem}
+.champ label{font-weight:600;font-size:.9375rem}
+.champ input{width:100%;height:3rem;padding:.6rem .8rem;border:1.5px solid var(--trait-2);border-radius:var(--r);background:var(--blanc);font-size:1rem}
+.champ input:focus-visible{outline:3px solid var(--azur);outline-offset:1px;border-color:var(--nuit)}
+.champ input[aria-invalid="true"]{border-color:var(--erreur)}
+.champ .err-champ{font-size:.875rem;color:var(--erreur);font-weight:600}
+.champ .err-champ:empty{display:none}
+.deux-champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:0 .75rem}
+.erreur{display:flex;gap:.5rem;align-items:flex-start;margin-top:.75rem;padding:.6rem .75rem;border-radius:var(--r);background:#FBEDEB;color:var(--erreur);font-size:.9rem;font-weight:600}
+.erreur:empty{display:none}
+.rgpd{font-size:.8125rem;color:var(--texte-2);margin-top:.25rem}
+.recap{display:grid;margin:0}
+.recap div{display:grid;grid-template-columns:1fr auto;gap:0 .75rem;padding:.55rem 0;border-bottom:1px solid var(--trait)}
+.recap dt{font-size:.8125rem;color:var(--texte-2);grid-column:1}
+.recap dd{margin:0;font-weight:600;grid-column:1}
+.recap button{grid-column:2;grid-row:1/3;align-self:center;background:none;border:0;padding:.5rem .25rem;min-height:2.75rem;color:var(--azur);font-weight:600;
+  font-size:.875rem;text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
+.fini .ico-ok{width:3rem;height:3rem;color:var(--nuit);stroke-width:1.6;margin-bottom:.75rem}
+.fini .ico-ok circle{fill:var(--or);stroke:var(--or)}
+.fini p{margin-top:.5rem;font-size:.9375rem;color:var(--texte-2)}
+.fini p strong{color:var(--texte)}
+.etude-nav{display:flex;gap:.6rem;padding:1.1rem 1.5rem 1.5rem;margin-top:auto}
+.etude-nav .btn{flex:1}
+.etude-nav .btn-contour{flex:0 0 auto}
+.etude-nav [hidden],.etude-nav[hidden]{display:none}
+
+/* Bandeau de confiance */
+.confiance{background:var(--blanc);border-bottom:1px solid var(--trait)}
+.confiance .wrap{display:grid;padding-block:1.75rem}
+.confiance ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));gap:1.25rem 2rem}
+.confiance li{display:flex;gap:.8rem;align-items:flex-start;line-height:1.35}
+.confiance .ico{width:2.1rem;height:2.1rem;color:var(--nuit);stroke-width:1.5}
+.confiance strong{display:block;font-stretch:84%;font-weight:700;font-size:1.0625rem}
+.confiance span{font-size:.875rem;color:var(--texte-2)}
+/* ordinateur : les engagements laissent la colonne de droite à la carte d'étude */
+@media (min-width:64rem){
+  .confiance .wrap{grid-template-columns:minmax(0,1fr) var(--carte);column-gap:4rem;padding-block:2rem}
+  .confiance ul{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* grand écran : les quatre engagements sur une ligne */
+@media (min-width:80rem){ .confiance ul{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5rem} .confiance li{flex-direction:column;gap:.6rem} }
+
+/* Sections */
+.section{padding-block:var(--section)}
+.section-ciel{background:var(--ciel)}
+.entete-section{max-width:46rem;margin-bottom:clamp(2rem,1.5rem + 2vi,3rem)}
+.entete-section h2,.h2{font-size:clamp(2rem, 1.35rem + 2.6vi, 3.1rem)}
+.entete-section p{margin-top:.9rem;color:var(--texte-2);font-size:1.125rem;max-width:58ch}
+
+/* Installations */
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:2.5rem 2rem}
+.service img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+.service h3{font-size:1.55rem;margin-top:1.25rem}
+.service p{margin-top:.6rem;color:var(--texte-2)}
+.service ul{list-style:none;padding:0;margin-top:1rem;display:grid;gap:.45rem;font-size:.9375rem}
+.service li{display:flex;gap:.55rem;align-items:flex-start}
+.service li .ico{width:1.1rem;height:1.1rem;color:var(--azur);margin-top:.25rem;stroke-width:2.4}
+
+/* Signature : les démarches dans l'ordre, montées sur un rail. Chaque étape est un
+   <details> natif (lisible sans JS) ; name="demarche" n'en garde qu'une ouverte. */
+.dossier{background:var(--nuit);color:#E3EAF2}
+.dossier .wrap{display:grid;gap:2rem}
+.dossier .entete-section{margin-bottom:0}
+.dossier .entete-section p{color:#BCC9D8}
+.dossier .note{max-width:48ch;font-size:.875rem;color:#A9B8C9}
+.dossier .note small{display:block;margin-top:.4rem;font-size:.8125rem}
+.dossier .btn{margin-top:1.5rem}
+.rail{list-style:none;padding:0;position:relative;counter-reset:etape}
+/* le rail : une ligne d'aluminium continue derrière les pattes numérotées */
+.rail::before{content:"";position:absolute;inset-block:.75rem;inset-inline-start:calc(1.3rem - 2px);inline-size:4px;border-radius:2px;
+  background:linear-gradient(90deg,#6F849B,#A9B9CA 50%,#6F849B)}
+.rail li{counter-increment:etape;position:relative}
+.rail summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:2.6rem 1fr 1.5rem;gap:.1rem 1rem;
+  align-items:start;padding-block:.85rem;min-height:2.75rem;border-radius:var(--r)}
+.rail summary::-webkit-details-marker{display:none}
+/* la patte de fixation : le numéro serré sur le rail */
+.rail summary::before{content:counter(etape);grid-row:span 2;display:grid;place-items:center;block-size:2.6rem;
+  background:var(--nuit);border:2px solid var(--alu);border-radius:4px;font-stretch:62%;font-weight:800;font-size:1.4rem;
+  font-variant-numeric:tabular-nums;color:#fff;transition:background-color .2s,border-color .2s,color .2s}
+.rail summary::after{content:"+";grid-column:3;grid-row:1;font-size:1.5rem;line-height:1.1;color:#A9B8C9;text-align:center}
+.rail details[open] summary::after{content:"\2212"}
+.rail details[open] summary::before{background:var(--or);border-color:var(--or);color:var(--nuit)}
+.rail h3{font-size:1.35rem;font-stretch:80%;font-weight:700;line-height:1.2;grid-column:2}
+.rail .qui{grid-column:2 / span 2;font-size:.9375rem;color:#A9B8C9}
+.rail summary:hover h3{text-decoration:underline;text-decoration-color:var(--alu);text-underline-offset:.2em}
+.rail summary:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+.rail .dedans{padding:0 0 1.25rem 3.6rem;max-width:calc(62ch + 3.6rem)}
+.rail .dedans p + p{margin-top:.6rem}
+.rail .dedans b{color:#fff;font-weight:650}
+.rail .dedans small{display:block;color:#A9B8C9;margin-top:.6rem;font-size:.8125rem}
+/* le seul mouvement de la page : la patte se serre, le détail s'ouvre */
+@media (prefers-reduced-motion:no-preference){ .rail details[open] .dedans{animation:serre .28s ease-out} }
+@keyframes serre{from{opacity:0;transform:translateY(-.35rem)}to{opacity:1;transform:none}}
+/* ordinateur : l'explication et la note à gauche, le rail à droite */
+@media (min-width:60rem){
+  .dossier .wrap{grid-template-columns:minmax(0,1fr) minmax(0,1.45fr);grid-template-rows:auto 1fr;gap:1.75rem 4rem;align-items:start}
+  .dossier .intro{grid-column:1;grid-row:1}
+  .dossier .rail{grid-column:2;grid-row:1 / span 2}
+  .dossier .note{grid-column:1;grid-row:2}
+}
+
+/* La visite technique */
+.visite{display:grid;gap:clamp(2rem,1rem + 3vi,4rem)}
+.visite figure{margin:0}
+.visite img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r)}
+.visite figcaption{font-size:.8125rem;color:var(--texte-2);margin-top:.5rem}
+.visite dl{margin-top:1.5rem;display:grid;gap:1.1rem;max-width:60ch}
+.visite dl div{padding-left:1rem;border-left:3px solid var(--or)}
+.visite dt{font-weight:700;font-stretch:88%;font-size:1.125rem}
+.visite dd{margin:0;color:var(--texte-2)}
+/* ce qu'on ne promet pas : un encadré net, pas une promesse */
+.franc{margin-top:2.25rem;padding:1.4rem 1.5rem;border-radius:var(--r);background:var(--blanc);border:1.5px solid var(--nuit)}
+.franc h3{font-size:1.4rem}
+.franc p{margin-top:.7rem;max-width:60ch}
+/* ordinateur : photo collée en haut, liste qui défile à côté */
+@media (min-width:60rem){
+  .visite{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);align-items:start}
+  .visite figure{position:sticky;top:7rem}
+}
+
+/* Réalisations */
+.chantiers{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16rem),1fr));gap:2rem 1.5rem}
+.chantier img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+.chantier .type{display:inline-block;margin-top:.8rem;font-size:.8125rem;font-weight:650;color:var(--nuit);background:#FCEFD0;border-radius:4px;padding:.12rem .5rem}
+.chantier h3{font-size:1.35rem;margin-top:.45rem}
+.chantier p{margin-top:.3rem;font-size:.9375rem;color:var(--texte-2);line-height:1.5}
+
+/* L'entreprise */
+.entreprise{display:grid;gap:3rem;align-items:center}
+@media (min-width:60rem){ .entreprise{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:4.5rem} }
+.entreprise-texte p{margin-top:1rem;max-width:60ch}
+.chiffres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--trait-2)}
+.chiffres div{display:flex;flex-direction:column;gap:.25rem}
+.chiffres dt{font-size:.875rem;color:var(--texte-2);order:2;line-height:1.35}
+.chiffres dd{margin:0;font-stretch:66%;font-weight:760;font-size:clamp(2rem,1.5rem + 1.8vi,2.8rem);line-height:1;font-variant-numeric:tabular-nums}
+.avertissement{display:flex;gap:.75rem;margin-top:2rem;padding:1rem 1.1rem;border-radius:var(--r);background:var(--blanc);border:1px solid var(--trait-2);font-size:.9375rem;font-weight:600}
+.avertissement .ico{width:1.4rem;height:1.4rem;color:var(--azur);margin-top:.1rem}
+.photos{position:relative;margin:0}
+.photos figure{margin:0}
+.photos .principale img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 30%;border-radius:var(--r)}
+.photos figcaption{font-size:.8125rem;color:var(--texte-2);margin-top:.5rem}
+.photos .seconde{margin-top:1.25rem}
+.photos .seconde img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r)}
+/* dès la tablette : le portrait du poseur à droite, l'utilitaire posé en travers */
+@media (min-width:40rem){
+  .photos{padding-bottom:3rem}
+  .photos .principale{width:68%;margin-left:auto}
+  .photos .principale img{aspect-ratio:4/5}
+  .photos .seconde{position:absolute;left:0;bottom:0;width:52%;margin:0}
+  .photos .seconde img{border:6px solid var(--ciel);border-radius:12px}
+  .photos .principale figcaption{padding-left:31%}
+}
+
+/* Zone d'intervention et contact */
+.contact{display:grid;gap:2.5rem;align-items:start}
+@media (min-width:60rem){ .contact{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:4rem} }
+.carte{background:var(--ciel);border-radius:var(--r);padding:clamp(.75rem,.4rem + 1.5vi,1.5rem);overflow:hidden}
+.carte-svg{width:100%;height:auto;overflow:visible}
+.carte-svg .mer{fill:#CFE0EE}
+.carte-svg .cote{fill:none;stroke:#8FB0CB;stroke-width:2}
+.carte-svg .mer-nom{font-family:var(--police);font-style:italic;font-size:15px;fill:#4F7394;letter-spacing:.06em}
+.carte-svg .riv{fill:none;stroke:#8FB0CB;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.carte-svg .canal{fill:none;stroke:#6C8B5B;stroke-width:2.5;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round}
+.carte-svg .riv-nom{font-family:var(--police);font-style:italic;font-size:13px;fill:#4F7394}
+.carte-svg .canal-nom{font-family:var(--police);font-style:italic;font-size:13px;fill:#4E6B40}
+.carte-svg .villes circle{fill:var(--nuit)}
+.carte-svg text{paint-order:stroke;stroke:var(--ciel);stroke-width:4px;stroke-linejoin:round}
+.carte-svg .villes text{font-family:var(--police);font-size:14px;font-weight:500;fill:var(--nuit)}
+.carte-svg .siege rect{fill:var(--or);stroke:var(--nuit);stroke-width:2.5}
+.carte-svg .siege text{font-family:var(--police);font-stretch:74%;font-weight:760;font-size:22px;fill:var(--nuit)}
+/* téléphone : noms agrandis, communes secondaires masquées */
+@media (max-width:40rem){
+  .carte-svg .villes text{font-size:19px}
+  .carte-svg .villes .mineure{display:none}
+  .carte-svg .siege text{font-size:26px}
+  .carte-svg .riv-nom,.carte-svg .canal-nom,.carte-svg .mer-nom{font-size:17px}
+}
+.carte-legende{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;font-size:.875rem;color:var(--texte-2);margin-top:1rem}
+.carte-legende span{display:inline-flex;align-items:center;gap:.45rem}
+.carte-legende i{display:inline-block;flex:none}
+.carre-atelier{width:.8rem;height:.8rem;border-radius:2px;background:var(--or);box-shadow:inset 0 0 0 2px var(--nuit)}
+.trait-canal{width:1.4rem;height:0;border-top:2.5px dashed #6C8B5B}
+.communes-t{margin-top:1.75rem;font-weight:700;font-stretch:88%;font-size:1.125rem}
+.communes{list-style:none;padding:0;margin-top:.9rem;columns:3 9.5rem;column-gap:1.5rem;font-size:.9375rem}
+.communes li{padding:.2rem 0;break-inside:avoid}
+.coord h3{font-size:1.45rem;margin-top:2rem}
+.coord h3:first-child{margin-top:0}
+.coord address{font-style:normal;margin-top:.6rem}
+.tel-grand{display:inline-flex;align-items:center;gap:.6rem;margin-top:.75rem;font-stretch:70%;font-weight:780;font-size:clamp(1.9rem,1.5rem + 1.5vi,2.5rem);
+  text-decoration:none;color:var(--nuit);font-variant-numeric:tabular-nums}
+.tel-grand .ico{width:1.6rem;height:1.6rem;color:var(--azur)}
+.tel-grand:hover{text-decoration:underline;text-underline-offset:.15em}
+.horaires{margin-top:.6rem;border-collapse:collapse;width:100%;max-width:26rem;font-size:.9375rem}
+.horaires th,.horaires td{text-align:left;padding:.45rem 0;border-bottom:1px solid var(--trait);font-weight:400}
+.horaires td{text-align:right;font-weight:650}
+.petit{margin-top:1rem;font-size:.875rem;color:var(--texte-2);max-width:60ch}
+.coord .btn{margin-top:1.75rem}
+
+/* Pied de page */
+.pied{background:var(--nuit-2);color:#C3D0DE;font-size:.9375rem;padding-block:3.5rem 2rem}
+.pied a{color:#fff}
+.pied-grille{display:grid;gap:2.5rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr))}
+.pied .logo{margin:0}
+.pied .logo-nom{color:#fff}
+.pied .logo-sig{color:#A9B8C9}
+.pied h2{font-stretch:84%;font-size:1.0625rem;font-weight:700;color:#fff;margin-bottom:.8rem}
+.pied ul{list-style:none;padding:0;display:grid;gap:.35rem}
+.pied ul a{text-decoration:none}
+.pied ul a:hover{text-decoration:underline;text-underline-offset:.2em}
+.pied address{font-style:normal;margin-top:1.1rem;line-height:1.7}
+.badges{display:flex;flex-wrap:wrap;gap:.5rem}
+.badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgb(255 255 255 / .35);border-radius:4px;padding:.35rem .6rem;color:#fff;font-weight:600;font-size:.875rem}
+.badge .ico{width:1rem;height:1rem;color:var(--or)}
+.pied-bas{margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgb(255 255 255 / .16);display:grid;gap:.5rem;font-size:.875rem;color:#A9B8C9}
+
+/* Barre d'appel sous le pouce (téléphone, et téléphone en paysage) : on appelle un
+   installateur plus qu'on ne lui écrit. Elle se range quand l'étude est à l'écran. */
+.pouce{display:none}
+@media (max-width:47.99rem),(max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-bottom:5.5rem}
+  .pouce{display:grid;grid-template-columns:1fr 1.3fr;gap:.5rem;position:fixed;inset-inline:0;bottom:0;z-index:25;
+    padding:.6rem var(--gut) calc(.6rem + env(safe-area-inset-bottom));background:var(--blanc);
+    border-top:1px solid var(--trait);box-shadow:0 -10px 24px -14px rgb(19 41 74 / .4);transition:transform .25s ease}
+  .pouce .btn{min-height:2.9rem;padding-inline:1rem}
+  .pouce.range{transform:translateY(110%)}
+  .pied{padding-bottom:calc(6.5rem + env(safe-area-inset-bottom))}
+}
+
+/* téléphone en paysage : la hauteur manque, l'en-tête défile avec la page
+   et la barre d'appel s'amincit */
+@media (max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-top:1rem}
+  .entete{position:static}
+  .entete .entete-tel{display:none}
+  .hero-texte{padding-block:2.5rem 2rem}
+  .hero h1{font-size:2.3rem;max-width:22ch}
+  .hero-sous{font-size:1rem;max-width:60ch}
+  .hero-media{min-height:24rem}
+  .pouce{padding-block:.4rem calc(.4rem + env(safe-area-inset-bottom))}
+  .pouce .btn{min-height:2.6rem}
+}
+
+/* mouvement réduit : ni défilement doux ni transition */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}

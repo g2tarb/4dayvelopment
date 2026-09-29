@@ -1,0 +1,431 @@
+/* Chariot (démo 4dayvelopment), studio de Pilates sur reformer, Paris 11e.
+   Direction « l’entreprise établie », identité d’atelier : bleu de travail des ébénistes
+   du faubourg, encre, hêtre des machines, murs blanchis. Rayon 6 px.
+   Police auto-hébergée (SIL OFL 1.1) : Encode Sans variable, graisse 100-900 et chasse 75-125 %.
+   Titres en chasse étroite, nom de la marque en chasse large (le chariot sorti sur ses rails). */
+@font-face{font-family:"Encode Sans";font-style:normal;font-weight:100 900;font-stretch:75% 125%;font-display:swap;
+  src:url("/fonts/encode-sans-var.woff2") format("woff2")}
+:root{
+  --encre:#16213A;     /* texte, barre du haut, pied de page */
+  --encre-2:#0F1830;
+  --bleu:#1F3F8E;      /* bleu de travail : boutons, choix, marque */
+  --bleu-2:#172F6C;
+  --bleu-pale:#E9EEF8; /* fond d’un choix coché */
+  --hetre:#C68A4B;     /* le bois des machines : filets, prix sur fond encre */
+  --hetre-clair:#E2B380;
+  --chaux:#F2F3F0;     /* sections alternées : murs blanchis de l’atelier */
+  --blanc:#FFFFFF;
+  --acier:#525C72;     /* texte secondaire (6,4:1 sur blanc) */
+  --trait:#D8DBE1;
+  --champ:#7A8296;     /* bord des champs et des tuiles (3,8:1) */
+  --erreur:#A3281F;
+  --r:6px;
+  --gut:clamp(1rem, .4rem + 3vi, 2.5rem);
+  --max:76rem;
+  --carte:26.5rem;
+  --section:clamp(3.5rem, 2rem + 5vi, 6.5rem);
+  --ombre:0 1px 2px rgb(22 33 58 / .1), 0 22px 44px -14px rgb(22 33 58 / .45);
+  --police:"Encode Sans",system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth;scroll-padding-top:5.5rem}
+body{font-family:var(--police);font-stretch:100%;font-size:1.0625rem;line-height:1.6;color:var(--encre);background:var(--blanc);
+  -webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{font-stretch:78%;font-weight:800;line-height:1.02;letter-spacing:-.01em;text-wrap:balance}
+p{text-wrap:pretty}
+sup{font-size:.62em;line-height:0;vertical-align:.6em}
+:focus-visible{outline:3px solid var(--bleu);outline-offset:3px}
+.wrap{width:min(100% - 2*var(--gut), var(--max));margin-inline:auto}
+.visuel-seul{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;left:1rem;top:-4rem;z-index:50;background:var(--bleu);color:#fff;padding:.7rem 1rem;border-radius:var(--r);font-weight:650}
+.skip:focus{top:1rem}
+.ico{width:1.25rem;height:1.25rem;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+
+/* Boutons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-height:3rem;padding:.75rem 1.35rem;
+  border-radius:var(--r);border:2px solid transparent;background:var(--bleu);color:#fff;font-stretch:92%;
+  font-weight:700;font-size:1rem;text-decoration:none;cursor:pointer;white-space:nowrap;
+  transition:background-color .15s, border-color .15s, color .15s}
+.btn:hover{background:var(--bleu-2)}
+.btn:active{transform:translateY(1px)}
+.btn-contour{background:transparent;border-color:currentColor;color:var(--encre)}
+.btn-contour:hover{background:var(--chaux)}
+.btn-clair{background:transparent;border-color:rgb(255 255 255 / .75);color:#fff}
+.btn-clair:hover{background:rgb(255 255 255 / .12)}
+
+/* Barre supérieure : adresse, métro, cours d’essai, téléphone */
+.topbar{background:var(--encre);color:#DDE3EE;font-size:.875rem}
+.topbar .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.75rem;min-height:2.5rem;padding-block:.35rem}
+.topbar .wrap > a,.topbar .wrap > span{display:inline-flex;align-items:center;gap:.45rem;text-decoration:none}
+.topbar a{font-weight:650;color:#fff}
+.topbar a:hover{text-decoration:underline;text-underline-offset:.2em}
+.topbar .ico{width:1rem;height:1rem;color:var(--hetre-clair)}
+.topbar .essai-lien{margin-left:auto}
+.topbar .court{display:none}
+.topbar .court-xs{display:none}
+/* très petit écran : le prix de l’essai en version courte, tout tient sur une ligne */
+@media (max-width:23rem){ .topbar .long-xs{display:none} .topbar .court-xs{display:inline} }
+/* téléphone : l’adresse et le téléphone cèdent la place au métro et au prix de l’essai */
+@media (max-width:47.99rem){
+  .topbar .wrap > .adresse,.topbar .wrap > .tel-haut{display:none}
+  .topbar .wrap{justify-content:space-between;gap:.35rem 1rem}
+  .topbar .long{display:none} .topbar .court{display:inline}
+}
+
+/* En-tête */
+.entete{position:sticky;top:0;z-index:30;background:var(--blanc);border-bottom:1px solid var(--trait)}
+.entete .wrap{display:flex;align-items:center;gap:1rem;min-height:4.75rem}
+.logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;min-width:0;margin-right:auto}
+.logo svg{width:2.9rem;height:2.9rem;flex:none}
+.logo-txt{display:flex;flex-direction:column;line-height:1.1;min-width:0}
+.logo-nom{font-stretch:125%;font-weight:760;font-size:1.3rem;letter-spacing:.01em;white-space:nowrap;color:var(--bleu)}
+.logo-sig{font-size:.8125rem;color:var(--acier);white-space:nowrap;margin-top:.1rem}
+.nav ul{list-style:none;padding:0;display:flex;align-items:center;gap:.25rem}
+.nav a{display:block;white-space:nowrap;padding:.6rem .7rem;border-radius:var(--r);text-decoration:none;font-weight:650;font-size:.975rem;font-stretch:94%}
+.nav a:hover{background:var(--chaux)}
+.nav .nav-plus{display:none}
+.entete-tel{display:none}
+.burger{display:none}
+@media (min-width:75rem){ .entete .btn{margin-left:.5rem} }
+/* téléphone : la barre du bas remplace le bouton de réservation de l’en-tête */
+@media (max-width:47.99rem){ .entete .btn-essai{display:none} }
+/* jusqu’au grand écran : menu replié derrière le bouton burger */
+@media (max-width:74.99rem){
+  .entete .wrap{min-height:4.25rem;gap:.5rem}
+  .entete-tel,.burger{display:inline-grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:var(--r);
+    border:1.5px solid var(--trait);background:var(--blanc);color:var(--encre);cursor:pointer;text-decoration:none}
+  .entete-tel .ico,.burger .ico{width:1.35rem;height:1.35rem}
+  .burger .ico-fermer{display:none}
+  .burger[aria-expanded="true"] .ico-ouvrir{display:none}
+  .burger[aria-expanded="true"] .ico-fermer{display:block}
+  .nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--blanc);border-bottom:1px solid var(--trait);
+    box-shadow:0 24px 32px -24px rgb(22 33 58 / .4);max-height:calc(100dvh - 4.25rem);overflow-y:auto}
+  .nav.ouvert{display:block}
+  .nav ul{flex-direction:column;align-items:stretch;gap:0;padding:.5rem var(--gut) 1.25rem}
+  .nav li{border-bottom:1px solid var(--trait)}
+  .nav a{padding:1rem .25rem;font-size:1.25rem;font-stretch:82%;font-weight:750;border-radius:0}
+  .nav .nav-plus{display:block;border:0;padding-top:1rem}
+  .nav a.btn{display:flex;width:100%;padding:.85rem 1.35rem;font-size:1.0625rem;font-stretch:92%;border-radius:var(--r)}
+  .nav a.btn:hover{background:var(--bleu-2)}
+  .nav .nav-info{color:var(--acier);font-size:.9375rem;padding-top:.75rem}
+  .nav .nav-info a{display:inline;padding:0;font:inherit;font-weight:700;color:var(--encre)}
+}
+/* téléphone : l’appel passe par la barre du bas */
+@media (max-width:47.99rem){ .entete .entete-tel{display:none} }
+/* très petit écran : logo resserré */
+@media (max-width:23rem){
+  .logo-sig{font-size:.75rem} .logo-nom{font-size:1.125rem} .logo{gap:.5rem}
+  .logo svg{width:2.5rem;height:2.5rem}
+  .burger{width:2.6rem;height:2.6rem}
+}
+
+/* Hero : la salle plein cadre, texte à gauche, réservation posée à droite */
+.hero{display:grid;background:var(--chaux);
+  grid-template-columns:[full-start] var(--gut) [texte-start carte-start] minmax(0,1fr) [texte-end carte-end] var(--gut) [full-end]}
+.hero-media{grid-column:full;grid-row:1;position:relative;min-height:34rem;background:#2A2723}
+.hero-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:46% 78%}
+.hero-media::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(0deg, rgb(15 24 48 / .94) 0%, rgb(15 24 48 / .8) 45%, rgb(15 24 48 / .38) 80%, rgb(15 24 48 / .18) 100%)}
+.hero-texte{grid-column:texte;grid-row:1;align-self:end;position:relative;z-index:1;color:#fff;padding-block:8rem 2.5rem}
+.hero h1{font-size:clamp(2.6rem, 1.6rem + 4vi, 4.6rem);font-stretch:75%;font-weight:820;letter-spacing:-.005em;line-height:.98;max-width:12ch}
+.hero-sous{margin-top:1.1rem;font-size:clamp(1.0625rem, 1rem + .3vi, 1.2rem);line-height:1.55;max-width:40ch;color:#E9EDF4}
+.hero-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.75rem}
+.hero-vignette{display:flex;align-items:center;gap:.9rem;margin:1.75rem 0 0;max-width:30rem}
+.hero-vignette img{flex:none;width:6.5rem;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r);border:2px solid rgb(255 255 255 / .9)}
+.hero-vignette figcaption{font-size:.9375rem;line-height:1.45;color:#D9E0EA}
+.hero-vignette strong{display:flex;align-items:center;gap:.4rem;color:#fff;font-weight:700;font-size:1rem}
+.hero-vignette strong .ico{width:1.1rem;height:1.1rem;color:var(--hetre-clair);stroke-width:2.2}
+.essai{grid-column:carte;grid-row:2;margin-block:1.5rem 0;position:relative;z-index:2}
+/* ordinateur : texte à gauche, réservation à droite, à cheval sur le bandeau */
+@media (min-width:64rem){
+  .hero{background:none;
+    grid-template-columns:[full-start] minmax(var(--gut),1fr) [texte-start] minmax(0, calc(var(--max) - var(--carte) - 4rem)) [texte-end] 4rem [carte-start] var(--carte) [carte-end] minmax(var(--gut),1fr) [full-end]}
+  .hero-media{min-height:37rem}
+  .hero-media::after{background:linear-gradient(90deg, rgb(15 24 48 / .9) 0%, rgb(15 24 48 / .66) 36%, rgb(15 24 48 / .16) 64%, rgb(15 24 48 / .04) 80%)}
+  .hero-media img{object-position:50% 62%}
+  .hero-texte{align-self:center;padding-block:4rem 6.5rem}
+  .essai{grid-row:1;align-self:end;margin-block:2.5rem -5.5rem}
+}
+
+/* L’intensité d’un cours, en ressorts : le nombre compte, pas la couleur */
+.tension{display:inline-flex;align-items:center;gap:.2rem;font-size:.8125rem;font-weight:600;color:var(--acier);white-space:nowrap}
+.tension i{width:1.3rem;height:.6rem;background:currentColor;opacity:.25;
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 8'%3E%3Cpath d='M0 4h4l2-3 3 6 3-6 3 6 3-6 2 3h6' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 8'%3E%3Cpath d='M0 4h4l2-3 3 6 3-6 3 6 3-6 2 3h6' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.t1 i:nth-child(-n+1),.t2 i:nth-child(-n+2),.t3 i{opacity:1;color:var(--bleu)}
+.tension i:last-of-type{margin-right:.3rem}
+
+/* Carte de réservation du cours d’essai, en étapes */
+.essai-carte{display:flex;flex-direction:column;background:var(--blanc);border-radius:var(--r);box-shadow:var(--ombre);border:1px solid rgb(22 33 58 / .08)}
+.essai-tete{padding:1.4rem 1.5rem 0}
+.essai-tete h2{font-size:1.65rem;font-stretch:80%}
+.essai-tete p{font-size:.9375rem;color:var(--acier);margin-top:.25rem}
+.progression{margin-top:1.1rem;display:flex;align-items:center;gap:.75rem;font-size:.8125rem;font-weight:650;color:var(--acier)}
+.progression-barre{flex:1;height:6px;border-radius:3px;background:#E4E7EC;overflow:hidden}
+.progression-barre span{display:block;height:100%;width:100%;background:var(--bleu);border-radius:3px;transform-origin:left;transform:scaleX(.25);transition:transform .3s ease}
+.etape{border:0;padding:1.25rem 1.5rem .25rem;min-width:0}
+.etape[hidden]{display:none}
+.etape legend{float:left;width:100%}
+.etape legend + *{clear:both}
+.etape legend,.etape .titre-etape{font-stretch:88%;font-weight:750;font-size:1.15rem;padding:0;margin-bottom:.9rem;line-height:1.25}
+.etape legend:focus,.etape .titre-etape:focus{outline:none}
+.tuiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+.tuiles-jours{grid-template-columns:repeat(3,minmax(0,1fr))}
+.tuiles-liste{grid-template-columns:1fr}
+.tuile{position:relative;display:flex;flex-direction:column;justify-content:center;gap:.3rem;min-height:4.2rem;padding:.75rem .85rem;
+  border:1.5px solid var(--champ);border-radius:var(--r);background:var(--blanc);cursor:pointer;line-height:1.25;
+  font-weight:650;font-size:.9375rem;transition:border-color .15s, background-color .15s, box-shadow .15s}
+.tuile input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer;width:100%;height:100%}
+.tuile small{display:block;font-weight:400;font-size:.8125rem;color:var(--acier)}
+.tuile:hover{border-color:var(--encre)}
+.tuile:has(input:checked){border-color:var(--bleu);background:var(--bleu-pale);box-shadow:inset 0 0 0 1px var(--bleu)}
+.tuile:has(input:checked)::after{content:"";position:absolute;top:-.45rem;right:-.45rem;width:1.2rem;height:1.2rem;border-radius:50%;box-shadow:0 0 0 2px var(--blanc);
+  background:var(--bleu) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.2l2.6 2.6L12 5.4' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
+.tuile:has(input:focus-visible){outline:3px solid var(--bleu);outline-offset:2px}
+.tuiles-jours .tuile{align-items:center;text-align:center;min-height:4.4rem;font-stretch:90%;font-size:1rem}
+/* un créneau : l’heure en grand, le cours, le professeur et l’intensité */
+.tuile-cours{display:grid;grid-template-columns:4.1rem minmax(0,1fr);align-items:center;gap:.1rem .75rem;min-height:4.4rem}
+.tuile-cours .heure{grid-row:span 3;font-stretch:78%;font-weight:760;font-size:1.3rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tuile-cours .tension{margin-top:.1rem}
+.note-etape{font-size:.8125rem;color:var(--acier);margin-top:.7rem}
+.champ{display:grid;gap:.35rem;margin-bottom:.85rem}
+.champ label{font-weight:650;font-size:.9375rem}
+.champ label small{font-weight:400;color:var(--acier)}
+.champ input,.champ textarea{width:100%;min-height:3rem;padding:.6rem .8rem;border:1.5px solid var(--champ);border-radius:var(--r);background:var(--blanc);font-size:1rem}
+.champ textarea{min-height:4.5rem;resize:vertical;line-height:1.45}
+.champ input:focus-visible,.champ textarea:focus-visible{outline:3px solid var(--bleu);outline-offset:1px;border-color:var(--encre)}
+.champ input[aria-invalid="true"]{border-color:var(--erreur)}
+.champ .err-champ{font-size:.875rem;color:var(--erreur);font-weight:650}
+.champ .err-champ:empty{display:none}
+.sous-champ{margin-top:1rem;margin-bottom:0}
+.erreur{margin-top:.75rem;padding:.6rem .75rem;border-radius:var(--r);background:#FBEDEB;color:var(--erreur);font-size:.9rem;font-weight:650}
+.erreur:empty{display:none}
+.rgpd{font-size:.8125rem;color:var(--acier);margin-top:.25rem}
+.recap{display:grid;margin:0}
+.recap div{display:grid;grid-template-columns:1fr auto;gap:0 .75rem;padding:.6rem 0;border-bottom:1px solid var(--trait)}
+.recap dt{font-size:.8125rem;color:var(--acier);grid-column:1}
+.recap dd{margin:0;font-weight:650;grid-column:1}
+.recap button{grid-column:2;grid-row:1/3;align-self:center;background:none;border:0;padding:.5rem .25rem;color:var(--bleu);font-weight:650;
+  font-size:.875rem;text-decoration:underline;text-underline-offset:.2em;cursor:pointer}
+.recap-prix{display:flex;justify-content:space-between;align-items:baseline;padding-top:.75rem;font-weight:650}
+.recap-prix strong{font-stretch:80%;font-size:1.4rem;font-weight:780}
+.fini .ico-ok{width:3rem;height:3rem;color:var(--bleu);stroke-width:1.6;margin-bottom:.75rem}
+.fini p{margin-top:.5rem;font-size:.9375rem;color:var(--acier)}
+.fini p strong{color:var(--encre)}
+.essai-nav{display:flex;gap:.6rem;padding:1.1rem 1.5rem 1.5rem;margin-top:auto}
+.essai-nav .btn{flex:1}
+.essai-nav .btn-contour{flex:0 0 auto}
+.essai-nav [hidden],.essai-nav[hidden]{display:none}
+
+/* Bandeau de confiance */
+.confiance{background:var(--blanc);border-bottom:1px solid var(--trait)}
+.confiance .wrap{display:grid;padding-block:1.75rem}
+.confiance ul{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,10.5rem),1fr));gap:1.25rem 2rem}
+.confiance li{display:flex;gap:.8rem;align-items:flex-start;line-height:1.35}
+.confiance .ico{width:2rem;height:2rem;color:var(--bleu);stroke-width:1.5}
+.confiance strong{display:block;font-stretch:85%;font-weight:750;font-size:1.0625rem}
+.confiance span{font-size:.875rem;color:var(--acier)}
+/* ordinateur : les engagements laissent la colonne de droite à la carte de réservation */
+@media (min-width:64rem){
+  .confiance .wrap{grid-template-columns:minmax(0,1fr) var(--carte);column-gap:4rem;padding-block:2rem}
+  .confiance ul{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+/* grand écran : les quatre engagements sur une ligne */
+@media (min-width:80rem){ .confiance ul{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.5rem} .confiance li{flex-direction:column;gap:.6rem} }
+
+/* Sections */
+.section{padding-block:var(--section)}
+.section-chaux{background:var(--chaux)}
+.entete-section{max-width:44rem;margin-bottom:clamp(2rem,1.5rem + 2vi,3rem)}
+.entete-section h2,.h2{font-size:clamp(2rem, 1.3rem + 2.6vi, 3.1rem)}
+.entete-section p{margin-top:.9rem;color:var(--acier);font-size:1.125rem;max-width:58ch}
+
+/* Les cours */
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,19rem),1fr));gap:2.5rem 2rem}
+.service img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+.service-titre{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.25rem 1rem;margin-top:1.25rem}
+.service h3{font-size:1.5rem}
+.service p{margin-top:.6rem;color:var(--acier)}
+.service ul{list-style:none;padding:0;margin-top:1rem;display:grid;gap:.45rem;font-size:.9375rem}
+.service li{display:flex;gap:.55rem;align-items:flex-start}
+.service li .ico{width:1.1rem;height:1.1rem;color:var(--bleu);margin-top:.25rem;stroke-width:2.2}
+
+/* Le planning de la semaine : on choisit un jour, la liste du jour s’affiche (CSS :has) */
+.planning-grille{display:grid;gap:2.5rem;align-items:start}
+@media (min-width:60rem){ .planning-grille{grid-template-columns:minmax(0,1fr) 20rem;gap:4rem} }
+.jours{border:0;padding:0;min-width:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.3rem;max-width:36rem}
+.jours label{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:3.25rem;
+  border:1.5px solid var(--champ);border-radius:var(--r);font-weight:700;font-stretch:86%;cursor:pointer;background:var(--blanc);line-height:1.1}
+.jours input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer;width:100%;height:100%}
+.jours label:hover{border-color:var(--encre)}
+.jours label:has(:checked){background:var(--bleu);border-color:var(--bleu);color:#fff}
+.jours label:has(:focus-visible){outline:3px solid var(--bleu);outline-offset:2px}
+.liste{margin-top:1.25rem}
+.jour{display:none}
+.jour h3{font-size:1.5rem;font-stretch:80%;margin-bottom:.4rem}
+.jour ol{list-style:none;padding:0;border-bottom:1px solid var(--trait)}
+.creneau{display:grid;grid-template-columns:4.4rem minmax(0,1fr) auto;align-items:center;gap:.2rem .9rem;padding:.8rem .25rem;border-top:1px solid var(--trait);min-height:4.25rem}
+.creneau time{font-stretch:78%;font-weight:760;font-size:1.3rem;font-variant-numeric:tabular-nums;white-space:nowrap}
+.quoi b{display:block;font-weight:680;line-height:1.25}
+.quoi small{display:block;font-size:.875rem;color:var(--acier)}
+.creneau .btn{min-height:2.75rem;padding:.5rem .9rem;font-size:.9375rem}
+.etat{font-size:.8125rem;font-weight:650;color:var(--acier);text-align:right;max-width:7.5rem;line-height:1.25}
+.ferme time,.ferme .quoi b{color:var(--acier)}
+/* le jour coché affiche sa liste ; sans :has, toute la semaine reste visible */
+@supports not selector(:has(*)){ .jour{display:block;margin-top:1.5rem} }
+.planning:has(#j-lun:checked) .j-lun,.planning:has(#j-mar:checked) .j-mar,.planning:has(#j-mer:checked) .j-mer,
+.planning:has(#j-jeu:checked) .j-jeu,.planning:has(#j-ven:checked) .j-ven,.planning:has(#j-sam:checked) .j-sam{display:block;animation:glisse .3s ease-out}
+/* le seul mouvement de la page : la liste du jour glisse comme le chariot sur ses rails */
+@keyframes glisse{from{opacity:0;transform:translateX(-.6rem)}to{opacity:1;transform:none}}
+/* téléphone : le bouton de réservation passe sous le cours */
+@media (max-width:30rem){
+  .creneau{grid-template-columns:3.9rem minmax(0,1fr)}
+  .creneau .btn,.creneau .etat{grid-column:2;justify-self:start;text-align:left;max-width:none}
+}
+.reperes{background:var(--chaux);border-radius:var(--r);padding:1.5rem;display:grid;gap:1rem;font-size:.9375rem}
+.reperes h3{font-size:1.25rem;font-stretch:82%}
+.reperes dl{display:grid;gap:.7rem;margin:0}
+.reperes dt .tension{color:var(--encre);font-size:.875rem}
+.reperes dd{margin:.1rem 0 0;color:var(--acier)}
+.reperes p{color:var(--acier)}
+@media (min-width:60rem){ .reperes{position:sticky;top:6.5rem} }
+
+/* Premier cours : une vraie séquence, d’où les numéros */
+.premier{display:grid;gap:2.5rem;align-items:start}
+@media (min-width:60rem){ .premier{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:4.5rem} .premier figure{position:sticky;top:6.5rem} }
+.premier ol{list-style:none;padding:0;margin-top:1.75rem;display:grid;gap:1.35rem;counter-reset:e}
+.premier li{counter-increment:e;display:grid;grid-template-columns:2.6rem 1fr;gap:.2rem .9rem;max-width:60ch}
+.premier li::before{content:counter(e);grid-row:span 2;font-stretch:75%;font-weight:800;font-size:2.4rem;line-height:.9;color:var(--bleu)}
+.premier h3{font-size:1.3rem;font-stretch:84%}
+.premier li p{color:var(--acier)}
+.premier figure{margin:0}
+.premier img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+figcaption{font-size:.8125rem;color:var(--acier);margin-top:.5rem}
+
+/* Tarifs : un tableau de prix sur fond encre, pas des cartes */
+.tarifs{background:var(--encre);color:#DDE3EE}
+.tarifs .entete-section h2{color:#fff}
+.tarifs .entete-section p{color:#B9C2D3}
+.tarifs-grille{display:grid;gap:2.5rem;align-items:start}
+@media (min-width:60rem){ .tarifs-grille{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:4.5rem} }
+.prix{margin:0}
+.prix div{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.2rem 1.5rem;padding:1rem 0;border-top:1px solid #34405A}
+.prix div:last-child{border-bottom:1px solid #34405A}
+.prix dt{font-weight:650;flex:1 1 14rem;color:#fff}
+.prix dt small{display:block;font-weight:400;font-size:.875rem;color:#AAB3C4}
+.prix dd{font-stretch:80%;font-weight:760;font-size:1.55rem;color:var(--hetre-clair);font-variant-numeric:tabular-nums;white-space:nowrap}
+.prix .essai-ligne dt{font-size:1.125rem}
+.tarifs-note{display:grid;gap:1rem;align-content:start}
+.tarifs-note p{max-width:44ch}
+.tarifs-note .btn{justify-self:start;margin-top:.5rem}
+
+/* Le studio en images */
+.galerie{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,16rem),1fr));gap:2rem 1.5rem}
+.galerie img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+.galerie .lieu{display:inline-block;margin-top:.8rem;font-size:.8125rem;font-weight:650;color:var(--bleu);border:1px solid #B9C6E4;border-radius:4px;padding:.12rem .5rem}
+.galerie h3{font-size:1.2rem;font-stretch:86%;margin-top:.55rem}
+.galerie p{margin-top:.3rem;font-size:.9375rem;color:var(--acier);line-height:1.5}
+
+/* L’équipe et le lieu */
+.entreprise{display:grid;gap:3rem;align-items:center}
+@media (min-width:60rem){ .entreprise{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:4.5rem} }
+.entreprise-texte p{margin-top:1rem;max-width:58ch}
+.entreprise-texte .h2{margin-bottom:.25rem}
+.chiffres{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem;margin-top:2rem;padding-top:1.5rem;border-top:1px solid var(--trait)}
+.chiffres div{display:flex;flex-direction:column;gap:.2rem}
+.chiffres dt{font-size:.875rem;color:var(--acier);order:2;line-height:1.35}
+.chiffres dd{margin:0;font-stretch:78%;font-weight:800;font-size:clamp(1.9rem,1.4rem + 1.8vi,2.7rem);line-height:1}
+.entreprise figure{margin:0}
+.entreprise img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
+
+/* Accès et contact */
+.contact{display:grid;gap:2.5rem;align-items:start}
+@media (min-width:60rem){ .contact{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:4rem} }
+.plan{background:var(--blanc);border:1px solid var(--trait);border-radius:var(--r);padding:clamp(.75rem,.4rem + 1.5vi,1.5rem)}
+.plan-svg{width:100%;height:auto}
+.plan-svg .rue{fill:none;stroke:#C9CED8;stroke-linecap:round}
+.plan-svg .rue-grande{stroke-width:14}
+.plan-svg .rue-petite{stroke-width:8}
+.plan-svg text{font-family:var(--police);paint-order:stroke;stroke:var(--blanc);stroke-width:4px;stroke-linejoin:round}
+.plan-svg .nom-rue{font-size:13px;font-style:italic;fill:#5B6479}
+.plan-svg .arr{font-size:15px;font-weight:700;fill:#9AA2B3;font-stretch:120%}
+.plan-svg .station circle{fill:var(--blanc);stroke:var(--encre);stroke-width:2.5}
+.plan-svg .station text{font-size:14px;font-weight:700;fill:var(--encre)}
+.plan-svg .m{font-size:11px;font-weight:800;fill:var(--encre);stroke:none}
+.plan-svg .studio rect{fill:var(--bleu);stroke:#fff;stroke-width:3}
+.plan-svg .studio text{font-size:15px;font-weight:800;fill:var(--bleu);font-stretch:110%}
+.plan-svg .direction{font-size:12.5px;fill:#5B6479}
+@media (max-width:40rem){
+  .plan-svg .nom-rue{font-size:17px} .plan-svg .station text{font-size:18px} .plan-svg .studio text{font-size:19px}
+  .plan-svg .direction{font-size:16px} .plan-svg .arr{font-size:18px}
+}
+.acces{list-style:none;padding:0;margin-top:1.5rem;display:grid;gap:.9rem}
+.acces li{display:flex;gap:.75rem;align-items:flex-start}
+.acces .ico{width:1.4rem;height:1.4rem;color:var(--bleu);margin-top:.15rem}
+.acces b{display:block;font-stretch:90%}
+.acces span{color:var(--acier);font-size:.9375rem}
+.coord h3{font-size:1.35rem;margin-top:2rem}
+.coord h3:first-child{margin-top:0}
+.coord address{font-style:normal;margin-top:.6rem}
+.tel-grand{display:inline-flex;align-items:center;gap:.6rem;margin-top:.75rem;font-stretch:80%;font-weight:800;font-size:clamp(1.7rem,1.4rem + 1.2vi,2.2rem);
+  text-decoration:none;color:var(--encre);font-variant-numeric:tabular-nums}
+.tel-grand .ico{width:1.6rem;height:1.6rem;color:var(--bleu)}
+.tel-grand:hover{text-decoration:underline;text-underline-offset:.15em}
+.horaires{margin-top:.6rem;border-collapse:collapse;width:100%;max-width:26rem;font-size:.9375rem}
+.horaires th,.horaires td{text-align:left;padding:.45rem 0;border-bottom:1px solid var(--trait);font-weight:400}
+.horaires td{text-align:right;font-weight:650}
+.coord .note{margin-top:1rem;font-size:.875rem;color:var(--acier);max-width:44ch}
+.coord .btn{margin-top:1.75rem}
+
+/* Pied de page */
+.pied{background:var(--encre);color:#C3CAD7;font-size:.9375rem;padding-block:3.5rem 2rem}
+.pied a{color:#fff}
+.pied-grille{display:grid;gap:2.5rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr))}
+.pied .logo{margin:0}
+.pied .logo-nom{color:#fff}
+.pied .logo-sig{color:#AAB3C4}
+.pied h2{font-size:1.05rem;font-stretch:88%;font-weight:750;color:#fff;margin-bottom:.8rem}
+.pied ul{list-style:none;padding:0;display:grid;gap:.35rem}
+.pied ul a{text-decoration:none}
+.pied ul a:hover{text-decoration:underline;text-underline-offset:.2em}
+.pied address{font-style:normal;margin-top:1.1rem;line-height:1.7}
+.pied-bas{margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgb(255 255 255 / .16);display:grid;gap:.5rem;font-size:.875rem;color:#AAB3C4}
+
+/* Barre d’action sous le pouce (téléphone, et téléphone en paysage).
+   Elle se range quand la carte de réservation est à l’écran. */
+.pouce{display:none}
+@media (max-width:47.99rem),(max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-bottom:5.5rem}
+  .pouce{display:grid;grid-template-columns:1fr 1.5fr;gap:.5rem;position:fixed;inset-inline:0;bottom:0;z-index:25;
+    padding:.6rem var(--gut) calc(.6rem + env(safe-area-inset-bottom));background:var(--blanc);
+    border-top:1px solid var(--trait);box-shadow:0 -10px 24px -14px rgb(22 33 58 / .4);transition:transform .25s ease}
+  .pouce .btn{min-height:2.9rem;padding-inline:1rem}
+  .pouce.range{transform:translateY(110%)}
+  .pied{padding-bottom:calc(6.5rem + env(safe-area-inset-bottom))}
+}
+/* téléphone en paysage : l’en-tête défile avec la page, la barre d’action s’amincit */
+@media (max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-top:1rem}
+  .entete{position:static}
+  .entete .entete-tel{display:none}
+  .pouce{padding-block:.4rem calc(.4rem + env(safe-area-inset-bottom))}
+  .pouce .btn{min-height:2.6rem}
+  .hero-texte{padding-block:2.5rem 2rem}
+  .hero-media{min-height:22rem}
+  .hero h1{font-size:2.5rem;max-width:none}
+  .hero-media::after{background:linear-gradient(90deg, rgb(15 24 48 / .9) 0%, rgb(15 24 48 / .72) 60%, rgb(15 24 48 / .4) 100%)}
+  .hero-sous{margin-top:.6rem;max-width:60ch}
+  .hero-actions{margin-top:1.1rem}
+}
+
+/* mouvement réduit : ni défilement doux, ni animation, ni transition */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+}
+.rappel{font-size:.875rem;font-weight:650;color:var(--bleu);margin:-.35rem 0 .8rem}

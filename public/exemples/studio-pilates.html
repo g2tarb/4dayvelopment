@@ -2,406 +2,538 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Chariot, Pilates reformer à Paris 11e | Démo 4dayvelopment</title>
-<meta name="description" content="Démo : studio de Pilates sur reformer et au sol dans le 11e arrondissement de Paris. Planning de la semaine, cours d’essai à 25 €, tarifs et accès.">
+<meta name="description" content="Démo 4dayvelopment&#8239;: Chariot, studio de Pilates sur reformer et au sol à Paris 11e. Planning de la semaine, cours d’essai à 25&nbsp;€ en ligne, tarifs et accès.">
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#1F3F8E">
+<meta name="theme-color" content="#16213A">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/encode-sans-var.woff2" crossorigin>
-<style>
-@font-face{font-family:'Encode Sans';font-style:normal;font-weight:100 900;font-stretch:75% 125%;font-display:swap;src:url('/fonts/encode-sans-var.woff2') format('woff2')}
-
-:root{
-  --chaux:#F5F6F3;   /* fond : murs passés à la chaux de l'atelier */
-  --blanc:#FFFFFF;   /* le tableau du planning */
-  --encre:#172238;   /* texte */
-  --bleu:#1F3F8E;    /* bleu de travail des ébénistes du faubourg : marque, boutons, choix */
-  --bleu-2:#16306E;
-  --hetre:#C68A4B;   /* le bois des machines : prix sur fond encre, filet du téléphone */
-  --acier:#566079;   /* texte secondaire (5,8:1 sur la chaux) */
-  --trait:#D3D7DF;
-  --champ:#7A8296;   /* bord des champs et des choix (3,8:1) */
-  --mesure:62ch;
-  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
-}
-*,*::before,*::after{box-sizing:border-box}
-*{margin:0}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{
-  font-family:'Encode Sans',system-ui,sans-serif;font-stretch:100%;font-weight:400;
-  font-size:1.0625rem;line-height:1.55;color:var(--encre);background:var(--chaux);
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-}
-img{display:block;max-width:100%;height:auto;background:#E2E5EA} /* fond visible pendant le chargement ou si l'image manque */
-a{color:inherit}
-:focus-visible{outline:3px solid var(--bleu);outline-offset:3px}
-h1,h2,h3{font-stretch:75%;font-weight:800;line-height:1.02;letter-spacing:-.005em;text-wrap:balance}
-h2{font-size:clamp(1.9rem,1.2rem + 2.8vi,3rem)}
-p{text-wrap:pretty}
-sup{font-size:.7em;line-height:0}
-.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:-999px}
-.skip:focus{left:1rem;top:1rem;background:var(--bleu);color:#fff;padding:.6rem 1rem;z-index:10}
-
-/* Barre du haut : le nom en largeur étendue (le chariot sorti), le numéro */
-.top{border-bottom:1px solid var(--trait)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.75rem}
-.marque{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;min-height:2.75rem}
-.marque b{font-stretch:125%;font-weight:760;font-size:1.375rem;letter-spacing:.01em;color:var(--bleu)}
-.marque span{font-size:.8125rem;color:var(--acier);margin-top:.25rem}
-.tel{font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap;text-decoration:none;
-  padding:.55rem .1rem;border-bottom:2px solid var(--hetre)}
-
-/* Ouverture */
-.ouv{padding-block:var(--pas) calc(var(--pas)*1.75)}
-.ouv .wrap{display:grid;gap:var(--pas)}
-.ouv h1{font-size:clamp(2.5rem,1.4rem + 4.8vi,4.75rem);max-width:13ch}
-.chapo{font-size:1.125rem;max-width:40ch;margin-top:1rem;color:var(--acier)}
-.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.5rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.8rem 1.35rem;
-  background:var(--bleu);color:#fff;border:2px solid transparent;border-radius:4px;font:inherit;font-weight:650;
-  font-stretch:92%;text-decoration:none;cursor:pointer;transition:background-color .15s}
-.btn:active{transform:translateY(1px)}
-.discret{font-size:.9375rem;color:var(--acier);max-width:32ch}
-.ouv figure img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:50% 80%;border-radius:3px}
-figcaption{font-size:.8125rem;color:var(--acier);margin-top:.5rem;max-width:52ch}
-/* ordinateur : texte et photo côte à côte, la photo retrouve son format vertical */
-@media (min-width:60rem){
-  .ouv .wrap{grid-template-columns:1.1fr .9fr;align-items:center;gap:3.5rem}
-  .ouv figure img{aspect-ratio:4/5;object-position:50% 62%}
-}
-/* téléphone en paysage : titre réduit pour garder le bouton dans le premier écran */
-@media (max-height:30rem) and (orientation:landscape){
-  .ouv h1{font-size:2.25rem;max-width:none}
-  .chapo{margin-top:.5rem;max-width:60ch}
-  .actions{margin-top:1rem}
-}
-/* survol seulement avec une souris : pas d'état collant au toucher */
-@media (hover:hover){.btn:hover{background:var(--bleu-2)}}
-
-/* Signature : le planning. On choisit un jour, puis un cours, et la réservation
-   s'ouvre : tout en CSS (:has). Sans :has, tous les jours et le formulaire
-   restent affichés, rien n'est perdu. */
-.plan{background:var(--blanc);border-block:1px solid var(--trait);padding-block:calc(var(--pas)*2)}
-.plan .intro{max-width:var(--mesure);margin-top:.75rem;color:var(--acier)}
-.planning{margin-top:1.5rem;display:grid;gap:1.25rem}
-.planning fieldset{border:0;padding:0;min-width:0}
-.jours{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.25rem;max-width:34rem}
-.jours label{position:relative;display:flex;align-items:center;justify-content:center;min-height:3rem;
-  border:1.5px solid var(--champ);border-radius:4px;font-weight:650;font-stretch:88%;cursor:pointer}
-.jours input,.creneau input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
-.jours label:has(:checked){background:var(--bleu);border-color:var(--bleu);color:#fff}
-.jours label:has(:focus-visible),label.creneau:has(:focus-visible){outline:3px solid var(--bleu);outline-offset:2px}
-.cours{display:grid}
-.cours legend{font-stretch:75%;font-weight:800;font-size:1.5rem;padding:0;margin-bottom:.4rem}
-.creneau{position:relative;display:grid;grid-template-columns:4.4rem minmax(0,1fr) auto;align-items:center;
-  gap:.2rem .75rem;padding:.75rem .7rem;border-top:1px solid var(--trait);min-height:3.75rem}
-.cours > :last-child{border-bottom:1px solid var(--trait)}
-label.creneau{cursor:pointer}
-.creneau time{font-stretch:78%;font-weight:750;font-size:1.25rem;font-variant-numeric:tabular-nums;white-space:nowrap}
-.quoi b{display:block;font-weight:650;line-height:1.25}
-.quoi small{display:block;font-size:.875rem;color:var(--acier)}
-/* l'intensité en ressorts : le nombre compte, pas la couleur */
-.tension{display:inline-flex;align-items:center;gap:.2rem;font-size:.8125rem;margin-top:.2rem}
-.tension i{width:1.3rem;height:.6rem;background:currentColor;opacity:.22;
-  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 8'%3E%3Cpath d='M0 4h4l2-3 3 6 3-6 3 6 3-6 2 3h6' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% 100% no-repeat;
-  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 8'%3E%3Cpath d='M0 4h4l2-3 3 6 3-6 3 6 3-6 2 3h6' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% 100% no-repeat}
-.t1 i:nth-child(-n+1),.t2 i:nth-child(-n+2),.t3 i{opacity:1}
-.tension i:last-of-type{margin-right:.3rem}
-/* la case ronde à droite dit qu'on peut choisir la ligne */
-label.creneau::after{content:"";width:1.3rem;height:1.3rem;border:2px solid var(--champ);border-radius:50%}
-label.creneau:has(:checked){background:var(--bleu);color:#fff;border-radius:4px;border-top-color:var(--bleu)}
-label.creneau:has(:checked) .quoi small{color:#D6DDEF}
-label.creneau:has(:checked)::after{border-color:#fff;background:radial-gradient(circle,#fff 0 38%,transparent 42%)}
-.ferme{color:var(--acier)}
-.etat{font-size:.8125rem;font-weight:600;text-align:right;max-width:7rem;line-height:1.25}
-.attente{display:none;color:var(--acier);font-size:.9375rem}
-.coords{display:grid;gap:1rem;align-content:start}
-.choisi{font-weight:650}
-.deux{display:grid;gap:1rem}
-.champ label{display:block;font-weight:600;margin-bottom:.35rem}
-.champ input,.champ select{width:100%;font:inherit;font-size:1rem;color:var(--encre);background:#fff;
-  border:1.5px solid var(--champ);border-radius:4px;padding:.7rem .8rem;min-height:3rem}
-.champ input:focus-visible,.champ select:focus-visible{outline:3px solid var(--bleu);outline-offset:1px;border-color:var(--encre)}
-.coords .btn{width:100%}
-.coords .discret{max-width:none}
-.merci{display:none;padding:1rem 1.1rem;border:1.5px solid var(--bleu);border-radius:4px;background:#fff;font-weight:600}
-.planning.envoye .merci{display:block}
-@supports selector(:has(*)){
-  .cours,.coords{display:none}
-  .attente{display:block}
-  .planning:has(#j-lun:checked) .c-lun,.planning:has(#j-mar:checked) .c-mar,.planning:has(#j-mer:checked) .c-mer,
-  .planning:has(#j-jeu:checked) .c-jeu,.planning:has(#j-ven:checked) .c-ven,.planning:has(#j-sam:checked) .c-sam{display:grid;animation:glisse .3s ease-out}
-  /* la réservation s'ouvre quand un cours du jour affiché est choisi */
-  .planning:has(#j-lun:checked):has(.c-lun :checked) .coords,.planning:has(#j-mar:checked):has(.c-mar :checked) .coords,
-  .planning:has(#j-mer:checked):has(.c-mer :checked) .coords,.planning:has(#j-jeu:checked):has(.c-jeu :checked) .coords,
-  .planning:has(#j-ven:checked):has(.c-ven :checked) .coords,.planning:has(#j-sam:checked):has(.c-sam :checked) .coords{display:grid}
-  .planning:has(#j-lun:checked):has(.c-lun :checked) .attente,.planning:has(#j-mar:checked):has(.c-mar :checked) .attente,
-  .planning:has(#j-mer:checked):has(.c-mer :checked) .attente,.planning:has(#j-jeu:checked):has(.c-jeu :checked) .attente,
-  .planning:has(#j-ven:checked):has(.c-ven :checked) .attente,.planning:has(#j-sam:checked):has(.c-sam :checked) .attente{display:none}
-}
-/* le seul mouvement de la page : la liste du jour glisse comme le chariot sur ses rails */
-@keyframes glisse{from{opacity:0;transform:translateX(-.6rem)}to{opacity:1;transform:none}}
-/* deux champs par ligne dès qu'ils ont la place */
-@media (min-width:36rem){.deux{grid-template-columns:1fr 1fr}}
-/* ordinateur : la liste du jour à gauche, la réservation en regard, qui reste visible */
-@media (min-width:60rem){
-  .planning{grid-template-columns:minmax(0,1fr) 22rem;column-gap:3.5rem;align-items:start}
-  .jours{grid-column:1 / -1}
-  .liste{grid-row:2}
-  .attente,.coords{grid-column:2;grid-row:2;position:sticky;top:1.5rem;background:var(--chaux);padding:1.5rem;border-radius:4px}
-  .coords .deux{grid-template-columns:1fr}
-}
-
-/* Premier cours : une vraie séquence, d'où les numéros */
-.premier{padding-block:calc(var(--pas)*2)}
-.premier .wrap{display:grid;gap:var(--pas)}
-.premier .wrap > div > p{max-width:var(--mesure);margin-top:.85rem}
-.premier ol{list-style:none;padding:0;margin-top:1.5rem;display:grid;gap:1.2rem;counter-reset:e}
-.premier li{counter-increment:e;display:grid;grid-template-columns:2.4rem 1fr;gap:.2rem .9rem;max-width:var(--mesure)}
-.premier li::before{content:counter(e);grid-row:span 2;font-stretch:75%;font-weight:800;font-size:2.3rem;line-height:.9;color:var(--bleu)}
-.premier h3{font-size:1.25rem;font-stretch:85%}
-.premier img{width:100%;border-radius:3px}
-/* texte et photo des ressorts côte à côte */
-@media (min-width:60rem){.premier .wrap{grid-template-columns:1.1fr .9fr;align-items:start;gap:3.5rem}.premier figure{position:sticky;top:1.5rem}}
-
-/* Tarifs : un tableau de prix, pas des cartes */
-.tarifs{background:var(--encre);color:#E3E7EF;padding-block:calc(var(--pas)*2)}
-.tarifs h2{color:#fff}
-.prix{margin-top:1.5rem;max-width:46rem}
-.prix div{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.2rem 1.5rem;padding:1rem 0;border-top:1px solid #36425C}
-.prix div:last-child{border-bottom:1px solid #36425C}
-.prix dt{font-weight:600;flex:1 1 15rem}
-.prix dt small{display:block;font-weight:400;font-size:.875rem;color:#AAB3C4}
-.prix dd{font-stretch:80%;font-weight:750;font-size:1.5rem;color:var(--hetre);font-variant-numeric:tabular-nums;white-space:nowrap}
-.tarifs .note{margin-top:1.25rem;max-width:var(--mesure);color:#C3CAD7}
-
-/* Le lieu */
-.lieu{padding-block:calc(var(--pas)*2)}
-.lieu .wrap{display:grid;gap:var(--pas)}
-.lieu img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:3px}
-.lieu .wrap > div > p{max-width:var(--mesure);margin-top:.85rem}
-.infos{list-style:none;padding:0;margin-top:1.25rem;display:grid;gap:.8rem;max-width:var(--mesure)}
-.infos b{display:block;font-stretch:88%}
-/* photo et informations pratiques côte à côte */
-@media (min-width:60rem){.lieu .wrap{grid-template-columns:1fr 1fr;align-items:center;gap:3.5rem}}
-
-footer{background:var(--encre);color:#C3CAD7;padding-block:2.5rem;font-size:.875rem;border-top:1px solid #36425C}
-footer .wrap{display:grid;gap:.75rem}
-footer b{color:#fff;font-stretch:125%;font-weight:760;font-size:1.25rem}
-footer a{color:#fff}
-
-/* Barre d'action sous le pouce, en mobile et en paysage téléphone. Rangée
-   quand le planning est à l'écran : elle doublerait son bouton. */
-.pouce{display:none}
-@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
-  html{scroll-padding-bottom:6rem}
-  .pouce{display:grid;grid-template-columns:1fr 1.6fr;gap:.5rem;position:fixed;left:0;right:0;bottom:0;z-index:5;
-    padding:.6rem .75rem max(.6rem,env(safe-area-inset-bottom));background:var(--chaux);border-top:1px solid var(--trait);transition:transform .2s ease-out}
-  .pouce a{display:flex;align-items:center;justify-content:center;min-height:2.75rem;border-radius:4px;font-weight:650;font-stretch:92%;text-decoration:none}
-  .pouce .appel{border:1.5px solid var(--encre)}
-  .pouce .demande{background:var(--bleu);color:#fff;border:1.5px solid transparent}
-  .pouce.cache{transform:translateY(110%)}
-  footer{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
-}
-/* mouvement réduit : ni animation ni transition */
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+<link rel="stylesheet" href="/exemples/studio-pilates.css">
+<script src="/exemples/studio-pilates.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#planning">Aller au planning</a>
+<a class="skip" href="#contenu">Aller au contenu</a>
 
-<header class="top">
+<!-- Pictogrammes au trait, réutilisés par <use> -->
+<svg width="0" height="0" class="visuel-seul" aria-hidden="true" focusable="false">
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5.2 3.5h3.1l1.6 4.1-2.1 1.3a11.5 11.5 0 0 0 5.3 5.3l1.3-2.1 4.1 1.6v3.1a2 2 0 0 1-2.1 2A16 16 0 0 1 3.2 5.6a2 2 0 0 1 2-2.1z"/></symbol>
+  <symbol id="i-lieu" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+  <symbol id="i-metro" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M7.5 16.5v-9l4.5 6 4.5-6v9"/></symbol>
+  <symbol id="i-ressort" viewBox="0 0 24 24"><path d="M2.5 12h3l1.6-4.5 3 9 3-9 3 9 1.6-4.5h3.8"/></symbol>
+  <symbol id="i-horloge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-groupe" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.4-3.4 2.9-5.6 6-5.6s5.6 2.2 6 5.6"/><path d="M15.5 5.2a3 3 0 0 1 0 5.6"/><path d="M17.4 14.6c2 .6 3.3 2.6 3.6 5.4"/></symbol>
+  <symbol id="i-agenda" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="m9.5 12.5 5 5M14.5 12.5l-5 5"/></symbol>
+  <symbol id="i-porte" viewBox="0 0 24 24"><path d="M5 21V4.5A1.5 1.5 0 0 1 6.5 3h11A1.5 1.5 0 0 1 19 4.5V21"/><path d="M3 21h18"/><circle cx="15" cy="12.5" r=".9"/></symbol>
+  <symbol id="i-casier" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M12 3v18M7.5 7.5h2M14.5 7.5h2"/></symbol>
+  <symbol id="i-chaussette" viewBox="0 0 24 24"><path d="M9 3h6v8.5l3.4 3.4a3.3 3.3 0 0 1-4.7 4.7L9.6 15.5A2 2 0 0 1 9 14V3z"/><path d="M9 6.5h6"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="m7.8 12.3 2.9 2.9 5.6-5.6"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-fermer" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+</svg>
+
+<div class="topbar">
   <div class="wrap">
-    <a class="marque" href="#">
-      <b>Chariot</b>
-      <span>Pilates sur reformer, Paris 11<sup>e</sup></span>
+    <span class="adresse"><svg class="ico" aria-hidden="true"><use href="#i-lieu"/></svg><span>27 rue Faidherbe, Paris 11<sup>e</sup></span></span>
+    <span><svg class="ico" aria-hidden="true"><use href="#i-metro"/></svg><span class="long">Métro Faidherbe-Chaligny, ligne 8</span><span class="court">M° Faidherbe-Chaligny</span></span>
+    <a class="tel-haut" href="tel:+33199002714"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>01&nbsp;99&nbsp;00&nbsp;27&nbsp;14</a>
+    <a class="essai-lien" href="#essai"><svg class="ico" aria-hidden="true"><use href="#i-ressort"/></svg><span class="long-xs">Cours d’essai 25&nbsp;€</span><span class="court-xs">Essai 25&nbsp;€</span></a>
+  </div>
+</div>
+
+<header class="entete">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Chariot, accueil">
+      <!-- le symbole de la marque : un reformer de profil, barre de pied, ressort, chariot, appui-tête -->
+      <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+        <rect width="48" height="48" rx="7" fill="#1F3F8E"/>
+        <g fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6.5 33.5h35M10.5 33.5v4.5M37.5 33.5v4.5" stroke-width="3.4"/>
+          <path d="M11.5 33.5 16 14.5" stroke-width="3.4"/>
+          <path d="M15.8 25.5h1.4l1.6-3.8 2.2 7.6 2.2-7.6 1.6 3.8h1.4" stroke-width="2.2"/>
+        </g>
+        <g fill="#fff"><rect x="26" y="21.5" width="13" height="8" rx="2"/><rect x="35.5" y="16" width="3.6" height="6" rx="1.2"/></g>
+      </svg>
+      <span class="logo-txt">
+        <span class="logo-nom">Chariot</span>
+        <span class="logo-sig">Pilates sur reformer, Paris 11<sup>e</sup></span>
+      </span>
     </a>
-    <a class="tel" href="tel:+33199002714" aria-label="Appeler Chariot au 01 99 00 27 14">01 99 00 27 14</a>
+    <nav class="nav" id="menu" aria-label="Menu principal">
+      <ul>
+        <li><a href="#cours">Les cours</a></li>
+        <li><a href="#planning">Planning</a></li>
+        <li><a href="#tarifs">Tarifs</a></li>
+        <li><a href="#studio">Le studio</a></li>
+        <li><a href="#acces">Accès</a></li>
+        <li class="nav-plus"><a class="btn" href="#essai">Réserver mon cours d’essai</a></li>
+        <li class="nav-plus nav-info">Appelez le studio au <a href="tel:+33199002714">01&nbsp;99&nbsp;00&nbsp;27&nbsp;14</a>, on vous répond entre deux cours.</li>
+      </ul>
+    </nav>
+    <a class="btn btn-essai" href="#essai">Réserver un essai</a>
+    <a class="entete-tel" href="tel:+33199002714" aria-label="Appeler le 01 99 00 27 14"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg></a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">
+      <svg class="ico ico-ouvrir" aria-hidden="true"><use href="#i-menu"/></svg>
+      <svg class="ico ico-fermer" aria-hidden="true"><use href="#i-fermer"/></svg>
+    </button>
   </div>
 </header>
 
-<main>
-  <section class="ouv">
-    <div class="wrap">
-      <div>
-        <h1>Pilates sur reformer et au sol, Paris 11<sup>e</sup></h1>
-        <p class="chapo">Huit machines en bois dans un ancien atelier d’ébéniste du faubourg Saint-Antoine. Des cours de cinquante minutes, à huit au maximum.</p>
-        <div class="actions">
-          <a class="btn" href="#planning">Choisir mon cours d’essai</a>
-          <p class="discret">Le premier cours coûte 25 €. On vous montre la machine avant de commencer.</p>
-        </div>
+<main id="contenu" tabindex="-1">
+  <section class="hero" aria-labelledby="hero-t">
+    <div class="hero-media">
+      <img src="/exemples/img/studio-pilates-salle-1200.webp" srcset="/exemples/img/studio-pilates-salle-480.webp 480w, /exemples/img/studio-pilates-salle-800.webp 800w, /exemples/img/studio-pilates-salle-1200.webp 1200w" sizes="100vw"
+           width="1200" height="786" fetchpriority="high"
+           alt="Salle du studio : rangées de reformers en bois clair devant de grandes baies vitrées, piliers de briques et poutres au plafond">
+    </div>
+    <div class="hero-texte">
+      <h1 id="hero-t">Pilates sur reformer et au sol, Paris 11<sup>e</sup></h1>
+      <p class="hero-sous">Huit machines en bois dans un ancien atelier d’ébéniste du faubourg Saint-Antoine. Des cours de cinquante minutes, à huit au maximum.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#essai">Réserver mon cours d’essai</a>
+        <a class="btn btn-clair" href="#planning">Voir le planning</a>
       </div>
-      <figure>
-        <img src="/exemples/img/studio-pilates-machine-800.webp"
-             srcset="/exemples/img/studio-pilates-machine-480.webp 480w, /exemples/img/studio-pilates-machine-800.webp 800w, /exemples/img/studio-pilates-machine-1200.webp 1200w"
-             sizes="(min-width: 60rem) 31rem, calc(100vi - 2rem)"
-             width="1200" height="1499" fetchpriority="high"
-             alt="Reformer en bois clair sous un cadre en acier d’où pendent des sangles, devant une verrière d’atelier">
-        <figcaption>Un reformer sous un cadre de trapèze : le chariot roule sur des rails, les ressorts donnent la résistance.</figcaption>
+      <figure class="hero-vignette">
+        <img src="/exemples/img/studio-pilates-crochets-480.webp" width="480" height="360" alt="Ressorts et mousquetons accrochés au cadre d’un appareil de Pilates">
+        <figcaption><strong><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Premier cours à 25&nbsp;€</strong>On vous montre la machine et on règle les ressorts avec vous avant de commencer.</figcaption>
       </figure>
     </div>
-  </section>
 
-  <section class="plan" id="planning" aria-labelledby="plan-t">
-    <div class="wrap">
-      <h2 id="plan-t">Le planning de la semaine</h2>
-      <p class="intro">Choisissez un jour, puis un cours. Les ressorts indiquent l’intensité : un pour découvrir, trois pour un cours soutenu.</p>
+    <aside class="essai" id="essai" aria-labelledby="essai-t">
+      <form class="essai-carte" id="essai-form" novalidate>
+        <div class="essai-tete">
+          <h2 id="essai-t">Réservez votre cours d’essai</h2>
+          <p>25&nbsp;€, cinquante minutes, à huit au maximum.</p>
+          <div class="progression">
+            <div class="progression-barre" aria-hidden="true"><span id="essai-barre"></span></div>
+            <span id="essai-etape" aria-live="polite">Étape 1 sur 4</span>
+          </div>
+        </div>
 
-      <form class="planning" id="reserver" action="#planning" novalidate>
-        <fieldset class="jours">
-          <legend class="sr">Jour</legend>
-          <label><input type="radio" name="jour" id="j-lun" value="Lundi" aria-label="Lundi" checked><span aria-hidden="true">Lun.</span></label>
-          <label><input type="radio" name="jour" id="j-mar" value="Mardi" aria-label="Mardi"><span aria-hidden="true">Mar.</span></label>
-          <label><input type="radio" name="jour" id="j-mer" value="Mercredi" aria-label="Mercredi"><span aria-hidden="true">Mer.</span></label>
-          <label><input type="radio" name="jour" id="j-jeu" value="Jeudi" aria-label="Jeudi"><span aria-hidden="true">Jeu.</span></label>
-          <label><input type="radio" name="jour" id="j-ven" value="Vendredi" aria-label="Vendredi"><span aria-hidden="true">Ven.</span></label>
-          <label><input type="radio" name="jour" id="j-sam" value="Samedi" aria-label="Samedi"><span aria-hidden="true">Sam.</span></label>
+        <fieldset class="etape" data-etape="1">
+          <legend tabindex="-1">Quel jour vous arrange&#8239;?</legend>
+          <div class="tuiles tuiles-jours">
+            <label class="tuile"><input type="radio" name="jour" value="lun" data-nom="Lundi">Lundi<small>3 cours</small></label>
+            <label class="tuile"><input type="radio" name="jour" value="mar" data-nom="Mardi">Mardi<small>3 cours</small></label>
+            <label class="tuile"><input type="radio" name="jour" value="mer" data-nom="Mercredi">Mercredi<small>3 cours</small></label>
+            <label class="tuile"><input type="radio" name="jour" value="jeu" data-nom="Jeudi">Jeudi<small>2 cours</small></label>
+            <label class="tuile"><input type="radio" name="jour" value="ven" data-nom="Vendredi">Vendredi<small>3 cours</small></label>
+            <label class="tuile"><input type="radio" name="jour" value="sam" data-nom="Samedi">Samedi<small>3 cours</small></label>
+          </div>
+          <p class="note-etape">Le studio est fermé le dimanche.</p>
+          <p class="erreur" id="err-1" role="alert"></p>
         </fieldset>
 
-        <div class="liste">
-          <fieldset class="cours c-lun">
-            <legend>Lundi</legend>
-            <label class="creneau"><input type="radio" name="cours" value="Lundi 7 h 30, Reformer, les bases"><time datetime="07:30">7 h 30</time><span class="quoi"><b>Reformer, les bases</b><small>Inès, 50 min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Lundi 12 h 30, Tapis au sol"><time datetime="12:30">12 h 30</time><span class="quoi"><b>Tapis au sol</b><small>Bastien, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Lundi 18 h 30, Reformer, tous niveaux"><time datetime="18:30">18 h 30</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Inès, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-            <div class="creneau ferme"><time datetime="19:45">19 h 45</time><span class="quoi"><b>Reformer, enchaînements</b><small>Maud, 50 min</small><span class="tension t3"><i></i><i></i><i></i>soutenu</span></span><span class="etat">Après cinq cours</span></div>
-          </fieldset>
+        <fieldset class="etape" data-etape="2" hidden>
+          <legend tabindex="-1" id="legende-creneau">À quelle heure&#8239;?</legend>
+          <div class="tuiles tuiles-liste" id="creneaux"></div>
+          <p class="note-etape">Seuls les cours ouverts au cours d’essai sont proposés.</p>
+          <p class="erreur" id="err-2" role="alert"></p>
+        </fieldset>
 
-          <fieldset class="cours c-mar">
-            <legend>Mardi</legend>
-            <label class="creneau"><input type="radio" name="cours" value="Mardi 8 h, Reformer, tous niveaux"><time datetime="08:00">8 h</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Maud, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Mardi 12 h 30, Reformer, les bases"><time datetime="12:30">12 h 30</time><span class="quoi"><b>Reformer, les bases</b><small>Bastien, 50 min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Mardi 19 h, Tapis au sol"><time datetime="19:00">19 h</time><span class="quoi"><b>Tapis au sol</b><small>Maud, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-            <div class="creneau ferme"><time datetime="20:15">20 h 15</time><span class="quoi"><b>Reformer, les bases</b><small>Inès, 50 min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><span class="etat">Complet</span></div>
-          </fieldset>
+        <fieldset class="etape" data-etape="3" hidden>
+          <legend tabindex="-1">Le Pilates, pour vous</legend>
+          <p class="rappel" id="rappel"></p>
+          <div class="tuiles tuiles-liste">
+            <label class="tuile"><input type="radio" name="niveau" value="Je n’en ai jamais fait">Je n’en ai jamais fait<small>Le professeur vous installe sur la machine.</small></label>
+            <label class="tuile"><input type="radio" name="niveau" value="J’en ai fait au sol">J’en ai fait au sol</label>
+            <label class="tuile"><input type="radio" name="niveau" value="J’en ai déjà fait sur reformer">J’en ai déjà fait sur reformer</label>
+          </div>
+          <p class="erreur" id="err-3" role="alert"></p>
+          <div class="champ sous-champ">
+            <label for="signaler">À signaler au professeur <small>(facultatif)</small></label>
+            <textarea id="signaler" name="signaler" rows="2" maxlength="300" aria-describedby="signaler-aide"></textarea>
+            <p class="rgpd" id="signaler-aide">Une grossesse, une opération récente, une douleur&#8239;: il adapte les exercices.</p>
+          </div>
+        </fieldset>
 
-          <fieldset class="cours c-mer">
-            <legend>Mercredi</legend>
-            <div class="creneau ferme"><time datetime="07:30">7 h 30</time><span class="quoi"><b>Reformer, enchaînements</b><small>Inès, 50 min</small><span class="tension t3"><i></i><i></i><i></i>soutenu</span></span><span class="etat">Après cinq cours</span></div>
-            <label class="creneau"><input type="radio" name="cours" value="Mercredi 10 h, Reformer, les bases"><time datetime="10:00">10 h</time><span class="quoi"><b>Reformer, les bases</b><small>Maud, 50 min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Mercredi 18 h 30, Reformer, tous niveaux"><time datetime="18:30">18 h 30</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Bastien, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Mercredi 19 h 45, Reformer, les bases"><time datetime="19:45">19 h 45</time><span class="quoi"><b>Reformer, les bases</b><small>Bastien, 50 min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span></label>
-          </fieldset>
-
-          <fieldset class="cours c-jeu">
-            <legend>Jeudi</legend>
-            <label class="creneau"><input type="radio" name="cours" value="Jeudi 8 h, Tapis au sol"><time datetime="08:00">8 h</time><span class="quoi"><b>Tapis au sol</b><small>Inès, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Jeudi 12 h 30, Reformer, tous niveaux"><time datetime="12:30">12 h 30</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Maud, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-            <div class="creneau ferme"><time datetime="18:30">18 h 30</time><span class="quoi"><b>Reformer, les bases</b><small>Maud, 50 min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><span class="etat">Complet</span></div>
-            <div class="creneau ferme"><time datetime="19:45">19 h 45</time><span class="quoi"><b>Reformer, enchaînements</b><small>Bastien, 50 min</small><span class="tension t3"><i></i><i></i><i></i>soutenu</span></span><span class="etat">Après cinq cours</span></div>
-          </fieldset>
-
-          <fieldset class="cours c-ven">
-            <legend>Vendredi</legend>
-            <label class="creneau"><input type="radio" name="cours" value="Vendredi 7 h 30, Reformer, tous niveaux"><time datetime="07:30">7 h 30</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Bastien, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Vendredi 12 h 30, Reformer, les bases"><time datetime="12:30">12 h 30</time><span class="quoi"><b>Reformer, les bases</b><small>Inès, 50 min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Vendredi 18 h, Reformer, tous niveaux"><time datetime="18:00">18 h</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Maud, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-          </fieldset>
-
-          <fieldset class="cours c-sam">
-            <legend>Samedi</legend>
-            <label class="creneau"><input type="radio" name="cours" value="Samedi 9 h, Reformer, les bases"><time datetime="09:00">9 h</time><span class="quoi"><b>Reformer, les bases</b><small>Inès, 50 min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Samedi 10 h 15, Reformer, tous niveaux"><time datetime="10:15">10 h 15</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Inès, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-            <label class="creneau"><input type="radio" name="cours" value="Samedi 11 h 30, Tapis au sol"><time datetime="11:30">11 h 30</time><span class="quoi"><b>Tapis au sol</b><small>Bastien, 50 min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span></label>
-          </fieldset>
-        </div>
-
-        <p class="attente">Choisissez un cours dans la liste : la réservation s’ouvre ici. Le studio est fermé le dimanche.</p>
-
-        <div class="coords">
-          <p class="choisi">Votre cours d’essai, 25 €</p>
-          <div class="deux">
-            <div class="champ"><label for="prenom">Prénom *</label><input id="prenom" name="prenom" autocomplete="given-name" enterkeyhint="next" required></div>
-            <div class="champ"><label for="tel">Téléphone *</label><input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" required></div>
+        <fieldset class="etape" data-etape="4" hidden>
+          <legend tabindex="-1">Où vous envoyer la confirmation&#8239;?</legend>
+          <div class="champ">
+            <label for="prenom">Prénom</label>
+            <input id="prenom" name="prenom" autocomplete="given-name" enterkeyhint="next" aria-describedby="prenom-err">
+            <p class="err-champ" id="prenom-err"></p>
           </div>
           <div class="champ">
-            <label for="pratique">Le Pilates, pour vous</label>
-            <select id="pratique" name="pratique"><option>Je n’en ai jamais fait</option><option>J’en ai fait au sol</option><option>J’en ai déjà fait sur reformer</option></select>
+            <label for="tel">Téléphone mobile</label>
+            <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="done" aria-describedby="tel-err tel-aide">
+            <p class="err-champ" id="tel-err"></p>
+            <p class="rgpd" id="tel-aide">La confirmation et le code de la porte arrivent par SMS.</p>
           </div>
-          <button class="btn" type="submit">Réserver ce cours d’essai</button>
-          <p class="discret">Annulation gratuite jusqu’à 12 h avant le cours. * obligatoire</p>
-          <p class="merci" role="status">Cours d’essai réservé : <span>votre créneau</span>. Dans la version en ligne, la confirmation arrive par SMS avec le code de la porte.</p>
+          <p class="rgpd">Annulation gratuite jusqu’à 12&nbsp;h avant le cours. Ces informations servent uniquement à votre réservation.</p>
+        </fieldset>
+
+        <div class="etape" data-etape="5" hidden>
+          <h3 class="titre-etape" tabindex="-1">Vérifiez votre réservation</h3>
+          <dl class="recap" id="recap"></dl>
+          <p class="recap-prix"><span>Cours d’essai, réglé sur place</span><strong>25&nbsp;€</strong></p>
+        </div>
+
+        <div class="etape fini" data-etape="6" hidden>
+          <svg class="ico ico-ok" aria-hidden="true"><use href="#i-ok"/></svg>
+          <h3 class="titre-etape" tabindex="-1">Cours d’essai réservé</h3>
+          <p><strong id="fini-cours"></strong></p>
+          <p>Dans la version en ligne, la confirmation arrive par SMS au <strong id="fini-tel"></strong>, avec le code de la porte. Arrivez dix minutes avant le début du cours.</p>
+          <p>Démonstration&#8239;: aucune donnée n’a été transmise.</p>
+        </div>
+
+        <div class="essai-nav">
+          <button class="btn btn-contour" type="button" id="essai-retour" hidden>Retour</button>
+          <button class="btn" type="submit" id="essai-suivant">Continuer</button>
         </div>
       </form>
+    </aside>
+  </section>
+
+  <section class="confiance" aria-label="Le studio en bref">
+    <div class="wrap">
+      <ul>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-groupe"/></svg><div><strong>Huit au maximum</strong><span>Un reformer par personne, le professeur voit tout le monde</span></div></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-horloge"/></svg><div><strong>Cours de 50 minutes</strong><span>Du lundi au samedi, dès 7&nbsp;h&nbsp;30</span></div></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-ressort"/></svg><div><strong>Essai à 25&nbsp;€</strong><span>Déduit de la carte de 10 prise dans la semaine</span></div></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-agenda"/></svg><div><strong>Annulation gratuite</strong><span>Jusqu’à 12&nbsp;h avant le cours</span></div></li>
+      </ul>
     </div>
   </section>
 
-  <section class="premier" aria-labelledby="premier-t">
+  <section class="section" id="cours" aria-labelledby="cours-t">
     <div class="wrap">
+      <div class="entete-section">
+        <h2 id="cours-t">Trois cours, cinquante minutes chacun</h2>
+        <p>Le reformer est un cadre de bois sur lequel roule un chariot. Des ressorts le retiennent&#8239;: plus on en accroche, plus il résiste. Au sol, le cours de tapis travaille les mêmes principes avec le poids du corps.</p>
+      </div>
+      <div class="services">
+        <article class="service">
+          <img src="/exemples/img/studio-pilates-reformers-800.webp" srcset="/exemples/img/studio-pilates-reformers-480.webp 480w, /exemples/img/studio-pilates-reformers-800.webp 800w, /exemples/img/studio-pilates-reformers-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async"
+               alt="Reformers alignés au soleil : barres de pied, chariots noirs, appuis d’épaules et cordes des poignées">
+          <div class="service-titre"><h3>Reformer, les bases</h3><span class="tension t1"><i></i><i></i><i></i>doux</span></div>
+          <p>Pour découvrir la machine&#8239;: on apprend à régler la barre de pied, l’appui-tête et les sangles, puis les mouvements de base.</p>
+          <ul>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Conseillé pour un cours d’essai</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Ressorts changés avec vous au début du cours</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Chaque jour, du lundi au samedi</li>
+          </ul>
+        </article>
+        <article class="service">
+          <img src="/exemples/img/studio-pilates-sangles-800.webp" srcset="/exemples/img/studio-pilates-sangles-480.webp 480w, /exemples/img/studio-pilates-sangles-800.webp 800w, /exemples/img/studio-pilates-sangles-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="901" loading="lazy" decoding="async"
+               alt="Élève allongée sur un reformer en bois, les pieds dans les sangles, vue de dos">
+          <div class="service-titre"><h3>Reformer, tous niveaux</h3><span class="tension t2"><i></i><i></i><i></i>moyen</span></div>
+          <p>Le cours de la semaine&#8239;: on enchaîne les exercices au rythme du groupe, jambes dans les sangles ou mains aux poignées.</p>
+          <ul>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Ouvert dès le premier cours</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Après cinq cours, les enchaînements, plus soutenus</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Tôt le matin, à midi et le soir</li>
+          </ul>
+        </article>
+        <article class="service">
+          <img src="/exemples/img/studio-pilates-tapis-800.webp" srcset="/exemples/img/studio-pilates-tapis-480.webp 480w, /exemples/img/studio-pilates-tapis-800.webp 800w, /exemples/img/studio-pilates-tapis-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async"
+               alt="Tapis de sol et petits ballons posés sur le parquet, dans la lumière d’une grande fenêtre">
+          <div class="service-titre"><h3>Tapis au sol</h3><span class="tension t2"><i></i><i></i><i></i>moyen</span></div>
+          <p>Les mêmes principes que sur la machine, avec le poids du corps. Un complément du reformer, à 22&nbsp;€ le cours.</p>
+          <ul>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Tapis et petits ballons fournis</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Lundi, mardi, jeudi et samedi</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Possible pour le cours d’essai</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-chaux" id="planning" aria-labelledby="planning-t">
+    <div class="wrap">
+      <div class="entete-section">
+        <h2 id="planning-t">Le planning de la semaine</h2>
+        <p>Choisissez un jour. Les cours avec un bouton «&nbsp;Réserver&nbsp;» sont ouverts au cours d’essai&#8239;: le bouton remplit la réservation pour vous.</p>
+      </div>
+      <div class="planning-grille">
+        <div class="planning">
+          <fieldset class="jours">
+            <legend class="visuel-seul">Jour affiché</legend>
+            <label><input type="radio" name="jour-planning" id="j-lun" value="lun" aria-label="Lundi" checked><span aria-hidden="true">Lun.</span></label>
+            <label><input type="radio" name="jour-planning" id="j-mar" value="mar" aria-label="Mardi"><span aria-hidden="true">Mar.</span></label>
+            <label><input type="radio" name="jour-planning" id="j-mer" value="mer" aria-label="Mercredi"><span aria-hidden="true">Mer.</span></label>
+            <label><input type="radio" name="jour-planning" id="j-jeu" value="jeu" aria-label="Jeudi"><span aria-hidden="true">Jeu.</span></label>
+            <label><input type="radio" name="jour-planning" id="j-ven" value="ven" aria-label="Vendredi"><span aria-hidden="true">Ven.</span></label>
+            <label><input type="radio" name="jour-planning" id="j-sam" value="sam" aria-label="Samedi"><span aria-hidden="true">Sam.</span></label>
+          </fieldset>
+          <div class="liste">
+            <section class="jour j-lun" aria-label="Lundi">
+              <h3>Lundi</h3>
+              <ol>
+                <li class="creneau ouvert"><time datetime="07:30">7&nbsp;h&nbsp;30</time><span class="quoi"><b>Reformer, les bases</b><small>Inès, 50&nbsp;min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><button class="btn btn-contour" type="button" data-jour="lun" data-heure="07:30">Réserver<span class="visuel-seul"> le cours du lundi à 7&nbsp;h&nbsp;30</span></button></li>
+                <li class="creneau ouvert"><time datetime="12:30">12&nbsp;h&nbsp;30</time><span class="quoi"><b>Tapis au sol</b><small>Bastien, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="lun" data-heure="12:30">Réserver<span class="visuel-seul"> le cours du lundi à 12&nbsp;h&nbsp;30</span></button></li>
+                <li class="creneau ouvert"><time datetime="18:30">18&nbsp;h&nbsp;30</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Inès, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="lun" data-heure="18:30">Réserver<span class="visuel-seul"> le cours du lundi à 18&nbsp;h&nbsp;30</span></button></li>
+                <li class="creneau ferme"><time datetime="19:45">19&nbsp;h&nbsp;45</time><span class="quoi"><b>Reformer, enchaînements</b><small>Maud, 50&nbsp;min</small><span class="tension t3"><i></i><i></i><i></i>soutenu</span></span><span class="etat">Après cinq cours</span></li>
+              </ol>
+            </section>
+            <section class="jour j-mar" aria-label="Mardi">
+              <h3>Mardi</h3>
+              <ol>
+                <li class="creneau ouvert"><time datetime="08:00">8&nbsp;h</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Maud, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="mar" data-heure="08:00">Réserver<span class="visuel-seul"> le cours du mardi à 8&nbsp;h</span></button></li>
+                <li class="creneau ouvert"><time datetime="12:30">12&nbsp;h&nbsp;30</time><span class="quoi"><b>Reformer, les bases</b><small>Bastien, 50&nbsp;min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><button class="btn btn-contour" type="button" data-jour="mar" data-heure="12:30">Réserver<span class="visuel-seul"> le cours du mardi à 12&nbsp;h&nbsp;30</span></button></li>
+                <li class="creneau ouvert"><time datetime="19:00">19&nbsp;h</time><span class="quoi"><b>Tapis au sol</b><small>Maud, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="mar" data-heure="19:00">Réserver<span class="visuel-seul"> le cours du mardi à 19&nbsp;h</span></button></li>
+                <li class="creneau ferme"><time datetime="20:15">20&nbsp;h&nbsp;15</time><span class="quoi"><b>Reformer, les bases</b><small>Inès, 50&nbsp;min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><span class="etat">Complet</span></li>
+              </ol>
+            </section>
+            <section class="jour j-mer" aria-label="Mercredi">
+              <h3>Mercredi</h3>
+              <ol>
+                <li class="creneau ferme"><time datetime="07:30">7&nbsp;h&nbsp;30</time><span class="quoi"><b>Reformer, enchaînements</b><small>Inès, 50&nbsp;min</small><span class="tension t3"><i></i><i></i><i></i>soutenu</span></span><span class="etat">Après cinq cours</span></li>
+                <li class="creneau ouvert"><time datetime="10:00">10&nbsp;h</time><span class="quoi"><b>Reformer, les bases</b><small>Maud, 50&nbsp;min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><button class="btn btn-contour" type="button" data-jour="mer" data-heure="10:00">Réserver<span class="visuel-seul"> le cours du mercredi à 10&nbsp;h</span></button></li>
+                <li class="creneau ouvert"><time datetime="18:30">18&nbsp;h&nbsp;30</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Bastien, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="mer" data-heure="18:30">Réserver<span class="visuel-seul"> le cours du mercredi à 18&nbsp;h&nbsp;30</span></button></li>
+                <li class="creneau ouvert"><time datetime="19:45">19&nbsp;h&nbsp;45</time><span class="quoi"><b>Reformer, les bases</b><small>Bastien, 50&nbsp;min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><button class="btn btn-contour" type="button" data-jour="mer" data-heure="19:45">Réserver<span class="visuel-seul"> le cours du mercredi à 19&nbsp;h&nbsp;45</span></button></li>
+              </ol>
+            </section>
+            <section class="jour j-jeu" aria-label="Jeudi">
+              <h3>Jeudi</h3>
+              <ol>
+                <li class="creneau ouvert"><time datetime="08:00">8&nbsp;h</time><span class="quoi"><b>Tapis au sol</b><small>Inès, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="jeu" data-heure="08:00">Réserver<span class="visuel-seul"> le cours du jeudi à 8&nbsp;h</span></button></li>
+                <li class="creneau ouvert"><time datetime="12:30">12&nbsp;h&nbsp;30</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Maud, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="jeu" data-heure="12:30">Réserver<span class="visuel-seul"> le cours du jeudi à 12&nbsp;h&nbsp;30</span></button></li>
+                <li class="creneau ferme"><time datetime="18:30">18&nbsp;h&nbsp;30</time><span class="quoi"><b>Reformer, les bases</b><small>Maud, 50&nbsp;min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><span class="etat">Complet</span></li>
+                <li class="creneau ferme"><time datetime="19:45">19&nbsp;h&nbsp;45</time><span class="quoi"><b>Reformer, enchaînements</b><small>Bastien, 50&nbsp;min</small><span class="tension t3"><i></i><i></i><i></i>soutenu</span></span><span class="etat">Après cinq cours</span></li>
+              </ol>
+            </section>
+            <section class="jour j-ven" aria-label="Vendredi">
+              <h3>Vendredi</h3>
+              <ol>
+                <li class="creneau ouvert"><time datetime="07:30">7&nbsp;h&nbsp;30</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Bastien, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="ven" data-heure="07:30">Réserver<span class="visuel-seul"> le cours du vendredi à 7&nbsp;h&nbsp;30</span></button></li>
+                <li class="creneau ouvert"><time datetime="12:30">12&nbsp;h&nbsp;30</time><span class="quoi"><b>Reformer, les bases</b><small>Inès, 50&nbsp;min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><button class="btn btn-contour" type="button" data-jour="ven" data-heure="12:30">Réserver<span class="visuel-seul"> le cours du vendredi à 12&nbsp;h&nbsp;30</span></button></li>
+                <li class="creneau ouvert"><time datetime="18:00">18&nbsp;h</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Maud, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="ven" data-heure="18:00">Réserver<span class="visuel-seul"> le cours du vendredi à 18&nbsp;h</span></button></li>
+              </ol>
+            </section>
+            <section class="jour j-sam" aria-label="Samedi">
+              <h3>Samedi</h3>
+              <ol>
+                <li class="creneau ouvert"><time datetime="09:00">9&nbsp;h</time><span class="quoi"><b>Reformer, les bases</b><small>Inès, 50&nbsp;min</small><span class="tension t1"><i></i><i></i><i></i>doux</span></span><button class="btn btn-contour" type="button" data-jour="sam" data-heure="09:00">Réserver<span class="visuel-seul"> le cours du samedi à 9&nbsp;h</span></button></li>
+                <li class="creneau ouvert"><time datetime="10:15">10&nbsp;h&nbsp;15</time><span class="quoi"><b>Reformer, tous niveaux</b><small>Inès, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="sam" data-heure="10:15">Réserver<span class="visuel-seul"> le cours du samedi à 10&nbsp;h&nbsp;15</span></button></li>
+                <li class="creneau ouvert"><time datetime="11:30">11&nbsp;h&nbsp;30</time><span class="quoi"><b>Tapis au sol</b><small>Bastien, 50&nbsp;min</small><span class="tension t2"><i></i><i></i><i></i>moyen</span></span><button class="btn btn-contour" type="button" data-jour="sam" data-heure="11:30">Réserver<span class="visuel-seul"> le cours du samedi à 11&nbsp;h&nbsp;30</span></button></li>
+              </ol>
+            </section>
+          </div>
+        </div>
+        <aside class="reperes" aria-labelledby="reperes-t">
+          <h3 id="reperes-t">Lire le planning</h3>
+          <dl>
+            <div><dt><span class="tension t1"><i></i><i></i><i></i>doux</span></dt><dd>Pour découvrir la machine. Conseillé pour un premier cours.</dd></div>
+            <div><dt><span class="tension t2"><i></i><i></i><i></i>moyen</span></dt><dd>Le cours de la semaine, ouvert à tous.</dd></div>
+            <div><dt><span class="tension t3"><i></i><i></i><i></i>soutenu</span></dt><dd>Les enchaînements, après cinq cours.</dd></div>
+          </dl>
+          <p>Le studio est fermé le dimanche. Annulation gratuite jusqu’à 12&nbsp;h avant le cours.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="premier-cours" aria-labelledby="premier-t">
+    <div class="wrap premier">
       <div>
-        <h2 id="premier-t">Votre premier cours sur un reformer</h2>
-        <p>Le reformer est un cadre de bois sur lequel roule un chariot. Des ressorts le retiennent : plus on en accroche, plus il résiste. Au sol, le cours de tapis travaille les mêmes principes avec le poids du corps.</p>
+        <div class="entete-section">
+          <h2 id="premier-t">Votre premier cours sur un reformer</h2>
+          <p>Personne ne vous demande de savoir vous servir de la machine. Voici comment se passe le cours d’essai.</p>
+        </div>
         <ol>
-          <li><h3>Arrivez dix minutes avant</h3><p>Le temps de vous changer et de régler la machine à votre taille : barre de pied, appui-tête, longueur des sangles.</p></li>
-          <li><h3>Dites-nous ce qu’il faut savoir</h3><p>Une grossesse, une opération récente, une douleur : le professeur adapte les exercices, dites-le-lui avant le cours.</p></li>
+          <li><h3>Arrivez dix minutes avant</h3><p>Le temps de vous changer et de régler la machine à votre taille&#8239;: barre de pied, appui-tête, longueur des sangles.</p></li>
+          <li><h3>Dites-nous ce qu’il faut savoir</h3><p>Une grossesse, une opération récente, une douleur&#8239;: le professeur adapte les exercices, dites-le-lui avant le cours.</p></li>
           <li><h3>Cinquante minutes, à huit au maximum</h3><p>Le professeur montre chaque exercice, change les ressorts avec vous au début et corrige vos placements pendant le cours.</p></li>
           <li><h3>Et ensuite</h3><p>Votre cours d’essai est déduit si vous prenez une carte de 10 dans la semaine qui suit.</p></li>
         </ol>
       </div>
       <figure>
-        <img src="/exemples/img/studio-pilates-ressorts-755.webp"
-             srcset="/exemples/img/studio-pilates-ressorts-480.webp 480w, /exemples/img/studio-pilates-ressorts-755.webp 755w"
-             sizes="(min-width: 60rem) 31rem, calc(100vi - 2rem)"
-             width="755" height="638" loading="lazy" decoding="async"
-             alt="Chariot de reformer vu de face, rembourrage noir, cinq ressorts accrochés dessous, rails en bois de chaque côté">
-        <figcaption>Cinq ressorts sous le chariot : on en accroche un ou plusieurs selon l’exercice.</figcaption>
+        <img src="/exemples/img/studio-pilates-ressorts-800.webp" srcset="/exemples/img/studio-pilates-ressorts-480.webp 480w, /exemples/img/studio-pilates-ressorts-800.webp 800w, /exemples/img/studio-pilates-ressorts-1200.webp 1200w" sizes="(min-width: 60rem) 32rem, 92vw" width="1200" height="900" loading="lazy" decoding="async"
+             alt="Cadre de trapèze en acier : ressorts à mousquetons jaunes, barre de bois, poignées gainées, reformers au fond">
+        <figcaption>Au cadre de trapèze comme sur le reformer, plus on accroche de ressorts, plus le mouvement résiste.</figcaption>
       </figure>
     </div>
   </section>
 
-  <section class="tarifs" id="tarifs" aria-labelledby="tarifs-t">
+  <section class="section tarifs" id="tarifs" aria-labelledby="tarifs-t">
     <div class="wrap">
-      <h2 id="tarifs-t">Tarifs</h2>
-      <dl class="prix">
-        <div><dt>Cours d’essai<small>reformer ou tapis, un par personne</small></dt><dd>25 €</dd></div>
-        <div><dt>Cours de reformer à l’unité</dt><dd>38 €</dd></div>
-        <div><dt>Cours de tapis à l’unité</dt><dd>22 €</dd></div>
-        <div><dt>Carte de 10 cours de reformer<small>valable quatre mois</small></dt><dd>340 €</dd></div>
-        <div><dt>Abonnement, un cours de reformer par semaine<small>sans engagement, résiliable chaque mois</small></dt><dd>129 € par mois</dd></div>
-      </dl>
-      <p class="note">Le cours d’essai est déduit de la carte de 10 si vous la prenez dans la semaine qui suit. Paiement en ligne au moment de réserver, ou sur place.</p>
+      <div class="entete-section">
+        <h2 id="tarifs-t">Tarifs</h2>
+        <p>Les mêmes prix pour tous les cours de reformer, quel que soit le niveau.</p>
+      </div>
+      <div class="tarifs-grille">
+        <dl class="prix">
+          <div class="essai-ligne"><dt>Cours d’essai<small>reformer ou tapis, un par personne</small></dt><dd>25&nbsp;€</dd></div>
+          <div><dt>Cours de reformer à l’unité</dt><dd>38&nbsp;€</dd></div>
+          <div><dt>Cours de tapis à l’unité</dt><dd>22&nbsp;€</dd></div>
+          <div><dt>Carte de 10 cours de reformer<small>valable quatre mois</small></dt><dd>340&nbsp;€</dd></div>
+          <div><dt>Abonnement, un cours de reformer par semaine<small>sans engagement, résiliable chaque mois</small></dt><dd>129&nbsp;€ par mois</dd></div>
+        </dl>
+        <div class="tarifs-note">
+          <p>Le cours d’essai est déduit de la carte de 10 si vous la prenez dans la semaine qui suit.</p>
+          <p>Paiement en ligne au moment de réserver, ou sur place.</p>
+          <p>Prévoyez une tenue souple et des chaussettes antidérapantes, en vente à l’accueil (8&nbsp;€).</p>
+          <a class="btn" href="#essai">Réserver mon cours d’essai</a>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="lieu" aria-labelledby="lieu-t">
+  <section class="section section-chaux" id="studio" aria-labelledby="studio-t">
     <div class="wrap">
+      <div class="entete-section">
+        <h2 id="studio-t">Le studio, rue Faidherbe</h2>
+        <p>Un ancien atelier d’ébéniste en rez-de-chaussée&#8239;: briques, poutres, grandes baies vitrées et huit reformers en bois.</p>
+      </div>
+      <ul class="galerie">
+        <li>
+          <img src="/exemples/img/studio-pilates-baies-800.webp" srcset="/exemples/img/studio-pilates-baies-480.webp 480w, /exemples/img/studio-pilates-baies-800.webp 800w, /exemples/img/studio-pilates-baies-1200.webp 1200w" sizes="(min-width: 76rem) 17rem, (min-width: 36rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Reformers en rang devant les baies vitrées, stores à moitié baissés, pilier de briques">
+          <span class="lieu">La salle</span>
+          <h3>Face aux baies vitrées</h3>
+          <p>La lumière du jour pour les cours du matin, les stores baissés pour ceux du soir.</p>
+        </li>
+        <li>
+          <img src="/exemples/img/studio-pilates-barres-800.webp" srcset="/exemples/img/studio-pilates-barres-480.webp 480w, /exemples/img/studio-pilates-barres-800.webp 800w, /exemples/img/studio-pilates-barres-1200.webp 1200w" sizes="(min-width: 76rem) 17rem, (min-width: 36rem) 46vw, 92vw" width="1200" height="899" loading="lazy" decoding="async" alt="Barres de pied gainées de noir et chariots rembourrés de plusieurs reformers, en lumière chaude">
+          <span class="lieu">Les reformers</span>
+          <h3>Barre de pied et chariot</h3>
+          <p>La barre de pied se règle à votre taille au début de chaque cours.</p>
+        </li>
+        <li>
+          <img src="/exemples/img/studio-pilates-cadre-800.webp" srcset="/exemples/img/studio-pilates-cadre-480.webp 480w, /exemples/img/studio-pilates-cadre-800.webp 800w, /exemples/img/studio-pilates-cadre-1200.webp 1200w" sizes="(min-width: 76rem) 17rem, (min-width: 36rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Jambes tendues vers le haut, chevilles tenues par des sangles reliées à de longs ressorts">
+          <span class="lieu">Le cadre de trapèze</span>
+          <h3>Les sangles aux chevilles</h3>
+          <p>Au cadre de trapèze, les jambes travaillent contre de longs ressorts.</p>
+        </li>
+        <li>
+          <img src="/exemples/img/studio-pilates-bois-800.webp" srcset="/exemples/img/studio-pilates-bois-480.webp 480w, /exemples/img/studio-pilates-bois-800.webp 800w, /exemples/img/studio-pilates-bois-1200.webp 1200w" sizes="(min-width: 76rem) 17rem, (min-width: 36rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Reformers en bois massif alignés le long d’un mur blanc, coussins et couvertures posés sur les caissons">
+          <span class="lieu">Les reformers</span>
+          <h3>Du bois massif</h3>
+          <p>Des cadres lourds et silencieux, avec un caisson et une couverture pour chaque place.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="equipe" aria-labelledby="equipe-t">
+    <div class="wrap entreprise">
+      <div class="entreprise-texte">
+        <h2 class="h2" id="equipe-t">Un atelier d’ébéniste devenu studio</h2>
+        <p>Le faubourg Saint-Antoine a fabriqué les meubles de Paris pendant des siècles. Chariot a ouvert en 2019 dans l’un de ses anciens ateliers, rue Faidherbe&#8239;: nous avons gardé les briques, les poutres et les baies.</p>
+        <p>Inès, Maud et Bastien se partagent le planning. Le professeur qui vous accueille pour votre cours d’essai vous montre la machine, puis corrige vos placements tout au long du cours.</p>
+        <dl class="chiffres">
+          <div><dt>ouverture du studio</dt><dd>2019</dd></div>
+          <div><dt>reformers en bois</dt><dd>8</dd></div>
+          <div><dt>professeurs</dt><dd>3</dd></div>
+        </dl>
+      </div>
       <figure>
-        <img src="/exemples/img/studio-pilates-cour-800.webp"
-             srcset="/exemples/img/studio-pilates-cour-480.webp 480w, /exemples/img/studio-pilates-cour-800.webp 800w, /exemples/img/studio-pilates-cour-1200.webp 1200w"
-             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
-             width="1200" height="800" loading="lazy" decoding="async"
-             alt="Cour pavée du faubourg Saint-Antoine, façades blanches, arbres, ancien atelier vitré sur la droite">
-        <figcaption>La cour de l’Étoile-d’Or, rue du Faubourg-Saint-Antoine, à cinq minutes du studio.</figcaption>
+        <img src="/exemples/img/studio-pilates-correction-800.webp" srcset="/exemples/img/studio-pilates-correction-480.webp 480w, /exemples/img/studio-pilates-correction-800.webp 800w, /exemples/img/studio-pilates-correction-1200.webp 1200w" sizes="(min-width: 60rem) 34rem, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Mains d’une professeure posées sur les genoux d’une élève allongée sur un reformer, pieds sur la barre">
+        <figcaption>Correction d’un placement pendant un cours de reformer.</figcaption>
       </figure>
-      <div>
-        <h2 id="lieu-t">Au fond d’une cour du faubourg</h2>
-        <p>Le faubourg Saint-Antoine a fabriqué les meubles de Paris pendant des siècles. Le studio occupe un ancien atelier d’ébéniste, sous une verrière, au rez-de-chaussée d’une cour pavée.</p>
-        <ul class="infos">
-          <li><b>Métro</b>Ledru-Rollin ou Faidherbe-Chaligny, ligne 8.</li>
-          <li><b>Adresse</b>Envoyée avec la confirmation de réservation, avec le code de la porte.</li>
-          <li><b>Sur place</b>Vestiaire, casiers et douche.</li>
-          <li><b>À prévoir</b>Une tenue souple et des chaussettes antidérapantes, en vente à l’accueil (8 €).</li>
-        </ul>
+    </div>
+  </section>
+
+  <section class="section section-chaux" id="acces" aria-labelledby="acces-t">
+    <div class="wrap">
+      <div class="entete-section">
+        <h2 id="acces-t">Accès et horaires</h2>
+        <p>Dans le 11<sup>e</sup>, à deux minutes à pied du métro Faidherbe-Chaligny, côté faubourg Saint-Antoine.</p>
+      </div>
+      <div class="contact">
+        <div>
+          <div class="plan">
+            <svg class="plan-svg" viewBox="0 0 600 380" role="img" aria-labelledby="plan-t plan-d">
+              <title id="plan-t">Plan d’accès du studio Chariot</title>
+              <desc id="plan-d">Le studio est rue Faidherbe, au nord de la rue du Faubourg-Saint-Antoine, près des stations Faidherbe-Chaligny et Ledru-Rollin de la ligne 8.</desc>
+              <path class="rue rue-grande" d="M-10 250 L610 214"/>
+              <path class="rue rue-grande" d="M170 -10 L182 390"/>
+              <path class="rue rue-petite" d="M400 226 L438 -10"/>
+              <path class="rue rue-petite" d="M400 226 L386 390"/>
+              <text class="arr" x="44" y="120">11<tspan dy="-7" font-size="11">e</tspan></text>
+              <text class="arr" x="44" y="345">12<tspan dy="-7" font-size="11">e</tspan></text>
+              <text class="nom-rue" x="224" y="228" transform="rotate(-3.3 224 228)">Faubourg Saint-Antoine</text>
+              <text class="nom-rue" x="190" y="40" transform="rotate(87.8 190 40)">Avenue Ledru-Rollin</text>
+              <text class="nom-rue" x="432" y="112" transform="rotate(-80.9 432 112)">Rue Faidherbe</text>
+              <text class="nom-rue" x="401" y="374" transform="rotate(-85.1 401 374)">Rue de Chaligny</text>
+              <text class="direction" x="6" y="278">vers Bastille</text>
+              <text class="direction" x="594" y="242" text-anchor="end">vers Nation</text>
+              <g class="station"><circle cx="176" cy="239" r="11"/><text class="m" x="176" y="243" text-anchor="middle">M</text><text x="193" y="272">Ledru-Rollin</text></g>
+              <g class="station"><circle cx="400" cy="226" r="11"/><text class="m" x="400" y="230" text-anchor="middle">M</text><text x="416" y="256">Faidherbe-Chaligny</text></g>
+              <g class="studio"><rect x="403" y="141" width="18" height="18" rx="4"/><text x="394" y="156" text-anchor="end">Chariot</text></g>
+            </svg>
+          </div>
+          <ul class="acces">
+            <li><svg class="ico" aria-hidden="true"><use href="#i-metro"/></svg><div><b>Métro</b><span>Faidherbe-Chaligny ou Ledru-Rollin, ligne 8.</span></div></li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-porte"/></svg><div><b>La porte</b><span>Le code arrive par SMS avec la confirmation de votre réservation.</span></div></li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-casier"/></svg><div><b>Sur place</b><span>Vestiaire, casiers et douche.</span></div></li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-chaussette"/></svg><div><b>À prévoir</b><span>Une tenue souple et des chaussettes antidérapantes, en vente à l’accueil (8&nbsp;€).</span></div></li>
+          </ul>
+        </div>
+        <div class="coord">
+          <h3>Chariot</h3>
+          <address>27 rue Faidherbe<br>75011 Paris</address>
+          <a class="tel-grand" href="tel:+33199002714"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>01&nbsp;99&nbsp;00&nbsp;27&nbsp;14</a>
+          <h3>Horaires des cours</h3>
+          <table class="horaires">
+            <tbody>
+              <tr><th scope="row">Du lundi au vendredi</th><td>7&nbsp;h&nbsp;30-21&nbsp;h&nbsp;05</td></tr>
+              <tr><th scope="row">Samedi</th><td>9&nbsp;h-12&nbsp;h&nbsp;20</td></tr>
+              <tr><th scope="row">Dimanche</th><td>Fermé</td></tr>
+            </tbody>
+          </table>
+          <p class="note">Le studio ouvre un quart d’heure avant le premier cours. On répond au téléphone entre deux cours&#8239;; pour réserver, le plus simple reste le formulaire.</p>
+          <a class="btn" href="#essai">Réserver mon cours d’essai</a>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
+<footer class="pied">
   <div class="wrap">
-    <b>Chariot</b>
-    <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-studio-pilates" target="_top">4dayvelopment</a>. L’entreprise, son équipe et son numéro sont fictifs.</p>
-    <p>Photos via Wikimedia Commons, recadrées : « <a href="https://commons.wikimedia.org/wiki/File:GRATZ.jpg">GRATZ</a> », Grumbler, et « <a href="https://commons.wikimedia.org/wiki/File:Cour_de_l%27%C3%A9toile_d%27or_au_fond.jpg">Cour de l’étoile d’or au fond</a> », VVVCFFrance, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a> ; « <a href="https://commons.wikimedia.org/wiki/File:Pilates_reformer2.jpg">Pilates reformer2</a> », Aeveraal, sous licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr">CC BY 4.0</a>.</p>
+    <div class="pied-grille">
+      <div>
+        <a class="logo" href="#" aria-label="Chariot, retour en haut de page">
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <rect width="48" height="48" rx="7" fill="#FFFFFF"/>
+        <g fill="none" stroke="#1F3F8E" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6.5 33.5h35M10.5 33.5v4.5M37.5 33.5v4.5" stroke-width="3.4"/>
+          <path d="M11.5 33.5 16 14.5" stroke-width="3.4"/>
+          <path d="M15.8 25.5h1.4l1.6-3.8 2.2 7.6 2.2-7.6 1.6 3.8h1.4" stroke-width="2.2"/>
+        </g>
+        <g fill="#1F3F8E"><rect x="26" y="21.5" width="13" height="8" rx="2"/><rect x="35.5" y="16" width="3.6" height="6" rx="1.2"/></g>
+          </svg>
+          <span class="logo-txt">
+            <span class="logo-nom">Chariot</span>
+            <span class="logo-sig">Pilates sur reformer, Paris 11<sup>e</sup></span>
+          </span>
+        </a>
+        <address>27 rue Faidherbe, 75011 Paris<br>
+          <a href="tel:+33199002714">01&nbsp;99&nbsp;00&nbsp;27&nbsp;14</a><br>
+          Métro Faidherbe-Chaligny, ligne 8</address>
+      </div>
+      <nav aria-label="Plan du site">
+        <h2>Le site</h2>
+        <ul>
+          <li><a href="#cours">Les cours</a></li>
+          <li><a href="#planning">Planning</a></li>
+          <li><a href="#tarifs">Tarifs</a></li>
+          <li><a href="#studio">Le studio</a></li>
+          <li><a href="#acces">Accès et horaires</a></li>
+          <li><a href="#essai">Réserver un cours d’essai</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2>Horaires des cours</h2>
+        <ul>
+          <li>Du lundi au vendredi, 7&nbsp;h&nbsp;30-21&nbsp;h&nbsp;05</li>
+          <li>Samedi, 9&nbsp;h-12&nbsp;h&nbsp;20</li>
+          <li>Fermé le dimanche</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <p>Site de démonstration réalisé par <a href="/services/site-internet-studio-pilates" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs.</p>
+      <p>Photos&#8239;: Pexels.</p>
+    </div>
   </div>
 </footer>
 
 <nav class="pouce" aria-label="Contact rapide">
-  <a class="appel" href="tel:+33199002714">Appeler</a>
-  <a class="demande" href="#planning">Choisir mon cours d’essai</a>
+  <a class="btn btn-contour" href="tel:+33199002714"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Appeler</a>
+  <a class="btn" href="#essai">Mon cours d’essai</a>
 </nav>
-
-<script src="/exemples/studio-pilates.js" defer></script>
 </body>
 </html>
