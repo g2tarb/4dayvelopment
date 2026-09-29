@@ -24,7 +24,7 @@ export async function applyLang(lang) {
   });
 
   const btn = $('#lang-toggle');
-  if (btn) btn.innerHTML = lang === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR';
+  if (btn) { btn.textContent = lang === 'fr' ? 'EN' : 'FR'; btn.setAttribute('aria-label', lang === 'fr' ? 'EN, English version' : 'FR, version française'); }
   document.documentElement.lang = lang;
   localStorage.setItem('lang', lang);
 }

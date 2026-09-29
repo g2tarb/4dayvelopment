@@ -227,9 +227,9 @@ ${getVal('e-description')}
         ['.urg-btn', 'Flexible',  2],
         /* submit & garanties */
         ['.btn-label',               'Commander ma formule Essentiel →'],
-        ['.garanties .garantie',     '<span class="garantie-icon" aria-hidden="true">🔒</span>Paiement 100% sécurisé', 0],
-        ['.garanties .garantie',     '<span class="garantie-icon" aria-hidden="true">⚡</span>Livraison en 4 jours garantie contractuellement', 1],
-        ['.garanties .garantie',     '<span class="garantie-icon" aria-hidden="true">💬</span>Réponse sous 2h par email ou WhatsApp', 2],
+        ['.garanties .garantie',     '<span class="garantie-icon"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>Paiement 100% sécurisé', 0],
+        ['.garanties .garantie',     '<span class="garantie-icon"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>Livraison en 4 jours garantie contractuellement', 1],
+        ['.garanties .garantie',     '<span class="garantie-icon"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>Réponse sous 2h par email ou WhatsApp', 2],
         ['.form-legal',              'En soumettant ce formulaire, vous acceptez que vos données soient utilisées pour traiter votre commande. Aucun spam.'],
         /* success */
         ['#success h2',              'Commande reçue !'],
@@ -323,9 +323,9 @@ ${getVal('e-description')}
         ['.urg-btn', 'Flexible',    2],
         /* submit & garanties */
         ['.btn-label',               'Order my Essential plan →'],
-        ['.garanties .garantie',     '<span class="garantie-icon" aria-hidden="true">🔒</span>100% secure payment', 0],
-        ['.garanties .garantie',     '<span class="garantie-icon" aria-hidden="true">⚡</span>4-day delivery contractually guaranteed', 1],
-        ['.garanties .garantie',     '<span class="garantie-icon" aria-hidden="true">💬</span>Reply within 2h by email or WhatsApp', 2],
+        ['.garanties .garantie',     '<span class="garantie-icon"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>100% secure payment', 0],
+        ['.garanties .garantie',     '<span class="garantie-icon"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>4-day delivery contractually guaranteed', 1],
+        ['.garanties .garantie',     '<span class="garantie-icon"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>Reply within 2h by email or WhatsApp', 2],
         ['.form-legal',              'By submitting this form, you agree that your data will be used to process your order. No spam.'],
         /* success */
         ['#success h2',              'Order received!'],
@@ -356,7 +356,7 @@ ${getVal('e-description')}
       (PH[lang] || []).forEach(([sel, text]) => setPH(sel, text));
       document.documentElement.lang = lang;
       const btn = document.getElementById('lang-btn');
-      if (btn) btn.textContent = lang === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR';
+      if (btn) { btn.textContent = lang === 'fr' ? 'EN' : 'FR'; btn.setAttribute('aria-label', lang === 'fr' ? 'EN, English version' : 'FR, version française'); }
       localStorage.setItem('lang', lang);
     }
 
@@ -370,7 +370,7 @@ ${getVal('e-description')}
 
     const saved = localStorage.getItem('lang') || 'fr';
     const btn = document.getElementById('lang-btn');
-    if (btn) btn.textContent = saved === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR';
+    if (btn) { btn.textContent = saved === 'fr' ? 'EN' : 'FR'; btn.setAttribute('aria-label', saved === 'fr' ? 'EN, English version' : 'FR, version française'); }
     if (saved === 'en') applyLang('en');
   })();
 
