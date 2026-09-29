@@ -35,6 +35,11 @@
   --accent2:     #f2b13b;
   --accent3:     #884083;
   --gradient:    linear-gradient(135deg, #DA5426 0%, #f2b13b 40%, #884083 100%);
+  /* Boutons et pastilles pleins : orange -> or seulement, texte sombre.
+     Le blanc tombait a 1,9:1 sur l'or ; un texte sombre, a 3,1:1 sur le
+     violet que le survol devoilait. Ici : 5,3:1 sur l'orange, 10,9 sur l'or. */
+  --gradient-cta: linear-gradient(135deg, #DA5426 0%, #f2b13b 100%);
+  --on-cta:      #0b0b0b;
   --gradient-bg: linear-gradient(135deg, rgba(218,84,38,0.12), rgba(136,64,131,0.08));
 
   --text:        #f0f0f0;
@@ -115,7 +120,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.2; }
   padding: 12px 20px;
   border-radius: 99px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-cta);
   font-weight: 700;
   font-size: 0.9375rem;
   transform: translateY(calc(-100% - 20px));
@@ -315,9 +320,9 @@ nav.scrolled {
 
 
 .nav-cta {
-  background: var(--gradient);
+  background: var(--gradient-cta);
   background-size: 200% auto;
-  color: #fff;
+  color: var(--on-cta);
   padding: 10px 24px;
   border-radius: var(--radius-full);
   font-size: 0.875rem;
@@ -392,8 +397,8 @@ nav.scrolled {
 .mobile-menu a:hover { color: var(--text); }
 .mobile-cta {
   margin-top: 24px;
-  background: var(--gradient) !important;
-  color: #fff !important;
+  background: var(--gradient-cta) !important;
+  color: var(--on-cta) !important;
   padding: 14px 24px !important;
   border-radius: var(--radius) !important;
   text-align: center;
@@ -574,9 +579,9 @@ p.maj {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--gradient);
+  background: var(--gradient-cta);
   background-size: 200% auto;
-  color: #fff;
+  color: var(--on-cta);
   padding: 16px 36px;
   border-radius: var(--radius-full);
   font-weight: 700;
@@ -614,7 +619,7 @@ p.maj {
   overflow: hidden;
   border-radius: 50px;
   padding: 0;
-  background: linear-gradient(135deg, #DA5426, #884083, #f2b13b, #DA5426);
+  background: linear-gradient(135deg, #DA5426, #f2b13b, #e8792f, #DA5426); /* sans violet : texte sombre lisible a chaque instant de l'animation */
   background-size: 300% 300%;
   animation: prospect-glow 2.5s ease-in-out infinite,
              gradientShift 4s ease infinite;
@@ -640,7 +645,7 @@ p.maj {
   font-family: 'Syne', sans-serif;
   font-size: 0.9375rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--on-cta);
   letter-spacing: -0.3px;
   z-index: 1;
 }
@@ -1113,14 +1118,14 @@ section { padding: 100px var(--gutter-x); }
 .step-num {
   width: 52px; height: 52px;
   min-width: 52px;
-  background: var(--gradient);
+  background: var(--gradient-cta);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
   font-size: 1.1rem;
-  color: #fff;
+  color: var(--on-cta);
   box-shadow: 0 0 30px rgba(218,84,38,0.4);
   position: relative;
   z-index: 1;
@@ -1184,8 +1189,8 @@ section { padding: 100px var(--gutter-x); }
   background: rgba(218,84,38,0.08);
 }
 .btn-plan-filled {
-  background: var(--gradient);
-  color: #fff;
+  background: var(--gradient-cta);
+  color: var(--on-cta);
   box-shadow: 0 4px 24px rgba(218,84,38,0.35);
 }
 .btn-plan-filled:hover {
@@ -1521,8 +1526,8 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   height: 22px;
   padding: 0 5px;
   border-radius: 6px;
-  background: var(--gradient);
-  color: #fff;
+  background: var(--gradient-cta);
+  color: var(--on-cta);
   font-size: 0.75rem;
 }
 
@@ -1843,9 +1848,9 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   font-weight: 800;
   font-size: 1.0625rem;
   line-height: 1;
-  color: #fff;
+  color: var(--on-cta);
   flex-shrink: 0;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  background: var(--gradient-cta);
 }
 .author-info strong { display: block; font-size: 0.875rem; font-weight: 700; }
 .author-info span   { font-size: 0.75rem; color: var(--muted); }
@@ -2174,7 +2179,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 /* Bouton submit */
 .btn-submit {
   background-size: 200% auto;
-  color: #fff;
+  color: var(--on-cta);
   font-family: 'Inter', sans-serif;
   cursor: pointer;
   display: flex;
@@ -2395,8 +2400,8 @@ footer {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--gradient);
-  color: #fff;
+  background: var(--gradient-cta);
+  color: var(--on-cta);
   padding: 16px 36px;
   border-radius: var(--radius-full);
   font-weight: 700;
@@ -3553,9 +3558,9 @@ footer {
 }
 .type-chip:hover { transform: translateY(-2px); border-color: rgba(242,177,59,.4); }
 .type-chip.active {
-  background: var(--gradient);
+  background: var(--gradient-cta);
   border-color: transparent;
-  color: #fff;
+  color: var(--on-cta);
   box-shadow: 0 10px 26px -10px rgba(218,84,38,.6);
 }
 .btn-submit {
@@ -3565,7 +3570,7 @@ footer {
   font-size: 0.9375rem;
   font-weight: 700;
   letter-spacing: .02em;
-  background: var(--gradient);
+  background: var(--gradient-cta);
   border: 0;
   box-shadow: 0 18px 44px -16px rgba(218,84,38,.6);
   transition: transform .3s var(--ease-spring), box-shadow .3s, filter .3s;
@@ -4610,8 +4615,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     gap: 7px;
     padding: 13px 12px;
     border-radius: 14px;
-    background: var(--gradient);
-    color: #fff;
+    background: var(--gradient-cta);
+    color: var(--on-cta);
     font-size: 0.8438rem;
     font-weight: 800;
     white-space: nowrap;

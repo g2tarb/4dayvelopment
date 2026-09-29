@@ -541,8 +541,8 @@
       align-items: center;
       justify-content: center;
       gap: 10px;
-      background: linear-gradient(135deg, var(--orange), #b83d1c);
-      color: #fff;
+      background: linear-gradient(135deg, var(--orange), #f2b13b); /* texte sombre : le blanc tombait a 4:1 sur l'orange */
+      color: #0b0b0b;
       font-family: 'Syne', sans-serif;
       font-size: 0.9375rem;
       font-weight: 800;
@@ -573,8 +573,8 @@
 
     .spinner {
       width: 18px; height: 18px;
-      border: 2px solid rgba(255,255,255,.3);
-      border-top-color: #fff;
+      border: 2px solid rgba(11,11,11,.25);
+      border-top-color: #0b0b0b; /* sur le bouton orange-or, le blanc ne se voyait pas */
       border-radius: 50%;
       animation: spin .7s linear infinite;
       display: none;
