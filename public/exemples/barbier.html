@@ -81,8 +81,8 @@ button{font:inherit;color:inherit}
   background:radial-gradient(ellipse at 50% 58%,transparent 0%,rgba(18,12,8,.42) 64%,rgba(18,12,8,.86) 100%),
              linear-gradient(180deg,rgba(18,12,8,.55) 0%,transparent 30%,transparent 55%,rgba(18,12,8,.95) 100%)}
 .hero__inner{position:relative;max-width:1160px;margin:0 auto;width:100%;padding:0 1.4rem}
-.hero__eyebrow{font-size:11px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--creme-dim);margin-bottom:2rem}
-.hero__eyebrow i{font-style:normal;color:var(--laiton);padding:0 .85rem;font-size:.8em}
+.hero__eyebrow{font-size:12px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--creme-dim);margin-bottom:2rem}
+.hero__eyebrow i{font-style:normal;color:var(--laiton);padding:0 .85rem;font-size:max(12px,.8em)}
 h1{font-family:'Fraunces',serif;font-weight:350;font-size:clamp(2.7rem,8.6vw,6.6rem);line-height:1.02;letter-spacing:-.02em;max-width:14ch}
 h1 em{font-style:italic;color:var(--laiton);font-weight:400}
 .hero__sub{font-family:'Fraunces',serif;font-style:italic;font-weight:330;font-size:clamp(1.02rem,1.5vw,1.25rem);
@@ -101,7 +101,7 @@ h1 em{font-style:italic;color:var(--laiton);font-weight:400}
 /* ── Sections & ornements ── */
 section{padding:6.5rem 1.4rem}
 .wrap{max-width:1160px;margin:0 auto}
-.s-label{font-size:11px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--laiton);margin-bottom:1.6rem}
+.s-label{font-size:12px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--laiton);margin-bottom:1.6rem}
 h2{font-family:'Fraunces',serif;font-weight:350;font-size:clamp(2.1rem,5vw,3.7rem);line-height:1.06;letter-spacing:-.018em;margin-bottom:1.4rem}
 h2 em{font-style:italic;color:var(--laiton)}
 .s-lead{font-family:'Fraunces',serif;font-style:italic;color:var(--creme-dim);font-size:1.05rem;max-width:52ch}
@@ -117,16 +117,16 @@ h2 em{font-style:italic;color:var(--laiton)}
   background:linear-gradient(175deg,rgba(42,26,16,.72),rgba(24,15,9,.88));
   box-shadow:0 0 0 5px var(--cuir-fonce),0 0 0 6px rgba(201,149,92,.22),0 30px 60px -20px rgba(0,0,0,.6);
   padding:2rem 1.6rem 2.2rem}
-.carnet__titre{text-align:center;font-size:11px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--laiton);margin-bottom:1.6rem}
+.carnet__titre{text-align:center;font-size:12px;font-weight:500;letter-spacing:.3em;text-transform:uppercase;color:var(--laiton);margin-bottom:1.6rem}
 .carnet__filet{height:1px;background:linear-gradient(90deg,transparent,var(--filet),transparent);margin:1.6rem 0;position:relative}
 .carnet__filet::after{content:'✦';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  background:transparent;color:var(--laiton);font-size:.65rem;padding:0 .6rem;background:#1e130b}
+  background:transparent;color:var(--laiton);font-size:12px;padding:0 .6rem;background:#1e130b}
 .carnet .etape{font-family:'Fraunces',serif;font-style:italic;font-size:.92rem;color:var(--creme-dim);margin-bottom:.85rem}
 .pills{display:flex;flex-wrap:wrap;gap:.55rem}
 .pill{display:inline-flex;align-items:center;gap:.5rem;min-height:44px;padding:.55rem 1.15rem;border-radius:999px;cursor:pointer;
   border:1px solid var(--ligne);background:rgba(242,230,208,.03);color:var(--creme);font-size:.88rem;font-weight:400;
   transition:border-color .3s,background .3s,color .3s,transform .3s var(--ease)}
-.pill i{font-style:normal;color:var(--laiton);font-variant-numeric:tabular-nums;font-size:.84em}
+.pill i{font-style:normal;color:var(--laiton);font-variant-numeric:tabular-nums;font-size:max(12px,.84em)}
 .pill:hover{border-color:var(--laiton);transform:translateY(-1px)}
 .pill[aria-pressed="true"]{background:var(--laiton);border-color:var(--laiton);color:var(--noir);font-weight:600}
 .pill[aria-pressed="true"] i{color:rgba(18,12,8,.72)}
@@ -135,9 +135,9 @@ h2 em{font-style:italic;color:var(--laiton)}
   border:1px solid var(--ligne);background:rgba(242,230,208,.03);position:relative;
   transition:border-color .3s,background .3s,transform .3s var(--ease)}
 .jour:hover{border-color:var(--laiton)}
-.jour .d{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--creme-dim);font-weight:500}
+.jour .d{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--creme-dim);font-weight:500}
 .jour .n{font-family:'Fraunces',serif;font-weight:450;font-size:1.35rem;line-height:1.15}
-.jour .m{font-size:10.5px;color:var(--creme-faible)}
+.jour .m{font-size:12px;color:var(--creme-faible)}
 .jour[aria-pressed="true"]{background:rgba(201,149,92,.14);border-color:var(--laiton)}
 .jour[aria-pressed="true"] .n{color:var(--laiton-clair)}
 .jour.auj::after{content:'';position:absolute;top:7px;right:8px;width:5px;height:5px;border-radius:50%;background:var(--rouge)}
@@ -178,7 +178,7 @@ h2 em{font-style:italic;color:var(--laiton)}
 .geste__fil{flex:1;border-bottom:1px dotted rgba(242,230,208,.25);transform:translateY(-5px);min-width:2rem}
 .geste__prix{font-family:'Fraunces',serif;font-style:italic;font-weight:420;color:var(--laiton);font-size:1.15rem;white-space:nowrap;font-variant-numeric:tabular-nums}
 .geste__desc{font-family:'Fraunces',serif;font-style:italic;font-size:.92rem;color:var(--creme-dim);margin-top:.3rem;max-width:46ch}
-.geste__tag{display:inline-block;margin-left:.7rem;font-family:'Inter',sans-serif;font-style:normal;font-weight:500;font-size:10px;
+.geste__tag{display:inline-block;margin-left:.7rem;font-family:'Inter',sans-serif;font-style:normal;font-weight:500;font-size:12px;
   letter-spacing:.18em;text-transform:uppercase;color:var(--rouge);vertical-align:.15em}
 .geste__tag::before{content:'✦ ';color:var(--laiton)}
 
@@ -211,7 +211,7 @@ h2 em{font-style:italic;color:var(--laiton)}
 .adresse .rue{font-family:'Fraunces',serif;font-weight:430;font-size:1.35rem;letter-spacing:-.01em;display:block;margin-bottom:.2rem}
 .adresse .metro{display:flex;align-items:center;gap:.6rem;margin-top:1rem;font-size:.9rem;color:var(--creme-dim)}
 .pastille{display:inline-flex;width:24px;height:24px;flex:none;border-radius:50%;border:1px solid var(--laiton);color:var(--laiton);
-  font-size:.72rem;font-weight:600;align-items:center;justify-content:center}
+  font-size:12px;font-weight:600;align-items:center;justify-content:center}
 .adresse .tel{margin-top:1.2rem;font-family:'Fraunces',serif;font-style:italic;font-size:.95rem;color:var(--creme-dim)}
 .horaires{display:grid;grid-template-columns:auto 1fr;gap:.55rem 1.8rem;font-size:.95rem;max-width:380px}
 .horaires dt{color:var(--creme-dim)}
@@ -225,7 +225,7 @@ h2 em{font-style:italic;color:var(--laiton)}
 footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem + env(safe-area-inset-bottom));text-align:center}
 .foot__demo{display:flex;flex-direction:column;align-items:center;gap:1.1rem}
 .foot__demo p{font-family:'Fraunces',serif;font-style:italic;font-size:.95rem;color:var(--creme-dim)}
-.foot__credit{font-size:11px;color:var(--creme-faible);margin-top:1.6rem;line-height:1.8}
+.foot__credit{font-size:12px;color:var(--creme-faible);margin-top:1.6rem;line-height:1.8}
 .foot__credit a{color:var(--creme-dim)}
 
 /* ── Toast ── */
@@ -258,10 +258,10 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
   /* Le hero doit tenir dans le cadre : sinon on ouvre l'exemple sur une photo et du
      vide, le titre et le bouton restant sous le bord de l'ecran du mockup. */
   .hero{padding:3.2rem 0 1.4rem}
-  .hero__eyebrow,.eyebrow,.badge{margin-bottom:.8rem;font-size:9.5px;letter-spacing:.2em;line-height:1.5}
+  .hero__eyebrow,.eyebrow,.badge{margin-bottom:.8rem;font-size:12px;letter-spacing:.2em;line-height:1.5}
   .hero__sub,.hero__hum{margin:.7rem 0 1.1rem;font-size:.88rem;line-height:1.55}
   .hero__actions{gap:.55rem}
-  .hero__actions a,.hero__actions button{min-height:42px;padding:.6rem 1.1rem;font-size:11px;letter-spacing:.06em}
+  .hero__actions a,.hero__actions button{min-height:42px;padding:.6rem 1.1rem;font-size:12px;letter-spacing:.06em}
   /* Mockup telephone (~244 px de large) : les paddings de section restaient ceux
      du grand ecran, ce qui laissait un grand vide entre la derniere section et
      le pied de page au lieu de montrer la fin du site. */
@@ -271,7 +271,7 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
   .brand{white-space:nowrap;min-width:0}
   .brand span{display:none}
   .brand b,.brand strong{font-size:1rem}
-  .top-cta,.top-tel,.btn.btn--top{font-size:10.5px;padding:.45rem .85rem;min-height:40px;letter-spacing:.06em;white-space:nowrap}
+  .top-cta,.top-tel,.btn.btn--top{font-size:12px;padding:.45rem .85rem;min-height:40px;letter-spacing:.06em;white-space:nowrap}
   .stamp{display:none}
   h1{font-size:clamp(1.6rem,9vw,3.4rem)}
   h2{font-size:clamp(1.35rem,8.4vw,2.6rem)}

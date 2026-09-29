@@ -46,7 +46,7 @@ img{max-width:100%;display:block}
 
 /* ── Tampon ── */
 .tampon{display:inline-block;position:relative;padding:.42rem .95rem;border:1.5px solid currentColor;border-radius:7px;
-  font-family:'Fraunces',serif;font-weight:520;font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  font-family:'Fraunces',serif;font-weight:520;font-size:12px;letter-spacing:.22em;text-transform:uppercase;
   color:var(--encre);opacity:.85;line-height:1.4;white-space:nowrap}
 .tampon::after{content:'';position:absolute;inset:3px;border:1px solid currentColor;border-radius:4px;opacity:.6}
 .tampon--incline{transform:rotate(-4deg)}
@@ -61,8 +61,8 @@ img{max-width:100%;display:block}
 .brand{display:flex;align-items:center;gap:.9rem;text-decoration:none;color:var(--encre);min-height:44px}
 .brand b{font-family:'Fraunces',serif;font-weight:560;font-size:1.3rem;letter-spacing:-.01em;white-space:nowrap}
 .brand b i{font-style:italic;color:var(--bleu);font-weight:480}
-.brand small{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--encre-dim);font-weight:500;white-space:nowrap}
-.topbar .tampon{font-size:9.5px;padding:.3rem .7rem}
+.brand small{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--encre-dim);font-weight:500;white-space:nowrap}
+.topbar .tampon{font-size:12px;padding:.3rem .7rem}
 @media(max-width:820px){.topbar .tampon{display:none}}
 @media(max-width:560px){.brand small{display:none}}
 .top-tel{display:inline-flex;align-items:center;gap:.55rem;min-height:44px;padding:.55rem 1.15rem;border-radius:999px;
@@ -82,9 +82,9 @@ img{max-width:100%;display:block}
   background:linear-gradient(90deg,rgba(244,242,237,.72) 0%,rgba(244,242,237,.3) 42%,transparent 68%),
              linear-gradient(180deg,rgba(244,242,237,.42) 0%,rgba(244,242,237,.08) 30%,rgba(244,242,237,.55) 62%,rgba(244,242,237,.94) 86%,var(--papier) 100%)}
 .hero__inner{position:relative;max-width:1200px;margin:0 auto;width:100%;padding:0 1.4rem}
-.hero__eyebrow{font-size:11px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:rgba(29,53,87,.8);margin-bottom:1.8rem}
+.hero__eyebrow{font-size:12px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:rgba(29,53,87,.8);margin-bottom:1.8rem}
 .hero__eyebrow i{display:inline-block;width:26px;height:1px;background:rgba(29,53,87,.35);vertical-align:middle;margin:0 .9rem;font-style:normal}
-@media(max-width:560px){.hero__eyebrow{font-size:10px;letter-spacing:.24em;max-width:26ch}.hero__eyebrow i{width:12px;margin:0 .5rem}}
+@media(max-width:560px){.hero__eyebrow{font-size:12px;letter-spacing:.24em;max-width:26ch}.hero__eyebrow i{width:12px;margin:0 .5rem}}
 h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2.7rem,9vw,6.4rem);line-height:.98;letter-spacing:-.02em;max-width:14ch}
 h1 em,h2 em{font-style:italic;color:var(--bleu);font-weight:420}
 .hero__sub{font-family:'Fraunces',serif;font-style:italic;font-weight:340;font-size:clamp(1.02rem,1.5vw,1.25rem);
@@ -92,7 +92,7 @@ h1 em,h2 em{font-style:italic;color:var(--bleu);font-weight:420}
 .hero__urgence{display:flex;flex-direction:column;gap:.7rem;margin-bottom:2rem}
 .badge2h{display:inline-flex;align-items:center;gap:.55rem;align-self:flex-start;
   border:1.5px solid var(--orange);color:var(--orange);border-radius:999px;padding:.42rem 1.05rem;
-  font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
+  font-size:12px;font-weight:700;letter-spacing:.2em;text-transform:uppercase}
 .badge2h i{width:7px;height:7px;border-radius:50%;background:var(--orange);animation:pulse 1.8s ease-in-out infinite;font-style:normal}
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.78)}}
 @media (prefers-reduced-motion:reduce){.badge2h i{animation:none}}
@@ -129,7 +129,7 @@ h1 em,h2 em{font-style:italic;color:var(--bleu);font-weight:420}
 /* ── Sections ── */
 section{padding:6.5rem 1.4rem}
 .wrap{max-width:1200px;margin:0 auto}
-.s-label{font-size:11px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--bleu);margin-bottom:1.6rem}
+.s-label{font-size:12px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--bleu);margin-bottom:1.6rem}
 h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2rem,5vw,3.6rem);line-height:1.05;letter-spacing:-.018em;margin-bottom:1.3rem}
 .s-lead{font-family:'Fraunces',serif;font-style:italic;font-weight:340;color:var(--encre-dim);font-size:1.05rem;max-width:52ch}
 
@@ -139,7 +139,7 @@ h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2rem,5vw,3.6rem)
 .diag__head{display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;
   padding:1rem 1.6rem;border-bottom:1px dashed var(--ligne)}
 .diag__marque{font-family:'Fraunces',serif;font-style:italic;font-size:.9rem;color:var(--encre-dim)}
-.diag__etape{font-size:10.5px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--zinc)}
+.diag__etape{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--zinc)}
 .diag__corps{padding:2.2rem 1.6rem 2.4rem;position:relative}
 @media(min-width:760px){.diag__corps{padding:2.8rem 2.6rem 3rem}}
 .dscreen{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
@@ -176,13 +176,13 @@ h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2rem,5vw,3.6rem)
 .bon__top{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;flex-wrap:wrap;
   padding-bottom:1.1rem;border-bottom:1px dashed var(--ligne);margin-bottom:1.5rem}
 .bon__marque b{display:block;font-family:'Fraunces',serif;font-weight:560;font-size:1.2rem;letter-spacing:-.01em}
-.bon__marque span{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--zinc);font-weight:500}
+.bon__marque span{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--zinc);font-weight:500}
 .bon__num{font-family:'Fraunces',serif;font-style:italic;color:var(--encre-dim);font-size:.92rem;font-variant-numeric:tabular-nums}
-.bon__titre{font-size:10.5px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--bleu);margin-bottom:1.2rem}
+.bon__titre{font-size:12px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;color:var(--bleu);margin-bottom:1.2rem}
 .bon__lignes{display:flex;flex-direction:column;gap:.95rem;margin-bottom:1.3rem}
 .bon__lignes>div{display:grid;gap:.15rem}
 @media(min-width:640px){.bon__lignes>div{grid-template-columns:180px 1fr;gap:1.2rem;align-items:baseline}}
-.bon__lignes dt{font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--zinc)}
+.bon__lignes dt{font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--zinc)}
 .bon__lignes dd{font-family:'Fraunces',serif;font-weight:460;font-size:1.08rem;line-height:1.45;font-variant-numeric:tabular-nums;min-height:1.5em}
 .type.typing::after{content:'▍';color:var(--bleu);animation:caret 1s steps(2) infinite;margin-left:1px}
 @keyframes caret{50%{opacity:0}}
@@ -200,7 +200,7 @@ h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(2rem,5vw,3.6rem)
 .rappel{display:grid;gap:.9rem;margin-top:1.3rem;padding-top:1.3rem;border-top:1px dashed var(--ligne);max-width:560px}
 .rappel[hidden]{display:none}
 @media(min-width:640px){.rappel{grid-template-columns:1fr 1fr auto;align-items:end}}
-.rappel label{display:block;font-size:10.5px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--zinc);margin-bottom:.3rem}
+.rappel label{display:block;font-size:12px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--zinc);margin-bottom:.3rem}
 .rappel input{width:100%;font-size:16px;font-family:inherit;color:var(--encre);background:#fff;
   border:1.5px solid var(--ligne);border-radius:10px;padding:.7rem .9rem;min-height:48px}
 .rappel input:focus{outline:none;border-color:var(--bleu);box-shadow:0 0 0 3px rgba(37,99,235,.15)}
@@ -274,7 +274,7 @@ footer{background:var(--encre);color:rgba(244,242,237,.75);
   font-size:13px;letter-spacing:.12em;text-transform:uppercase;font-weight:550;
   transition:border-color .3s,background .3s}
 .foot__btn:hover{border-color:var(--papier);background:rgba(244,242,237,.08)}
-.foot__credit{font-size:11px;color:rgba(244,242,237,.45);margin-top:1.8rem;line-height:1.9}
+.foot__credit{font-size:12px;color:rgba(244,242,237,.45);margin-top:1.8rem;line-height:1.9}
 .foot__credit a{color:rgba(244,242,237,.6)}
 @media(max-width:859px){footer{padding-bottom:calc(2.4rem + 86px + env(safe-area-inset-bottom))}}
 
@@ -305,14 +305,14 @@ footer{background:var(--encre);color:rgba(244,242,237,.75);
   /* Le hero doit tenir dans le cadre : sinon on ouvre l'exemple sur une photo et du
      vide, le titre et le bouton restant sous le bord de l'ecran du mockup. */
   .hero{padding:3.2rem 0 1.4rem}
-  .hero__eyebrow,.eyebrow,.badge{margin-bottom:.8rem;font-size:9.5px;letter-spacing:.2em;line-height:1.5}
+  .hero__eyebrow,.eyebrow,.badge{margin-bottom:.8rem;font-size:12px;letter-spacing:.2em;line-height:1.5}
   .hero__sub,.hero__hum{margin:.7rem 0 1.1rem;font-size:.88rem;line-height:1.55}
   .hero__actions{gap:.55rem}
-  .hero__actions a,.hero__actions button{min-height:42px;padding:.6rem 1.1rem;font-size:11px;letter-spacing:.06em}
+  .hero__actions a,.hero__actions button{min-height:42px;padding:.6rem 1.1rem;font-size:12px;letter-spacing:.06em}
   .hero__urgence{gap:.35rem;margin:.6rem 0 .9rem}
-  .badge2h{font-size:9.5px;padding:.35rem .7rem}
+  .badge2h{font-size:12px;padding:.35rem .7rem}
   .tel-geant{font-size:1.5rem;line-height:1.2}
-  .tel-note{font-size:10px;line-height:1.4}
+  .tel-note{font-size:12px;line-height:1.4}
   /* Mockup telephone (~244 px de large) : les paddings de section restaient ceux
      du grand ecran, ce qui laissait un grand vide entre la derniere section et
      le pied de page au lieu de montrer la fin du site. */
@@ -323,12 +323,12 @@ footer{background:var(--encre);color:rgba(244,242,237,.75);
   .brand{white-space:nowrap;min-width:0}
   .brand span{display:none}
   .brand b,.brand strong{font-size:1rem}
-  .top-cta,.top-tel,.btn.btn--top{font-size:10.5px;padding:.45rem .85rem;min-height:40px;letter-spacing:.06em;white-space:nowrap}
+  .top-cta,.top-tel,.btn.btn--top{font-size:12px;padding:.45rem .85rem;min-height:40px;letter-spacing:.06em;white-space:nowrap}
   .stamp{display:none}
   h1{font-size:clamp(1.6rem,9vw,3.4rem)}
   h2{font-size:clamp(1.35rem,8.4vw,2.6rem)}
   .tampons{flex-wrap:wrap;min-width:0}
-  .tampons>*{min-width:0;font-size:11px;padding:.5rem .7rem;white-space:normal;text-align:center}
+  .tampons>*{min-width:0;font-size:12px;padding:.5rem .7rem;white-space:normal;text-align:center}
   .formes{flex-wrap:wrap;justify-content:center}
   .formes .forme,.formes button{min-width:0;padding:.5rem .7rem;font-size:12px}
 }
