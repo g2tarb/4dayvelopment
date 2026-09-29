@@ -474,6 +474,10 @@ nav.scrolled {
   hyphens: auto;
   hyphenate-limit-chars: 10 4 4; /* seuls les mots longs se coupent : pas de « mé-thode » */
 }
+/* Le nom de marque ne se coupe pas au hasard (« 4dayvelop-ment ») : seule
+   coupure permise, 4day / velopment, comme sur le logo (<wbr>). Sans
+   césure, « velopment » (8,4 em) doit tenir seul : 10vi le borne à 320 px. */
+.brand-word { hyphens: manual; font-size: min(1em, 10vi); }
 
 .hero-title {
   font-family: 'Syne', sans-serif;
