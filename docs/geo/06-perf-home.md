@@ -68,3 +68,20 @@ Le plan de corrections (backlog 35) reste à ouvrir d'après ce rapport. Il n'es
 - CSS critique et chargement différé du reste de `style.css` ;
 - un bundle pour les modules du premier écran ;
 - `gl-bg.js` découpé ou démarré après le LCP.
+
+## Mesure du 29 septembre 2026, après les corrections
+
+Même protocole (Lighthouse 12.8.2, throttling simulé, profil mobile), sur la production au commit `648a87a`, médiane de six passages. Corrections : #8 (revue design), #9, #10 et #11 (modules de bas de page, d'effet et de la démo du téléphone importés après `load`, `utils.js` préchargé, image de `#process` en lazy, locales chargées à la demande).
+
+| Ligne du budget | Cible | Éliminatoire | 28 sept. | 29 sept. | Verdict |
+|---|---|---|---|---|---|
+| LCP (mobile, 4G lente) | < 1,8 s | 2,5 s | 1,88 s | 1,78 s (passages de 1,70 à 1,86 s) | OK |
+| CLS | < 0,02 | 0,1 | 0 | 0 | OK |
+| JS transféré initial | < 90 Ko gz | 150 Ko | 49,9 Ko | 18 Ko | OK |
+| CSS transféré | < 45 Ko gz | 70 Ko | 36,4 Ko | 38 Ko | OK |
+| Poids du premier écran | < 500 Ko | 900 Ko | 214 Ko | 165 Ko | OK |
+| Requêtes du premier écran | < 25 | 40 | 26 | 15 | OK |
+
+Score Lighthouse : 100 (passages : 99 à 100). TBT : 0 ms.
+
+Le LCP simulé est bimodal (1,70 s ou 1,85 s), indépendamment du temps de réponse du serveur : il se joue sur les requêtes que la simulation range avant le premier affichage. Le reste du chemin critique tient au CSS (38 Ko) et aux deux polices préchargées (Syne 35 Ko, Inter 48 Ko). Prochain levier, si la cible doit être tenue à chaque passage : CSS critique en ligne et chargement différé du reste de `style.css`.
