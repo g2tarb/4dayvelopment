@@ -288,6 +288,10 @@ nav.scrolled {
   transition: color .2s, background .2s;
 }
 .nav-links a:hover { color: var(--text); background: rgba(255,255,255,0.05); }
+/* Page en cours : le rendu du survol. La pastille de fond donne un repère
+   qui ne tient pas qu'à la couleur. */
+.nav-links a[aria-current="page"],
+.mobile-menu a[aria-current="page"] { color: var(--text); background: rgba(255,255,255,0.05); }
 
 .nav-right {
   display: flex;
@@ -2764,11 +2768,13 @@ footer {
   .btn-submit { font-size: 0.9375rem; padding: 16px; min-height: 52px; }
 
 
-  /* ─ Footer ─ */
+  /* ─ Footer ─ : Services et Agence côte à côte, la marque et le contact
+     (adresse e-mail longue) en pleine largeur. */
   .footer-inner {
-    grid-template-columns: 1fr;
-    gap: 28px;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 16px;
   }
+  .footer-brand, .footer-contact { grid-column: 1 / -1; }
   footer { padding: 48px 16px 24px; }
   .footer-legal { flex-wrap: wrap; gap: 12px; }
 
@@ -2892,8 +2898,11 @@ footer {
   /* Espacement tactile entre elements interactifs */
   .type-chips { gap: 10px; }
   .nav-links { gap: 4px; }
-  .footer-links-group a { padding: 6px 0; }
-  .footer-legal a { padding: 8px 4px; }
+  /* Cibles de 44 px : elles espacent déjà les liens, d'où gap: 0 */
+  .footer-links-group ul { gap: 0; }
+  .footer-links-group a,
+  .footer-legal a { display: inline-flex; align-items: center; min-height: 44px; }
+  .footer-legal a { padding: 0 4px; }
 }
 
 @media (max-width: 768px) {

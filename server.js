@@ -48,6 +48,21 @@ function bootstrap() {
 }
 bootstrap();
 
+/* ── Nav et pied de page communs (partials/, voir scripts/sync-partials.js) ──
+   Lus une fois au démarrage pour les articles générés. S'ils manquent, le
+   serveur refuse de démarrer : Render garde alors la version précédente. */
+const PARTIALS_DIR = process.env.PARTIALS_DIR || path.join(__dirname, 'partials');
+let PARTIALS;
+try {
+  PARTIALS = require('./scripts/sync-partials').loadPartials(PARTIALS_DIR);
+  logger.info({ dir: PARTIALS_DIR }, 'Partiels nav et pied de page lus');
+} catch (err) {
+  logger.fatal({ err: err.message }, 'Partiels introuvables, arret');
+  process.exit(1);
+}
+// Un article généré est toujours sous /blog : Blog est l'entrée active.
+const ARTICLE_NAV = PARTIALS.nav.replace('<a href="https://4dayvelopment.fr/blog">', '<a href="https://4dayvelopment.fr/blog" aria-current="page">');
+
 /* ── Persistance locale des leads ────────────────────── */
 const LEADS_DIR  = path.join(__dirname, 'data');
 const LEADS_FILE = path.join(LEADS_DIR, 'leads.json');
@@ -599,23 +614,8 @@ function buildArticleHTML(data) {
 </head>
 <body>
 
-  <nav id="navbar">
-    <a href="/" class="nav-logo">
-      <img src="/logo/logo4day.svg" alt="4dayvelopment" class="logo-img" width="160" height="59">
-    </a>
-    <ul class="nav-links">
-      <li><a href="https://4dayvelopment.fr/services/site-vitrine">Site Vitrine</a></li>
-      <li><a href="https://4dayvelopment.fr/services/e-commerce">E-commerce</a></li>
-      <li><a href="https://4dayvelopment.fr/services/referencement-seo">SEO</a></li>
-      <li><a href="https://4dayvelopment.fr/exemples">Exemples</a></li>
-      <li><a href="https://4dayvelopment.fr/#tarifs">Tarifs</a></li>
-      <li><a href="https://4dayvelopment.fr/blog" class="active">Blog</a></li>
-    </ul>
-    <div class="nav-right">
-      <a href="https://4dayvelopment.fr/#contact" class="nav-cta">Devis gratuit →</a>
-    </div>
-    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-  </nav>
+  <!-- partial:nav -->
+${ARTICLE_NAV}  <!-- /partial:nav -->
 
   <main>
 
@@ -668,40 +668,8 @@ ${faqHtml}
 
   </main>
 
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <a href="/" class="footer-logo"><img src="/logo/logo4day.svg" alt="4dayvelopment" class="logo-img" width="160" height="59"></a>
-        <p>Un site qui vend, livré en 4 jours.</p>
-      </div>
-      <div class="footer-links-group">
-        <p class="footer-col-h">Services</p>
-        <ul>
-          <li><a href="/services/site-vitrine">Site Vitrine</a></li>
-          <li><a href="/services/e-commerce">E-commerce</a></li>
-          <li><a href="/services/referencement-seo">SEO</a></li>
-        </ul>
-      </div>
-      <div class="footer-links-group">
-        <p class="footer-col-h">Agence</p>
-        <ul>
-          <li><a href="/#process">Processus</a></li>
-          <li><a href="/#tarifs">Tarifs</a></li>
-          <li><a href="/blog">Blog</a></li>
-        </ul>
-      </div>
-      <div class="footer-links-group">
-        <p class="footer-col-h">Contact</p>
-        <ul>
-          <li><a href="/#contact">Prendre RDV</a></li>
-          <li><a href="mailto:contact@4dayvelopment.fr">contact@4dayvelopment.fr</a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>&copy; 2026 4dayvelopment. Tous droits réservés.</p>
-    </div>
-  </footer>
+  <!-- partial:footer -->
+${PARTIALS.footer}  <!-- /partial:footer -->
 
   <script type="application/ld+json">
   {
@@ -948,6 +916,11 @@ process.once('SIGTERM', () => {
 });
 
 /* ── Démarrage ────────────────────────────────────────── */
-app.listen(PORT, () => {
-  logger.info({ port: PORT }, '4DAYVELOPMENT — Server actif');
-});
+// Lancé directement (npm start) : le serveur écoute. Importé par un test :
+// seul le gabarit d'article est exposé.
+if (require.main === module) {
+  app.listen(PORT, () => {
+    logger.info({ port: PORT }, '4DAYVELOPMENT — Server actif');
+  });
+}
+module.exports = { buildArticleHTML };

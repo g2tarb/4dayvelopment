@@ -11,7 +11,8 @@
  *  - un lien interne ou une ancre est cassé ;
  *  - un placeholder ([À …], {{…}}) est présent ;
  *  - fr.json diffère du HTML de la home ou de la 404, ou les liens d'une
- *    valeur de en.json diffèrent de ceux de fr.json.
+ *    valeur de en.json diffèrent de ceux de fr.json ;
+ *  - une nav ou un pied de page diverge de partials/ (npm run sync:partials).
  * La date visible est la source de vérité : on la change quand le contenu
  * change, puis on reporte la même date dans sitemap.xml. */
 
@@ -19,6 +20,7 @@ const fs = require('fs');
 const path = require('path');
 const { parseDocument } = require('htmlparser2');
 const { resolve: resolveRoute, HTML_RENAMES, PUB } = require('../lib/routes');
+const partialsLib = require('./sync-partials');
 
 const SITE = 'https://4dayvelopment.fr';
 const SANS_DATE = ['/devis', '/blog']; // formulaire et liste d'articles : pas de contenu éditorial daté
@@ -248,6 +250,17 @@ function main() {
   }
   for (const rel of ['index.html', '404.html']) for (const issue of i18nDrift(read(rel), fr)) fail(rel, issue);
   for (const issue of i18nLinkDrift(fr, en)) fail('locales/en.json', issue);
+
+  // Nav et pied de page : chaque page cible doit porter les partiels.
+  const partials = partialsLib.loadPartials();
+  for (const rel of partialsLib.targetFiles()) {
+    const html = read(rel);
+    try {
+      if (partialsLib.syncHtml(html, rel, partialsLib.routeOf(rel), partials) !== html) {
+        fail(rel, 'nav ou pied de page différent de partials/ : lancer npm run sync:partials');
+      }
+    } catch (e) { fail(rel, e.message); }
+  }
 
   if (errors.length) {
     console.error(errors.map(e => '✗ ' + e).join('\n'));
