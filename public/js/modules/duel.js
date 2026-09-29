@@ -105,6 +105,7 @@ export function initDuel() {
       const roll = document.createElement('span');
       roll.className = 'roll';
       roll.setAttribute('aria-hidden', 'true');
+      roll.dataset.d = c;
       const strip = document.createElement('span');
       for (let t = 0; t < 3; t++) for (let n = 0; n <= 9; n++) {
         const d = document.createElement('i');

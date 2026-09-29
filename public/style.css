@@ -1337,12 +1337,28 @@ section { padding: 100px var(--gutter-x); }
    transformes et les chiffres disparaitraient. */
 .duel-digits .roll {
   display: inline-block;
+  position: relative;
   height: 1em;
   overflow: hidden;
 }
+/* Rouleaux construits : le degrade du conteneur ne sert plus qu'au prix
+   sans JS. Laisse en place, il peignait un eclat du texte masque devant
+   le premier chiffre. */
+.duel-digits[data-digits] { background: none; }
+/* Chaque rouleau prend la largeur de SON chiffre (data-d), pas celle du
+   plus large des dix : le 1 de "1 990" laissait un trou d'un chiffre. */
+.duel-digits .roll::before {
+  content: attr(data-d);
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
 /* espace des milliers de "1 990" */
-.duel-digits .gap { display: inline-block; width: .09em; }
+.duel-digits .gap { display: inline-block; width: .36em; }
 .duel-digits .roll > span {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   display: block;
   line-height: 1;
   transition: transform .7s cubic-bezier(.22,1,.36,1);
