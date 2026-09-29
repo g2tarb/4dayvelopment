@@ -182,7 +182,7 @@ input[type=range]:focus-visible{outline:2px solid var(--volt);outline-offset:4px
 .res__sub{font-size:12px;color:var(--dim);font-variant-numeric:tabular-nums}
 .sim__hum{font-family:'Fraunces',serif;font-style:italic;font-weight:340;font-size:clamp(1.15rem,3vw,1.5rem);
   color:var(--blanc);margin:1.8rem 0 1.6rem;min-height:2.4em}
-.sim__hum::before{content:'— ';color:var(--cuivre)}
+.sim__hum::before{content:'';display:inline-block;width:.9em;height:1px;margin-right:.4em;vertical-align:.3em;background:var(--cuivre)}
 
 /* ── Formules ── */
 .offres__grid{display:grid;gap:1.3rem;margin-top:3.2rem}
@@ -592,7 +592,7 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
 
 <footer>
   <div class="foot__demo">
-    <p>Site de démonstration réalisé par 4dayvelopment — entreprise fictive.</p>
+    <p>Site de démonstration réalisé par 4dayvelopment : entreprise fictive.</p>
     <a class="btn-ghost" href="/devis?metier=borne-recharge" style="min-height:46px">Créer le mien en 4 jours →</a>
   </div>
   <p class="foot__credit">Photos : <a href="https://unsplash.com" rel="noopener">Unsplash</a> (licence Unsplash).</p>

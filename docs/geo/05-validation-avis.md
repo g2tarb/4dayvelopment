@@ -14,35 +14,33 @@ Ce qui compte comme validation : un email ou un message écrit du client qui cit
 
 ## Avis 1 : Haykel, Nakama
 
-Affiché sur la home (section « Avis clients »), avec 5 étoiles et un lien vers https://www.nakama-app.fr/.
+Affiché sur la home (section « Avis clients »), avec un lien vers https://www.nakama-app.fr/. Depuis le 28 septembre, sans étoiles ni guillemets tapés : le guillemet décoratif de la carte marque la citation.
 
 | Élément | Version française (affichée par défaut) | Version anglaise (affichée si le visiteur passe en EN) |
 |---|---|---|
 | Texte | « Je ne suis pas du tout technique et j'avais peur de ne pas suivre. Deux appels, un brief, et tout était en ligne le jeudi. Ils traduisent vos idées en décisions simples, et quand j'ai un doute, j'ai une réponse dans la journée. » | « I'm not technical at all and I was afraid I wouldn't keep up. Two calls, one brief, and everything was live on Thursday. They turn your ideas into simple decisions, and whenever I have a doubt, I get an answer the same day. » |
 | Nom | Haykel | Haykel |
 | Rôle | Fondateur de Nakama | Founder of Nakama |
-| Note affichée | ★★★★★ (5 étoiles) | ★★★★★ |
+| Note affichée | aucune (étoiles retirées le 28 septembre) | aucune |
 
 Points à faire confirmer explicitement :
-- la note de 5 étoiles ;
 - « tout était en ligne le jeudi » : le délai réel du projet Nakama `[À FOURNIR PAR SIRVEN]` ;
 - la version anglaise, qui est une traduction faite par l'agence.
 
 ## Avis 2 : EMON
 
-Affiché sur la home (section « Avis clients »), avec 5 étoiles et un lien vers https://www.emonworldwide.com/. Le texte est affiché **en anglais dans les deux langues**.
+Affiché sur la home (section « Avis clients »), avec un lien vers https://www.emonworldwide.com/. Depuis le 28 septembre, sans étoiles ni guillemets tapés. Le texte est affiché **en anglais dans les deux langues**.
 
 | Élément | Valeur affichée |
 |---|---|
-| Texte | « Four days from brief to launch, and you can't tell it was rushed `[tiret long]` because it wasn't. The site feels like our brand: clean, fast, nothing extra. **Orders come in from outside France** and checkout has been flawless. » |
+| Texte | « Four days from brief to launch, and you can't tell it was rushed, because it wasn't. The site feels like our brand: clean, fast, nothing extra. **Orders come in from outside France** and checkout has been flawless. » |
 | Nom | EMON |
 | Rôle | « Maison d'objets » en français, « Design house » en anglais |
-| Note affichée | ★★★★★ (5 étoiles) |
+| Note affichée | aucune (étoiles retirées le 28 septembre) |
 
-`[tiret long]` : le site affiche ici un tiret long (U+2014), contraire à la règle éditoriale du site. Si EMON valide le texte, proposer de le remplacer par une virgule : « you can't tell it was rushed, because it wasn't ».
+Le tiret long qui suivait « rushed » a été remplacé par une virgule le 28 septembre, sans changer un mot (règle éditoriale du site).
 
 Points à faire confirmer explicitement :
-- la note de 5 étoiles ;
 - « Four days from brief to launch » : le délai réel `[À FOURNIR PAR SIRVEN]` ;
 - « Orders come in from outside France » et « checkout has been flawless ». EMON est présenté sur le site comme un « site vitrine luxe » : le site a-t-il réellement un tunnel de commande ?
 - la mise en avant en gras de « Orders come in from outside France », choisie par l'agence.
@@ -59,7 +57,7 @@ Points à faire confirmer explicitement :
 >
 > Voici exactement ce qui est affiché :
 >
-> [coller le texte, le nom, le rôle et la note ci-dessus, dans chaque langue affichée]
+> [coller le texte, le nom et le rôle ci-dessus, dans chaque langue affichée]
 >
 > Pouvez-vous nous répondre par écrit :
 > - « je valide ce texte pour publication », ou

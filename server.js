@@ -18,6 +18,7 @@ const sanitizeHtml = require('sanitize-html');
 const crypto = require('crypto');
 const pino       = require('pino');
 const { createIaLog } = require('./ia-log');
+const { HTML_RENAMES, cleanPages } = require('./lib/routes');
 
 /* ── Logger Pino ──────────────────────────────────────── */
 const logger = pino(
@@ -158,7 +159,6 @@ if (process.env.NODE_ENV === 'production') {
 /* ── SEO : URLs canoniques (301) ───────────────────────────
    .html et slash final -> version propre. DOIT précéder express.static,
    qui sinon sert les .html en 200 (duplication de contenu indexable). */
-const HTML_RENAMES = { '/lead.html': '/devis' };
 app.use((req, res, next) => {
   if (req.method !== 'GET' && req.method !== 'HEAD') return next();
   const p = req.path;
@@ -856,29 +856,7 @@ app.get('/api/version', apiLimiter, (req, res) => {
   res.json({ commit: process.env.RENDER_GIT_COMMIT || null });
 });
 
-/* ── URLs propres (sans .html) ────────────────────────── */
-const cleanPages = {
-  '/essentiel':      'essentiel.html',
-  '/devis':          'lead.html',
-  '/services/site-vitrine':  'services/site-vitrine.html',
-  '/services/e-commerce':    'services/e-commerce.html',
-  '/services/referencement-seo': 'services/referencement-seo.html',
-  '/services/site-internet-restaurant': 'services/site-internet-restaurant.html',
-  '/services/application-web': 'services/application-web.html',
-  '/methode-4-jours': 'methode-4-jours.html',
-  '/agence':         'agence.html',
-  '/portfolio':       'portfolio.html',
-  '/exemples':        'exemples/index.html', // plus liee dans la nav : les demos passent par le mockup de la home
-  '/mentions-legales': 'mentions-legales.html',
-  '/confidentialite': 'confidentialite.html',
-  '/cgv':            'cgv.html',
-  '/blog':           'blog/index.html',
-  '/blog/combien-coute-site-internet-2026': 'blog/combien-coute-site-internet-2026.html',
-  // Cartes de visite digitales (QR scanne en face a face) : hors index (noindex) : leur trafic vient du QR imprime, pas de la recherche
-  '/sirven':         'sirven/index.html',
-  '/erwin':          'erwin/index.html',
-  '/carte':          'carte/index.html',
-};
+/* ── URLs propres (sans .html) : table dans lib/routes.js ── */
 
 // Servir les URLs propres
 for (const [route, file] of Object.entries(cleanPages)) {
