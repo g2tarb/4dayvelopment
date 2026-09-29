@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Clé de 15, réparation de vélos à Dijon | Démo 4dayvelopment</title>
+<meta name="description" content="Démo : atelier de réparation de vélos ouvert en septembre 2026 à Dijon. Le prix de votre réparation en trois choix, horaires, adresse et dépôt sur rendez-vous.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#F6F7F6">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/pathway-extreme-var.woff2" crossorigin>
+<style>
+@font-face{font-family:'Pathway Extreme';font-style:normal;font-weight:100 900;font-stretch:75% 100%;font-display:swap;src:url('/fonts/pathway-extreme-var.woff2') format('woff2')}
+
+:root{
+  --blanc:#F6F7F6;      /* fond : mur blanchi de l'atelier */
+  --tole:#DCE1E2;       /* panneau perforé en tôle galvanisée */
+  --tole-2:#C7CED1;
+  --cambouis:#1B1F23;   /* texte : noir de chaîne graissée */
+  --gris:#50585E;       /* texte secondaire */
+  --bleu:#1E4AA8;       /* bleu de travail : actions et choix */
+  --etiquette:#F2D548;  /* carton jaune des étiquettes de réparation, uniquement sur l'étiquette */
+  --filet:#B9C1C5;
+  --mesure:62ch;
+  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  font-family:'Pathway Extreme',system-ui,sans-serif;font-stretch:100%;font-weight:400;font-optical-sizing:auto;
+  font-size:1.0625rem;line-height:1.55;color:var(--cambouis);background:var(--blanc);
+  -webkit-font-smoothing:antialiased;
+}
+img{display:block;max-width:100%;height:auto;background:var(--tole)} /* fond visible pendant le chargement ou si l'image manque */
+a{color:inherit}
+:focus-visible{outline:3px solid var(--bleu);outline-offset:3px}
+h1,h2,h3{font-stretch:75%;font-weight:800;line-height:1.02;letter-spacing:-.005em;text-wrap:balance}
+h2{font-size:clamp(1.9rem,1.3rem + 2.6vi,3rem)}
+p{text-wrap:pretty}
+sup{font-size:.7em;line-height:0}
+.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:1rem;top:1rem;background:var(--cambouis);color:var(--blanc);padding:.6rem 1rem;z-index:10}
+.discret{font-size:.9375rem;color:var(--gris)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.8rem 1.35rem;
+  background:var(--bleu);color:#fff;border:2px solid transparent;border-radius:4px;font:inherit;font-weight:700;
+  text-decoration:none;cursor:pointer;transition:background-color .15s}
+.btn:hover{background:#163A86}
+.btn:active{transform:translateY(1px)}
+
+/* Barre du haut : le nom et le numéro, ce qu'on cherche avec un vélo à plat */
+.top{border-bottom:1px solid var(--filet)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.75rem}
+.marque{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;min-height:2.75rem}
+.marque b{font-stretch:75%;font-weight:850;font-size:1.6rem}
+.marque span{font-size:.8125rem;color:var(--gris);margin-top:.2rem}
+.tel{font-weight:700;font-size:1.0625rem;text-decoration:none;white-space:nowrap;font-variant-numeric:tabular-nums;
+  padding:.55rem .15rem;border-bottom:2px solid var(--bleu)}
+
+/* Ouverture */
+.ouv{padding-block:var(--pas) calc(var(--pas)*1.5)}
+.ouv .wrap{display:grid;gap:var(--pas)}
+.ouv h1{font-size:clamp(2.4rem,1.4rem + 4.4vi,4.4rem);max-width:13ch}
+.ouv .chapo{font-size:1.125rem;max-width:42ch;margin-top:1rem;color:var(--gris)}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.5rem}
+.actions .discret{max-width:26ch}
+.ouvert{margin-top:1.5rem;padding-top:1rem;border-top:1px solid var(--filet);max-width:42ch}
+.ouv figure img{width:100%;aspect-ratio:1430/1042;object-fit:cover;border-radius:3px}
+figcaption{font-size:.8125rem;color:var(--gris);margin-top:.5rem}
+/* ordinateur : texte et photo côte à côte */
+@media (min-width:60rem){.ouv .wrap{grid-template-columns:1fr 1.1fr;align-items:center;gap:3rem}}
+
+/* Signature : le devis en trois choix, entièrement en CSS (:has). Le résultat
+   s'écrit sur l'étiquette qu'on accroche au vélo, pendue au panneau perforé. */
+.devis{background:var(--tole);padding-block:calc(var(--pas)*2)}
+.devis .intro{max-width:var(--mesure);margin-top:.75rem}
+.devis-grille{margin-top:1.75rem;display:grid;gap:2rem}
+.devis fieldset{border:0;padding:0;min-width:0}
+.devis fieldset + fieldset{margin-top:1.5rem}
+.devis legend{display:flex;align-items:baseline;gap:.6rem;font-weight:700;font-size:1.125rem;margin-bottom:.7rem;padding:0}
+.devis legend b{font-stretch:75%;font-weight:850;font-size:1.9rem;line-height:.8;color:var(--bleu);font-variant-numeric:tabular-nums}
+.choix{display:flex;flex-wrap:wrap;gap:.5rem}
+.choix label{display:inline-flex;align-items:center;gap:.55rem;min-height:2.75rem;padding:.45rem .9rem .45rem .7rem;
+  background:var(--blanc);border:1.5px solid #6D777D;border-radius:4px;cursor:pointer;line-height:1.2}
+.choix input{width:1.1rem;height:1.1rem;margin:0;accent-color:var(--bleu);flex:none}
+.choix label:has(input:checked){border-color:var(--bleu);box-shadow:inset 0 0 0 1.5px var(--bleu);font-weight:700}
+.choix label:has(input:focus-visible){outline:3px solid var(--bleu);outline-offset:2px}
+
+.panneau{position:relative;padding:3.25rem 1rem 1.5rem;border-radius:3px;background-color:#CDD4D7;
+  background-image:radial-gradient(circle,#8E999F 0 .2rem,transparent .23rem);background-size:1.5rem 1.5rem;background-position:.75rem .75rem}
+.panneau::before{content:'';position:absolute;top:.95rem;left:50%;width:.5rem;height:1.2rem;margin-left:-.25rem;
+  border:3px solid #6F7A80;border-top:0;border-radius:0 0 .4rem .4rem} /* crochet */
+.fil{position:absolute;top:1.75rem;left:50%;width:2px;height:2.35rem;margin-left:-1px;background:var(--cambouis);z-index:1}
+.etiquette{position:relative;max-width:21rem;margin-inline:auto;background:var(--etiquette);border:2px solid transparent;
+  padding:2.75rem 1.25rem 1.35rem;clip-path:polygon(1.4rem 0,calc(100% - 1.4rem) 0,100% 1.4rem,100% 100%,0 100%,0 1.4rem)}
+.etiquette::before{content:'';position:absolute;top:.85rem;left:50%;width:1.05rem;height:1.05rem;margin-left:-.525rem;
+  border-radius:50%;background:#CDD4D7;box-shadow:0 0 0 .3rem #D9BD2E} /* œillet renforcé */
+.t-quoi{font-weight:700}
+.t-prix{display:block;font-stretch:75%;font-weight:850;font-size:clamp(2.8rem,2.2rem + 3vi,3.8rem);line-height:1;
+  letter-spacing:-.01em;font-variant-numeric:tabular-nums;margin-top:.35rem;white-space:nowrap}
+.t-inclus{font-size:.9375rem;margin-top:.35rem}
+.t-delai{margin-top:1rem;padding-top:.8rem;border-top:1.5px dashed rgba(27,31,35,.45);display:grid;gap:.3rem}
+.t-delai div{display:flex;gap:.4rem}
+.t-delai dt{font-weight:700}
+.t-delai dd{margin:0}
+.etiquette .btn{margin-top:1.15rem;width:100%;padding-inline:.75rem}
+.devis .note{font-size:.9375rem;margin-top:1rem;max-width:var(--mesure)}
+/* tout est caché, puis :has() montre ce qui correspond aux trois choix */
+.g, .v, .p, .u{display:none}
+.devis:has(#v-ville:checked) .v-ville,.devis:has(#v-route:checked) .v-route,
+.devis:has(#v-vtt:checked) .v-vtt,.devis:has(#v-elec:checked) .v-elec{display:inline}
+.devis:has(#p-crev:checked) .p-crev,.devis:has(#p-frein:checked) .p-frein,.devis:has(#p-vit:checked) .p-vit,
+.devis:has(#p-roue:checked) .p-roue,.devis:has(#p-rev:checked) .p-rev{display:inline;animation:pose .3s ease-out}
+.devis:has(#u-sem:checked) .u-sem,.devis:has(#u-48:checked) .u-48,.devis:has(#u-jour:checked) .u-jour{display:inline}
+/* une révision prend une demi-journée : pas de « jour même » */
+.devis:has(#p-rev:checked):has(#u-jour:checked) .u-jour{display:none}
+.devis:has(#p-rev:checked):has(#u-jour:checked) .u-rev-jour{display:inline}
+@keyframes pose{from{opacity:0;transform:translateY(.3rem)}to{opacity:1;transform:none}}
+/* les choix à gauche, l'étiquette en regard */
+@media (min-width:56rem){.devis-grille{grid-template-columns:minmax(0,1.3fr) minmax(19rem,1fr);gap:3rem;align-items:start}}
+
+/* Forfaits */
+.forfaits{padding-block:calc(var(--pas)*2)}
+.forfaits ul{list-style:none;padding:0;margin-top:1.5rem;max-width:44rem}
+.forfaits li{display:grid;grid-template-columns:1fr auto;gap:.1rem 1rem;padding-block:.85rem;border-top:1px solid var(--filet)}
+.forfaits li:last-child{border-bottom:1px solid var(--filet)}
+.forfaits b{font-weight:700;font-size:1.125rem}
+.forfaits .prix{grid-column:2;grid-row:1;font-stretch:75%;font-weight:850;font-size:1.3rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.forfaits li span:not(.prix){grid-column:1 / -1;color:var(--gris);font-size:.9375rem}
+.forfaits .discret{margin-top:1rem;max-width:var(--mesure)}
+
+/* Adresse et horaires : les mêmes partout */
+.trouver{background:var(--cambouis);color:var(--blanc);padding-block:calc(var(--pas)*2)}
+.trouver .grille{display:grid;gap:2rem;margin-top:1.5rem}
+.trouver address{font-style:normal;font-size:1.25rem;line-height:1.4}
+.trouver address a{display:inline-block;margin-top:.75rem;font-weight:700;font-size:1.5rem;font-variant-numeric:tabular-nums;min-height:2.75rem}
+/* le jour et ses heures côte à côte ; les heures passent dessous quand la ligne est trop courte (320 px) */
+.horaires div{display:flex;flex-wrap:wrap;gap:.15rem 1rem;padding-block:.6rem;border-top:1px solid #3D454C}
+.horaires dt{flex:0 0 11.5rem}
+.horaires dd{flex:1 1 9rem}
+.horaires div:last-child{border-bottom:1px solid #3D454C}
+.horaires dt{font-weight:700}
+.horaires dd{margin:0;font-variant-numeric:tabular-nums}
+.trouver .coherence{margin-top:1.5rem;max-width:var(--mesure);color:#C9CFD3}
+.trouver :focus-visible{outline-color:var(--etiquette)}
+/* adresse et horaires côte à côte */
+@media (min-width:48rem){.trouver .grille{grid-template-columns:1fr 1.3fr;gap:3rem}}
+
+/* Déroulé : une vraie séquence, d'où les numéros */
+.etapes{padding-block:calc(var(--pas)*2)}
+.etapes ol{list-style:none;padding:0;margin-top:1.5rem;display:grid;gap:1.4rem;counter-reset:e}
+.etapes li{counter-increment:e;display:grid;grid-template-columns:2.5rem 1fr;gap:.25rem 1rem;max-width:var(--mesure)}
+.etapes li::before{content:counter(e);grid-row:span 2;font-stretch:75%;font-weight:850;font-size:2.6rem;line-height:.9;color:var(--bleu)}
+.etapes h3{font-size:1.35rem}
+/* les quatre étapes sur deux colonnes */
+@media (min-width:60rem){.etapes ol{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:3rem}}
+
+/* Qui répare */
+.atelier{border-top:1px solid var(--filet);padding-block:calc(var(--pas)*2)}
+.atelier .wrap{display:grid;gap:var(--pas)}
+.atelier p{max-width:var(--mesure);margin-top:.85rem}
+.atelier figure{max-width:26rem}
+.atelier img{width:100%;aspect-ratio:945/1113;object-fit:cover;border-radius:3px}
+/* texte et photo côte à côte */
+@media (min-width:52rem){.atelier .wrap{grid-template-columns:1.3fr 1fr;gap:3rem;align-items:center}}
+
+/* Réservation du dépôt */
+.rdv{background:var(--tole);padding-block:calc(var(--pas)*2)}
+.rdv > .wrap > p{max-width:var(--mesure);margin-top:.75rem}
+.rdv .cote{margin-top:2rem;display:grid;gap:.5rem;align-content:start;max-width:30rem}
+.rdv .cote b{font-size:1.125rem}
+.rdv .cote a{font-weight:700;font-size:1.5rem;font-variant-numeric:tabular-nums;min-height:2.75rem;display:inline-flex;align-items:center}
+/* sur ordinateur : le formulaire à gauche, le passage sans rendez-vous en regard */
+@media (min-width:60rem){.rdv .grille{display:grid;grid-template-columns:minmax(0,36rem) 1fr;gap:4rem;align-items:start}.rdv .cote{margin-top:1.5rem}}
+form{margin-top:1.5rem;display:grid;gap:1rem;max-width:36rem}
+label{display:block;font-weight:600;margin-bottom:.35rem}
+input:not([type=radio]),select{width:100%;font:inherit;font-size:1rem;color:var(--cambouis);background:#fff;
+  border:1.5px solid #6D777D;border-radius:4px;padding:.75rem .8rem;min-height:3.2rem}
+input:focus-visible,select:focus-visible{outline:3px solid var(--bleu);outline-offset:1px;border-color:var(--cambouis)}
+.deux{display:grid;gap:1rem}
+/* deux champs par ligne dès qu'ils ont la place */
+@media (min-width:36rem){.deux{grid-template-columns:1fr 1fr}}
+.merci{display:none;padding:1rem 1.1rem;border:1.5px solid var(--cambouis);border-radius:4px;background:#fff;font-weight:600}
+form.envoye .merci{display:block}
+
+footer{background:var(--cambouis);color:#C9CFD3;padding-block:2.5rem;font-size:.875rem}
+footer .wrap{display:grid;gap:.75rem}
+footer b{color:#fff;font-stretch:75%;font-weight:850;font-size:1.35rem}
+footer a{color:#fff}
+
+/* Barre sous le pouce, en mobile et en paysage téléphone : un vélo à plat, on
+   appelle ou on réserve. Rangée quand le formulaire est à l'écran. */
+.pouce{display:none}
+@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-bottom:6rem}
+  .pouce{display:grid;grid-template-columns:1fr 1.6fr;gap:.5rem;position:fixed;left:0;right:0;bottom:0;z-index:5;
+    padding:.6rem .75rem calc(.6rem + env(safe-area-inset-bottom));background:var(--blanc);border-top:1px solid var(--filet);
+    transition:transform .2s ease-out}
+  .pouce a{display:flex;align-items:center;justify-content:center;min-height:2.75rem;padding-inline:.5rem;border-radius:4px;font-size:.9375rem;font-weight:700;text-decoration:none;white-space:nowrap}
+  .pouce .appel{border:1.5px solid var(--cambouis)}
+  .pouce .resa{background:var(--bleu);color:#fff;border:1.5px solid transparent}
+  .pouce.cache{transform:translateY(110%)}
+  footer{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
+}
+/* mouvement réduit : ni animation ni transition */
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#rdv">Aller à la réservation</a>
+
+<header class="top">
+  <div class="wrap">
+    <a class="marque" href="#">
+      <b>Clé de 15</b>
+      <span>Atelier vélo, Dijon</span>
+    </a>
+    <a class="tel" href="tel:+33353012715" aria-label="Appeler Clé de 15 au 03 53 01 27 15">03 53 01 27 15</a>
+  </div>
+</header>
+
+<main>
+  <section class="ouv">
+    <div class="wrap">
+      <div>
+        <h1>Réparation de vélos à Dijon, au prix annoncé</h1>
+        <p class="chapo">Crevaison, freins, vitesses, roue voilée ou révision : vous connaissez le prix avant qu’on touche au vélo. Prêt sous 3 jours ouvrés, ou le soir même si vous le déposez avant 10 h.</p>
+        <div class="actions">
+          <a class="btn" href="#rdv">Réserver un dépôt</a>
+          <p class="discret">Diagnostic gratuit au comptoir, en cinq minutes.</p>
+        </div>
+        <p class="ouvert"><b>Ouvert depuis le 1<sup>er</sup> septembre 2026</b>, du mardi au samedi, au 181 rue d’Auxonne.</p>
+      </div>
+      <figure>
+        <img src="/exemples/img/creation-outils-800.webp"
+             srcset="/exemples/img/creation-outils-480.webp 480w, /exemples/img/creation-outils-800.webp 800w, /exemples/img/creation-outils-1200.webp 1200w"
+             sizes="(min-width: 60rem) 38rem, calc(100vi - 2rem)"
+             width="1200" height="874" fetchpriority="high"
+             alt="Panneau perforé en tôle galvanisée : clés à rayons, clés en Y, clés six pans, marteau et tournevis rangés sur des supports rouges">
+        <figcaption>Chaque outil à sa place : on voit tout de suite s’il en manque un.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="devis" id="devis" aria-labelledby="devis-t">
+    <div class="wrap">
+      <h2 id="devis-t">Combien pour votre réparation ?</h2>
+      <p class="intro">Trois choix, et vous lisez la fourchette qu’on écrira sur l’étiquette de votre vélo. Le prix final ne la dépasse pas sans votre accord.</p>
+      <div class="devis-grille">
+        <div>
+          <fieldset>
+            <legend><b>1</b>Votre vélo</legend>
+            <div class="choix">
+              <label><input type="radio" name="velo" id="v-ville" value="ville" checked>Ville ou vélotaf</label>
+              <label><input type="radio" name="velo" id="v-route" value="route">Route ou gravel</label>
+              <label><input type="radio" name="velo" id="v-vtt" value="vtt">VTT</label>
+              <label><input type="radio" name="velo" id="v-elec" value="elec">Électrique</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><b>2</b>Ce qui ne va pas</legend>
+            <div class="choix">
+              <label><input type="radio" name="panne" id="p-crev" value="crev" checked>Crevaison</label>
+              <label><input type="radio" name="panne" id="p-frein" value="frein">Freins</label>
+              <label><input type="radio" name="panne" id="p-vit" value="vit">Vitesses</label>
+              <label><input type="radio" name="panne" id="p-roue" value="roue">Roue voilée</label>
+              <label><input type="radio" name="panne" id="p-rev" value="rev">Révision complète</label>
+            </div>
+          </fieldset>
+          <fieldset>
+            <legend><b>3</b>Il vous le faut</legend>
+            <div class="choix">
+              <label><input type="radio" name="quand" id="u-sem" value="sem" checked>Dans la semaine</label>
+              <label><input type="radio" name="quand" id="u-48" value="48">Sous 48 h</label>
+              <label><input type="radio" name="quand" id="u-jour" value="jour">Aujourd’hui</label>
+            </div>
+          </fieldset>
+        </div>
+
+        <div class="panneau">
+          <span class="fil" aria-hidden="true"></span>
+          <div class="etiquette" aria-live="polite">
+            <p class="t-quoi">
+              <span class="v v-ville">Vélo de ville</span><span class="v v-route">Vélo de route</span><span class="v v-vtt">VTT</span><span class="v v-elec">Vélo électrique</span>,
+              <span class="p p-crev">crevaison</span><span class="p p-frein">freins</span><span class="p p-vit">vitesses</span><span class="p p-roue">roue voilée</span><span class="p p-rev">révision complète</span>
+            </p>
+            <p class="t-prix">
+              <span class="g v v-ville"><span class="p p-crev">15 à 20 €</span><span class="p p-frein">15 à 30 €</span><span class="p p-vit">15 à 30 €</span><span class="p p-roue">15 à 25 €</span><span class="p p-rev">59 €</span></span>
+              <span class="g v v-route"><span class="p p-crev">15 à 22 €</span><span class="p p-frein">20 à 40 €</span><span class="p p-vit">20 à 35 €</span><span class="p p-roue">20 à 30 €</span><span class="p p-rev">69 €</span></span>
+              <span class="g v v-vtt"><span class="p p-crev">18 à 25 €</span><span class="p p-frein">25 à 50 €</span><span class="p p-vit">20 à 35 €</span><span class="p p-roue">20 à 30 €</span><span class="p p-rev">69 €</span></span>
+              <span class="g v v-elec"><span class="p p-crev">20 à 35 €</span><span class="p p-frein">25 à 50 €</span><span class="p p-vit">20 à 40 €</span><span class="p p-roue">25 à 40 €</span><span class="p p-rev">79 €</span></span>
+            </p>
+            <p class="t-inclus">
+              <span class="p p-crev">Chambre à air et main‑d’œuvre comprises.</span><span class="p p-frein">Réglage, plaquettes ou patins compris.</span><span class="p p-vit">Réglage du dérailleur, câble neuf si besoin.</span><span class="p p-roue">Dévoilage, un rayon neuf compris.</span><span class="p p-rev">Forfait main‑d’œuvre, pièces d’usure en plus.</span>
+            </p>
+            <dl class="t-delai">
+              <div><dt>Prêt :</dt><dd><span class="u u-sem">sous 3 jours ouvrés</span><span class="u u-48">sous 48 h</span><span class="u u-jour">le jour même en fin de journée, si déposé avant 10 h</span><span class="u u-rev-jour">sous 48 h, une révision ne se fait pas dans la journée</span></dd></div>
+              <div><dt>Supplément :</dt><dd><span class="u u-sem">aucun</span><span class="u u-48">10 €</span><span class="u u-jour">15 €</span><span class="u u-rev-jour">10 €</span></dd></div>
+            </dl>
+            <a class="btn" href="#rdv">Réserver ce dépôt</a>
+          </div>
+        </div>
+      </div>
+      <p class="note">Pneu, chaîne ou cassette à changer en plus : on vous envoie le prix par SMS et on attend votre accord avant de monter la pièce.</p>
+    </div>
+  </section>
+
+  <section class="forfaits" aria-labelledby="forfaits-t">
+    <div class="wrap">
+      <h2 id="forfaits-t">Les forfaits, affichés aussi à l’atelier</h2>
+      <ul>
+        <li><b>Crevaison</b><span class="prix">dès 15 €</span><span>Chambre à air et main‑d’œuvre comprises.</span></li>
+        <li><b>Freins</b><span class="prix">dès 15 €</span><span>Réglage, plaquettes ou patins compris.</span></li>
+        <li><b>Vitesses</b><span class="prix">dès 15 €</span><span>Réglage du dérailleur, câble neuf si besoin.</span></li>
+        <li><b>Roue voilée</b><span class="prix">dès 15 €</span><span>Dévoilage à la clé à rayons, un rayon neuf compris.</span></li>
+        <li><b>Révision complète</b><span class="prix">dès 59 €</span><span>Freins, transmission, roues, jeu de direction et serrages vérifiés et réglés.</span></li>
+        <li><b>Pose d’un accessoire</b><span class="prix">dès 10 €</span><span>Porte-bagages, garde-boue, éclairage, siège enfant.</span></li>
+      </ul>
+      <p class="discret">Vélo électrique : on répare toute la partie vélo. Le moteur et la batterie relèvent du réseau de leur marque, on vous dit lequel.</p>
+    </div>
+  </section>
+
+  <section class="trouver" aria-labelledby="trouver-t">
+    <div class="wrap">
+      <h2 id="trouver-t">Où et quand nous trouver</h2>
+      <div class="grille">
+        <address>
+          Clé de 15<br>181 rue d’Auxonne<br>21000 Dijon<br>
+          <a href="tel:+33353012715">03 53 01 27 15</a>
+        </address>
+        <dl class="horaires">
+          <div><dt>Mardi à vendredi</dt><dd>8 h 30 à 12 h 30<br>14 h à 19 h</dd></div>
+          <div><dt>Samedi</dt><dd>9 h à 17 h</dd></div>
+          <div><dt>Dimanche et lundi</dt><dd>Fermé</dd></div>
+        </dl>
+      </div>
+      <p class="coherence">Les mêmes horaires sont affichés sur la porte de l’atelier et sur notre fiche Google. Une fermeture exceptionnelle est annoncée ici et sur la fiche le même jour.</p>
+    </div>
+  </section>
+
+  <section class="etapes" aria-labelledby="etapes-t">
+    <div class="wrap">
+      <h2 id="etapes-t">Comment se passe une réparation</h2>
+      <ol>
+        <li><h3>Vous réservez un dépôt</h3><p>En ligne ou par téléphone. Un SMS confirme le créneau, un autre vous le rappelle la veille.</p></li>
+        <li><h3>On regarde le vélo devant vous</h3><p>Cinq minutes au comptoir : on vous dit ce qui cloche et combien ça coûte.</p></li>
+        <li><h3>On répare sans surprise</h3><p>Une pièce imprévue à changer ? Vous recevez son prix par SMS et on attend votre réponse.</p></li>
+        <li><h3>Vous reprenez votre vélo</h3><p>Un SMS vous prévient dès qu’il est prêt. Paiement sur place, par carte ou en espèces.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="atelier" aria-labelledby="atelier-t">
+    <div class="wrap">
+      <div>
+        <h2 id="atelier-t">Qui répare votre vélo</h2>
+        <p>Clé de 15 a ouvert le 1<sup>er</sup> septembre 2026. Derrière le comptoir, Inès, mécanicienne cycle titulaire du CQP technicien cycles, après six ans à l’atelier d’un magasin de sport.</p>
+        <p>Le nom vient de la clé plate de 15 millimètres, celle qui démonte les pédales et les roues à écrous : l’outil qu’on attrape le plus souvent.</p>
+      </div>
+      <figure>
+        <img src="/exemples/img/creation-rayon-800.webp"
+             srcset="/exemples/img/creation-rayon-480.webp 480w, /exemples/img/creation-rayon-800.webp 800w"
+             sizes="(min-width: 52rem) 26rem, calc(100vi - 2rem)"
+             width="800" height="942" loading="lazy" decoding="async"
+             alt="Clé à rayons en métal posée sur l’écrou d’un rayon, sous la jante, ses trois tailles marquées 1, 2 et 3">
+        <figcaption>Une roue voilée se redresse rayon par rayon, sans la changer.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="rdv" id="rdv" aria-labelledby="rdv-t">
+    <div class="wrap">
+      <h2 id="rdv-t">Réserver un dépôt</h2>
+      <p>Choisissez le jour et le créneau. Un SMS vous confirme la réservation, puis vous la rappelle la veille.</p>
+      <div class="grille">
+      <form id="resa" action="#rdv" novalidate>
+        <div class="deux">
+          <div>
+            <label for="f-velo">Votre vélo</label>
+            <select id="f-velo" name="velo">
+              <option value="ville">Ville ou vélotaf</option><option value="route">Route ou gravel</option><option value="vtt">VTT</option><option value="elec">Électrique</option>
+            </select>
+          </div>
+          <div>
+            <label for="f-panne">Réparation</label>
+            <select id="f-panne" name="panne">
+              <option value="crev">Crevaison</option><option value="frein">Freins</option><option value="vit">Vitesses</option><option value="roue">Roue voilée</option><option value="rev">Révision complète</option><option value="autre">Autre, à voir au comptoir</option>
+            </select>
+          </div>
+        </div>
+        <div class="deux">
+          <div><label for="f-jour">Jour de dépôt *</label><input id="f-jour" name="jour" type="date" required></div>
+          <div>
+            <label for="f-creneau">Créneau</label>
+            <select id="f-creneau" name="creneau">
+              <option>À l’ouverture, jusqu’à 10 h</option><option>En fin de journée, jusqu’à la fermeture</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          <label for="f-quand">Il vous le faut</label>
+          <select id="f-quand" name="quand">
+            <option value="sem">Dans la semaine</option><option value="48">Sous 48 h (10 € de plus)</option><option value="jour">Aujourd’hui (15 € de plus)</option>
+          </select>
+        </div>
+        <div class="deux">
+          <div><label for="f-nom">Nom *</label><input id="f-nom" name="nom" autocomplete="name" enterkeyhint="next" required></div>
+          <div><label for="f-tel">Téléphone mobile *</label><input id="f-tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="send" required></div>
+        </div>
+        <p class="discret">* obligatoire. Le numéro sert uniquement aux SMS de confirmation et de rappel.</p>
+        <div><button class="btn" type="submit">Réserver le dépôt</button></div>
+        <p class="merci" role="status">Dépôt réservé. Dans la version en ligne, un SMS vous le confirme tout de suite et vous le rappelle la veille.</p>
+      </form>
+      <aside class="cote" aria-label="Sans rendez-vous">
+        <b>Sans rendez-vous ?</b>
+        <p>Passez aux heures d’ouverture : on prend votre vélo si l’atelier a la place, sinon on vous donne le premier créneau libre.</p>
+        <a href="tel:+33353012715">03 53 01 27 15</a>
+      </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <b>Clé de 15</b>
+    <p>181 rue d’Auxonne, 21000 Dijon. Du mardi au samedi.</p>
+    <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-creation-entreprise" target="_top">4dayvelopment</a>. L’entreprise, son adresse, son numéro et ses qualifications sont fictifs.</p>
+    <p>Photos : « Tools at Somerville Bike Kitchen 1 », 4300streetcar, sous licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr">CC BY 4.0</a>, recadrée, marques retirées ; « Spoke wrench in use », Scott Ehardt, domaine public. Via Wikimedia Commons.</p>
+  </div>
+</footer>
+
+<nav class="pouce" aria-label="Contact rapide">
+  <a class="appel" href="tel:+33353012715">Appeler</a>
+  <a class="resa" href="#rdv">Réserver un dépôt</a>
+</nav>
+
+<script src="/exemples/creation.js" defer></script>
+</body>
+</html>
