@@ -5,16 +5,11 @@
 
 import { initProgress, initNav, initPageTransition, initBottomSheetSwipe } from './modules/navigation.js';
 import { initCursor, initGlow, initMagnetic, initReveal } from './modules/animations.js';
-import { initContactForm, initTypeChips, initExit } from './modules/form.js';
 import { initLang } from './modules/i18n.js';
 import { checkMotion, initFAQ } from './modules/ui.js';
-import { initUniverse } from './modules/gl-bg.js';
 import { initDemoViewer } from './modules/demos.js';
 import { initPhoneFrames } from './modules/phone.js';
 import { initPreloader } from './modules/preloader.js';
-import { initBrowserReel } from './modules/reel.js';
-import { initDuel } from './modules/duel.js';
-import { initCarouselDots } from './modules/carousel.js';
 import { initSplitTitles, initTilt, initVelocityMarquee, initCursorFlair } from './modules/motion.js';
 import { initPunchline } from './modules/punchline.js';
 import { initInertia } from './modules/inertia.js';
@@ -79,14 +74,8 @@ async function init() {
   initAppBar();
   initNative();
   initBottomSheetSwipe();
-  initExit();
-  initTypeChips();
-  initContactForm();
   initDemoViewer();
   initPhoneFrames();
-  initBrowserReel();
-  initDuel();
-  initCarouselDots();
   initVelocityMarquee();
   initPunchline();
 
@@ -100,12 +89,22 @@ async function init() {
     initTilt();
   }, 150);
 
-  // Fond WebGL maison (zéro dépendance) : après le premier paint, hors LCP
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(initUniverse, { timeout: 800 });
-  } else {
-    setTimeout(initUniverse, 300);
-  }
+  /* Bas de page et décor : chargés après l'événement load, au premier temps
+     mort. Ils ne font plus partie du premier écran (la charte en vise moins
+     de 25 requêtes) et ne rivalisent plus avec le CSS et les polices. Sans
+     eux, rien ne manque au-dessus de la ligne de flottaison : les prix
+     restent lisibles en texte simple (repli sans JS) jusqu'aux rouleaux. */
+  const apresChargement = fn => {
+    const go = () => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1200 }) : setTimeout(fn, 200));
+    if (document.readyState === 'complete') go(); else addEventListener('load', go, { once: true });
+  };
+  apresChargement(() => {
+    import('./modules/form.js').then(m => { m.initExit(); m.initTypeChips(); m.initContactForm(); });
+    import('./modules/reel.js').then(m => m.initBrowserReel());
+    import('./modules/duel.js').then(m => m.initDuel());
+    import('./modules/carousel.js').then(m => m.initCarouselDots());
+    import('./modules/gl-bg.js').then(m => m.initUniverse());   // fond WebGL maison, hors LCP
+  });
 
   console.log('%c4DAYVELOPMENT', 'color:#f2b13b;font-size:22px;font-weight:900;font-family:Syne,sans-serif;');
   console.log('%cMasterclass 2026 · Maximum Conversion', 'color:#DA5426;font-size:12px;');
