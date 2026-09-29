@@ -722,7 +722,7 @@ p.maj {
 .logos-label {
   text-align: center;
   color: var(--accent2);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -822,7 +822,7 @@ section { padding: 100px var(--gutter-x); }
 }
 .section-label {
   color: var(--accent2);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -975,7 +975,7 @@ section { padding: 100px var(--gutter-x); }
 }
 .maintenance-price { flex-wrap: wrap; }
 .mo-detail {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--muted);
   line-height: 1.4;
   flex: 1;
@@ -1006,7 +1006,7 @@ section { padding: 100px var(--gutter-x); }
   background: rgba(218,84,38,0.1);
   border: 1px solid rgba(218,84,38,0.2);
   color: var(--accent2);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   border-radius: var(--radius-full);
   letter-spacing: 0.5px;
@@ -1297,14 +1297,14 @@ section { padding: 100px var(--gutter-x); }
   margin-bottom: 10px;
 }
 .duel-tag {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--muted);
 }
 .duel-pop {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--accent2);
   letter-spacing: .5px;
@@ -1451,7 +1451,7 @@ html:not(.js-enabled) .duel-more {
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.04);
   color: var(--muted2);
-  font-size: 0.7188rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: .05em;
   text-transform: uppercase;
@@ -1705,7 +1705,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   border-radius: var(--radius);
 }
 .wp-option-price-item span {
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -1929,7 +1929,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 }
 .faq-num {
   font-family: 'Syne', sans-serif;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 800;
   color: var(--accent);
   opacity: 0.6;
@@ -2556,7 +2556,7 @@ footer {
   }
   .hero-inner { width: 100%; }
 
-  .badge { font-size: 0.6875rem; padding: 6px 14px; }
+  .badge { font-size: 0.75rem; padding: 6px 14px; }
   .btn-primary,
   .btn-secondary {
     justify-content: center;
@@ -2586,8 +2586,8 @@ footer {
 
   /* ─ Logos ticker ─ */
   .logos-section { padding: 28px 0; }
-  .logos-label { font-size: 0.625rem; margin-bottom: 18px; }
-  .logo-item { font-size: 0.72rem; padding: 9px 14px 9px 12px; gap: 9px; letter-spacing: .07em; }
+  .logos-label { font-size: 0.75rem; margin-bottom: 18px; }
+  .logo-item { font-size: 0.75rem; padding: 9px 14px 9px 12px; gap: 9px; letter-spacing: .07em; }
   .logos-track { gap: 18px; animation-duration: 16s; }
   .logo-dot { width: 10px; }
 
@@ -2702,7 +2702,7 @@ footer {
   }
   .footer-brand .logo-img { height: clamp(24px, 4vw, 32px); }
   .footer-brand p { font-size: 0.8125rem; }
-  .footer-links-group h4, .footer-links-group .footer-col-h { font-size: 0.6875rem; margin-bottom: 14px; }
+  .footer-links-group h4, .footer-links-group .footer-col-h { font-size: 0.75rem; margin-bottom: 14px; }
   .footer-links-group a { font-size: 0.8125rem; }
   .footer-bottom {
     flex-direction: column;
@@ -2738,7 +2738,9 @@ footer {
 
   /* ─ Hero ─ */
   .hero { padding: 100px 16px 64px; }
-  .badge { font-size: 0.625rem; padding: 5px 12px; }
+  /* 12 px (plancher de lisibilite) : interlettrage reduit pour tenir sur une
+     ligne des 360 px ; a 320 px, deux lignes equilibrees et centrees */
+  .badge { font-size: 0.75rem; padding: 5px 12px; letter-spacing: .02em; text-wrap: balance; text-align: center; }
 
   /* Stats — empilement vertical */
 
@@ -3162,7 +3164,7 @@ footer {
   .faq-num {
     min-width: 28px;
     height: 28px;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
   }
   .faq-answer-inner {
     padding: 0 16px 20px;
@@ -3497,7 +3499,7 @@ footer {
   background: linear-gradient(90deg, transparent, rgba(242,177,59,.55), transparent);
 }
 .form-group label {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: .16em;
   color: var(--muted);
@@ -3554,7 +3556,7 @@ footer {
 }
 .btn-submit:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 24px 52px -16px rgba(218,84,38,.7); }
 .btn-submit:active { transform: translateY(0); }
-.form-legal { font-size: 0.7188rem; line-height: 1.6; }
+.form-legal { font-size: 0.75rem; line-height: 1.6; }
 @media (max-width: 768px) {
   .contact-right { padding: 26px 18px; border-radius: 20px; }
 }
@@ -3663,7 +3665,7 @@ footer {
   color: #fff;
   padding: 5px 12px;
   border-radius: var(--radius-full);
-  font-size: 0.6563rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -4574,7 +4576,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     padding: 7px 4px;
     border-radius: 13px;
     color: var(--muted);
-    font-size: 0.6563rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: .02em;
     text-align: center;
