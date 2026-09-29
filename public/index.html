@@ -45,6 +45,9 @@
   <!-- Fonts -->
   <link rel="preload" as="font" type="font/woff2" href="/fonts/syne-var.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-var.woff2" crossorigin>
+  <!-- utils.js est importé par les modules eux-mêmes : sans ce préchargement,
+       il formait un troisième niveau de requêtes (main.js, modules, utils.js). -->
+  <link rel="modulepreload" href="/js/modules/utils.js">
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
