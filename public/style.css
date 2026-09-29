@@ -42,7 +42,7 @@
   /* #555 donnait 2,68:1 sur le fond sombre, sous le minimum legal de
      4,5:1, et servait du texte de 13 px : pied de page, mentions legales,
      liens juridiques. #7a7a7a passe a 4,66:1 en restant discret. */
-  --muted2:      #7a7a7a;
+  --muted2:      #858585; /* 4,5:1 minimum sur les fonds #080808 a #1a1a1a */
 
   --radius:      16px;
   --radius-lg:   24px;

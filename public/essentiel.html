@@ -48,7 +48,7 @@
       --card:    #111111;
       --border:  #1e1e1e;
       --text:    #e8e8e8;
-      --muted:   #666666;
+      --muted:   #888888; /* #666 donnait 3,5:1 sur ce fond */
       --radius:  14px;
     }
 
@@ -154,7 +154,6 @@
       -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-    /* date de mise a jour visible : #888 et non --muted (#666, contraste 3,6:1 sur ce fond) */
     .maj { font-size: clamp(0.8rem, 0.78rem + 0.1vi, 0.875rem); color: #888; margin-block-start: 0.75rem; }
 
     /* mention TTC a cote des prix, discrete dans les titres */
@@ -434,7 +433,7 @@
       width: 100%;
     }
     .field input::placeholder,
-    .field textarea::placeholder { color: #333; }
+    .field textarea::placeholder { color: var(--muted); }
     .field select option { background: #1a1a1a; }
     .field input:focus,
     .field select:focus,
@@ -581,7 +580,7 @@
 
     .form-legal {
       font-size: 0.6875rem;
-      color: #333;
+      color: var(--muted);
       text-align: center;
       margin-top: 12px;
       line-height: 1.5;

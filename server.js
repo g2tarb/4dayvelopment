@@ -623,7 +623,7 @@ ${ARTICLE_NAV}  <!-- /partial:nav -->
     <div class="container" style="max-width:800px;">
 
       <nav aria-label="Fil d'Ariane" class="breadcrumb" style="margin-top:24px;">
-        <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;font-size:14px;color:#666;">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;font-size:14px;color:var(--muted2);">
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
             <a itemprop="item" href="/" style="color:#888;text-decoration:none;"><span itemprop="name">Accueil</span></a>
             <meta itemprop="position" content="1"><span style="margin-left:8px;color:#444;">›</span>
@@ -641,8 +641,8 @@ ${ARTICLE_NAV}  <!-- /partial:nav -->
 
       <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:20px;margin-bottom:20px;">
         <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">${escapeHtml(category)}</span>
-        <time datetime="${date}" style="font-size:13px;color:#666;">${dateFR}</time>
-        <span style="font-size:13px;color:#666;">· ${escapeHtml(readTime)}</span>
+        <time datetime="${date}" style="font-size:13px;color:var(--muted2);">${dateFR}</time>
+        <span style="font-size:13px;color:var(--muted2);">· ${escapeHtml(readTime)}</span>
       </div>
 
       <h1 class="hero-title reveal" style="font-size:clamp(2rem,5vw,3.2rem);margin-top:0;line-height:1.2;">${escapeHtml(title)}</h1>
@@ -726,8 +726,8 @@ function addToBlogIndex(data) {
       <article style="background:#141414;border:1px solid #222;border-radius:16px;padding:32px;margin-bottom:24px;">
         <div style="display:flex;gap:12px;align-items:center;margin-bottom:16px;">
           <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">${escapeHtml(data.category)}</span>
-          <time datetime="${date}" style="font-size:13px;color:#666;">${dateFR}</time>
-          <span style="font-size:13px;color:#666;">· ${escapeHtml(data.readTime)}</span>
+          <time datetime="${date}" style="font-size:13px;color:var(--muted2);">${dateFR}</time>
+          <span style="font-size:13px;color:var(--muted2);">· ${escapeHtml(data.readTime)}</span>
         </div>
         <h2 style="font-size:1.5rem;margin-bottom:12px;">
           <a href="/blog/${escapeHtml(data.slug)}" style="color:#e8e8e8;text-decoration:none;">${escapeHtml(data.title)}</a>
