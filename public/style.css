@@ -4855,59 +4855,57 @@ p { text-wrap: pretty; }
   nav.scrolled, footer, .mobile-menu, .logos-section { border-width: 0.5px; }
 }
 
-/* ── 6. Les pastilles du carrousel d'avis ──
-   Pilotees par js/modules/carousel.js, qui ne les pose que si la piste
-   defile reellement. La pastille courante s'allonge en pilule au lieu de
-   changer de couleur : la position se lit d'un coup d'oeil, sans compter.
-   La cible tactile fait 44 px, l'ecart entre deux pastilles n'en fait
-   que 8 : c'est la zone qui est large, pas le point. */
-.car-dots {
+/* ── 6. La navigation des carrousels ──
+   Posee par js/modules/carousel.js, seulement si la piste defile
+   reellement. Deux boutons de 44 px encadrent les pastilles : ce sont eux
+   les cibles, au doigt comme au clavier. Les pastilles ne font plus
+   qu'indiquer la position : la courante s'allonge en pilule, la position
+   se lit d'un coup d'oeil, sans compter. */
+.car-nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2px;
+  gap: 12px;
   margin-top: 10px;
 }
-.car-dot {
-  position: relative;
-  /* La regle tactile globale impose 48 px de large a tout bouton. Ici elle
-     se retournait contre nous : huit pastilles a 48 px depassent la largeur
-     d'un telephone, le navigateur les comprimait, et la rangee s'etalait
-     d'un bord a l'autre au lieu de rester un petit groupe centre. La base
-     flex fige la largeur, min-width la defend, et la hauteur de 44 px suffit
-     a tenir la regle du pouce. */
-  flex: 0 0 22px;
-  width: 22px;
-  min-width: 22px;
+.car-step {
+  display: grid;
+  place-items: center;
+  width: 44px;
   height: 44px;
   padding: 0;
-  border: 0;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 50%;
   background: none;
+  color: var(--text);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  transition: border-color .2s, opacity .2s;
 }
-.car-dot::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
+.car-step[aria-disabled="true"] { opacity: .35; cursor: default; }
+.car-step:active:not([aria-disabled="true"]) { border-color: var(--accent2); }
+@media (hover: hover) and (pointer: fine) {
+  .car-step:hover:not([aria-disabled="true"]) { border-color: rgba(242,177,59,.55); }
+}
+.car-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.car-dot {
   width: 6px;
   height: 6px;
   border-radius: 99px;
   background: rgba(255,255,255,.22);
   transition: width .35s var(--ease-spring), background .35s var(--ease-out);
 }
-.car-dot.is-here::before {
+.car-dot.is-here {
   width: 20px;
   background: var(--accent2);
 }
-.car-dot:active::before { background: rgba(255,255,255,.4); }
-.car-dot.is-here:active::before { background: var(--accent2); }
-.car-dot:focus-visible { outline: 2px solid var(--accent2); outline-offset: -8px; border-radius: 10px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .car-dot::before { transition: none; }
+  .car-dot { transition: none; }
 }
 
 /* ── 7. Les realisations defilent au lieu de s'empiler ──
