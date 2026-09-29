@@ -733,7 +733,7 @@ function addToBlogIndex(data) {
           <a href="/blog/${escapeHtml(data.slug)}" style="color:#e8e8e8;text-decoration:none;">${escapeHtml(data.title)}</a>
         </h2>
         <p style="color:#888;line-height:1.7;margin-bottom:16px;">${escapeHtml(data.description)}</p>
-        <a href="/blog/${escapeHtml(data.slug)}" style="color:#f2b13b;font-weight:600;font-size:14px;text-decoration:none;">Lire l'article →</a>
+        <a href="/blog/${escapeHtml(data.slug)}" class="blog-more" style="color:#f2b13b;font-weight:600;font-size:14px;text-decoration:none;">Lire l'article →</a>
       </article>`;
 
     // Inserer apres le premier <div class="container"> de la section articles

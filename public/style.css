@@ -266,12 +266,18 @@ nav.scrolled {
   box-shadow: 0 4px 30px rgba(0,0,0,0.4);
 }
 /* Fil d'Ariane : c'est aussi un <nav>, mais il ne doit PAS hériter du
-   positionnement fixe de la barre de navigation principale. */
+   positionnement fixe ni du fond flouté de la barre de navigation
+   principale (bande sombre visible derrière « Accueil › … » en mobile). */
 .breadcrumb {
   position: static;
   z-index: auto;
   display: block;
   padding: 0;
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: 0;
+  box-shadow: none;
 }
 
 .nav-logo { display: flex; align-items: center; }
@@ -2888,9 +2894,17 @@ footer {
   .type-chip, .faq-question, .nav-toggle,
   .hamburger,
   .btn-primary, .btn-secondary, .btn-plan,
-  .btn-submit, .mobile-cta, .exit-cta, .exit-close {
+  .btn-submit, .mobile-cta, .exit-cta, .exit-close, .exit-close-icon {
     min-height: 48px;
     min-width: 48px;
+  }
+  /* min-height n'agit pas sur un lien en ligne (fil d'Ariane, « Lire
+     l'article », logo du pied de page), et .t-link fixait 36 px. */
+  .t-link { min-height: 44px; }
+  .breadcrumb a, .blog-more, .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 
   /* Active state tactile — feedback visuel instantane */

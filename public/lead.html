@@ -770,6 +770,8 @@
       font-family: var(--font-body);
       letter-spacing: 0.3px;
     }
+    /* page autonome, sans la regle tactile de style.css : 34 px de haut au doigt */
+    @media (pointer: coarse) { .lang-btn-ext { min-height: 44px; } }
     .lang-btn-ext:hover { background: rgba(255,255,255,0.12); color: var(--c-text); }
   </style>
 </head>

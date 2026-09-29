@@ -88,6 +88,8 @@
       gap: 6px;
       transition: color .2s;
     }
+    /* page autonome, sans la regle tactile de style.css : 30 px de haut au doigt */
+    @media (pointer: coarse) { .back-link { min-height: 44px; } }
     .back-link:hover { color: var(--text); }
 
     /* ── Layout ── */
