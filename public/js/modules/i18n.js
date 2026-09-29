@@ -3,11 +3,15 @@ import { $, $$, on } from './utils.js';
 
 const cache = {};
 
-async function loadTranslations(lang) {
-  if (cache[lang]) return cache[lang];
-  const res = await fetch(`/locales/${lang}.json`);
-  if (!res.ok) throw new Error(`i18n: impossible de charger ${lang}.json`);
-  cache[lang] = await res.json();
+// La promesse est gardée, pas seulement le résultat : survol, focus et doigt
+// posé préchauffent en même temps sans lancer trois fois la même requête.
+function loadTranslations(lang) {
+  cache[lang] ||= fetch(`/locales/${lang}.json`)
+    .then(res => {
+      if (!res.ok) throw new Error(`i18n: impossible de charger ${lang}.json`);
+      return res.json();
+    })
+    .catch(err => { delete cache[lang]; throw err; });
   return cache[lang];
 }
 
@@ -46,9 +50,11 @@ export async function initLang() {
 
   let lang = localStorage.getItem('lang') || 'fr';
 
-  // Précharger les deux locales en arrière-plan dès le démarrage
-  loadTranslations('fr').catch(() => {});
-  loadTranslations('en').catch(() => {});
+  // Les locales ne servent qu'au changement de langue : on les charge à
+  // l'approche du bouton (survol, focus, doigt posé), pas au démarrage où
+  // elles faisaient deux requêtes de plus au premier écran.
+  const prechauffe = () => { loadTranslations('fr').catch(() => {}); loadTranslations('en').catch(() => {}); };
+  ['pointerenter', 'focus', 'touchstart'].forEach(ev => on(btn, ev, prechauffe, { once: true, passive: true }));
 
   if (lang === 'en') await applyLang('en');
 
