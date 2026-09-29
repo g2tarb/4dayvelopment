@@ -17,10 +17,15 @@ export function initAppBar() {
   bar.hidden = false;
   document.body.classList.add('has-appbar');
 
-  // Visible des que le hero est derriere nous
+  // Visible des que le hero est derriere nous, et retiree quand le formulaire
+  // est a l'ecran : elle doublait son bouton d'envoi et masquait ses champs.
+  let heroPasse = false, formVu = false;
+  const maj = () => bar.classList.toggle('is-on', heroPasse && !formVu);
   new IntersectionObserver(([e]) => {
-    bar.classList.toggle('is-on', !e.isIntersecting);
+    heroPasse = !e.isIntersecting; maj();
   }, { threshold: 0, rootMargin: '-70% 0px 0px 0px' }).observe(hero);
+  const form = document.getElementById('maquette') || document.getElementById('contact');
+  if (form) new IntersectionObserver(([e]) => { formVu = e.isIntersecting; maj(); }).observe(form);
 
   /* Elle s'efface quand on remonte : le geste de retour vers le haut est
      une lecture, pas une navigation. */
