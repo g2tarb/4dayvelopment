@@ -617,7 +617,7 @@ function buildArticleHTML(data) {
   <!-- partial:nav -->
 ${ARTICLE_NAV}  <!-- /partial:nav -->
 
-  <main>
+  <main id="contenu">
 
   <section class="hero" style="min-height:auto;padding:140px 24px 60px;">
     <div class="container" style="max-width:800px;">

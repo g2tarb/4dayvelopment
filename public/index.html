@@ -55,10 +55,6 @@
 </head>
 <body>
 
-  <!-- Un visiteur au clavier ne doit pas traverser toute la navigation pour
-       atteindre le contenu : premier element focusable de la page. -->
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
-
   <!-- ── ÉCRAN D'ENTRÉE ──
        Masqué par défaut : il ne s'affiche que si boot.js a posé .has-intro. -->
   <div id="preloader" aria-hidden="true">
@@ -108,6 +104,8 @@
 
   <!-- ── NAV ── -->
   <!-- partial:nav -->
+  <!-- Premier element focusable : au clavier, on saute la navigation. -->
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
   <nav id="navbar">
     <a href="/" class="nav-logo">
       <img src="/logo/logo4day.svg" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="89">

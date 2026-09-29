@@ -3,7 +3,7 @@
    Orchestrateur ES6 modules · Sans bundler
    ================================================================ */
 
-import { initProgress, initNav, initSmoothScroll, initPageTransition, initBottomSheetSwipe } from './modules/navigation.js';
+import { initProgress, initNav, initPageTransition, initBottomSheetSwipe } from './modules/navigation.js';
 import { initCursor, initGlow, initMagnetic, initReveal } from './modules/animations.js';
 import { initContactForm, initTypeChips, initExit } from './modules/form.js';
 import { initLang } from './modules/i18n.js';
@@ -72,7 +72,6 @@ async function init() {
   initSplitTitles();   // avant initReveal : les masques sont en place quand .visible tombe
   initReveal();
   initFAQ();
-  initSmoothScroll();
   initInertia();
   initAppBar();
   initNative();

@@ -143,6 +143,12 @@ function linkIssues(html, route, read, exists) {
     const t = internal(href, SITE + route);
     if (!t) continue;
     const rel = resolveRoute(t.path);
+    if (!rel && href.startsWith('#')) {
+      // Page sans route propre (la 404, servie pour toute adresse inconnue) :
+      // une ancre seule vise le document courant.
+      if (!ids(html).has(t.hash)) issues.push(`ancre absente : ${href}`);
+      continue;
+    }
     if (!rel) {
       if (!exists(t.path.slice(1))) issues.push(`lien cassé : ${href}`);
       continue;
