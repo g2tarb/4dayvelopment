@@ -332,6 +332,8 @@ footer{background:var(--encre);color:rgba(244,242,237,.75);
   .formes{flex-wrap:wrap;justify-content:center}
   .formes .forme,.formes button{min-width:0;padding:.5rem .7rem;font-size:12px}
 }
+/* cibles tactiles : 44 px minimum au doigt (liens d'appel et logo trop bas) */
+@media (pointer: coarse) { .tel-geant { display: inline-flex; align-items: center; min-height: 44px; } }
 </style>
 </head>
 <body>
