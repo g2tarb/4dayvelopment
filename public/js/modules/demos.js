@@ -11,7 +11,7 @@ const DEMOS = {
   'coach-sportif':  { label: 'Coach sportif',     url: '/exemples/coach-sportif' },
   'barbier':        { label: 'Barbier',           url: '/exemples/barbier' },
   'plombier':       { label: 'Plombier',          url: '/exemples/plombier' },
-  'borne-recharge': { label: 'Borne de recharge', url: '/exemples/borne-recharge' },
+  'borne-irve':     { label: 'Borne de recharge', url: '/exemples/borne-irve' },
 };
 
 const ORDER    = Object.keys(DEMOS);
