@@ -1586,6 +1586,10 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   inset: 0;
   pointer-events: none;
   z-index: 4;
+  /* un canvas ne s'etire pas avec inset: 0 : sans taille CSS il prend celle
+     de son tampon (1,5 x la zone sur ecran dense) et deborde de la page */
+  width: 100%;
+  height: 100%;
 }
 
 /* ── Mobile : les camps s'empilent, le tap donne la main ── */
@@ -3782,6 +3786,10 @@ footer {
   position: relative;
   padding: 26px 0 0 26px;   /* place pour la fenêtre décalée en arrière-plan */
 }
+/* Le halo deborde de 50 px autour de la pile : sur telephone, il elargissait
+   la page de 31 px (la zone d'affichage s'etirait a 421 px pour 390). La
+   section coupe l'horizontale, le halo garde son debord vertical. */
+.process { overflow-x: clip; }
 .browser-stack::after {
   /* halo chaud derrière la pile */
   content: '';
@@ -4450,6 +4458,10 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  /* un canvas ne s'etire pas avec inset: 0 : sans taille CSS il prend celle
+     de son tampon (1,5 x la zone sur ecran dense) et deborde de la page */
+  width: 100%;
+  height: 100%;
 }
 /* le contenu du hero passe au-dessus du canvas */
 .hero-inner { position: relative; z-index: 1; }
