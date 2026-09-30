@@ -32,7 +32,7 @@
     /* ===== GRILLE PORTFOLIO — révélation de la DA au survol ===== */
     .pf-grid {
       display:grid;
-      grid-template-columns:repeat(auto-fill, minmax(min(330px, 100%), 1fr));
+      grid-template-columns:repeat(auto-fill, minmax(min(20.625rem, 100%), 1fr));
       gap:20px;
     }
     .pcard {
@@ -93,7 +93,7 @@
       padding:22px;
     }
     .pcard-top {
-      position:absolute; top:18px; left:22px; right:22px;
+      position:absolute; inset-block-start:18px; inset-inline-start:22px; inset-inline-end:22px;
       display:flex; justify-content:space-between; align-items:center;
     }
     .pcard-cat {
@@ -113,7 +113,7 @@
     }
     .pcard-kpi {
       font-family:'Syne',sans-serif; font-weight:800; font-size:1rem;
-      color:var(--brand); margin-bottom:10px;
+      color:var(--brand); margin-block-end:10px;
     }
     .pcard-desc {
       color:#c8c8c8; font-size:13.5px; line-height:1.6;
@@ -121,9 +121,9 @@
       transition:max-height .45s ease, opacity .4s ease, margin .4s ease;
     }
     .pcard:hover .pcard-desc, .pcard:focus-visible .pcard-desc {
-      max-height:160px; opacity:1; margin-bottom:13px;
+      max-height:160px; opacity:1; margin-block-end:13px;
     }
-    .pcard-tags { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:13px; }
+    .pcard-tags { display:flex; flex-wrap:wrap; gap:6px; margin-block-end:13px; }
     .pcard-tags span {
       font-family:'JetBrains Mono',monospace;
       font-size:0.75rem; letter-spacing:.02em;
@@ -141,7 +141,7 @@
     /* Tactile / mobile : sans survol, tout le texte s'affiche en meme temps et se
        superposait a la capture (illisible). L'apercu passe en bandeau, le texte
        en bloc plein juste dessous. */
-    @media (hover: none), (max-width: 768px) {
+    @media (hover: none), (max-width: 48rem) {
       .pf-grid { grid-template-columns:1fr; gap:16px; }
       .pcard { min-height:0; }
       .pcard-visual {
@@ -155,8 +155,8 @@
       .pcard-body { justify-content:flex-start; padding:18px 20px 22px; background:#101010; }
       /* le badge se referait au body (seul parent positionne) et retombait sur le titre :
          on le remet dans le flux, au-dessus du titre. */
-      .pcard-top { position:static; margin-bottom:12px; }
-      .pcard-desc { max-height:200px; opacity:1; margin-bottom:13px; }
+      .pcard-top { position:static; margin-block-end:12px; }
+      .pcard-desc { max-height:200px; opacity:1; margin-block-end:13px; }
       .pcard-cta { opacity:1; transform:none; }
     }
     /* Accessibilité : mouvement réduit */
@@ -199,7 +199,7 @@
     <div class="container">
 
 
-      <h1 class="hero-title reveal" style="font-size:clamp(2.2rem,5vw,3.8rem);margin-top:20px;">
+      <h1 class="hero-title reveal" style="font-size:clamp(2.2rem,5vi,3.8rem);margin-block-start:20px;">
         Nos réalisations
       </h1>
       <p class="maj">Mis à jour le <time datetime="2026-09-23">23 septembre 2026</time></p>
@@ -377,7 +377,7 @@
   <section style="padding-block:40px 100px;">
     <div class="container" style="text-align:center;max-width:700px;">
       <h2 class="section-title reveal">Votre projet pourrait être le prochain</h2>
-      <p class="section-sub reveal" style="margin-bottom:32px;">
+      <p class="section-sub reveal" style="margin-block-end:32px;">
         Discutons de votre projet gratuitement. Nous vous proposerons une solution sur-mesure, livrée en 4 jours.
       </p>
       <a href="/#contact" class="btn-primary magnetic reveal">Démarrer mon projet →</a>

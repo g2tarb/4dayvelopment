@@ -71,17 +71,17 @@
     /* ── Header ── */
     .lead-header {
       position: sticky;
-      top: 0;
+      inset-block-start: 0;
       z-index: 100;
       background: rgba(8,8,8,0.92);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid var(--c-border);
+      border-block-end: 1px solid var(--c-border);
       padding: 16px 32px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .lead-logo img { height: clamp(34px, 4.5vw, 50px); width: auto; }
+    .lead-logo img { height: clamp(2.125rem, 4.5vi, 3.125rem); width: auto; }
     .lead-header-right {
       display: flex;
       align-items: center;
@@ -105,11 +105,11 @@
     }
     .lead-hero h1 {
       font-family: var(--font-title);
-      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-size: clamp(2rem, 4vi, 3.2rem);
       font-weight: 800;
       letter-spacing: -1.5px;
       line-height: 1.1;
-      margin-bottom: 16px;
+      margin-block-end: 16px;
     }
     .lead-hero p {
       font-size: 1.0625rem;
@@ -190,25 +190,25 @@
     }
 
     .section-title-wrap {
-      margin-bottom: 32px;
+      margin-block-end: 32px;
     }
     .section-num {
       font-family: var(--font-title);
       font-size: 0.875rem;
       font-weight: 600;
       color: var(--c-sub);
-      margin-bottom: 8px;
+      margin-block-end: 8px;
     }
     .section-title-wrap h2 {
       font-family: var(--font-title);
-      font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+      font-size: clamp(1.4rem, 2.5vi, 1.9rem);
       font-weight: 800;
       letter-spacing: -0.5px;
     }
     .section-title-wrap p {
       color: var(--c-sub);
       font-size: 0.875rem;
-      margin-top: 6px;
+      margin-block-start: 6px;
     }
 
     /* ── Form Grid ── */
@@ -229,7 +229,7 @@
       font-weight: 600;
       color: var(--c-sub);
     }
-    .form-group label .req { color: var(--c-orange); margin-left: 2px; }
+    .form-group label .req { color: var(--c-orange); margin-inline-start: 2px; }
     .form-group input,
     .form-group select,
     .form-group textarea {
@@ -307,13 +307,13 @@
       background: rgba(218,84,38,.1);
       box-shadow: 0 0 0 1px rgba(218,84,38,.3);
     }
-    .choice-card .card-icon { font-size: 1.75rem; margin-bottom: 10px; color: #f2b13b; display: inline-flex; }
+    .choice-card .card-icon { font-size: 1.75rem; margin-block-end: 10px; color: #f2b13b; display: inline-flex; }
     .choice-card .card-label {
       font-family: var(--font-title);
       font-size: 0.8125rem;
       font-weight: 700;
       color: var(--c-text);
-      margin-bottom: 4px;
+      margin-block-end: 4px;
     }
     .choice-card .card-sub {
       font-size: 0.75rem;
@@ -322,7 +322,7 @@
     }
     .choice-card .card-check {
       position: absolute;
-      top: 10px; right: 10px;
+      inset-block-start: 10px; inset-inline-end: 10px;
       width: 18px; height: 18px;
       border-radius: 50%;
       border: 2px solid var(--c-border);
@@ -345,7 +345,7 @@
       font-family: var(--font-title);
       font-size: 2rem;
       font-weight: 800;
-      margin-bottom: 16px;
+      margin-block-end: 16px;
     }
     .budget-range {
       width: 100%;
@@ -356,7 +356,7 @@
       border-radius: 3px;
       outline: none;
       cursor: pointer;
-      margin-bottom: 8px;
+      margin-block-end: 8px;
     }
     .budget-range::-webkit-slider-thumb {
       -webkit-appearance: none;
@@ -418,7 +418,7 @@
       display: block;
       width: 5px; height: 9px;
       border: 2px solid #fff;
-      border-top: none; border-left: none;
+      border-block-start: none; border-inline-start: none;
       transform: rotate(45deg) translate(-1px, -1px);
     }
     .check-label { font-size: 0.875rem; color: var(--c-text); }
@@ -457,7 +457,7 @@
     }
     .recap-header {
       background: linear-gradient(135deg, rgba(218,84,38,.2), rgba(136,64,131,.2));
-      border-bottom: 1px solid var(--c-border);
+      border-block-end: 1px solid var(--c-border);
       padding: 20px 24px;
       display: flex;
       align-items: center;
@@ -483,7 +483,7 @@
       font-size: 0.875rem;
       font-weight: 600;
       color: var(--c-muted);
-      margin-bottom: 4px;
+      margin-block-end: 4px;
     }
     .recap-value {
       font-size: 0.875rem;
@@ -496,7 +496,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-top: 40px;
+      margin-block-start: 40px;
       gap: 16px;
     }
     .btn-prev {
@@ -569,7 +569,7 @@
     .spinner {
       width: 18px; height: 18px;
       border: 2px solid rgba(11,11,11,.25);
-      border-top-color: #0b0b0b; /* sur le bouton orange-or, le blanc ne se voyait pas */
+      border-block-start-color: #0b0b0b; /* sur le bouton orange-or, le blanc ne se voyait pas */
       border-radius: 50%;
       animation: spin 0.7s linear infinite;
       display: none;
@@ -594,17 +594,17 @@
     .success-icon svg { width: 100%; height: 100%; }
     .success-screen h2 {
       font-family: var(--font-title);
-      font-size: clamp(1.8rem, 3vw, 2.4rem);
+      font-size: clamp(1.8rem, 3vi, 2.4rem);
       font-weight: 800;
       letter-spacing: -1px;
-      margin-bottom: 16px;
+      margin-block-end: 16px;
     }
     .success-screen p {
       color: var(--c-sub);
       font-size: 1rem;
-      margin-bottom: 32px;
+      margin-block-end: 32px;
       max-width: 440px;
-      margin-left: auto; margin-right: auto;
+      margin-inline-start: auto; margin-inline-end: auto;
     }
     .success-actions {
       display: flex;
@@ -630,7 +630,7 @@
 
     /* ── Form feedback ── */
     .form-feedback {
-      margin-top: 16px;
+      margin-block-start: 16px;
       padding: 12px 16px;
       border-radius: var(--radius-sm);
       font-size: 0.8125rem;
@@ -659,7 +659,7 @@
 
     /* ── Footer hint ── */
     .section-hint {
-      margin-top: 12px;
+      margin-block-start: 12px;
       font-size: 0.75rem;
       color: var(--c-muted);
       display: flex;
@@ -672,18 +672,18 @@
     button, a, label { touch-action: manipulation; }
 
     /* ── Responsive ── */
-    @media (max-width: 768px) {
+    @media (max-width: 48rem) {
       .lead-header { padding: 12px 20px; }
       .secure-badge { display: none; }
       .lead-hero { padding: 40px 20px 28px; }
-      .lead-hero h1 { font-size: clamp(1.6rem, 7vw, 2.4rem); letter-spacing: -1px; }
+      .lead-hero h1 { font-size: clamp(1.6rem, 7vi, 2.4rem); letter-spacing: -1px; }
       .lead-hero p { font-size: 0.9375rem; }
       .steps-indicator { padding: 0 20px 28px; }
       .si-step span:not(.si-dot) { display: none; }
       .si-line { max-width: 40px; }
       .lead-main { padding: 0 16px 60px; }
-      .section-title-wrap { margin-bottom: 24px; }
-      .section-title-wrap h2 { font-size: clamp(1.3rem, 5vw, 1.7rem); }
+      .section-title-wrap { margin-block-end: 24px; }
+      .section-title-wrap h2 { font-size: clamp(1.3rem, 5vi, 1.7rem); }
       .form-grid { grid-template-columns: 1fr; }
       .card-grid { grid-template-columns: repeat(2, 1fr); }
       .card-grid.cols-4 { grid-template-columns: repeat(2, 1fr); }
@@ -694,10 +694,10 @@
       .form-group textarea { font-size: 1rem; }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 30rem) {
       .lead-header { padding: 10px 14px; }
       .lead-hero { padding: 28px 16px 20px; }
-      .lead-hero h1 { font-size: clamp(1.4rem, 8vw, 2rem); }
+      .lead-hero h1 { font-size: clamp(1.4rem, 8vi, 2rem); }
       .lead-hero p { font-size: 0.875rem; }
       .steps-indicator { padding: 0 14px 20px; gap: 0; }
       .si-dot { width: 24px; height: 24px; font-size: 0.75rem; }
@@ -716,7 +716,7 @@
       .style-tag { padding: 8px 14px; font-size: 0.75rem; min-height: 40px; }
     }
 
-    @media (max-width: 375px) {
+    @media (max-width: 23.4375rem) {
       .lead-hero { padding: 20px 14px 16px; }
       .card-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
       .choice-card { padding: 12px 8px; }
@@ -861,9 +861,9 @@
       </div>
 
       <!-- Type de site -->
-      <div class="form-group" style="margin-bottom:28px;">
+      <div class="form-group" style="margin-block-end:28px;">
         <label>Type de site souhaité <span class="req">*</span></label>
-        <div class="card-grid" id="type-grid" style="margin-top:10px;">
+        <div class="card-grid" id="type-grid" style="margin-block-start:10px;">
           <label class="choice-card">
             <input type="radio" name="type-site" value="Site vitrine">
             <div class="card-check"></div>
@@ -907,13 +907,13 @@
             <div class="card-sub">Page de conversion</div>
           </label>
         </div>
-        <span class="field-error" id="err-type" style="margin-top:8px;">Veuillez choisir un type de site.</span>
+        <span class="field-error" id="err-type" style="margin-block-start:8px;">Veuillez choisir un type de site.</span>
       </div>
 
       <!-- Budget -->
-      <div class="form-group" style="margin-bottom:28px;">
+      <div class="form-group" style="margin-block-end:28px;">
         <label for="budget-range">Budget estimé</label>
-        <div style="margin-top:10px;">
+        <div style="margin-block-start:10px;">
           <div class="budget-display" id="budget-display" aria-live="polite">2 000 €</div>
           <input type="range" class="budget-range" id="budget-range"
                  min="0" max="10" step="1" value="2"
@@ -928,9 +928,9 @@
       </div>
 
       <!-- Délai -->
-      <div class="form-group" style="margin-bottom:28px;">
+      <div class="form-group" style="margin-block-end:28px;">
         <label>Délai souhaité <span class="req">*</span></label>
-        <div class="tag-group" id="delai-tags" style="margin-top:10px;">
+        <div class="tag-group" id="delai-tags" style="margin-block-start:10px;">
           <button class="tag-btn" type="button" data-val="Le plus vite possible">Urgent</button>
           <button class="tag-btn" type="button" data-val="Dans le mois">Ce mois-ci</button>
           <button class="tag-btn" type="button" data-val="Dans 1 à 3 mois">1 à 3 mois</button>
@@ -938,7 +938,7 @@
           <button class="tag-btn" type="button" data-val="Je ne sais pas encore">Pas encore défini</button>
         </div>
         <input type="hidden" id="f-delai" name="delai">
-        <span class="field-error" id="err-delai" style="margin-top:8px;">Veuillez sélectionner un délai.</span>
+        <span class="field-error" id="err-delai" style="margin-block-start:8px;">Veuillez sélectionner un délai.</span>
       </div>
 
       <!-- Objectif principal -->
@@ -973,9 +973,9 @@
       </div>
 
       <!-- Pages -->
-      <div class="form-group" style="margin-bottom:28px;">
+      <div class="form-group" style="margin-block-end:28px;">
         <label>Pages souhaitées (cochez tout ce qui s'applique)</label>
-        <div class="check-list" style="margin-top:10px;">
+        <div class="check-list" style="margin-block-start:10px;">
           <label class="check-item">
             <input type="checkbox" name="pages" value="Accueil">
             <div class="check-box"></div>
@@ -1044,72 +1044,72 @@
       </div>
 
       <!-- Fonctionnalités -->
-      <div class="form-group" style="margin-bottom:28px;">
+      <div class="form-group" style="margin-block-end:28px;">
         <label>Fonctionnalités souhaitées</label>
-        <div class="card-grid cols-2" style="margin-top:10px;">
-          <label class="choice-card" style="text-align:left;padding:14px 16px;">
+        <div class="card-grid cols-2" style="margin-block-start:10px;">
+          <label class="choice-card" style="text-align:start;padding:14px 16px;">
             <input type="checkbox" name="fonctionnalites" value="Formulaire de contact">
             <div class="card-check"></div>
-            <div style="padding-right:20px;">
-              <div class="card-label" style="text-align:left;">Formulaire de contact</div>
+            <div style="padding-inline-end:20px;">
+              <div class="card-label" style="text-align:start;">Formulaire de contact</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:left;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:14px 16px;">
             <input type="checkbox" name="fonctionnalites" value="Prise de rendez-vous">
             <div class="card-check"></div>
-            <div style="padding-right:20px;">
-              <div class="card-label" style="text-align:left;">Prise de rendez-vous</div>
+            <div style="padding-inline-end:20px;">
+              <div class="card-label" style="text-align:start;">Prise de rendez-vous</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:left;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:14px 16px;">
             <input type="checkbox" name="fonctionnalites" value="Paiement en ligne">
             <div class="card-check"></div>
-            <div style="padding-right:20px;">
-              <div class="card-label" style="text-align:left;">Paiement en ligne</div>
+            <div style="padding-inline-end:20px;">
+              <div class="card-label" style="text-align:start;">Paiement en ligne</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:left;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:14px 16px;">
             <input type="checkbox" name="fonctionnalites" value="Espace membre / Connexion">
             <div class="card-check"></div>
-            <div style="padding-right:20px;">
-              <div class="card-label" style="text-align:left;">Espace membre</div>
+            <div style="padding-inline-end:20px;">
+              <div class="card-label" style="text-align:start;">Espace membre</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:left;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:14px 16px;">
             <input type="checkbox" name="fonctionnalites" value="Multilingue">
             <div class="card-check"></div>
-            <div style="padding-right:20px;">
-              <div class="card-label" style="text-align:left;">Multilingue</div>
+            <div style="padding-inline-end:20px;">
+              <div class="card-label" style="text-align:start;">Multilingue</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:left;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:14px 16px;">
             <input type="checkbox" name="fonctionnalites" value="SEO avancé">
             <div class="card-check"></div>
-            <div style="padding-right:20px;">
-              <div class="card-label" style="text-align:left;">SEO avancé</div>
+            <div style="padding-inline-end:20px;">
+              <div class="card-label" style="text-align:start;">SEO avancé</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:left;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:14px 16px;">
             <input type="checkbox" name="fonctionnalites" value="Chat / Support en ligne">
             <div class="card-check"></div>
-            <div style="padding-right:20px;">
-              <div class="card-label" style="text-align:left;">Chat / Support</div>
+            <div style="padding-inline-end:20px;">
+              <div class="card-label" style="text-align:start;">Chat / Support</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:left;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:14px 16px;">
             <input type="checkbox" name="fonctionnalites" value="Tableau de bord admin">
             <div class="card-check"></div>
-            <div style="padding-right:20px;">
-              <div class="card-label" style="text-align:left;">Dashboard admin</div>
+            <div style="padding-inline-end:20px;">
+              <div class="card-label" style="text-align:start;">Dashboard admin</div>
             </div>
           </label>
         </div>
       </div>
 
       <!-- Style visuel -->
-      <div class="form-group" style="margin-bottom:28px;">
+      <div class="form-group" style="margin-block-end:28px;">
         <label>Style visuel préféré</label>
-        <div class="tag-group" id="style-tags" style="margin-top:10px;">
+        <div class="tag-group" id="style-tags" style="margin-block-start:10px;">
           <button class="tag-btn" type="button" data-val="Moderne & épuré">Moderne & épuré</button>
           <button class="tag-btn" type="button" data-val="Luxe & premium">Luxe & premium</button>
           <button class="tag-btn" type="button" data-val="Coloré & dynamique">Coloré & dynamique</button>
@@ -1171,7 +1171,7 @@
         </button>
       </div>
 
-      <p id="lead-legal" style="font-size: 0.75rem;color:var(--c-muted);text-align:center;margin-top:16px;">
+      <p id="lead-legal" style="font-size: 0.75rem;color:var(--c-muted);text-align:center;margin-block-start:16px;">
         En soumettant ce formulaire, vous acceptez que vos données soient utilisées pour vous recontacter. Aucun spam.
       </p>
     </section>
