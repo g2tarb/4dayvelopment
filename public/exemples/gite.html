@@ -2,456 +2,502 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Maison Tixier, chambres d’hôtes à Coudes | Démo 4dayvelopment</title>
-<meta name="description" content="Démo : chambres d’hôtes dans une maison de pierre à Coudes, au bord de l’Allier. Disponibilités à jour, 95 € la nuit pour deux avec le petit-déjeuner.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Maison Tixier, chambres d’hôtes à Coudes | Démo 4DV</title>
+<meta name="description" content="Démo 4dayvelopment&#8239;: deux chambres d’hôtes à Coudes, au bord de l’Allier. Galerie de la maison, nuits libres, prix du séjour calculé et demande en direct.">
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#212428">
-<link rel="preload" as="font" type="font/woff2" href="/fonts/besley-var.woff2" crossorigin>
-<style>
-/* Besley : Clarendon des enseignes peintes et des almanachs, OFL (Owen Earl) */
-@font-face{font-family:'Besley';font-style:normal;font-weight:400 900;font-display:swap;src:url('/fonts/besley-var.woff2') format('woff2')}
-
-:root{
-  --linge:#F3F5F4;       /* fond : draps blancs, fenêtres ouvertes du calendrier */
-  --linge-2:#E4E9E7;
-  --lave:#212428;        /* texte et bande du calendrier : andésite de Volvic */
-  --lave-2:#50565C;
-  --lave-3:#B7BEC2;      /* texte secondaire sur la lave */
-  --volet:#2A7E91;       /* peinture des volets : nuits prises */
-  --volet-f:#1C5F6E;     /* bouton */
-  --volet-c:#8CC3CE;
-  --arkose:#C99A55;      /* pierre dorée du pays : le séjour choisi */
-  --trait:#C5CCCA;
-  --mesure:62ch;
-  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
-}
-*,*::before,*::after{box-sizing:border-box}
-*{margin:0}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{
-  font-family:'Besley',Georgia,serif;font-weight:400;font-size:1.0625rem;line-height:1.6;
-  color:var(--lave);background:var(--linge);-webkit-font-smoothing:antialiased;
-}
-img{display:block;max-width:100%;height:auto;background:var(--linge-2)} /* fond visible pendant le chargement ou si l'image manque */
-a{color:inherit}
-:focus-visible{outline:3px solid var(--volet);outline-offset:3px}
-h1,h2,h3{font-weight:700;line-height:1.1;letter-spacing:-.01em;text-wrap:balance}
-p{text-wrap:pretty}
-sup{font-size:.7em;line-height:0}
-.nw{white-space:nowrap}
-.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
-.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:-999px}
-.skip:focus{left:1rem;top:1rem;background:var(--lave);color:var(--linge);padding:.6rem 1rem;z-index:10}
-
-/* Barre du haut : le nom de la maison et le numéro */
-.top{border-bottom:1px solid var(--trait)}
-.top .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.25rem 1rem;min-height:3.75rem;padding-block:.5rem}
-.marque{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1.1;min-height:2.75rem}
-.marque b{font-weight:800;font-size:1.375rem}
-.marque span{font-size:.8125rem;color:var(--lave-2);margin-top:.15rem}
-.tel{font-weight:600;text-decoration:none;white-space:nowrap;font-variant-numeric:lining-nums;
-  padding:.55rem .1rem;border-bottom:2px solid var(--volet)}
-
-/* Ouverture */
-.ouv{padding-block:var(--pas) calc(var(--pas)*1.75)}
-.ouv .wrap{display:grid;gap:calc(var(--pas)*1.25)}
-.ouv h1{font-size:clamp(2rem,1.3rem + 3.2vi,3.4rem);max-width:15ch}
-.chapo{font-size:1.125rem;max-width:40ch;margin-top:1rem;color:var(--lave-2)}
-.nuit{margin-top:1rem;font-weight:600;max-width:40ch}
-.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.5rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.8rem 1.35rem;
-  background:var(--volet-f);color:#fff;border:2px solid transparent;border-radius:4px;
-  font:inherit;font-weight:700;text-decoration:none;cursor:pointer;transition:background-color .15s}
-.btn:active{transform:translateY(1px)}
-@media (hover:hover){.btn:hover{background:#164C58}} /* survol : seulement avec une souris */
-.discret{font-size:.9375rem;color:var(--lave-2);max-width:34ch}
-figure{margin:0}
-figcaption{font-size:.8125rem;color:var(--lave-2);margin-top:.5rem}
-.ouv img{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:75% 50%;border-radius:3px}
-/* ordinateur : le texte et la photo côte à côte */
-@media (min-width:60rem){
-  .ouv .wrap{grid-template-columns:1.1fr 1fr;align-items:center;gap:4rem}
-  .ouv img{aspect-ratio:1}
-}
-
-/* Signature : le calendrier des nuits libres. Chaque nuit est une fenêtre :
-   volet fermé, elle est prise. Mois et séjour se choisissent sans script. */
-.dispos{background:var(--lave);color:var(--linge);padding-block:calc(var(--pas)*2)}
-.dispos :focus-visible{outline-color:var(--arkose)}
-.dispos h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
-.dispos .intro{max-width:var(--mesure);margin-top:.75rem;color:var(--lave-3)}
-.cal{margin-top:1.75rem;max-width:30rem}
-.onglets{border:0;padding:0;display:none;grid-template-columns:repeat(3,minmax(0,1fr));gap:.375rem}
-.onglets label{position:relative;display:flex;align-items:center;justify-content:center;min-height:2.75rem;padding:.25rem;
-  border:1.5px solid #7A838A;border-radius:4px;cursor:pointer;font-weight:600;
-  font-size:clamp(.8125rem,.7rem + .5vi,1rem);transition:background-color .15s,border-color .15s}
-.onglets input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
-.onglets label:has(input:checked){background:var(--linge);color:var(--lave);border-color:var(--linge)}
-.onglets label:has(input:focus-visible){outline:3px solid var(--arkose);outline-offset:2px}
-.mois{border:0;padding:0;margin-top:1.25rem;min-width:0}
-.mois legend{padding:0;font-weight:700;font-size:1.125rem;margin-bottom:.6rem}
-.jours,.sem{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.1875rem}
-.jours{font-size:.75rem;color:var(--lave-3);margin-bottom:.3rem;padding-inline:.3rem}
-.sem{position:relative;border-radius:3px}
-.sem + .sem{margin-top:.1875rem}
-.n{position:relative;isolation:isolate;min-height:2.5rem;padding:.15rem .3rem;border-radius:2px;
-  background:var(--linge);color:var(--lave);font-size:.875rem;font-variant-numeric:lining-nums;line-height:1.4}
-.n.p{background:repeating-linear-gradient(180deg,var(--volet) 0 .3rem,#1D6475 .3rem .4rem);color:#fff}
-.n.v{background:transparent}
-/* séjour libre : les nuits de semaine (lundi à jeudi) ou le week-end (vendredi
-   et samedi) se choisissent d'un geste ; la case du dimanche reste à part */
-.seg{position:relative;display:grid;gap:.1875rem;cursor:pointer;border-radius:3px}
-.s4{grid-column:span 4;grid-template-columns:repeat(4,minmax(0,1fr))}
-.s2{grid-column:span 2;grid-template-columns:repeat(2,minmax(0,1fr))}
-.seg .n{box-shadow:inset 0 -.25rem 0 var(--arkose)} /* trait doré : ce séjour se choisit */
-.seg input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
-.seg:has(input:focus-visible){outline:3px solid var(--arkose);outline-offset:3px}
-@media (hover:hover){.seg:hover .n{box-shadow:inset 0 0 0 2px var(--arkose)}} /* survol : le séjour qu'on va choisir */
-.seg input:checked ~ .n{box-shadow:none} /* survol : la rangée qu'on va choisir */
-.n::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:var(--arkose);transform:scaleY(0);transform-origin:50% 100%}
-.seg input:checked ~ .n::before{transform:none}
-.seg input:checked ~ .n{font-weight:700}
-.recap{display:none;grid-column:1/-1;padding:.55rem .1rem .35rem;font-size:.9375rem;line-height:1.45}
-.recap b{color:var(--arkose)}
-.sem:has(.s4 input:checked) .r4,.sem:has(.s2 input:checked) .r2{display:block}
-.legende{display:flex;flex-wrap:wrap;gap:.4rem 1.1rem;margin-top:1rem;font-size:.8125rem;color:var(--lave-3)}
-.legende span{display:inline-flex;align-items:center;gap:.45rem}
-.legende i{width:1.1rem;height:1.1rem;border-radius:2px;background:var(--linge)}
-.legende .l-p{background:repeating-linear-gradient(180deg,var(--volet) 0 .22rem,#1D6475 .22rem .3rem)}
-.legende .l-l{box-shadow:inset 0 -.2rem 0 var(--arkose)}
-.legende .l-c{background:var(--arkose)}
-.autres{margin-top:1rem;font-size:.9375rem;color:var(--lave-3);max-width:44ch}
-/* sans :has, les trois mois restent affichés l'un sous l'autre */
-@supports selector(:has(*)){
-  .onglets{display:grid}
-  .cal .mois{display:none}
-  .cal:has(#m-oct:checked) #g-oct,.cal:has(#m-nov:checked) #g-nov,.cal:has(#m-dec:checked) #g-dec{display:block}
-}
-/* la nuitée : prix et ce qu'il comprend */
-.nuitee{margin-top:2.25rem;border-top:1.5px solid #3E444A;padding-top:1.5rem;max-width:30rem}
-.prix strong{display:block;font-weight:800;font-size:clamp(2.6rem,2rem + 3vi,3.75rem);line-height:1;color:#fff;font-variant-numeric:lining-nums}
-.prix{color:var(--lave-3)}
-.prix + p{margin-top:.5rem;color:var(--lave-3)}
-.nuitee h3{font-size:1.125rem;margin-top:1.5rem}
-.nuitee ul{padding-left:1.1rem;margin-top:.5rem;color:var(--lave-3)}
-.nuitee li + li{margin-top:.3rem}
-.nuitee li::marker{color:var(--arkose)}
-/* ordinateur : le calendrier à gauche, la nuitée en regard */
-@media (min-width:60rem){
-  .dispos .grille{display:grid;grid-template-columns:minmax(0,30rem) minmax(0,26rem);gap:5rem;align-items:start}
-  .nuitee{margin-top:1.75rem}
-  .n{min-height:3.25rem;font-size:1rem;padding:.25rem .45rem}
-}
-
-/* La demande de réservation */
-.demande{background:var(--linge-2);padding-block:calc(var(--pas)*2)}
-.demande h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
-.demande .wrap > p{max-width:var(--mesure);margin-top:.75rem}
-.choisie{margin-top:1.25rem;padding:.85rem 1rem;border-radius:4px;background:var(--linge);border:1.5px solid var(--trait);max-width:36rem}
-.choisie p{display:none;font-weight:600}
-.choisie .aucune{display:block;font-weight:400;color:var(--lave-2)}
-@supports selector(:has(*)){
-  body:has([name=sejour]:checked) .choisie .aucune{display:none}
-  body:has([name=sejour]:checked) .choisie .une{display:block}
-  body:has([name=sejour]:checked) .choisie{border-color:var(--arkose);border-width:2px}
-}
-form{margin-top:1.5rem;display:grid;gap:1rem;max-width:36rem}
-label{display:block;font-weight:600;margin-bottom:.35rem}
-input,select,textarea{width:100%;font:inherit;font-size:1rem;color:var(--lave);background:#fff;
-  border:1.5px solid #6E7679;border-radius:4px;padding:.7rem .8rem}
-input,select{height:3.2rem}
-textarea{min-height:6.5rem;resize:vertical}
-input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--volet);outline-offset:1px;border-color:var(--lave)}
-.deux{display:grid;gap:1rem}
-/* deux champs par ligne dès qu'ils ont la place */
-@media (min-width:36rem){.deux{grid-template-columns:1fr 1fr}}
-.note{font-size:.9375rem;color:var(--lave-2)}
-.merci{display:none;padding:1rem 1.1rem;border:1.5px solid var(--lave);border-radius:4px;background:#fff;font-weight:600}
-form.envoye .merci{display:block}
-.cote{margin-top:2rem;display:grid;gap:.5rem;align-content:start}
-.cote b{font-size:1.125rem}
-.cote a{font-weight:700;font-size:1.5rem;font-variant-numeric:lining-nums}
-/* ordinateur : le formulaire à gauche, le téléphone en regard */
-@media (min-width:60rem){.demande .grille{display:grid;grid-template-columns:minmax(0,36rem) 1fr;gap:4rem;align-items:start}.cote{margin-top:1.5rem}}
-
-/* Les chambres, le petit-déjeuner, les alentours : texte et photo */
-.piece{padding-block:calc(var(--pas)*2)}
-.piece + .piece{border-top:1px solid var(--trait)}
-.piece .wrap{display:grid;gap:var(--pas)}
-.piece h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
-.piece p{max-width:var(--mesure);margin-top:.85rem}
-.piece img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:3px}
-.loin{margin-top:1.25rem;max-width:30rem}
-.loin div{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-top:1px solid var(--trait)}
-.loin div:last-child{border-bottom:1px solid var(--trait)}
-.loin dd{margin:0;font-weight:600;white-space:nowrap}
-.avert{background:var(--linge-2);padding:1rem 1.1rem;border-radius:3px;font-weight:600}
-/* ordinateur : photo et texte côte à côte, la photo des chambres à gauche */
-@media (min-width:60rem){
-  .piece .wrap{grid-template-columns:1fr 1fr;align-items:center;gap:4rem}
-  .chambres figure{grid-column:1;grid-row:1}
-}
-
-footer{background:var(--lave);color:var(--lave-3);padding-block:2.5rem;font-size:.875rem}
-footer .wrap{display:grid;gap:.75rem}
-footer b{color:#fff;font-weight:800;font-size:1.25rem}
-footer a{color:#fff}
-
-/* Barre sous le pouce, en mobile et en paysage téléphone : appeler ou voir les
-   nuits libres. Rangée quand le calendrier ou la demande sont à l'écran. */
-.pouce{display:none}
-@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
-  html{scroll-padding-bottom:6rem}
-  .pouce{display:grid;grid-template-columns:1fr 1.5fr;gap:.5rem;position:fixed;left:0;right:0;bottom:0;z-index:5;
-    padding:.6rem .75rem max(.6rem,env(safe-area-inset-bottom));background:var(--linge);border-top:1px solid var(--trait);
-    transition:transform .2s ease-out}
-  .pouce a{display:flex;align-items:center;justify-content:center;min-height:2.75rem;border-radius:4px;font-weight:700;text-decoration:none}
-  .pouce .appel{border:1.5px solid var(--lave)}
-  .pouce .voir{background:var(--volet-f);color:#fff;border:1.5px solid transparent}
-  .pouce.cache{transform:translateY(110%)}
-  footer{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
-}
-
-/* Le seul mouvement : les fenêtres du séjour choisi s'éclairent l'une
-   après l'autre, puis le récapitulatif apparaît. */
-@media (prefers-reduced-motion:no-preference){
-  .n::before{transition:transform .22s ease-out}
-  /* span 1 = texte lu par les lecteurs d'écran, les nuits suivent */
-  .sem input:checked ~ .n:nth-of-type(3)::before{transition-delay:40ms}
-  .sem input:checked ~ .n:nth-of-type(4)::before{transition-delay:80ms}
-  .sem input:checked ~ .n:nth-of-type(5)::before{transition-delay:120ms}
-  .sem input:checked ~ .n:nth-of-type(6)::before{transition-delay:160ms}
-  .sem input:checked ~ .n:nth-of-type(7)::before{transition-delay:200ms}
-  .sem input:checked ~ .n:nth-of-type(8)::before{transition-delay:240ms}
-  .sem:has(.s4 input:checked) .r4,.sem:has(.s2 input:checked) .r2{animation:monte .3s ease-out .2s both}
-  @keyframes monte{from{opacity:0;transform:translateY(.3rem)}to{opacity:1;transform:none}}
-}
-/* mouvement réduit : ni transition ni animation, l'état final directement */
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-</style>
+<meta name="theme-color" content="#24272B">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/libre-caslon-text-400.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/karla-var.woff2" crossorigin>
+<link rel="stylesheet" href="/exemples/gite.css">
+<script src="/exemples/gite.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#dispos">Aller aux disponibilités</a>
+<a class="skip" href="#contenu">Aller au contenu</a>
 
-<header class="top">
-  <div class="wrap">
-    <a class="marque" href="#">
-      <b>Maison Tixier</b>
-      <span>Chambres d’hôtes à Coudes</span>
-    </a>
-    <a class="tel" href="tel:+33465712318" aria-label="Appeler la Maison Tixier au 04 65 71 23 18">04 65 71 23 18</a>
-  </div>
+<!-- Pictogrammes au trait, réutilisés par <use> -->
+<svg width="0" height="0" class="vs" aria-hidden="true" focusable="false">
+  <symbol id="i-volets" viewBox="0 0 32 32"><rect x="4" y="5" width="11" height="22" rx="1.2"/><rect x="17" y="5" width="11" height="22" rx="1.2"/><path d="M6.5 9.5h6M6.5 13h6M6.5 16.5h6M6.5 20h6M6.5 23.5h6M19.5 9.5h6M19.5 13h6M19.5 16.5h6M19.5 20h6M19.5 23.5h6"/></symbol>
+  <symbol id="i-gauche" viewBox="0 0 24 24"><path d="M14.5 5.5 8 12l6.5 6.5"/></symbol>
+  <symbol id="i-droite" viewBox="0 0 24 24"><path d="M9.5 5.5 16 12l-6.5 6.5"/></symbol>
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5.2 3.5h3.1l1.6 4.1-2.1 1.3a11.5 11.5 0 0 0 5.3 5.3l1.3-2.1 4.1 1.6v3.1a2 2 0 0 1-2.1 2A16 16 0 0 1 3.2 5.6a2 2 0 0 1 2-2.1z"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-fermer" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-alerte" viewBox="0 0 24 24"><path d="M12 3.5 21 19.5H3z"/><path d="M12 10v4.5M12 17v.2"/></symbol>
+</svg>
+
+<header class="tete">
+  <a class="marque" href="#haut" aria-label="Maison Tixier, retour en haut de page">
+    <svg class="marque-ico" aria-hidden="true"><use href="#i-volets"/></svg>
+    <span class="marque-nom">Maison Tixier</span>
+  </a>
+  <nav class="tete-nav" aria-label="Sections">
+    <a href="#chambres">Les chambres</a>
+    <a href="#table">La table</a>
+    <a href="#autour">Autour</a>
+    <a href="#nuits">Les nuits libres</a>
+  </nav>
+  <a class="tete-tel" href="tel:+33465712318" aria-label="Appeler la Maison Tixier au 04 65 71 23 18">
+    <svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span>04&nbsp;65&nbsp;71&nbsp;23&nbsp;18</span>
+  </a>
 </header>
 
-<main>
-  <section class="ouv">
-    <div class="wrap">
-      <div>
-        <h1>Chambres d’hôtes à Coudes, au bord de l’Allier</h1>
-        <p class="chapo">Deux chambres qui communiquent, dans une maison de pierre du village. Nous ne prenons qu’une réservation à la fois : la salle d’eau et la table du <span class="nw">petit-déjeuner</span> sont pour vous seuls.</p>
-        <p class="nuit">95 € la nuit pour deux, <span class="nw">petit-déjeuner</span> compris.</p>
-        <div class="actions">
-          <a class="btn" href="#dispos">Voir les nuits libres</a>
-          <p class="discret">Arrivée de 17 h à 20 h, départ avant 11 h.</p>
-        </div>
-      </div>
-      <figure>
-        <img src="/exemples/img/gite-riviere-800.webp"
-             srcset="/exemples/img/gite-riviere-480.webp 480w, /exemples/img/gite-riviere-800.webp 800w, /exemples/img/gite-riviere-1200.webp 1200w"
-             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
-             width="1200" height="1500" fetchpriority="high"
-             alt="L’Allier entre deux rives boisées aux couleurs d’automne">
-        <figcaption>L’Allier au pied du village, en octobre.</figcaption>
-      </figure>
+<main id="contenu">
+<section class="galerie" id="haut" aria-labelledby="titre">
+  <div class="piste" id="piste" tabindex="0" aria-label="Photos de la maison&#8239;: faites glisser, ou utilisez les flèches du clavier">
+    <figure class="vue" id="vue-1">
+      <img src="/exemples/img/gite-maison-1200.webp"
+        srcset="/exemples/img/gite-maison-480.webp 480w, /exemples/img/gite-maison-800.webp 800w, /exemples/img/gite-maison-1200.webp 1200w, /exemples/img/gite-maison-1600.webp 1600w"
+        sizes="(orientation: portrait) 115vh, 100vw" width="1600" height="1400" fetchpriority="high"
+        alt="Maison de pierre au toit de tuiles, fenêtres à volets bruns, colline boisée dans la brume derrière">
+      <figcaption>La maison, un matin de brume.</figcaption>
+    </figure>
+    <figure class="vue" id="vue-2">
+      <img src="/exemples/img/gite-chambre-1200.webp"
+        srcset="/exemples/img/gite-chambre-480.webp 480w, /exemples/img/gite-chambre-800.webp 800w, /exemples/img/gite-chambre-1200.webp 1200w, /exemples/img/gite-chambre-1600.webp 1600w"
+        sizes="(orientation: portrait) 110vh, 100vw" width="1600" height="1520" loading="lazy" decoding="async"
+        alt="Porte-fenêtre ouverte sur les arbres de la cour, voilages blancs, lit fait de draps blancs">
+      <figcaption>La grande chambre, côté cour.</figcaption>
+    </figure>
+    <figure class="vue" id="vue-3">
+      <img src="/exemples/img/gite-petitdej-1200.webp"
+        srcset="/exemples/img/gite-petitdej-480.webp 480w, /exemples/img/gite-petitdej-800.webp 800w, /exemples/img/gite-petitdej-1200.webp 1200w, /exemples/img/gite-petitdej-1600.webp 1600w"
+        sizes="(orientation: portrait) 110vh, 100vw" width="1600" height="1483" loading="lazy" decoding="async"
+        alt="Tranches de pain grillées dans une assiette de faïence à motifs bleus, couteau à beurre">
+      <figcaption>Le pain du boulanger, grillé au petit-déjeuner.</figcaption>
+    </figure>
+    <figure class="vue" id="vue-4">
+      <img src="/exemples/img/gite-riviere-1200.webp"
+        srcset="/exemples/img/gite-riviere-480.webp 480w, /exemples/img/gite-riviere-800.webp 800w, /exemples/img/gite-riviere-1200.webp 1200w, /exemples/img/gite-riviere-1600.webp 1600w"
+        sizes="(orientation: portrait) 160vh, 100vw" width="1600" height="1067" loading="lazy" decoding="async"
+        alt="Rivière calme entre des prés et des saules, collines boisées au loin">
+      <figcaption>La rivière, à la sortie du village.</figcaption>
+    </figure>
+    <figure class="vue" id="vue-5">
+      <img src="/exemples/img/gite-volcans-1200.webp"
+        srcset="/exemples/img/gite-volcans-480.webp 480w, /exemples/img/gite-volcans-800.webp 800w, /exemples/img/gite-volcans-1200.webp 1200w, /exemples/img/gite-volcans-1600.webp 1600w"
+        sizes="(orientation: portrait) 160vh, 100vw" width="1600" height="1067" loading="lazy" decoding="async"
+        alt="Deux pitons rocheux de part et d’autre d’une vallée verte et boisée">
+      <figcaption>Les roches Tuilière et Sanadoire, dans les monts Dore.</figcaption>
+    </figure>
+  </div>
+
+  <div class="galerie-texte">
+    <p class="galerie-lieu">Coudes, Puy-de-Dôme</p>
+    <h1 id="titre">Deux chambres d’hôtes au bord de l’Allier</h1>
+    <p class="galerie-chapo">Une maison de pierre au village, une seule réservation à la fois&#8239;: la salle d’eau et la table du petit-déjeuner sont pour vous seuls.</p>
+  </div>
+
+  <div class="galerie-nav">
+    <button class="rond" type="button" id="prec" aria-controls="piste"><svg class="ico" aria-hidden="true"><use href="#i-gauche"/></svg><span class="vs">Photo précédente</span></button>
+    <p class="compte" id="compte" aria-live="polite"><b>1</b> sur 5</p>
+    <button class="rond" type="button" id="suiv" aria-controls="piste"><svg class="ico" aria-hidden="true"><use href="#i-droite"/></svg><span class="vs">Photo suivante</span></button>
+    <div class="vignettes" role="group" aria-label="Aller à une photo">
+      <button type="button" data-vue="0" aria-current="true"><img src="/exemples/img/gite-maison-480.webp" alt="" width="480" height="420" loading="lazy"><span class="vs">La maison</span></button>
+      <button type="button" data-vue="1"><img src="/exemples/img/gite-chambre-480.webp" alt="" width="480" height="456" loading="lazy"><span class="vs">La grande chambre</span></button>
+      <button type="button" data-vue="2"><img src="/exemples/img/gite-petitdej-480.webp" alt="" width="480" height="445" loading="lazy"><span class="vs">Le petit-déjeuner</span></button>
+      <button type="button" data-vue="3"><img src="/exemples/img/gite-riviere-480.webp" alt="" width="480" height="320" loading="lazy"><span class="vs">La rivière</span></button>
+      <button type="button" data-vue="4"><img src="/exemples/img/gite-volcans-480.webp" alt="" width="480" height="320" loading="lazy"><span class="vs">Les monts Dore</span></button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="dispos" id="dispos" aria-labelledby="dispos-t">
-    <div class="wrap">
-      <h2 id="dispos-t">Les nuits libres</h2>
-      <p class="intro">Choisissez un mois, puis un séjour libre : un week-end, ou des nuits en semaine. Un volet fermé, c’est une nuit déjà prise.</p>
-      <div class="grille">
-        <div class="cal">
-          <fieldset class="onglets">
-            <legend class="sr">Mois affiché</legend>
-            <label><input type="radio" name="mois" id="m-oct" checked>Octobre</label>
-            <label><input type="radio" name="mois" id="m-nov">Novembre</label>
-            <label><input type="radio" name="mois" id="m-dec">Décembre</label>
-          </fieldset>
-
-          <fieldset class="mois" id="g-oct">
-            <legend>Octobre 2026</legend>
-            <div class="jours" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
-            <div class="sem"><span class="sr">Du 1<sup>er</sup> au 4 octobre : nuits du 2 et du 3 prises.</span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n" aria-hidden="true">1</span><span class="n p" aria-hidden="true">2</span><span class="n p" aria-hidden="true">3</span><span class="n" aria-hidden="true">4</span></div>
-            <div class="sem"><span class="sr">Du 5 au 11 octobre : toutes les nuits libres.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1005" value="des nuits en semaine, entre le lundi 5 et le vendredi 9 octobre 2026" form="resa"><span class="sr">En semaine, du lundi 5 au vendredi 9 octobre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">5</span><span class="n" aria-hidden="true">6</span><span class="n" aria-hidden="true">7</span><span class="n" aria-hidden="true">8</span></label><label class="seg s2"><input type="radio" name="sejour" id="w-1009" value="le week-end du vendredi 9 au dimanche 11 octobre 2026" form="resa"><span class="sr">Week-end du vendredi 9 au dimanche 11 octobre : deux nuits.</span><span class="n" aria-hidden="true">9</span><span class="n" aria-hidden="true">10</span></label><span class="n" aria-hidden="true">11</span><span class="recap r4">Du lundi 5 au vendredi 9 octobre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span><span class="recap r2">Arrivée le vendredi 9, départ le dimanche 11 octobre. <b>2 nuits pour deux : 190 €</b>, <span class="nw">petits-déjeuners</span> compris.</span></div>
-            <div class="sem"><span class="sr">Du 12 au 18 octobre : nuits du 16 et du 17 prises.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1012" value="des nuits en semaine, entre le lundi 12 et le vendredi 16 octobre 2026" form="resa"><span class="sr">En semaine, du lundi 12 au vendredi 16 octobre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">12</span><span class="n" aria-hidden="true">13</span><span class="n" aria-hidden="true">14</span><span class="n" aria-hidden="true">15</span></label><span class="n p" aria-hidden="true">16</span><span class="n p" aria-hidden="true">17</span><span class="n" aria-hidden="true">18</span><span class="recap r4">Du lundi 12 au vendredi 16 octobre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span></div>
-            <div class="sem"><span class="sr">Du 19 au 25 octobre : complet.</span><span class="n p" aria-hidden="true">19</span><span class="n p" aria-hidden="true">20</span><span class="n p" aria-hidden="true">21</span><span class="n p" aria-hidden="true">22</span><span class="n p" aria-hidden="true">23</span><span class="n p" aria-hidden="true">24</span><span class="n p" aria-hidden="true">25</span></div>
-            <div class="sem"><span class="sr">Du 26 au 31 octobre : nuits du 26 au 30 prises.</span><span class="n p" aria-hidden="true">26</span><span class="n p" aria-hidden="true">27</span><span class="n p" aria-hidden="true">28</span><span class="n p" aria-hidden="true">29</span><span class="n p" aria-hidden="true">30</span><span class="n" aria-hidden="true">31</span><span class="n v" aria-hidden="true"></span></div>
-          </fieldset>
-
-          <fieldset class="mois" id="g-nov">
-            <legend>Novembre 2026</legend>
-            <div class="jours" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
-            <div class="sem"><span class="sr">Dimanche 1<sup>er</sup> novembre : nuit libre.</span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n" aria-hidden="true">1</span></div>
-            <div class="sem"><span class="sr">Du 2 au 8 novembre : toutes les nuits libres.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1102" value="des nuits en semaine, entre le lundi 2 et le vendredi 6 novembre 2026" form="resa"><span class="sr">En semaine, du lundi 2 au vendredi 6 novembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">2</span><span class="n" aria-hidden="true">3</span><span class="n" aria-hidden="true">4</span><span class="n" aria-hidden="true">5</span></label><label class="seg s2"><input type="radio" name="sejour" id="w-1106" value="le week-end du vendredi 6 au dimanche 8 novembre 2026" form="resa"><span class="sr">Week-end du vendredi 6 au dimanche 8 novembre : deux nuits.</span><span class="n" aria-hidden="true">6</span><span class="n" aria-hidden="true">7</span></label><span class="n" aria-hidden="true">8</span><span class="recap r4">Du lundi 2 au vendredi 6 novembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span><span class="recap r2">Arrivée le vendredi 6, départ le dimanche 8 novembre. <b>2 nuits pour deux : 190 €</b>, <span class="nw">petits-déjeuners</span> compris.</span></div>
-            <div class="sem"><span class="sr">Du 9 au 15 novembre : nuits du 13 et du 14 prises.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1109" value="des nuits en semaine, entre le lundi 9 et le vendredi 13 novembre 2026" form="resa"><span class="sr">En semaine, du lundi 9 au vendredi 13 novembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">9</span><span class="n" aria-hidden="true">10</span><span class="n" aria-hidden="true">11</span><span class="n" aria-hidden="true">12</span></label><span class="n p" aria-hidden="true">13</span><span class="n p" aria-hidden="true">14</span><span class="n" aria-hidden="true">15</span><span class="recap r4">Du lundi 9 au vendredi 13 novembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span></div>
-            <div class="sem"><span class="sr">Du 16 au 22 novembre : toutes les nuits libres.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1116" value="des nuits en semaine, entre le lundi 16 et le vendredi 20 novembre 2026" form="resa"><span class="sr">En semaine, du lundi 16 au vendredi 20 novembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">16</span><span class="n" aria-hidden="true">17</span><span class="n" aria-hidden="true">18</span><span class="n" aria-hidden="true">19</span></label><label class="seg s2"><input type="radio" name="sejour" id="w-1120" value="le week-end du vendredi 20 au dimanche 22 novembre 2026" form="resa"><span class="sr">Week-end du vendredi 20 au dimanche 22 novembre : deux nuits.</span><span class="n" aria-hidden="true">20</span><span class="n" aria-hidden="true">21</span></label><span class="n" aria-hidden="true">22</span><span class="recap r4">Du lundi 16 au vendredi 20 novembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span><span class="recap r2">Arrivée le vendredi 20, départ le dimanche 22 novembre. <b>2 nuits pour deux : 190 €</b>, <span class="nw">petits-déjeuners</span> compris.</span></div>
-            <div class="sem"><span class="sr">Du 23 au 29 novembre : nuits du 24, du 25, du 27 et du 28 prises.</span><span class="n" aria-hidden="true">23</span><span class="n p" aria-hidden="true">24</span><span class="n p" aria-hidden="true">25</span><span class="n" aria-hidden="true">26</span><span class="n p" aria-hidden="true">27</span><span class="n p" aria-hidden="true">28</span><span class="n" aria-hidden="true">29</span></div>
-            <div class="sem"><span class="sr">Lundi 30 novembre : nuit libre.</span><span class="n" aria-hidden="true">30</span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span></div>
-          </fieldset>
-
-          <fieldset class="mois" id="g-dec">
-            <legend>Décembre 2026</legend>
-            <div class="jours" aria-hidden="true"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
-            <div class="sem"><span class="sr">Du 1<sup>er</sup> au 6 décembre : nuits du 4 et du 5 prises.</span><span class="n v" aria-hidden="true"></span><span class="n" aria-hidden="true">1</span><span class="n" aria-hidden="true">2</span><span class="n" aria-hidden="true">3</span><span class="n p" aria-hidden="true">4</span><span class="n p" aria-hidden="true">5</span><span class="n" aria-hidden="true">6</span></div>
-            <div class="sem"><span class="sr">Du 7 au 13 décembre : toutes les nuits libres.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1207" value="des nuits en semaine, entre le lundi 7 et le vendredi 11 décembre 2026" form="resa"><span class="sr">En semaine, du lundi 7 au vendredi 11 décembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">7</span><span class="n" aria-hidden="true">8</span><span class="n" aria-hidden="true">9</span><span class="n" aria-hidden="true">10</span></label><label class="seg s2"><input type="radio" name="sejour" id="w-1211" value="le week-end du vendredi 11 au dimanche 13 décembre 2026" form="resa"><span class="sr">Week-end du vendredi 11 au dimanche 13 décembre : deux nuits.</span><span class="n" aria-hidden="true">11</span><span class="n" aria-hidden="true">12</span></label><span class="n" aria-hidden="true">13</span><span class="recap r4">Du lundi 7 au vendredi 11 décembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span><span class="recap r2">Arrivée le vendredi 11, départ le dimanche 13 décembre. <b>2 nuits pour deux : 190 €</b>, <span class="nw">petits-déjeuners</span> compris.</span></div>
-            <div class="sem"><span class="sr">Du 14 au 20 décembre : nuits du 18 et du 19 prises.</span><label class="seg s4"><input type="radio" name="sejour" id="s-1214" value="des nuits en semaine, entre le lundi 14 et le vendredi 18 décembre 2026" form="resa"><span class="sr">En semaine, du lundi 14 au vendredi 18 décembre : d’une à quatre nuits.</span><span class="n" aria-hidden="true">14</span><span class="n" aria-hidden="true">15</span><span class="n" aria-hidden="true">16</span><span class="n" aria-hidden="true">17</span></label><span class="n p" aria-hidden="true">18</span><span class="n p" aria-hidden="true">19</span><span class="n" aria-hidden="true">20</span><span class="recap r4">Du lundi 14 au vendredi 18 décembre, une à quatre nuits au choix : <b>95 € la nuit pour deux</b>, <span class="nw">petit-déjeuner</span> compris. Précisez vos nuits dans la demande.</span></div>
-            <div class="sem"><span class="sr">Du 21 au 27 décembre : complet.</span><span class="n p" aria-hidden="true">21</span><span class="n p" aria-hidden="true">22</span><span class="n p" aria-hidden="true">23</span><span class="n p" aria-hidden="true">24</span><span class="n p" aria-hidden="true">25</span><span class="n p" aria-hidden="true">26</span><span class="n p" aria-hidden="true">27</span></div>
-            <div class="sem"><span class="sr">Du 28 au 31 décembre : complet.</span><span class="n p" aria-hidden="true">28</span><span class="n p" aria-hidden="true">29</span><span class="n p" aria-hidden="true">30</span><span class="n p" aria-hidden="true">31</span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span><span class="n v" aria-hidden="true"></span></div>
-          </fieldset>
-
-          <p class="legende" aria-hidden="true"><span><i></i>Nuit libre</span><span><i class="l-p"></i>Nuit prise, volet fermé</span><span><i class="l-l"></i>Séjour libre, à choisir</span><span><i class="l-c"></i>Votre séjour</span></p>
-          <p class="autres">Une autre date vous convient ? Toutes les nuits libres se demandent : notez-les dans le message.</p>
-        </div>
-
-        <div class="nuitee">
-          <p class="prix"><strong>95 €</strong> la nuit pour deux personnes, <span class="nw">petit-déjeuner</span> compris.</p>
-          <p>30 € la nuit par personne en plus, dans la petite chambre. Le week-end, deux nuits pour deux : 190 €.</p>
-          <h3>Compris dans la nuitée</h3>
-          <ul>
-            <li>Le <span class="nw">petit-déjeuner</span>, servi de 8 h à 10 h.</li>
-            <li>Les draps et le linge de toilette, les lits faits à votre arrivée.</li>
-            <li>La salle d’eau, rien que pour vous.</li>
-            <li>Le parking dans la cour et le wifi.</li>
-          </ul>
-          <h3>En plus, si vous le souhaitez</h3>
-          <ul>
-            <li>La table d’hôtes, 28 € par personne, à demander la veille.</li>
-            <li>La taxe de séjour, au tarif fixé par la communauté de communes.</li>
-          </ul>
-        </div>
-      </div>
+<!-- La barre de réservation : en haut à l’écran sur ordinateur, sous le pouce sur téléphone -->
+<form class="barre" id="barre" aria-label="Vos dates et le prix du séjour" novalidate>
+  <div class="barre-resume">
+    <p class="barre-resume-txt" id="barre-resume"><b>95&nbsp;€</b> la nuit pour deux<span class="r-pdj">, <span class="nw">petit-déjeuner</span> compris</span></p>
+    <button class="btn btn-petit" type="button" id="barre-ouvrir" aria-expanded="false" aria-controls="barre-champs">Choisir mes dates</button>
+  </div>
+  <div class="barre-champs" id="barre-champs">
+    <div class="barre-tete">
+      <p class="barre-titre">Vos dates</p>
+      <button class="rond rond-clair" type="button" id="barre-fermer"><svg class="ico" aria-hidden="true"><use href="#i-fermer"/></svg><span class="vs">Fermer</span></button>
     </div>
-  </section>
+    <div class="champ"><label for="arrivee">Arrivée</label><input type="date" id="arrivee" name="arrivee" min="2026-10-01" max="2026-12-30"></div>
+    <div class="champ"><label for="depart">Départ</label><input type="date" id="depart" name="depart" min="2026-10-02" max="2026-12-31"></div>
+    <div class="champ champ-v"><label for="voyageurs">Voyageurs</label>
+      <select id="voyageurs" name="voyageurs">
+        <option value="1">1 voyageur</option>
+        <option value="2" selected>2 voyageurs</option>
+        <option value="3">3 voyageurs</option>
+        <option value="4">4 voyageurs</option>
+      </select>
+    </div>
+    <p class="barre-total" id="barre-total"><span class="barre-total-nuits">Aucune date choisie</span><b>95&nbsp;€ la nuit</b></p>
+    <button class="btn" type="submit">Demander ces nuits</button>
+    <p class="barre-note" id="barre-note" role="status">Le prix de la maison, sans frais de réservation. Rien n’est payé en ligne.</p>
+    <a class="barre-cal" href="#nuits"><svg class="ico" aria-hidden="true"><use href="#i-cal"/></svg>Voir le calendrier des nuits libres</a>
+  </div>
+</form>
 
-  <section class="demande" id="demande" aria-labelledby="demande-t">
-    <div class="wrap">
-      <h2 id="demande-t">Demander ces nuits</h2>
-      <p>Rien n’est payé en ligne. Nous vous répondons dans la journée ; un acompte de 30 % confirme la réservation, le solde se règle sur place. Pas de frais de réservation : vous payez le prix de la maison.</p>
-      <div class="choisie" aria-live="polite">
-        <p class="aucune">Aucun séjour choisi. Choisissez-en un dans le calendrier, ou écrivez vos dates dans le message.</p>
-        <p class="une">Votre séjour : <span id="sejour-choisi">celui choisi dans le calendrier</span>.</p>
-      </div>
-      <div class="grille">
-        <form id="resa" action="#demande" novalidate>
-          <div class="deux">
-            <div><label for="nom">Nom *</label><input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required></div>
-            <div><label for="email">Email *</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" enterkeyhint="next" required></div>
+<section class="carnet" aria-labelledby="carnet-t">
+  <div class="cadre">
+    <header class="carnet-tete">
+      <h2 id="carnet-t">Un séjour chez nous, du premier soir au départ</h2>
+      <p>Deux chambres qui communiquent, une salle d’eau, la table du matin&#8239;: tout est pour vous, puisque nous ne prenons qu’une réservation à la fois. Voici comment se passent vos journées.</p>
+    </header>
+
+    <ol class="etapes">
+      <li class="etape" id="arrivee-etape">
+        <p class="heure"><span>Premier soir</span><b>17&nbsp;h</b></p>
+        <div class="etape-corps etape-duo">
+          <div>
+            <h3>L’arrivée</h3>
+            <p>Nous vous accueillons de 17&nbsp;h à 20&nbsp;h, le temps de vous montrer la maison et le chemin de la rivière. Vous arrivez plus tard&#8239;? La clé vous attend dans une boîte à code, et nous vous envoyons le code la veille.</p>
+            <ul class="coches">
+              <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Parking dans la cour, portail fermé la nuit</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Wifi dans toute la maison</li>
+              <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Lits faits, draps et linge de toilette fournis</li>
+            </ul>
           </div>
-          <div class="deux">
-            <div><label for="tel">Téléphone</label><input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next"></div>
-            <div>
-              <label for="personnes">Personnes</label>
-              <select id="personnes" name="personnes"><option>2 personnes</option><option>1 personne</option><option>3 personnes</option><option>4 personnes</option></select>
+          <figure class="photo photo-haute">
+            <img src="/exemples/img/gite-facade-800.webp"
+              srcset="/exemples/img/gite-facade-480.webp 480w, /exemples/img/gite-facade-800.webp 800w, /exemples/img/gite-facade-1200.webp 1200w"
+              sizes="(min-width: 64rem) 22rem, (min-width: 40rem) 40vw, calc(100vw - 2rem)" width="1200" height="1688" loading="lazy" decoding="async"
+              alt="Façade de pierre apparente, fenêtres à encadrement clair et volets verts persiennés">
+            <figcaption>La façade sur la rue.</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li class="etape" id="chambres">
+        <p class="heure"><span>Premier soir</span><b>18&nbsp;h</b></p>
+        <div class="etape-corps">
+          <h3>Les deux chambres</h3>
+          <p class="etape-intro">Elles communiquent par une porte intérieure et partagent une salle d’eau que personne d’autre n’utilise. Les murs de pierre gardent la fraîcheur l’été&#8239;; l’hiver, le chauffage est allumé avant votre arrivée.</p>
+          <div class="fiches">
+            <article class="fiche" aria-labelledby="fiche-grande">
+              <div class="fiche-photos">
+                <figure class="fiche-photo" id="grande-a">
+                  <img src="/exemples/img/gite-chambre-800.webp"
+                    srcset="/exemples/img/gite-chambre-480.webp 480w, /exemples/img/gite-chambre-800.webp 800w, /exemples/img/gite-chambre-1200.webp 1200w"
+                    sizes="(min-width: 64rem) 30rem, (min-width: 40rem) 45vw, calc(100vw - 2rem)" width="1600" height="1520" loading="lazy" decoding="async"
+                    alt="Lit aux draps blancs devant une porte-fenêtre ouverte sur la cour">
+                </figure>
+                <figure class="fiche-photo" id="grande-b" hidden>
+                  <img src="/exemples/img/gite-douche-800.webp"
+                    srcset="/exemples/img/gite-douche-480.webp 480w, /exemples/img/gite-douche-800.webp 800w, /exemples/img/gite-douche-1200.webp 1200w"
+                    sizes="(min-width: 64rem) 30rem, (min-width: 40rem) 45vw, calc(100vw - 2rem)" width="1200" height="1725" loading="lazy" decoding="async"
+                    alt="Douche à l’italienne contre un mur de pierre claire, tabouret de bois">
+                </figure>
+                <div class="bascule" role="group" aria-label="Photos de la grande chambre">
+                  <button type="button" aria-pressed="true" data-montre="grande-a">La chambre</button>
+                  <button type="button" aria-pressed="false" data-montre="grande-b">La salle d’eau</button>
+                </div>
+              </div>
+              <div class="fiche-texte">
+                <h4 id="fiche-grande">La grande chambre</h4>
+                <dl class="fiche-dl">
+                  <div><dt>Lit</dt><dd>Deux lits de 90 accolés, ou séparés si vous le demandez</dd></div>
+                  <div><dt>Salle d’eau</dt><dd>Au bout du couloir, douche à l’italienne, pour vous seuls</dd></div>
+                  <div><dt>Vue</dt><dd>Sur la cour et le tilleul</dd></div>
+                </dl>
+                <p class="fiche-prix">Comprise dans les 95&nbsp;€ la nuit pour deux</p>
+              </div>
+            </article>
+
+            <article class="fiche" aria-labelledby="fiche-petite">
+              <div class="fiche-photos">
+                <figure class="fiche-photo" id="petite-a">
+                  <img src="/exemples/img/gite-petite-800.webp"
+                    srcset="/exemples/img/gite-petite-480.webp 480w, /exemples/img/gite-petite-800.webp 800w, /exemples/img/gite-petite-1200.webp 1200w"
+                    sizes="(min-width: 64rem) 30rem, (min-width: 40rem) 45vw, calc(100vw - 2rem)" width="1200" height="658" loading="lazy" decoding="async"
+                    alt="Deux lits simples aux draps blancs contre un mur de pierre, fenêtre sur la campagne">
+                </figure>
+                <figure class="fiche-photo" id="petite-b" hidden>
+                  <img src="/exemples/img/gite-linge-800.webp"
+                    srcset="/exemples/img/gite-linge-480.webp 480w, /exemples/img/gite-linge-800.webp 800w, /exemples/img/gite-linge-1200.webp 1200w"
+                    sizes="(min-width: 64rem) 30rem, (min-width: 40rem) 45vw, calc(100vw - 2rem)" width="1200" height="1800" loading="lazy" decoding="async"
+                    alt="Draps et oreillers blancs sous une fenêtre lumineuse, un carnet posé sur le lit">
+                </figure>
+                <div class="bascule" role="group" aria-label="Photos de la petite chambre">
+                  <button type="button" aria-pressed="true" data-montre="petite-a">La chambre</button>
+                  <button type="button" aria-pressed="false" data-montre="petite-b">Le linge</button>
+                </div>
+              </div>
+              <div class="fiche-texte">
+                <h4 id="fiche-petite">La petite chambre</h4>
+                <dl class="fiche-dl">
+                  <div><dt>Lit</dt><dd>Deux lits simples, pour des enfants ou un ami</dd></div>
+                  <div><dt>Salle d’eau</dt><dd>La même, partagée avec la grande chambre seulement</dd></div>
+                  <div><dt>Vue</dt><dd>Sur les toits du village</dd></div>
+                </dl>
+                <p class="fiche-prix">30&nbsp;€ la nuit par personne en plus</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </li>
+
+      <li class="etape" id="table">
+        <p class="heure"><span>Premier soir</span><b>19&nbsp;h&nbsp;30</b></p>
+        <div class="etape-corps etape-duo">
+          <div>
+            <h3>La table d’hôtes, si vous le souhaitez</h3>
+            <p>Un dîner de saison avec nous, dans la salle du bas. Demandez-le la veille, ou cochez-le dans votre demande de réservation.</p>
+            <p class="tarif"><b>28&nbsp;€</b> par personne</p>
+            <div class="menu">
+              <p class="menu-titre">Un soir d’octobre, par exemple</p>
+              <ul>
+                <li>Velouté de potimarron</li>
+                <li>Potée aux légumes du jardin</li>
+                <li>Saint-nectaire de la ferme voisine</li>
+                <li>Tarte aux pommes</li>
+              </ul>
             </div>
           </div>
+          <figure class="photo photo-haute">
+            <img src="/exemples/img/gite-soupe-800.webp"
+              srcset="/exemples/img/gite-soupe-480.webp 480w, /exemples/img/gite-soupe-800.webp 800w, /exemples/img/gite-soupe-1200.webp 1200w"
+              sizes="(min-width: 64rem) 22rem, (min-width: 40rem) 40vw, calc(100vw - 2rem)" width="1200" height="1650" loading="lazy" decoding="async"
+              alt="Deux assiettes de velouté sur des sets orange, corbeille de pain de campagne, table de bois sombre">
+            <figcaption>Le velouté du soir.</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li class="etape" id="matin">
+        <p class="heure"><span>Le matin</span><b>8&nbsp;h</b></p>
+        <div class="etape-corps etape-duo">
           <div>
-            <label for="nuits">Nuits</label>
-            <select id="nuits" name="nuits"><option>Selon le séjour choisi</option><option>1 nuit</option><option>2 nuits</option><option>3 nuits</option><option>4 nuits</option><option>D’autres dates, notées dans le message</option></select>
+            <h3>Le <span class="nw">petit-déjeuner</span></h3>
+            <p>Servi de 8&nbsp;h à 10&nbsp;h dans la salle du bas, à votre table. Il est compris dans la nuitée.</p>
+            <ul class="menu-liste">
+              <li>Pain du boulanger</li>
+              <li>Confitures de la maison</li>
+              <li>Beurre et fromage blanc</li>
+              <li>Fruits de saison</li>
+              <li>Café, thé ou chocolat</li>
+            </ul>
+          </div>
+          <figure class="photo photo-carree">
+            <img src="/exemples/img/gite-petitdej-800.webp"
+              srcset="/exemples/img/gite-petitdej-480.webp 480w, /exemples/img/gite-petitdej-800.webp 800w, /exemples/img/gite-petitdej-1200.webp 1200w"
+              sizes="(min-width: 64rem) 22rem, (min-width: 40rem) 40vw, calc(100vw - 2rem)" width="1600" height="1483" loading="lazy" decoding="async"
+              alt="Tranches de pain grillées dans une assiette de faïence à motifs bleus">
+            <figcaption>Le pain grillé du matin.</figcaption>
+          </figure>
+        </div>
+      </li>
+
+      <li class="etape" id="autour">
+        <p class="heure"><span>Dans la journée</span><b>10&nbsp;h</b></p>
+        <div class="etape-corps">
+          <h3>Autour de la maison</h3>
+          <p class="etape-intro">Coudes est au bord de l’Allier, entre Issoire et Clermont-Ferrand, avec les volcans à l’ouest. Choisissez un lieu&#8239;: les temps de trajet sont approximatifs, en voiture depuis la maison, hors bouchons.</p>
+          <div class="carte" id="carte" data-lieu="allier">
+            <svg class="carte-svg" viewBox="40 20 660 540" role="img" aria-labelledby="carte-t carte-d">
+              <title id="carte-t">Plan simplifié autour de Coudes</title>
+              <desc id="carte-d">L’Allier coule du sud au nord et passe à Coudes. Issoire est au sud, Clermont-Ferrand au nord, les monts Dore à l’ouest. Plan sans échelle.</desc>
+              <g class="relief" aria-hidden="true">
+                <path d="M78 470l18-30 18 30M104 452l24-42 24 42M92 510l20-34 20 34M126 500l22-38 22 38M84 405l16-26 16 26M118 392l14-24 14 24"/>
+                <path d="M262 70a10 10 0 0 1 20 0M272 104a12 12 0 0 1 24 0M270 140a13 13 0 0 1 26 0M268 176a10 10 0 0 1 20 0M280 206a9 9 0 0 1 18 0"/>
+              </g>
+              <path class="riviere" d="M660 560C646 530 640 505 628 478S590 410 568 372 590 320 594 298 578 262 583 250 566 200 572 172 600 110 605 80 614 40 616 20"/>
+              <g class="trajets">
+                <path class="trajet t-issoire" d="M558 367L604 481"/>
+                <path class="trajet t-clermont" d="M558 367L426 115"/>
+                <path class="trajet t-dore" d="M558 367C420 360 260 400 120 431"/>
+                <path class="trajet t-allier" d="M566 372C580 340 596 312 594 290"/>
+              </g>
+              <g class="lieux">
+                <g class="lieu-pt p-issoire"><circle cx="604" cy="481" r="7"/><text x="586" y="489" text-anchor="end">Issoire</text></g>
+                <g class="lieu-pt p-clermont"><circle cx="426" cy="115" r="9"/><text x="330" y="90">Clermont-Ferrand</text></g>
+                <g class="lieu-pt p-dore"><circle cx="120" cy="431" r="7"/><text x="62" y="545">Les monts Dore</text></g>
+                <text class="nom-riviere" x="562" y="196" text-anchor="end">L’Allier</text>
+                <text class="nom-puys" x="198" y="236">Chaîne des Puys</text>
+              </g>
+              <g class="temps">
+                <g class="pill t-issoire"><rect x="614" y="404" width="78" height="28" rx="14"/><text x="653" y="423">15 min</text></g>
+                <g class="pill t-clermont"><rect x="452" y="226" width="78" height="28" rx="14"/><text x="491" y="245">30 min</text></g>
+                <g class="pill t-dore"><rect x="300" y="362" width="64" height="28" rx="14"/><text x="332" y="381">1 h</text></g>
+                <g class="pill t-allier"><rect x="612" y="306" width="78" height="28" rx="14"/><text x="651" y="325">à pied</text></g>
+              </g>
+              <g class="maison" aria-hidden="true"><path d="M544 372v-14l14-11 14 11v14z"/><text x="532" y="366" text-anchor="end">La maison</text></g>
+              <g class="nord" aria-hidden="true"><path d="M672 60l8 22-8-5-8 5z"/><text x="672" y="52">N</text></g>
+            </svg>
+            <div class="carte-lieux">
+              <div class="lieux-choix" role="group" aria-label="Choisir un lieu">
+                <button type="button" data-lieu="allier" aria-pressed="true">L’Allier<span>à pied</span></button>
+                <button type="button" data-lieu="issoire" aria-pressed="false">Issoire<span>15&nbsp;min</span></button>
+                <button type="button" data-lieu="clermont" aria-pressed="false">Clermont-Ferrand<span>30&nbsp;min</span></button>
+                <button type="button" data-lieu="dore" aria-pressed="false">Les monts Dore<span>1&nbsp;h</span></button>
+              </div>
+              <div class="lieu" id="lieu-allier" data-lieu="allier">
+                <h4>L’Allier, à pied depuis la maison</h4>
+                <p>Le chemin part de la sortie du village et longe la rivière entre les saules. Comptez environ une heure pour un aller-retour tranquille.</p>
+                <img src="/exemples/img/gite-riviere-480.webp" width="480" height="320" loading="lazy" decoding="async" alt="La rivière entre les prés et les saules">
+              </div>
+              <div class="lieu" id="lieu-issoire" data-lieu="issoire">
+                <h4>Issoire, environ 15 minutes</h4>
+                <p>L’abbatiale romane Saint-Austremoine, les commerces du centre et la gare, si vous arrivez en train.</p>
+              </div>
+              <div class="lieu" id="lieu-clermont" data-lieu="clermont">
+                <h4>Clermont-Ferrand, environ 30 minutes</h4>
+                <p>La cathédrale noire, bâtie en pierre de Volvic, et le puy de Dôme qui domine la ville.</p>
+                <img src="/exemples/img/gite-puy-480.webp" width="480" height="270" loading="lazy" decoding="async" alt="Le puy de Dôme, volcan couvert d’herbe, au-dessus d’une lande">
+              </div>
+              <div class="lieu" id="lieu-dore" data-lieu="dore">
+                <h4>Les monts Dore, environ 1 heure</h4>
+                <p>Les roches Tuilière et Sanadoire, le lac de Guéry et les sentiers du Sancy. Prévoyez de bonnes chaussures.</p>
+                <img src="/exemples/img/gite-volcans-480.webp" width="480" height="320" loading="lazy" decoding="async" alt="Deux pitons rocheux au-dessus d’une vallée boisée">
+              </div>
+            </div>
+          </div>
+        </div>
+      </li>
+
+      <li class="etape" id="depart-etape">
+        <p class="heure"><span>Le dernier matin</span><b>11&nbsp;h</b></p>
+        <div class="etape-corps">
+          <h3>Le départ</h3>
+          <p>Vous libérez les chambres avant 11&nbsp;h. Le solde se règle sur place, au moment de rendre la clé. Vos bagages peuvent attendre dans la cour le temps d’une dernière balade.</p>
+        </div>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="nuits" id="nuits" aria-labelledby="nuits-t">
+  <div class="cadre">
+    <header class="nuits-tete">
+      <h2 id="nuits-t">Les nuits libres</h2>
+      <p>Octobre, novembre et décembre 2026. Touchez la nuit d’arrivée, puis le jour du départ&#8239;: la barre de réservation se met à jour. Un volet fermé, c’est une nuit déjà prise.</p>
+      <ul class="regles">
+        <li>Séjours d’une à quatre nuits</li>
+        <li>Arrivée un vendredi&#8239;: deux nuits, le week-end entier</li>
+        <li>Arrivée de 17&nbsp;h à 20&nbsp;h, départ avant 11&nbsp;h</li>
+      </ul>
+    </header>
+    <div class="nuits-grille">
+      <div class="cal">
+        <div class="cal-choix" role="group" aria-label="Mois affiché">
+          <button type="button" data-mois="10" aria-pressed="true">Octobre</button>
+          <button type="button" data-mois="11" aria-pressed="false">Novembre</button>
+          <button type="button" data-mois="12" aria-pressed="false">Décembre</button>
+        </div>
+        <div class="cal-mois" id="cal-mois">
+          <div class="mois" data-mois="10"><h3>Octobre 2026</h3><p class="mois-pris">Nuits déjà prises&#8239;: le 2, le 3, le 16, le 17 et du 19 au 30.</p></div>
+          <div class="mois" data-mois="11"><h3>Novembre 2026</h3><p class="mois-pris">Nuits déjà prises&#8239;: le 13, le 14, le 24, le 25, le 27 et le 28.</p></div>
+          <div class="mois" data-mois="12"><h3>Décembre 2026</h3><p class="mois-pris">Nuits déjà prises&#8239;: le 4, le 5, le 18, le 19 et du 21 au 31.</p></div>
+        </div>
+        <p class="legende" aria-hidden="true"><span><i class="l-libre"></i>Nuit libre</span><span><i class="l-prise"></i>Nuit prise, volet fermé</span><span><i class="l-choix"></i>Votre séjour</span></p>
+      </div>
+
+      <aside class="recap" aria-labelledby="recap-t">
+        <h3 id="recap-t">Votre séjour</h3>
+        <div class="recap-contenu" id="recap-contenu" aria-live="polite">
+          <p class="recap-vide">Choisissez vos nuits dans le calendrier ou dans la barre de réservation&#8239;: le prix s’affiche ici, ligne par ligne.</p>
+        </div>
+        <p class="recap-base"><b>95&nbsp;€</b> la nuit pour une ou deux personnes, <span class="nw">petit-déjeuner</span> compris. 30&nbsp;€ la nuit par personne en plus, dans la petite chambre. Un week-end, deux nuits pour deux&#8239;: 190&nbsp;€.</p>
+        <div class="recap-listes">
+          <div>
+            <h4>Compris dans la nuitée</h4>
+            <ul>
+              <li>Le <span class="nw">petit-déjeuner</span>, de 8&nbsp;h à 10&nbsp;h</li>
+              <li>Les draps, le linge de toilette, les lits faits</li>
+              <li>La salle d’eau, rien que pour vous</li>
+              <li>Le parking dans la cour et le wifi</li>
+            </ul>
           </div>
           <div>
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="3" enterkeyhint="send" placeholder="Vos dates, l’heure d’arrivée prévue, une question"></textarea>
+            <h4>En plus, si vous le souhaitez</h4>
+            <ul>
+              <li>La table d’hôtes, 28&nbsp;€ par personne, à demander la veille</li>
+              <li>La taxe de séjour, au tarif fixé par la communauté de communes</li>
+            </ul>
           </div>
-          <p class="note">* obligatoire</p>
-          <div><button class="btn" type="submit">Envoyer ma demande</button></div>
-          <p class="merci" role="status">Demande enregistrée. Dans la version en ligne, la Maison Tixier vous répond dans la journée avec la confirmation et le montant de l’acompte.</p>
-        </form>
-        <aside class="cote" aria-label="Nous appeler">
-          <b>Vous préférez appeler ?</b>
-          <a href="tel:+33465712318">04 65 71 23 18</a>
-          <p>Tous les jours, de 9 h à 19 h. Hors de ces horaires, laissez votre demande : nous répondons le lendemain matin.</p>
-        </aside>
-      </div>
+        </div>
+        <a class="btn btn-large" href="#demande">Demander ces nuits</a>
+      </aside>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="piece chambres" aria-labelledby="chambres-t">
-    <div class="wrap">
-      <div>
-        <h2 id="chambres-t">Les chambres</h2>
-        <p>La grande chambre donne sur la cour : deux lits de 90 accolés, ou séparés si vous le demandez. La petite, à côté, a deux lits simples pour des enfants ou un ami.</p>
-        <p>Au bout du couloir, une salle d’eau avec douche à l’italienne. Les murs de pierre gardent la fraîcheur l’été ; l’hiver, le chauffage est allumé avant votre arrivée.</p>
-      </div>
-      <figure>
-        <img src="/exemples/img/gite-chambre-800.webp"
-             srcset="/exemples/img/gite-chambre-480.webp 480w, /exemples/img/gite-chambre-800.webp 800w, /exemples/img/gite-chambre-1200.webp 1200w"
-             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
-             width="1200" height="800" loading="lazy" decoding="async"
-             alt="Chambre aux murs gris-bleu, deux lits accolés faits de draps blancs, table de chevet et miroir ancien">
-        <figcaption>La grande chambre, lits accolés.</figcaption>
-      </figure>
+<section class="hotes" id="hotes" aria-labelledby="hotes-t">
+  <div class="cadre hotes-grille">
+    <div class="hotes-texte">
+      <p class="pastilles" aria-hidden="true"><span class="p-o">O</span><span class="p-j">J</span></p>
+      <h2 id="hotes-t">Vos hôtes, Odile et Julien</h2>
+      <p>Julien a grandi dans cette maison. Nous l’avons reprise en 2019 et ouvert les deux chambres de l’étage, sans en faire un hôtel&#8239;: une seule réservation à la fois, et nous habitons au rez-de-chaussée.</p>
+      <p>Odile fait les confitures et la table d’hôtes, Julien connaît chaque chemin le long de l’Allier. C’est l’un de nous deux qui vous répond, au téléphone comme par écrit.</p>
+      <p class="hotes-tel"><a href="tel:+33465712318"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>04&nbsp;65&nbsp;71&nbsp;23&nbsp;18</a><span>Tous les jours, de 9&nbsp;h à 19&nbsp;h. Hors de ces horaires, laissez votre demande&#8239;: nous répondons le lendemain matin.</span></p>
     </div>
-  </section>
+    <aside class="alerte" aria-labelledby="alerte-t">
+      <svg class="alerte-ico" aria-hidden="true"><use href="#i-alerte"/></svg>
+      <h3 id="alerte-t">Un message vous demande de payer par un lien&#8239;?</h3>
+      <p><strong>Nous ne vous demanderons jamais de payer par un lien reçu par SMS ou par message.</strong> Un doute&#8239;? Appelez-nous au numéro de ce site.</p>
+      <p>Rien ne se paie en ligne&#8239;: un acompte de 30&nbsp;% confirme la réservation une fois que nous vous avons répondu, et le solde se règle sur place.</p>
+    </aside>
+  </div>
+</section>
 
-  <section class="piece matin" aria-labelledby="matin-t">
-    <div class="wrap">
-      <div>
-        <h2 id="matin-t">Le <span class="nw">petit-déjeuner</span></h2>
-        <p>Servi dans la salle du bas, de 8 h à 10 h : pain du boulanger, confitures de la maison, beurre, fromage blanc, fruits de saison, café, thé ou chocolat.</p>
-        <p>Le soir, sur demande la veille, la table d’hôtes : un dîner de saison avec nous, 28 € par personne.</p>
+<section class="demande" id="demande" aria-labelledby="demande-t">
+  <div class="cadre demande-grille">
+    <div class="demande-intro">
+      <h2 id="demande-t">Demander ces nuits</h2>
+      <p>Nous vous répondons dans la journée. Rien n’est payé en ligne&#8239;: un acompte de 30&nbsp;% confirme la réservation, le solde se règle sur place. Pas de frais de réservation, vous payez le prix de la maison.</p>
+      <div class="billet" id="billet">
+        <div class="billet-dates">
+          <p><span>Arrivée</span><b id="billet-arrivee">à choisir</b><small>de 17&nbsp;h à 20&nbsp;h</small></p>
+          <p><span>Départ</span><b id="billet-depart">à choisir</b><small>avant 11&nbsp;h</small></p>
+        </div>
+        <p class="billet-total" id="billet-total">Choisissez vos dates dans la barre ou dans le calendrier.</p>
+        <a class="lien" href="#nuits" id="billet-modifier">Modifier les dates</a>
       </div>
-      <figure>
-        <img src="/exemples/img/gite-table-800.webp"
-             srcset="/exemples/img/gite-table-480.webp 480w, /exemples/img/gite-table-800.webp 800w, /exemples/img/gite-table-1200.webp 1200w"
-             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
-             width="1200" height="800" loading="lazy" decoding="async"
-             alt="Tartines beurrées à la confiture d’abricot et de fraise, baguette, bol de café, pots de confiture">
-        <figcaption>Tartines, confitures et bol de café.</figcaption>
-      </figure>
     </div>
-  </section>
 
-  <section class="piece autour" aria-labelledby="autour-t">
-    <div class="wrap">
-      <div>
-        <h2 id="autour-t">Autour de la maison</h2>
-        <p>Coudes est au bord de l’Allier. On part à pied le long de la rivière dès la sortie du village.</p>
-        <dl class="loin">
-          <div><dt>Issoire</dt><dd>15 minutes</dd></div>
-          <div><dt>Clermont-Ferrand</dt><dd>30 minutes</dd></div>
-          <div><dt>Les monts Dore</dt><dd>1 heure</dd></div>
-        </dl>
-        <p>L’adresse exacte vous est envoyée avec la confirmation. La clé vous attend dans une boîte à code si vous arrivez après 20 h.</p>
-        <p class="avert">Nous ne vous demanderons jamais de payer par un lien reçu par SMS ou par message. Un doute ? Appelez-nous.</p>
+    <form class="resa" id="resa" novalidate>
+      <div class="deux">
+        <div class="champ-f"><label for="nom">Nom et prénom</label><input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required aria-describedby="err-nom"><p class="err" id="err-nom"></p></div>
+        <div class="champ-f"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" inputmode="email" enterkeyhint="next" required aria-describedby="err-email"><p class="err" id="err-email"></p></div>
       </div>
-      <figure>
-        <img src="/exemples/img/gite-puy-800.webp"
-             srcset="/exemples/img/gite-puy-480.webp 480w, /exemples/img/gite-puy-800.webp 800w, /exemples/img/gite-puy-1200.webp 1200w"
-             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
-             width="1200" height="795" loading="lazy" decoding="async"
-             alt="Le puy de l’Angle, volcan couvert d’herbe, au-dessus d’une prairie de fauche sous un ciel bleu">
-        <figcaption>Le puy de l’Angle, dans les monts Dore, à une heure de route.</figcaption>
-      </figure>
+      <div class="deux">
+        <div class="champ-f"><label for="tel">Téléphone <span class="facultatif">(facultatif)</span></label><input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next"></div>
+        <div class="champ-f"><label for="heure">Heure d’arrivée prévue</label>
+          <select id="heure" name="heure">
+            <option>Entre 17&nbsp;h et 18&nbsp;h</option>
+            <option selected>Entre 18&nbsp;h et 19&nbsp;h</option>
+            <option>Entre 19&nbsp;h et 20&nbsp;h</option>
+            <option>Après 20&nbsp;h, avec la boîte à code</option>
+          </select>
+        </div>
+      </div>
+      <label class="case"><input type="checkbox" id="table-hotes" name="table"><span>Table d’hôtes le premier soir, 28&nbsp;€ par personne</span></label>
+      <div class="champ-f"><label for="message">Un mot pour nous <span class="facultatif">(facultatif)</span></label><textarea id="message" name="message" rows="3" enterkeyhint="send" placeholder="Une allergie, un lit d’appoint, une question sur les balades"></textarea></div>
+      <p class="err err-sejour" id="err-sejour" role="alert"></p>
+      <button class="btn btn-large" type="submit">Envoyer ma demande</button>
+    </form>
+
+    <div class="merci" id="merci" hidden>
+      <svg class="merci-ico" aria-hidden="true"><use href="#i-volets"/></svg>
+      <h3 id="merci-t" tabindex="-1">Demande envoyée à Odile et Julien</h3>
+      <p id="merci-sejour"></p>
+      <ol class="merci-suite">
+        <li>Nous vous répondons dans la journée, par email ou par téléphone.</li>
+        <li>Nous vous indiquons le montant de l’acompte, <b id="merci-acompte"></b>, et comment le régler.</li>
+        <li>Avec la confirmation, vous recevez l’adresse exacte et le code de la boîte à clé.</li>
+      </ol>
+      <p class="merci-demo">Démonstration&#8239;: aucune demande n’a été envoyée.</p>
+      <button class="lien" type="button" id="merci-retour">Modifier ma demande</button>
     </div>
-  </section>
+  </div>
+</section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <b>Maison Tixier</b>
-    <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-gite-chambre-hotes" target="_top">4dayvelopment</a>. L’entreprise, son numéro et ses disponibilités sont fictifs.</p>
-    <p>Photos via Wikimedia Commons, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a> : « Allier river in Coudes (1) », Krzysztof Golik, recadrée ; « Chambre secondaire (Bouvaincourt-sur-Bresle) », Gzen92, couleurs réchauffées ; « Petit déjeuner français », Nat ; « PNR Volcans Auvergne Puy Angle Col Cx St Robert », Bruno Cagnon.</p>
+<footer class="pied">
+  <div class="cadre pied-grille">
+    <div>
+      <p class="pied-marque"><svg class="marque-ico" aria-hidden="true"><use href="#i-volets"/></svg>Maison Tixier</p>
+      <p>Deux chambres d’hôtes à Coudes, Puy-de-Dôme, au bord de l’Allier.</p>
+      <p><a href="tel:+33465712318">04&nbsp;65&nbsp;71&nbsp;23&nbsp;18</a>, tous les jours de 9&nbsp;h à 19&nbsp;h</p>
+    </div>
+    <div class="pied-bas">
+      <p>Site de démonstration réalisé par <a href="/services/site-internet-gite-chambre-hotes" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs.</p>
+      <p>Photos&#8239;: Pexels.</p>
+    </div>
   </div>
 </footer>
-
-<nav class="pouce" aria-label="Contact rapide">
-  <a class="appel" href="tel:+33465712318">Appeler</a>
-  <a class="voir" href="#dispos">Réserver</a>
-</nav>
-
-<script src="/exemples/gite.js" defer></script>
 </body>
 </html>
