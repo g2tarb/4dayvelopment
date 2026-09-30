@@ -4,541 +4,656 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Cabanel Solaire, panneaux solaires dans le Biterrois</title>
-<meta name="description" content="Démo 4dayvelopment&#8239;: Cabanel Solaire, électriciens et installateurs photovoltaïques à Béziers, avec étude de toiture en ligne, démarches et chantiers.">
+<meta name="description" content="Démo 4dayvelopment&#8239;: Cabanel Solaire, installateur photovoltaïque à Béziers. Posez vos panneaux sur un toit en tuiles canal, puis faites vérifier le vôtre.">
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#13294A">
+<meta name="theme-color" content="#6CB2F0">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/saira-var.woff2" crossorigin>
 <link rel="stylesheet" href="/exemples/solaire.css">
 <script src="/exemples/solaire.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#contenu">Aller au contenu</a>
+<a class="skip" href="#simulateur">Aller au simulateur</a>
 
 <!-- Pictogrammes au trait, réutilisés par <use> -->
 <svg width="0" height="0" class="visuel-seul" aria-hidden="true" focusable="false">
   <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5.2 3.5h3.1l1.6 4.1-2.1 1.3a11.5 11.5 0 0 0 5.3 5.3l1.3-2.1 4.1 1.6v3.1a2 2 0 0 1-2.1 2A16 16 0 0 1 3.2 5.6a2 2 0 0 1 2-2.1z"/></symbol>
-  <symbol id="i-horloge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
-  <symbol id="i-lieu" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
-  <symbol id="i-qualif" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.6 13.8 7.3 21l4.7-2.4 4.7 2.4-1.3-7.2"/><path d="m9.6 9 1.6 1.6 3.2-3.2" stroke="#DE9C16"/></symbol>
-  <symbol id="i-bouclier" viewBox="0 0 24 24"><path d="M12 3 19 6v5.2c0 4.3-2.9 8-7 9.8-4.1-1.8-7-5.5-7-9.8V6l7-3z"/><path d="m9 12 2.1 2.1L15.2 10" stroke="#DE9C16"/></symbol>
-  <symbol id="i-casque" viewBox="0 0 24 24"><path d="M3 17.5h18"/><path d="M5 17.5V15a7 7 0 0 1 14 0v2.5"/><path d="M10 8.4V6.5h4v1.9" stroke="#DE9C16"/><path d="M12 11v3"/></symbol>
-  <symbol id="i-dossier" viewBox="0 0 24 24"><path d="M8 3.5h7.5l4 4v12A1.5 1.5 0 0 1 18 21H8a1.5 1.5 0 0 1-1.5-1.5v-14A1.5 1.5 0 0 1 8 3.5z"/><path d="M15.5 3.5v4h4"/><path d="M4.5 7v13.5A1.5 1.5 0 0 0 6 22h9"/><path d="m10 14.2 1.9 1.9 3.6-3.6" stroke="#DE9C16"/></symbol>
-  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
-  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="m7.8 12.3 2.9 2.9 5.6-5.6"/></symbol>
-  <symbol id="i-alerte" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.2v.3"/></symbol>
   <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
   <symbol id="i-fermer" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
-  <!-- couvertures -->
-  <symbol id="i-canal" viewBox="0 0 32 32"><path d="M2 12c1.7-4 5.3-4 7 0 1.7-4 5.3-4 7 0 1.7-4 5.3-4 7 0 1.7-4 5.3-4 7 0"/><path d="M2 20c1.7-4 5.3-4 7 0 1.7-4 5.3-4 7 0 1.7-4 5.3-4 7 0 1.7-4 5.3-4 7 0"/><path d="M2 28c1.7-4 5.3-4 7 0 1.7-4 5.3-4 7 0 1.7-4 5.3-4 7 0 1.7-4 5.3-4 7 0"/></symbol>
-  <symbol id="i-mecanique" viewBox="0 0 32 32"><rect x="3" y="7" width="26" height="19" rx="1"/><path d="M3 13.3h26M3 19.6h26M9.5 7v6.3M16 7v6.3M22.5 7v6.3M6.3 13.3v6.3M12.8 13.3v6.3M19.2 13.3v6.3M25.7 13.3v6.3M9.5 19.6V26M16 19.6V26M22.5 19.6V26"/></symbol>
-  <symbol id="i-ardoise" viewBox="0 0 32 32"><path d="m3 16 6.5-6.5L16 16l-6.5 6.5z"/><path d="m16 16 6.5-6.5L29 16l-6.5 6.5z"/><path d="M9.5 9.5 16 3l6.5 6.5M9.5 22.5 16 29l6.5-6.5"/></symbol>
-  <symbol id="i-acier" viewBox="0 0 32 32"><path d="M2 13h3l2-4h4l2 4h4l2-4h4l2 4h5"/><path d="M2 13v13h28V13"/><path d="M9 9v17M21 9v17" stroke-dasharray="1.5 3"/></symbol>
-  <symbol id="i-plat" viewBox="0 0 32 32"><path d="M2 11h28"/><path d="M4 11v16h24V11"/><path d="M9 27v-7h5v7"/><path d="M18 16h6v4h-6z"/></symbol>
-  <symbol id="i-inconnu" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12"/><path d="M12.4 12.6a3.7 3.7 0 1 1 5.3 3.3c-1.2.6-1.7 1.4-1.7 2.6v.8"/><path d="M16 22.6v.3"/></symbol>
-  <!-- orientations : boussole, aiguille dorée vers le pan exposé -->
-  <symbol id="i-sud" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12.5"/><path d="M16 3.5v3"/><path d="M16 27.5 12.4 16h7.2z" fill="#F2B134" stroke="#13294A" stroke-width="1.2"/></symbol>
-  <symbol id="i-sudx" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12.5"/><path d="M16 3.5v3"/><path d="m24.8 24.8-10-6.3 3.6-3.6z" fill="#F2B134" stroke="#13294A" stroke-width="1.2"/><path d="m7.2 24.8 6.3-10 3.6 3.6z" fill="#F2B134" stroke="#13294A" stroke-width="1.2"/></symbol>
-  <symbol id="i-estouest" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12.5"/><path d="M16 3.5v3"/><path d="M28 16 17 12.6v6.8z" fill="#F2B134" stroke="#13294A" stroke-width="1.2"/><path d="M4 16l11-3.4v6.8z" fill="#F2B134" stroke="#13294A" stroke-width="1.2"/></symbol>
+  <symbol id="i-moins" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+  <symbol id="i-fleche" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-retour" viewBox="0 0 24 24"><path d="M19 12H6M11 6l-6 6 6 6"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="m7.8 12.3 2.9 2.9 5.6-5.6"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-ombre" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.2v.3"/></symbol>
+  <symbol id="i-eclair" viewBox="0 0 24 24"><path d="M13.5 2.5 5 13.5h6l-1 8 8.5-11h-6z"/></symbol>
+  <!-- boussoles : l'aiguille pointe vers où regarde le pan (nord en haut) -->
+  <symbol id="o-sud" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M12 19.5 9.4 11h5.2z" class="aiguille"/></symbol>
+  <symbol id="o-sud-est" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="m17.3 17.3-7.4-3.8 3.6-3.6z" class="aiguille"/></symbol>
+  <symbol id="o-sud-ouest" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="m6.7 17.3 3.8-7.4 3.6 3.6z" class="aiguille"/></symbol>
+  <symbol id="o-est-ouest" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="M19.5 12 13 9.6v4.8zM4.5 12 11 9.6v4.8z" class="aiguille"/></symbol>
 </svg>
 
-<div class="topbar">
-  <div class="wrap">
-    <a href="tel:+33465710318"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span class="num">04&nbsp;65&nbsp;71&nbsp;03&nbsp;18</span></a>
-    <span><svg class="ico" aria-hidden="true"><use href="#i-horloge"/></svg>Lun-ven, 8&nbsp;h-18&nbsp;h</span>
-    <span class="zone"><svg class="ico" aria-hidden="true"><use href="#i-lieu"/></svg>De Capestang à Agde et Pézenas</span>
-  </div>
-</div>
-
 <header class="entete">
-  <div class="wrap">
-    <a class="logo" href="#" aria-label="Cabanel Solaire, accueil">
-      <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-        <rect width="48" height="48" rx="7" fill="#13294A"/>
-        <circle cx="24" cy="19" r="8" fill="#F2B134"/>
-        <path d="M6.5 35.5a4.4 4.4 0 0 1 8.8 0a4.4 4.4 0 0 1 8.8 0a4.4 4.4 0 0 1 8.8 0a4.4 4.4 0 0 1 8.8 0M4.5 35.5h39" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <div class="entete-in">
+    <a class="logo" href="#simulateur" aria-label="Cabanel Solaire, retour au simulateur">
+      <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <circle cx="20" cy="15" r="7.5" class="logo-soleil"/>
+        <path d="M2.5 30.5a4.4 4.4 0 0 1 8.75 0a4.4 4.4 0 0 1 8.75 0a4.4 4.4 0 0 1 8.75 0a4.4 4.4 0 0 1 8.75 0" class="logo-tuile"/>
+        <path d="M2.5 37h35" class="logo-tuile"/>
       </svg>
-      <span class="logo-txt">
-        <span class="logo-nom">Cabanel Solaire</span>
-        <span class="logo-sig"><span class="long">Électricité et photovoltaïque depuis 2009</span><span class="court">Photovoltaïque depuis 2009</span></span>
-      </span>
+      <span class="logo-txt"><span class="logo-nom">Cabanel Solaire</span><span class="logo-sig">Électriciens depuis 2009</span></span>
     </a>
+    <a class="entete-tel" href="tel:+33465710318" aria-label="Appeler le 04 65 71 03 18"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span class="num">04&nbsp;65&nbsp;71&nbsp;03&nbsp;18</span></a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu"><svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg></button>
     <nav class="nav" id="menu" aria-label="Menu principal">
       <ul>
-        <li><a href="#installations">Installations</a></li>
+        <li><a href="#simulateur">Simulateur</a></li>
         <li><a href="#demarches">Démarches</a></li>
-        <li><a href="#realisations">Réalisations</a></li>
-        <li><a href="#entreprise">L’entreprise</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="nav-plus"><a class="btn" href="#etude">Demander une étude</a></li>
-        <li class="nav-plus nav-info">Appelez-nous au <a href="tel:+33465710318">04&nbsp;65&nbsp;71&nbsp;03&nbsp;18</a>, du lundi au vendredi de 8&nbsp;h à 18&nbsp;h.</li>
+        <li><a href="#chantiers">Chantiers</a></li>
+        <li><a href="#atelier">L’atelier</a></li>
       </ul>
+      <a class="btn btn-soleil nav-cta" href="#verifier">Faire vérifier mon toit</a>
     </nav>
-    <a class="btn btn-etude" href="#etude">Demander une étude</a>
-    <a class="entete-tel" href="tel:+33465710318" aria-label="Appeler le 04 65 71 03 18"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg></a>
-    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">
-      <svg class="ico ico-ouvrir" aria-hidden="true"><use href="#i-menu"/></svg>
-      <svg class="ico ico-fermer" aria-hidden="true"><use href="#i-fermer"/></svg>
-    </button>
   </div>
 </header>
 
-<main id="contenu" tabindex="-1">
-  <section class="hero" aria-labelledby="hero-t">
-    <div class="hero-media">
-      <img src="/exemples/img/solaire-hero-1200.webp" srcset="/exemples/img/solaire-hero-480.webp 480w, /exemples/img/solaire-hero-800.webp 800w, /exemples/img/solaire-hero-1200.webp 1200w" sizes="(max-width: 63.99rem) 58rem, 100vw"
-           width="1200" height="806" fetchpriority="high"
-           alt="Maison au toit de tuiles couvert de panneaux solaires, entre les souches de cheminée en brique et les cyprès">
+<main id="contenu">
+
+<!-- ============ Le simulateur de toiture (module phare) ============ -->
+<section class="simu" id="simulateur" data-o="sud" aria-labelledby="simu-titre">
+  <div class="simu-in">
+    <div class="simu-titre">
+      <p class="statut"><span class="statut-point" aria-hidden="true"></span><span id="statut">Visites de toiture du lundi au vendredi</span></p>
+      <h1 id="simu-titre">Posez vos panneaux, nous vérifions le toit.</h1>
     </div>
-    <div class="hero-texte">
-      <h1 id="hero-t">Panneaux solaires sur votre toit, démarches comprises</h1>
-      <p class="hero-sous">Électriciens à Béziers depuis 2009, nous dimensionnons l’installation sur ce que vous consommez, nous la posons avec nos propres équipes et nous nous occupons de la mairie, d’Enedis et du Consuel.</p>
-      <div class="hero-actions">
-        <a class="btn" href="#etude">Demander une étude</a>
-        <a class="btn btn-clair" href="tel:+33465710318"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span class="num">04&nbsp;65&nbsp;71&nbsp;03&nbsp;18</span></a>
+    <p class="simu-intro">Ajoutez ou retirez des panneaux sur ce toit en tuiles canal, tournez-le vers le sud ou l’est-ouest&#8239;: la puissance et la place prise s’affichent en direct. Électriciens à Béziers depuis 2009, nous posons avec nos équipes et nous nous occupons de la mairie, d’Enedis et du Consuel.</p>
+
+    <div class="scene">
+      <svg class="toit" viewBox="0 0 800 520" preserveAspectRatio="xMidYMin slice" role="group" aria-labelledby="toit-t">
+        <title id="toit-t">Toit de démonstration en tuiles canal</title>
+        <defs>
+          <pattern id="p-tuiles" width="18" height="22" patternUnits="userSpaceOnUse">
+            <rect width="18" height="22" fill="#A64A22"/>
+            <rect x="1" width="10" height="22" rx="5" fill="#D06F3B"/>
+            <rect x="3" y="2" width="2.4" height="17" rx="1.2" fill="#EC9A66"/>
+            <path d="M1 21q5 3 10 0M12 21q3 2 6 0" stroke="#7A3316" stroke-width="1.2" fill="none"/>
+          </pattern>
+          <pattern id="p-tuiles-plan" width=".5" height=".34" patternUnits="userSpaceOnUse">
+            <rect width=".5" height=".34" fill="#A64A22"/>
+            <rect y=".02" width=".5" height=".16" rx=".08" fill="#D06F3B"/>
+            <rect x=".03" y=".05" width=".4" height=".035" rx=".017" fill="#EC9A66"/>
+            <rect x=".46" y=".02" width=".04" height=".16" fill="#7A3316" opacity=".55"/>
+          </pattern>
+          <pattern id="p-genoise" width="12" height="8" patternUnits="userSpaceOnUse">
+            <rect width="12" height="8" fill="#E7CFA4"/><path d="M.8 0a5.2 6.4 0 0 0 10.4 0z" fill="#B4532A"/>
+          </pattern>
+          <pattern id="p-genoise-b" x="6" width="12" height="8" patternUnits="userSpaceOnUse">
+            <rect width="12" height="8" fill="#E7CFA4"/><path d="M.8 0a5.2 6.4 0 0 0 10.4 0z" fill="#9E4622"/>
+          </pattern>
+          <pattern id="p-cellules" width="7.6667" height="5.6" patternUnits="userSpaceOnUse">
+            <rect width="7.6667" height="5.6" fill="#1A2F4E"/><path d="M7.6667 0v5.6M0 5.6h7.6667" stroke="#3A5C88" stroke-width=".7"/>
+          </pattern>
+          <pattern id="p-cellules-m" width=".189" height=".1722" patternUnits="userSpaceOnUse">
+            <rect width=".189" height=".1722" fill="#1A2F4E"/><path d="M.189 0v.1722M0 .1722h.189" stroke="#3A5C88" stroke-width=".014"/>
+          </pattern>
+          <pattern id="p-hachures" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <path d="M0 0v6" stroke="#2A1206" stroke-opacity=".45" stroke-width="2.2"/>
+          </pattern>
+          <linearGradient id="g-reflet" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/>
+          </linearGradient>
+          <linearGradient id="g-pan" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff" stop-opacity=".14"/><stop offset="1" stop-color="#3A1405" stop-opacity=".16"/>
+          </linearGradient>
+          <symbol id="cypres" viewBox="0 0 50 360"><path d="M25 0c8 40 21 110 21 200 0 80-6 130-21 160C10 330 4 280 4 200 4 110 17 40 25 0z" fill="#2F5138"/><path d="M25 0C17 40 4 110 4 200c0 80 6 130 21 160z" fill="#25432D"/></symbol>
+          <symbol id="fenetre" viewBox="0 0 84 70"><rect width="21" height="70" fill="#6D9AB0"/><rect x="63" width="21" height="70" fill="#6D9AB0"/><path d="M3 9h15M3 19h15M3 29h15M3 39h15M3 49h15M3 59h15M66 9h15M66 19h15M66 29h15M66 39h15M66 49h15M66 59h15" stroke="#52809A" stroke-width="2.4"/><rect x="22" width="40" height="70" fill="#F7F1E4"/><rect x="25" y="3" width="15.5" height="64" fill="#2E4A62"/><rect x="43.5" y="3" width="15.5" height="64" fill="#2E4A62"/></symbol>
+        </defs>
+
+        <!-- course du soleil, de l'est (à droite) à l'ouest (à gauche) -->
+        <path class="trajet" d="M760 230Q400-160 40 230"/>
+        <g class="soleil"><circle r="44" class="soleil-halo"/><circle r="28" class="soleil-disque"/></g>
+        <g class="rose" transform="translate(60 64)">
+          <circle r="33" class="rose-fond"/>
+          <text y="-19" class="rose-l">N</text><text y="29" class="rose-l">S</text>
+          <text x="23" y="4.5" class="rose-l">E</text><text x="-23" y="4.5" class="rose-l">O</text>
+          <path class="rose-aiguille rose-simple" d="M0 15-5 0h10z"/>
+          <path class="rose-aiguille rose-double" d="M15 0 1-4.5v9zM-15 0-1-4.5v9z"/>
+          <circle r="2.2" class="rose-axe"/>
+        </g>
+
+        <!-- Vue 1 : un pan face au sud (toit à quatre pentes, génoise, volets) -->
+        <g class="vue vue-face">
+          <use href="#cypres" x="12" y="150" width="54" height="380"/>
+          <use href="#cypres" x="740" y="290" width="40" height="240"/>
+          <rect x="96" y="330" width="608" height="200" fill="#F1DEBC"/>
+          <rect x="96" y="330" width="608" height="16" fill="#DCC296"/>
+          <use href="#fenetre" x="120" y="372" width="84" height="70"/>
+          <use href="#fenetre" x="262" y="372" width="84" height="70"/>
+          <use href="#fenetre" x="454" y="372" width="84" height="70"/>
+          <use href="#fenetre" x="596" y="372" width="84" height="70"/>
+          <use href="#fenetre" x="120" y="486" width="84" height="70"/>
+          <use href="#fenetre" x="596" y="486" width="84" height="70"/>
+          <path d="M366 530v-52a34 34 0 0 1 68 0v52z" fill="#6D9AB0"/>
+          <rect x="84" y="318" width="632" height="8" fill="url(#p-genoise)"/>
+          <rect x="90" y="326" width="620" height="8" fill="url(#p-genoise-b)"/>
+          <path d="M70 318 250 120h300l180 198z" fill="url(#p-tuiles)"/>
+          <path d="M70 318 250 120h300l180 198z" fill="url(#g-pan)"/>
+          <path class="ombre-souche" d="M507 146 452 156v30l48 58h42l-3-60h-32z"/>
+          <path class="arete" d="M70 318 250 120h300l180 198"/>
+          <path class="arete-tuiles" d="M70 318 250 120h300l180 198"/>
+          <path class="egout" d="M64 318h672"/>
+          <g class="souche">
+            <rect x="507" y="96" width="32" height="88" fill="#EAD5AE"/>
+            <rect x="527" y="96" width="12" height="88" fill="#CDB184"/>
+            <rect x="500" y="88" width="46" height="9" rx="2" fill="#8E3B1A"/>
+            <path d="M506 88a7 7 0 0 1 14 0M526 88a7 7 0 0 1 14 0" fill="#C8612F"/>
+          </g>
+          <g class="slots" data-vue="face" role="group" aria-label="Emplacements du pan"></g>
+        </g>
+
+        <!-- Vue 2 : deux pans, est et ouest, vus du ciel depuis le sud -->
+        <g class="vue vue-pignon">
+          <use href="#cypres" x="36" y="200" width="48" height="330"/>
+          <use href="#cypres" x="716" y="230" width="46" height="300"/>
+          <path d="M140 314 400 262l260 52v216H140z" fill="#F1DEBC"/>
+          <path d="M140 314 400 262l260 52v14L400 276 140 328z" fill="#DCC296"/>
+          <circle cx="400" cy="302" r="13" fill="#2E4A62" stroke="#F7F1E4" stroke-width="4"/>
+          <use href="#fenetre" x="190" y="370" width="84" height="70"/>
+          <use href="#fenetre" x="526" y="370" width="84" height="70"/>
+          <path d="M370 530v-60a30 30 0 0 1 60 0v60z" fill="#6D9AB0"/>
+          <g transform="matrix(-46.667 11.333 0 -20 400 250)">
+            <rect width="6" height="9" fill="url(#p-tuiles-plan)"/>
+            <rect width="6" height="9" class="pan-ombre"/>
+            <g class="slots" data-vue="ouest" role="group" aria-label="Emplacements du pan ouest"></g>
+          </g>
+          <g transform="matrix(46.667 11.333 0 -20 400 250)">
+            <rect width="6" height="9" fill="url(#p-tuiles-plan)"/>
+            <g class="slots" data-vue="est" role="group" aria-label="Emplacements du pan est"></g>
+          </g>
+          <path class="bord" d="M120 318V138M680 318V138"/>
+          <path class="arete" d="M120 138 400 70l280 68M120 318 400 250l280 68M400 250V70"/>
+          <path class="arete-tuiles" d="M400 250V70"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="etat">
+      <dl class="mesures">
+        <div class="mesure"><dt>Panneaux</dt><dd><output id="m-n" class="chiffre">12</output><span class="unite">×&nbsp;425&nbsp;Wc</span></dd></div>
+        <div class="mesure"><dt>Puissance</dt><dd><output id="m-kwc" class="chiffre">5,1</output><span class="unite">kWc</span></dd></div>
+        <div class="mesure"><dt>Surface</dt><dd><output id="m-m2" class="chiffre">23,4</output><span class="unite">m²</span></dd></div>
+      </dl>
+      <div class="jauge" id="jauge">
+        <div class="jauge-barre" aria-hidden="true"><span class="jauge-rempli" id="jauge-rempli"></span><span class="jauge-seuil">9&nbsp;kWc</span></div>
+        <p class="jauge-txt" id="jauge-txt">Dans le seuil de 9&nbsp;kWc&#8239;: le surplus que vous revendez est acheté 1,1&nbsp;c€&nbsp;HT le kWh par EDF&nbsp;OA.</p>
       </div>
-      <p class="hero-preuve"><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Visite de toiture gratuite et sans engagement</p>
+      <p class="alerte-ombre" id="alerte-ombre" hidden><svg class="ico" aria-hidden="true"><use href="#i-ombre"/></svg><span>Un panneau touche l’ombre de la souche. Une ombre sur un seul panneau peut freiner toute la rangée&#8239;: nous le vérifions à la visite.</span></p>
     </div>
 
-    <aside class="etude" id="etude" aria-labelledby="etude-t">
-      <form class="etude-carte" id="etude-form" novalidate>
-        <div class="etude-tete">
-          <h2 id="etude-t">Votre étude de toiture</h2>
-          <p>4 questions, nous vous rappelons sous 24&nbsp;h ouvrées.</p>
-          <div class="progression">
-            <div class="progression-barre" aria-hidden="true"><span class="fait"></span><span></span><span></span><span></span></div>
-            <span id="etude-etape" aria-live="polite">Étape 1 sur 4</span>
-          </div>
+    <div class="cmd">
+      <div class="pas">
+        <div class="pas-ligne">
+          <button type="button" class="pas-btn" id="moins" aria-label="Retirer un panneau" aria-controls="m-n"><svg class="ico" aria-hidden="true"><use href="#i-moins"/></svg></button>
+          <input type="range" class="curseur" id="curseur" min="0" max="23" value="12" step="1" aria-label="Nombre de panneaux" aria-valuetext="12 panneaux">
+          <button type="button" class="pas-btn" id="plus" aria-label="Ajouter un panneau" aria-controls="m-n"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></button>
         </div>
+        <p class="pas-aide">Ou choisissez un emplacement sur le toit. Un panneau mesure 1,72&nbsp;×&nbsp;1,13&nbsp;m.</p>
+      </div>
+      <fieldset class="orient">
+        <legend>Vers où regarde votre toit&#8239;?</legend>
+        <div class="orient-choix">
+          <label><input type="radio" name="orientation" value="sud" checked><svg class="ico" aria-hidden="true"><use href="#o-sud"/></svg><span>Sud</span></label>
+          <label><input type="radio" name="orientation" value="sud-est"><svg class="ico" aria-hidden="true"><use href="#o-sud-est"/></svg><span>Sud-est</span></label>
+          <label><input type="radio" name="orientation" value="sud-ouest"><svg class="ico" aria-hidden="true"><use href="#o-sud-ouest"/></svg><span>Sud-ouest</span></label>
+          <label><input type="radio" name="orientation" value="est-ouest"><svg class="ico" aria-hidden="true"><use href="#o-est-ouest"/></svg><span>Est-ouest</span></label>
+        </div>
+        <p class="orient-note" id="orient-note">Un seul pan couvert, tourné vers le sud.</p>
+      </fieldset>
+      <a class="btn btn-soleil cmd-cta" href="#verifier">Faire vérifier mon toit</a>
+      <p class="cmd-pvgis">Ce que ces panneaux produiront et vous feront économiser, nous le calculons avec PVGIS, l’outil gratuit de la Commission européenne, lors de la visite et pour votre adresse.</p>
+    </div>
+    <p class="visuel-seul" id="annonce" aria-live="polite"></p>
+  </div>
+</section>
 
-        <fieldset class="etape" data-etape="1">
-          <legend tabindex="-1">Quelle est la couverture de votre toit&#8239;?</legend>
-          <div class="tuiles tuiles-toit">
-            <label class="tuile"><input type="radio" name="couverture" value="Tuile canal"><svg class="ico" aria-hidden="true"><use href="#i-canal"/></svg>Tuile canal</label>
-            <label class="tuile"><input type="radio" name="couverture" value="Tuile mécanique"><svg class="ico" aria-hidden="true"><use href="#i-mecanique"/></svg>Tuile mécanique</label>
-            <label class="tuile"><input type="radio" name="couverture" value="Ardoise"><svg class="ico" aria-hidden="true"><use href="#i-ardoise"/></svg>Ardoise</label>
-            <label class="tuile"><input type="radio" name="couverture" value="Bac acier"><svg class="ico" aria-hidden="true"><use href="#i-acier"/></svg>Bac acier</label>
-            <label class="tuile"><input type="radio" name="couverture" value="Toit plat"><svg class="ico" aria-hidden="true"><use href="#i-plat"/></svg>Toit plat</label>
-            <label class="tuile"><input type="radio" name="couverture" value="Je ne sais pas"><svg class="ico" aria-hidden="true"><use href="#i-inconnu"/></svg>Je ne sais pas</label>
-          </div>
-          <p class="erreur" id="err-1" role="alert"></p>
-        </fieldset>
+<!-- ============ Faire vérifier mon toit ============ -->
+<section class="verif" id="verifier" aria-labelledby="verif-titre">
+  <div class="verif-in">
+    <div class="verif-tete">
+      <h2 id="verif-titre">Faire vérifier mon toit</h2>
+      <p>Votre configuration part avec la demande. Nous vous rappelons sous 24&nbsp;h ouvrées pour fixer la visite, gratuite et sans engagement.</p>
+    </div>
 
-        <fieldset class="etape" data-etape="2" hidden>
-          <legend tabindex="-1">Vers où regarde le pan le mieux exposé&#8239;?</legend>
-          <div class="tuiles tuiles-orient">
-            <label class="tuile"><input type="radio" name="orientation" value="Sud"><svg class="ico" aria-hidden="true"><use href="#i-sud"/></svg>Sud</label>
-            <label class="tuile"><input type="radio" name="orientation" value="Sud-est ou sud-ouest"><svg class="ico" aria-hidden="true"><use href="#i-sudx"/></svg>Sud-est ou sud-ouest</label>
-            <label class="tuile"><input type="radio" name="orientation" value="Est et ouest"><svg class="ico" aria-hidden="true"><use href="#i-estouest"/></svg>Est et ouest</label>
-            <label class="tuile"><input type="radio" name="orientation" value="Je ne sais pas"><svg class="ico" aria-hidden="true"><use href="#i-inconnu"/></svg>Je ne sais pas</label>
-          </div>
-          <p class="aide">Plein sud n’est pas une obligation&#8239;: un toit est-ouest produit plus tôt le matin et plus tard le soir.</p>
-          <p class="erreur" id="err-2" role="alert"></p>
-        </fieldset>
-
-        <fieldset class="etape" data-etape="3" hidden>
-          <legend tabindex="-1">Votre consommation d’électricité</legend>
-          <div class="curseur">
-            <label for="conso">Sur une année</label>
-            <output id="conso-val" for="conso">4&#8239;500&nbsp;kWh</output>
-            <input type="range" id="conso" name="conso" min="1000" max="15000" step="500" value="4500" aria-describedby="conso-bornes conso-aide">
-            <div class="bornes" id="conso-bornes"><span>1&#8239;000&nbsp;kWh</span><span>15&#8239;000&nbsp;kWh et plus</span></div>
-            <p class="aide" id="conso-aide">Elle figure sur votre facture annuelle et dans votre espace client Enedis.</p>
-          </div>
-          <label class="case"><input type="checkbox" id="conso-inconnue" name="conso-inconnue">Je ne la connais pas</label>
-          <fieldset class="sous-groupe">
-            <legend>Êtes-vous chez vous en journée&#8239;?</legend>
-            <div class="tuiles tuiles-texte">
-              <label class="tuile"><input type="radio" name="journee" value="La plupart du temps">La plupart du temps<small>télétravail, retraite</small></label>
-              <label class="tuile"><input type="radio" name="journee" value="Quelques jours par semaine">Quelques jours par semaine</label>
-              <label class="tuile"><input type="radio" name="journee" value="Rarement">Rarement</label>
-              <label class="tuile"><input type="radio" name="journee" value="Résidence secondaire">Résidence secondaire</label>
-            </div>
-          </fieldset>
-          <p class="erreur" id="err-3" role="alert"></p>
-        </fieldset>
-
-        <fieldset class="etape" data-etape="4" hidden>
-          <legend tabindex="-1">Où et comment vous rappeler&#8239;?</legend>
-          <div class="champ">
-            <label for="nom">Nom</label>
-            <input id="nom" name="nom" autocomplete="name" aria-describedby="nom-err">
-            <p class="err-champ" id="nom-err"></p>
-          </div>
-          <div class="deux-champs">
-            <div class="champ">
-              <label for="tel">Téléphone</label>
-              <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="tel-err">
-              <p class="err-champ" id="tel-err"></p>
-            </div>
-            <div class="champ">
-              <label for="commune">Commune</label>
-              <input id="commune" name="commune" list="liste-communes" autocomplete="address-level2" aria-describedby="commune-err">
-              <p class="err-champ" id="commune-err"></p>
-            </div>
-          </div>
-          <datalist id="liste-communes">
-            <option value="Béziers"></option><option value="Villeneuve-lès-Béziers"></option><option value="Sérignan"></option><option value="Valras-Plage"></option>
-            <option value="Sauvian"></option><option value="Vendres"></option><option value="Portiragnes"></option><option value="Vias"></option>
-            <option value="Agde"></option><option value="Servian"></option><option value="Pézenas"></option><option value="Capestang"></option>
+    <form class="bon" id="bon">
+      <div class="bon-config">
+        <p class="bon-config-t">Votre configuration</p>
+        <p class="bon-config-v" id="bon-config">12 panneaux de 425&nbsp;Wc, 5,1&nbsp;kWc, 23,4&nbsp;m², pan sud</p>
+        <a class="lien bon-modifier" href="#simulateur"><svg class="ico" aria-hidden="true"><use href="#i-retour"/></svg>Modifier sur le toit</a>
+        <input type="hidden" name="configuration" id="bon-config-champ" value="12 panneaux de 425 Wc, 5,1 kWc, 23,4 m², pan sud">
+      </div>
+      <div class="bon-champs">
+        <div class="champ">
+          <label for="couverture">Couverture</label>
+          <select id="couverture" name="couverture">
+            <option selected>Tuile canal</option>
+            <option>Tuile mécanique</option>
+            <option>Ardoise</option>
+            <option>Bac acier</option>
+            <option>Toit plat</option>
+            <option>Je ne sais pas</option>
+          </select>
+        </div>
+        <div class="champ">
+          <label for="commune">Commune</label>
+          <input id="commune" name="commune" list="communes" autocomplete="address-level2" enterkeyhint="next" required minlength="2" aria-describedby="commune-err">
+          <datalist id="communes">
+            <option value="Béziers"></option><option value="Villeneuve-lès-Béziers"></option><option value="Sérignan"></option>
+            <option value="Valras-Plage"></option><option value="Sauvian"></option><option value="Vendres"></option>
+            <option value="Portiragnes"></option><option value="Vias"></option><option value="Agde"></option>
+            <option value="Servian"></option><option value="Pézenas"></option><option value="Capestang"></option>
           </datalist>
-          <p class="rgpd">Ces informations servent uniquement à vous rappeler au sujet de votre projet.</p>
-        </fieldset>
-
-        <div class="etape" data-etape="5" hidden>
-          <h3 class="titre-etape" tabindex="-1">Vérifiez votre demande</h3>
-          <dl class="recap" id="recap"></dl>
+          <p class="champ-err" id="commune-err"></p>
         </div>
-
-        <div class="etape fini" data-etape="6" hidden>
-          <svg class="ico ico-ok" aria-hidden="true"><use href="#i-ok"/></svg>
-          <h3 class="titre-etape" tabindex="-1">Demande envoyée</h3>
-          <p>Dans la version en ligne, Cabanel Solaire vous rappelle sous 24&nbsp;h ouvrées au <strong id="fini-tel"></strong> pour fixer la visite de votre toiture.</p>
-          <p>Démonstration&#8239;: aucune donnée n’a été transmise.</p>
+        <div class="champ">
+          <label for="nom">Nom</label>
+          <input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required minlength="2" aria-describedby="nom-err">
+          <p class="champ-err" id="nom-err"></p>
         </div>
-
-        <div class="etude-nav">
-          <button class="btn btn-contour" type="button" id="etude-retour" hidden>Retour</button>
-          <button class="btn" type="submit" id="etude-suivant">Continuer</button>
+        <div class="champ">
+          <label for="tel">Téléphone</label>
+          <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="send" required pattern="[0-9 .+]{10,17}" aria-describedby="tel-err">
+          <p class="champ-err" id="tel-err"></p>
         </div>
-      </form>
-    </aside>
-  </section>
+      </div>
+      <div class="bon-pied">
+        <button class="btn btn-soleil" type="submit">Faire vérifier mon toit</button>
+        <p class="bon-mention">Ces informations servent uniquement à vous rappeler au sujet de votre projet.</p>
+      </div>
+      <div class="bon-ok" id="bon-ok" tabindex="-1" hidden>
+        <svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>
+        <div>
+          <p class="bon-ok-t">Demande prête</p>
+          <p id="bon-ok-txt">Dans la version en ligne, Cabanel Solaire vous rappelle sous 24&nbsp;h ouvrées pour fixer la visite de votre toit.</p>
+          <p class="bon-ok-demo">Démonstration&#8239;: aucune donnée n’a été transmise.</p>
+          <button class="lien" type="button" id="bon-refaire">Modifier ma demande</button>
+        </div>
+      </div>
+    </form>
 
-  <section class="confiance" aria-label="Nos engagements">
-    <div class="wrap">
-      <ul>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-qualif"/></svg><div><strong>QualiPV 36, module électricité</strong><span>L’une des qualifications qu’exige le contrat d’achat du surplus</span></div></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-bouclier"/></svg><div><strong>Garantie décennale</strong><span>Attestation jointe à chaque devis</span></div></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-casque"/></svg><div><strong>Électriciens depuis 2009</strong><span>Poseurs salariés, formés au travail en hauteur</span></div></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-dossier"/></svg><div><strong>Démarches comprises</strong><span>Mairie, Enedis et Consuel&#8239;: nous nous en occupons</span></div></li>
+    <aside class="visite" aria-labelledby="visite-titre">
+      <h3 id="visite-titre">Ce que la visite vérifie, en une heure environ</h3>
+      <ul class="visite-liste">
+        <li><strong>La couverture.</strong> Tuile canal, tuile mécanique, ardoise ou bac acier&#8239;: chacune a sa fixation, et une tuile abîmée se change avant la pose, pas après.</li>
+        <li><strong>L’orientation et la pente.</strong> Nous relevons celles de chaque pan&#8239;: plein sud n’est pas une obligation.</li>
+        <li><strong>Les ombres.</strong> Cheminée, antenne, arbre du voisin&#8239;: une ombre sur un seul panneau peut freiner toute la rangée.</li>
+        <li><strong>La charpente.</strong> Elle doit porter les panneaux, les rails et le vent. Nous la regardons depuis les combles quand c’est possible.</li>
+        <li><strong>Le tableau et le compteur.</strong> La place de l’onduleur, les protections à ajouter, et votre compteur Linky.</li>
       </ul>
-    </div>
-  </section>
+      <p class="visite-note">Le simulateur montre ce que votre toit peut porter. Le devis, lui, part de ce que vous consommez&#8239;: revendre le surplus rapporte peu, l’intérêt du solaire est surtout dans ce que vous consommez vous-même, en journée. Pour la visite, préparez vos factures d’électricité des douze derniers mois.</p>
+      <p><a class="lien" href="https://re.jrc.ec.europa.eu/pvg_tools/fr/" target="_blank" rel="noopener">Essayer PVGIS sur votre adresse</a></p>
+    </aside>
+  </div>
+</section>
 
-  <section class="section" id="installations" aria-labelledby="installations-t">
-    <div class="wrap">
-      <div class="entete-section">
-        <h2 id="installations-t">Du toit au tableau électrique</h2>
-        <p>Nous sommes électriciens avant d’être poseurs&#8239;: l’équipe qui monte sur votre toit est celle qui raccorde l’installation à votre tableau.</p>
-      </div>
-      <div class="services">
-        <article class="service">
-          <img src="/exemples/img/solaire-toiture-800.webp" srcset="/exemples/img/solaire-toiture-480.webp 480w, /exemples/img/solaire-toiture-800.webp 800w, /exemples/img/solaire-toiture-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Dix panneaux solaires noirs posés sur une toiture en tuiles orangées, à côté d’un châssis de toit">
-          <h3>Panneaux dimensionnés sur votre consommation</h3>
-          <p>Le nombre de panneaux se calcule à partir de vos factures, pas de la surface du toit.</p>
-          <ul>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Production calculée avec PVGIS pour votre adresse</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Autoconsommation, avec ou sans revente du surplus</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Mairie, Enedis et Consuel compris dans le devis</li>
-          </ul>
-        </article>
-        <article class="service">
-          <img src="/exemples/img/solaire-pose-800.webp" srcset="/exemples/img/solaire-pose-480.webp 480w, /exemples/img/solaire-pose-800.webp 800w, /exemples/img/solaire-pose-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Main gantée serrant la bride qui fixe un panneau sur son rail en aluminium">
-          <h3>Pose sur tuile canal, mécanique ou bac acier</h3>
-          <p>Crochets vissés dans la charpente, rails en aluminium, tuiles remises en place à l’identique.</p>
-          <ul>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Une à deux journées sur le toit en général</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Une tuile qui casse est remplacée le jour même</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Poseurs salariés, formés au travail en hauteur</li>
-          </ul>
-        </article>
-        <article class="service">
-          <img src="/exemples/img/solaire-tableau-800.webp" srcset="/exemples/img/solaire-tableau-480.webp 480w, /exemples/img/solaire-tableau-800.webp 800w, /exemples/img/solaire-tableau-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Électricien vérifiant au tournevis les disjoncteurs d’un tableau électrique ouvert">
-          <h3>Onduleur, tableau et compteur</h3>
-          <p>L’onduleur près de votre tableau électrique, les protections à ajouter et le lien avec votre compteur Linky.</p>
-          <ul>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Tableau remis aux normes si la visite le montre</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Production vérifiée avec vous le premier mois</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Dépannage électrique pour nos clients</li>
-          </ul>
-        </article>
-      </div>
+<!-- ============ Les 7 démarches, en frise ============ -->
+<section class="demarches" id="demarches" aria-labelledby="dem-titre">
+  <div class="dem-in">
+    <div class="dem-tete">
+      <h2 id="dem-titre">Sept démarches, du devis au contrat d’achat</h2>
+      <p>Un projet solaire, c’est une ou deux journées sur le toit et plusieurs semaines de papiers. Suivez le fil&#8239;: le courant ne part sur le réseau qu’à la sixième étape.</p>
     </div>
-  </section>
+    <div class="frise">
+      <div class="frise-piste" role="tablist" aria-label="Les sept démarches">
+        <button class="etape-btn" type="button" role="tab" id="t1" aria-controls="e1" aria-selected="true"><span class="etape-num">1</span><span class="etape-nom">Visite et devis</span><span class="etape-qui">Nous</span></button>
+        <button class="etape-btn" type="button" role="tab" id="t2" aria-controls="e2" aria-selected="false" tabindex="-1"><span class="etape-num">2</span><span class="etape-nom">Mairie</span><span class="etape-qui">Nous</span></button>
+        <button class="etape-btn" type="button" role="tab" id="t3" aria-controls="e3" aria-selected="false" tabindex="-1"><span class="etape-num">3</span><span class="etape-nom">Enedis</span><span class="etape-qui">Nous, en votre nom</span></button>
+        <button class="etape-btn" type="button" role="tab" id="t4" aria-controls="e4" aria-selected="false" tabindex="-1"><span class="etape-num">4</span><span class="etape-nom">La pose</span><span class="etape-qui">Nos poseurs</span></button>
+        <button class="etape-btn" type="button" role="tab" id="t5" aria-controls="e5" aria-selected="false" tabindex="-1"><span class="etape-num">5</span><span class="etape-nom">Consuel</span><span class="etape-qui">Nous</span></button>
+        <button class="etape-btn" type="button" role="tab" id="t6" aria-controls="e6" aria-selected="false" tabindex="-1"><span class="etape-num">6</span><span class="etape-nom">Mise en service</span><span class="etape-qui">Enedis</span></button>
+        <button class="etape-btn" type="button" role="tab" id="t7" aria-controls="e7" aria-selected="false" tabindex="-1"><span class="etape-num">7</span><span class="etape-nom">Contrat EDF&nbsp;OA</span><span class="etape-qui">Vous, avec nous</span></button>
+      </div>
 
-  <section class="section dossier" id="demarches" aria-labelledby="demarches-t">
-    <div class="wrap">
-      <div class="intro">
-        <div class="entete-section">
-          <h2 id="demarches-t">Les démarches, dans l’ordre, et qui s’en occupe</h2>
-          <p>Un projet solaire, c’est une ou deux journées sur le toit et plusieurs semaines de papiers. Voici lesquels. Ouvrez une étape pour savoir ce qu’elle demande.</p>
+      <div class="etape-panneau" role="tabpanel" id="e1" aria-labelledby="t1" tabindex="0">
+        <div class="etape-corps">
+          <h3>Visite technique et devis</h3>
+          <p>Nous regardons la couverture, l’orientation, les ombres, la charpente, le tableau électrique et le compteur.</p>
+          <p>Le devis détaille le nombre de panneaux, l’onduleur, la pose et chacune des démarches qui suivent.</p>
         </div>
-        <a class="btn" href="#etude">Demander une étude</a>
-      </div>
-
-      <ol class="rail">
-        <li>
-          <details name="demarche" open>
-            <summary><h3>Visite technique et devis</h3><span class="qui">Chez vous, une heure environ.</span></summary>
-            <div class="dedans">
-              <p>Nous regardons la couverture, l’orientation, les ombres, la charpente, le tableau électrique et le compteur.</p>
-              <p><b>De votre côté&#8239;:</b> vos factures d’électricité des douze derniers mois. Le devis détaille le nombre de panneaux, l’onduleur, la pose et chacune des démarches ci-dessous.</p>
-            </div>
-          </details>
-        </li>
-        <li>
-          <details name="demarche">
-            <summary><h3>Déclaration préalable en mairie</h3><span class="qui">Déposée par nous. Instruction&#8239;: 1&nbsp;mois, 2 en secteur protégé.</span></summary>
-            <div class="dedans">
-              <p>Les panneaux changent l’aspect du toit&#8239;: la mairie doit être consultée avant la pose. Nous préparons le dossier (plans, photos, insertion dans le paysage) et nous le déposons.</p>
-              <p>Sans réponse au bout d’un mois, c’est en principe un accord tacite. Aux abords d’un monument historique, l’architecte des Bâtiments de France donne son avis et le délai passe en général à deux mois.</p>
-              <p><b>De votre côté&#8239;:</b> une signature sur le formulaire.</p>
-            </div>
-          </details>
-        </li>
-        <li>
-          <details name="demarche">
-            <summary><h3>Demande de raccordement à Enedis</h3><span class="qui">Faite par nous, en votre nom. Délai&#8239;: variable.</span></summary>
-            <div class="dedans">
-              <p>Nous déclarons l’installation à Enedis et nous choisissons avec vous&#8239;: tout consommer vous-même, ou revendre ce que vous ne consommez pas.</p>
-              <p>Aucun courant ne doit partir sur le réseau avant la mise en service, même si les panneaux sont posés.</p>
-            </div>
-          </details>
-        </li>
-        <li>
-          <details name="demarche">
-            <summary><h3>La pose</h3><span class="qui">Par nos poseurs. En général une à deux journées.</span></summary>
-            <div class="dedans">
-              <p>Nous soulevons les tuiles, nous vissons les crochets dans la charpente, nous remettons les tuiles en place. Puis viennent les rails en aluminium, les panneaux, et l’onduleur près de votre tableau électrique.</p>
-              <p>Une tuile qui casse est remplacée le jour même.</p>
-            </div>
-          </details>
-        </li>
-        <li>
-          <details name="demarche">
-            <summary><h3>Attestation du Consuel</h3><span class="qui">Demandée par nous. Délai&#8239;: variable.</span></summary>
-            <div class="dedans">
-              <p>Le Consuel vérifie que l’installation respecte les règles de sécurité électrique, sur dossier et parfois sur place.</p>
-              <p>Sans son attestation, Enedis ne met pas l’installation en service.</p>
-            </div>
-          </details>
-        </li>
-        <li>
-          <details name="demarche">
-            <summary><h3>Mise en service</h3><span class="qui">Par Enedis. Délai&#8239;: variable.</span></summary>
-            <div class="dedans">
-              <p>Enedis valide le raccordement et met l’installation en service. À partir de là, vos panneaux alimentent la maison.</p>
-              <p>Nous revenons vérifier la production avec vous pendant le premier mois.</p>
-            </div>
-          </details>
-        </li>
-        <li>
-          <details name="demarche">
-            <summary><h3>Contrat d’achat du surplus</h3><span class="qui">Si vous revendez. Signé par vous, préparé avec nous.</span></summary>
-            <div class="dedans">
-              <p>Le surplus est acheté par EDF&nbsp;OA, l’acheteur obligé désigné par la loi. Pour une installation de 9&nbsp;kWc ou moins, il est payé 1,1&nbsp;c€&nbsp;HT le kWh.</p>
-              <p>C’est peu&#8239;: l’intérêt du solaire est surtout dans ce que vous consommez vous-même. Nous en tenons compte dès le devis.</p>
-              <p>Pour signer ce contrat, l’installation doit être posée par un professionnel qualifié. Nous sommes qualifiés QualiPV&nbsp;36, module électricité&#8239;: l’une des qualifications qu’exige l’arrêté du 6&nbsp;octobre 2021.</p>
-              <small>Tarif fixé par l’arrêté du 1<sup>er</sup>&nbsp;juin 2026, publié au Journal officiel du 4&nbsp;juin 2026.</small>
-            </div>
-          </details>
-        </li>
-      </ol>
-      <p class="note">Le délai de la mairie est fixé par le code de l’urbanisme. Les autres dépendent d’Enedis, du Consuel et de la saison&#8239;: nous ne vous promettons pas de date que nous ne tiendrions pas, nous vous appelons à chaque étape franchie.<small>Délais d’instruction&#8239;: service-public.gouv.fr, fiche «&#8239;Déclaration préalable de travaux&#8239;», vérifiée le 28&nbsp;septembre 2026.</small></p>
-    </div>
-  </section>
-
-  <section class="section section-ciel" id="visite" aria-labelledby="visite-t">
-    <div class="wrap visite">
-      <figure>
-        <img src="/exemples/img/solaire-tuiles-800.webp" srcset="/exemples/img/solaire-tuiles-480.webp 480w, /exemples/img/solaire-tuiles-800.webp 800w, /exemples/img/solaire-tuiles-1200.webp 1200w" sizes="(min-width: 76rem) 35rem, (min-width: 60rem) 46vw, 92vw" width="1200" height="800" loading="lazy" decoding="async"
-             alt="Rangs de tuiles canal anciennes, couvertes de lichen, sur une toiture en pente">
-        <figcaption>Une couverture en tuiles canal&#8239;: chaque tuile abîmée se change avant la pose.</figcaption>
-      </figure>
-      <div>
-        <h2 class="h2" id="visite-t">Ce que nous regardons sur votre toit</h2>
-        <dl>
-          <div><dt>La couverture</dt><dd>Tuile canal, tuile mécanique, ardoise ou bac acier&#8239;: chacune a sa fixation, et une tuile abîmée se change avant la pose, pas après.</dd></div>
-          <div><dt>L’orientation et la pente</dt><dd>Plein sud n’est pas une obligation. Un toit est-ouest produit plus tôt le matin et plus tard le soir.</dd></div>
-          <div><dt>Les ombres</dt><dd>Cheminée, antenne, arbre du voisin&#8239;: une ombre sur un seul panneau peut freiner toute la rangée.</dd></div>
-          <div><dt>La charpente</dt><dd>Elle doit porter les panneaux, les rails et le vent. Nous la regardons depuis les combles quand c’est possible.</dd></div>
-          <div><dt>Le tableau et le compteur</dt><dd>La place de l’onduleur, les protections à ajouter, et votre compteur Linky.</dd></div>
+        <dl class="etape-fiche">
+          <div><dt>Qui s’en occupe</dt><dd>Nous, chez vous</dd></div>
+          <div><dt>Durée</dt><dd>Une heure environ</dd></div>
+          <div><dt>De votre côté</dt><dd>Vos factures d’électricité des douze derniers mois</dd></div>
         </dl>
-        <div class="franc">
-          <h3>Pas d’économies annoncées avant d’avoir vu vos factures</h3>
-          <p>Ce que vos panneaux produiront dépend de votre toit. Nous le calculons avec PVGIS, l’outil gratuit de la Commission européenne, et nous vous montrons le calcul.</p>
-          <p>Ce que vous économiserez dépend de la part que vous consommez vous-même, en journée. Revendre le surplus rapporte peu&#8239;: nous dimensionnons sur votre consommation, pas sur la taille du toit.</p>
-          <p><a class="lien" href="https://re.jrc.ec.europa.eu/pvg_tools/fr/" target="_blank" rel="noopener">Essayer PVGIS sur votre adresse</a></p>
+      </div>
+      <div class="etape-panneau" role="tabpanel" id="e2" aria-labelledby="t2" tabindex="0">
+        <div class="etape-corps">
+          <h3>Déclaration préalable en mairie</h3>
+          <p>Les panneaux changent l’aspect du toit&#8239;: la mairie doit être consultée avant la pose. Nous préparons le dossier (plans, photos, insertion dans le paysage) et nous le déposons.</p>
+          <p>Sans réponse au bout d’un mois, c’est en principe un accord tacite. Aux abords d’un monument historique, l’architecte des Bâtiments de France donne son avis et le délai passe en général à deux mois.</p>
         </div>
+        <dl class="etape-fiche">
+          <div><dt>Qui s’en occupe</dt><dd>Nous, qui déposons le dossier</dd></div>
+          <div><dt>Instruction</dt><dd>1&nbsp;mois, 2 en secteur protégé</dd></div>
+          <div><dt>De votre côté</dt><dd>Une signature sur le formulaire</dd></div>
+        </dl>
+      </div>
+      <div class="etape-panneau" role="tabpanel" id="e3" aria-labelledby="t3" tabindex="0">
+        <div class="etape-corps">
+          <h3>Demande de raccordement à Enedis</h3>
+          <p>Nous déclarons l’installation à Enedis et nous choisissons avec vous&#8239;: tout consommer vous-même, ou revendre ce que vous ne consommez pas.</p>
+          <p>Aucun courant ne doit partir sur le réseau avant la mise en service, même si les panneaux sont posés.</p>
+        </div>
+        <dl class="etape-fiche">
+          <div><dt>Qui s’en occupe</dt><dd>Nous, en votre nom</dd></div>
+          <div><dt>Délai</dt><dd>Variable</dd></div>
+          <div><dt>De votre côté</dt><dd>Choisir&#8239;: tout consommer, ou revendre le surplus</dd></div>
+        </dl>
+      </div>
+      <div class="etape-panneau" role="tabpanel" id="e4" aria-labelledby="t4" tabindex="0">
+        <div class="etape-corps">
+          <h3>La pose</h3>
+          <p>Nous soulevons les tuiles, nous vissons les crochets dans la charpente, nous remettons les tuiles en place. Puis viennent les rails en aluminium, les panneaux, et l’onduleur près de votre tableau électrique.</p>
+          <p>Une tuile qui casse est remplacée le jour même.</p>
+        </div>
+        <dl class="etape-fiche">
+          <div><dt>Qui s’en occupe</dt><dd>Nos poseurs salariés</dd></div>
+          <div><dt>Durée</dt><dd>En général une à deux journées</dd></div>
+          <div><dt>De votre côté</dt><dd>Nous laisser l’accès au toit et au tableau</dd></div>
+        </dl>
+      </div>
+      <div class="etape-panneau" role="tabpanel" id="e5" aria-labelledby="t5" tabindex="0">
+        <div class="etape-corps">
+          <h3>Attestation du Consuel</h3>
+          <p>Le Consuel vérifie que l’installation respecte les règles de sécurité électrique, sur dossier et parfois sur place.</p>
+          <p>Sans son attestation, Enedis ne met pas l’installation en service.</p>
+        </div>
+        <dl class="etape-fiche">
+          <div><dt>Qui s’en occupe</dt><dd>Nous, qui la demandons</dd></div>
+          <div><dt>Délai</dt><dd>Variable</dd></div>
+          <div><dt>De votre côté</dt><dd>Rien, sauf s’il passe sur place&#8239;: nous vous prévenons</dd></div>
+        </dl>
+      </div>
+      <div class="etape-panneau" role="tabpanel" id="e6" aria-labelledby="t6" tabindex="0">
+        <div class="etape-corps">
+          <h3>Mise en service</h3>
+          <p>Enedis valide le raccordement et met l’installation en service. À partir de là, vos panneaux alimentent la maison.</p>
+          <p>Nous revenons vérifier la production avec vous pendant le premier mois.</p>
+        </div>
+        <dl class="etape-fiche">
+          <div><dt>Qui s’en occupe</dt><dd>Enedis</dd></div>
+          <div><dt>Délai</dt><dd>Variable</dd></div>
+          <div><dt>De votre côté</dt><dd>Regarder la production avec nous, le premier mois</dd></div>
+        </dl>
+      </div>
+      <div class="etape-panneau" role="tabpanel" id="e7" aria-labelledby="t7" tabindex="0">
+        <div class="etape-corps">
+          <h3>Contrat d’achat du surplus</h3>
+          <p>Le surplus est acheté par EDF&nbsp;OA, l’acheteur obligé désigné par la loi. Pour une installation de 9&nbsp;kWc ou moins, il est payé 1,1&nbsp;c€&nbsp;HT le kWh. C’est peu&#8239;: l’intérêt du solaire est surtout dans ce que vous consommez vous-même. Nous en tenons compte dès le devis.</p>
+          <p>Pour signer ce contrat, l’installation doit être posée par un professionnel qualifié. Nous sommes qualifiés QualiPV&nbsp;36, module électricité&#8239;: l’une des qualifications qu’exige l’arrêté du 6&nbsp;octobre 2021.</p>
+          <p class="etape-source">Tarif fixé par l’arrêté du 1<sup>er</sup>&nbsp;juin 2026, publié au Journal officiel du 4&nbsp;juin 2026.</p>
+        </div>
+        <dl class="etape-fiche">
+          <div><dt>Qui s’en occupe</dt><dd>Vous signez, nous le préparons avec vous</dd></div>
+          <div><dt>Quand</dt><dd>Si vous revendez le surplus</dd></div>
+          <div><dt>Notre qualification</dt><dd>QualiPV&nbsp;36, module électricité</dd></div>
+        </dl>
+      </div>
+
+      <div class="frise-nav">
+        <button class="btn btn-contour" type="button" id="frise-prec"><svg class="ico" aria-hidden="true"><use href="#i-retour"/></svg>Étape précédente</button>
+        <button class="btn btn-contour" type="button" id="frise-suiv">Étape suivante<svg class="ico" aria-hidden="true"><use href="#i-fleche"/></svg></button>
       </div>
     </div>
-  </section>
+    <p class="dem-note">Le délai de la mairie est fixé par le code de l’urbanisme. Les autres dépendent d’Enedis, du Consuel et de la saison&#8239;: nous ne vous promettons pas de date que nous ne tiendrions pas, nous vous appelons à chaque étape franchie. Délais d’instruction&#8239;: service-public.gouv.fr, fiche «&#8239;Déclaration préalable de travaux&#8239;», vérifiée le 28&nbsp;septembre 2026.</p>
+  </div>
+</section>
 
-  <section class="section" id="realisations" aria-labelledby="realisations-t">
-    <div class="wrap">
-      <div class="entete-section">
-        <h2 id="realisations-t">Quelques chantiers du Biterrois</h2>
-        <p>Plus de 450 installations posées depuis 2009, de Capestang à Pézenas. Voici quelques chantiers de l’année.</p>
-      </div>
-      <ul class="chantiers">
-        <li class="chantier">
-          <img src="/exemples/img/solaire-real-villeneuve-800.webp" srcset="/exemples/img/solaire-real-villeneuve-480.webp 480w, /exemples/img/solaire-real-villeneuve-800.webp 800w, /exemples/img/solaire-real-villeneuve-1200.webp 1200w" sizes="(min-width: 76rem) 18rem, (min-width: 36rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Panneaux solaires sur des toits de tuiles, autour de trois souches de cheminée en brique">
-          <span class="type">Surplus revendu</span>
+<!-- ============ Chantiers récents ============ -->
+<section class="chantiers" id="chantiers" aria-labelledby="ch-titre">
+  <div class="ch-in">
+    <div class="ch-tete">
+      <h2 id="ch-titre">Posés cette année dans le Biterrois</h2>
+      <p>Plus de 450 installations posées depuis 2009, de Capestang à Pézenas. Voici six chantiers de l’année avec leur configuration&#8239;: chargez-la sur le toit du simulateur pour la comparer au vôtre.</p>
+    </div>
+    <div class="filtres" role="group" aria-label="Filtrer les chantiers par couverture">
+      <button type="button" class="filtre" data-f="tous" aria-pressed="true">Tous <span class="filtre-n">6</span></button>
+      <button type="button" class="filtre" data-f="canal" aria-pressed="false">Tuile canal <span class="filtre-n">4</span></button>
+      <button type="button" class="filtre" data-f="mecanique" aria-pressed="false">Tuile mécanique <span class="filtre-n">1</span></button>
+      <button type="button" class="filtre" data-f="acier" aria-pressed="false">Bac acier <span class="filtre-n">1</span></button>
+    </div>
+    <p class="visuel-seul" id="ch-annonce" aria-live="polite"></p>
+    <div class="ch-grille">
+      <article class="chantier" id="ch-villeneuve" data-toit="canal">
+        <div class="chantier-photo">
+          <img src="/exemples/img/solaire-real-villeneuve-800.webp" srcset="/exemples/img/solaire-real-villeneuve-480.webp 480w, /exemples/img/solaire-real-villeneuve-800.webp 800w, /exemples/img/solaire-real-villeneuve-1200.webp 1200w" sizes="(min-width: 72rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Panneaux solaires noirs sur un toit de tuiles, entre deux souches de cheminée en brique">
+          <p class="chantier-kwc"><span class="chiffre">8,5</span>&nbsp;kWc</p>
+        </div>
+        <div class="chantier-corps">
           <h3>Villeneuve-lès-Béziers</h3>
           <p>Deux pans couverts, panneaux posés entre les souches de cheminée sans toucher à leur maçonnerie.</p>
-        </li>
-        <li class="chantier">
-          <img src="/exemples/img/solaire-real-agde-800.webp" srcset="/exemples/img/solaire-real-agde-480.webp 480w, /exemples/img/solaire-real-agde-800.webp 800w, /exemples/img/solaire-real-agde-1200.webp 1200w" sizes="(min-width: 76rem) 18rem, (min-width: 36rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Maisons aux toits de tuiles parmi les cyprès, face à la mer, panneaux solaires au premier plan">
-          <span class="type">Autoconsommation</span>
+          <dl class="chantier-fiche">
+            <div><dt>Toit</dt><dd>Tuile canal</dd></div>
+            <div><dt>Panneaux</dt><dd>20 × 425&nbsp;Wc</dd></div>
+            <div><dt>Orientation</dt><dd>Est-ouest</dd></div>
+            <div><dt>Surplus</dt><dd>Revendu</dd></div>
+          </dl>
+          <button type="button" class="btn btn-contour chantier-charger" data-n="20" data-o="est-ouest" data-lieu="Villeneuve-lès-Béziers">Charger sur le simulateur<span class="visuel-seul"> la configuration de Villeneuve-lès-Béziers</span></button>
+        </div>
+      </article>
+      <article class="chantier" id="ch-agde" data-toit="canal">
+        <div class="chantier-photo">
+          <img src="/exemples/img/solaire-real-agde-800.webp" srcset="/exemples/img/solaire-real-agde-480.webp 480w, /exemples/img/solaire-real-agde-800.webp 800w, /exemples/img/solaire-real-agde-1200.webp 1200w" sizes="(min-width: 72rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Maisons aux toits de tuiles orangées sur une colline face à la mer, panneaux solaires sur l’une d’elles">
+          <p class="chantier-kwc"><span class="chiffre">3,825</span>&nbsp;kWc</p>
+        </div>
+        <div class="chantier-corps">
           <h3>Agde</h3>
           <p>Maison sur les hauteurs. Panneaux sur le pan sud-ouest, onduleur installé au garage.</p>
-        </li>
-        <li class="chantier">
-          <img src="/exemples/img/solaire-real-servian-800.webp" srcset="/exemples/img/solaire-real-servian-480.webp 480w, /exemples/img/solaire-real-servian-800.webp 800w, /exemples/img/solaire-real-servian-1200.webp 1200w" sizes="(min-width: 76rem) 18rem, (min-width: 36rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Mas en pierre au milieu de la garrigue, panneaux solaires sur le toit de l’annexe">
-          <span class="type">Autoconsommation</span>
+          <dl class="chantier-fiche">
+            <div><dt>Toit</dt><dd>Tuile canal</dd></div>
+            <div><dt>Panneaux</dt><dd>9 × 425&nbsp;Wc</dd></div>
+            <div><dt>Orientation</dt><dd>Sud-ouest</dd></div>
+            <div><dt>Surplus</dt><dd>Consommé sur place</dd></div>
+          </dl>
+          <button type="button" class="btn btn-contour chantier-charger" data-n="9" data-o="sud-ouest" data-lieu="Agde">Charger sur le simulateur<span class="visuel-seul"> la configuration de Agde</span></button>
+        </div>
+      </article>
+      <article class="chantier" id="ch-serignan" data-toit="mecanique">
+        <div class="chantier-photo">
+          <img src="/exemples/img/solaire-toiture-800.webp" srcset="/exemples/img/solaire-toiture-480.webp 480w, /exemples/img/solaire-toiture-800.webp 800w, /exemples/img/solaire-toiture-1200.webp 1200w" sizes="(min-width: 72rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Dix panneaux solaires noirs posés sur une toiture en tuiles orangées, à côté d’un châssis de toit">
+          <p class="chantier-kwc"><span class="chiffre">4,25</span>&nbsp;kWc</p>
+        </div>
+        <div class="chantier-corps">
+          <h3>Sérignan</h3>
+          <p>Dix panneaux en deux rangées, calés à côté du châssis de toit qui garde toute son ouverture.</p>
+          <dl class="chantier-fiche">
+            <div><dt>Toit</dt><dd>Tuile mécanique</dd></div>
+            <div><dt>Panneaux</dt><dd>10 × 425&nbsp;Wc</dd></div>
+            <div><dt>Orientation</dt><dd>Sud-est</dd></div>
+            <div><dt>Surplus</dt><dd>Consommé sur place</dd></div>
+          </dl>
+          <button type="button" class="btn btn-contour chantier-charger" data-n="10" data-o="sud-est" data-lieu="Sérignan">Charger sur le simulateur<span class="visuel-seul"> la configuration de Sérignan</span></button>
+        </div>
+      </article>
+      <article class="chantier" id="ch-servian" data-toit="canal">
+        <div class="chantier-photo">
+          <img src="/exemples/img/solaire-real-servian-800.webp" srcset="/exemples/img/solaire-real-servian-480.webp 480w, /exemples/img/solaire-real-servian-800.webp 800w, /exemples/img/solaire-real-servian-1200.webp 1200w" sizes="(min-width: 72rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Mas en pierre vu du ciel au milieu des champs, panneaux solaires sur le toit de son annexe">
+          <p class="chantier-kwc"><span class="chiffre">3,4</span>&nbsp;kWc</p>
+        </div>
+        <div class="chantier-corps">
           <h3>Servian</h3>
           <p>Mas en pierre. Panneaux posés sur l’annexe&#8239;: le toit principal reste intact.</p>
-        </li>
-        <li class="chantier">
-          <img src="/exemples/img/solaire-real-vendres-800.webp" srcset="/exemples/img/solaire-real-vendres-480.webp 480w, /exemples/img/solaire-real-vendres-800.webp 800w, /exemples/img/solaire-real-vendres-1200.webp 1200w" sizes="(min-width: 76rem) 18rem, (min-width: 36rem) 46vw, 92vw" width="1200" height="899" loading="lazy" decoding="async" alt="Long bâtiment en pierre au bord d’un étang, panneaux solaires sur sa couverture en bac acier">
-          <span class="type">Bâtiment agricole</span>
+          <dl class="chantier-fiche">
+            <div><dt>Toit</dt><dd>Tuile canal</dd></div>
+            <div><dt>Panneaux</dt><dd>8 × 425&nbsp;Wc</dd></div>
+            <div><dt>Orientation</dt><dd>Sud</dd></div>
+            <div><dt>Surplus</dt><dd>Consommé sur place</dd></div>
+          </dl>
+          <button type="button" class="btn btn-contour chantier-charger" data-n="8" data-o="sud" data-lieu="Servian">Charger sur le simulateur<span class="visuel-seul"> la configuration de Servian</span></button>
+        </div>
+      </article>
+      <article class="chantier" id="ch-sauvian" data-toit="canal">
+        <div class="chantier-photo">
+          <img src="/exemples/img/solaire-hero-800.webp" srcset="/exemples/img/solaire-hero-480.webp 480w, /exemples/img/solaire-hero-800.webp 800w, /exemples/img/solaire-hero-1200.webp 1200w" sizes="(min-width: 72rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="806" loading="lazy" decoding="async" alt="Maison au toit de tuiles couvert de panneaux solaires, entre les souches de cheminée en brique et les cyprès">
+          <p class="chantier-kwc"><span class="chiffre">7,65</span>&nbsp;kWc</p>
+        </div>
+        <div class="chantier-corps">
+          <h3>Sauvian</h3>
+          <p>Maison à étage. Deux rangées sur le pan sud, entre les souches en brique, et un tableau électrique remis aux normes.</p>
+          <dl class="chantier-fiche">
+            <div><dt>Toit</dt><dd>Tuile canal</dd></div>
+            <div><dt>Panneaux</dt><dd>18 × 425&nbsp;Wc</dd></div>
+            <div><dt>Orientation</dt><dd>Sud</dd></div>
+            <div><dt>Surplus</dt><dd>Revendu</dd></div>
+          </dl>
+          <button type="button" class="btn btn-contour chantier-charger" data-n="18" data-o="sud" data-lieu="Sauvian">Charger sur le simulateur<span class="visuel-seul"> la configuration de Sauvian</span></button>
+        </div>
+      </article>
+      <article class="chantier" id="ch-vendres" data-toit="acier">
+        <div class="chantier-photo">
+          <img src="/exemples/img/solaire-real-vendres-800.webp" srcset="/exemples/img/solaire-real-vendres-480.webp 480w, /exemples/img/solaire-real-vendres-800.webp 800w, /exemples/img/solaire-real-vendres-1200.webp 1200w" sizes="(min-width: 72rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Long bâtiment en pierre au bord d’un étang, toit couvert de panneaux solaires">
+          <p class="chantier-kwc"><span class="chiffre">15,3</span>&nbsp;kWc</p>
+        </div>
+        <div class="chantier-corps">
           <h3>Vendres</h3>
-          <p>Ancien bâtiment en pierre au bord de l’étang, panneaux fixés sur la couverture en bac acier.</p>
-        </li>
-      </ul>
+          <p>Ancien bâtiment agricole en pierre au bord de l’étang, panneaux fixés sur la couverture en bac acier.</p>
+          <dl class="chantier-fiche">
+            <div><dt>Toit</dt><dd>Bac acier</dd></div>
+            <div><dt>Panneaux</dt><dd>36 × 425&nbsp;Wc</dd></div>
+            <div><dt>Orientation</dt><dd>Sud</dd></div>
+            <div><dt>Surplus</dt><dd>Revendu</dd></div>
+          </dl>
+          <p class="chantier-hors">Trop grand pour ce toit de maison&#8239;: un bâtiment agricole s’étudie sur plan.</p>
+        </div>
+      </article>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section class="section section-ciel" id="entreprise" aria-labelledby="entreprise-t">
-    <div class="wrap entreprise">
-      <div class="entreprise-texte">
-        <h2 class="h2" id="entreprise-t">Des électriciens de Béziers, depuis 2009</h2>
-        <p>Cabanel Solaire a ouvert en 2009 comme entreprise d’électricité générale, dans un atelier du chemin de la Tuilerie, à Béziers. Nous y sommes toujours. Le photovoltaïque est devenu notre premier métier sans que nous cessions d’être électriciens&#8239;: une installation solaire est d’abord une installation électrique.</p>
-        <p>Les poseurs sont nos salariés, formés au travail en hauteur. Nous sommes qualifiés QualiPV&nbsp;36, module électricité, et notre attestation d’assurance décennale est jointe à chaque devis.</p>
-        <dl class="chiffres">
-          <div><dt>année de création</dt><dd>2009</dd></div>
-          <div><dt>électriciens et poseurs salariés</dt><dd>7</dd></div>
-          <div><dt>installations solaires posées</dt><dd>450+</dd></div>
+<!-- ============ L'atelier et la zone ============ -->
+<section class="atelier" id="atelier" aria-labelledby="at-titre">
+  <div class="at-in">
+    <div class="at-texte">
+      <h2 id="at-titre">Des électriciens de Béziers, depuis 2009</h2>
+      <p>Cabanel Solaire a ouvert en 2009 comme entreprise d’électricité générale, dans un atelier du chemin de la Tuilerie, à Béziers. Nous y sommes toujours. Le photovoltaïque est devenu notre premier métier sans que nous cessions d’être électriciens&#8239;: une installation solaire est d’abord une installation électrique.</p>
+      <p>L’équipe qui monte sur votre toit est celle qui raccorde l’installation à votre tableau. Les poseurs sont nos salariés, formés au travail en hauteur. Nous sommes qualifiés QualiPV&nbsp;36, module électricité, et notre attestation d’assurance décennale est jointe à chaque devis.</p>
+      <div class="plaque">
+        <p class="plaque-t">Fiche signalétique</p>
+        <dl>
+          <div><dt>Création</dt><dd><span class="chiffre">2009</span></dd></div>
+          <div><dt>Électriciens et poseurs salariés</dt><dd><span class="chiffre">7</span></dd></div>
+          <div><dt>Installations solaires posées</dt><dd><span class="chiffre">450+</span></dd></div>
+          <div><dt>Qualification</dt><dd>QualiPV&nbsp;36, module électricité</dd></div>
+          <div><dt>Assurance</dt><dd>Décennale, attestation jointe au devis</dd></div>
         </dl>
-        <p class="avertissement"><svg class="ico" aria-hidden="true"><use href="#i-alerte"/></svg><span>Nous ne démarchons jamais, ni par téléphone ni à domicile. Si quelqu’un se présente de notre part sans rendez-vous, ce n’est pas nous.</span></p>
       </div>
-      <div class="photos">
-        <figure class="principale">
-          <img src="/exemples/img/solaire-poseur-800.webp" srcset="/exemples/img/solaire-poseur-480.webp 480w, /exemples/img/solaire-poseur-800.webp 800w, /exemples/img/solaire-poseur-1200.webp 1200w" sizes="(min-width: 76rem) 22rem, (min-width: 60rem) 30vw, (min-width: 40rem) 62vw, 92vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Poseur vu de dos, ceinture à outils à la taille, portant un panneau solaire sur l’épaule le long du toit">
-          <figcaption>Montée d’un panneau, avant sa fixation sur les rails.</figcaption>
-        </figure>
-        <figure class="seconde">
-          <img src="/exemples/img/solaire-camion-800.webp" srcset="/exemples/img/solaire-camion-480.webp 480w, /exemples/img/solaire-camion-800.webp 800w, /exemples/img/solaire-camion-1200.webp 1200w" sizes="(min-width: 76rem) 17rem, (min-width: 40rem) 48vw, 92vw" width="1200" height="800" loading="lazy" decoding="async" alt="Utilitaire gris de l’entreprise, garé devant un bâtiment d’activités">
-        </figure>
-      </div>
+      <h3 class="equipe-t">L’équipe</h3>
+      <ul class="equipe">
+        <li><span class="pastille" aria-hidden="true">LC</span><span><strong>Laurent</strong> gérant, électricien</span></li>
+        <li><span class="pastille" aria-hidden="true">AM</span><span><strong>Anaïs</strong> électricienne, visites de toiture</span></li>
+        <li><span class="pastille" aria-hidden="true">MR</span><span><strong>Mathieu</strong> chef de chantier</span></li>
+        <li><span class="pastille" aria-hidden="true">TP</span><span><strong>Thomas</strong> électricien</span></li>
+        <li><span class="pastille" aria-hidden="true">SA</span><span><strong>Sofiane</strong> poseur</span></li>
+        <li><span class="pastille" aria-hidden="true">KB</span><span><strong>Kévin</strong> poseur</span></li>
+        <li><span class="pastille" aria-hidden="true">RG</span><span><strong>Romain</strong> poseur</span></li>
+        <li><span class="pastille pastille-bureau" aria-hidden="true">JT</span><span><strong>Julie</strong> au bureau&#8239;: mairie, Enedis, Consuel</span></li>
+      </ul>
+      <p class="demarchage"><strong>Nous ne démarchons jamais</strong>, ni par téléphone ni à domicile. Si quelqu’un se présente de notre part sans rendez-vous, ce n’est pas nous.</p>
     </div>
-  </section>
+    <figure class="at-photo">
+      <img src="/exemples/img/solaire-poseur-800.webp" srcset="/exemples/img/solaire-poseur-480.webp 480w, /exemples/img/solaire-poseur-800.webp 800w, /exemples/img/solaire-poseur-1200.webp 1200w" sizes="(min-width: 60rem) 26rem, 92vw" width="1200" height="1600" loading="lazy" decoding="async" alt="Poseur de dos montant un panneau solaire sur un toit, sous un ciel nuageux">
+      <figcaption>Montée d’un panneau, avant sa fixation sur les rails.</figcaption>
+    </figure>
+  </div>
 
-  <section class="section" id="contact" aria-labelledby="contact-t">
-    <div class="wrap">
-      <div class="entete-section">
-        <h2 id="contact-t">Zone d’intervention et contact</h2>
-        <p>Nous intervenons dans le Biterrois, de Capestang à Agde et Pézenas, depuis notre atelier de Béziers.</p>
-      </div>
+  <div class="zone">
+    <div class="zone-carte">
+      <svg class="carte-svg" viewBox="0 0 568 400" role="group" aria-labelledby="carte-t carte-d">
+        <title id="carte-t">Zone d’intervention de Cabanel Solaire</title>
+        <desc id="carte-d">Carte schématique du Biterrois&#8239;: l’atelier est à Béziers, les chantiers vont de Capestang à Agde, de Pézenas à Valras-Plage. Les six chantiers de l’année y sont marqués.</desc>
+        <path class="mer" d="M170 400 L213 394 L244 372 L267 345 L295 330 L307 322 L331 309 L369 289 L411 273 L442 282 L470 290 L497 294 L510 285 L530 260 L544 240 L568 208 L568 400 Z"/>
+        <path class="cote" d="M170 400 L213 394 L244 372 L267 345 L295 330 L307 322 L331 309 L369 289 L411 273 L442 282 L470 290 L497 294 L510 285 L530 260 L544 240 L568 208"/>
+        <text class="mer-nom" x="478" y="378" text-anchor="middle">Mer Méditerranée</text>
+        <path class="riv" d="M113 52 L151 104 L189 156 L215 201 L246 240 L274 273 L293 302 L307 322"/>
+        <path class="riv" d="M426 0 L435 52 L436 130 L452 195 L458 247 L442 282"/>
+        <path class="canal" d="M0 234 L61 224 L114 234 L151 240 L208 214 L255 227 L289 240 L336 253 L411 247 L459 240 L511 221 L539 201"/>
+        <text class="riv-nom" x="150" y="126" transform="rotate(54 150 126)">Orb</text>
+        <text class="riv-nom" x="446" y="96" transform="rotate(86 446 96)">Hérault</text>
+        <text class="canal-nom" x="96" y="254" text-anchor="middle" transform="rotate(10 96 254)">Canal du Midi</text>
+        <g class="villes">
+          <circle cx="61" cy="223" r="3.5"/><text x="61" y="210" text-anchor="middle">Capestang</text>
+          <circle cx="305" cy="95" r="3.5"/><text x="314" y="100">Servian</text>
+          <circle cx="419" cy="53" r="3.5"/><text x="410" y="58" text-anchor="end">Pézenas</text>
+          <circle cx="469" cy="246" r="3.5"/><text x="478" y="238">Agde</text>
+          <circle cx="415" cy="244" r="3.5"/><text x="415" y="232" text-anchor="middle">Vias</text>
+          <circle class="mineure" cx="338" cy="255" r="3.5"/><text class="mineure" x="347" y="262">Portiragnes</text>
+          <circle class="mineure" cx="287" cy="240" r="3.5"/><text class="mineure" x="287" y="226" text-anchor="middle">Villeneuve-lès-Béziers</text>
+          <circle class="mineure" cx="265" cy="270" r="3.5"/><text class="mineure" x="256" y="274" text-anchor="end">Sauvian</text>
+          <circle cx="281" cy="285" r="3.5"/><text x="290" y="291">Sérignan</text>
+          <circle class="mineure" cx="230" cy="300" r="3.5"/><text class="mineure" x="221" y="305" text-anchor="end">Vendres</text>
+          <circle cx="295" cy="327" r="3.5"/><text x="304" y="346">Valras-Plage</text>
+        </g>
+        <g class="siege"><rect x="215" y="194" width="16" height="16" rx="2"/><text x="206" y="198" text-anchor="end">Béziers</text></g>
+        <g class="reperes">
+          <a href="#ch-servian" aria-label="Chantier de Servian, 3,4 kWc"><rect x="297" y="70" width="16" height="12" rx="1.5"/></a>
+          <a href="#ch-agde" aria-label="Chantier d’Agde, 3,825 kWc"><rect x="461" y="220" width="16" height="12" rx="1.5"/></a>
+          <a href="#ch-villeneuve" aria-label="Chantier de Villeneuve-lès-Béziers, 8,5 kWc"><rect x="279" y="244" width="16" height="12" rx="1.5"/></a>
+          <a href="#ch-sauvian" aria-label="Chantier de Sauvian, 7,65 kWc"><rect x="257" y="252" width="16" height="12" rx="1.5"/></a>
+          <a href="#ch-serignan" aria-label="Chantier de Sérignan, 4,25 kWc"><rect x="273" y="291" width="16" height="12" rx="1.5"/></a>
+          <a href="#ch-vendres" aria-label="Chantier de Vendres, 15,3 kWc"><rect x="222" y="306" width="16" height="12" rx="1.5"/></a>
+        </g>
+      </svg>
+      <p class="carte-legende"><span><i class="leg-atelier" aria-hidden="true"></i>Notre atelier, à Béziers</span><span><i class="leg-chantier" aria-hidden="true"></i>Chantier de l’année, touchez-le pour sa fiche</span><span><i class="leg-canal" aria-hidden="true"></i>Canal du Midi</span></p>
+    </div>
+    <div class="zone-infos">
+      <h3>Où nous intervenons</h3>
+      <p>Dans le Biterrois, de Capestang à Agde et Pézenas, depuis notre atelier de Béziers. Les communes où nous posons le plus souvent&#8239;:</p>
+      <ul class="communes">
+        <li>Béziers</li><li>Villeneuve-lès-Béziers</li><li>Sérignan</li><li>Valras-Plage</li>
+        <li>Sauvian</li><li>Vendres</li><li>Portiragnes</li><li>Vias</li>
+        <li>Agde</li><li>Servian</li><li>Pézenas</li><li>Capestang</li>
+      </ul>
       <div class="contact">
-        <div>
-          <div class="carte">
-            <svg class="carte-svg" viewBox="0 0 568 400" role="img" aria-labelledby="carte-t carte-d">
-              <title id="carte-t">Zone d’intervention de Cabanel Solaire</title>
-              <desc id="carte-d">Carte schématique du Biterrois&#8239;: l’atelier est à Béziers, les chantiers vont de Capestang à Agde, de Pézenas à Valras-Plage.</desc>
-              <path class="mer" d="M170 400 L213 394 L244 372 L267 345 L295 330 L307 322 L331 309 L369 289 L411 273 L442 282 L470 290 L497 294 L510 285 L530 260 L544 240 L568 208 L568 400 Z"/>
-              <path class="cote" d="M170 400 L213 394 L244 372 L267 345 L295 330 L307 322 L331 309 L369 289 L411 273 L442 282 L470 290 L497 294 L510 285 L530 260 L544 240 L568 208"/>
-              <text class="mer-nom" x="478" y="378" text-anchor="middle">Mer Méditerranée</text>
-              <path class="riv" d="M113 52 L151 104 L189 156 L215 201 L246 240 L274 273 L293 302 L307 322"/>
-              <path class="riv" d="M426 0 L435 52 L436 130 L452 195 L458 247 L442 282"/>
-              <path class="canal" d="M0 234 L61 224 L114 234 L151 240 L208 214 L255 227 L289 240 L336 253 L411 247 L459 240 L511 221 L539 201"/>
-              <text class="riv-nom" x="150" y="126" transform="rotate(54 150 126)">Orb</text>
-              <text class="riv-nom" x="446" y="96" transform="rotate(86 446 96)">Hérault</text>
-              <text class="canal-nom" x="96" y="254" text-anchor="middle" transform="rotate(10 96 254)">Canal du Midi</text>
-              <g class="villes">
-                <circle cx="61" cy="223" r="3.5"/><text x="61" y="210" text-anchor="middle">Capestang</text>
-                <circle cx="305" cy="95" r="3.5"/><text x="314" y="100">Servian</text>
-                <circle cx="419" cy="53" r="3.5"/><text x="410" y="58" text-anchor="end">Pézenas</text>
-                <circle cx="469" cy="246" r="3.5"/><text x="478" y="238">Agde</text>
-                <circle cx="415" cy="244" r="3.5"/><text x="415" y="232" text-anchor="middle">Vias</text>
-                <circle class="mineure" cx="338" cy="255" r="3.5"/><text class="mineure" x="347" y="262">Portiragnes</text>
-                <circle class="mineure" cx="287" cy="240" r="3.5"/><text class="mineure" x="287" y="226" text-anchor="middle">Villeneuve-lès-Béziers</text>
-                <circle class="mineure" cx="265" cy="270" r="3.5"/><text class="mineure" x="256" y="274" text-anchor="end">Sauvian</text>
-                <circle cx="281" cy="285" r="3.5"/><text x="290" y="291">Sérignan</text>
-                <circle class="mineure" cx="230" cy="300" r="3.5"/><text class="mineure" x="221" y="305" text-anchor="end">Vendres</text>
-                <circle cx="295" cy="327" r="3.5"/><text x="304" y="346">Valras-Plage</text>
-              </g>
-              <g class="siege"><rect x="215" y="194" width="16" height="16" rx="2"/><text x="206" y="198" text-anchor="end">Béziers</text></g>
-            </svg>
-          </div>
-          <p class="carte-legende"><span><i class="carre-atelier" aria-hidden="true"></i>Notre atelier, à Béziers</span><span><i class="trait-canal" aria-hidden="true"></i>Canal du Midi</span></p>
-          <p class="communes-t">Communes où nous intervenons le plus souvent&#8239;:</p>
-          <ul class="communes">
-            <li>Béziers</li><li>Villeneuve-lès-Béziers</li><li>Sérignan</li><li>Valras-Plage</li>
-            <li>Sauvian</li><li>Vendres</li><li>Portiragnes</li><li>Vias</li>
-            <li>Agde</li><li>Servian</li><li>Pézenas</li><li>Capestang</li>
-          </ul>
-        </div>
-        <div class="coord">
-          <h3>Cabanel Solaire</h3>
-          <address>18 chemin de la Tuilerie<br>34500 Béziers</address>
-          <a class="tel-grand" href="tel:+33465710318"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>04&nbsp;65&nbsp;71&nbsp;03&nbsp;18</a>
-          <h3>Horaires</h3>
-          <table class="horaires">
-            <tbody>
-              <tr><th scope="row">Du lundi au vendredi</th><td>8&nbsp;h-18&nbsp;h</td></tr>
-              <tr><th scope="row">Samedi et dimanche</th><td>Fermé</td></tr>
-            </tbody>
-          </table>
-          <p class="petit">Hors de ces horaires, laissez votre demande d’étude&#8239;: nous vous rappelons le jour ouvré suivant.</p>
-          <a class="btn" href="#etude">Demander une étude</a>
-        </div>
+        <address><strong>Cabanel Solaire</strong><br>18 chemin de la Tuilerie<br>34500 Béziers</address>
+        <p><a class="contact-tel" href="tel:+33465710318"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span class="num">04&nbsp;65&nbsp;71&nbsp;03&nbsp;18</span></a></p>
+        <dl class="horaires">
+          <div><dt>Du lundi au vendredi</dt><dd>8&nbsp;h-18&nbsp;h</dd></div>
+          <div><dt>Samedi et dimanche</dt><dd>Fermé</dd></div>
+        </dl>
+        <p class="contact-note">Hors de ces horaires, laissez votre demande&#8239;: nous vous rappelons le jour ouvré suivant.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 </main>
 
 <footer class="pied">
-  <div class="wrap">
-    <div class="pied-grille">
-      <div>
-        <a class="logo" href="#" aria-label="Cabanel Solaire, retour en haut de page">
-          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-            <rect width="48" height="48" rx="7" fill="#FFFFFF"/>
-            <circle cx="24" cy="19" r="8" fill="#F2B134"/>
-            <path d="M6.5 35.5a4.4 4.4 0 0 1 8.8 0a4.4 4.4 0 0 1 8.8 0a4.4 4.4 0 0 1 8.8 0a4.4 4.4 0 0 1 8.8 0M4.5 35.5h39" fill="none" stroke="#13294A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-          <span class="logo-txt">
-            <span class="logo-nom">Cabanel Solaire</span>
-            <span class="logo-sig"><span class="long">Électricité et photovoltaïque depuis 2009</span><span class="court">Photovoltaïque depuis 2009</span></span>
-          </span>
-        </a>
-        <address>18 chemin de la Tuilerie, 34500 Béziers<br>
-          <a href="tel:+33465710318">04&nbsp;65&nbsp;71&nbsp;03&nbsp;18</a><br>
-          Du lundi au vendredi, 8&nbsp;h-18&nbsp;h</address>
-      </div>
-      <nav aria-label="Plan du site">
-        <h2>Le site</h2>
-        <ul>
-          <li><a href="#installations">Installations</a></li>
-          <li><a href="#demarches">Démarches</a></li>
-          <li><a href="#realisations">Réalisations</a></li>
-          <li><a href="#entreprise">L’entreprise</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#etude">Demander une étude</a></li>
-        </ul>
-      </nav>
-      <div>
-        <h2>Qualifications</h2>
-        <div class="badges">
-          <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-qualif"/></svg>QualiPV&nbsp;36, module électricité</span>
-          <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-bouclier"/></svg>Garantie décennale</span>
-        </div>
-      </div>
+  <div class="pied-in">
+    <div class="pied-marque">
+      <p class="pied-nom">Cabanel Solaire</p>
+      <p>Électricité et photovoltaïque à Béziers depuis 2009.<br>18 chemin de la Tuilerie, 34500 Béziers<br><a href="tel:+33465710318">04&nbsp;65&nbsp;71&nbsp;03&nbsp;18</a>, du lundi au vendredi, 8&nbsp;h-18&nbsp;h</p>
     </div>
-    <div class="pied-bas">
-      <p>Site de démonstration réalisé par <a href="/services/site-internet-installateur-solaire" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs. Ses qualifications et ses chiffres le sont aussi.</p>
-      <p>Photos&#8239;: Pexels.</p>
-    </div>
+    <nav class="pied-nav" aria-label="Plan du site">
+      <ul>
+        <li><a href="#simulateur">Simulateur de toiture</a></li>
+        <li><a href="#verifier">Faire vérifier mon toit</a></li>
+        <li><a href="#demarches">Les sept démarches</a></li>
+        <li><a href="#chantiers">Chantiers de l’année</a></li>
+        <li><a href="#atelier">L’atelier et la zone</a></li>
+      </ul>
+    </nav>
+    <p class="pied-qualif">QualiPV&nbsp;36, module électricité<br>Assurance décennale, attestation jointe à chaque devis</p>
+  </div>
+  <div class="pied-bas">
+    <p>Site de démonstration réalisé par <a href="/services/site-internet-installateur-solaire" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs. Ses qualifications et ses chiffres le sont aussi.</p>
+    <p>Photos&#8239;: Pexels.</p>
   </div>
 </footer>
 
-<nav class="pouce" aria-label="Contact rapide">
-  <a class="btn btn-contour" href="tel:+33465710318"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Appeler</a>
-  <a class="btn" href="#etude">Mon étude</a>
-</nav>
+<!-- La configuration suit le visiteur une fois le toit quitté -->
+<div class="suivi" id="suivi" inert>
+  <p class="suivi-config"><span class="chiffre" id="suivi-n">12</span>&nbsp;panneaux, <span class="chiffre" id="suivi-kwc">5,1</span>&nbsp;kWc<span class="suivi-o" id="suivi-o">, pan sud</span></p>
+  <a class="btn btn-soleil" href="#verifier">Faire vérifier</a>
+</div>
 </body>
 </html>

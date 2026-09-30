@@ -4,522 +4,614 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Deûle Électricité, bornes de recharge à Lille</title>
-<meta name="description" content="Démo 4dayvelopment&#8239;: Deûle Électricité, électricien qualifié IRVE à Lille. Bornes de recharge en maison, copropriété et entreprise, visite technique en ligne.">
+<meta name="description" content="Démo 4dayvelopment&#8239;: configure ta borne de recharge avec Deûle Électricité, électricien IRVE à Lille. Puissance, temps de charge et forfait de pose en 3 étapes.">
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#0E3B3A">
+<meta name="theme-color" content="#123338">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/archivo-var.woff2" crossorigin>
 <link rel="stylesheet" href="/exemples/borne-irve.css">
 <script src="/exemples/borne-irve.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#contenu">Aller au contenu</a>
+<a class="skip" href="#configurateur">Aller au configurateur</a>
 
-<!-- Pictogrammes au trait, réutilisés par <use> -->
 <svg width="0" height="0" class="visuel-seul" aria-hidden="true" focusable="false">
   <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5.2 3.5h3.1l1.6 4.1-2.1 1.3a11.5 11.5 0 0 0 5.3 5.3l1.3-2.1 4.1 1.6v3.1a2 2 0 0 1-2.1 2A16 16 0 0 1 3.2 5.6a2 2 0 0 1 2-2.1z"/></symbol>
-  <symbol id="i-horloge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
-  <symbol id="i-lieu" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
-  <symbol id="i-irve" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.6 13.8 7.3 21l4.7-2.4 4.7 2.4-1.3-7.2"/><path d="M12.9 5.6 10.6 9.3h2.8l-2.3 3.6"/></symbol>
-  <symbol id="i-visite" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/><path d="m9 15.2 2 2 4-4"/></symbol>
-  <symbol id="i-devis" viewBox="0 0 24 24"><path d="M13 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21H11"/><path d="M13 3l5 5h-5z"/><path d="M8 9h3M8 12.5h5"/><circle cx="16.5" cy="16.5" r="4"/><path d="M16.5 14.6v2l1.3.9"/></symbol>
-  <symbol id="i-equipe" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.4-3.4 2.9-5.6 6-5.6s5.6 2.2 6 5.6"/><path d="M15.5 5.2a3 3 0 0 1 0 5.6"/><path d="M17.4 14.6c2 .6 3.3 2.6 3.6 5.4"/></symbol>
-  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
-  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="m7.8 12.3 2.9 2.9 5.6-5.6"/></symbol>
-  <symbol id="i-alerte" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.2v.3"/></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-maison" viewBox="0 0 24 24"><path d="M3.5 11.5 12 4l8.5 7.5"/><path d="M5.5 10v10h13V10"/><path d="m12.6 9.6-1.9 3h2.6l-1.9 3"/></symbol>
+  <symbol id="i-immeuble" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="1.2"/><path d="M8.5 7h2M13.5 7h2M8.5 11h2M13.5 11h2M8.5 15h2M13.5 15h2M10.5 21v-3h3v3"/></symbol>
+  <symbol id="i-entreprise" viewBox="0 0 24 24"><path d="M2.5 20.5h19"/><path d="M4 20.5V6.5L10.5 4v16.5"/><path d="M10.5 8.5h9v12"/><path d="M13.5 17.5V12h2.3a1.6 1.6 0 0 1 0 3.2h-2.3"/></symbol>
   <symbol id="i-fermer" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
-  <symbol id="i-maison" viewBox="0 0 32 32"><path d="M4 15 16 5l12 10"/><path d="M7 13v14h18V13"/><path d="M12 27v-6h8v6"/><path d="m16.8 10.5-2.3 3.4h3l-2.3 3.4"/></symbol>
-  <symbol id="i-immeuble" viewBox="0 0 32 32"><rect x="7" y="4" width="18" height="23" rx="1.5"/><path d="M11.5 9h2M18.5 9h2M11.5 14h2M18.5 14h2M11.5 19h2M18.5 19h2M14 27v-4h4v4"/></symbol>
-  <symbol id="i-entreprise" viewBox="0 0 32 32"><path d="M3 27h26"/><path d="M5 27V8.5L14 5v22"/><path d="M14 11h13v16"/><path d="M8.5 11h2M8.5 15.5h2M8.5 20h2"/><path d="M18.5 23.5V15h3.2a2.4 2.4 0 0 1 0 4.8h-3.2"/></symbol>
+  <symbol id="i-moins" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="m7.8 12.3 2.9 2.9 5.6-5.6"/></symbol>
+  <symbol id="i-alerte" viewBox="0 0 24 24"><path d="M12 3.5 2.8 19.5h18.4z"/><path d="M12 10v4.2M12 16.8v.2"/></symbol>
+  <symbol id="i-eclair" viewBox="0 0 24 24"><path d="M13.5 2.5 5.5 13.5h6l-1.5 8 8.5-11.5h-6z"/></symbol>
 </svg>
 
-<div class="topbar">
-  <div class="wrap">
-    <a href="tel:+33353012759"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span class="nombre">03&nbsp;53&nbsp;01&nbsp;27&nbsp;59</span></a>
-    <span><svg class="ico" aria-hidden="true"><use href="#i-horloge"/></svg>Lun-ven, 7&nbsp;h&nbsp;30-17&nbsp;h&nbsp;30</span>
-    <span class="zone"><svg class="ico" aria-hidden="true"><use href="#i-lieu"/></svg>Intervention dans la métropole lilloise</span>
-  </div>
-</div>
+<header class="entete" id="haut">
+  <a class="logo" href="#haut" aria-label="Deûle Électricité, haut de page">
+    <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+      <rect width="48" height="48" rx="6" fill="#123338"/>
+      <path d="M13 11v26h9a13 13 0 0 0 0-26z" fill="none" stroke="#F4F6F2" stroke-width="4" stroke-linejoin="round"/>
+      <path d="M25 15.5 19 25h4.8l-2.3 8 6.7-10.4h-4.9l2.7-7.1z" fill="#FFD23F"/>
+      <path d="M4 42c4-2.4 8-2.4 12 0s8 2.4 12 0 8-2.4 12 0" fill="none" stroke="#5FA3A0" stroke-width="2"/>
+    </svg>
+    <span class="logo-txt"><span class="logo-nom">Deûle Électricité</span><span class="logo-sig">Bornes de recharge, depuis 2009</span></span>
+  </a>
 
-<header class="entete">
-  <div class="wrap">
-    <a class="logo" href="#" aria-label="Deûle Électricité, accueil">
-      <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-        <rect width="48" height="48" rx="7" fill="#0E3B3A"/>
-        <path d="M13 12v24h8.5a12 12 0 0 0 0-24z" fill="none" stroke="#fff" stroke-width="4" stroke-linejoin="round"/>
-        <path d="M24.6 16.5 18.8 25.6h4.6l-2.2 7.9 6.4-10h-4.7l2.6-7z" fill="#F2B632"/>
-      </svg>
-      <span class="logo-txt">
-        <span class="logo-nom">Deûle Électricité</span>
-        <span class="logo-sig"><span class="long">Bornes de recharge et électricité depuis 2009</span><span class="court">Électriciens depuis 2009</span></span>
-      </span>
-    </a>
-    <nav class="nav" id="menu" aria-label="Menu principal">
-      <ul>
-        <li><a href="#bornes">Nos bornes</a></li>
-        <li><a href="#puissance">Quelle puissance&#8239;?</a></li>
-        <li><a href="#realisations">Réalisations</a></li>
-        <li><a href="#entreprise">L’entreprise</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li class="nav-plus"><a class="btn" href="#visite">Demander une visite</a></li>
-        <li class="nav-plus nav-info">Appelez-nous au <a href="tel:+33353012759">03&nbsp;53&nbsp;01&nbsp;27&nbsp;59</a>, du lundi au vendredi de 7&nbsp;h&nbsp;30 à 17&nbsp;h&nbsp;30.</li>
-      </ul>
-    </nav>
-    <a class="btn btn-visite" href="#visite">Demander une visite</a>
-    <a class="entete-tel" href="tel:+33353012759" aria-label="Appeler le 03 53 01 27 59"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg></a>
-    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">
-      <svg class="ico ico-ouvrir" aria-hidden="true"><use href="#i-menu"/></svg>
-      <svg class="ico ico-fermer" aria-hidden="true"><use href="#i-fermer"/></svg>
-    </button>
-  </div>
+  <fieldset class="parcours">
+    <legend class="visuel-seul">Où sera ta borne&#8239;?</legend>
+    <label><input type="radio" name="parcours" value="maison" checked><svg class="ico" aria-hidden="true"><use href="#i-maison"/></svg><span>Maison</span></label>
+    <label><input type="radio" name="parcours" value="copro"><svg class="ico" aria-hidden="true"><use href="#i-immeuble"/></svg><span>Copropriété</span></label>
+    <label><input type="radio" name="parcours" value="entreprise"><svg class="ico" aria-hidden="true"><use href="#i-entreprise"/></svg><span>Entreprise</span></label>
+  </fieldset>
+
+  <p class="statut statut-entete"><span class="voyant-statut" aria-hidden="true"></span><span class="statut-txt">Du lundi au vendredi, 7&nbsp;h&nbsp;30-17&nbsp;h&nbsp;30</span></p>
+  <a class="entete-tel" href="tel:+33353012759"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span>03&nbsp;53&nbsp;01&nbsp;27&nbsp;59</span></a>
+  <a class="btn btn-entete" href="#contact" data-visite>Demander une visite</a>
 </header>
 
-<main id="contenu" tabindex="-1">
-  <section class="hero" aria-labelledby="hero-t">
-    <div class="hero-media">
-      <img src="/exemples/img/borne-irve-hero-1200.webp" srcset="/exemples/img/borne-irve-hero-480.webp 480w, /exemples/img/borne-irve-hero-800.webp 800w, /exemples/img/borne-irve-hero-1200.webp 1200w" sizes="(max-width: 63.99rem) 60rem, 100vw"
-           width="1200" height="800" fetchpriority="high"
-           alt="Pignon à gradins d’une maison flamande en brique rouge, avec son oculus et ses toits de tuiles orangées">
-    </div>
-    <div class="hero-texte">
-      <h1 id="hero-t">Votre borne de recharge, du tableau à la place de parking</h1>
-      <p class="hero-sous">Électriciens qualifiés IRVE dans la métropole lilloise. Nous venons voir votre tableau, mesurons le trajet du câble, et le devis compte tout, tranchée comprise.</p>
-      <div class="hero-actions">
-        <a class="btn" href="#visite">Demander une visite</a>
-        <a class="btn btn-clair" href="tel:+33353012759"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>03&nbsp;53&nbsp;01&nbsp;27&nbsp;59</a>
+<main id="contenu">
+  <section class="config" id="configurateur" aria-labelledby="titre">
+    <div class="scene">
+      <div class="scene-texte">
+        <p class="statut statut-scene"><span class="voyant-statut" aria-hidden="true"></span><span class="statut-txt">Du lundi au vendredi, 7&nbsp;h&nbsp;30-17&nbsp;h&nbsp;30</span></p>
+        <h1 id="titre">Quelle borne te <span class="insecable">faut-il</span>, et combien posée&#8239;?</h1>
+        <p class="chapo">Trois questions, et tu vois la puissance qu’il te faut, le temps de recharge et notre forfait de pose. Électriciens qualifiés IRVE à Marcq-en-Barœul depuis 2009.</p>
       </div>
-      <figure class="hero-vignette">
-        <img src="/exemples/img/borne-irve-vignette-480.webp" width="480" height="360" alt="Borne murale noire fixée sur un mur de béton, son écran allumé pendant une charge">
-        <figcaption><strong><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Visite technique gratuite</strong>Un électricien passe sous huit jours, partout dans la métropole lilloise.</figcaption>
-      </figure>
-    </div>
 
-    <aside class="devis" id="visite" aria-labelledby="visite-t">
-      <form class="devis-carte" id="visite-form" novalidate>
-        <div class="devis-tete">
-          <h2 id="visite-t">Demandez votre visite technique</h2>
-          <p>Gratuite, sous huit jours. 4 questions pour la préparer.</p>
-          <div class="progression">
-            <div class="progression-barre" aria-hidden="true"><span id="visite-barre"></span></div>
-            <span id="visite-etape" aria-live="polite">Étape 1 sur 4</span>
-          </div>
-        </div>
+      <svg class="dessin" id="dessin" viewBox="0 0 600 330" preserveAspectRatio="xMidYMid slice" role="img" aria-labelledby="dessin-t dessin-d" data-parcours="maison" data-phase="mono" data-kw="7.4">
+        <title id="dessin-t">Ton installation, dessinée</title>
+        <desc id="dessin-d">Le tableau électrique à gauche, le câble qui court le long du mur jusqu’à la borne, et la voiture branchée à droite. La longueur du câble suit la distance que tu indiques.</desc>
+        <defs>
+          <pattern id="brique" width="44" height="18" patternUnits="userSpaceOnUse">
+            <rect width="44" height="18" fill="#5B4A42"/>
+            <rect x="0" y="1" width="42" height="7.4" rx=".8" fill="#86402D"/>
+            <rect x="-22" y="10" width="42" height="7.4" rx=".8" fill="#7C3A29"/>
+            <rect x="22" y="10" width="42" height="7.4" rx=".8" fill="#8F4631"/>
+          </pattern>
+          <pattern id="beton" width="120" height="60" patternUnits="userSpaceOnUse">
+            <rect width="120" height="60" fill="#7B8481"/>
+            <path d="M0 59.5h120M119.5 0v60" stroke="#6A7370" stroke-width="1"/>
+            <circle cx="12" cy="10" r="1.6" fill="#646D6A"/><circle cx="108" cy="10" r="1.6" fill="#646D6A"/>
+          </pattern>
+          <pattern id="paves" width="22" height="14" patternUnits="userSpaceOnUse">
+            <rect width="22" height="14" fill="#262D2C"/>
+            <rect x="1" y="1" width="20" height="5.6" rx="1.2" fill="#3A4341"/>
+            <rect x="-10" y="8" width="20" height="5.6" rx="1.2" fill="#353E3C"/>
+            <rect x="12" y="8" width="20" height="5.6" rx="1.2" fill="#3E4745"/>
+          </pattern>
+          <radialGradient id="lumiere" cx="52%" cy="36%" r="70%">
+            <stop offset="0" stop-color="#123338" stop-opacity="0"/>
+            <stop offset=".62" stop-color="#123338" stop-opacity=".35"/>
+            <stop offset="1" stop-color="#123338" stop-opacity=".92"/>
+          </radialGradient>
+        </defs>
 
-        <fieldset class="etape" data-etape="1">
-          <legend tabindex="-1">Où sera la borne&#8239;?</legend>
-          <div class="tuiles tuiles-lieu">
-            <label class="tuile"><input type="radio" name="lieu" value="Maison"><svg class="ico" aria-hidden="true"><use href="#i-maison"/></svg>Maison</label>
-            <label class="tuile"><input type="radio" name="lieu" value="Copropriété"><svg class="ico" aria-hidden="true"><use href="#i-immeuble"/></svg>Copropriété</label>
-            <label class="tuile"><input type="radio" name="lieu" value="Entreprise"><svg class="ico" aria-hidden="true"><use href="#i-entreprise"/></svg>Entreprise</label>
-          </div>
-          <p class="erreur" id="err-1" role="alert"></p>
-        </fieldset>
+        <rect class="mur mur-brique" width="600" height="262" fill="url(#brique)"/>
+        <rect class="mur mur-beton" width="600" height="262" fill="url(#beton)"/>
+        <rect class="sol sol-paves" y="262" width="600" height="68" fill="url(#paves)"/>
+        <rect class="sol sol-beton" y="262" width="600" height="68" fill="#353D3B"/>
+        <path class="place-verte" d="M150 262h300l40 68H110z"/>
+        <path class="place-traits" d="M150 262l-40 68M450 262l40 68"/>
+        <rect y="258" width="600" height="5" fill="#1E2624"/>
 
-        <fieldset class="etape" data-etape="2" hidden>
-          <legend tabindex="-1">Votre installation</legend>
-          <fieldset class="sous-groupe">
-            <legend>Puissance souhaitée</legend>
-            <div class="tuiles tuiles-kw">
-              <label class="tuile"><input type="radio" name="puissance" value="3,7&nbsp;kW">3,7&nbsp;kW<small>monophasé</small></label>
-              <label class="tuile"><input type="radio" name="puissance" value="7,4&nbsp;kW">7,4&nbsp;kW<small>monophasé</small></label>
-              <label class="tuile"><input type="radio" name="puissance" value="11&nbsp;kW">11&nbsp;kW<small>triphasé</small></label>
-              <label class="tuile"><input type="radio" name="puissance" value="22&nbsp;kW">22&nbsp;kW<small>triphasé</small></label>
-              <label class="tuile large"><input type="radio" name="puissance" value="Je ne sais pas encore">Je ne sais pas encore</label>
-            </div>
-            <p class="indice">Pour comparer, <a href="#puissance">voyez le temps de charge de chaque puissance</a>.</p>
-          </fieldset>
-          <fieldset class="sous-groupe">
-            <legend>Distance entre le tableau et la place</legend>
-            <div class="tuiles">
-              <label class="tuile"><input type="radio" name="distance" value="Moins de 10&nbsp;m">Moins de 10&nbsp;m</label>
-              <label class="tuile"><input type="radio" name="distance" value="De 10 à 25&nbsp;m">De 10 à 25&nbsp;m</label>
-              <label class="tuile"><input type="radio" name="distance" value="Plus de 25&nbsp;m">Plus de 25&nbsp;m</label>
-              <label class="tuile"><input type="radio" name="distance" value="Je ne sais pas">Je ne sais pas</label>
-            </div>
-          </fieldset>
-          <p class="erreur" id="err-2" role="alert"></p>
-        </fieldset>
+        <rect class="tranchee" id="tranchee-trace" x="60" y="268" width="300" height="12" rx="2"/>
 
-        <fieldset class="etape" data-etape="3" hidden>
-          <legend tabindex="-1">Quand pouvons-nous passer&#8239;?</legend>
-          <fieldset class="sous-groupe">
-            <legend>Jour de la visite</legend>
-            <div class="tuiles tuiles-jours" id="jours"></div>
-          </fieldset>
-          <fieldset class="sous-groupe">
-            <legend>Moment de la journée</legend>
-            <div class="tuiles">
-              <label class="tuile"><input type="radio" name="moment" value="le matin, entre 8&nbsp;h et 12&nbsp;h">Le matin<small>entre 8&nbsp;h et 12&nbsp;h</small></label>
-              <label class="tuile"><input type="radio" name="moment" value="l’après-midi, entre 13&nbsp;h&nbsp;30 et 17&nbsp;h&nbsp;30">L’après-midi<small>entre 13&nbsp;h&nbsp;30 et 17&nbsp;h&nbsp;30</small></label>
-            </div>
-          </fieldset>
-          <p class="indice">Comptez une heure sur place.</p>
-          <p class="erreur" id="err-3" role="alert"></p>
-        </fieldset>
+        <g class="tableau">
+          <rect x="28" y="58" width="76" height="112" rx="4" fill="#C7CDC9"/>
+          <rect x="34" y="64" width="64" height="72" rx="2" fill="#E6EAE7"/>
+          <rect x="38" y="92" width="56" height="5" fill="#9AA3A0"/>
+          <g fill="#FFFFFF" stroke="#8C9592" stroke-width=".8">
+            <rect x="39" y="82" width="8" height="24" rx="1"/><rect x="48" y="82" width="8" height="24" rx="1"/><rect x="57" y="82" width="8" height="24" rx="1"/>
+          </g>
+          <rect class="dj-nouveau" x="67" y="82" width="16" height="24" rx="1.2"/>
+          <text x="66" y="156" class="legende-svg" text-anchor="middle">tableau</text>
+        </g>
 
-        <fieldset class="etape" data-etape="4" hidden>
-          <legend tabindex="-1">Où et comment vous joindre&#8239;?</legend>
-          <div class="champ">
-            <label for="nom">Nom</label>
-            <input id="nom" name="nom" autocomplete="name" enterkeyhint="next" aria-describedby="nom-err">
-            <p class="err-champ" id="nom-err"></p>
-          </div>
-          <div class="deux-champs">
-            <div class="champ">
-              <label for="tel">Téléphone</label>
-              <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" aria-describedby="tel-err">
-              <p class="err-champ" id="tel-err"></p>
-            </div>
-            <div class="champ">
-              <label for="commune">Commune</label>
-              <input id="commune" name="commune" list="liste-communes" autocomplete="address-level2" enterkeyhint="done" aria-describedby="commune-err">
-              <p class="err-champ" id="commune-err"></p>
-            </div>
-          </div>
-          <datalist id="liste-communes">
-            <option value="Lille"></option><option value="Marcq-en-Barœul"></option><option value="Roubaix"></option><option value="Tourcoing"></option>
-            <option value="Villeneuve-d’Ascq"></option><option value="Lambersart"></option><option value="La Madeleine"></option><option value="Wasquehal"></option>
-            <option value="Croix"></option><option value="Mons-en-Barœul"></option><option value="Wambrechies"></option><option value="Ronchin"></option>
-          </datalist>
-          <p class="rgpd">Ces informations servent uniquement à confirmer votre visite.</p>
-        </fieldset>
+        <path class="goulotte" id="goulotte" d="M66 170V214H340V190"/>
+        <path class="cable" id="cable" d="M66 170V214H340V190"/>
 
-        <div class="etape" data-etape="5" hidden>
-          <h3 class="titre-etape" tabindex="-1">Vérifiez votre demande</h3>
-          <dl class="recap" id="recap"></dl>
-        </div>
+        <g class="cote" id="cote">
+          <path id="cote-ligne" d="M66 238H340M66 232v12M340 232v12"/>
+          <rect id="cote-fond" x="178" y="228" width="52" height="20" rx="10"/>
+          <text id="cote-txt" x="204" y="242" text-anchor="middle">12&nbsp;m</text>
+        </g>
 
-        <div class="etape fini" data-etape="6" hidden>
-          <svg class="ico ico-ok" aria-hidden="true"><use href="#i-ok"/></svg>
-          <h3 class="titre-etape" tabindex="-1">Demande envoyée</h3>
-          <p>Dans la version en ligne, Deûle Électricité vous confirme par SMS au <strong id="fini-tel"></strong> l’heure de passage de l’électricien, <strong id="fini-creneau"></strong>.</p>
-          <p>Démonstration&#8239;: aucune donnée n’a été transmise.</p>
-        </div>
+        <path class="cable cable-voiture" id="cable-voiture" d="M362 164C392 250 440 262 474 224"/>
 
-        <div class="devis-nav">
-          <button class="btn btn-contour" type="button" id="visite-retour" hidden>Retour</button>
-          <button class="btn" type="submit" id="visite-suivant">Continuer</button>
-        </div>
-      </form>
-    </aside>
-  </section>
+        <g class="voiture">
+          <path d="M452 268c-2-22 8-34 30-38l54-9c22-24 44-34 64-36v83h-48a26 26 0 0 0-50 0z" fill="#D9DEDB"/>
+          <path d="M546 219c18-19 36-27 54-29v29z" fill="#2B3A3D"/>
+          <path d="M462 238h18" stroke="#FFF6CF" stroke-width="5" stroke-linecap="round"/>
+          <circle cx="527" cy="268" r="22" fill="#141B1B"/><circle cx="527" cy="268" r="9" fill="#8F9996"/>
+          <circle class="prise-voiture" cx="476" cy="224" r="4.5"/>
+        </g>
 
-  <section class="confiance" aria-label="Nos engagements">
-    <div class="wrap">
-      <ul>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-irve"/></svg><div><strong>Qualifiés IRVE</strong><span>Qualifelec, obligatoire au-delà de 3,7&nbsp;kW</span></div></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-visite"/></svg><div><strong>Visite gratuite</strong><span>Un électricien passe sous huit jours</span></div></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-devis"/></svg><div><strong>Devis complet</strong><span>Tableau et tranchée compris, rien «&nbsp;à prévoir&nbsp;»</span></div></li>
-        <li><svg class="ico" aria-hidden="true"><use href="#i-equipe"/></svg><div><strong>Depuis 2009</strong><span>Celui qui fait la visite revient poser la borne</span></div></li>
-      </ul>
-    </div>
-  </section>
+        <g class="borne" id="borne" transform="translate(310 94)">
+          <g class="fantomes">
+            <rect x="46" y="-10" width="60" height="96" rx="9"/>
+            <rect x="23" y="-5" width="60" height="96" rx="9"/>
+          </g>
+          <rect class="corps" width="60" height="96" rx="9"/>
+          <rect class="face" x="3" y="3" width="54" height="90" rx="7"/>
+          <rect class="ecran" x="10" y="13" width="40" height="24" rx="3"/>
+          <text class="ecran-txt" id="ecran-kw" x="30" y="30" text-anchor="middle">7,4&nbsp;kW</text>
+          <rect class="led" x="12" y="45" width="36" height="4" rx="2"/>
+          <g class="tri-marques"><rect x="15" y="54" width="8" height="3" rx="1"/><rect x="26" y="54" width="8" height="3" rx="1"/><rect x="37" y="54" width="8" height="3" rx="1"/></g>
+          <circle class="prise" cx="30" cy="74" r="10"/>
+          <circle class="prise-trou" cx="26" cy="72" r="1.8"/><circle class="prise-trou" cx="34" cy="72" r="1.8"/><circle class="prise-trou" cx="30" cy="78" r="1.8"/>
+        </g>
+        <g class="badge-points" id="badge-points">
+          <rect x="258" y="54" width="96" height="26" rx="13"/>
+          <text id="badge-txt" x="306" y="72" text-anchor="middle">×&nbsp;4&nbsp;points</text>
+        </g>
 
-  <section class="section" id="bornes" aria-labelledby="bornes-t">
-    <div class="wrap">
-      <div class="entete-section">
-        <h2 id="bornes-t">Maison, copropriété ou entreprise</h2>
-        <p>Chaque lieu a ses contraintes et ses aides. Nous vous disons lesquelles pendant la visite, avant de chiffrer.</p>
+        <rect width="600" height="330" fill="url(#lumiere)" pointer-events="none"/>
+      </svg>
+
+      <div class="releves">
+        <div class="releve releve-kw"><span class="releve-t">Puissance conseillée</span><strong id="r-kw">7,4&nbsp;kW</strong><span id="r-kw-d">monophasé, 32&nbsp;A</span></div>
+        <div class="releve"><span class="releve-t">Ton trajet du jour</span><strong id="r-jour">2&nbsp;h&nbsp;10</strong><span id="r-jour-d">80&nbsp;km, soit 16&nbsp;kWh</span></div>
+        <div class="releve"><span class="releve-t">De vide à pleine</span><strong id="r-plein">8&nbsp;h&nbsp;06</strong><span id="r-plein-d">batterie de 60&nbsp;kWh</span></div>
       </div>
-      <div class="services">
-        <article class="service">
-          <img src="/exemples/img/borne-irve-maison-800.webp" srcset="/exemples/img/borne-irve-maison-480.webp 480w, /exemples/img/borne-irve-maison-800.webp 800w, /exemples/img/borne-irve-maison-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="800" loading="lazy" decoding="async"
-               alt="Garage éclairé&#8239;: deux bornes murales fixées au mur, chacune reliée par un câble spiralé à une voiture en charge">
-          <h3>En maison</h3>
-          <p>On part de votre tableau, on ajoute la protection dédiée à la borne et on tire le câble jusqu’au garage ou à l’allée.</p>
-          <ul>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Tranchée sous la cour ou le chemin mesurée pendant la visite</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Départ étiqueté au tableau</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Essai de charge avec votre voiture</li>
-          </ul>
-          <p class="a-savoir">En maison individuelle, pas de prime ADVENIR, et le crédit d’impôt pour une borne est supprimé pour les dépenses payées depuis le 1<sup>er</sup>&nbsp;janvier 2026&#8239;: le prix du devis est celui que vous payez.</p>
-        </article>
-        <article class="service">
-          <img src="/exemples/img/borne-irve-parking-800.webp" srcset="/exemples/img/borne-irve-parking-480.webp 480w, /exemples/img/borne-irve-parking-800.webp 800w, /exemples/img/borne-irve-parking-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="899" loading="lazy" decoding="async"
-               alt="Parking souterrain&#8239;: un coffret électrique fixé au mur alimente la voiture garée sur une place peinte en vert">
-          <h3>En copropriété</h3>
-          <p>Le droit à la prise vous permet d’équiper votre place à vos frais. Vous le notifiez au syndic par lettre recommandée avec accusé de réception, avec une description détaillée des travaux et un plan ou un schéma&#8239;: on vous les prépare.</p>
-          <ul>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Description des travaux et schéma prêts à envoyer</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Dossier ADVENIR monté et suivi jusqu’au versement</li>
-          </ul>
-          <p class="a-savoir">La prime ADVENIR prend en charge 50&nbsp;% d’une borne individuelle en immeuble collectif, jusqu’à 1&#8239;000&nbsp;€&nbsp;HT par point de recharge.<small>Source&#8239;: advenir.mobi, montants d’aides par type de prime, consulté le 28&nbsp;septembre 2026.</small></p>
-        </article>
-        <article class="service">
-          <img src="/exemples/img/borne-irve-entreprise-800.webp" srcset="/exemples/img/borne-irve-entreprise-480.webp 480w, /exemples/img/borne-irve-entreprise-800.webp 800w, /exemples/img/borne-irve-entreprise-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async"
-               alt="Borne murale noire fixée sur une clôture de parking, sous un panneau bleu de stationnement réservé à la recharge">
-          <h3>En entreprise</h3>
-          <p>Parking de salariés, de visiteurs ou flotte de véhicules&#8239;: on dimensionne l’alimentation pour plusieurs points de recharge, avec un pilotage qui partage la puissance disponible entre les voitures branchées.</p>
-          <ul>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Alimentation calculée pour tous les points de recharge</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Puissance partagée entre les voitures branchées</li>
-            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Pose par un électricien qualifié IRVE</li>
-          </ul>
-        </article>
+      <div class="batterie">
+        <span class="batterie-boitier" id="batterie-boitier" aria-hidden="true"><span class="batterie-jour" id="batterie-jour"></span></span>
+        <p id="batterie-txt">Ton trajet du jour prend 27&nbsp;% de ta batterie.</p>
       </div>
+      <p class="visuel-seul" id="annonce" aria-live="polite"></p>
     </div>
-  </section>
 
-  <section class="section section-ciment" id="puissance" aria-labelledby="puissance-t">
-    <div class="wrap puissance">
-      <div>
-        <div class="entete-section">
-          <h2 id="puissance-t">Quelle puissance pour votre borne&#8239;?</h2>
-          <p>Choisissez un disjoncteur&#8239;: vous voyez le temps de recharge et ce que cette puissance demande à votre installation. Au-delà de 3,7&nbsp;kW, la pose est réservée à un électricien qualifié IRVE.</p>
+    <form class="panneau" id="config-form" novalidate>
+      <fieldset class="etapes-nav">
+        <legend class="visuel-seul">Étapes du configurateur</legend>
+        <label><input type="radio" name="etape" value="1" checked><span class="num">1</span><span class="pour-perso">Ta voiture</span><span class="pour-entreprise">Tes véhicules</span></label>
+        <label><input type="radio" name="etape" value="2"><span class="num">2</span><span>Ton installation</span></label>
+        <label><input type="radio" name="etape" value="3"><span class="num">3</span><span class="pour-perso">Ta borne</span><span class="pour-entreprise">Tes bornes</span></label>
+      </fieldset>
+
+      <fieldset class="etape" data-etape="1">
+        <legend class="etape-t" tabindex="-1"><span class="pour-perso">Ta voiture</span><span class="pour-entreprise">Tes véhicules</span></legend>
+        <fieldset class="groupe">
+          <legend><span class="pour-perso">Sa batterie</span><span class="pour-entreprise">Leur batterie, en moyenne</span></legend>
+          <div class="tuiles">
+            <label class="tuile"><input type="radio" name="batterie" value="40"><span class="pile pile-40" aria-hidden="true"></span><strong>Petite</strong><small>40&nbsp;kWh</small></label>
+            <label class="tuile"><input type="radio" name="batterie" value="60" checked><span class="pile pile-60" aria-hidden="true"></span><strong>Moyenne</strong><small>60&nbsp;kWh</small></label>
+            <label class="tuile"><input type="radio" name="batterie" value="80"><span class="pile pile-80" aria-hidden="true"></span><strong>Grande</strong><small>80&nbsp;kWh</small></label>
+          </div>
+          <p class="indice">La capacité figure dans la fiche technique de ta voiture. Dans le doute, garde «&nbsp;moyenne&nbsp;»&#8239;: on vérifie à la visite.</p>
+        </fieldset>
+        <div class="curseur">
+          <div class="curseur-tete">
+            <label for="km"><span class="pour-perso">Tes kilomètres par jour</span><span class="pour-entreprise">Kilomètres par jour et par véhicule</span></label>
+            <output id="km-sortie" for="km">80&nbsp;km</output>
+          </div>
+          <input type="range" id="km" name="km" min="5" max="200" step="5" value="80" aria-describedby="km-aide">
+          <p class="curseur-bornes" aria-hidden="true"><span>5&nbsp;km</span><span>200&nbsp;km</span></p>
+          <p class="indice" id="km-aide">On compte 20&nbsp;kWh aux 100&nbsp;km&#8239;: une hypothèse volontairement large, hiver et voie rapide compris.</p>
         </div>
+        <div class="compteur pour-entreprise">
+          <label for="points">Nombre de points de recharge</label>
+          <div class="compteur-ctrl">
+            <button type="button" class="pas" data-pas="-1" aria-label="Un point de recharge de moins"><svg class="ico" aria-hidden="true"><use href="#i-moins"/></svg></button>
+            <input id="points" name="points" type="number" inputmode="numeric" min="1" max="20" value="4">
+            <button type="button" class="pas" data-pas="1" aria-label="Un point de recharge de plus"><svg class="ico" aria-hidden="true"><use href="#i-plus"/></svg></button>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset class="etape" data-etape="2">
+        <legend class="etape-t" tabindex="-1">Ton installation</legend>
+        <fieldset class="groupe">
+          <legend>Ton compteur</legend>
+          <div class="tuiles">
+            <label class="tuile"><input type="radio" name="phase" value="mono" checked><span class="fils fils-1" aria-hidden="true"></span><strong>Monophasé</strong><small>230&nbsp;V</small></label>
+            <label class="tuile"><input type="radio" name="phase" value="tri"><span class="fils fils-3" aria-hidden="true"></span><strong>Triphasé</strong><small>400&nbsp;V</small></label>
+            <label class="tuile"><input type="radio" name="phase" value="inconnu"><span class="fils fils-0" aria-hidden="true"></span><strong>Je ne sais pas</strong><small>on regarde ta facture</small></label>
+          </div>
+        </fieldset>
+        <div class="curseur">
+          <div class="curseur-tete">
+            <label for="distance"><span class="pour-maison">Du tableau à la borne</span><span class="pour-copro">Du tableau à ta place</span><span class="pour-entreprise">Du tableau général au parking</span></label>
+            <output id="distance-sortie" for="distance">12&nbsp;m</output>
+          </div>
+          <input type="range" id="distance" name="distance" min="2" max="40" step="1" value="12" aria-describedby="distance-aide">
+          <p class="curseur-bornes" aria-hidden="true"><span>2&nbsp;m</span><span>40&nbsp;m</span></p>
+          <p class="indice" id="distance-aide">À vue d’œil, ça suffit&#8239;: on mesure le trajet exact du câble pendant la visite.</p>
+        </div>
+        <label class="case pour-maison-entreprise"><input type="checkbox" id="tranchee" name="tranchee"><span><span class="pour-maison">Le câble doit passer sous une cour ou un jardin</span><span class="pour-entreprise">Le câble doit traverser le parking</span><small>Tranchée à <span class="pour-maison">45&nbsp;€&nbsp;TTC</span><span class="pour-entreprise">38&nbsp;€&nbsp;HT</span> le mètre, mesurée à la visite</small></span></label>
+      </fieldset>
+
+      <div class="etape etape-resultat" data-etape="3" role="group" aria-labelledby="resultat-t">
+        <h2 class="etape-t" id="resultat-t" tabindex="-1"><span class="pour-perso">Ta borne</span><span class="pour-entreprise">Tes bornes</span></h2>
+        <div class="reco-tete">
+          <svg class="produit" id="produit" viewBox="0 0 120 172" aria-hidden="true" focusable="false" data-kw="7.4">
+            <rect class="produit-ombre" x="16" y="10" width="88" height="124" rx="15"/>
+            <rect class="produit-corps" x="20" y="4" width="80" height="122" rx="13"/>
+            <rect class="produit-face" x="24" y="8" width="72" height="114" rx="10"/>
+            <rect class="produit-ecran" x="32" y="18" width="56" height="30" rx="4"/>
+            <text class="produit-txt" id="produit-kw" x="60" y="39" text-anchor="middle">7,4&nbsp;kW</text>
+            <rect class="produit-led" x="34" y="58" width="52" height="5" rx="2.5"/>
+            <g class="produit-tri"><rect x="38" y="70" width="12" height="4" rx="1.5"/><rect x="54" y="70" width="12" height="4" rx="1.5"/><rect x="70" y="70" width="12" height="4" rx="1.5"/></g>
+            <circle class="produit-prise" cx="60" cy="96" r="13"/>
+            <circle class="produit-trou" cx="55" cy="93" r="2.2"/><circle class="produit-trou" cx="65" cy="93" r="2.2"/><circle class="produit-trou" cx="60" cy="101" r="2.2"/>
+            <path class="produit-cable" d="M60 109c0 26-30 30-30 46 0 10 14 14 34 12 18-2 30-6 38-14"/>
+          </svg>
+          <div class="reco-txt">
+            <p class="reco" id="reco-nom">Borne murale 7,4&nbsp;kW, monophasée, avec câble attaché</p>
+            <p class="reco-pourquoi" id="reco-pourquoi">Tes 80&nbsp;km du jour se rechargent en 2&nbsp;h&nbsp;10&#8239;: une nuit suffit.</p>
+          </div>
+        </div>
+
         <div class="coffret">
-          <fieldset class="rail">
-            <legend>Puissance de la borne</legend>
-            <label class="dj"><input type="radio" name="kw" id="p37" value="3,7 kW"><span class="corps" aria-hidden="true"><span class="kw">3,7&nbsp;kW</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="visuel-seul">3,7 kW, </span>16&nbsp;A</span></label>
-            <label class="dj"><input type="radio" name="kw" id="p74" value="7,4 kW" checked><span class="corps" aria-hidden="true"><span class="kw">7,4&nbsp;kW</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="visuel-seul">7,4 kW, </span>32&nbsp;A</span></label>
-            <label class="dj tri"><input type="radio" name="kw" id="p11" value="11 kW"><span class="corps" aria-hidden="true"><span class="kw">11&nbsp;kW</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="visuel-seul">11 kW, </span>3&nbsp;×&nbsp;16&nbsp;A</span></label>
-            <label class="dj tri"><input type="radio" name="kw" id="p22" value="22 kW"><span class="corps" aria-hidden="true"><span class="kw">22&nbsp;kW</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="visuel-seul">22 kW, </span>3&nbsp;×&nbsp;32&nbsp;A</span></label>
+          <fieldset class="rail" id="rail" data-conseil="7.4">
+            <legend>Compare&#8239;: enclenche un autre disjoncteur</legend>
+            <label class="dj" data-kw="3.7"><input type="radio" name="kw" value="3.7"><span class="dj-corps" aria-hidden="true"><span class="kw">3,7</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="visuel-seul">3,7&nbsp;kW, courant de charge </span>16&nbsp;A</span><span class="conseil" aria-hidden="true">conseillé</span></label>
+            <label class="dj" data-kw="7.4"><input type="radio" name="kw" value="7.4" checked><span class="dj-corps" aria-hidden="true"><span class="kw">7,4</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="visuel-seul">7,4&nbsp;kW, courant de charge </span>32&nbsp;A</span><span class="conseil" aria-hidden="true">conseillé</span></label>
+            <label class="dj tri" data-kw="11"><input type="radio" name="kw" value="11"><span class="dj-corps" aria-hidden="true"><span class="kw">11</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="visuel-seul">11&nbsp;kW, courant de charge </span>3&nbsp;×&nbsp;16&nbsp;A</span><span class="conseil" aria-hidden="true">conseillé</span></label>
+            <label class="dj tri" data-kw="22"><input type="radio" name="kw" value="22"><span class="dj-corps" aria-hidden="true"><span class="kw">22</span><span class="fente"></span><span class="voyant"></span></span><span class="etiquette"><span class="visuel-seul">22&nbsp;kW, courant de charge </span>3&nbsp;×&nbsp;32&nbsp;A</span><span class="conseil" aria-hidden="true">conseillé</span></label>
           </fieldset>
-          <p class="phases" aria-hidden="true"><span>Monophasé</span><span>Triphasé</span></p>
+          <p class="phases" aria-hidden="true"><span>monophasé, kW</span><span>triphasé, kW</span></p>
         </div>
+        <p class="avis" id="avis-tri" hidden><svg class="ico" aria-hidden="true"><use href="#i-alerte"/></svg><span>Cette puissance demande un compteur triphasé. Si le tien est monophasé, le passage se demande à ton fournisseur d’électricité, qui transmet à Enedis.</span></p>
+
+        <dl class="lignes" id="lignes">
+          <div><dt>Borne, protection au tableau, 10&nbsp;m de câble et mise en service</dt><dd>1&#8239;390&nbsp;€</dd></div>
+          <div><dt>Câble au-delà de 10&nbsp;m, 2&nbsp;m à 29&nbsp;€</dt><dd>58&nbsp;€</dd></div>
+          <div class="total"><dt>Forfait posé, à partir de</dt><dd>1&#8239;448&nbsp;€&nbsp;TTC</dd></div>
+        </dl>
+
+        <dl class="conditions" id="conditions">
+          <div><dt>Réseau</dt><dd>Monophasé, 230&nbsp;V, 32&nbsp;A.</dd></div>
+          <div><dt>Abonnement</dt><dd>Souvent à augmenter, sauf si la borne module sa charge selon la consommation de la maison.</dd></div>
+          <div><dt>Pose</dt><dd>Par un électricien qualifié IRVE, obligatoire.</dd></div>
+        </dl>
+
+        <p class="note pour-maison">En maison individuelle, pas de prime ADVENIR, et le crédit d’impôt pour une borne est supprimé pour les dépenses payées depuis le 1<sup>er</sup>&nbsp;janvier 2026&#8239;: le prix affiché est celui que tu paies.</p>
+        <p class="note pour-copro">La prime ADVENIR prend en charge 50&nbsp;% d’une borne individuelle en immeuble collectif, jusqu’à 1&#8239;000&nbsp;€&nbsp;HT par point de recharge. On monte le dossier et on le suit jusqu’au versement.<small>Source&#8239;: advenir.mobi, montants d’aides par type de prime, consulté le 28&nbsp;septembre 2026.</small></p>
+        <p class="note pour-entreprise">On dimensionne l’alimentation pour tous les points de recharge, avec un pilotage qui partage la puissance disponible entre les voitures branchées.</p>
+        <p class="base">Estimation théorique, hors pertes&#8239;: la capacité de la batterie divisée par la puissance de la borne. Le disjoncteur de la ligne a un calibre supérieur au courant de charge, 40&nbsp;A courbe&nbsp;C pour une borne de 7,4&nbsp;kW. Ta voiture ne charge jamais plus vite que son chargeur embarqué&#8239;: pendant la visite, on regarde sa fiche technique et ta dernière facture d’électricité.</p>
       </div>
-      <div class="resultat">
-        <div aria-live="polite">
-          <div class="temps t37">
-            <p class="etiq">Borne de 3,7&nbsp;kW, monophasé</p>
-            <strong>16&nbsp;h&nbsp;13</strong>
-            <p>pour recharger une batterie de 60&nbsp;kWh, de vide à pleine.</p>
-            <dl>
-              <div><dt>Réseau</dt><dd>Monophasé, 230&nbsp;V, 16&nbsp;A.</dd></div>
-              <div><dt>Abonnement</dt><dd>Votre puissance souscrite actuelle suffit souvent.</dd></div>
-              <div><dt>Pose</dt><dd>En logement privé, la qualification IRVE n’est pas exigée à cette puissance. Elle l’est en entreprise, et pour toucher la prime ADVENIR. On pose avec le même soin.</dd></div>
-            </dl>
-          </div>
-          <div class="temps t74">
-            <p class="etiq">Borne de 7,4&nbsp;kW, monophasé</p>
-            <strong>8&nbsp;h&nbsp;06</strong>
-            <p>pour recharger une batterie de 60&nbsp;kWh, de vide à pleine. Une nuit suffit.</p>
-            <dl>
-              <div><dt>Réseau</dt><dd>Monophasé, 230&nbsp;V, 32&nbsp;A.</dd></div>
-              <div><dt>Abonnement</dt><dd>Souvent à augmenter, sauf si la borne module sa charge selon la consommation de la maison.</dd></div>
-              <div><dt>Pose</dt><dd>Par un électricien qualifié IRVE, obligatoire.</dd></div>
-            </dl>
-          </div>
-          <div class="temps t11">
-            <p class="etiq">Borne de 11&nbsp;kW, triphasé</p>
-            <strong>5&nbsp;h&nbsp;27</strong>
-            <p>pour recharger une batterie de 60&nbsp;kWh, de vide à pleine.</p>
-            <dl>
-              <div><dt>Réseau</dt><dd>Triphasé, 400&nbsp;V, 3&nbsp;×&nbsp;16&nbsp;A.</dd></div>
-              <div><dt>Abonnement</dt><dd>Il faut un compteur triphasé. Si le vôtre est monophasé, le passage se demande à votre fournisseur d’électricité, qui transmet à Enedis.</dd></div>
-              <div><dt>Pose</dt><dd>Par un électricien qualifié IRVE, obligatoire.</dd></div>
-            </dl>
-          </div>
-          <div class="temps t22">
-            <p class="etiq">Borne de 22&nbsp;kW, triphasé</p>
-            <strong>2&nbsp;h&nbsp;44</strong>
-            <p>pour recharger une batterie de 60&nbsp;kWh, de vide à pleine.</p>
-            <dl>
-              <div><dt>Réseau</dt><dd>Triphasé, 400&nbsp;V, 3&nbsp;×&nbsp;32&nbsp;A.</dd></div>
-              <div><dt>Abonnement</dt><dd>Triphasé, avec une forte puissance souscrite. Rare en maison, courant en parking d’entreprise.</dd></div>
-              <div><dt>Pose</dt><dd>Par un électricien qualifié IRVE, obligatoire.</dd></div>
-            </dl>
-          </div>
-        </div>
-        <a class="btn" href="#visite" id="choisir-kw">Demander une visite pour cette puissance</a>
+    </form>
+
+    <div class="resume" id="resume">
+      <p class="resume-config" id="resume-config">Maison, batterie de 60&nbsp;kWh, 80&nbsp;km par jour, monophasé, 12&nbsp;m de câble</p>
+      <p class="resume-prix"><span class="resume-kw" id="resume-kw">7,4&nbsp;kW</span><span class="resume-montant"><small>Forfait posé dès</small><strong id="resume-prix">1&#8239;448&nbsp;€&nbsp;TTC</strong></span></p>
+      <div class="resume-actions">
+        <button type="button" class="btn btn-retour" id="retour" hidden>Retour</button>
+        <button type="button" class="btn" id="avancer">Continuer</button>
       </div>
-      <p class="base">Estimation théorique, hors pertes&#8239;: 60&nbsp;kWh divisés par la puissance de la borne. 16&nbsp;A et 32&nbsp;A&#8239;: courant de charge. Le disjoncteur de la ligne a un calibre supérieur, 40&nbsp;A courbe&nbsp;C pour une borne de 7,4&nbsp;kW. Votre voiture ne charge jamais plus vite que son chargeur embarqué&#8239;: pendant la visite, on regarde sa fiche technique et votre dernière facture d’électricité.</p>
     </div>
   </section>
 
-  <section class="section" id="deroule" aria-labelledby="deroule-t">
-    <div class="wrap">
-      <div class="entete-section">
-        <h2 id="deroule-t">De la visite à la première charge</h2>
-        <p>Une seule équipe du début à la fin&#8239;: l’électricien qui vient voir votre tableau est celui qui revient poser la borne.</p>
+  <section class="lieu" id="lieu" aria-labelledby="lieu-t">
+    <div class="wrap lieu-grille">
+      <div class="lieu-texte">
+        <h2 id="lieu-t"><span class="pour-maison">Chez toi, du tableau jusqu’à l’allée</span><span class="pour-copro">En copropriété, le droit à la prise</span><span class="pour-entreprise">Au travail, un parking qui recharge tout le monde</span></h2>
+
+        <div class="pour-maison">
+          <p class="lieu-chapo">On part de ton tableau, on ajoute la protection dédiée à la borne et on tire le câble jusqu’au garage ou à l’allée. Le devis compte tout, tranchée comprise.</p>
+          <ul class="coches">
+            <li>Tranchée sous la cour ou le chemin, mesurée pendant la visite</li>
+            <li>Départ étiqueté au tableau</li>
+            <li>Essai de charge avec ta voiture avant de partir</li>
+          </ul>
+          <p class="encadre">Au-delà de 3,7&nbsp;kW, la pose est réservée à un électricien qualifié IRVE. À 3,7&nbsp;kW en logement privé, elle ne l’est pas&#8239;: on pose avec le même soin.</p>
+        </div>
+
+        <div class="pour-copro">
+          <p class="lieu-chapo">Le droit à la prise te permet d’équiper ta place à tes frais. Tu le notifies au syndic par lettre recommandée avec accusé de réception, avec une description détaillée des travaux et un plan ou un schéma&#8239;: on te les prépare.</p>
+          <ol class="suite">
+            <li><strong>On prépare le dossier</strong>Description détaillée des travaux, plan ou schéma de ta place et du trajet du câble.</li>
+            <li><strong>Tu l’envoies au syndic</strong>Par lettre recommandée avec accusé de réception, pièces jointes.</li>
+            <li><strong>On pose et on monte ADVENIR</strong>Dossier de prime monté et suivi jusqu’au versement.</li>
+          </ol>
+        </div>
+
+        <div class="pour-entreprise">
+          <p class="lieu-chapo">Parking de salariés, de visiteurs ou flotte de véhicules&#8239;: on dimensionne l’alimentation pour plusieurs points de recharge, avec un pilotage qui partage la puissance disponible entre les voitures branchées.</p>
+          <ul class="coches">
+            <li>Alimentation calculée pour tous les points de recharge</li>
+            <li>Puissance partagée entre les voitures branchées</li>
+            <li>Pose par un électricien qualifié IRVE, obligatoire en entreprise, même à 3,7&nbsp;kW</li>
+          </ul>
+          <p class="encadre">22&nbsp;kW demande un triphasé avec une forte puissance souscrite&#8239;: rare en maison, courant en parking d’entreprise.</p>
+        </div>
       </div>
-      <ol class="etapes">
-        <li><h3>La visite sur place</h3><p>Comptez une heure&#8239;: on regarde l’état du tableau et la puissance souscrite, on choisit l’emplacement de la borne, on mesure le trajet du câble.</p></li>
+
+      <div class="lieu-visuel">
+        <figure class="pour-maison">
+          <img src="/exemples/img/borne-irve-maison-800.webp" srcset="/exemples/img/borne-irve-maison-480.webp 480w, /exemples/img/borne-irve-maison-800.webp 800w, /exemples/img/borne-irve-maison-1200.webp 1200w" sizes="(min-width: 60rem) 36rem, 92vw" width="1200" height="800" loading="lazy" decoding="async"
+               alt="Garage éclairé&#8239;: deux bornes murales fixées au mur, chacune reliée par un câble spiralé à une voiture en charge">
+        </figure>
+        <figure class="pour-copro lettre-fig">
+          <div class="lettre" aria-label="Exemple de notification au syndic préparée par Deûle Électricité" role="img">
+            <p class="lettre-envoi">Lettre recommandée avec accusé de réception</p>
+            <p class="lettre-objet">Objet&#8239;: notification du droit à la prise, place n°&nbsp;17, niveau&nbsp;-1</p>
+            <p class="lettre-corps">Madame, Monsieur, je vous informe de mon projet d’installer à mes frais une borne de recharge sur ma place de stationnement.</p>
+            <ul class="lettre-pj">
+              <li>Pièce jointe 1&#8239;: description détaillée des travaux</li>
+              <li>Pièce jointe 2&#8239;: plan du trajet du câble</li>
+            </ul>
+          </div>
+          <img src="/exemples/img/borne-irve-parking-800.webp" srcset="/exemples/img/borne-irve-parking-480.webp 480w, /exemples/img/borne-irve-parking-800.webp 800w, /exemples/img/borne-irve-parking-1200.webp 1200w" sizes="(min-width: 60rem) 36rem, 92vw" width="1200" height="899" loading="lazy" decoding="async"
+               alt="Parking souterrain&#8239;: un coffret électrique fixé au mur alimente la voiture garée sur une place peinte en vert">
+        </figure>
+        <figure class="pour-entreprise">
+          <img src="/exemples/img/borne-irve-entreprise-800.webp" srcset="/exemples/img/borne-irve-entreprise-480.webp 480w, /exemples/img/borne-irve-entreprise-800.webp 800w, /exemples/img/borne-irve-entreprise-1200.webp 1200w" sizes="(min-width: 60rem) 36rem, 92vw" width="1200" height="900" loading="lazy" decoding="async"
+               alt="Borne murale noire fixée sur une clôture de parking, sous un panneau bleu de stationnement réservé à la recharge">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="chantiers-section" id="chantiers" aria-labelledby="chantiers-t">
+    <div class="wrap">
+      <div class="tete-section">
+        <h2 id="chantiers-t">Nos derniers chantiers</h2>
+        <p>De Wambrechies à Villeneuve-d’Ascq, les bornes posées ces derniers mois. Chaque fiche se recharge dans le configurateur.</p>
+      </div>
+    </div>
+    <ul class="chantiers" id="liste-chantiers">
+      <li class="chantier" data-parcours="maison" data-kw="7.4" data-phase="mono" data-distance="14">
+        <img src="/exemples/img/borne-irve-lambersart-800.webp" srcset="/exemples/img/borne-irve-lambersart-480.webp 480w, /exemples/img/borne-irve-lambersart-800.webp 800w, /exemples/img/borne-irve-lambersart-1200.webp 1200w" sizes="(min-width: 75rem) 24rem, (min-width: 48rem) 45vw, 80vw" width="1200" height="899" loading="lazy" decoding="async" alt="Borne murale grise fixée sur un mur de briques claires, son câble de charge branché, à côté d’une descente de gouttière">
+        <div class="chantier-txt">
+          <p class="chantier-lieu"><strong>Lambersart</strong><span>Maison, septembre 2026</span></p>
+          <dl class="fiche"><div><dt>Puissance</dt><dd>7,4&nbsp;kW</dd></div><div><dt>Câble</dt><dd>14&nbsp;m</dd></div><div><dt>Pose</dt><dd>1&nbsp;jour</dd></div></dl>
+          <p>Borne fixée sur le mur de brique, à côté de l’allée. Câble de 14&nbsp;m depuis le tableau de la cave.</p>
+          <button type="button" class="essayer">Essayer cette config<span class="visuel-seul">, Lambersart</span></button>
+        </div>
+      </li>
+      <li class="chantier" data-parcours="entreprise" data-kw="11" data-phase="tri" data-distance="30" data-points="6">
+        <img src="/exemples/img/borne-irve-tableau-800.webp" srcset="/exemples/img/borne-irve-tableau-480.webp 480w, /exemples/img/borne-irve-tableau-800.webp 800w, /exemples/img/borne-irve-tableau-1200.webp 1200w" sizes="(min-width: 75rem) 24rem, (min-width: 48rem) 45vw, 80vw" width="1200" height="798" loading="lazy" decoding="async" alt="Main tenant un tournevis devant les disjoncteurs et les câbles d’un tableau électrique ouvert">
+        <div class="chantier-txt">
+          <p class="chantier-lieu"><strong>Wasquehal</strong><span>Entreprise, août 2026</span></p>
+          <dl class="fiche"><div><dt>Puissance</dt><dd>6&nbsp;×&nbsp;11&nbsp;kW</dd></div><div><dt>Câble</dt><dd>30&nbsp;m</dd></div><div><dt>Pose</dt><dd>3&nbsp;jours</dd></div></dl>
+          <p>Parking des salariés d’une PME. Départ ajouté au tableau général, six points avec la puissance partagée entre les voitures branchées.</p>
+          <button type="button" class="essayer">Essayer cette config<span class="visuel-seul">, Wasquehal</span></button>
+        </div>
+      </li>
+      <li class="chantier" data-parcours="copro" data-kw="7.4" data-phase="mono" data-distance="18">
+        <img src="/exemples/img/borne-irve-villeneuve-800.webp" srcset="/exemples/img/borne-irve-villeneuve-480.webp 480w, /exemples/img/borne-irve-villeneuve-800.webp 800w, /exemples/img/borne-irve-villeneuve-1200.webp 1200w" sizes="(min-width: 75rem) 24rem, (min-width: 48rem) 45vw, 80vw" width="1200" height="899" loading="lazy" decoding="async" alt="Parking souterrain d’une résidence, places de recharge marquées au sol en vert">
+        <div class="chantier-txt">
+          <p class="chantier-lieu"><strong>Villeneuve-d’Ascq</strong><span>Copropriété, juillet 2026</span></p>
+          <dl class="fiche"><div><dt>Puissance</dt><dd>7,4&nbsp;kW</dd></div><div><dt>Places</dt><dd>6</dd></div><div><dt>ADVENIR</dt><dd>6 dossiers</dd></div></dl>
+          <p>Parking en sous-sol. Droit à la prise notifié au syndic pour six places, six dossiers ADVENIR suivis.</p>
+          <button type="button" class="essayer">Essayer cette config<span class="visuel-seul">, Villeneuve-d’Ascq</span></button>
+        </div>
+      </li>
+      <li class="chantier" data-parcours="maison" data-kw="7.4" data-phase="mono" data-distance="25" data-tranchee="1">
+        <img src="/exemples/img/borne-irve-tourcoing-800.webp" srcset="/exemples/img/borne-irve-tourcoing-480.webp 480w, /exemples/img/borne-irve-tourcoing-800.webp 800w, /exemples/img/borne-irve-tourcoing-1200.webp 1200w" sizes="(min-width: 75rem) 24rem, (min-width: 48rem) 45vw, 80vw" width="1200" height="899" loading="lazy" decoding="async" alt="Ruelle bordée de maisons mitoyennes en brique, avec leurs petites dépendances sur l’arrière">
+        <div class="chantier-txt">
+          <p class="chantier-lieu"><strong>Tourcoing</strong><span>Maison, juin 2026</span></p>
+          <dl class="fiche"><div><dt>Puissance</dt><dd>7,4&nbsp;kW</dd></div><div><dt>Tranchée</dt><dd>22&nbsp;m</dd></div><div><dt>Pose</dt><dd>2&nbsp;jours</dd></div></dl>
+          <p>Maison mitoyenne&#8239;: 22&nbsp;m de tranchée sous l’allée du jardin, mesurés et chiffrés dès la visite.</p>
+          <button type="button" class="essayer">Essayer cette config<span class="visuel-seul">, Tourcoing</span></button>
+        </div>
+      </li>
+      <li class="chantier" data-parcours="maison" data-kw="3.7" data-phase="mono" data-distance="11">
+        <img src="/exemples/img/borne-irve-roubaix-800.webp" srcset="/exemples/img/borne-irve-roubaix-480.webp 480w, /exemples/img/borne-irve-roubaix-800.webp 800w, /exemples/img/borne-irve-roubaix-1200.webp 1200w" sizes="(min-width: 75rem) 24rem, (min-width: 48rem) 45vw, 80vw" width="1200" height="900" loading="lazy" decoding="async" alt="Façade de maisons de ville en brique rouge, avec leurs portes sombres et leurs fenêtres à guillotine">
+        <div class="chantier-txt">
+          <p class="chantier-lieu"><strong>Roubaix</strong><span>Maison de ville, mai 2026</span></p>
+          <dl class="fiche"><div><dt>Puissance</dt><dd>3,7&nbsp;kW</dd></div><div><dt>Câble</dt><dd>11&nbsp;m</dd></div><div><dt>Pose</dt><dd>1&nbsp;jour</dd></div></dl>
+          <p>Pas de garage&#8239;: borne posée dans la cour arrière, câble passé en goulotte le long du couloir.</p>
+          <button type="button" class="essayer">Essayer cette config<span class="visuel-seul">, Roubaix</span></button>
+        </div>
+      </li>
+      <li class="chantier" data-parcours="maison" data-kw="11" data-phase="tri" data-distance="8">
+        <img src="/exemples/img/borne-irve-madeleine-800.webp" srcset="/exemples/img/borne-irve-madeleine-480.webp 480w, /exemples/img/borne-irve-madeleine-800.webp 800w, /exemples/img/borne-irve-madeleine-1200.webp 1200w" sizes="(min-width: 75rem) 24rem, (min-width: 48rem) 45vw, 80vw" width="1200" height="899" loading="lazy" decoding="async" alt="Rangée de maisons de brique à bow-windows et lucarnes, sous un ciel nuageux">
+        <div class="chantier-txt">
+          <p class="chantier-lieu"><strong>La Madeleine</strong><span>Maison, avril 2026</span></p>
+          <dl class="fiche"><div><dt>Puissance</dt><dd>11&nbsp;kW</dd></div><div><dt>Câble</dt><dd>8&nbsp;m</dd></div><div><dt>Pose</dt><dd>1&nbsp;jour</dd></div></dl>
+          <p>Compteur passé en triphasé à la demande du client, auprès de son fournisseur. Borne de 11&nbsp;kW dans le garage.</p>
+          <button type="button" class="essayer">Essayer cette config<span class="visuel-seul">, La Madeleine</span></button>
+        </div>
+      </li>
+      <li class="chantier" data-parcours="maison" data-kw="7.4" data-phase="mono" data-distance="3">
+        <img src="/exemples/img/borne-irve-wambrechies-800.webp" srcset="/exemples/img/borne-irve-wambrechies-480.webp 480w, /exemples/img/borne-irve-wambrechies-800.webp 800w, /exemples/img/borne-irve-wambrechies-1200.webp 1200w" sizes="(min-width: 75rem) 24rem, (min-width: 48rem) 45vw, 80vw" width="1200" height="900" loading="lazy" decoding="async" alt="Maisons récentes en brique orangée alignées le long d’une ruelle pavée, portes de garage au rez-de-chaussée">
+        <div class="chantier-txt">
+          <p class="chantier-lieu"><strong>Wambrechies</strong><span>Maison, mars 2026</span></p>
+          <dl class="fiche"><div><dt>Puissance</dt><dd>7,4&nbsp;kW</dd></div><div><dt>Câble</dt><dd>3&nbsp;m</dd></div><div><dt>Pose</dt><dd>matinée</dd></div></dl>
+          <p>Maison récente avec garage accolé. Borne posée en une matinée, tableau à trois mètres.</p>
+          <button type="button" class="essayer">Essayer cette config<span class="visuel-seul">, Wambrechies</span></button>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="deroule" id="deroule" aria-labelledby="deroule-t">
+    <div class="wrap">
+      <div class="tete-section">
+        <h2 id="deroule-t">De la visite à la première charge</h2>
+        <p>Une seule équipe du début à la fin&#8239;: l’électricien qui vient voir ton tableau est celui qui revient poser la borne.</p>
+      </div>
+      <ol class="fil">
+        <li><h3>La visite sur place</h3><p>Compte une heure&#8239;: on regarde l’état du tableau et la puissance souscrite, on choisit l’emplacement de la borne, on mesure le trajet du câble.</p></li>
         <li><h3>Le devis complet</h3><p>Borne, câble, protections, tranchée s’il en faut une&#8239;: tout est chiffré. Aucune ligne «&nbsp;à prévoir&nbsp;» découverte le jour de la pose.</p></li>
         <li><h3>La pose</h3><p>Le plus souvent en une journée, tableau compris. On protège le passage et on repart en laissant propre.</p></li>
-        <li><h3>La mise en service et les papiers</h3><p>Essai de charge avec votre voiture, départ étiqueté au tableau. Si une attestation Consuel est nécessaire, on la demande nous-mêmes.</p></li>
+        <li><h3>La mise en service</h3><p>Essai de charge avec ta voiture, départ étiqueté au tableau. Si une attestation Consuel est nécessaire, on la demande nous-mêmes.</p></li>
       </ol>
     </div>
   </section>
 
-  <section class="section section-ciment" id="realisations" aria-labelledby="realisations-t">
-    <div class="wrap">
-      <div class="entete-section">
-        <h2 id="realisations-t">Nos derniers chantiers dans la métropole</h2>
-        <p>Des maisons de ville, des résidences et des parkings d’entreprise, de Wambrechies à Villeneuve-d’Ascq. Voici quelques chantiers de l’année.</p>
-      </div>
-      <ul class="chantiers">
-        <li class="chantier">
-          <img src="/exemples/img/borne-irve-lambersart-800.webp" srcset="/exemples/img/borne-irve-lambersart-480.webp 480w, /exemples/img/borne-irve-lambersart-800.webp 800w, /exemples/img/borne-irve-lambersart-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="899" loading="lazy" decoding="async" alt="Borne murale grise fixée sur un mur de briques claires, son câble de charge branché, à côté d’une descente de gouttière">
-          <span class="type">Maison, 7,4&nbsp;kW</span>
-          <h3>Lambersart</h3>
-          <p>Borne fixée sur le mur de brique, à côté de l’allée. Câble de 14&nbsp;m depuis le tableau de la cave.</p>
-        </li>
-        <li class="chantier">
-          <img src="/exemples/img/borne-irve-roubaix-800.webp" srcset="/exemples/img/borne-irve-roubaix-480.webp 480w, /exemples/img/borne-irve-roubaix-800.webp 800w, /exemples/img/borne-irve-roubaix-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Façade de maisons de ville en brique rouge, avec leurs portes sombres et leurs fenêtres à guillotine">
-          <span class="type">Maison de ville, 3,7&nbsp;kW</span>
-          <h3>Roubaix</h3>
-          <p>Pas de garage&#8239;: borne posée dans la cour arrière, câble passé en goulotte le long du couloir.</p>
-        </li>
-        <li class="chantier">
-          <img src="/exemples/img/borne-irve-villeneuve-800.webp" srcset="/exemples/img/borne-irve-villeneuve-480.webp 480w, /exemples/img/borne-irve-villeneuve-800.webp 800w, /exemples/img/borne-irve-villeneuve-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="899" loading="lazy" decoding="async" alt="Parking souterrain d’une résidence, places de recharge marquées au sol en vert">
-          <span class="type">Copropriété, 7,4&nbsp;kW</span>
-          <h3>Villeneuve-d’Ascq</h3>
-          <p>Parking en sous-sol. Droit à la prise notifié au syndic pour six places, six dossiers ADVENIR suivis.</p>
-        </li>
-        <li class="chantier">
-          <img src="/exemples/img/borne-irve-tourcoing-800.webp" srcset="/exemples/img/borne-irve-tourcoing-480.webp 480w, /exemples/img/borne-irve-tourcoing-800.webp 800w, /exemples/img/borne-irve-tourcoing-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="899" loading="lazy" decoding="async" alt="Ruelle bordée de maisons mitoyennes en brique, avec leurs petites dépendances sur l’arrière">
-          <span class="type">Maison, 7,4&nbsp;kW</span>
-          <h3>Tourcoing</h3>
-          <p>Maison mitoyenne&#8239;: 22&nbsp;m de tranchée sous l’allée du jardin, mesurés et chiffrés dès la visite.</p>
-        </li>
-        <li class="chantier">
-          <img src="/exemples/img/borne-irve-madeleine-800.webp" srcset="/exemples/img/borne-irve-madeleine-480.webp 480w, /exemples/img/borne-irve-madeleine-800.webp 800w, /exemples/img/borne-irve-madeleine-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="899" loading="lazy" decoding="async" alt="Rangée de maisons de brique à bow-windows et lucarnes, sous un ciel nuageux">
-          <span class="type">Maison, 11&nbsp;kW</span>
-          <h3>La Madeleine</h3>
-          <p>Compteur passé en triphasé à la demande du client, auprès de son fournisseur. Borne de 11&nbsp;kW dans le garage.</p>
-        </li>
-        <li class="chantier">
-          <img src="/exemples/img/borne-irve-wambrechies-800.webp" srcset="/exemples/img/borne-irve-wambrechies-480.webp 480w, /exemples/img/borne-irve-wambrechies-800.webp 800w, /exemples/img/borne-irve-wambrechies-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Maisons récentes en brique orangée alignées le long d’une ruelle pavée, portes de garage au rez-de-chaussée">
-          <span class="type">Maison, 7,4&nbsp;kW</span>
-          <h3>Wambrechies</h3>
-          <p>Maison récente avec garage accolé. Borne posée en une matinée, tableau à trois mètres.</p>
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="section" id="entreprise" aria-labelledby="entreprise-t">
-    <div class="wrap entreprise">
-      <div class="entreprise-texte">
-        <h2 class="h2" id="entreprise-t">Une entreprise d’électricité de Marcq-en-Barœul</h2>
-        <p>Deûle Électricité a ouvert en 2009 à Marcq-en-Barœul. Nous sommes quatre électriciens salariés, qualifiés IRVE par Qualifelec, et nous posons des bornes de recharge dans toute la métropole lilloise.</p>
-        <p>Celui qui fait la visite revient poser la borne. Il connaît déjà votre tableau, le trajet du câble et l’endroit où passer la tranchée.</p>
-        <dl class="chiffres">
-          <div><dt>année de création</dt><dd>2009</dd></div>
-          <div><dt>électriciens salariés</dt><dd>4</dd></div>
-          <div><dt>de pose, le plus souvent</dt><dd>1&nbsp;jour</dd></div>
-        </dl>
-        <p class="avertissement"><svg class="ico" aria-hidden="true"><use href="#i-alerte"/></svg><span>On ne vous appellera jamais pour vous vendre une borne&#8239;: c’est vous qui nous écrivez. Si quelqu’un vous appelle de notre part sans que vous l’ayez demandé, ce n’est pas nous.</span></p>
-      </div>
-      <div class="photos">
-        <figure class="principale">
-          <img src="/exemples/img/borne-irve-equipe-800.webp" srcset="/exemples/img/borne-irve-equipe-480.webp 480w, /exemples/img/borne-irve-equipe-800.webp 800w, /exemples/img/borne-irve-equipe-1200.webp 1200w" sizes="(min-width: 60rem) 33rem, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Électricien vu de dos, en tee-shirt jaune, fixant une gaine sur un mur de brique, des câbles neufs à la main">
-          <figcaption>Tirage d’une ligne dédiée, avant la pose d’une borne.</figcaption>
-        </figure>
-        <figure class="seconde">
-          <img src="/exemples/img/borne-irve-tableau-800.webp" srcset="/exemples/img/borne-irve-tableau-480.webp 480w, /exemples/img/borne-irve-tableau-800.webp 800w, /exemples/img/borne-irve-tableau-1200.webp 1200w" sizes="(min-width: 60rem) 18rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="798" loading="lazy" decoding="async" alt="Main tenant un tournevis devant les disjoncteurs et les câbles d’un tableau électrique ouvert">
-        </figure>
+  <section class="questions" id="questions" aria-labelledby="questions-t">
+    <div class="wrap questions-grille">
+      <h2 id="questions-t">Ce qu’on nous demande avant la visite</h2>
+      <div class="faq">
+        <details>
+          <summary>Faut-il un électricien qualifié IRVE pour poser ma borne&#8239;?</summary>
+          <p>Au-delà de 3,7&nbsp;kW, oui, c’est obligatoire. À 3,7&nbsp;kW en logement privé, la qualification n’est pas exigée, mais elle l’est en entreprise et pour toucher la prime ADVENIR. Nos quatre électriciens sont qualifiés IRVE par Qualifelec.</p>
+        </details>
+        <details>
+          <summary>Mon compteur est monophasé. Puis-je quand même avoir 11&nbsp;kW&#8239;?</summary>
+          <p>Il faut un compteur triphasé. Le passage se demande à ton fournisseur d’électricité, qui transmet à Enedis. À La Madeleine, un client l’a fait avant qu’on pose sa borne de 11&nbsp;kW.</p>
+        </details>
+        <details>
+          <summary>Existe-t-il encore une aide pour une borne en maison&#8239;?</summary>
+          <p>En maison individuelle, pas de prime ADVENIR, et le crédit d’impôt pour une borne est supprimé pour les dépenses payées depuis le 1<sup>er</sup>&nbsp;janvier 2026. En copropriété, ADVENIR prend en charge 50&nbsp;% d’une borne individuelle, jusqu’à 1&#8239;000&nbsp;€&nbsp;HT par point de recharge.</p>
+        </details>
+        <details>
+          <summary>Ma voiture chargera-t-elle à la puissance de la borne&#8239;?</summary>
+          <p>Pas toujours&#8239;: une voiture ne charge jamais plus vite que son chargeur embarqué. Pendant la visite, on regarde sa fiche technique avant de te conseiller une puissance.</p>
+        </details>
       </div>
     </div>
   </section>
 
-  <section class="section section-ciment" id="contact" aria-labelledby="contact-t">
-    <div class="wrap">
-      <div class="entete-section">
+  <section class="atelier" id="atelier" aria-labelledby="atelier-t">
+    <div class="wrap atelier-grille">
+      <figure class="atelier-photo">
+        <img src="/exemples/img/borne-irve-equipe-800.webp" srcset="/exemples/img/borne-irve-equipe-480.webp 480w, /exemples/img/borne-irve-equipe-800.webp 800w, /exemples/img/borne-irve-equipe-1200.webp 1200w" sizes="(min-width: 60rem) 34rem, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Électricien vu de dos, en tee-shirt jaune, fixant une gaine sur un mur de brique, des câbles neufs à la main">
+        <figcaption>Tirage d’une ligne dédiée, avant la pose d’une borne.</figcaption>
+      </figure>
+      <div class="atelier-texte">
+        <h2 id="atelier-t">Quatre électriciens, un atelier à Marcq-en-Barœul</h2>
+        <p>Deûle Électricité a ouvert en 2009, à deux rues du canal. Nous sommes quatre électriciens salariés, qualifiés IRVE par Qualifelec, et nous posons des bornes de recharge dans toute la métropole lilloise.</p>
+        <p>Celui qui fait la visite revient poser la borne. Il connaît déjà ton tableau, le trajet du câble et l’endroit où passer la tranchée.</p>
+        <ul class="equipe">
+          <li><span class="pastille" aria-hidden="true">K</span><span><strong>Karim</strong>Roubaix, Tourcoing, Wasquehal</span></li>
+          <li><span class="pastille" aria-hidden="true">É</span><span><strong>Élodie</strong>Copropriétés et dossiers ADVENIR</span></li>
+          <li><span class="pastille" aria-hidden="true">J</span><span><strong>Julien</strong>Lille, La Madeleine, Lambersart</span></li>
+          <li><span class="pastille" aria-hidden="true">M</span><span><strong>Mathis</strong>Parkings d’entreprise</span></li>
+        </ul>
+        <p class="avertissement"><svg class="ico" aria-hidden="true"><use href="#i-alerte"/></svg><span>On ne t’appellera jamais pour te vendre une borne&#8239;: c’est toi qui nous écris. Si quelqu’un t’appelle de notre part sans que tu l’aies demandé, ce n’est pas nous.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-t">
+    <div class="wrap contact-grille">
+      <div class="carte">
+        <svg class="carte-svg" viewBox="0 0 424 345" role="img" aria-labelledby="carte-t carte-d">
+          <title id="carte-t">Zone d’intervention de Deûle Électricité</title>
+          <desc id="carte-d">Carte schématique de la métropole lilloise&#8239;: l’atelier est à Marcq-en-Barœul, au bord de la Deûle, et l’équipe intervient de Wambrechies à Villeneuve-d’Ascq, de Tourcoing à Ronchin.</desc>
+          <path class="eau deule" d="M49 322 L92 296 L127 269 L143 242 L148 220 L155 193 L167 167 L175 151 L162 136 L150 122 L127 100 L89 73 L49 47 L14 22"/>
+          <path class="eau canal-rx" d="M175 151 L198 153 L226 160 L251 171 L271 173 L291 162 L306 145 L325 127 L346 113 L374 100 L409 87"/>
+          <text class="eau-nom" x="40" y="36" transform="rotate(34 40 36)">La Deûle</text>
+          <text class="eau-nom" x="318" y="108" transform="rotate(-22 318 108)">Canal de Roubaix</text>
+          <g class="villes">
+            <circle cx="174" cy="240" r="5.5"/><text x="174" y="264" text-anchor="middle" class="grande">Lille</text>
+            <circle cx="330" cy="120" r="4"/><text x="338" y="129" text-anchor="start">Roubaix</text>
+            <circle cx="312" cy="47" r="4"/><text x="320" y="52" text-anchor="start">Tourcoing</text>
+            <circle cx="288" cy="278" r="4"/><text x="296" y="283" text-anchor="start">Villeneuve-d’Ascq</text>
+            <circle cx="120" cy="211" r="3.5"/><text x="112" y="216" text-anchor="end">Lambersart</text>
+            <circle cx="154" cy="131" r="3.5"/><text x="146" y="128" text-anchor="end">Wambrechies</text>
+            <circle cx="185" cy="201" r="3.5"/><text x="193" y="206" text-anchor="start" class="mineure">La Madeleine</text>
+            <circle cx="268" cy="167" r="3.5"/><text x="276" y="181" text-anchor="start" class="mineure">Wasquehal</text>
+            <circle cx="297" cy="149" r="3.5"/><text x="305" y="152" text-anchor="start" class="mineure">Croix</text>
+            <circle cx="239" cy="229" r="3.5"/><text x="247" y="234" text-anchor="start" class="mineure">Mons-en-Barœul</text>
+            <circle cx="212" cy="314" r="3.5"/><text x="220" y="319" text-anchor="start">Ronchin</text>
+          </g>
+          <g class="siege"><rect x="211" y="156" width="18" height="18" rx="3"/><path d="M221.5 159.5 216.5 166h3.4l-1.4 5 4.9-6.6h-3.4l1.6-4.9z"/><text x="220" y="146" text-anchor="middle">Marcq-en-Barœul</text></g>
+        </svg>
+        <p class="carte-legende"><span class="carre-atelier" aria-hidden="true"></span>Notre atelier, 27 rue de la Briqueterie</p>
+      </div>
+      <div class="coord">
         <h2 id="contact-t">Zone d’intervention et contact</h2>
-        <p>Nous intervenons dans toute la métropole lilloise, depuis notre atelier de Marcq-en-Barœul.</p>
-      </div>
-      <div class="contact">
-        <div>
-          <div class="carte">
-            <svg class="carte-svg" viewBox="0 0 424 345" role="img" aria-labelledby="carte-t carte-d">
-              <title id="carte-t">Zone d’intervention de Deûle Électricité</title>
-              <desc id="carte-d">Carte schématique de la métropole lilloise&#8239;: l’atelier est à Marcq-en-Barœul et l’équipe intervient de Wambrechies à Villeneuve-d’Ascq, de Tourcoing à Ronchin.</desc>
-              <path class="eau deule" d="M49 322 L92 296 L127 269 L143 242 L148 220 L155 193 L167 167 L175 151 L162 136 L150 122 L127 100 L89 73 L49 47 L14 22"/>
-              <path class="eau canal-rx" d="M175 151 L198 153 L226 160 L251 171 L271 173 L291 162 L306 145 L325 127 L346 113 L374 100 L409 87"/>
-              <text class="eau-nom" x="40" y="36" transform="rotate(34 40 36)">La Deûle</text>
-              <text class="eau-nom" x="318" y="108" transform="rotate(-22 318 108)">Canal de Roubaix</text>
-              <g class="villes">
-                <circle cx="174" cy="240" r="5.5"/><text x="174" y="264" text-anchor="middle" class="grande">Lille</text>
-                <circle cx="330" cy="120" r="4"/><text x="338" y="129" text-anchor="start">Roubaix</text>
-                <circle cx="312" cy="47" r="4"/><text x="320" y="52" text-anchor="start">Tourcoing</text>
-                <circle cx="288" cy="278" r="4"/><text x="296" y="283" text-anchor="start">Villeneuve-d’Ascq</text>
-                <circle cx="120" cy="211" r="3.5"/><text x="112" y="216" text-anchor="end">Lambersart</text>
-                <circle cx="154" cy="131" r="3.5"/><text x="146" y="128" text-anchor="end">Wambrechies</text>
-                <circle cx="185" cy="201" r="3.5"/><text x="177" y="206" text-anchor="end" class="mineure">La Madeleine</text>
-                <circle cx="268" cy="167" r="3.5"/><text x="276" y="181" text-anchor="start" class="mineure">Wasquehal</text>
-                <circle cx="297" cy="149" r="3.5"/><text x="305" y="152" text-anchor="start" class="mineure">Croix</text>
-                <circle cx="239" cy="229" r="3.5"/><text x="247" y="234" text-anchor="start" class="mineure">Mons-en-Barœul</text>
-                <circle cx="212" cy="314" r="3.5"/><text x="220" y="319" text-anchor="start">Ronchin</text>
-              </g>
-              <g class="siege"><rect x="211" y="156" width="18" height="18" rx="3"/><text x="220" y="146" text-anchor="middle">Marcq-en-Barœul</text></g>
-            </svg>
-          </div>
-          <p class="carte-legende"><span class="carre-atelier" aria-hidden="true"></span>Notre atelier, à Marcq-en-Barœul</p>
-          <p class="communes-t">Communes où nous intervenons le plus souvent&#8239;:</p>
-          <ul class="communes">
-            <li>Lille</li><li>Marcq-en-Barœul</li><li>Roubaix</li><li>Tourcoing</li>
-            <li>Villeneuve-d’Ascq</li><li>Lambersart</li><li>La Madeleine</li><li>Wasquehal</li>
-            <li>Croix</li><li>Mons-en-Barœul</li><li>Wambrechies</li><li>Ronchin</li>
-          </ul>
-        </div>
-        <div class="coord">
-          <h3>Deûle Électricité</h3>
-          <address>27 rue de la Briqueterie<br>59700 Marcq-en-Barœul</address>
-          <a class="tel-grand" href="tel:+33353012759"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>03&nbsp;53&nbsp;01&nbsp;27&nbsp;59</a>
-          <h3>Horaires</h3>
-          <table class="horaires">
-            <tbody>
-              <tr><th scope="row">Du lundi au vendredi</th><td>7&nbsp;h&nbsp;30-17&nbsp;h&nbsp;30</td></tr>
-              <tr><th scope="row">Samedi et dimanche</th><td>Fermé</td></tr>
-            </tbody>
-          </table>
-          <p class="note">Le soir et le week-end, le formulaire répond à notre place&#8239;: choisissez votre créneau de visite, nous le confirmons le jour ouvré suivant.</p>
-          <a class="btn" href="#visite">Demander une visite</a>
-        </div>
+        <p>Toute la métropole lilloise, depuis notre atelier de Marcq-en-Barœul.</p>
+        <address>Deûle Électricité<br>27 rue de la Briqueterie<br>59700 Marcq-en-Barœul</address>
+        <a class="tel-grand" href="tel:+33353012759"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>03&nbsp;53&nbsp;01&nbsp;27&nbsp;59</a>
+        <table class="horaires">
+          <caption class="visuel-seul">Horaires de l’atelier</caption>
+          <tbody>
+            <tr><th scope="row">Du lundi au vendredi</th><td>7&nbsp;h&nbsp;30-17&nbsp;h&nbsp;30</td></tr>
+            <tr><th scope="row">Samedi et dimanche</th><td>Fermé</td></tr>
+          </tbody>
+        </table>
+        <p class="note-soir">Le soir et le week-end, la demande de visite répond à notre place&#8239;: choisis ton créneau, on le confirme le jour ouvré suivant.</p>
+        <a class="btn" href="#contact" data-visite>Demander une visite</a>
       </div>
     </div>
   </section>
 </main>
 
 <footer class="pied">
-  <div class="wrap">
-    <div class="pied-grille">
-      <div>
-        <a class="logo" href="#" aria-label="Deûle Électricité, retour en haut de page">
-          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-            <rect width="48" height="48" rx="7" fill="#FFFFFF"/>
-            <path d="M13 12v24h8.5a12 12 0 0 0 0-24z" fill="none" stroke="#0E3B3A" stroke-width="4" stroke-linejoin="round"/>
-            <path d="M24.6 16.5 18.8 25.6h4.6l-2.2 7.9 6.4-10h-4.7l2.6-7z" fill="#E3A41E"/>
-          </svg>
-          <span class="logo-txt">
-            <span class="logo-nom">Deûle Électricité</span>
-            <span class="logo-sig"><span class="long">Bornes de recharge et électricité depuis 2009</span><span class="court">Électriciens depuis 2009</span></span>
-          </span>
-        </a>
-        <address>27 rue de la Briqueterie, 59700 Marcq-en-Barœul<br>
-          <a href="tel:+33353012759">03&nbsp;53&nbsp;01&nbsp;27&nbsp;59</a><br>
-          Du lundi au vendredi, 7&nbsp;h&nbsp;30-17&nbsp;h&nbsp;30</address>
-      </div>
-      <nav aria-label="Plan du site">
-        <h2>Le site</h2>
-        <ul>
-          <li><a href="#bornes">Nos bornes</a></li>
-          <li><a href="#puissance">Quelle puissance&#8239;?</a></li>
-          <li><a href="#realisations">Réalisations</a></li>
-          <li><a href="#entreprise">L’entreprise</a></li>
-          <li><a href="#contact">Contact</a></li>
-          <li><a href="#visite">Demander une visite</a></li>
-        </ul>
-      </nav>
-      <div>
-        <h2>Qualification</h2>
-        <div class="badges">
-          <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-irve"/></svg>IRVE, Qualifelec</span>
-        </div>
-      </div>
+  <div class="wrap pied-grille">
+    <div>
+      <p class="pied-nom">Deûle Électricité</p>
+      <p>Électriciens qualifiés IRVE, bornes de recharge et électricité depuis 2009.</p>
+      <address>27 rue de la Briqueterie, 59700 Marcq-en-Barœul<br><a href="tel:+33353012759">03&nbsp;53&nbsp;01&nbsp;27&nbsp;59</a>, du lundi au vendredi, 7&nbsp;h&nbsp;30-17&nbsp;h&nbsp;30</address>
     </div>
-    <div class="pied-bas">
-      <p>Site de démonstration réalisé par <a href="/services/site-internet-borne-recharge" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs.</p>
+    <nav aria-label="Plan du site">
+      <ul>
+        <li><a href="#configurateur">Configurer ma borne</a></li>
+        <li><a href="#lieu">Maison, copropriété, entreprise</a></li>
+        <li><a href="#chantiers">Nos derniers chantiers</a></li>
+        <li><a href="#questions">Questions</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <div class="pied-mentions">
+      <p>Site de démonstration réalisé par <a href="/services/site-internet-borne-recharge" target="_top">4dayvelopment</a>.</p>
+      <p>L’entreprise, son adresse et son numéro sont fictifs.</p>
       <p>Photos&#8239;: Pexels.</p>
     </div>
   </div>
 </footer>
 
-<nav class="pouce" aria-label="Contact rapide">
-  <a class="btn btn-contour" href="tel:+33353012759"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Appeler</a>
-  <a class="btn" href="#visite">Demander une visite</a>
-</nav>
+<dialog class="visite" id="visite" aria-labelledby="visite-t">
+  <form class="visite-form" id="visite-form" novalidate>
+    <div class="visite-tete">
+      <h2 id="visite-t">Demande de visite</h2>
+      <p>Gratuite, sous huit jours. L’électricien arrive avec ta configuration.</p>
+      <button type="button" class="fermer" data-fermer aria-label="Fermer la demande"><svg class="ico" aria-hidden="true"><use href="#i-fermer"/></svg></button>
+    </div>
+
+    <div class="visite-corps" id="visite-corps">
+      <div class="visite-config">
+        <h3>Ta configuration</h3>
+        <dl id="visite-recap"></dl>
+        <button type="button" class="lien" data-modifier>Modifier dans le configurateur</button>
+      </div>
+      <fieldset class="groupe">
+        <legend>Quel jour pouvons-nous passer&#8239;?</legend>
+        <div class="tuiles tuiles-jours" id="jours"></div>
+      </fieldset>
+      <fieldset class="groupe">
+        <legend>À quel moment&#8239;?</legend>
+        <div class="tuiles tuiles-2">
+          <label class="tuile"><input type="radio" name="moment" value="le matin, entre 8&nbsp;h et 12&nbsp;h"><strong>Le matin</strong><small>entre 8&nbsp;h et 12&nbsp;h</small></label>
+          <label class="tuile"><input type="radio" name="moment" value="l’après-midi, entre 13&nbsp;h&nbsp;30 et 17&nbsp;h&nbsp;30"><strong>L’après-midi</strong><small>entre 13&nbsp;h&nbsp;30 et 17&nbsp;h&nbsp;30</small></label>
+        </div>
+        <p class="indice">Compte une heure sur place.</p>
+      </fieldset>
+      <p class="erreur" id="err-creneau" role="alert"></p>
+      <div class="champ">
+        <label for="nom">Nom</label>
+        <input id="nom" name="nom" autocomplete="name" enterkeyhint="next" aria-describedby="nom-err">
+        <p class="err-champ" id="nom-err"></p>
+      </div>
+      <div class="deux-champs">
+        <div class="champ">
+          <label for="tel">Téléphone</label>
+          <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" aria-describedby="tel-err">
+          <p class="err-champ" id="tel-err"></p>
+        </div>
+        <div class="champ">
+          <label for="commune">Commune</label>
+          <input id="commune" name="commune" list="liste-communes" autocomplete="address-level2" enterkeyhint="done" aria-describedby="commune-err">
+          <p class="err-champ" id="commune-err"></p>
+        </div>
+      </div>
+      <datalist id="liste-communes">
+        <option value="Lille"></option><option value="Marcq-en-Barœul"></option><option value="Roubaix"></option><option value="Tourcoing"></option>
+        <option value="Villeneuve-d’Ascq"></option><option value="Lambersart"></option><option value="La Madeleine"></option><option value="Wasquehal"></option>
+        <option value="Croix"></option><option value="Mons-en-Barœul"></option><option value="Wambrechies"></option><option value="Ronchin"></option>
+      </datalist>
+      <p class="rgpd">Ces informations servent uniquement à confirmer ta visite.</p>
+    </div>
+
+    <div class="visite-pied" id="visite-pied">
+      <button type="submit" class="btn">Envoyer ma demande</button>
+    </div>
+
+    <div class="visite-fini" id="visite-fini" hidden>
+      <svg class="ico" aria-hidden="true"><use href="#i-ok"/></svg>
+      <h3 tabindex="-1">Demande envoyée</h3>
+      <p>Dans la version en ligne, Deûle Électricité te confirme par SMS au <strong id="fini-tel"></strong> l’heure de passage de l’électricien, <strong id="fini-creneau"></strong>.</p>
+      <p>Démonstration&#8239;: aucune donnée n’a été transmise.</p>
+      <button type="button" class="btn btn-clair" data-fermer>Fermer</button>
+    </div>
+  </form>
+</dialog>
 </body>
 </html>
