@@ -41,25 +41,6 @@ export function initCursor() {
   raf(tick);
 }
 
-export function initGlow() {
-  const glow = document.createElement('div');
-  // transform et pas left/top : le halo suit la souris sur le compositeur,
-  // sans relancer la mise en page a chaque mouvement
-  glow.style.cssText = `
-    position:fixed;left:0;top:0;width:350px;height:350px;
-    background:radial-gradient(circle,rgba(218,84,38,0.06) 0%,transparent 70%);
-    border-radius:50%;pointer-events:none;
-    transform:translate(-50%,-50%);
-    transition:transform .6s cubic-bezier(.23,1,.32,1);
-    will-change:transform;
-    z-index:0;
-  `;
-  document.body.appendChild(glow);
-  on(document, 'mousemove', e => {
-    glow.style.transform = `translate(${e.clientX}px,${e.clientY}px) translate(-50%,-50%)`;
-  }, { passive: true });
-}
-
 export function initMagnetic() {
   if (matchMedia('(max-width: 768px)').matches) return;
   $$('.magnetic').forEach(btn => {

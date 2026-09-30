@@ -72,14 +72,14 @@
       align-items: center;
       justify-content: space-between;
       padding: 16px 32px;
-      border-bottom: 1px solid var(--border);
+      border-block-end: 1px solid var(--border);
       background: rgba(8,8,8,0.95);
       backdrop-filter: blur(20px);
       position: sticky;
-      top: 0;
+      inset-block-start: 0;
       z-index: 100;
     }
-    header img { height: auto; width: min(26rem, 55vi); max-height: 113px; }
+    header img { height: clamp(2.125rem, 4.5vi, 3.125rem); width: auto; }
     .back-link {
       font-size: 0.8125rem;
       color: var(--muted);
@@ -103,7 +103,7 @@
     /* ── Colonne gauche : pitch ── */
     .pitch {
       padding: 64px 56px;
-      border-right: 1px solid var(--border);
+      border-inline-end: 1px solid var(--border);
       display: flex;
       flex-direction: column;
       gap: 40px;
@@ -114,16 +114,7 @@
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: linear-gradient(135deg, rgba(218,84,38,0.2), rgba(242,177,59,0.15));
-      border: 1px solid rgba(218,84,38,0.4);
-      border-radius: 100px;
-      padding: 10px 20px;
       width: fit-content;
-      animation: pulse-badge 2s ease-in-out infinite;
-    }
-    @keyframes pulse-badge {
-      0%, 100% { box-shadow: 0 0 0 0 rgba(218,84,38,0); }
-      50%       { box-shadow: 0 0 0 8px rgba(218,84,38,0.12); }
     }
     .badge-4j-icon { font-size: 1.375rem; color: var(--amber, #f2b13b); display: inline-flex; }
     .badge-4j-text { display: flex; flex-direction: column; }
@@ -131,10 +122,6 @@
       font-family: 'Syne', sans-serif;
       font-size: 1.125rem;
       font-weight: 800;
-      background: linear-gradient(135deg, var(--orange), var(--amber));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
       letter-spacing: -0.5px;
     }
     .badge-4j-sub {
@@ -146,21 +133,15 @@
     /* Titre */
     .pitch h1 {
       font-family: 'Syne', sans-serif;
-      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-size: clamp(2rem, 3vi, 2.8rem);
       font-weight: 800;
       letter-spacing: -1.5px;
       line-height: 1.1;
     }
-    .g {
-      background: linear-gradient(135deg, var(--orange), var(--amber));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
     .maj { font-size: clamp(0.8rem, 0.78rem + 0.1vi, 0.875rem); color: #888; margin-block-start: 0.75rem; }
 
     /* mention TTC a cote des prix, discrete dans les titres */
-    .taxe { font-family: 'Inter', sans-serif; font-size: clamp(0.75rem, 0.72rem + 0.1vi, 0.8125rem); font-weight: 500; letter-spacing: 0; color: #888; -webkit-text-fill-color: #888; vertical-align: middle; }
+    .taxe { font-family: 'Inter', sans-serif; font-size: clamp(0.75rem, 0.72rem + 0.1vi, 0.8125rem); font-weight: 500; letter-spacing: 0; color: #888; vertical-align: middle; }
 
     .pitch p.desc {
       font-size: 1rem;
@@ -172,12 +153,9 @@
     /* Ce que comprend la formule */
     .inclus-title {
       font-family: 'Syne', sans-serif;
-      font-size: 0.75rem;
+      font-size: 1rem;
       font-weight: 700;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--orange);
-      margin-bottom: 16px;
+      margin-block-end: 16px;
     }
     .inclus-list {
       display: flex;
@@ -218,10 +196,6 @@
       font-size: 3rem;
       font-weight: 800;
       letter-spacing: -2px;
-      background: linear-gradient(135deg, var(--orange), var(--amber));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
       line-height: 1;
     }
     .prix-detail { font-size: 0.8125rem; color: var(--muted); line-height: 1.6; }
@@ -261,9 +235,9 @@
       font-size: 0.9375rem;
       font-weight: 700;
     }
-    .mb-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .mb-sub { font-size: 0.75rem; color: var(--muted); margin-block-start: 2px; }
     .mb-price {
-      margin-left: auto;
+      margin-inline-start: auto;
       display: flex;
       align-items: baseline;
       gap: 3px;
@@ -273,10 +247,6 @@
       font-family: 'Syne', sans-serif;
       font-size: 1.6rem;
       font-weight: 800;
-      background: linear-gradient(135deg, #884083, #f2b13b);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
       letter-spacing: -1px;
       line-height: 1;
     }
@@ -299,8 +269,8 @@
     .mb-footer {
       font-size: 0.75rem;
       color: var(--muted);
-      padding-top: 10px;
-      border-top: 1px solid rgba(136,64,131,0.15);
+      padding-block-start: 10px;
+      border-block-start: 1px solid rgba(136,64,131,0.15);
     }
     .mb-toggle {
       display: flex;
@@ -334,30 +304,30 @@
       content: '';
       width: 5px; height: 9px;
       border: 2px solid #fff;
-      border-top: none; border-left: none;
+      border-block-start: none; border-inline-start: none;
       transform: rotate(45deg) translate(-1px,-1px);
       display: block;
     }
     .wp-add-title { font-family: 'Syne', sans-serif; font-size: 0.9375rem; font-weight: 700; }
-    .wp-add-sub { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+    .wp-add-sub { font-size: 0.75rem; color: var(--muted); margin-block-start: 2px; }
     .wp-add-item { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-    .wp-add-footer { font-size: 0.75rem; color: var(--muted); padding-top: 10px; border-top: 1px solid rgba(136,64,131,0.15); }
+    .wp-add-footer { font-size: 0.75rem; color: var(--muted); padding-block-start: 10px; border-block-start: 1px solid rgba(136,64,131,0.15); }
 
     /* Timeline 4 jours */
     .timeline { display: flex; flex-direction: column; gap: 0; }
     .tl-item {
       display: flex;
       gap: 16px;
-      padding-bottom: 20px;
+      padding-block-end: 20px;
       position: relative;
     }
-    .tl-item:last-child { padding-bottom: 0; }
+    .tl-item:last-child { padding-block-end: 0; }
     .tl-item:not(:last-child) .tl-dot::after {
       content: '';
       position: absolute;
-      left: 13.5px;
-      top: 30px;
-      bottom: 0;
+      inset-inline-start: 13.5px;
+      inset-block-start: 30px;
+      inset-block-end: 0;
       width: 1px;
       background: linear-gradient(180deg, rgba(218,84,38,0.4), transparent);
     }
@@ -382,14 +352,12 @@
       /* Inter et non Syne : a 12 px, Syne extra-gras touchait le cercle */
       font-family: 'Inter', sans-serif;
     }
-    .tl-content { padding-top: 2px; }
+    .tl-content { padding-block-start: 2px; }
     .tl-day {
-      font-size: 0.75rem;
+      font-size: 0.875rem;
       font-weight: 700;
       color: var(--orange);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      margin-bottom: 2px;
+      margin-block-end: 2px;
     }
     .tl-desc { font-size: 0.8125rem; color: var(--muted); line-height: 1.5; }
 
@@ -404,21 +372,19 @@
       font-size: 1.125rem;
       font-weight: 800;
       letter-spacing: -0.5px;
-      margin-bottom: 6px;
+      margin-block-end: 6px;
     }
     .form-subtitle {
       font-size: 0.8125rem;
       color: var(--muted);
-      margin-bottom: 32px;
+      margin-block-end: 32px;
     }
 
     /* Champs */
-    .field { display: flex; flex-direction: column; gap: 7px; margin-bottom: 18px; }
+    .field { display: flex; flex-direction: column; gap: 7px; margin-block-end: 18px; }
     .field label {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
+      font-size: 0.875rem;
+      font-weight: 600;
       color: var(--muted);
     }
     .field label .req { color: var(--orange); }
@@ -504,7 +470,7 @@
       content: '';
       width: 4px; height: 7px;
       border: 1.5px solid #fff;
-      border-top: none; border-left: none;
+      border-block-start: none; border-inline-start: none;
       transform: rotate(45deg) translate(-1px,-1px);
       display: block;
     }
@@ -550,7 +516,7 @@
       border-radius: 12px;
       border: none;
       cursor: pointer;
-      margin-top: 8px;
+      margin-block-start: 8px;
       transition: all .3s;
       letter-spacing: -0.3px;
       position: relative;
@@ -567,14 +533,13 @@
     .btn-submit:hover::before { transform: translateX(100%); }
     .btn-submit:hover {
       transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(218,84,38,0.45);
     }
     .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
 
     .spinner {
       width: 18px; height: 18px;
       border: 2px solid rgba(11,11,11,.25);
-      border-top-color: #0b0b0b; /* sur le bouton orange-or, le blanc ne se voyait pas */
+      border-block-start-color: #0b0b0b; /* sur le bouton orange-or, le blanc ne se voyait pas */
       border-radius: 50%;
       animation: spin .7s linear infinite;
       display: none;
@@ -587,7 +552,7 @@
       font-size: 0.75rem;
       color: var(--muted);
       text-align: center;
-      margin-top: 12px;
+      margin-block-start: 12px;
       line-height: 1.5;
     }
 
@@ -596,7 +561,7 @@
       padding: 12px 16px;
       border-radius: 10px;
       font-size: 0.8125rem;
-      margin-top: 12px;
+      margin-block-start: 12px;
       display: none;
     }
     .feedback.err {
@@ -614,7 +579,7 @@
       display: flex;
       flex-direction: column;
       gap: 8px;
-      margin-top: 4px;
+      margin-block-start: 4px;
     }
     .garantie {
       display: flex;
@@ -638,9 +603,9 @@
       font-size: 1.375rem;
       font-weight: 800;
       letter-spacing: -0.5px;
-      margin-bottom: 12px;
+      margin-block-end: 12px;
     }
-    .success p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-bottom: 24px; }
+    .success p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-block-end: 24px; }
     .btn-retour {
       display: inline-flex;
       align-items: center;
@@ -680,39 +645,39 @@
     button, a, label { touch-action: manipulation; }
 
     /* ── Responsive ── */
-    @media (max-width: 900px) {
+    @media (max-width: 56.25rem) {
       .page { grid-template-columns: 1fr; }
       .pitch {
         padding: 40px 28px;
-        border-right: none;
-        border-bottom: 1px solid var(--border);
+        border-inline-end: none;
+        border-block-end: 1px solid var(--border);
       }
       .form-side { padding: 32px 28px; }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 37.5rem) {
       header { padding: 10px 16px; }
       header img { max-height: 64px; }
       .back-link { font-size: 0.75rem; }
       .pitch { padding: 28px 16px; gap: 24px; }
-      .pitch h1 { font-size: clamp(1.6rem, 7vw, 2.2rem); letter-spacing: -1px; }
+      .pitch h1 { font-size: clamp(1.6rem, 7vi, 2.2rem); letter-spacing: -1px; }
       .prix-block { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 16px; }
       .prix-montant { font-size: 2.2rem; }
       .maintenance-block { padding: 16px; }
       .form-side { padding: 24px 16px; }
       .form-title { font-size: 1rem; }
-      .form-subtitle { font-size: 0.75rem; margin-bottom: 20px; }
-      .field { margin-bottom: 14px; }
+      .form-subtitle { font-size: 0.75rem; margin-block-end: 20px; }
+      .field { margin-block-end: 14px; }
       /* iOS : évite le zoom auto au focus */
       .field input,
       .field select,
       .field textarea { font-size: 1rem; padding: 12px 14px; }
       .urg-btns { flex-direction: column; }
       .urg-btn { width: 100%; justify-content: center; padding: 14px; min-height: 50px; }
-      .btn-submit-wrap { position: sticky; bottom: 0; background: var(--card); padding: 12px 0 0; }
+      .btn-submit-wrap { position: sticky; inset-block-end: 0; background: var(--card); padding: 12px 0 0; }
     }
 
-    @media (max-width: 400px) {
+    @media (max-width: 25rem) {
       header img { max-height: 52px; }
       .pitch { padding: 20px 14px; }
       .form-side { padding: 20px 14px; }
@@ -747,9 +712,9 @@
 
       <!-- Titre -->
       <div>
-        <h1>Formule <span class="g">Essentiel</span><br>à 890€ <span class="taxe">TTC</span></h1>
+        <h1>Formule Essentiel<br>à 890€ <span class="taxe">TTC</span></h1>
         <p class="maj">Mis à jour le <time datetime="2026-09-28">28 septembre 2026</time></p>
-        <p class="desc" style="margin-top:16px;">Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.</p>
+        <p class="desc" style="margin-block-start:16px;">Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.</p>
       </div>
 
       <!-- Ce qui est inclus -->
@@ -775,7 +740,7 @@
         </div>
         <div style="text-align:right;">
           <div class="prix-paiement">ou 2× 445€ TTC</div>
-          <div id="prix-secure" style="font-size: 0.75rem;color:var(--muted);margin-top:6px;">Paiement sécurisé</div>
+          <div id="prix-secure" style="font-size: 0.75rem;color:var(--muted);margin-block-start:6px;">Paiement sécurisé</div>
         </div>
       </div>
 
@@ -907,7 +872,7 @@
 
           <div class="field">
             <label>Pages souhaitées (3 max)</label>
-            <div class="pages-grid" style="margin-top:4px;">
+            <div class="pages-grid" style="margin-block-start:4px;">
               <label class="page-check"><input type="checkbox" name="pages" value="Accueil"><div class="page-check-box"></div><span class="page-label">Accueil</span></label>
               <label class="page-check"><input type="checkbox" name="pages" value="À propos"><div class="page-check-box"></div><span class="page-label">À propos</span></label>
               <label class="page-check"><input type="checkbox" name="pages" value="Services"><div class="page-check-box"></div><span class="page-label">Services</span></label>
@@ -941,7 +906,7 @@
 
           <div class="field">
             <label>Délai souhaité</label>
-            <div class="urgence-toggle" id="urg-toggle" style="margin-top:4px;">
+            <div class="urgence-toggle" id="urg-toggle" style="margin-block-start:4px;">
               <button type="button" class="urg-btn" data-val="Le plus vite possible">Urgent</button>
               <button type="button" class="urg-btn" data-val="Dans le mois">Ce mois</button>
               <button type="button" class="urg-btn" data-val="Flexible">Flexible</button>
@@ -972,7 +937,7 @@
             <span class="btn-label">Commander ma formule Essentiel →</span>
           </button>
 
-          <div class="garanties" style="margin-top:16px;">
+          <div class="garanties" style="margin-block-start:16px;">
             <div class="garantie"><span class="garantie-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>Paiement 100% sécurisé</div>
             <div class="garantie"><span class="garantie-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>Livraison en 4 jours garantie contractuellement</div>
             <div class="garantie"><span class="garantie-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>Réponse sous 2h par email ou WhatsApp</div>

@@ -85,3 +85,18 @@ Même protocole (Lighthouse 12.8.2, throttling simulé, profil mobile), sur la p
 Score Lighthouse : 100 (passages : 99 à 100). TBT : 0 ms.
 
 Le LCP simulé est bimodal (1,70 s ou 1,85 s), indépendamment du temps de réponse du serveur : il se joue sur les requêtes que la simulation range avant le premier affichage. Le reste du chemin critique tient au CSS (38 Ko) et aux deux polices préchargées (Syne 35 Ko, Inter 48 Ko). Prochain levier, si la cible doit être tenue à chaque passage : CSS critique en ligne et chargement différé du reste de `style.css`.
+
+## Leviers testés le 30 septembre 2026, sans gain
+
+Protocole local : Lighthouse 12.8.2 en throttling simulé, cinq passages par variante, `main` et la branche servis côte à côte. En local, les valeurs absolues dépassent celles de la production, mais l'écart entre deux variantes reste lisible. Référence : LCP médian 2 259 ms, premier affichage (FCP) 1 580 ms.
+
+| Variante | LCP médian | FCP médian | Verdict |
+|---|---|---|---|
+| CSS critique en ligne (8,8 Ko gz), reste de `style.css` chargé sans bloquer | 2 254 ms | 1 504 ms | pas de gain sur le LCP |
+| Inter retirée (police système) | 2 254 ms | 1 579 ms | pas de gain |
+| `modulepreload` des six modules statiques | 2 555 ms | 1 655 ms | pire : ils concurrencent le CSS et les polices |
+| `style.css` non bloquant, sans CSS critique | 2 574 ms | 1 437 ms | pire : la page se peint sans style |
+
+L'élément LCP de la home n'est pas le titre : c'est le texte circulaire de l'écran d'entrée (« Votre site en 4 jours · … »), peint au premier affichage. En production, premier affichage et LCP observés tombent sur la même image (375 ms). L'écart simulé entre FCP et LCP vient de la méthode : pour le LCP, la simulation compte toutes les requêtes parties avant le premier affichage (polices, modules), pas seulement celles qui bloquent le rendu. Retirer le CSS du chemin bloquant ne change donc pas le LCP simulé. La suppression des effets de la revue « sans motifs d'IA » ne le change pas non plus (2 259 ms, identique à `main`).
+
+Conclusion : le LCP reste à la cible (1,78 s en production), et aucun levier restant ne le fait baisser sans toucher au contenu du premier écran (écran d'entrée, polices). Le CSS critique en ligne est écarté : il n'apporte rien au LCP et dupliquerait le CSS du premier écran.

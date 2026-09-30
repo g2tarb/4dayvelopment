@@ -27,7 +27,7 @@ body{background:var(--bg);color:var(--ink);font-family:Inter,system-ui,sans-seri
 h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.25rem,7.5vi - .2rem,1.875rem);line-height:1.04;margin:10px 0 14px;text-wrap:balance}
 .pitch{font-size:18px;font-weight:600;color:var(--ink)}
 .pitch b{color:var(--gold);font-weight:700}
-.sub{color:var(--muted);font-size:1rem;margin-top:8px}
+.sub{color:var(--muted);font-size:1rem;margin-block-start:8px}
 .topbar{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:12px}
 .qr-mini{flex:0 0 auto;margin-inline-start:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;color:var(--gold);font-family:Syne,sans-serif;font-weight:700;font-size:12px;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;text-align:center;line-height:1.2}
 .qr-mini svg{display:block;margin:0 auto 6px}
@@ -35,34 +35,34 @@ h1{font-family:Syne,sans-serif;font-weight:800;font-size:clamp(1.25rem,7.5vi - .
 .btn-orange{background:var(--orange);color:#0b0b0b}
 .btn-violet{background:var(--violet);color:#fff}
 .btn-line{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
-.btn+.btn{margin-top:12px}
+.btn+.btn{margin-block-start:12px}
 .btn small{display:block;font-family:Inter,sans-serif;font-weight:400;font-size:13px;opacity:.85}
-.stack{margin-top:26px}
-section{margin-top:40px}
-h2{font-family:Syne,sans-serif;font-weight:700;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.stack{margin-block-start:26px}
+section{margin-block-start:40px}
+h2{font-family:Syne,sans-serif;font-weight:700;font-size:14px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-block-end:16px}
 .offers{border:1px solid var(--line);border-radius:18px;overflow:hidden}
 .offer{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:15px 18px;background:var(--card)}
-.offer+.offer{border-top:1px solid rgba(242,177,59,.12)}
+.offer+.offer{border-block-start:1px solid rgba(242,177,59,.12)}
 .offer .n{font-weight:600}
 .offer .d{color:var(--muted);font-size:13.5px;display:block;font-weight:400}
 .offer .p{font-family:Syne,sans-serif;font-weight:800;font-size:19px;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums lining-nums}
 .offer .p em{font-style:normal;font-size:12px;color:var(--muted);font-family:Inter,sans-serif;font-weight:400;display:block;text-align:right}
-.garantie{margin-top:14px;border:1.5px solid var(--gold);border-radius:16px;padding:16px 18px;text-align:center}
+.garantie{margin-block-start:14px;border:1.5px solid var(--gold);border-radius:16px;padding:16px 18px;text-align:center}
 .garantie strong{font-family:Syne,sans-serif;font-weight:800;font-size:18px;color:var(--gold)}
-.garantie-cond{display:block;margin-top:8px;font-size:.8125rem;line-height:1.5;opacity:.8}
+.garantie-cond{display:block;margin-block-start:8px;font-size:.8125rem;line-height:1.5;opacity:.8}
 .refs{list-style:none}
-.refs li{padding:12px 0 12px 22px;position:relative;border-bottom:1px solid rgba(242,177,59,.1)}
-.refs li:last-child{border-bottom:0}
-.refs li::before{content:"";position:absolute;left:0;top:20px;width:9px;height:9px;border-radius:3px;background:var(--violet)}
-.refs .rn{font-weight:600;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--gold);padding-bottom:1px}
+.refs li{padding:12px 0 12px 22px;position:relative;border-block-end:1px solid rgba(242,177,59,.1)}
+.refs li:last-child{border-block-end:0}
+.refs li::before{content:"";position:absolute;inset-inline-start:0;inset-block-start:20px;width:9px;height:9px;border-radius:3px;background:var(--violet)}
+.refs .rn{font-weight:600;color:var(--ink);text-decoration:none;border-block-end:1px solid var(--gold);padding-block-end:1px}
 .refs .rd{color:var(--muted);font-size:14.5px}
-.links{display:flex;gap:12px;margin-top:14px}
+.links{display:flex;gap:12px;margin-block-start:14px}
 .links a{flex:1;text-align:center;padding:14px 10px;border:1.5px solid var(--line);border-radius:14px;color:var(--ink);text-decoration:none;font-weight:600;font-size:15px}
-footer{margin-top:48px;color:var(--muted);font-size:13.5px;text-align:center}
+footer{margin-block-start:48px;color:var(--muted);font-size:13.5px;text-align:center}
 footer a{color:var(--gold);text-decoration:none}
 #qrfull{position:fixed;inset:0;background:#FCF7EF;display:none;z-index:50;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px}
 #qrfull.on{display:flex}
-#qrfull svg{width:min(84vw,84vh);height:auto}
+#qrfull svg{width:min(84vi,84vh);height:auto}
 #qrfull .u{font-family:Syne,sans-serif;font-weight:700;color:#080808;font-size:17px;letter-spacing:.02em}
 #qrfull .h{color:#8a8172;font-size:13px}
 </style>
@@ -118,7 +118,7 @@ footer a{color:var(--gold);text-decoration:none}
 
   <footer>
     <p><a href="mailto:contact@4dayvelopment.com">contact@4dayvelopment.com</a></p>
-    <p style="margin-top:6px">4Dayvelopment, Paris. Prix affichés toutes taxes comprises.</p>
+    <p style="margin-block-start:6px">4Dayvelopment, Paris. Prix affichés toutes taxes comprises.</p>
   </footer>
 </div>
 

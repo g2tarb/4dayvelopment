@@ -147,7 +147,7 @@ ${getVal('e-description')}
         ['.badge-4j-main',           'Livré en 4 jours'],
         ['.badge-4j-sub',            'Délai garanti contractuellement'],
         /* pitch */
-        ['.pitch h1',                'Formule <span class="g">Essentiel</span><br>à 890€ <span class="taxe">TTC</span>'],
+        ['.pitch h1',                'Formule Essentiel<br>à 890€ <span class="taxe">TTC</span>'],
         ['.pitch .desc',             'Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.'],
         /* inclus */
         ['.inclus-title',            'Ce qui est inclus', 0],
@@ -243,7 +243,7 @@ ${getVal('e-description')}
         ['.badge-4j-main',           'Delivered in 4 days'],
         ['.badge-4j-sub',            'Contractually guaranteed delivery date'],
         /* pitch */
-        ['.pitch h1',                '<span class="g">Essential</span> Plan<br>at €890 <span class="taxe">incl. VAT</span>'],
+        ['.pitch h1',                'Essential Plan<br>at €890 <span class="taxe">incl. VAT</span>'],
         ['.pitch .desc',             'Your professional showcase website, delivered in 4 days flat. Perfect for launching with an online presence that reassures your clients and generates leads.'],
         /* inclus */
         ['.inclus-title',            "What's included", 0],
