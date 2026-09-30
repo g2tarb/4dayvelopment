@@ -2,348 +2,497 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Berthier Énergies, pompes à chaleur en Touraine | Démo 4dayvelopment</title>
-<meta name="description" content="Démo : installateur de pompes à chaleur air-eau en Touraine. Visite technique gratuite, devis détaillé aides déduites, pose en deux jours, entretien tous les deux ans.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Berthier Énergies, pompes à chaleur en Touraine</title>
+<meta name="description" content="Démo 4dayvelopment : Berthier Énergies, installateur de pompes à chaleur air-eau en Touraine, avec devis en ligne, simulateur MaPrimeRénov’ et chantiers.">
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#243240">
-<link rel="preload" as="font" type="font/woff2" href="/fonts/archivo-var.woff2" crossorigin>
-<style>
-@font-face{font-family:'Archivo';font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;src:url('/fonts/archivo-var.woff2') format('woff2')}
-
-:root{
-  --enduit:#EEF0EC;      /* fond : enduit de facade, blanc froid */
-  --enduit-2:#E3E7E2;
-  --ardoise:#243240;     /* texte et bouton : ardoise des toits de Touraine */
-  --ardoise-2:#3C4C5C;
-  --laiton:#7F611A;      /* l'unique accent : raccords en laiton */
-  --givre:#CFE0E8;       /* section hiver */
-  --trait:#C9CFC8;
-  /* categories MaPrimeRenov' (couleurs de l'Anah), uniquement dans le simulateur */
-  --c-bleu:#2B59C3; --c-jaune:#E8B400; --c-violet:#7B4FB5; --c-rose:#D95C94;
-  --mesure:62ch;
-  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
-}
-*,*::before,*::after{box-sizing:border-box}
-*{margin:0}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{
-  font-family:'Archivo',system-ui,sans-serif;font-stretch:100%;font-weight:400;
-  font-size:1.0625rem;line-height:1.55;color:var(--ardoise);background:var(--enduit);
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
-}
-img{display:block;max-width:100%;height:auto;background:var(--enduit-2)} /* fond visible pendant le chargement ou si l'image manque */
-a{color:inherit}
-:focus-visible{outline:3px solid var(--laiton);outline-offset:3px}
-h1,h2,h3{font-stretch:75%;font-weight:760;line-height:1.08;letter-spacing:-.01em;text-wrap:balance}
-p{text-wrap:pretty}
-.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
-.skip{position:absolute;left:-999px}
-.skip:focus{left:1rem;top:1rem;background:var(--ardoise);color:var(--enduit);padding:.6rem 1rem;z-index:10}
-
-/* Barre du haut : nom et numero, c'est ce que cherche un client presse */
-.top{border-bottom:1px solid var(--trait);background:var(--enduit)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:3.75rem}
-.marque{text-decoration:none;display:flex;flex-direction:column;justify-content:center;line-height:1;min-height:2.75rem}
-.marque b{font-stretch:62%;font-weight:850;font-size:1.5rem;letter-spacing:.005em}
-.marque span{font-size:.8125rem;color:var(--ardoise-2);margin-top:.2rem}
-.tel{font-stretch:88%;font-weight:650;font-size:1.0625rem;text-decoration:none;white-space:nowrap;
-  font-variant-numeric:tabular-nums;padding:.55rem .15rem;border-bottom:2px solid var(--laiton)}
-
-/* Ouverture */
-.ouv{padding-block:var(--pas) calc(var(--pas)*1.5)}
-.ouv .wrap{display:grid;gap:var(--pas)}
-.ouv h1{font-size:clamp(2rem,1.2rem + 3.6vi,3.6rem);max-width:18ch}
-.ouv .chapo{font-size:1.125rem;max-width:44ch;margin-top:.9rem;color:var(--ardoise-2)}
-.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.75rem 1.25rem;margin-top:1.5rem}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.8rem 1.35rem;
-  background:var(--ardoise);color:var(--enduit);border:2px solid transparent;border-radius:4px;font:inherit;font-weight:650;
-  font-stretch:92%;text-decoration:none;cursor:pointer;transition:background-color .15s}
-.btn:hover{background:#17212C}
-.btn:active{transform:translateY(1px)}
-.discret{font-size:.9375rem;color:var(--ardoise-2);max-width:34ch}
-.ouv figure{margin:0}
-.ouv figure img{width:100%;aspect-ratio:1;object-fit:cover;object-position:18% 50%;border-radius:3px}
-.ouv figcaption{font-size:.8125rem;color:var(--ardoise-2);margin-top:.5rem}
-/* ordinateur : texte et photo côte à côte */
-@media (min-width:60rem){
-  .ouv .wrap{grid-template-columns:1fr 1.05fr;align-items:center;gap:3rem}
-}
-
-/* Signature : le simulateur MaPrimeRenov', entierement en CSS (:has) */
-.aide{background:var(--ardoise);color:var(--enduit);padding-block:calc(var(--pas)*2)}
-.aide h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem);max-width:22ch}
-.aide .intro{max-width:var(--mesure);margin-top:.75rem;color:#C8D1D9}
-.sim{margin-top:1.75rem;display:grid;gap:1.5rem}
-.sim fieldset{border:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
-.sim legend{font-weight:650;margin-bottom:.75rem;padding:0}
-.cat{position:relative;display:flex;gap:.7rem;align-items:flex-start;padding:.8rem .85rem;
-  border:1.5px solid #7C8C9B;border-radius:4px;cursor:pointer;min-height:3.25rem;transition:border-color .15s,background-color .15s}
-.cat input{position:absolute;opacity:0;inset:0;cursor:pointer}
-.cat i{flex:none;width:1.1rem;height:1.1rem;border-radius:50%;margin-top:.15rem;box-shadow:0 0 0 2px var(--ardoise),0 0 0 3px #7C8C9B}
-.cat b{display:block;font-weight:650}
-.cat small{display:block;font-size:.8125rem;color:#AEB9C3;line-height:1.3}
-.cat:has(input:checked){border-color:var(--enduit);background:#2E3E4E}
-.cat:has(input:checked) i{box-shadow:0 0 0 2px var(--ardoise),0 0 0 4px #fff}
-.cat:has(input:focus-visible){outline:3px solid #D9B25A;outline-offset:2px}
-.bleu i{background:var(--c-bleu)} .jaune i{background:var(--c-jaune)} .violet i{background:var(--c-violet)} .rose i{background:var(--c-rose)}
-.res{border-top:1.5px solid #4A5B6C;padding-top:1.25rem}
-.res .montant{display:none}
-.montant strong{display:block;font-stretch:125%;font-weight:800;font-size:clamp(3rem,2rem + 5vi,5.25rem);
-  line-height:1;letter-spacing:-.02em;font-variant-numeric:tabular-nums;color:#fff}
-.montant p{margin-top:.6rem;max-width:40ch;color:#C8D1D9}
-.sim:has(#c-bleu:checked) .m-bleu,.sim:has(#c-jaune:checked) .m-jaune,
-.sim:has(#c-violet:checked) .m-violet,.sim:has(#c-rose:checked) .m-rose{display:block;animation:monte .35s ease-out}
-.m-rose strong{font-size:clamp(1.6rem,1.2rem + 2vi,2.4rem);font-stretch:100%}
-@keyframes monte{from{opacity:0;transform:translateY(.4rem)}to{opacity:1;transform:none}}
-.base{font-size:.8125rem;color:#9FAAB5;margin-top:1rem;max-width:var(--mesure)}
-/* le simulateur passe sur deux colonnes : catégories à gauche, montant à droite */
-@media (min-width:48rem){
-  .sim{grid-template-columns:1.2fr 1fr;align-items:end;gap:2.5rem}
-  .res{border-top:0;border-left:1.5px solid #4A5B6C;padding:0 0 0 2rem}
-}
-
-/* Hiver : la question que tout le monde pose */
-.gel{background:var(--givre);padding-block:calc(var(--pas)*2)}
-.gel .wrap{display:grid;gap:var(--pas)}
-.gel h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
-.gel p{max-width:var(--mesure);margin-top:.85rem}
-.gel img{width:100%;aspect-ratio:1200/686;object-fit:cover;border-radius:3px}
-.gel figcaption{font-size:.8125rem;margin-top:.5rem;color:var(--ardoise-2)}
-/* texte et photo d'hiver côte à côte */
-@media (min-width:60rem){.gel .wrap{grid-template-columns:1fr 1fr;align-items:center;gap:3rem}}
-
-/* Deroule : une vraie sequence, d'ou les numeros */
-.etapes{padding-block:calc(var(--pas)*2)}
-.etapes h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
-.etapes ol{list-style:none;padding:0;margin-top:1.5rem;display:grid;gap:1.4rem;counter-reset:e}
-.etapes li{counter-increment:e;display:grid;grid-template-columns:3rem 1fr;gap:.25rem 1rem;max-width:var(--mesure)}
-.etapes li::before{content:counter(e);grid-row:span 2;font-stretch:62%;font-weight:850;font-size:2.6rem;line-height:.9;color:var(--laiton)}
-.etapes h3{font-size:1.25rem;font-stretch:88%}
-/* les quatre étapes sur deux colonnes */
-@media (min-width:60rem){.etapes ol{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:3rem}}
-
-/* Qui vient chez vous */
-.nous{border-top:1px solid var(--trait);padding-block:calc(var(--pas)*2)}
-.nous .wrap{display:grid;gap:var(--pas)}
-.nous h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
-.nous p{max-width:var(--mesure);margin-top:.85rem}
-.avert{background:var(--enduit-2);padding:1rem 1.1rem;border-radius:3px;font-weight:650;font-stretch:92%;font-size:1.0625rem}
-.communes{list-style:none;padding:0;margin-top:.9rem;column-gap:1.5rem}
-.communes li{padding:.2rem 0;break-inside:avoid}
-.nous .wrap > div{min-width:0}
-/* deux puis trois colonnes dès que les noms les plus longs y tiennent */
-@media (min-width:24rem){.communes{columns:2}}
-@media (min-width:40rem){.communes{columns:3}}
-/* présentation et communes côte à côte */
-@media (min-width:60rem){.nous .wrap{grid-template-columns:1.1fr 1fr;gap:3rem}}
-
-/* Demande de visite */
-.visite{background:var(--enduit-2);padding-block:calc(var(--pas)*2)}
-.visite h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.5rem)}
-.visite > .wrap > p{max-width:var(--mesure);margin-top:.75rem}
-.visite .cote{margin-top:2rem;display:grid;gap:.5rem;align-content:start}
-.visite .cote b{font-stretch:88%;font-size:1.125rem}
-.visite .cote a{font-stretch:88%;font-weight:700;font-size:1.5rem;font-variant-numeric:tabular-nums}
-/* sur ordinateur : le formulaire à gauche, les coordonnées en regard */
-@media (min-width:60rem){.visite .grille{display:grid;grid-template-columns:minmax(0,36rem) 1fr;gap:4rem;align-items:start}.visite .cote{margin-top:1.5rem}}
-form{margin-top:1.5rem;display:grid;gap:1rem;max-width:36rem}
-label{display:block;font-weight:600;margin-bottom:.35rem}
-input,select{width:100%;font:inherit;font-size:1rem;color:var(--ardoise);background:#fff;
-  border:1.5px solid #6F7A72;border-radius:4px;padding:.75rem .8rem;height:3.2rem}
-input:focus-visible,select:focus-visible{outline:3px solid var(--laiton);outline-offset:1px;border-color:var(--ardoise)}
-.deux{display:grid;gap:1rem}
-/* deux champs par ligne dès qu'ils ont la place */
-@media (min-width:36rem){.deux{grid-template-columns:1fr 1fr}}
-.merci{display:none;padding:1rem 1.1rem;border:1.5px solid var(--ardoise);border-radius:4px;background:#fff;font-weight:600}
-form.envoye .merci{display:block}
-
-footer{background:var(--ardoise);color:#C8D1D9;padding-block:2.5rem;font-size:.875rem}
-footer .wrap{display:grid;gap:.75rem}
-footer b{color:#fff;font-stretch:62%;font-weight:850;font-size:1.25rem}
-footer a{color:#fff}
-
-/* Barre d'appel sous le pouce, en mobile et en paysage téléphone : on appelle un
-   artisan plus qu'on ne lui écrit. Masquée quand le formulaire est à l'écran. */
-.pouce{display:none}
-@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
-  html{scroll-padding-bottom:6rem}
-  .pouce{display:grid;grid-template-columns:1fr 1.4fr;gap:.5rem;position:fixed;left:0;right:0;bottom:0;z-index:5;
-    padding:.6rem .75rem calc(.6rem + env(safe-area-inset-bottom));background:var(--enduit);border-top:1px solid var(--trait)}
-  .pouce a{display:flex;align-items:center;justify-content:center;min-height:2.75rem;border-radius:4px;font-weight:650;font-stretch:92%;text-decoration:none}
-  .pouce .appel{border:1.5px solid var(--ardoise)}
-  .pouce .demande{background:var(--ardoise);color:var(--enduit);border:1.5px solid transparent}
-  footer{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
-  .pouce.cache{transform:translateY(110%)}
-  .pouce{transition:transform .2s ease-out}
-}
-sup{font-size:.7em;line-height:0}
-/* mouvement réduit : ni animation ni transition */
-@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-/* cibles tactiles : 44 px minimum au doigt (liens d'appel et logo trop bas) */
-@media (pointer: coarse) { .cote a { display: flex; align-items: center; min-height: 44px; } }
-</style>
+<meta name="theme-color" content="#1E3A5F">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/red-hat-display-var.woff2" crossorigin>
+<link rel="stylesheet" href="/exemples/pompe-a-chaleur.css">
+<script src="/exemples/pompe-a-chaleur.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#visite">Aller à la demande de visite</a>
+<a class="skip" href="#contenu">Aller au contenu</a>
 
-<header class="top">
+<!-- Pictogrammes au trait, réutilisés par <use> -->
+<svg width="0" height="0" class="visuel-seul" aria-hidden="true" focusable="false">
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5.2 3.5h3.1l1.6 4.1-2.1 1.3a11.5 11.5 0 0 0 5.3 5.3l1.3-2.1 4.1 1.6v3.1a2 2 0 0 1-2.1 2A16 16 0 0 1 3.2 5.6a2 2 0 0 1 2-2.1z"/></symbol>
+  <symbol id="i-horloge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-lieu" viewBox="0 0 24 24"><path d="M12 21s-6.5-5.8-6.5-11a6.5 6.5 0 0 1 13 0c0 5.2-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></symbol>
+  <symbol id="i-rge" viewBox="0 0 24 24"><circle cx="12" cy="9" r="6"/><path d="M8.6 13.8 7.3 21l4.7-2.4 4.7 2.4-1.3-7.2"/><path d="m9.6 9 1.6 1.6 3.2-3.2"/></symbol>
+  <symbol id="i-bouclier" viewBox="0 0 24 24"><path d="M12 3 19 6v5.2c0 4.3-2.9 8-7 9.8-4.1-1.8-7-5.5-7-9.8V6l7-3z"/><path d="m9 12 2.1 2.1L15.2 10"/></symbol>
+  <symbol id="i-equipe" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c.4-3.4 2.9-5.6 6-5.6s5.6 2.2 6 5.6"/><path d="M15.5 5.2a3 3 0 0 1 0 5.6"/><path d="M17.4 14.6c2 .6 3.3 2.6 3.6 5.4"/></symbol>
+  <symbol id="i-devis" viewBox="0 0 24 24"><path d="M13 3H6.5A1.5 1.5 0 0 0 5 4.5v15A1.5 1.5 0 0 0 6.5 21H11"/><path d="M13 3l5 5h-5z"/><path d="M8 9h3M8 12.5h5"/><circle cx="16.5" cy="16.5" r="4"/><path d="M16.5 14.6v2l1.3.9"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-ok" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9.5"/><path d="m7.8 12.3 2.9 2.9 5.6-5.6"/></symbol>
+  <symbol id="i-alerte" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.2v.3"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-fermer" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-maison" viewBox="0 0 32 32"><path d="M4 15 16 5l12 10"/><path d="M7 13v14h18V13"/><path d="M13.5 27v-7h5v7"/></symbol>
+  <symbol id="i-mitoyenne" viewBox="0 0 32 32"><path d="M2.5 15 9.5 8.5l6.5 6 6.5-6 7 6.5"/><path d="M4.5 13.5V27h23V13.5M16 15v12"/><path d="M8 27v-5h3v5M21 27v-5h3v5"/></symbol>
+  <symbol id="i-appart" viewBox="0 0 32 32"><rect x="7" y="4" width="18" height="23" rx="1.5"/><path d="M11.5 9h2M18.5 9h2M11.5 14h2M18.5 14h2M11.5 19h2M18.5 19h2M14 27v-4h4v4"/></symbol>
+  <symbol id="i-local" viewBox="0 0 32 32"><path d="M4 12 6 5h20l2 7"/><path d="M4 12h24a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0z"/><path d="M6 15v12h20V15"/><path d="M13 27v-6h6v6"/></symbol>
+</svg>
+
+<div class="topbar">
   <div class="wrap">
-    <a class="marque" href="#">
-      <b>Berthier Énergies</b>
-      <span>Chauffage et pompes à chaleur, Touraine</span>
+    <a href="tel:+33261910042"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>02&nbsp;61&nbsp;91&nbsp;00&nbsp;42</a>
+    <span><svg class="ico" aria-hidden="true"><use href="#i-horloge"/></svg>Lun-ven, 8&nbsp;h-18&nbsp;h</span>
+    <span class="zone"><svg class="ico" aria-hidden="true"><use href="#i-lieu"/></svg>Intervention en Indre-et-Loire</span>
+  </div>
+</div>
+
+<header class="entete">
+  <div class="wrap">
+    <a class="logo" href="#" aria-label="Berthier Énergies, accueil">
+      <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+        <rect width="48" height="48" rx="8" fill="#1E3A5F"/>
+        <g fill="none" stroke="#fff" stroke-width="4" transform="translate(-1.5 0)">
+          <path d="M13 13v22M13 15h6a4 4 0 0 1 0 8h-6M13 23h7a5 5 0 0 1 0 10h-7"/>
+          <path d="M32 13v22M30 15h10M30 24h8M30 33h10"/>
+        </g>
+      </svg>
+      <span class="logo-txt">
+        <span class="logo-nom">Berthier Énergies</span>
+        <span class="logo-sig"><span class="long">Chauffage et pompes à chaleur depuis 2006</span><span class="court">Pompes à chaleur depuis 2006</span></span>
+      </span>
     </a>
-    <a class="tel" href="tel:+33261910042" aria-label="Appeler Berthier Énergies au 02 61 91 00 42">02 61 91 00 42</a>
+    <nav class="nav" id="menu" aria-label="Menu principal">
+      <ul>
+        <li><a href="#services">Pompes à chaleur</a></li>
+        <li><a href="#aides">Aides</a></li>
+        <li><a href="#realisations">Réalisations</a></li>
+        <li><a href="#entreprise">L’entreprise</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li class="nav-plus"><a class="btn" href="#devis">Demander un devis</a></li>
+        <li class="nav-plus nav-info">Appelez-nous au <a href="tel:+33261910042">02&nbsp;61&nbsp;91&nbsp;00&nbsp;42</a>, du lundi au vendredi de 8&nbsp;h à 18&nbsp;h.</li>
+      </ul>
+    </nav>
+    <a class="btn btn-devis" href="#devis">Demander un devis</a>
+    <a class="entete-tel" href="tel:+33261910042" aria-label="Appeler le 02 61 91 00 42"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg></a>
+    <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Ouvrir le menu">
+      <svg class="ico ico-ouvrir" aria-hidden="true"><use href="#i-menu"/></svg>
+      <svg class="ico ico-fermer" aria-hidden="true"><use href="#i-fermer"/></svg>
+    </button>
   </div>
 </header>
 
-<main>
-  <section class="ouv">
-    <div class="wrap">
-      <div>
-        <h1>Remplacer votre chaudière fioul par une pompe à chaleur</h1>
-        <p class="chapo">On vient chez vous mesurer ce dont votre maison a besoin, on chiffre la pose aides déduites, et notre équipe l’installe en deux jours.</p>
-        <div class="actions">
-          <a class="btn" href="#visite">Demander une visite technique</a>
-          <p class="discret">Gratuite, sans engagement, sous dix jours dans l’agglomération de Tours.</p>
-        </div>
+<main id="contenu" tabindex="-1">
+  <section class="hero" aria-labelledby="hero-t">
+    <div class="hero-media">
+      <img src="/exemples/img/pac-hero-1200.webp" srcset="/exemples/img/pac-hero-480.webp 480w, /exemples/img/pac-hero-800.webp 800w, /exemples/img/pac-hero-1200.webp 1200w" sizes="100vw"
+           width="1200" height="806" fetchpriority="high"
+           alt="Maison ancienne en pierre claire, derrière son muret de moellons et son portillon blanc">
+    </div>
+    <div class="hero-texte">
+      <h1 id="hero-t">Pompes à chaleur air-eau en Touraine</h1>
+      <p class="hero-sous">Nous remplaçons votre chaudière fioul ou gaz par une pompe à chaleur, posée en 2&nbsp;jours par nos techniciens salariés, puis nous l’entretenons.</p>
+      <div class="hero-actions">
+        <a class="btn" href="#devis">Estimer mon projet</a>
+        <a class="btn btn-clair" href="tel:+33261910042"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>02&nbsp;61&nbsp;91&nbsp;00&nbsp;42</a>
       </div>
-      <figure>
-        <img src="/exemples/img/pac-hero-800.webp"
-             srcset="/exemples/img/pac-hero-480.webp 480w, /exemples/img/pac-hero-800.webp 800w, /exemples/img/pac-hero-1200.webp 1200w"
-             sizes="(min-width: 60rem) 36rem, calc(100vi - 2rem)"
-             width="1200" height="900" fetchpriority="high"
-             alt="Unité extérieure d’une pompe à chaleur air-eau posée sur un lit de galets contre le mur d’une maison">
-        <figcaption>Unité extérieure posée sur plots, à distance du voisinage.</figcaption>
+      <figure class="hero-vignette">
+        <img src="/exemples/img/pac-vignette-480.webp" width="480" height="360" alt="Unité extérieure d’une pompe à chaleur air-eau posée sur un lit de graviers, contre un mur enduit">
+        <figcaption><strong>Visite technique gratuite</strong>Nous choisissons avec vous l’emplacement de l’unité extérieure.</figcaption>
       </figure>
     </div>
-  </section>
 
-  <section class="aide" aria-labelledby="aide-t">
-    <div class="wrap">
-      <h2 id="aide-t">Combien MaPrimeRénov’ prend en charge chez vous</h2>
-      <p class="intro">L’aide dépend de vos revenus. L’Anah les classe en quatre couleurs : choisissez la vôtre.</p>
-      <div class="sim">
-        <fieldset>
-          <legend>Votre catégorie de revenus</legend>
-          <label class="cat bleu"><input type="radio" name="cat" id="c-bleu"><i></i><span><b>Bleu</b><small>très modestes</small></span></label>
-          <label class="cat jaune"><input type="radio" name="cat" id="c-jaune" checked><i></i><span><b>Jaune</b><small>modestes</small></span></label>
-          <label class="cat violet"><input type="radio" name="cat" id="c-violet"><i></i><span><b>Violet</b><small>intermédiaires</small></span></label>
-          <label class="cat rose"><input type="radio" name="cat" id="c-rose"><i></i><span><b>Rose</b><small>supérieurs</small></span></label>
-        </fieldset>
-        <div class="res" aria-live="polite">
-          <div class="montant m-bleu"><strong>5 000 €</strong><p>d’aide pour une pompe à chaleur air-eau.</p></div>
-          <div class="montant m-jaune"><strong>4 000 €</strong><p>d’aide pour une pompe à chaleur air-eau.</p></div>
-          <div class="montant m-violet"><strong>3 000 €</strong><p>d’aide pour une pompe à chaleur air-eau.</p></div>
-          <div class="montant m-rose"><strong>Pas de prime MaPrimeRénov’</strong><p>pour ce geste. La prime énergie (CEE) reste possible : on la chiffre pendant la visite.</p></div>
-        </div>
-      </div>
-      <p class="base">Barème MaPrimeRénov’ par geste en vigueur depuis le 1<sup>er</sup> septembre 2026 (décret du 25 août 2026), sur une dépense plafonnée à 12 000 € TTC. Vous ne connaissez pas votre couleur ? On la vérifie avec vous, avis d’imposition en main.</p>
-    </div>
-  </section>
-
-  <section class="gel" aria-labelledby="gel-t">
-    <div class="wrap">
-      <div>
-        <h2 id="gel-t">Et quand il gèle ?</h2>
-        <p>Une pompe à chaleur air-eau continue de chauffer sous zéro. Elle consomme davantage par grand froid : c’est pour ça qu’on la dimensionne sur la température de base de votre commune et sur les pertes de chaleur de votre maison, mesurées pièce par pièce pendant la visite.</p>
-        <p>Vos radiateurs actuels sont souvent conservés. Si l’un d’eux est trop petit pour une eau moins chaude, on vous le dit avant de signer.</p>
-      </div>
-      <figure>
-        <img src="/exemples/img/pac-gel-800.webp"
-             srcset="/exemples/img/pac-gel-480.webp 480w, /exemples/img/pac-gel-800.webp 800w, /exemples/img/pac-gel-1200.webp 1200w"
-             sizes="(min-width: 60rem) 34rem, calc(100vi - 2rem)"
-             width="1200" height="686" loading="lazy" decoding="async"
-             alt="Pompe à chaleur en fonctionnement sous la neige, givre sur les ailettes">
-        <figcaption>En février, sous la neige, la machine tourne.</figcaption>
-      </figure>
-    </div>
-  </section>
-
-  <section class="etapes" aria-labelledby="etapes-t">
-    <div class="wrap">
-      <h2 id="etapes-t">Comment ça se passe</h2>
-      <ol>
-        <li><h3>La visite technique</h3><p>Une heure chez vous : pertes de chaleur, état des radiateurs, emplacement de l’unité extérieure et distance avec les voisins.</p></li>
-        <li><h3>Le devis, aides déduites</h3><p>Chaque poste chiffré, la prime MaPrimeRénov’ et la prime énergie déjà retirées. Ce que vous signez est ce que vous payez.</p></li>
-        <li><h3>La pose en deux jours</h3><p>Dépose de l’ancienne chaudière, raccordement, mise en service et réglage devant vous.</p></li>
-        <li><h3>L’entretien tous les deux ans</h3><p>Il est obligatoire pour une pompe à chaleur de 4 à 70 kW. On vous rappelle à la date, vous n’avez rien à suivre.</p></li>
-      </ol>
-    </div>
-  </section>
-
-  <section class="nous" aria-labelledby="nous-t">
-    <div class="wrap">
-      <div>
-        <h2 id="nous-t">Qui vient chez vous</h2>
-        <p>Une entreprise familiale installée à Joué‑lès‑Tours depuis 1998. Les poseurs sont nos salariés, pas des sous-traitants trouvés la veille. Qualification RGE QualiPAC, condition pour que vos aides soient versées.</p>
-        <p>Du lundi au vendredi, de 8 h à 18 h.</p>
-        <p class="avert">Nous ne démarchons jamais par téléphone. Si quelqu’un vous appelle de notre part sans que vous l’ayez demandé, ce n’est pas nous.</p>
-      </div>
-      <div>
-        <h3>Les communes où nous intervenons</h3>
-        <ul class="communes">
-          <li>Tours</li><li>Joué‑lès‑Tours</li><li>Saint‑Cyr‑sur‑Loire</li><li>Saint‑Pierre‑des‑Corps</li>
-          <li>Chambray‑lès‑Tours</li><li>Saint‑Avertin</li><li>Montlouis‑sur‑Loire</li><li>Amboise</li>
-          <li>Ballan‑Miré</li><li>Azay‑le‑Rideau</li><li>Chinon</li><li>Loches</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="visite" id="visite" aria-labelledby="visite-t">
-    <div class="wrap">
-      <h2 id="visite-t">Demander une visite technique</h2>
-      <p>On vous rappelle sous 24 heures ouvrées pour fixer un créneau. La visite est gratuite et ne vous engage à rien.</p>
-      <div class="grille">
-      <form id="demande" action="#visite" novalidate>
-        <div class="deux">
-          <div><label for="nom">Nom *</label><input id="nom" name="nom" autocomplete="name" required></div>
-          <div><label for="tel">Téléphone *</label><input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" required></div>
-        </div>
-        <div class="deux">
-          <div><label for="commune">Commune *</label><input id="commune" name="commune" list="liste-communes" autocomplete="address-level2" required></div>
-          <div>
-            <label for="logement">Logement</label>
-            <select id="logement" name="logement"><option>Maison</option><option>Appartement</option></select>
+    <aside class="devis" id="devis" aria-labelledby="devis-t">
+      <form class="devis-carte" id="devis-form" novalidate>
+        <div class="devis-tete">
+          <h2 id="devis-t">Estimez votre projet</h2>
+          <p>4 questions, une réponse sous 48&nbsp;h.</p>
+          <div class="progression">
+            <div class="progression-barre" aria-hidden="true"><span id="devis-barre"></span></div>
+            <span id="devis-etape" aria-live="polite">Étape 1 sur 4</span>
           </div>
         </div>
-        <div>
-          <label for="chauffage">Chauffage actuel</label>
-          <select id="chauffage" name="chauffage">
-            <option>Chaudière fioul</option><option>Chaudière gaz</option><option>Radiateurs électriques</option><option>Poêle ou chaudière bois</option><option>Autre</option>
-          </select>
+
+        <fieldset class="etape" data-etape="1">
+          <legend tabindex="-1">Quel logement faut-il chauffer&#8239;?</legend>
+          <div class="tuiles tuiles-grandes">
+            <label class="tuile"><input type="radio" name="logement" value="Maison individuelle"><svg class="ico" aria-hidden="true"><use href="#i-maison"/></svg>Maison individuelle</label>
+            <label class="tuile"><input type="radio" name="logement" value="Maison mitoyenne"><svg class="ico" aria-hidden="true"><use href="#i-mitoyenne"/></svg>Maison mitoyenne</label>
+            <label class="tuile"><input type="radio" name="logement" value="Appartement"><svg class="ico" aria-hidden="true"><use href="#i-appart"/></svg>Appartement</label>
+            <label class="tuile"><input type="radio" name="logement" value="Local professionnel"><svg class="ico" aria-hidden="true"><use href="#i-local"/></svg>Local professionnel</label>
+          </div>
+          <p class="erreur" id="err-1" role="alert"></p>
+        </fieldset>
+
+        <fieldset class="etape" data-etape="2" hidden>
+          <legend tabindex="-1">Quel est votre chauffage actuel&#8239;?</legend>
+          <div class="tuiles tuiles-texte tuiles-hautes">
+            <label class="tuile"><input type="radio" name="chauffage" value="Chaudière fioul">Chaudière fioul</label>
+            <label class="tuile"><input type="radio" name="chauffage" value="Chaudière gaz">Chaudière gaz</label>
+            <label class="tuile"><input type="radio" name="chauffage" value="Radiateurs électriques">Radiateurs électriques</label>
+            <label class="tuile"><input type="radio" name="chauffage" value="Bois ou granulés">Bois ou granulés</label>
+            <label class="tuile"><input type="radio" name="chauffage" value="Pompe à chaleur ancienne">Pompe à chaleur ancienne</label>
+            <label class="tuile"><input type="radio" name="chauffage" value="Autre ou je ne sais pas">Autre ou je ne sais pas</label>
+          </div>
+          <p class="erreur" id="err-2" role="alert"></p>
+        </fieldset>
+
+        <fieldset class="etape" data-etape="3" hidden>
+          <legend tabindex="-1">Surface et délai</legend>
+          <div class="curseur">
+            <label for="surface">Surface chauffée</label>
+            <output id="surface-val" for="surface">110&nbsp;m²</output>
+            <input type="range" id="surface" name="surface" min="40" max="300" step="5" value="110" aria-describedby="surface-bornes">
+            <div class="bornes" id="surface-bornes"><span>40&nbsp;m²</span><span>300&nbsp;m² et plus</span></div>
+          </div>
+          <fieldset class="sous-groupe">
+            <legend>Quand souhaitez-vous démarrer&#8239;?</legend>
+            <div class="tuiles tuiles-texte">
+              <label class="tuile"><input type="radio" name="delai" value="Au plus vite">Au plus vite<small>panne ou chaudière en fin de vie</small></label>
+              <label class="tuile"><input type="radio" name="delai" value="Dans les 3 mois">Dans les 3&nbsp;mois</label>
+              <label class="tuile"><input type="radio" name="delai" value="Dans l’année">Dans l’année</label>
+              <label class="tuile"><input type="radio" name="delai" value="Je me renseigne">Je me renseigne</label>
+            </div>
+          </fieldset>
+          <p class="erreur" id="err-3" role="alert"></p>
+        </fieldset>
+
+        <fieldset class="etape" data-etape="4" hidden>
+          <legend tabindex="-1">Où et comment vous rappeler&#8239;?</legend>
+          <div class="champ">
+            <label for="nom">Nom</label>
+            <input id="nom" name="nom" autocomplete="name" aria-describedby="nom-err">
+            <p class="err-champ" id="nom-err"></p>
+          </div>
+          <div class="deux-champs">
+            <div class="champ">
+              <label for="tel">Téléphone</label>
+              <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" aria-describedby="tel-err">
+              <p class="err-champ" id="tel-err"></p>
+            </div>
+            <div class="champ">
+              <label for="cp">Code postal</label>
+              <input id="cp" name="cp" inputmode="numeric" autocomplete="postal-code" maxlength="5" aria-describedby="cp-err">
+              <p class="err-champ" id="cp-err"></p>
+            </div>
+          </div>
+          <p class="rgpd">Ces informations servent uniquement à vous rappeler au sujet de votre projet.</p>
+        </fieldset>
+
+        <div class="etape" data-etape="5" hidden>
+          <h3 class="titre-etape" tabindex="-1">Vérifiez votre demande</h3>
+          <dl class="recap" id="recap"></dl>
         </div>
-        <datalist id="liste-communes">
-          <option value="Tours"></option><option value="Joué-lès-Tours"></option><option value="Saint-Cyr-sur-Loire"></option><option value="Amboise"></option><option value="Chinon"></option><option value="Loches"></option>
-        </datalist>
-        <p class="discret">* obligatoire</p>
-        <div><button class="btn" type="submit">Demander la visite</button></div>
-        <p class="merci" role="status">Demande enregistrée. Dans la version en ligne, Berthier Énergies vous rappelle sous 24 heures ouvrées.</p>
+
+        <div class="etape fini" data-etape="6" hidden>
+          <svg class="ico ico-ok" aria-hidden="true"><use href="#i-ok"/></svg>
+          <h3 class="titre-etape" tabindex="-1">Demande envoyée</h3>
+          <p>Dans la version en ligne, un conseiller de Berthier Énergies vous rappelle sous 48&nbsp;h au <strong id="fini-tel"></strong> pour fixer la visite technique.</p>
+          <p>Démonstration&#8239;: aucune donnée n’a été transmise.</p>
+        </div>
+
+        <div class="devis-nav">
+          <button class="btn btn-contour" type="button" id="devis-retour" hidden>Retour</button>
+          <button class="btn" type="submit" id="devis-suivant">Continuer</button>
+        </div>
       </form>
-      <aside class="cote" aria-label="Nous joindre">
-        <b>Vous préférez appeler ?</b>
-        <a href="tel:+33261910042">02 61 91 00 42</a>
-        <p>Du lundi au vendredi, de 8 h à 18 h. Hors de ces horaires, laissez votre demande : on vous rappelle le jour ouvré suivant.</p>
-      </aside>
+    </aside>
+  </section>
+
+  <section class="confiance" aria-label="Nos engagements">
+    <div class="wrap">
+      <ul>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-rge"/></svg><div><strong>RGE QualiPAC</strong><span>La qualification qui ouvre droit aux aides</span></div></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-bouclier"/></svg><div><strong>Garantie décennale</strong><span>Sur chaque installation</span></div></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-equipe"/></svg><div><strong>Depuis 2006</strong><span>6 techniciens salariés, aucune sous-traitance</span></div></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-devis"/></svg><div><strong>Devis sous 48&nbsp;h</strong><span>Pose en 2&nbsp;jours, mise en service comprise</span></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" id="services" aria-labelledby="services-t">
+    <div class="wrap">
+      <div class="entete-section">
+        <h2 id="services-t">Chauffer votre maison, du devis au dépannage</h2>
+        <p>Une seule équipe s’occupe de tout&#8239;: celle qui chiffre votre projet est celle qui l’installe, puis qui l’entretient.</p>
+      </div>
+      <div class="services">
+        <article class="service">
+          <img src="/exemples/img/pac-service-pac-800.webp" srcset="/exemples/img/pac-service-pac-480.webp 480w, /exemples/img/pac-service-pac-800.webp 800w, /exemples/img/pac-service-pac-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async"
+               alt="Unité extérieure d’une pompe à chaleur air-eau posée sur un socle, au pied d’une maison, entre deux massifs">
+          <h3>Pompe à chaleur air-eau</h3>
+          <p>Elle remplace votre chaudière et alimente vos radiateurs ou votre plancher chauffant, ainsi que l’eau chaude.</p>
+          <ul>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Puissance calculée pièce par pièce pendant la visite</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Unité extérieure placée loin des chambres et du voisinage</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Dossier d’aides monté par nos soins</li>
+          </ul>
+        </article>
+        <article class="service">
+          <img src="/exemples/img/pac-service-chaudiere-800.webp" srcset="/exemples/img/pac-service-chaudiere-480.webp 480w, /exemples/img/pac-service-chaudiere-800.webp 800w, /exemples/img/pac-service-chaudiere-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async"
+               alt="Mains gantées d’un technicien serrant le raccord d’un radiateur neuf">
+          <h3>Chaudière et sortie du fioul</h3>
+          <p>Dépose de l’ancienne chaudière et de la cuve, raccordement à vos radiateurs, remplacement de ceux qui seraient trop petits.</p>
+          <ul>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Neutralisation et évacuation de la cuve fioul</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Radiateurs existants conservés dès que possible</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Chaudières gaz à condensation sur demande</li>
+          </ul>
+        </article>
+        <article class="service">
+          <img src="/exemples/img/pac-service-entretien-800.webp" srcset="/exemples/img/pac-service-entretien-480.webp 480w, /exemples/img/pac-service-entretien-800.webp 800w, /exemples/img/pac-service-entretien-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 44rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async"
+               alt="Technicien relevant les pressions d’une pompe à chaleur avec un manomètre à deux cadrans">
+          <h3>Entretien et dépannage</h3>
+          <p>Un contrat d’entretien simple, une visite à date fixe et un technicien qui connaît déjà votre installation.</p>
+          <ul>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Rappel de la date d’entretien, rien à suivre</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Dépannage prioritaire pour nos clients sous contrat</li>
+            <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Toutes marques de pompes à chaleur et chaudières</li>
+          </ul>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-pierre" id="aides" aria-labelledby="aides-t">
+    <div class="wrap aides">
+      <div>
+        <div class="entete-section">
+          <h2 id="aides-t">MaPrimeRénov’&#8239;: combien pour votre pompe à chaleur&#8239;?</h2>
+          <p>L’aide dépend des revenus de votre foyer, que l’Anah classe en quatre couleurs. Choisissez la vôtre.</p>
+        </div>
+        <fieldset class="couleurs">
+          <legend>Votre catégorie de revenus</legend>
+          <div class="tuiles">
+            <label class="tuile"><input type="radio" name="couleur" id="c-bleu" value="bleu"><span class="pastille bleu"></span><span>Bleu<small>revenus très modestes</small></span></label>
+            <label class="tuile"><input type="radio" name="couleur" id="c-jaune" value="jaune" checked><span class="pastille jaune"></span><span>Jaune<small>revenus modestes</small></span></label>
+            <label class="tuile"><input type="radio" name="couleur" id="c-violet" value="violet"><span class="pastille violet"></span><span>Violet<small>revenus intermédiaires</small></span></label>
+            <label class="tuile"><input type="radio" name="couleur" id="c-rose" value="rose"><span class="pastille rose"></span><span>Rose<small>revenus supérieurs</small></span></label>
+          </div>
+        </fieldset>
+        <p class="bareme">Barème MaPrimeRénov’ par geste en vigueur depuis le 1<sup>er</sup>&nbsp;septembre 2026 pour une pompe à chaleur air-eau, sur une dépense plafonnée à 12&#8239;000&nbsp;€&nbsp;TTC. Vous ne connaissez pas votre couleur&#8239;? Nous la vérifions avec vous, avis d’imposition en main.</p>
+      </div>
+      <div class="resultat">
+        <div aria-live="polite">
+        <div class="montant-bloc m-bleu">
+          <p class="etiquette">Catégorie bleue, prime MaPrimeRénov’</p>
+          <strong class="montant">5&#8239;000&nbsp;€</strong>
+          <p class="detail">pour l’installation d’une pompe à chaleur air-eau. Nous montons le dossier avec vous.</p>
+        </div>
+        <div class="montant-bloc m-jaune">
+          <p class="etiquette">Catégorie jaune, prime MaPrimeRénov’</p>
+          <strong class="montant">4&#8239;000&nbsp;€</strong>
+          <p class="detail">pour l’installation d’une pompe à chaleur air-eau. Nous montons le dossier avec vous.</p>
+        </div>
+        <div class="montant-bloc m-violet">
+          <p class="etiquette">Catégorie violette, prime MaPrimeRénov’</p>
+          <strong class="montant">3&#8239;000&nbsp;€</strong>
+          <p class="detail">pour l’installation d’une pompe à chaleur air-eau. Nous montons le dossier avec vous.</p>
+        </div>
+        <div class="montant-bloc m-rose">
+          <p class="etiquette">Catégorie rose, prime MaPrimeRénov’</p>
+          <strong class="montant long">Pas de prime MaPrimeRénov’</strong>
+          <p class="detail">pour ce geste. D’autres aides peuvent s’appliquer&#8239;: nous les vérifions avec vous pendant la visite.</p>
+        </div>
+        </div>
+        <hr>
+        <p class="rge"><svg class="ico" aria-hidden="true"><use href="#i-rge"/></svg><span>Berthier Énergies est qualifié RGE QualiPAC&#8239;: c’est la condition pour que l’aide vous soit versée.</span></p>
+        <a class="btn" href="#devis">Estimer mon projet</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="realisations" aria-labelledby="realisations-t">
+    <div class="wrap">
+      <div class="entete-section">
+        <h2 id="realisations-t">Nos derniers chantiers en Touraine</h2>
+        <p>Plus de 1&#8239;100 installations depuis 2006, de Chinon à Amboise. Voici quelques chantiers de l’année.</p>
+      </div>
+      <ul class="chantiers">
+        <li class="chantier">
+          <img src="/exemples/img/pac-real-saint-cyr-800.webp" srcset="/exemples/img/pac-real-saint-cyr-480.webp 480w, /exemples/img/pac-real-saint-cyr-800.webp 800w, /exemples/img/pac-real-saint-cyr-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Maison blanche au toit d’ardoise et aux volets de bois, trois lucarnes">
+          <span class="type">Pompe à chaleur air-eau</span>
+          <h3>Saint-Cyr-sur-Loire</h3>
+          <p>Remplacement d’une chaudière fioul de 1994. Radiateurs conservés, cuve évacuée.</p>
+        </li>
+        <li class="chantier">
+          <img src="/exemples/img/pac-real-azay-800.webp" srcset="/exemples/img/pac-real-azay-480.webp 480w, /exemples/img/pac-real-azay-800.webp 800w, /exemples/img/pac-real-azay-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Maison de maître en tuffeau avec sa tour d’escalier coiffée d’ardoise">
+          <span class="type">Pompe à chaleur air-eau</span>
+          <h3>Azay-le-Rideau</h3>
+          <p>Maison en tuffeau de 220&nbsp;m². Unité extérieure installée dans la cour, à l’abri des regards.</p>
+        </li>
+        <li class="chantier">
+          <img src="/exemples/img/pac-real-chambray-800.webp" srcset="/exemples/img/pac-real-chambray-480.webp 480w, /exemples/img/pac-real-chambray-800.webp 800w, /exemples/img/pac-real-chambray-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Unité extérieure d’une pompe à chaleur sur un lit de graviers blancs, devant un mur enduit">
+          <span class="type">Pompe à chaleur et plancher chauffant</span>
+          <h3>Chambray-lès-Tours</h3>
+          <p>Maison récente. Pompe à chaleur raccordée au plancher chauffant et à un ballon d’eau chaude.</p>
+        </li>
+        <li class="chantier">
+          <img src="/exemples/img/pac-real-loches-800.webp" srcset="/exemples/img/pac-real-loches-480.webp 480w, /exemples/img/pac-real-loches-800.webp 800w, /exemples/img/pac-real-loches-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Petite maison de campagne en pierre au bord d’un chemin, entourée d’arbres">
+          <span class="type">Chaudière remplacée</span>
+          <h3>Loches</h3>
+          <p>Maison de campagne chauffée au fioul. Passage à la pompe à chaleur avec deux radiateurs agrandis.</p>
+        </li>
+        <li class="chantier">
+          <img src="/exemples/img/pac-real-chenonceaux-800.webp" srcset="/exemples/img/pac-real-chenonceaux-480.webp 480w, /exemples/img/pac-real-chenonceaux-800.webp 800w, /exemples/img/pac-real-chenonceaux-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Longue maison au toit d’ardoise et aux lucarnes rouges, façade couverte de vigne vierge">
+          <span class="type">Entretien sous contrat</span>
+          <h3>Chenonceaux</h3>
+          <p>Pompe à chaleur posée en 2021, entretenue par la même équipe depuis sa mise en service.</p>
+        </li>
+        <li class="chantier">
+          <img src="/exemples/img/pac-real-amboise-800.webp" srcset="/exemples/img/pac-real-amboise-480.webp 480w, /exemples/img/pac-real-amboise-800.webp 800w, /exemples/img/pac-real-amboise-1200.webp 1200w" sizes="(min-width: 76rem) 24rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Maison ancienne en tuffeau avec lucarne et toit de tuiles, au milieu d’un jardin">
+          <span class="type">Pompe à chaleur air-eau</span>
+          <h3>Amboise</h3>
+          <p>Remplacement d’une chaudière gaz. Pose réalisée en deux jours, maison chauffée le soir même.</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section-pierre" id="entreprise" aria-labelledby="entreprise-t">
+    <div class="wrap entreprise">
+      <div class="entreprise-texte">
+        <h2 class="h2" id="entreprise-t">Une entreprise familiale de Joué-lès-Tours</h2>
+        <p>Berthier Énergies a ouvert en 2006 dans un atelier de la rue des Artisans, à Joué-lès-Tours. Nous y sommes toujours, avec six techniciens salariés formés chez nous à la pose et au réglage des pompes à chaleur.</p>
+        <p>Nous ne sous-traitons pas la pose. Le technicien qui vient faire la visite connaît le chantier, et c’est la même équipe qui revient pour l’entretien.</p>
+        <dl class="chiffres">
+          <div><dt>année de création</dt><dd>2006</dd></div>
+          <div><dt>techniciens salariés</dt><dd>6</dd></div>
+          <div><dt>installations en Touraine</dt><dd>1&#8239;100+</dd></div>
+        </dl>
+        <p class="avertissement"><svg class="ico" aria-hidden="true"><use href="#i-alerte"/></svg><span>Nous ne démarchons jamais par téléphone. Si quelqu’un vous appelle de notre part sans que vous l’ayez demandé, ce n’est pas nous.</span></p>
+      </div>
+      <div class="photos">
+        <figure class="principale">
+          <img src="/exemples/img/pac-atelier-800.webp" srcset="/exemples/img/pac-atelier-480.webp 480w, /exemples/img/pac-atelier-800.webp 800w, /exemples/img/pac-atelier-1200.webp 1200w" sizes="(min-width: 60rem) 33rem, 92vw" width="1200" height="900" loading="lazy" decoding="async" alt="Technicien vu de dos, en polo bleu, branchant un manomètre électronique sur une installation">
+          <figcaption>Contrôle d’une installation avant sa mise en service.</figcaption>
+        </figure>
+        <figure class="seconde">
+          <img src="/exemples/img/pac-camion-800.webp" srcset="/exemples/img/pac-camion-480.webp 480w, /exemples/img/pac-camion-800.webp 800w, /exemples/img/pac-camion-1200.webp 1200w" sizes="(min-width: 60rem) 18rem, (min-width: 40rem) 46vw, 92vw" width="1200" height="800" loading="lazy" decoding="async" alt="Utilitaire blanc de l’entreprise, échelle sur le toit, garé à l’ombre des arbres">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="contact" aria-labelledby="contact-t">
+    <div class="wrap">
+      <div class="entete-section">
+        <h2 id="contact-t">Zone d’intervention et contact</h2>
+        <p>Nous intervenons dans toute l’Indre-et-Loire, depuis notre atelier de Joué-lès-Tours.</p>
+      </div>
+      <div class="contact">
+        <div>
+          <div class="carte">
+            <svg class="carte-svg" viewBox="0 0 529 353" role="img" aria-labelledby="carte-t carte-d">
+            <title id="carte-t">Zone d’intervention de Berthier Énergies</title>
+            <desc id="carte-d">Carte schématique de l’Indre-et-Loire&#8239;: l’entreprise est à Joué-lès-Tours et intervient de Chinon à Amboise, de Château-Renault à Loches.</desc>
+            <g class="rivieres">
+            <path class="riv riv-loire" d="M0 260 L23 262 L59 245 L101 223 L143 198 L172 186 L210 161 L244 149 L281 143 L319 143 L353 140 L391 136 L420 124 L454 99 L496 68 L529 43"/>
+            <path class="riv riv-cher" d="M529 186 L462 189 L412 189 L370 183 L328 167 L294 158 L260 161 L227 174 L197 183 L172 186"/>
+            <path class="riv riv-indre" d="M529 353 L454 335 L410 311 L370 285 L319 260 L269 242 L223 232 L187 228 L143 226 L97 232"/>
+            <path class="riv riv-vienne" d="M252 353 L202 329 L160 304 L118 291 L93 288 L55 273 L23 262"/>
+            </g>
+            <text class="riv-nom" x="130" y="202" transform="rotate(-24 130 202)">Loire</text>
+            <text class="riv-nom" x="340" y="182" transform="rotate(12 340 182)">Cher</text>
+            <text class="riv-nom" x="302" y="259" transform="rotate(-18 302 259)">Indre</text>
+            <text class="riv-nom" x="160" y="311" transform="rotate(-14 160 311)">Vienne</text>
+            <g class="villes">
+            <circle cx="279" cy="146" r="5"/>
+            <text x="288" y="151" text-anchor="start" class="grande">Tours</text>
+            <circle cx="404" cy="135" r="3.5"/>
+            <text x="413" y="140" text-anchor="start">Amboise</text>
+            <circle cx="93" cy="287" r="3.5"/>
+            <text x="102" y="292" text-anchor="start">Chinon</text>
+            <circle cx="410" cy="311" r="3.5"/>
+            <text x="419" y="316" text-anchor="start">Loches</text>
+            <circle cx="187" cy="228" r="3.5"/>
+            <text x="187" y="250" text-anchor="middle">Azay-le-Rideau</text>
+            <circle cx="162" cy="189" r="3.5"/>
+            <text x="162" y="177" text-anchor="middle">Langeais</text>
+            <circle cx="374" cy="23" r="3.5"/>
+            <text x="383" y="28" text-anchor="start">Château-Renault</text>
+            <circle cx="253" cy="322" r="3.5"/>
+            <text x="262" y="327" text-anchor="start" class="mineure">Sainte-Maure-de-Touraine</text>
+            <circle cx="223" cy="51" r="3.5"/>
+            <text x="232" y="56" text-anchor="start" class="mineure">Neuillé-Pont-Pierre</text>
+            <circle cx="408" cy="188" r="3.5"/>
+            <text x="417" y="193" text-anchor="start">Bléré</text>
+                                    </g>
+            <g class="siege"><rect x="261" y="163" width="18" height="18" rx="4"/><text x="270" y="204" text-anchor="middle">Joué-lès-Tours</text></g>
+            </svg>          </div>
+          <p class="carte-legende"><span class="carre-atelier" aria-hidden="true"></span>Notre atelier, à Joué-lès-Tours</p>
+          <p class="communes-t">Communes où nous intervenons le plus souvent&#8239;:</p>
+          <ul class="communes">
+            <li>Tours</li><li>Joué-lès-Tours</li><li>Saint-Cyr-sur-Loire</li><li>Saint-Pierre-des-Corps</li>
+            <li>Chambray-lès-Tours</li><li>Saint-Avertin</li><li>Ballan-Miré</li><li>Fondettes</li>
+            <li>Montlouis-sur-Loire</li><li>Vouvray</li><li>Amboise</li><li>Bléré</li>
+            <li>Azay-le-Rideau</li><li>Langeais</li><li>Chinon</li><li>Loches</li>
+          </ul>
+        </div>
+        <div class="coord">
+          <h3>Berthier Énergies</h3>
+          <address>14 rue des Artisans<br>37300 Joué-lès-Tours</address>
+          <a class="tel-grand" href="tel:+33261910042"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>02&nbsp;61&nbsp;91&nbsp;00&nbsp;42</a>
+          <h3>Horaires</h3>
+          <table class="horaires">
+            <tbody>
+              <tr><th scope="row">Du lundi au vendredi</th><td>8&nbsp;h-18&nbsp;h</td></tr>
+              <tr><th scope="row">Samedi et dimanche</th><td>Fermé</td></tr>
+            </tbody>
+          </table>
+          <p class="bareme">En dehors de ces horaires, laissez votre demande de devis&#8239;: nous vous rappelons le jour ouvré suivant.</p>
+          <a class="btn" href="#devis">Demander un devis</a>
+        </div>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
+<footer class="pied">
   <div class="wrap">
-    <b>Berthier Énergies</b>
-    <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-pompe-a-chaleur" target="_top">4dayvelopment</a>. L’entreprise, son numéro et sa qualification sont fictifs.</p>
-    <p>Photos : « Wärmepumpe Außeneinheit », Mueller felix, et « Ecodan outdoor unit in the snow », PeterEastern, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>, via Wikimedia Commons. Marques retirées de la première photo.</p>
+    <div class="pied-grille">
+      <div>
+        <a class="logo" href="#" aria-label="Berthier Énergies, retour en haut de page">
+          <svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">
+            <rect width="48" height="48" rx="8" fill="#FFFFFF"/>
+            <g fill="none" stroke="#1E3A5F" stroke-width="4" transform="translate(-1.5 0)">
+              <path d="M13 13v22M13 15h6a4 4 0 0 1 0 8h-6M13 23h7a5 5 0 0 1 0 10h-7"/>
+              <path d="M32 13v22M30 15h10M30 24h8M30 33h10"/>
+            </g>
+          </svg>
+          <span class="logo-txt">
+            <span class="logo-nom">Berthier Énergies</span>
+            <span class="logo-sig"><span class="long">Chauffage et pompes à chaleur depuis 2006</span><span class="court">Pompes à chaleur depuis 2006</span></span>
+          </span>
+        </a>
+        <address>14 rue des Artisans, 37300 Joué-lès-Tours<br>
+          <a href="tel:+33261910042">02&nbsp;61&nbsp;91&nbsp;00&nbsp;42</a><br>
+          Du lundi au vendredi, 8&nbsp;h-18&nbsp;h</address>
+      </div>
+      <nav aria-label="Plan du site">
+        <h2>Le site</h2>
+        <ul>
+          <li><a href="#services">Pompes à chaleur</a></li>
+          <li><a href="#aides">Aides</a></li>
+          <li><a href="#realisations">Réalisations</a></li>
+          <li><a href="#entreprise">L’entreprise</a></li>
+          <li><a href="#contact">Contact</a></li>
+          <li><a href="#devis">Demander un devis</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2>Qualifications</h2>
+        <div class="badges">
+          <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-rge"/></svg>RGE QualiPAC</span>
+          <span class="badge"><svg class="ico" aria-hidden="true"><use href="#i-bouclier"/></svg>Garantie décennale</span>
+        </div>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <p>Site de démonstration réalisé par <a href="/services/site-internet-pompe-a-chaleur" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs.</p>
+      <p>Photos&#8239;: Pexels.</p>
+    </div>
   </div>
 </footer>
 
 <nav class="pouce" aria-label="Contact rapide">
-  <a class="appel" href="tel:+33261910042">Appeler</a>
-  <a class="demande" href="#visite">Demander une visite</a>
+  <a class="btn btn-contour" href="tel:+33261910042"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Appeler</a>
+  <a class="btn" href="#devis">Mon devis</a>
 </nav>
-
-<script src="/exemples/pompe-a-chaleur.js" defer></script>
 </body>
 </html>

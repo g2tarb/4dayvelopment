@@ -1,0 +1,435 @@
+/* Montagnon Chauffage (démo 4dayvelopment), dépannage de chaudières gaz à Lyon et Villeurbanne.
+   Concept « page d’urgence » : la page d’arrivée d’une annonce Google. Pas de menu. Le numéro est
+   l’élément dominant du premier écran, les prix sont lisibles avant l’appel, la veilleuse dit à
+   l’heure de Lyon si un technicien peut venir aujourd’hui, le tri mène à « appeler », « être
+   rappelé » ou aux consignes gaz, qui passent avant tout.
+   Identité : la flamme bleue du brûleur. Bleu de flamme pour tout ce qui appelle, cœur cyan pour
+   ce qui est allumé, encre de nuit pour le texte, émail froid pour le fond, rouge réservé au gaz.
+   Police : Atkinson Hyperlegible Next (SIL OFL 1.1), variable 200-800, dessinée pour les lecteurs
+   malvoyants. Corps de base 19 px : la page doit se lire sans lunettes. */
+@font-face{font-family:"Atkinson Hyperlegible Next";font-style:normal;font-weight:200 800;font-display:swap;
+  src:url("/fonts/atkinson-hyperlegible-next-var.woff2") format("woff2")}
+
+:root{
+  color-scheme:light;
+  --fond:#F3F5FA;          /* émail froid du capot */
+  --blanc:#FFFFFF;
+  --encre:#0E1B3D;         /* texte, veilleuse, pied de page */
+  --encre-2:#404B66;       /* texte secondaire : 8,2:1 sur le fond */
+  --encre-3:#C5CEE6;       /* texte secondaire sur l’encre */
+  --filet:#CBD3E4;
+  --flamme:#2347D6;        /* bleu de flamme : tout ce qui appelle (7:1 avec le blanc) */
+  --flamme-fonce:#1832A6;
+  --flamme-vive:#4C7BFF;   /* la flamme allumée, sur fond d’encre */
+  --flamme-pale:#E3E9FC;
+  --coeur:#8AD4FF;         /* le cœur de la flamme */
+  --gaz:#B3261E;           /* réservé à l’odeur de gaz et aux erreurs */
+  --gaz-fonce:#8E1C16;
+  --gaz-pale:#FCEBE9;
+  --r:14px;
+  --r-s:8px;
+  --pas:clamp(1rem,.5rem + 2vw,2rem);
+  --section:clamp(3rem,2rem + 4vw,5.5rem);
+  --mesure:62ch;
+  /* largeur de « 04 65 71 20 38 » en em, graisse 800, chiffres tabulaires (mesurée) */
+  --num-em:7.6;
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{font-family:"Atkinson Hyperlegible Next",system-ui,sans-serif;font-weight:400;font-size:1.1875rem;
+  line-height:1.55;color:var(--encre);background:var(--fond);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-underline-offset:.18em;text-decoration-thickness:.08em}
+button,input{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--flamme);outline-offset:3px}
+h1,h2,h3{line-height:1.08;letter-spacing:-.015em;text-wrap:balance}
+h2{font-size:clamp(1.85rem,1.2rem + 2.2vw,2.75rem);font-weight:800}
+h3{font-size:1.375rem;font-weight:800;line-height:1.2}
+p{text-wrap:pretty}
+[hidden]{display:none !important}
+.vs{position:absolute;width:0;height:0;overflow:hidden}
+.ico{width:1.3em;height:1.3em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.wrap{width:min(100% - 2*var(--pas),74rem);margin-inline:auto}
+.skip{position:absolute;left:-999px;top:.5rem;z-index:50;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--r-s)}
+.skip:focus{left:.5rem}
+
+/* Boutons : grands, contrastés, jamais plus petits que 56 px de haut */
+.bouton,.bouton-2,.bouton-gaz{display:inline-flex;align-items:center;justify-content:center;gap:.6rem;
+  min-height:3.5rem;padding:.8rem 1.4rem;border:2px solid transparent;border-radius:var(--r-s);
+  font-weight:700;line-height:1.2;text-align:center;text-decoration:none;transition:background-color .15s}
+.bouton{background:var(--flamme);color:#fff}
+.bouton:hover{background:var(--flamme-fonce)}
+.bouton-2{background:var(--blanc);color:var(--encre);border-color:var(--encre)}
+.bouton-2:hover{background:var(--flamme-pale)}
+.bouton-gaz{background:var(--blanc);color:var(--gaz);border-color:var(--gaz)}
+.bouton-gaz:hover{background:var(--gaz-pale)}
+/* ligne fermée : la demande de rappel devient l’action utile */
+body[data-ligne="fermee"] .une-suite .vers-rappel{background:var(--encre);border-color:var(--encre);color:#fff}
+body[data-ligne="fermee"] .une-suite .vers-rappel:hover{background:#000}
+.bouton:active,.bouton-2:active,.bouton-gaz:active,.tuile:active{transform:translateY(1px)}
+.nw{white-space:nowrap}
+.lien{display:inline-flex;align-items:center;min-height:2.75rem;font-weight:700;color:var(--flamme-fonce)}
+
+/* En-tête : le logo, la veilleuse, le téléphone. Rien d’autre. */
+.tete{background:var(--blanc);border-bottom:1px solid var(--filet)}
+.tete-in{width:min(100% - 2*var(--pas),74rem);margin-inline:auto;display:flex;flex-wrap:wrap;align-items:center;
+  justify-content:space-between;gap:.75rem 1.5rem;padding-block:.75rem}
+.logo{display:flex;align-items:center;gap:.7rem;min-width:0;text-decoration:none}
+.logo-marque{width:2.75rem;height:2.75rem;flex:none}
+.lm-fond{fill:var(--flamme)}
+.lm-flamme{fill:#fff}
+.lm-coeur{fill:var(--coeur)}
+.logo-txt{display:flex;flex-direction:column;min-width:0;line-height:1.15}
+.logo-txt b{font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
+.logo-txt span{font-size:1rem;color:var(--encre-2)}
+.tete-tel{display:inline-flex;align-items:center;gap:.5rem;min-height:3rem;padding:.5rem 1.1rem;border:2px solid var(--encre);
+  border-radius:999px;font-size:1.125rem;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;text-decoration:none}
+.tete-tel:hover{background:var(--flamme-pale)}
+
+/* La veilleuse : allumée quand un technicien peut venir aujourd’hui, en veille le soir, éteinte le dimanche */
+.statut{display:flex;align-items:center;gap:.8rem;flex:1 1 22rem;max-width:40rem;padding:.6rem 1.2rem .6rem .8rem;
+  border-radius:var(--r);background:var(--encre);color:#fff;line-height:1.3}
+.statut-txt{min-width:0}
+.statut-txt b{display:block;font-weight:700}
+.statut-txt span{font-size:1rem;color:var(--encre-3)}
+.veilleuse{width:2.1rem;height:2.1rem;flex:none;overflow:visible}
+.v-flamme{fill:var(--flamme-vive)}
+.v-coeur{fill:var(--coeur)}
+.v-flamme,.v-coeur{transform-box:fill-box;transform-origin:50% 100%}
+.statut[data-etat="matin"] .veilleuse,.statut[data-etat="apres"] .veilleuse{transform:scale(.82)}
+.statut[data-etat="soir"] .v-flamme,.statut[data-etat="ferme"] .v-flamme{fill:none;stroke:#8D98B5;stroke-width:1.4}
+.statut[data-etat="soir"] .v-coeur,.statut[data-etat="ferme"] .v-coeur{display:none}
+/* téléphone et tablette : la veilleuse devient un bandeau pleine largeur au-dessus du logo */
+@media (max-width:59.99rem){
+  .statut{order:-1;flex-basis:calc(100% + 2*var(--pas));max-width:none;margin:-.75rem calc(-1*var(--pas)) 0;padding:.65rem var(--pas);border-radius:0}
+  .logo{flex:1 1 0}
+}
+@media (max-width:33rem){
+  .tete-tel{width:3.25rem;height:3.25rem;padding:0;justify-content:center}
+  .tete-tel span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .tete-tel .ico{width:1.5rem;height:1.5rem}
+  .logo-txt span{font-size:.9375rem}
+}
+/* ordinateur : l’en-tête reste en haut, le numéro toujours à portée de clic */
+@media (min-width:60rem) and (min-height:40rem){
+  .tete{position:sticky;top:0;z-index:20}
+  section[id],.assistant{scroll-margin-top:6.5rem}
+}
+
+/* ── Premier écran ─────────────────────────────────────────────── */
+.une{padding-block:clamp(1.25rem,.6rem + 2.5vw,2.75rem) clamp(2.5rem,1.5rem + 3vw,4rem)}
+.une-grille{display:grid;grid-template-columns:minmax(0,1fr);gap:1rem;
+  grid-template-areas:"titre" "appel" "suite" "ticket" "chapo"}
+.une h1{grid-area:titre;max-width:20ch;font-size:clamp(1.9rem,1.1rem + 3.2vw,3.6rem);font-weight:800}
+.chapo{grid-area:chapo;max-width:46ch;color:var(--encre-2)}
+.une-suite{grid-area:suite;display:flex;flex-wrap:wrap;gap:.6rem}
+.une-suite > *{flex:1 1 12rem}
+.ticket{grid-area:ticket}
+
+/* Le bouton d’appel : le numéro grandit avec le bouton (unités de conteneur) */
+.appel{grid-area:appel;position:relative;isolation:isolate;overflow:hidden;container-type:inline-size;
+  display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"ico lib" "num num" "sous sous";
+  align-items:center;gap:.35rem .9rem;padding:1.1rem 1.25rem 1.25rem;border-radius:var(--r);
+  background:var(--flamme);color:#fff;text-decoration:none;
+  box-shadow:0 1px 0 rgb(14 27 61 / .25),0 22px 44px -22px rgb(35 71 214 / .7);transition:background-color .15s}
+.appel:hover{background:var(--flamme-fonce)}
+.appel:focus-visible{outline:4px solid var(--encre);outline-offset:4px}
+.appel-txt{display:contents}
+.appel-ico{grid-area:ico;display:grid;place-items:center;width:2.9rem;aspect-ratio:1;border-radius:50%;background:#fff;color:var(--flamme)}
+.appel-ico .ico{width:55%;height:55%;stroke-width:2.3}
+.appel-lib{grid-area:lib;font-size:1.25rem;font-weight:700;line-height:1.2}
+.appel-num{grid-area:num;font-size:calc(100cqi / var(--num-em));font-weight:800;line-height:1;letter-spacing:-.01em;
+  font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:.1em}
+.appel-sous{grid-area:sous;font-size:1rem;color:#DCE4FF;line-height:1.4}
+/* la flamme du brûleur, en fondu « écran » : le noir de la photo disparaît dans le bleu */
+.appel-flamme{position:absolute;z-index:-1;right:-1.5rem;top:-2.4rem;width:min(52%,15rem);max-width:none;height:auto;
+  mix-blend-mode:screen;opacity:.85;pointer-events:none;
+  -webkit-mask-image:linear-gradient(to right,transparent,#000 55%);mask-image:linear-gradient(to right,transparent,#000 55%)}
+@media (max-width:25rem){
+  .appel-flamme{width:42%;top:-2.9rem;right:-2rem}
+}
+@media (min-width:48rem){
+  .appel{grid-template-columns:auto minmax(0,1fr) 15rem;grid-template-areas:"ico lib ." "ico num ." "ico sous .";
+    gap:.2rem clamp(1rem,.4rem + 1.6vw,2rem);padding:clamp(1.25rem,.6rem + 1.4vw,2rem) clamp(1.25rem,.5rem + 2vw,2.5rem)}
+  .appel-ico{width:clamp(3.5rem,2rem + 3vw,5.25rem)}
+  .appel-lib{font-size:clamp(1.25rem,1rem + .6vw,1.6rem)}
+  .appel-num{font-size:min(8rem,calc((100cqi - clamp(3.5rem,2rem + 3vw,5.25rem) - 15rem - 2*clamp(1rem,.4rem + 1.6vw,2rem)) / var(--num-em)))}
+  .appel-sous{font-size:1.0625rem}
+  .appel-flamme{top:0;bottom:auto;right:0;height:100%;width:18.5rem;object-fit:cover;object-position:50% 70%;
+    -webkit-mask-image:linear-gradient(to right,transparent,#000 30%);mask-image:linear-gradient(to right,transparent,#000 30%)}
+}
+
+/* Le ticket des prix : talon principal (79 €), pointillés de découpe, puis le reste */
+.ticket{position:relative;display:grid;margin-top:.5rem;background:var(--blanc);border:2px solid var(--encre);border-radius:var(--r)}
+.t-principal{padding:1.1rem 1.25rem 1.25rem}
+.t-principal h2{font-size:1.125rem;font-weight:700;letter-spacing:0;color:var(--flamme-fonce)}
+.t-principal dt{margin-top:.35rem;font-size:1.25rem;font-weight:700}
+.t-prix{display:block;font-size:clamp(3rem,2.2rem + 3.4vw,4.75rem);font-weight:800;line-height:1;letter-spacing:-.02em;color:var(--flamme)}
+.t-prix small{font-size:.34em;font-weight:700;letter-spacing:0;color:var(--encre)}
+.ticket dd span{display:block;margin-top:.3rem;font-size:1.0625rem;color:var(--encre-2);line-height:1.45}
+.t-lignes{position:relative;border-top:2px dashed var(--filet)}
+.t-lignes > div{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:1rem;padding:.9rem 1.25rem}
+.t-lignes > div + div{border-top:1px solid var(--filet)}
+.t-lignes dt{font-weight:700}
+.t-lignes dd{display:contents}
+.t-lignes dd b{grid-column:2;grid-row:1;text-align:right;font-weight:800;font-size:1.25rem;line-height:1.25}
+.t-lignes dd b small{display:block;font-size:.8em;font-weight:700;color:var(--encre-2)}
+.t-lignes dd span{grid-column:1/-1}
+/* les encoches de la ligne de découpe */
+.t-lignes::before,.t-lignes::after{content:"";position:absolute;top:-13px;width:24px;height:24px;border-radius:50%;
+  background:var(--fond);border:2px solid var(--encre)}
+.t-lignes::before{left:-13px;clip-path:inset(0 0 0 11px)}
+.t-lignes::after{right:-13px;clip-path:inset(0 11px 0 0)}
+@media (min-width:48rem){
+  .ticket{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
+  .t-principal{padding:1.4rem 1.75rem 1.5rem}
+  .t-lignes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:0;border-left:2px dashed var(--filet)}
+  .t-lignes > div{display:flex;flex-direction:column;padding:1.4rem 1.5rem 1.5rem;justify-content:flex-end}
+  .t-lignes > div + div{border-top:0;border-left:1px solid var(--filet)}
+  .t-lignes dd{display:block}
+  .t-lignes dd b{display:block;margin-top:.35rem;text-align:left;font-size:clamp(1.5rem,1rem + 1vw,2rem);line-height:1.1}
+  .t-lignes dd b small{display:inline;font-size:.55em}
+  .t-lignes::before,.t-lignes::after{left:-13px;right:auto}
+  .t-lignes::before{top:-14px;clip-path:inset(11px 0 0 0)}
+  .t-lignes::after{top:auto;bottom:-14px;clip-path:inset(0 0 11px 0)}
+}
+/* ordinateur : titre et chapeau côte à côte, le bouton puis le ticket en pleine largeur */
+@media (min-width:60rem){
+  .une-grille{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);column-gap:3.5rem;row-gap:1.25rem;align-items:end;
+    grid-template-areas:"titre chapo" "titre suite" "appel appel" "ticket ticket"}
+  .une-suite{align-self:start;flex-direction:column;align-items:stretch}
+  .une-suite > *{flex:none}
+}
+
+/* ── Le tri de la panne ────────────────────────────────────────── */
+.tri{padding-block:var(--section);background:var(--blanc);border-block:1px solid var(--filet)}
+.tri-tete{max-width:46rem}
+.tri-tete p{margin-top:.8rem;color:var(--encre-2)}
+.assistant{margin-top:2rem;padding:clamp(1rem,.5rem + 2vw,2.25rem);border:2px solid var(--encre);border-radius:var(--r);background:var(--fond)}
+.etapes{list-style:none;padding:0;display:flex;gap:.5rem;margin-bottom:1.5rem;counter-reset:e}
+.etapes li{flex:1 1 0;min-width:0;padding-top:.55rem;border-top:5px solid var(--filet);counter-increment:e;
+  font-size:1rem;font-weight:700;line-height:1.25;color:var(--encre-2)}
+.etapes li::before{content:counter(e) ". "}
+.etapes li.fait{border-color:var(--flamme)}
+.etapes li[aria-current]{border-color:var(--flamme);color:var(--encre)}
+.pan h3{font-size:clamp(1.5rem,1.2rem + 1.2vw,2.1rem);line-height:1.15}
+.pan h3:focus{outline:none}
+.pan h3:focus-visible{outline:3px solid var(--flamme);outline-offset:4px}
+.pan-aide{margin-top:.4rem;color:var(--encre-2)}
+.tuiles{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.25rem}
+.tuile{display:flex;align-items:center;gap:1rem;min-height:5rem;padding:1rem 1.2rem;background:var(--blanc);
+  border:2px solid var(--encre);border-radius:var(--r);font-size:1.1875rem;font-weight:700;line-height:1.25;text-align:left;
+  flex:1 1 16rem;transition:background-color .12s}
+.tuile:hover{background:var(--flamme-pale)}
+.tuile .ico{width:2.25rem;height:2.25rem;color:var(--flamme)}
+.tuile small{display:block;margin-top:.15rem;font-size:1rem;font-weight:400;color:var(--encre-2)}
+.tuile-gaz{flex-basis:100%;border-color:var(--gaz);background:var(--gaz-pale);color:var(--gaz-fonce)}
+.tuile-gaz:hover{background:#F8D9D5}
+.tuile-gaz .ico{color:var(--gaz)}
+.tuile-gaz small{color:var(--gaz-fonce)}
+.tuiles-2{max-width:30rem}
+.tuiles-2 .tuile{flex-basis:8rem}
+.tuile-courte{justify-content:center;font-size:1.5rem}
+@media (min-width:60rem){
+  .tri > .wrap{display:grid;grid-template-columns:minmax(0,.75fr) minmax(0,2fr);gap:3.5rem;align-items:start}
+  .tri-tete{position:sticky;top:7.5rem}
+  .assistant{margin-top:0}
+}
+.retour{display:inline-flex;align-items:center;gap:.35rem;min-height:2.75rem;margin-top:1.5rem;padding:.4rem .2rem;
+  background:none;border:0;font-weight:700;text-decoration:underline;text-underline-offset:.18em}
+.retour .ico{width:1.1em;height:1.1em}
+/* les réponses */
+.v > p{max-width:var(--mesure);margin-top:.8rem}
+.v-note{padding-left:1rem;border-left:5px solid var(--flamme);font-weight:700}
+.v-conseil{padding:.9rem 1.1rem;background:var(--blanc);border-radius:var(--r-s)}
+.v-actions{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem}
+.v-actions > *{flex:0 1 auto}
+.v-actions .bouton{min-height:4rem;padding-inline:1.6rem;font-size:1.25rem}
+.v-code{max-width:24rem;margin-top:1.25rem}
+.v-code label{display:block;margin-bottom:.4rem;font-weight:700}
+body[data-ligne="ouverte"] .si-fermee,body[data-ligne="fermee"] .si-ouverte{display:none}
+/* ligne fermée : le rappel passe devant l’appel */
+body[data-ligne="fermee"] [data-pan="appel"] .vers-rappel{order:-1;background:var(--flamme);border-color:transparent;color:#fff;
+  min-height:4rem;font-size:1.25rem}
+body[data-ligne="fermee"] [data-pan="appel"] .v-appel{background:var(--blanc);color:var(--encre);border-color:var(--encre);font-size:1.1875rem}
+/* odeur de gaz : tout le panneau passe au rouge, plus aucun appel vers nous */
+.assistant[data-etape="gaz"]{border-color:var(--gaz);background:var(--gaz-pale)}
+.assistant[data-etape="gaz"] .etapes{display:none}
+.v-gaz h3{color:var(--gaz-fonce)}
+.gaz-etapes{display:grid;gap:.6rem;max-width:44rem;margin-top:1.1rem;padding-left:1.7rem;font-size:1.25rem;font-weight:700}
+.gaz-etapes li{padding-left:.3rem}
+.gaz-etapes li::marker{font-weight:800;color:var(--gaz)}
+.gaz-num{display:block;width:fit-content;margin-top:.5rem;padding:.35rem .9rem;border:2px solid var(--gaz);border-radius:var(--r-s);
+  background:var(--blanc);color:var(--gaz-fonce);font-size:clamp(1.9rem,1.3rem + 2.4vw,3rem);font-weight:800;line-height:1.1;
+  letter-spacing:-.01em;font-variant-numeric:tabular-nums;white-space:nowrap}
+.v-gaz .gaz-source{margin-top:1.1rem;font-size:1.0625rem;color:var(--encre-2)}
+
+/* Champs de saisie : gros, bordure franche */
+input:not([type="radio"]):not([type="hidden"]){width:100%;min-height:3.5rem;padding:.7rem 1rem;font-size:1.25rem;
+  background:var(--blanc);border:2px solid #5B6682;border-radius:var(--r-s)}
+input:not([type="radio"]):focus-visible{outline:3px solid var(--flamme);outline-offset:2px;border-color:var(--encre)}
+input[aria-invalid="true"]{border-color:var(--gaz)}
+
+/* ── Est-ce que vous venez chez moi ? ──────────────────────────── */
+.zone{padding-block:var(--section)}
+.zone-grille{display:grid;gap:2.5rem}
+.zone-txt{min-width:0}
+.zone-form{margin-top:1.5rem}
+.zone-form label{display:block;font-size:1.25rem;font-weight:700}
+.aide{font-size:1rem;color:var(--encre-2)}
+.zone-ligne{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:.6rem}
+.zone-ligne input{flex:1 1 13rem;width:auto;min-height:4rem;font-size:1.375rem}
+.zone-ligne .bouton{flex:0 0 auto;min-height:4rem;font-size:1.25rem}
+.zone-rep{margin-top:1.25rem;padding:1.1rem 1.25rem 1.2rem;border:2px solid var(--flamme);border-radius:var(--r);background:var(--flamme-pale)}
+.zone-rep.non{border-color:var(--encre);background:var(--blanc)}
+.rep-t{display:flex;align-items:center;gap:.6rem;font-size:1.5rem;font-weight:800;line-height:1.2}
+.rep-t .ico{width:1.75rem;height:1.75rem;color:var(--flamme)}
+.zone-rep p + p{margin-top:.5rem}
+.zone-rep .lien{margin-top:.25rem}
+.zone h3{margin-top:2.5rem;font-size:1.25rem}
+.communes{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
+.communes button{min-height:2.75rem;padding:.35rem .95rem;border:1.5px solid var(--filet);border-radius:999px;background:var(--blanc);
+  font-size:1.0625rem;line-height:1.3}
+.communes button:hover{border-color:var(--flamme)}
+.communes button[aria-pressed="true"]{border-color:var(--flamme);background:var(--flamme);color:#fff}
+.zone-loin{margin-top:1.25rem;color:var(--encre-2)}
+/* le plan */
+.plan{container-type:inline-size;min-width:0;padding:clamp(.75rem,.4rem + 1vw,1.5rem);border:1px solid var(--filet);border-radius:var(--r);background:var(--blanc)}
+.plan svg{display:block;width:100%;height:auto}
+.plan text{font-family:inherit}
+.p-lyon{fill:var(--flamme-pale);stroke:var(--flamme);stroke-width:2}
+.p-lyon.est-choisi{fill:#C3D1FA;stroke-width:4}
+.p-eau{fill:none;stroke:#A9C3F4;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
+.p-riv{font-size:15px;font-style:italic;fill:#3F63BF}
+.p-pt circle{fill:var(--blanc);stroke:var(--flamme);stroke-width:3;transform-box:fill-box;transform-origin:center;transition:transform .2s}
+.p-pt text,.p-lib{font-size:16px;fill:var(--encre);paint-order:stroke;stroke:var(--blanc);stroke-width:5px;stroke-linejoin:round}
+.p-lib-lyon{font-size:24px;font-weight:800}
+.p-pt.est-choisi circle{fill:var(--flamme);transform:scale(1.35)}
+.p-pt.est-choisi text{font-weight:800;fill:var(--flamme-fonce)}
+.plan figcaption{margin-top:.75rem;font-size:1rem;color:var(--encre-2)}
+/* plan étroit : les noms deviendraient illisibles, on garde les points et la réponse dit le nom */
+@container (max-width:30rem){
+  .p-pt text{display:none}
+  .p-lib-lyon{font-size:34px}
+  .p-riv{font-size:22px}
+}
+@media (min-width:60rem){
+  .zone-grille{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:start;gap:4rem}
+  .plan{position:sticky;top:7rem}
+}
+
+/* ── Le passage du technicien : une vraie suite d’étapes, fond d’encre ── */
+.passage{padding-block:var(--section);background:var(--encre);color:#fff}
+.bandeau{margin-top:1.75rem}
+.bandeau img{width:100%;aspect-ratio:16/9;object-fit:cover;object-position:38% 50%;border-radius:var(--r);background:#2A3558}
+.bandeau figcaption{margin-top:.6rem;font-size:1rem;color:var(--encre-3)}
+.etapes-passage{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));
+  gap:1.75rem 2rem;margin-top:2.25rem;counter-reset:p}
+.etapes-passage li{position:relative;padding-top:3.5rem;border-top:2px solid rgb(255 255 255 / .22);counter-increment:p}
+.etapes-passage li::before{content:counter(p);position:absolute;top:1rem;left:0;display:grid;place-items:center;
+  width:2.1rem;height:2.1rem;border-radius:50%;background:var(--flamme-vive);font-weight:800;line-height:1}
+.etapes-passage b{display:block;font-size:1.3rem;line-height:1.2}
+.etapes-passage span{display:block;margin-top:.45rem;color:var(--encre-3)}
+@media (min-width:48rem){
+  .bandeau img{aspect-ratio:1600/496}
+}
+
+/* ── Ce qu’on répare, l’entretien, qui sonne chez vous ─────────── */
+.parc{padding-block:var(--section)}
+.parc-grille{display:grid;gap:2.5rem}
+.parc-marques{min-width:0}
+.parc-marques > p{max-width:var(--mesure);margin-top:.9rem}
+.marques{list-style:none;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,10.5rem),1fr));
+  margin-top:1.1rem;border-top:1px solid var(--filet)}
+.marques li{padding:.75rem .1rem;border-bottom:1px solid var(--filet);font-size:1.3rem;font-weight:700;line-height:1.2}
+.parc-marques .parc-non{color:var(--encre-2)}
+.entretien{overflow:hidden;border:1px solid var(--filet);border-radius:var(--r);background:var(--blanc)}
+.entretien img{width:100%;aspect-ratio:3/2;object-fit:cover;object-position:70% 50%}
+.entretien-txt{padding:1.25rem 1.4rem 1.4rem}
+.entretien h3{font-size:1.5rem}
+.entretien p{margin-top:.5rem;color:var(--encre-2)}
+.porte{display:grid;gap:1.5rem;margin-top:3rem;padding:clamp(1.25rem,.8rem + 1.5vw,2rem);border:2px solid var(--encre);border-radius:var(--r);background:var(--blanc)}
+.techs{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.75rem 1.5rem;margin-top:.9rem;font-size:1.25rem;font-weight:700}
+.techs li{display:flex;align-items:center;gap:.6rem}
+.pastille{display:grid;place-items:center;width:3rem;height:3rem;border:2px solid var(--flamme);border-radius:50%;
+  background:var(--flamme-pale);color:var(--flamme-fonce);font-weight:800}
+.porte-qui p{margin-top:.7rem;color:var(--encre-2)}
+.porte-alerte{display:flex;align-items:flex-start;gap:1rem;font-size:1.25rem;line-height:1.45}
+.porte-alerte .ico{width:2.5rem;height:2.5rem;color:var(--flamme)}
+.porte-alerte b{display:block;font-size:1.5rem;line-height:1.2;margin-bottom:.3rem}
+@media (min-width:48rem){
+  .porte{grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);align-items:center;gap:2.5rem}
+  .porte-alerte{padding-left:2.5rem;border-left:1px solid var(--filet)}
+}
+@media (min-width:60rem){
+  .parc-grille{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);align-items:start;gap:4rem}
+}
+
+/* ── Être rappelé ───────────────────────────────────────────────── */
+.rappel{padding-block:var(--section);background:var(--flamme-pale);border-top:1px solid var(--filet)}
+.rappel-in{width:min(100% - 2*var(--pas),38rem)}
+.rappel-delai{margin-top:.8rem;color:var(--encre-2)}
+.rappel-delai span{font-weight:700;color:var(--encre)}
+#rappel-form{display:grid;gap:1.1rem;margin-top:1.5rem}
+.champ label,.quand legend{display:block;margin-bottom:.4rem;padding:0;font-weight:700}
+.err{margin-top:.4rem;font-size:1.0625rem;font-weight:700;color:var(--gaz-fonce)}
+.quand{display:flex;flex-wrap:wrap;gap:.5rem;min-width:0;padding:0;border:0}
+.quand legend{width:100%}
+.quand label{display:inline-flex;align-items:center;gap:.6rem;min-height:3.25rem;padding:.5rem 1.1rem;border:2px solid var(--filet);
+  border-radius:999px;background:var(--blanc);font-weight:600;cursor:pointer}
+.quand label:has(input:checked){border-color:var(--flamme);box-shadow:inset 0 0 0 1px var(--flamme)}
+.quand label:has(input:focus-visible){outline:3px solid var(--flamme);outline-offset:2px}
+.quand input{width:1.3rem;height:1.3rem;margin:0;accent-color:var(--flamme)}
+.bouton-plein{width:100%;min-height:4rem;font-size:1.3rem}
+.resume{display:flex;align-items:flex-start;gap:.7rem;padding:.8rem 1rem;border-left:5px solid var(--flamme);border-radius:var(--r-s);background:var(--blanc)}
+.resume .ico{width:1.5rem;height:1.5rem;margin-top:.1rem;color:var(--flamme)}
+.merci{display:flex;align-items:flex-start;gap:1rem;margin-top:1.5rem;padding:1.25rem 1.4rem;border:2px solid var(--flamme);border-radius:var(--r);background:var(--blanc)}
+.merci:focus{outline:none}
+.merci .ico{width:2.25rem;height:2.25rem;color:var(--flamme)}
+.merci-t{font-size:1.375rem;font-weight:800}
+.merci p + p{margin-top:.35rem}
+.rappel-ou{margin-top:1.5rem;font-size:1.25rem}
+.rappel-ou a{font-weight:800;white-space:nowrap}
+
+/* ── Pied de page ──────────────────────────────────────────────── */
+.pied{padding-block:3rem;background:var(--encre);color:var(--encre-3);font-size:1.0625rem}
+.pied-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr));gap:1.5rem 3rem}
+.pied p + p{margin-top:.5rem}
+.pied-nom{font-size:1.25rem;font-weight:800;color:#fff}
+.pied a{font-weight:700;color:#fff}
+.pied-bas{grid-column:1/-1;padding-top:1.25rem;border-top:1px solid rgb(255 255 255 / .18);font-size:1rem}
+
+/* ── Sous le pouce : l’appel, pleine largeur, en mobile et en paysage téléphone ── */
+.pouce{display:none}
+@media (max-width:47.99rem),(max-height:30rem) and (orientation:landscape){
+  html{scroll-padding-bottom:5rem}
+  .pouce{position:fixed;left:0;right:0;bottom:0;z-index:30;display:flex;align-items:center;justify-content:center;gap:.6rem;
+    min-height:3.75rem;padding:.8rem 1rem calc(.8rem + env(safe-area-inset-bottom));background:var(--flamme);color:#fff;
+    font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums;text-decoration:none;
+    box-shadow:0 -8px 24px rgb(14 27 61 / .22);transition:transform .2s ease-out}
+  .pouce .ico{width:1.5rem;height:1.5rem}
+  .pouce.cache{transform:translateY(110%)}
+  body.gaz .pouce{display:none}
+  .pied{padding-bottom:calc(6rem + env(safe-area-inset-bottom))}
+}
+/* téléphone en paysage : le premier écran se resserre pour garder le numéro visible */
+@media (max-height:30rem) and (orientation:landscape){
+  .une h1{font-size:1.75rem;max-width:none}
+  .chapo{display:none}
+  .une-grille{gap:.75rem}
+}
+
+/* ── Mouvement : la veilleuse vacille, les réponses se posent. Rien d’autre. ── */
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .statut[data-etat="jour"] .v-flamme{animation:vacille 2.6s ease-in-out infinite alternate}
+  .statut[data-etat="jour"] .v-coeur{animation:vacille 1.8s ease-in-out infinite alternate-reverse}
+  .pan:not([hidden]),.zone-rep:not([hidden]),.merci:not([hidden]){animation:pose .28s ease-out}
+}
+@keyframes vacille{0%{transform:scale(1,1)}50%{transform:scale(.95,1.06)}100%{transform:scale(1.03,.97)}}
+@keyframes pose{from{opacity:0;transform:translateY(.5rem)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .bouton,.bouton-2,.bouton-gaz,.appel,.tuile,.pouce,.p-pt circle{transition:none}
+}
