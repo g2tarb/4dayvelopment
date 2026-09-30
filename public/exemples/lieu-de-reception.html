@@ -2,531 +2,652 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Mas de l’Aiguier, mariages dans le Luberon | Démo 4dayvelopment</title>
-<meta name="description" content="Démo : mas du Luberon pour mariages et réceptions. Jusqu’à 180 invités sous les platanes, 14 couchages, demande de date, site en français et en anglais.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mas de l’Aiguier, mariages en Luberon | Démo 4dayvelopment</title>
+<meta name="description" content="Démo 4dayvelopment : un mas du Luberon pour mariages et réceptions. Vérifiez votre date, jusqu’à 180 invités, 14 couchages, plan des espaces, site bilingue.">
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#1F4E96">
-<link rel="preload" as="font" type="font/woff2" href="/fonts/marcellus-400.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="/fonts/commissioner-var.woff2" crossorigin>
-<style>
-/* Marcellus : capitales romaines gravées (Glanum, pont Julien), pour les titres.
-   Commissioner : sans-serif à empattements évasés (axe FLAR), pour le texte. */
-@font-face{font-family:'Marcellus';font-style:normal;font-weight:400;font-display:swap;src:url('/fonts/marcellus-400.woff2') format('woff2')}
-@font-face{font-family:'Commissioner';font-style:normal;font-weight:100 900;font-display:swap;src:url('/fonts/commissioner-var.woff2') format('woff2')}
-
-:root{
-  --ciel:#1F4E96;       /* ciel lavé par le mistral : ouverture, boutons, espaces choisis */
-  --ciel-2:#173D78;
-  --ciel-texte:#C9D6EA; /* texte secondaire sur le ciel (5,5:1) */
-  --chaux:#F3F2EE;      /* lait de chaux : fond de page */
-  --sol:#E6E2D8;        /* gravier de la cour : fond du plan */
-  --pierre:#DED7C9;     /* calcaire du Luberon : bâti du plan, section demande */
-  --fer:#1C2125;        /* ferronnerie : texte */
-  --ombre:#4B5661;      /* ombre portée bleutée : texte secondaire */
-  --trait:#6E777F;      /* bord des champs et des choix, 3:1 sur chaux et pierre */
-  --mesure:62ch;
-  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
-}
-*,*::before,*::after{box-sizing:border-box}
-*{margin:0}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{
-  font-family:'Commissioner',system-ui,sans-serif;font-variation-settings:'FLAR' 40;font-weight:400;
-  font-size:1.0625rem;line-height:1.6;color:var(--fer);background:var(--chaux);
-  -webkit-font-smoothing:antialiased;font-synthesis:none;
-}
-img{display:block;max-width:100%;height:auto;background:var(--pierre)} /* fond visible pendant le chargement ou si l'image manque */
-a{color:inherit;text-underline-offset:.2em}
-:focus-visible{outline:3px solid var(--ciel);outline-offset:3px}
-h1,h2,h3{font-family:'Marcellus',Georgia,serif;font-weight:400;line-height:1.08;text-wrap:balance}
-h2{font-size:clamp(1.75rem,1.2rem + 2.4vi,2.9rem)}
-p{text-wrap:pretty}
-sup{font-size:.7em;line-height:0}
-.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
-.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:-999px;z-index:10}
-.skip:focus{left:1rem;top:1rem;background:var(--chaux);color:var(--fer);padding:.6rem 1rem}
-
-/* Deux langues dans la page : la case « English » masque le français, et
-   inversement. Sans JS, la bascule marche quand même (:has). */
-:root:not(:has(#l-en:checked)) [lang="en"]:not(.langue *){display:none}
-:root:has(#l-en:checked) [lang="fr"]:not(.langue *){display:none}
-
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.75rem 1.35rem;
-  background:var(--ciel);color:var(--chaux);border:2px solid transparent;border-radius:4px;font:inherit;font-weight:620;
-  text-decoration:none;cursor:pointer;transition:background-color .15s}
-.btn:hover{background:var(--ciel-2)}
-.btn:active{transform:translateY(1px)}
-
-/* Ouverture : le ciel en haut, la cour dessous */
-.haut{background:var(--ciel);color:var(--chaux)}
-.haut :focus-visible{outline-color:var(--chaux)}
-.top .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:.5rem 1rem;padding-block:.75rem}
-.marque{display:flex;flex-direction:column;justify-content:center;min-height:2.75rem;text-decoration:none;line-height:1.15}
-.marque b{font-family:'Marcellus',Georgia,serif;font-weight:400;font-size:clamp(1.25rem,1rem + 1.2vi,1.55rem);letter-spacing:.01em}
-.marque span{font-size:.8125rem;color:var(--ciel-texte)}
-.langue{display:flex;border:0;padding:0;min-width:0}
-.langue label{position:relative;display:flex;align-items:center;min-height:2.75rem;padding:.35rem .7rem;font-size:.875rem;
-  border:1.5px solid rgb(243 242 238 / .6);cursor:pointer}
-.langue label:first-of-type{border-radius:4px 0 0 4px}
-.langue label:last-of-type{border-radius:0 4px 4px 0;border-left:0}
-.langue input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
-.langue label:has(input:checked){background:var(--chaux);color:var(--ciel);font-weight:650}
-.langue label:has(input:focus-visible){outline:3px solid var(--chaux);outline-offset:2px}
-
-.ouv .wrap{display:grid;gap:var(--pas);padding-top:calc(var(--pas)*.75)}
-.ouv h1{font-size:clamp(2.3rem,1.3rem + 4.4vi,4.5rem);line-height:1.02;max-width:14ch}
-.chapo{font-size:1.125rem;color:var(--ciel-texte);max-width:40ch;margin-top:1rem}
-.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.5rem;margin-top:1.5rem}
-.haut .btn{background:var(--chaux);color:var(--ciel)}
-.haut .btn:hover{background:#fff}
-.lien{display:inline-flex;align-items:center;min-height:2.75rem;font-weight:600;text-decoration:underline;text-decoration-thickness:1.5px}
-.ouv figure{margin-inline:calc(var(--pas)*-1)}
-.ouv img{width:100%;aspect-ratio:4/3;object-fit:cover}
-.ouv figcaption{font-size:.8125rem;color:var(--ciel-texte);padding:.5rem var(--pas) .9rem}
-/* ordinateur : le texte à gauche, la cour à droite, posée sur le bas du ciel */
-@media (min-width:60rem){
-  .ouv .wrap{grid-template-columns:1fr 1.15fr;align-items:end;gap:3.5rem}
-  .ouv .wrap > div{padding-bottom:calc(var(--pas)*3)}
-  .ouv figure{margin:0}
-  .ouv figcaption{padding-inline:0}
-}
-
-/* Signature : la demande de date, entièrement en CSS (:has) */
-.date{padding-block:calc(var(--pas)*2.5)}
-.intro{max-width:var(--mesure);margin-top:.85rem;color:var(--ombre)}
-.outil{margin-top:1.75rem;display:grid;gap:1.75rem}
-.choix{display:grid;gap:1.5rem;align-content:start}
-.choix fieldset{border:0;padding:0;min-width:0}
-.choix legend{font-weight:650;padding:0;margin-bottom:.6rem}
-.tuiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.5rem}
-.tuile{position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.6rem;align-items:start;
-  min-height:3.25rem;padding:.7rem .75rem;border:1.5px solid var(--trait);border-radius:4px;cursor:pointer;line-height:1.3}
-.tuile input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
-.tuile::before{content:"";grid-row:span 2;width:1rem;height:1rem;margin-top:.1rem;border:1.5px solid currentColor;border-radius:50%}
-.tuile b{font-weight:620}
-.tuile small{grid-column:2;font-size:.8125rem;color:var(--ombre)}
-.tuile:has(input:checked){background:var(--ciel);border-color:var(--ciel);color:var(--chaux)}
-.tuile:has(input:checked)::before{background:var(--chaux);box-shadow:inset 0 0 0 3px var(--ciel)}
-.tuile:has(input:checked) small{color:var(--ciel-texte)}
-.tuile:has(input:focus-visible){outline:3px solid var(--fer);outline-offset:2px}
-
-.vue{display:grid;gap:1.25rem;align-content:start;align-items:start}
-.plan{background:var(--sol);border-radius:4px;padding:.5rem}
-.plan svg{display:block;width:100%;height:auto}
-/* texte du plan en unités du dessin (font-size sur le svg) : il suit la largeur
-   du plan, bornée plus bas */
-.plan text{font-family:'Commissioner',system-ui,sans-serif;font-weight:560;fill:var(--t,var(--fer))}
-.bati{fill:var(--pierre);stroke:var(--fer);stroke-width:1}
-.zone{--f:var(--chaux);--t:var(--fer)}
-.zone > :not(text){fill:var(--f);stroke:var(--fer);stroke-width:1}
-.plan .arbre,.plan .eau{fill:none;stroke:var(--t);stroke-width:1}
-/* espaces utilisés selon la saison */
-.date:has(#s-ete:checked) :is(.g-aire,.g-cour,.g-plat),
-.date:has(#s-printemps:checked,#s-automne:checked) :is(.g-aire,.g-cour,.g-mag),
-.date:has(#s-hiver:checked) .g-mag{--f:var(--ciel);--t:var(--chaux)}
-/* ... sauf si le mas ne peut pas recevoir ce nombre d'invités à cette saison */
-.date:has(#g-plus:checked) .zone,
-.date:has(#g-180:checked):not(:has(#s-ete:checked)) .zone{--f:var(--chaux);--t:var(--fer)}
-
-.res{display:grid;gap:1rem;align-content:start}
-.verdict{display:none;font-family:'Marcellus',Georgia,serif;font-size:clamp(1.3rem,1.1rem + 1vi,1.65rem);line-height:1.22;max-width:32ch}
-.date .v-oui{display:block}
-.date:has(#g-plus:checked) .v-oui,
-.date:has(#g-180:checked):not(:has(#s-ete:checked)) .v-oui{display:none}
-.date:has(#g-plus:checked) .v-non,
-.date:has(#g-180:checked):not(:has(#s-ete:checked)) .v-ete{display:block}
-.r{display:none;grid-template-columns:minmax(0,8.5rem) minmax(0,1fr);gap:.55rem 1rem;border-top:1px solid var(--trait);padding-top:1rem}
-.r dt{font-weight:650}
-.r dd{margin:0}
-.date:has(#s-ete:checked) .r-ete,
-.date:has(#s-printemps:checked,#s-automne:checked) .r-mi,
-.date:has(#s-hiver:checked) .r-hiver{display:grid}
-.date:has(#g-plus:checked) .r,
-.date:has(#g-180:checked):not(:has(#s-ete:checked)) .r{display:none}
-.note{font-size:.875rem;color:var(--ombre)}
-.date:has(#g-plus:checked) :is(.note,.suite,.date-cta),.date:has(#g-180:checked):not(:has(#s-ete:checked)) :is(.note,.suite,.date-cta){display:none}
-.suite h3{font-size:1.4rem}
-.suite ol{list-style:none;padding:0;margin-top:.75rem;display:grid;gap:.7rem;counter-reset:e}
-.suite li{counter-increment:e;display:grid;grid-template-columns:1.75rem minmax(0,1fr);gap:.75rem;max-width:var(--mesure)}
-.suite li::before{content:counter(e);font-family:'Marcellus',Georgia,serif;font-size:1.6rem;line-height:1;color:var(--ciel)}
-/* choix à gauche, plan et réponse à droite, dès qu'il y a la place ; le plan
-   reste à taille de lecture au lieu de grossir avec la colonne */
-@media (min-width:56rem){
-  .outil{grid-template-columns:minmax(0,21rem) minmax(0,1fr);gap:3rem}
-  .plan{max-width:28rem}
-}
-/* écran large : choix, plan et réponse côte à côte, de gauche à droite */
-@media (min-width:75rem){
-  .vue{grid-template-columns:minmax(0,24rem) minmax(0,1fr);gap:2.5rem}
-  .r{grid-template-columns:1fr;gap:.1rem}
-  .choix,.plan{position:sticky;top:1.5rem;align-self:start}
-  .r dd + dt{margin-top:.6rem}
-}
-
-/* Les espaces */
-.espaces{padding-block:calc(var(--pas)*2.5);border-top:1px solid var(--pierre)}
-.duo{display:grid;gap:2rem;margin-top:1.75rem}
-.duo figure{margin:0}
-.duo img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:3px}
-.duo figcaption{margin-top:.85rem;max-width:var(--mesure)}
-.duo h3{font-size:1.6rem;margin-bottom:.35rem}
-/* ordinateur : les deux espaces côte à côte, décalés comme dans le mas */
-@media (min-width:52rem){
-  .duo{grid-template-columns:1.25fr 1fr;gap:3rem;align-items:start}
-  .duo figure + figure{margin-top:5rem}
-}
-.capa{width:100%;max-width:52rem;margin-top:2.5rem;border-collapse:collapse;font-size:.9375rem;line-height:1.4}
-.capa caption{text-align:left;font-family:'Marcellus',Georgia,serif;font-size:1.4rem;margin-bottom:.75rem}
-.capa th,.capa td{text-align:left;vertical-align:top;padding:.7rem .75rem .7rem 0;border-bottom:1px solid var(--pierre)}
-.capa thead th{font-weight:650;color:var(--ombre);border-bottom-color:var(--trait)}
-.capa tbody th{font-weight:620}
-.acces{margin-top:1.5rem;max-width:var(--mesure);color:var(--ombre)}
-
-/* Demande de date */
-.demande{background:var(--pierre);padding-block:calc(var(--pas)*2.5)}
-.demande > .wrap > p{max-width:var(--mesure);margin-top:.75rem}
-.grille{display:grid;gap:2rem;margin-top:1.5rem}
-form{display:grid;gap:1rem;max-width:36rem}
-.recap{padding:.75rem .9rem;border:1.5px solid var(--trait);border-radius:4px;background:var(--chaux)}
-.recap b{display:none;font-weight:650}
-:root:has(#s-printemps:checked) .rs-printemps,:root:has(#s-ete:checked) .rs-ete,
-:root:has(#s-automne:checked) .rs-automne,:root:has(#s-hiver:checked) .rs-hiver,
-:root:has(#g-80:checked) .rg-80,:root:has(#g-120:checked) .rg-120,
-:root:has(#g-180:checked) .rg-180,:root:has(#g-plus:checked) .rg-plus{display:inline}
-label,.form-legende{display:block;font-weight:620;margin-bottom:.35rem}
-.aide{display:block;font-size:.875rem;color:var(--ombre);margin-top:.3rem}
-input,textarea{width:100%;font:inherit;font-size:1rem;color:var(--fer);background:#fff;
-  border:1.5px solid var(--trait);border-radius:4px;padding:.7rem .8rem}
-input{height:3.2rem}
-textarea{min-height:6.5rem;resize:vertical}
-input:focus-visible,textarea:focus-visible{outline:3px solid var(--ciel);outline-offset:1px;border-color:var(--fer)}
-.deux{display:grid;gap:1rem}
-/* deux champs par ligne dès qu'ils ont la place */
-@media (min-width:36rem){.deux{grid-template-columns:1fr 1fr}}
-.type{border:0;padding:0;min-width:0}
-.type legend{padding:0}
-.type div{display:flex;flex-wrap:wrap;gap:.25rem 1.25rem}
-.type label{display:inline-flex;align-items:center;gap:.5rem;min-height:2.75rem;font-weight:400;margin:0;cursor:pointer}
-.type input{width:1.15rem;height:1.15rem;accent-color:var(--ciel);margin:0}
-.discret{font-size:.875rem;color:var(--ombre)}
-.merci{display:none;padding:1rem 1.1rem;border:1.5px solid var(--fer);border-radius:4px;background:#fff;font-weight:600}
-form.envoye .merci{display:block}
-.cote{display:grid;gap:.4rem;align-content:start}
-.cote b{font-family:'Marcellus',Georgia,serif;font-weight:400;font-size:1.4rem}
-.cote a{font-weight:650;font-size:1.5rem;font-variant-numeric:tabular-nums}
-/* le formulaire à gauche, le téléphone en regard */
-@media (min-width:60rem){.grille{grid-template-columns:minmax(0,36rem) 1fr;gap:4rem}}
-
-footer{background:var(--fer);color:#C9CED3;padding-block:2.5rem;font-size:.875rem}
-footer .wrap{display:grid;gap:.75rem}
-footer b{font-family:'Marcellus',Georgia,serif;font-weight:400;color:#fff;font-size:1.4rem}
-footer a{color:#fff}
-
-/* Barre d'appel sous le pouce, en mobile et en paysage téléphone : un couple
-   appelle volontiers pour une date. Rangée quand le formulaire est à l'écran. */
-.pouce{display:none}
-@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
-  html{scroll-padding-bottom:6rem}
-  .pouce{display:grid;grid-template-columns:1fr 1.5fr;gap:.5rem;position:fixed;left:0;right:0;bottom:0;z-index:5;
-    padding:.6rem .75rem max(.6rem,env(safe-area-inset-bottom));background:var(--chaux);border-top:1px solid var(--trait);
-    transition:transform .2s ease-out}
-  .pouce a{display:flex;align-items:center;justify-content:center;min-height:2.75rem;border-radius:4px;font-weight:620;text-decoration:none}
-  .pouce .appel{border:1.5px solid var(--fer)}
-  .pouce a{font-size:1rem;line-height:1.2;text-align:center}
-  .pouce .btn{min-height:2.75rem;padding:.4rem .5rem}
-  .pouce.cache{transform:translateY(110%)}
-  footer{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
-}
-/* téléphone en paysage : le titre rapetisse pour laisser voir le chapô et le bouton */
-@media (max-height:30rem) and (orientation:landscape){
-  .ouv h1{font-size:2.2rem;max-width:22ch}
-  .ouv .wrap{padding-top:.25rem}
-  .chapo{margin-top:.5rem}
-  .actions{margin-top:.9rem}
-}
-/* couleurs forcées : le choix coché garde une marque visible */
-@media (forced-colors:active){.tuile:has(input:checked){outline:3px solid Highlight}}
-/* une seule animation : le plan qui change de couleur et la réponse qui apparaît */
-@media (prefers-reduced-motion:no-preference){
-  .zone > :not(text){transition:fill .3s ease-out}
-  .r,.verdict{animation:monte .35s ease-out}
-  @keyframes monte{from{opacity:0;transform:translateY(.35rem)}to{opacity:1;transform:none}}
-}
-</style>
+<meta name="theme-color" content="#1D2622">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/cormorant-garamond-var.woff2" crossorigin>
+<link rel="stylesheet" href="/exemples/lieu-de-reception.css">
+<script src="/exemples/lieu-de-reception.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#demande"><span lang="fr">Aller à la demande de date</span><span lang="en">Skip to the date request</span></a>
+<a class="evite" href="#date"><span lang="fr">Aller au vérificateur de date</span><span lang="en">Skip to the date checker</span></a>
 
-<header class="top haut">
-    <div class="wrap">
-      <a class="marque" href="#">
-        <b>Mas de l’Aiguier</b>
-        <span><span lang="fr">Lieu de réception, Luberon</span><span lang="en">Wedding venue, Luberon</span></span>
-      </a>
-      <fieldset class="langue">
-        <legend class="vh">Langue du site, site language</legend>
-        <label lang="fr"><input type="radio" name="langue" id="l-fr" value="fr" checked>Français</label>
-        <label lang="en"><input type="radio" name="langue" id="l-en" value="en">English</label>
-      </fieldset>
-    </div>
+<header class="tete">
+  <a class="marque" href="#mas">
+    <span class="marque-nom">Mas de l’Aiguier</span>
+    <span class="marque-lieu"><span lang="fr">Mariages et réceptions, Luberon</span><span lang="en">Weddings and events, Luberon</span></span>
+  </a>
+  <fieldset class="langue">
+    <legend class="vh">Langue du site, site language</legend>
+    <label lang="fr"><input type="radio" name="langue" id="l-fr" value="fr" checked>FR<span class="vh"> Français</span></label>
+    <label lang="en"><input type="radio" name="langue" id="l-en" value="en">EN<span class="vh"> English</span></label>
+  </fieldset>
+  <a class="btn btn-clair tete-visite" href="#visite"><span lang="fr"><span class="long">Demander une visite</span><span class="court">Visite</span></span><span lang="en"><span class="long">Book a visit</span><span class="court">Visit</span></span></a>
 </header>
 
 <main id="contenu">
-  <section class="ouv haut" aria-labelledby="titre">
-    <div class="wrap">
-      <div>
+  <!-- I. La journée au mas, en quatre planches plein cadre qui glissent l'une sur l'autre -->
+  <section class="sequence" id="mas" aria-labelledby="titre">
+    <div class="planche planche-1">
+      <picture>
+        <source media="(max-aspect-ratio: 4/5)" srcset="/exemples/img/lieu-de-reception-mas-p-640.webp 640w, /exemples/img/lieu-de-reception-mas-p-960.webp 960w" sizes="100vw" width="960" height="1600">
+        <img src="/exemples/img/lieu-de-reception-mas-1200.webp"
+             srcset="/exemples/img/lieu-de-reception-mas-480.webp 480w, /exemples/img/lieu-de-reception-mas-800.webp 800w, /exemples/img/lieu-de-reception-mas-1200.webp 1200w, /exemples/img/lieu-de-reception-mas-1600.webp 1600w"
+             sizes="100vw" width="1600" height="1067" fetchpriority="high"
+             alt="Mas en pierre sèche aux volets gris-vert, entre des cyprès et deux grands pins parasols, sous un ciel bleu"
+             data-en="Dry-stone farmhouse with grey-green shutters between cypress trees and two large umbrella pines, under a blue sky">
+      </picture>
+      <div class="ouverture">
         <h1 id="titre"><span lang="fr">Se marier dans un mas en pierre, face au Luberon</span><span lang="en">Get married in a stone mas facing the Luberon</span></h1>
-        <p class="chapo" lang="fr">Jusqu’à 180 invités à dîner sous les platanes, 14 couchages sur place, et le mas pour vous seuls du vendredi au dimanche.</p>
-        <p class="chapo" lang="en">Up to 180 guests for dinner under the plane trees, 14 beds on site, and the whole mas to yourselves from Friday to Sunday.</p>
+        <p class="chapo" lang="fr">Jusqu’à 180 invités à dîner sous les platanes, 14 couchages sur place, et le mas pour vous seuls du vendredi 15 h au dimanche midi.</p>
+        <p class="chapo" lang="en">Up to 180 guests for dinner under the plane trees, 14 beds on site, and the whole mas to yourselves from Friday 3 pm to Sunday noon.</p>
         <div class="actions">
-          <a class="btn" href="#date"><span lang="fr">Demander une date</span><span lang="en">Request a date</span></a>
-          <a class="lien" href="#espaces"><span lang="fr">Voir les espaces</span><span lang="en">See the spaces</span></a>
+          <a class="btn btn-clair" href="#date"><span lang="fr">Vérifier ma date</span><span lang="en">Check my date</span></a>
+          <a class="lien-clair" href="#espaces"><span lang="fr">Voir les espaces</span><span lang="en">See the spaces</span></a>
         </div>
       </div>
-      <figure>
-        <img src="/exemples/img/lieu-de-reception-mas-800.webp"
-             srcset="/exemples/img/lieu-de-reception-mas-480.webp 480w, /exemples/img/lieu-de-reception-mas-800.webp 800w, /exemples/img/lieu-de-reception-mas-1200.webp 1200w"
-             sizes="(min-width: 60rem) 39rem, 100vi"
-             width="1200" height="900" fetchpriority="high"
-             alt="Long bâtiment en pierre claire percé de trois arcades vitrées, sous des toits de tuiles rondes, un grand cèdre et un ciel bleu, un escalier de pierre au premier plan">
-        <figcaption><span lang="fr">La galerie aux arcades, côté jardin.</span><span lang="en">The arcaded gallery, from the garden.</span></figcaption>
-      </figure>
+      <p class="legende">
+        <span class="heure"><span lang="fr">Vendredi, 15 h</span><span lang="en">Friday, 3 pm</span></span>
+        <span lang="fr">Vous arrivez : le mas est à vous jusqu’au dimanche midi.</span><span lang="en">You arrive: the mas is yours until Sunday noon.</span>
+        <span class="folio" aria-hidden="true">1/4</span>
+      </p>
     </div>
+
+    <figure class="planche">
+      <picture>
+        <source media="(max-aspect-ratio: 4/5)" srcset="/exemples/img/lieu-de-reception-aire-p-640.webp 640w, /exemples/img/lieu-de-reception-aire-p-960.webp 960w" sizes="100vw" width="960" height="1600">
+        <img src="/exemples/img/lieu-de-reception-aire-1200.webp"
+             srcset="/exemples/img/lieu-de-reception-aire-480.webp 480w, /exemples/img/lieu-de-reception-aire-800.webp 800w, /exemples/img/lieu-de-reception-aire-1200.webp 1200w, /exemples/img/lieu-de-reception-aire-1600.webp 1600w"
+             sizes="100vw" width="1600" height="1067" loading="lazy" decoding="async"
+             alt="Rangées de chaises dorées nouées de ruban, posées dans l’herbe sèche face à une plaine et des collines"
+             data-en="Rows of gilded chairs tied with ribbon, set on dry grass facing a plain and hills">
+      </picture>
+      <figcaption class="legende">
+        <span class="heure"><span lang="fr">Samedi, 17 h</span><span lang="en">Saturday, 5 pm</span></span>
+        <span lang="fr">La cérémonie sur l’aire de battage, jusqu’à 180 chaises.</span><span lang="en">The ceremony on the old threshing floor, up to 180 chairs.</span>
+        <span class="folio" aria-hidden="true">2/4</span>
+      </figcaption>
+    </figure>
+
+    <figure class="planche">
+      <picture>
+        <source media="(max-aspect-ratio: 4/5)" srcset="/exemples/img/lieu-de-reception-tablee-p-640.webp 640w, /exemples/img/lieu-de-reception-tablee-p-960.webp 960w" sizes="100vw" width="960" height="1600">
+        <img src="/exemples/img/lieu-de-reception-tablee-1200.webp"
+             srcset="/exemples/img/lieu-de-reception-tablee-480.webp 480w, /exemples/img/lieu-de-reception-tablee-800.webp 800w, /exemples/img/lieu-de-reception-tablee-1200.webp 1200w, /exemples/img/lieu-de-reception-tablee-1600.webp 1600w"
+             sizes="100vw" width="1600" height="1067" loading="lazy" decoding="async"
+             alt="Longue table dressée dans un jardin au soleil couchant, chaises en bois et bouquets de fleurs orangées"
+             data-en="Long table laid in a garden at sunset, wooden chairs and orange flower arrangements">
+      </picture>
+      <figcaption class="legende">
+        <span class="heure"><span lang="fr">Samedi, 21 h</span><span lang="en">Saturday, 9 pm</span></span>
+        <span lang="fr">Le dîner sous les platanes, jusqu’à 180 places assises, de juin à septembre.</span><span lang="en">Dinner under the plane trees, up to 180 seated, June to September.</span>
+        <span class="folio" aria-hidden="true">3/4</span>
+      </figcaption>
+    </figure>
+
+    <figure class="planche">
+      <picture>
+        <source media="(max-aspect-ratio: 4/5)" srcset="/exemples/img/lieu-de-reception-nuit-p-640.webp 640w, /exemples/img/lieu-de-reception-nuit-p-960.webp 960w" sizes="100vw" width="960" height="1600">
+        <img src="/exemples/img/lieu-de-reception-nuit-1200.webp"
+             srcset="/exemples/img/lieu-de-reception-nuit-480.webp 480w, /exemples/img/lieu-de-reception-nuit-800.webp 800w, /exemples/img/lieu-de-reception-nuit-1200.webp 1200w, /exemples/img/lieu-de-reception-nuit-1600.webp 1600w"
+             sizes="100vw" width="1600" height="1200" loading="lazy" decoding="async"
+             alt="Vue du ciel d’une cour éclairée de guirlandes, avec des tables rondes autour d’une piste de danse"
+             data-en="Aerial view of a courtyard lit with string lights, round tables around a dance floor">
+      </picture>
+      <figcaption class="legende">
+        <span class="heure"><span lang="fr">Minuit</span><span lang="en">Midnight</span></span>
+        <span lang="fr">On danse jusque tard ; dimanche midi, vous rendez les clés.</span><span lang="en">Dancing until late; on Sunday at noon, you hand back the keys.</span>
+        <span class="folio" aria-hidden="true">4/4</span>
+      </figcaption>
+    </figure>
   </section>
 
-  <section class="date" id="date" aria-labelledby="date-t">
-    <div class="wrap">
-      <h2 id="date-t"><span lang="fr">Votre date au mas</span><span lang="en">Your date at the mas</span></h2>
-      <p class="intro" lang="fr">Choisissez la saison et le nombre d’invités : le plan montre où se passe chaque moment de la journée, avec le prix du lieu et la marche à suivre.</p>
-      <p class="intro" lang="en">Pick the season and the number of guests: the plan shows where each part of the day takes place, with the venue price and the next steps.</p>
+  <!-- II. Le vérificateur : tout en CSS (:has), les choix partent avec la demande de visite (form="visite-form") -->
+  <section class="chapitre date" id="date" aria-labelledby="date-t">
+    <div class="cadre">
+      <header class="chap-tete">
+        <p class="chap-num" aria-hidden="true">II</p>
+        <h2 id="date-t"><span lang="fr">Votre date <span class="ensemble">passe-t-elle</span> au mas ?</span><span lang="en">Does your date work at the mas?</span></h2>
+        <p class="chap-intro" lang="fr">Choisissez le mois, le nombre d’invités et votre événement. La réponse s’écrit tout de suite, avec les lieux de la journée et le prix du lieu.</p>
+        <p class="chap-intro" lang="en">Pick the month, the number of guests and your event. The answer appears straight away, with where each part of the day happens and the venue price.</p>
+      </header>
 
-      <div class="outil">
-        <div class="choix">
-          <fieldset>
-            <legend><span lang="fr">La saison</span><span lang="en">Season</span></legend>
-            <div class="tuiles">
-              <label class="tuile"><input type="radio" name="saison" id="s-printemps" value="printemps" form="demande-form"><b><span lang="fr">Printemps</span><span lang="en">Spring</span></b><small><span lang="fr">avril, mai</span><span lang="en">April, May</span></small></label>
-              <label class="tuile"><input type="radio" name="saison" id="s-ete" value="ete" form="demande-form" checked><b><span lang="fr">Été</span><span lang="en">Summer</span></b><small><span lang="fr">juin à septembre</span><span lang="en">June to September</span></small></label>
-              <label class="tuile"><input type="radio" name="saison" id="s-automne" value="automne" form="demande-form"><b><span lang="fr">Automne</span><span lang="en">Autumn</span></b><small><span lang="fr">octobre</span><span lang="en">October</span></small></label>
-              <label class="tuile"><input type="radio" name="saison" id="s-hiver" value="hiver" form="demande-form"><b><span lang="fr">Hiver</span><span lang="en">Winter</span></b><small><span lang="fr">novembre à mars</span><span lang="en">November to March</span></small></label>
+      <div class="verif">
+        <div class="verif-choix">
+          <fieldset class="choix mois">
+            <legend><span lang="fr">Le mois</span><span lang="en">Month</span></legend>
+            <div class="puces puces-mois">
+              <label class="puce s-hiver"><input type="radio" name="mois" id="m-01" value="janvier" form="visite-form"><span lang="fr">janvier</span><span lang="en">January</span></label>
+              <label class="puce s-hiver"><input type="radio" name="mois" id="m-02" value="fevrier" form="visite-form"><span lang="fr">février</span><span lang="en">February</span></label>
+              <label class="puce s-hiver"><input type="radio" name="mois" id="m-03" value="mars" form="visite-form"><span lang="fr">mars</span><span lang="en">March</span></label>
+              <label class="puce s-mi"><input type="radio" name="mois" id="m-04" value="avril" form="visite-form"><span lang="fr">avril</span><span lang="en">April</span></label>
+              <label class="puce s-mi"><input type="radio" name="mois" id="m-05" value="mai" form="visite-form"><span lang="fr">mai</span><span lang="en">May</span></label>
+              <label class="puce s-ete"><input type="radio" name="mois" id="m-06" value="juin" form="visite-form" checked><span lang="fr">juin</span><span lang="en">June</span></label>
+              <label class="puce s-ete"><input type="radio" name="mois" id="m-07" value="juillet" form="visite-form"><span lang="fr">juillet</span><span lang="en">July</span></label>
+              <label class="puce s-ete"><input type="radio" name="mois" id="m-08" value="aout" form="visite-form"><span lang="fr">août</span><span lang="en">August</span></label>
+              <label class="puce s-ete"><input type="radio" name="mois" id="m-09" value="septembre" form="visite-form"><span lang="fr">septembre</span><span lang="en">September</span></label>
+              <label class="puce s-mi"><input type="radio" name="mois" id="m-10" value="octobre" form="visite-form"><span lang="fr">octobre</span><span lang="en">October</span></label>
+              <label class="puce s-hiver"><input type="radio" name="mois" id="m-11" value="novembre" form="visite-form"><span lang="fr">novembre</span><span lang="en">November</span></label>
+              <label class="puce s-hiver"><input type="radio" name="mois" id="m-12" value="decembre" form="visite-form"><span lang="fr">décembre</span><span lang="en">December</span></label>
             </div>
+            <p class="saison-dite">
+              <span class="sd-ete"><span lang="fr">L’été au mas, de juin à septembre : tout se passe dehors.</span><span lang="en">Summer at the mas, June to September: everything happens outdoors.</span></span>
+              <span class="sd-mi"><span lang="fr">Printemps ou automne (avril, mai, octobre) : dehors le jour, dans la magnanerie le soir.</span><span lang="en">Spring or autumn (April, May, October): outdoors by day, in the silk barn at night.</span></span>
+              <span class="sd-hiver"><span lang="fr">L’hiver, de novembre à mars : la magnanerie fermée et chauffée.</span><span lang="en">Winter, November to March: the silk barn, closed and heated.</span></span>
+            </p>
           </fieldset>
-          <fieldset>
+
+          <fieldset class="choix">
             <legend><span lang="fr">Le nombre d’invités</span><span lang="en">Number of guests</span></legend>
-            <div class="tuiles">
-              <label class="tuile"><input type="radio" name="invites" id="g-80" value="jusqu-a-80" form="demande-form"><b><span lang="fr">Jusqu’à 80</span><span lang="en">Up to 80</span></b></label>
-              <label class="tuile"><input type="radio" name="invites" id="g-120" value="80-a-120" form="demande-form" checked><b><span lang="fr">80 à 120</span><span lang="en">80 to 120</span></b></label>
-              <label class="tuile"><input type="radio" name="invites" id="g-180" value="120-a-180" form="demande-form"><b><span lang="fr">120 à 180</span><span lang="en">120 to 180</span></b></label>
-              <label class="tuile"><input type="radio" name="invites" id="g-plus" value="plus-de-180" form="demande-form"><b><span lang="fr">Plus de 180</span><span lang="en">Over 180</span></b></label>
+            <div class="puces puces-4">
+              <label class="puce"><input type="radio" name="invites" id="g-80" value="jusqu-a-80" form="visite-form"><span lang="fr">jusqu’à 80</span><span lang="en">up to 80</span></label>
+              <label class="puce"><input type="radio" name="invites" id="g-120" value="80-a-120" form="visite-form" checked><span lang="fr">80 à 120</span><span lang="en">80 to 120</span></label>
+              <label class="puce"><input type="radio" name="invites" id="g-180" value="120-a-180" form="visite-form"><span lang="fr">120 à 180</span><span lang="en">120 to 180</span></label>
+              <label class="puce"><input type="radio" name="invites" id="g-plus" value="plus-de-180" form="visite-form"><span lang="fr">plus de 180</span><span lang="en">over 180</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="choix">
+            <legend><span lang="fr">Votre événement</span><span lang="en">Your event</span></legend>
+            <div class="puces puces-3">
+              <label class="puce"><input type="radio" name="evenement" id="e-mariage" value="mariage" form="visite-form" checked><span lang="fr">Mariage</span><span lang="en">Wedding</span></label>
+              <label class="puce"><input type="radio" name="evenement" id="e-famille" value="famille" form="visite-form"><span lang="fr">Fête de famille</span><span lang="en">Family party</span></label>
+              <label class="puce"><input type="radio" name="evenement" id="e-seminaire" value="seminaire" form="visite-form"><span lang="fr">Séminaire</span><span lang="en">Seminar</span></label>
             </div>
           </fieldset>
         </div>
 
-        <div class="vue">
-          <div class="plan">
-            <!-- Plan du mas vu du ciel : les espaces de la journée passent au bleu. Décoratif, la réponse écrite dit la même chose. -->
-            <svg viewBox="0 0 360 236" font-size="14" aria-hidden="true" focusable="false">
-              <rect class="bati" x="16" y="14" width="238" height="46"/>
-              <text x="135" y="41" text-anchor="middle"><tspan lang="fr">Les chambres</tspan><tspan lang="en">Bedrooms</tspan></text>
-              <g class="zone g-mag">
-                <rect x="16" y="60" width="60" height="136"/>
-                <text transform="translate(50 128) rotate(-90)" text-anchor="middle"><tspan lang="fr">La magnanerie</tspan><tspan lang="en">The silk barn</tspan></text>
-              </g>
-              <g class="zone g-cour">
-                <rect x="76" y="60" width="178" height="92"/>
-                <circle class="eau" cx="165" cy="114" r="10"/>
-                <circle class="eau" cx="165" cy="114" r="4"/>
-                <text x="165" y="86" text-anchor="middle"><tspan lang="fr">La cour</tspan><tspan lang="en">Courtyard</tspan></text>
-              </g>
-              <g class="zone g-plat">
-                <rect x="76" y="152" width="178" height="44"/>
-                <circle class="arbre" cx="96" cy="163" r="6"/><circle class="arbre" cx="138" cy="163" r="6"/><circle class="arbre" cx="192" cy="163" r="6"/><circle class="arbre" cx="234" cy="163" r="6"/>
-                <text x="165" y="187" text-anchor="middle"><tspan lang="fr">Sous les platanes</tspan><tspan lang="en">Plane trees</tspan></text>
-              </g>
-              <g class="zone g-aire">
-                <circle cx="304" cy="136" r="40"/>
-                <text x="304" y="132" text-anchor="middle"><tspan lang="fr">L’aire de</tspan><tspan lang="en">Threshing</tspan></text>
-                <text x="304" y="146" text-anchor="middle"><tspan lang="fr">battage</tspan><tspan lang="en">floor</tspan></text>
-              </g>
-              <path class="bati" d="M290 48a14 14 0 0 1 28 0z"/>
-              <text x="304" y="66" text-anchor="middle"><tspan lang="fr">L’aiguier</tspan><tspan lang="en">Cistern</tspan></text>
-              <path d="M165 196v30M156 226h18" fill="none" stroke="#1C2125" stroke-width="1.2"/>
-              <text x="182" y="222"><tspan lang="fr">Entrée</tspan><tspan lang="en">Gate</tspan></text>
-            </svg>
+        <div class="reponse" aria-live="polite">
+          <p class="verdict v-oui"><span lang="fr">Le mas peut vous recevoir. Reste à savoir si votre date est libre.</span><span lang="en">The mas can host you. The only question left is whether your date is free.</span></p>
+          <p class="verdict v-ete"><span lang="fr">Au-delà de 120 invités, le dîner se tient dehors, sous les platanes : de juin à septembre seulement.</span><span lang="en">Above 120 guests, dinner is served outdoors under the plane trees: June to September only.</span></p>
+          <p class="verdict v-non"><span lang="fr">Au-delà de 180 invités, le mas n’est pas le bon lieu pour vous. Nous préférons vous le dire tout de suite.</span><span lang="en">Above 180 guests, the mas is not the right venue for you. We would rather tell you now.</span></p>
+          <p class="v-ete-plus"><span lang="fr">Choisissez un mois de juin à septembre, ou 120 invités au plus : la réponse change aussitôt.</span><span lang="en">Pick a month from June to September, or 120 guests at most: the answer changes at once.</span></p>
+
+          <div class="deroule">
+            <h3><span lang="fr">Votre journée</span><span lang="en">Your day</span></h3>
+            <ol class="journee j-ete">
+              <li class="j-ceremonie"><b><span lang="fr">Cérémonie</span><span lang="en">Ceremony</span></b><span><span lang="fr">sur <a href="#esp-aire">l’aire de battage</a>, jusqu’à 180 chaises</span><span lang="en">on <a href="#esp-aire">the threshing floor</a>, up to 180 chairs</span></span></li>
+              <li><b><span lang="fr">Vin d’honneur</span><span lang="en">Drinks</span></b><span><span lang="fr">dans <a href="#esp-cour">la cour</a>, autour de la fontaine</span><span lang="en">in <a href="#esp-cour">the courtyard</a>, around the fountain</span></span></li>
+              <li><b><span lang="fr">Dîner</span><span lang="en">Dinner</span></b><span><span lang="fr"><a href="#esp-platanes">sous les platanes</a>, jusqu’à 180 places assises</span><span lang="en"><a href="#esp-platanes">under the plane trees</a>, up to 180 seated</span></span></li>
+            </ol>
+            <ol class="journee j-mi">
+              <li class="j-ceremonie"><b><span lang="fr">Cérémonie</span><span lang="en">Ceremony</span></b><span><span lang="fr">sur <a href="#esp-aire">l’aire de battage</a>, ou dans la magnanerie s’il pleut</span><span lang="en">on <a href="#esp-aire">the threshing floor</a>, or in the silk barn if it rains</span></span></li>
+              <li><b><span lang="fr">Vin d’honneur</span><span lang="en">Drinks</span></b><span><span lang="fr">dans <a href="#esp-cour">la cour</a>, autour de la fontaine</span><span lang="en">in <a href="#esp-cour">the courtyard</a>, around the fountain</span></span></li>
+              <li><b><span lang="fr">Dîner</span><span lang="en">Dinner</span></b><span><span lang="fr">dans <a href="#esp-magnanerie">la magnanerie</a>, jusqu’à 120 places assises</span><span lang="en">in <a href="#esp-magnanerie">the silk barn</a>, up to 120 seated</span></span></li>
+            </ol>
+            <ol class="journee j-hiver">
+              <li class="j-ceremonie"><b><span lang="fr">Cérémonie</span><span lang="en">Ceremony</span></b><span><span lang="fr">dans <a href="#esp-magnanerie">la magnanerie</a></span><span lang="en">in <a href="#esp-magnanerie">the silk barn</a></span></span></li>
+              <li><b><span lang="fr">Vin d’honneur</span><span lang="en">Drinks</span></b><span><span lang="fr">dans la magnanerie, ou dans <a href="#esp-cour">la cour</a> s’il fait beau</span><span lang="en">in the silk barn, or in <a href="#esp-cour">the courtyard</a> on a sunny day</span></span></li>
+              <li><b><span lang="fr">Dîner</span><span lang="en">Dinner</span></b><span><span lang="fr">dans <a href="#esp-magnanerie">la magnanerie</a> chauffée, jusqu’à 120 places assises</span><span lang="en">in the heated <a href="#esp-magnanerie">silk barn</a>, up to 120 seated</span></span></li>
+            </ol>
           </div>
 
-          <div class="res" aria-live="polite">
-            <p class="verdict v-oui"><span lang="fr">Le mas peut vous recevoir. Reste à savoir si votre date est libre.</span><span lang="en">The mas can host you. The only question left is whether your date is free.</span></p>
-            <p class="verdict v-ete"><span lang="fr">Au-delà de 120 invités, le dîner se tient dehors, sous les platanes : de juin à septembre seulement.</span><span lang="en">Above 120 guests, dinner is served outdoors under the plane trees: June to September only.</span></p>
-            <p class="verdict v-non"><span lang="fr">Au-delà de 180 invités, le mas n’est pas le bon lieu pour vous. Nous préférons vous le dire tout de suite.</span><span lang="en">Above 180 guests, the mas is not the right venue for you. We would rather tell you now.</span></p>
-
-            <dl class="r r-ete">
-              <dt><span lang="fr">Cérémonie</span><span lang="en">Ceremony</span></dt>
-              <dd><span lang="fr">sur l’aire de battage, jusqu’à 180 chaises</span><span lang="en">on the old threshing floor, up to 180 chairs</span></dd>
-              <dt><span lang="fr">Vin d’honneur</span><span lang="en">Drinks</span></dt>
-              <dd><span lang="fr">dans la cour, autour de la fontaine</span><span lang="en">in the courtyard, around the fountain</span></dd>
-              <dt><span lang="fr">Dîner</span><span lang="en">Dinner</span></dt>
-              <dd><span lang="fr">sous les platanes, jusqu’à 180 places assises</span><span lang="en">under the plane trees, up to 180 seated</span></dd>
-              <dt><span lang="fr">Le lieu</span><span lang="en">Venue hire</span></dt>
-              <dd><span lang="fr">à partir de 9 800 €, du vendredi 15 h au dimanche midi, les 14 couchages compris</span><span lang="en">from €9,800, Friday 3 pm to Sunday noon, all 14 beds included</span></dd>
-            </dl>
-            <dl class="r r-mi">
-              <dt><span lang="fr">Cérémonie</span><span lang="en">Ceremony</span></dt>
-              <dd><span lang="fr">sur l’aire de battage, ou dans la magnanerie s’il pleut</span><span lang="en">on the threshing floor, or in the silk barn if it rains</span></dd>
-              <dt><span lang="fr">Vin d’honneur</span><span lang="en">Drinks</span></dt>
-              <dd><span lang="fr">dans la cour, autour de la fontaine</span><span lang="en">in the courtyard, around the fountain</span></dd>
-              <dt><span lang="fr">Dîner</span><span lang="en">Dinner</span></dt>
-              <dd><span lang="fr">dans la magnanerie, jusqu’à 120 places assises</span><span lang="en">in the silk barn, up to 120 seated</span></dd>
-              <dt><span lang="fr">Le lieu</span><span lang="en">Venue hire</span></dt>
-              <dd><span lang="fr">à partir de 7 400 €, du vendredi 15 h au dimanche midi, les 14 couchages compris</span><span lang="en">from €7,400, Friday 3 pm to Sunday noon, all 14 beds included</span></dd>
-            </dl>
-            <dl class="r r-hiver">
-              <dt><span lang="fr">Cérémonie</span><span lang="en">Ceremony</span></dt>
-              <dd><span lang="fr">dans la magnanerie</span><span lang="en">in the silk barn</span></dd>
-              <dt><span lang="fr">Vin d’honneur</span><span lang="en">Drinks</span></dt>
-              <dd><span lang="fr">dans la magnanerie, ou dans la cour s’il fait beau</span><span lang="en">in the silk barn, or in the courtyard on a sunny day</span></dd>
-              <dt><span lang="fr">Dîner</span><span lang="en">Dinner</span></dt>
-              <dd><span lang="fr">dans la magnanerie chauffée, jusqu’à 120 places assises</span><span lang="en">in the heated silk barn, up to 120 seated</span></dd>
-              <dt><span lang="fr">Le lieu</span><span lang="en">Venue hire</span></dt>
-              <dd><span lang="fr">à partir de 4 900 € le week-end, ou à la journée en semaine pour un séminaire</span><span lang="en">from €4,900 for the weekend, or by the day on weekdays for a seminar</span></dd>
-            </dl>
-            <p class="note" lang="fr">Prix du lieu seul. Le traiteur se choisit parmi nos six partenaires.</p>
-            <p class="note" lang="en">Venue hire only. You choose your caterer from our six partners.</p>
-
-            <div class="suite">
-              <h3><span lang="fr">Et ensuite</span><span lang="en">What happens next</span></h3>
-              <ol>
-                <li><span lang="fr">Vous demandez votre date, par le formulaire ou par téléphone.</span><span lang="en">You ask for your date, with the form or by phone.</span></li>
-                <li><span lang="fr">On vous répond sous 48 heures : date libre ou non, et le devis détaillé.</span><span lang="en">We reply within 48 hours: whether the date is free, and a detailed quote.</span></li>
-                <li><span lang="fr">Vous visitez le mas, en semaine ou le samedi matin.</span><span lang="en">You visit the mas, on a weekday or a Saturday morning.</span></li>
-                <li><span lang="fr">Votre date est bloquée 15 jours, le temps de décider. Le contrat et un acompte de 30 % la confirment.</span><span lang="en">Your date is held for 15 days while you decide. The contract and a 30% deposit confirm it.</span></li>
-              </ol>
-            </div>
-            <p class="date-cta"><a class="btn" href="#demande"><span lang="fr">Demander cette date</span><span lang="en">Request this date</span></a></p>
-          </div>
+          <p class="prix p-ete"><span class="prix-montant"><small><span lang="fr">Le lieu, à partir de</span><span lang="en">Venue hire, from</span></small><span lang="fr">9 800 €</span><span lang="en">€9,800</span></span><span lang="fr">du vendredi 15 h au dimanche midi, les 14 couchages compris.</span><span lang="en">Friday 3 pm to Sunday noon, all 14 beds included.</span></p>
+          <p class="prix p-mi"><span class="prix-montant"><small><span lang="fr">Le lieu, à partir de</span><span lang="en">Venue hire, from</span></small><span lang="fr">7 400 €</span><span lang="en">€7,400</span></span><span lang="fr">du vendredi 15 h au dimanche midi, les 14 couchages compris.</span><span lang="en">Friday 3 pm to Sunday noon, all 14 beds included.</span></p>
+          <p class="prix p-hiver"><span class="prix-montant"><small><span lang="fr">Le lieu, à partir de</span><span lang="en">Venue hire, from</span></small><span lang="fr">4 900 €</span><span lang="en">€4,900</span></span><span lang="fr">le week-end, ou à la journée en semaine pour un séminaire.</span><span lang="en">for the weekend, or by the day on weekdays for a seminar.</span></p>
+          <p class="note"><span lang="fr">Prix du lieu seul. Le traiteur se choisit parmi nos six partenaires.</span><span lang="en">Venue hire only. You choose your caterer from our six partners.</span></p>
+          <p class="reponse-cta"><a class="btn" href="#visite"><span lang="fr">Demander une visite pour cette date</span><span lang="en">Book a visit for this date</span></a></p>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="espaces" id="espaces" aria-labelledby="espaces-t">
-    <div class="wrap">
-      <h2 id="espaces-t"><span lang="fr">Le mas, espace par espace</span><span lang="en">The mas, space by space</span></h2>
-      <div class="duo">
-        <figure>
-          <img src="/exemples/img/lieu-de-reception-placette-800.webp"
-               srcset="/exemples/img/lieu-de-reception-placette-480.webp 480w, /exemples/img/lieu-de-reception-placette-800.webp 800w, /exemples/img/lieu-de-reception-placette-1200.webp 1200w"
-               sizes="(min-width: 52rem) 38rem, calc(100vi - 2rem)"
-               width="1200" height="800" loading="lazy" decoding="async"
-               alt="Petite place de village à l’ombre d’un grand platane, une fontaine de pierre au centre, des pots de fleurs et un bougainvillier contre les façades">
-          <figcaption>
-            <h3><span lang="fr">Sous les platanes</span><span lang="en">Under the plane trees</span></h3>
-            <p lang="fr">De juin à septembre, le dîner se tient à l’ombre des grands platanes, au bord de la cour. Les tables sont dressées l’après-midi et éclairées à la nuit tombée.</p>
-            <p lang="en">From June to September, dinner is served in the shade of the great plane trees, at the edge of the courtyard. Tables are laid in the afternoon and lit at nightfall.</p>
-          </figcaption>
-        </figure>
-        <figure>
-          <img src="/exemples/img/lieu-de-reception-galerie-800.webp"
-               srcset="/exemples/img/lieu-de-reception-galerie-480.webp 480w, /exemples/img/lieu-de-reception-galerie-800.webp 800w, /exemples/img/lieu-de-reception-galerie-1200.webp 1200w"
-               sizes="(min-width: 52rem) 30rem, calc(100vi - 2rem)"
-               width="1200" height="800" loading="lazy" decoding="async"
-               alt="Longue galerie aux murs de pierre, des arcades d’un côté et de hautes fenêtres cintrées de l’autre, sous une charpente de bois clair, sol de gravier et palmiers en pot">
-          <figcaption>
-            <h3><span lang="fr">La magnanerie</span><span lang="en">The silk barn</span></h3>
-            <p lang="fr">L’ancienne salle des vers à soie : murs de pierre, arcades côté jardin, charpente de bois. Fermée et chauffée l’hiver, elle reçoit 120 invités assis et la piste de danse.</p>
-            <p lang="en">Where silkworms were once raised: stone walls, garden-side arches, a timber roof. Closed and heated in winter, it seats 120 guests and holds the dance floor.</p>
-          </figcaption>
-        </figure>
-      </div>
+  <!-- III. Les espaces sur le plan : chaque espace est un lien vers sa fiche (sans JS, :target l'affiche) -->
+  <section class="chapitre espaces" id="espaces" aria-labelledby="espaces-t">
+    <div class="cadre">
+      <header class="chap-tete">
+        <p class="chap-num" aria-hidden="true">III</p>
+        <h2 id="espaces-t"><span lang="fr">Le mas, vu du ciel</span><span lang="en">The mas from above</span></h2>
+        <p class="chap-intro" lang="fr">Touchez un espace sur le plan : sa capacité assise ou debout, sa saison et sa photo s’affichent à côté.</p>
+        <p class="chap-intro" lang="en">Tap a space on the plan to see its seated or standing capacity, its season and a photo.</p>
+      </header>
 
-      <table class="capa">
-        <caption><span lang="fr">Capacités et saisons</span><span lang="en">Capacity and seasons</span></caption>
-        <thead>
-          <tr><th scope="col"><span lang="fr">Espace</span><span lang="en">Space</span></th><th scope="col"><span lang="fr">Capacité</span><span lang="en">Capacity</span></th><th scope="col"><span lang="fr">Saison</span><span lang="en">Season</span></th></tr>
-        </thead>
-        <tbody>
-          <tr><th scope="row"><span lang="fr">Sous les platanes</span><span lang="en">Under the plane trees</span></th><td><span lang="fr">180 assis, 250 debout</span><span lang="en">180 seated, 250 standing</span></td><td><span lang="fr">juin à septembre</span><span lang="en">June to September</span></td></tr>
-          <tr><th scope="row"><span lang="fr">La magnanerie</span><span lang="en">The silk barn</span></th><td><span lang="fr">120 assis, 160 debout</span><span lang="en">120 seated, 160 standing</span></td><td><span lang="fr">toute l’année</span><span lang="en">all year</span></td></tr>
-          <tr><th scope="row"><span lang="fr">La cour</span><span lang="en">The courtyard</span></th><td><span lang="fr">250 debout</span><span lang="en">250 standing</span></td><td><span lang="fr">avril à octobre</span><span lang="en">April to October</span></td></tr>
-          <tr><th scope="row"><span lang="fr">L’aire de battage</span><span lang="en">The threshing floor</span></th><td><span lang="fr">180 chaises</span><span lang="en">180 chairs</span></td><td><span lang="fr">avril à octobre</span><span lang="en">April to October</span></td></tr>
-          <tr><th scope="row"><span lang="fr">Les chambres</span><span lang="en">Bedrooms</span></th><td><span lang="fr">14 couchages en 6 chambres</span><span lang="en">14 beds in 6 rooms</span></td><td><span lang="fr">toute l’année</span><span lang="en">all year</span></td></tr>
-        </tbody>
-      </table>
-      <p class="acces" lang="fr">Entre Gordes et Roussillon, à 45 minutes de la gare TGV d’Avignon. Parking dans le pré.</p>
-      <p class="acces" lang="en">Between Gordes and Roussillon, 45 minutes from Avignon TGV station. Parking in the meadow.</p>
+      <div class="espaces-grille">
+        <figure class="plan">
+          <svg viewBox="0 0 360 300" font-size="13" role="group" aria-labelledby="plan-legende">
+            <rect class="sol" x="0" y="0" width="360" height="300" rx="4"/>
+            <g class="pre" aria-hidden="true">
+              <rect x="244" y="204" width="104" height="80" rx="3"/>
+              <path d="M252 214h88M252 226h88M252 262h88M252 274h88"/>
+              <text x="296" y="242" text-anchor="middle"><tspan lang="fr">Le pré</tspan><tspan lang="en">Meadow</tspan></text>
+              <text x="296" y="256" text-anchor="middle" class="petit"><tspan lang="fr">parking</tspan><tspan lang="en">parking</tspan></text>
+            </g>
+            <g class="allee" aria-hidden="true">
+              <ellipse cx="141" cy="214" rx="3.2" ry="6.5"/><ellipse cx="141" cy="227" rx="3.2" ry="6.5"/><ellipse cx="141" cy="240" rx="3.2" ry="6.5"/><ellipse cx="141" cy="253" rx="3.2" ry="6.5"/><ellipse cx="141" cy="266" rx="3.2" ry="6.5"/><ellipse cx="141" cy="279" rx="3.2" ry="6.5"/>
+              <ellipse cx="165" cy="214" rx="3.2" ry="6.5"/><ellipse cx="165" cy="227" rx="3.2" ry="6.5"/><ellipse cx="165" cy="240" rx="3.2" ry="6.5"/><ellipse cx="165" cy="253" rx="3.2" ry="6.5"/><ellipse cx="165" cy="266" rx="3.2" ry="6.5"/><ellipse cx="165" cy="279" rx="3.2" ry="6.5"/>
+              <path class="portail" d="M134 292h38"/>
+              <text x="178" y="296"><tspan lang="fr">Entrée</tspan><tspan lang="en">Gate</tspan></text>
+            </g>
+            <g class="aiguier" aria-hidden="true">
+              <circle cx="294" cy="36" r="10"/><path d="M284 36a10 10 0 0 1 20 0"/>
+              <text x="294" y="64" text-anchor="middle"><tspan lang="fr">L’aiguier</tspan><tspan lang="en">Cistern</tspan></text>
+            </g>
+            <text class="nord" x="340" y="22" text-anchor="middle" aria-hidden="true">N</text>
+            <path class="nord" d="M340 27v14" aria-hidden="true"/>
+
+            <a class="zone z-chambres" href="#esp-chambres">
+              <rect class="forme" x="16" y="16" width="216" height="44"/>
+              <text x="124" y="43" text-anchor="middle"><tspan lang="fr">Les chambres</tspan><tspan lang="en">Bedrooms</tspan></text>
+            </a>
+            <a class="zone z-magnanerie" href="#esp-magnanerie">
+              <rect class="forme" x="16" y="60" width="58" height="140"/>
+              <path class="detail" d="M74 72a5 5 0 0 0 0 10M74 90a5 5 0 0 0 0 10M74 108a5 5 0 0 0 0 10M74 126a5 5 0 0 0 0 10M74 144a5 5 0 0 0 0 10M74 162a5 5 0 0 0 0 10M74 180a5 5 0 0 0 0 10"/>
+              <text transform="translate(49 130) rotate(-90)" text-anchor="middle"><tspan lang="fr">La magnanerie</tspan><tspan lang="en">Silk barn</tspan></text>
+            </a>
+            <a class="zone z-cour" href="#esp-cour">
+              <rect class="forme" x="74" y="60" width="158" height="88"/>
+              <circle class="detail" cx="153" cy="98" r="11"/><circle class="detail" cx="153" cy="98" r="4"/>
+              <text x="153" y="134" text-anchor="middle"><tspan lang="fr">La cour</tspan><tspan lang="en">Courtyard</tspan></text>
+            </a>
+            <a class="zone z-platanes" href="#esp-platanes">
+              <rect class="forme" x="74" y="148" width="158" height="52"/>
+              <circle class="detail" cx="94" cy="166" r="10"/><circle class="detail" cx="132" cy="166" r="10"/><circle class="detail" cx="174" cy="166" r="10"/><circle class="detail" cx="212" cy="166" r="10"/>
+              <text x="153" y="193" text-anchor="middle"><tspan lang="fr">Sous les platanes</tspan><tspan lang="en">Plane trees</tspan></text>
+            </a>
+            <a class="zone z-aire" href="#esp-aire">
+              <circle class="forme" cx="294" cy="130" r="44"/>
+              <circle class="detail" cx="294" cy="130" r="33"/>
+              <text x="294" y="126" text-anchor="middle"><tspan lang="fr">L’aire de</tspan><tspan lang="en">Threshing</tspan></text>
+              <text x="294" y="142" text-anchor="middle"><tspan lang="fr">battage</tspan><tspan lang="en">floor</tspan></text>
+            </a>
+          </svg>
+          <figcaption id="plan-legende"><span lang="fr">Plan du mas, sans échelle. Les cinq espaces en clair se touchent.</span><span lang="en">Plan of the mas, not to scale. The five light spaces can be tapped.</span></figcaption>
+        </figure>
+
+        <div class="fiches">
+          <nav class="onglets" aria-label="Espaces">
+            <a href="#esp-aire"><span lang="fr">L’aire</span><span lang="en">Threshing floor</span></a>
+            <a href="#esp-cour"><span lang="fr">La cour</span><span lang="en">Courtyard</span></a>
+            <a href="#esp-platanes"><span lang="fr">Les platanes</span><span lang="en">Plane trees</span></a>
+            <a href="#esp-magnanerie"><span lang="fr">La magnanerie</span><span lang="en">Silk barn</span></a>
+            <a href="#esp-chambres"><span lang="fr">Les chambres</span><span lang="en">Bedrooms</span></a>
+          </nav>
+
+          <article class="fiche" id="esp-aire" aria-labelledby="esp-aire-t">
+            <img src="/exemples/img/lieu-de-reception-aire-800.webp" srcset="/exemples/img/lieu-de-reception-aire-480.webp 480w, /exemples/img/lieu-de-reception-aire-800.webp 800w, /exemples/img/lieu-de-reception-aire-1200.webp 1200w" sizes="(min-width: 60rem) 36rem, 100vw" width="1200" height="800" loading="lazy" decoding="async"
+                 alt="Rangées de chaises dorées dans l’herbe sèche, face à une plaine et des collines" data-en="Rows of gilded chairs on dry grass, facing a plain and hills">
+            <div class="fiche-texte">
+              <h3 id="esp-aire-t"><span lang="fr">L’aire de battage</span><span lang="en">The threshing floor</span></h3>
+              <dl class="jauge">
+                <div><dt><span lang="fr">chaises</span><span lang="en">chairs</span></dt><dd>180</dd></div>
+              </dl>
+              <p class="fiche-saison"><span lang="fr">D’avril à octobre</span><span lang="en">April to October</span></p>
+              <p lang="fr">Le cercle de pierre où l’on battait le blé, ouvert sur la vallée. La cérémonie s’y tient d’avril à octobre ; s’il pleut au printemps ou à l’automne, elle passe dans la magnanerie.</p>
+              <p lang="en">The stone circle where wheat was once threshed, open to the valley. Ceremonies take place here from April to October; if it rains in spring or autumn, they move into the silk barn.</p>
+            </div>
+          </article>
+
+          <article class="fiche" id="esp-cour" aria-labelledby="esp-cour-t">
+            <img src="/exemples/img/lieu-de-reception-cour-800.webp" srcset="/exemples/img/lieu-de-reception-cour-480.webp 480w, /exemples/img/lieu-de-reception-cour-800.webp 800w, /exemples/img/lieu-de-reception-cour-1200.webp 1200w" sizes="(min-width: 60rem) 36rem, 100vw" width="1200" height="1600" loading="lazy" decoding="async"
+                 alt="Cour pavée devant une façade de pierre, avec une fontaine à vasque entourée de plantes" data-en="Paved courtyard in front of a stone facade, with a basin fountain surrounded by plants">
+            <div class="fiche-texte">
+              <h3 id="esp-cour-t"><span lang="fr">La cour</span><span lang="en">The courtyard</span></h3>
+              <dl class="jauge">
+                <div><dt><span lang="fr">debout</span><span lang="en">standing</span></dt><dd>250</dd></div>
+              </dl>
+              <p class="fiche-saison"><span lang="fr">D’avril à octobre</span><span lang="en">April to October</span></p>
+              <p lang="fr">Entre la magnanerie et les chambres, la cour pavée garde sa fontaine. Le vin d’honneur s’y sert d’avril à octobre, et l’hiver, on y sort un verre à la main s’il fait beau.</p>
+              <p lang="en">Between the silk barn and the bedrooms, the paved courtyard keeps its fountain. Drinks are served here from April to October, and in winter guests step out with a glass on a sunny day.</p>
+            </div>
+          </article>
+
+          <article class="fiche" id="esp-platanes" aria-labelledby="esp-platanes-t">
+            <img src="/exemples/img/lieu-de-reception-platanes-800.webp" srcset="/exemples/img/lieu-de-reception-platanes-480.webp 480w, /exemples/img/lieu-de-reception-platanes-800.webp 800w, /exemples/img/lieu-de-reception-platanes-1200.webp 1200w" sizes="(min-width: 60rem) 36rem, 100vw" width="1200" height="900" loading="lazy" decoding="async"
+                 alt="Banc de pierre à l’ombre de deux grands platanes, face à un jardin" data-en="Stone bench in the shade of two large plane trees, facing a garden">
+            <div class="fiche-texte">
+              <h3 id="esp-platanes-t"><span lang="fr">Sous les platanes</span><span lang="en">Under the plane trees</span></h3>
+              <dl class="jauge">
+                <div><dt><span lang="fr">assis</span><span lang="en">seated</span></dt><dd>180</dd></div>
+                <div><dt><span lang="fr">debout</span><span lang="en">standing</span></dt><dd>250</dd></div>
+              </dl>
+              <p class="fiche-saison"><span lang="fr">De juin à septembre</span><span lang="en">June to September</span></p>
+              <p lang="fr">De juin à septembre, le dîner se tient à l’ombre des grands platanes, au bord de la cour. Les tables sont dressées l’après-midi et éclairées à la nuit tombée.</p>
+              <p lang="en">From June to September, dinner is served in the shade of the great plane trees, at the edge of the courtyard. Tables are laid in the afternoon and lit at nightfall.</p>
+            </div>
+          </article>
+
+          <article class="fiche" id="esp-magnanerie" aria-labelledby="esp-magnanerie-t">
+            <img src="/exemples/img/lieu-de-reception-magnanerie-800.webp" srcset="/exemples/img/lieu-de-reception-magnanerie-480.webp 480w, /exemples/img/lieu-de-reception-magnanerie-800.webp 800w, /exemples/img/lieu-de-reception-magnanerie-1200.webp 1200w" sizes="(min-width: 60rem) 36rem, 100vw" width="1200" height="1800" loading="lazy" decoding="async"
+                 alt="Longue table nappée sous une galerie à arcades de pierre et charpente de bois" data-en="Long table with a linen cloth under a stone arcade with a timber roof">
+            <div class="fiche-texte">
+              <h3 id="esp-magnanerie-t"><span lang="fr">La magnanerie</span><span lang="en">The silk barn</span></h3>
+              <dl class="jauge">
+                <div><dt><span lang="fr">assis</span><span lang="en">seated</span></dt><dd>120</dd></div>
+                <div><dt><span lang="fr">debout</span><span lang="en">standing</span></dt><dd>160</dd></div>
+              </dl>
+              <p class="fiche-saison"><span lang="fr">Toute l’année</span><span lang="en">All year</span></p>
+              <p lang="fr">L’ancienne salle des vers à soie : murs de pierre, arcades côté jardin, charpente de bois. Fermée et chauffée l’hiver, elle reçoit 120 invités assis et la piste de danse.</p>
+              <p lang="en">Where silkworms were once raised: stone walls, garden-side arches, a timber roof. Closed and heated in winter, it seats 120 guests and holds the dance floor.</p>
+            </div>
+          </article>
+
+          <article class="fiche" id="esp-chambres" aria-labelledby="esp-chambres-t">
+            <img src="/exemples/img/lieu-de-reception-chambres-800.webp" srcset="/exemples/img/lieu-de-reception-chambres-480.webp 480w, /exemples/img/lieu-de-reception-chambres-800.webp 800w, /exemples/img/lieu-de-reception-chambres-1200.webp 1200w" sizes="(min-width: 60rem) 36rem, 100vw" width="1200" height="1800" loading="lazy" decoding="async"
+                 alt="Chambre sous une charpente de bois, mur de pierre, lit double au couvre-lit bleu" data-en="Bedroom under timber beams, stone wall, double bed with a blue cover">
+            <div class="fiche-texte">
+              <h3 id="esp-chambres-t"><span lang="fr">Les chambres</span><span lang="en">The bedrooms</span></h3>
+              <dl class="jauge">
+                <div><dt><span lang="fr">couchages</span><span lang="en">beds</span></dt><dd>14</dd></div>
+                <div><dt><span lang="fr">chambres</span><span lang="en">rooms</span></dt><dd>6</dd></div>
+              </dl>
+              <p class="fiche-saison"><span lang="fr">Toute l’année</span><span lang="en">All year</span></p>
+              <p lang="fr">L’aile nord du mas, pour vous, vos familles et vos témoins. Vous vous préparez sur place et personne ne reprend la route après le dîner.</p>
+              <p lang="en">The north wing of the mas, for you, your families and your witnesses. You get ready on site and nobody has to drive after dinner.</p>
+              <p><a class="lien" href="#sejour"><span lang="fr">Voir les six chambres</span><span lang="en">See the six rooms</span></a></p>
+            </div>
+          </article>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section class="demande" id="demande" aria-labelledby="demande-t">
-    <div class="wrap">
-      <h2 id="demande-t"><span lang="fr">Demander une date</span><span lang="en">Request a date</span></h2>
-      <p lang="fr">Réponse sous 48 heures, avec la disponibilité de votre date et un devis détaillé.</p>
-      <p lang="en">We reply within 48 hours with your date’s availability and a detailed quote.</p>
-      <div class="grille">
-        <form id="demande-form" action="#demande" novalidate>
+  <!-- IV. Les formules : la saison choisie plus haut est signalée (:has) -->
+  <section class="chapitre formules" id="formules" aria-labelledby="formules-t">
+    <div class="cadre">
+      <header class="chap-tete">
+        <p class="chap-num" aria-hidden="true">IV</p>
+        <h2 id="formules-t"><span lang="fr">Le mas privatisé, selon la saison</span><span lang="en">The whole mas, by season</span></h2>
+        <p class="chap-intro" lang="fr">Une seule règle : pendant votre week-end, le mas ne reçoit que vous, du vendredi 15 h au dimanche midi. Le prix du lieu change avec la saison.</p>
+        <p class="chap-intro" lang="en">One rule: during your weekend, the mas hosts no one else, from Friday 3 pm to Sunday noon. The venue price changes with the season.</p>
+      </header>
+
+      <div class="tarifs">
+        <article class="tarif t-ete" aria-labelledby="t-ete-t">
+          <p class="tarif-votre"><span lang="fr">Votre saison</span><span lang="en">Your season</span></p>
+          <h3 id="t-ete-t"><span lang="fr">L’été</span><span lang="en">Summer</span></h3>
+          <p class="tarif-mois"><span lang="fr">juin à septembre</span><span lang="en">June to September</span></p>
+          <p class="tarif-prix"><small><span lang="fr">à partir de</span><span lang="en">from</span></small><span lang="fr">9 800 €</span><span lang="en">€9,800</span></p>
+          <ul>
+            <li><span lang="fr">Le week-end, du vendredi 15 h au dimanche midi</span><span lang="en">The weekend, Friday 3 pm to Sunday noon</span></li>
+            <li><span lang="fr">Les 14 couchages compris</span><span lang="en">All 14 beds included</span></li>
+            <li><span lang="fr">Cérémonie sur l’aire, jusqu’à 180 chaises</span><span lang="en">Ceremony on the threshing floor, up to 180 chairs</span></li>
+            <li><span lang="fr">Dîner sous les platanes, jusqu’à 180 places assises</span><span lang="en">Dinner under the plane trees, up to 180 seated</span></li>
+          </ul>
+        </article>
+        <article class="tarif t-mi" aria-labelledby="t-mi-t">
+          <p class="tarif-votre"><span lang="fr">Votre saison</span><span lang="en">Your season</span></p>
+          <h3 id="t-mi-t"><span lang="fr">Printemps et automne</span><span lang="en">Spring and autumn</span></h3>
+          <p class="tarif-mois"><span lang="fr">avril, mai et octobre</span><span lang="en">April, May and October</span></p>
+          <p class="tarif-prix"><small><span lang="fr">à partir de</span><span lang="en">from</span></small><span lang="fr">7 400 €</span><span lang="en">€7,400</span></p>
+          <ul>
+            <li><span lang="fr">Le week-end, du vendredi 15 h au dimanche midi</span><span lang="en">The weekend, Friday 3 pm to Sunday noon</span></li>
+            <li><span lang="fr">Les 14 couchages compris</span><span lang="en">All 14 beds included</span></li>
+            <li><span lang="fr">Cérémonie sur l’aire, ou dans la magnanerie s’il pleut</span><span lang="en">Ceremony on the threshing floor, or in the silk barn if it rains</span></li>
+            <li><span lang="fr">Dîner dans la magnanerie, jusqu’à 120 places assises</span><span lang="en">Dinner in the silk barn, up to 120 seated</span></li>
+          </ul>
+        </article>
+        <article class="tarif t-hiver" aria-labelledby="t-hiver-t">
+          <p class="tarif-votre"><span lang="fr">Votre saison</span><span lang="en">Your season</span></p>
+          <h3 id="t-hiver-t"><span lang="fr">L’hiver</span><span lang="en">Winter</span></h3>
+          <p class="tarif-mois"><span lang="fr">novembre à mars</span><span lang="en">November to March</span></p>
+          <p class="tarif-prix"><small><span lang="fr">à partir de</span><span lang="en">from</span></small><span lang="fr">4 900 €</span><span lang="en">€4,900</span></p>
+          <ul>
+            <li><span lang="fr">Le week-end, du vendredi 15 h au dimanche midi</span><span lang="en">The weekend, Friday 3 pm to Sunday noon</span></li>
+            <li><span lang="fr">Ou à la journée en semaine, pour un séminaire</span><span lang="en">Or by the day on weekdays, for a seminar</span></li>
+            <li><span lang="fr">Cérémonie et vin d’honneur dans la magnanerie</span><span lang="en">Ceremony and drinks in the silk barn</span></li>
+            <li><span lang="fr">Dîner dans la magnanerie chauffée, jusqu’à 120 places assises</span><span lang="en">Dinner in the heated silk barn, up to 120 seated</span></li>
+          </ul>
+        </article>
+      </div>
+      <p class="tarifs-note" lang="fr">Prix du lieu seul. Le traiteur se choisit parmi nos six partenaires. Votre date est bloquée 15 jours, le temps de décider ; le contrat et un acompte de 30 % la confirment.</p>
+      <p class="tarifs-note" lang="en">Venue hire only. You choose your caterer from our six partners. Your date is held for 15 days while you decide; the contract and a 30% deposit confirm it.</p>
+    </div>
+  </section>
+
+  <!-- V. Les photos : la mosaïque s'ouvre en grand (sans JS, le lien mène à l'image) -->
+  <section class="chapitre photos" id="photos" aria-labelledby="photos-t">
+    <div class="cadre">
+      <header class="chap-tete">
+        <p class="chap-num" aria-hidden="true">V</p>
+        <h2 id="photos-t"><span lang="fr">Le mas en images</span><span lang="en">The mas in pictures</span></h2>
+        <p class="chap-intro" lang="fr">Touchez une photo pour l’ouvrir en grand, puis passez à la suivante.</p>
+        <p class="chap-intro" lang="en">Tap a photo to open it full size, then move on to the next one.</p>
+      </header>
+      <ul class="mosaique" role="list">
+        <li class="m-1">
+          <figure>
+            <a class="vignette" href="/exemples/img/lieu-de-reception-table-1200.webp">
+              <img src="/exemples/img/lieu-de-reception-table-480.webp" srcset="/exemples/img/lieu-de-reception-table-480.webp 480w, /exemples/img/lieu-de-reception-table-800.webp 800w" sizes="(min-width: 60rem) 25vw, 50vw" width="1200" height="1798" loading="lazy" decoding="async"
+                   alt="Longue table en bois dressée sous des guirlandes lumineuses, serviettes vert sauge et eucalyptus" data-en="Long wooden table set under string lights, sage-green napkins and eucalyptus">
+            </a>
+            <figcaption><span lang="fr">La grande tablée, dressée l’après-midi.</span><span lang="en">The long table, laid in the afternoon.</span></figcaption>
+          </figure>
+        </li>
+        <li class="m-2">
+          <figure>
+            <a class="vignette" href="/exemples/img/lieu-de-reception-magnanerie-hiver-1200.webp">
+              <img src="/exemples/img/lieu-de-reception-magnanerie-hiver-480.webp" srcset="/exemples/img/lieu-de-reception-magnanerie-hiver-480.webp 480w, /exemples/img/lieu-de-reception-magnanerie-hiver-800.webp 800w" sizes="(min-width: 60rem) 25vw, 50vw" width="1200" height="800" loading="lazy" decoding="async"
+                   alt="Grande salle voûtée en pierre, tables dressées sous des guirlandes de lumières" data-en="Large vaulted stone hall, tables laid under strings of lights">
+            </a>
+            <figcaption><span lang="fr">Une salle de pierre dressée pour un dîner d’hiver.</span><span lang="en">A stone hall laid for a winter dinner.</span></figcaption>
+          </figure>
+        </li>
+        <li class="m-3">
+          <figure>
+            <a class="vignette" href="/exemples/img/lieu-de-reception-oliviers-1200.webp">
+              <img src="/exemples/img/lieu-de-reception-oliviers-480.webp" srcset="/exemples/img/lieu-de-reception-oliviers-480.webp 480w, /exemples/img/lieu-de-reception-oliviers-800.webp 800w" sizes="(min-width: 60rem) 25vw, 50vw" width="1200" height="1600" loading="lazy" decoding="async"
+                   alt="Oliviers sur une terre sèche devant une ferme en pierre" data-en="Olive trees on dry soil in front of a stone farmhouse">
+            </a>
+            <figcaption><span lang="fr">Les oliviers, sur le chemin de l’aire.</span><span lang="en">The olive trees, on the way to the threshing floor.</span></figcaption>
+          </figure>
+        </li>
+        <li class="m-4">
+          <figure>
+            <a class="vignette" href="/exemples/img/lieu-de-reception-terrasse-1200.webp">
+              <img src="/exemples/img/lieu-de-reception-terrasse-480.webp" srcset="/exemples/img/lieu-de-reception-terrasse-480.webp 480w, /exemples/img/lieu-de-reception-terrasse-800.webp 800w" sizes="(min-width: 60rem) 25vw, 50vw" width="1200" height="800" loading="lazy" decoding="async"
+                   alt="Terrasse à la rambarde de fer forgé, entre cyprès et lierre, ouverte sur une vallée" data-en="Terrace with wrought-iron railings between cypresses and ivy, overlooking a valley">
+            </a>
+            <figcaption><span lang="fr">La terrasse des chambres, face à la vallée.</span><span lang="en">The bedroom terrace, facing the valley.</span></figcaption>
+          </figure>
+        </li>
+        <li class="m-5">
+          <figure>
+            <a class="vignette" href="/exemples/img/lieu-de-reception-jardin-1200.webp">
+              <img src="/exemples/img/lieu-de-reception-jardin-480.webp" srcset="/exemples/img/lieu-de-reception-jardin-480.webp 480w, /exemples/img/lieu-de-reception-jardin-800.webp 800w" sizes="(min-width: 60rem) 25vw, 50vw" width="1200" height="1601" loading="lazy" decoding="async"
+                   alt="Allée dallée entre des buis taillés en boule et des cyprès, devant une maison de pierre" data-en="Flagstone path between clipped box balls and cypress trees, in front of a stone house">
+            </a>
+            <figcaption><span lang="fr">Le jardin de buis, côté chambres.</span><span lang="en">The box garden, by the bedrooms.</span></figcaption>
+          </figure>
+        </li>
+        <li class="m-6">
+          <figure>
+            <a class="vignette" href="/exemples/img/lieu-de-reception-vue-1200.webp">
+              <img src="/exemples/img/lieu-de-reception-vue-480.webp" srcset="/exemples/img/lieu-de-reception-vue-480.webp 480w, /exemples/img/lieu-de-reception-vue-800.webp 800w" sizes="(min-width: 60rem) 25vw, 50vw" width="1200" height="800" loading="lazy" decoding="async"
+                   alt="Toits de tuiles d’un village perché, lauriers-roses en fleur et une vallée au loin" data-en="Tiled roofs of a hilltop village, oleanders in bloom and a valley in the distance">
+            </a>
+            <figcaption><span lang="fr">Les villages perchés, à dix minutes.</span><span lang="en">The hilltop villages, ten minutes away.</span></figcaption>
+          </figure>
+        </li>
+        <li class="m-7">
+          <figure>
+            <a class="vignette" href="/exemples/img/lieu-de-reception-chambre-lumiere-1200.webp">
+              <img src="/exemples/img/lieu-de-reception-chambre-lumiere-480.webp" srcset="/exemples/img/lieu-de-reception-chambre-lumiere-480.webp 480w, /exemples/img/lieu-de-reception-chambre-lumiere-800.webp 800w" sizes="(min-width: 60rem) 25vw, 50vw" width="1200" height="1808" loading="lazy" decoding="async"
+                   alt="Chambre aux volets de bois ouverts, le soleil dessine des rayures sur le lit" data-en="Bedroom with open wooden shutters, sunlight striping the bed">
+            </a>
+            <figcaption><span lang="fr">Le matin, dans une chambre de l’aile nord.</span><span lang="en">Morning in a north-wing bedroom.</span></figcaption>
+          </figure>
+        </li>
+        <li class="m-8">
+          <figure>
+            <a class="vignette" href="/exemples/img/lieu-de-reception-nuit-1200.webp">
+              <img src="/exemples/img/lieu-de-reception-nuit-480.webp" srcset="/exemples/img/lieu-de-reception-nuit-480.webp 480w, /exemples/img/lieu-de-reception-nuit-800.webp 800w" sizes="(min-width: 60rem) 25vw, 50vw" width="1200" height="900" loading="lazy" decoding="async"
+                   alt="Vue du ciel d’une cour éclairée de guirlandes, avec des tables rondes autour d’une piste de danse" data-en="Aerial view of a courtyard lit with string lights, round tables around a dance floor">
+            </a>
+            <figcaption><span lang="fr">La nuit, les guirlandes s’allument.</span><span lang="en">At night, the string lights come on.</span></figcaption>
+          </figure>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- VI. Dormir et venir -->
+  <section class="chapitre sejour" id="sejour" aria-labelledby="sejour-t">
+    <div class="cadre">
+      <header class="chap-tete">
+        <p class="chap-num" aria-hidden="true">VI</p>
+        <h2 id="sejour-t"><span lang="fr">Dormir au mas, venir au mas</span><span lang="en">Staying and getting here</span></h2>
+      </header>
+
+      <div class="dormir">
+        <div class="dormir-photos">
+          <img src="/exemples/img/lieu-de-reception-chambre-lumiere-800.webp" srcset="/exemples/img/lieu-de-reception-chambre-lumiere-480.webp 480w, /exemples/img/lieu-de-reception-chambre-lumiere-800.webp 800w, /exemples/img/lieu-de-reception-chambre-lumiere-1200.webp 1200w" sizes="(min-width: 60rem) 26rem, 70vw" width="1200" height="1808" loading="lazy" decoding="async"
+               alt="Chambre aux volets de bois ouverts, le soleil dessine des rayures sur le lit" data-en="Bedroom with open wooden shutters, sunlight striping the bed">
+        </div>
+        <div class="dormir-texte">
+          <h3><span lang="fr">Quatorze couchages, six chambres</span><span lang="en">Fourteen beds, six rooms</span></h3>
+          <p lang="fr">L’aile nord du mas loge les mariés, leurs familles et les témoins. D’avril à octobre, les chambres sont comprises dans le prix du week-end ; le linge de lit et de toilette est fourni.</p>
+          <p lang="en">The north wing sleeps the couple, their families and the witnesses. From April to October, the rooms are included in the weekend price; bed linen and towels are provided.</p>
+          <ul class="chambres">
+            <li><b><span lang="fr">La chambre des mariés</span><span lang="en">The couple’s room</span></b><span><span lang="fr">2 couchages, terrasse</span><span lang="en">2 beds, terrace</span></span></li>
+            <li><b><span lang="fr">La chambre de l’aiguier</span><span lang="en">The cistern room</span></b><span><span lang="fr">2 couchages</span><span lang="en">2 beds</span></span></li>
+            <li><b><span lang="fr">La chambre des mûriers</span><span lang="en">The mulberry room</span></b><span><span lang="fr">2 couchages</span><span lang="en">2 beds</span></span></li>
+            <li><b><span lang="fr">La chambre des cyprès</span><span lang="en">The cypress room</span></b><span><span lang="fr">2 couchages</span><span lang="en">2 beds</span></span></li>
+            <li><b><span lang="fr">La grande chambre</span><span lang="en">The large room</span></b><span><span lang="fr">3 couchages</span><span lang="en">3 beds</span></span></li>
+            <li><b><span lang="fr">Le pigeonnier</span><span lang="en">The dovecote</span></b><span><span lang="fr">3 couchages</span><span lang="en">3 beds</span></span></li>
+          </ul>
+          <p class="discret" lang="fr">Pour vos autres invités, nous envoyons la liste des gîtes et hôtels proches avec la réponse à votre demande.</p>
+          <p class="discret" lang="en">For your other guests, we send a list of nearby guesthouses and hotels with our reply.</p>
+        </div>
+      </div>
+
+      <div class="venir">
+        <figure class="venir-photo">
+          <img src="/exemples/img/lieu-de-reception-allee-800.webp" srcset="/exemples/img/lieu-de-reception-allee-480.webp 480w, /exemples/img/lieu-de-reception-allee-800.webp 800w, /exemples/img/lieu-de-reception-allee-1200.webp 1200w" sizes="(min-width: 60rem) 34rem, 100vw" width="1200" height="960" loading="lazy" decoding="async"
+               alt="Allée bordée de cyprès et de lavande menant à un portail, des collines boisées au fond" data-en="Driveway lined with cypress and lavender leading to a gate, wooded hills behind">
+        </figure>
+        <div class="venir-texte">
+          <h3><span lang="fr">Venir au mas</span><span lang="en">Getting to the mas</span></h3>
+          <p lang="fr">Entre Gordes et Roussillon, dans le Vaucluse. On se gare dans le pré, au bout de l’allée.</p>
+          <p lang="en">Between Gordes and Roussillon, in the Vaucluse. Guests park in the meadow at the end of the drive.</p>
+          <table class="trajets">
+            <caption><span lang="fr">Temps de route approximatifs, en voiture et hors bouchons</span><span lang="en">Approximate driving times, outside traffic jams</span></caption>
+            <tbody>
+              <tr><th scope="row"><span lang="fr">Gare TGV d’Avignon</span><span lang="en">Avignon TGV station</span></th><td><span lang="fr">environ 45 min</span><span lang="en">about 45 min</span></td></tr>
+              <tr><th scope="row"><span lang="fr">Gare de Cavaillon</span><span lang="en">Cavaillon station</span></th><td><span lang="fr">environ 25 min</span><span lang="en">about 25 min</span></td></tr>
+              <tr><th scope="row"><span lang="fr">Gare TGV d’Aix-en-Provence</span><span lang="en">Aix-en-Provence TGV station</span></th><td><span lang="fr">environ 1 h</span><span lang="en">about 1 hr</span></td></tr>
+              <tr><th scope="row"><span lang="fr">Aéroport d’Avignon</span><span lang="en">Avignon airport</span></th><td><span lang="fr">environ 40 min</span><span lang="en">about 40 min</span></td></tr>
+              <tr><th scope="row"><span lang="fr">Aéroport de Marseille</span><span lang="en">Marseille airport</span></th><td><span lang="fr">environ 1 h 10</span><span lang="en">about 1 hr 10</span></td></tr>
+              <tr><th scope="row"><span lang="fr">Aéroport de Nice</span><span lang="en">Nice airport</span></th><td><span lang="fr">environ 2 h 45</span><span lang="en">about 2 hr 45</span></td></tr>
+            </tbody>
+          </table>
+          <p class="discret" lang="fr">Ce sont des ordres de grandeur : comptez davantage en juillet et en août.</p>
+          <p class="discret" lang="en">These are rough figures: allow more time in July and August.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VII. La visite : reliée au vérificateur (mois, invités et événement partent avec le formulaire) -->
+  <section class="chapitre visite" id="visite" aria-labelledby="visite-t">
+    <div class="cadre">
+      <header class="chap-tete">
+        <p class="chap-num" aria-hidden="true">VII</p>
+        <h2 id="visite-t"><span lang="fr">Demander une visite</span><span lang="en">Book a visit</span></h2>
+        <p class="chap-intro" lang="fr">Nous vous répondons sous 48 heures : votre date est-elle libre, et le devis détaillé. Puis vous visitez le mas, en semaine ou le samedi matin.</p>
+        <p class="chap-intro" lang="en">We reply within 48 hours: whether your date is free, and a detailed quote. Then you visit the mas, on a weekday or a Saturday morning.</p>
+      </header>
+
+      <div class="visite-grille">
+        <form id="visite-form" action="#visite" novalidate>
           <p class="recap">
-            <span lang="fr">Saison et invités choisis plus haut :</span><span lang="en">Season and guests chosen above:</span>
-            <b class="rs-printemps"><span lang="fr">avril, mai</span><span lang="en">April, May</span></b><b class="rs-ete"><span lang="fr">juin à septembre</span><span lang="en">June to September</span></b><b class="rs-automne"><span lang="fr">octobre</span><span lang="en">October</span></b><b class="rs-hiver"><span lang="fr">novembre à mars</span><span lang="en">November to March</span></b>,
-            <b class="rg-80"><span lang="fr">jusqu’à 80 invités</span><span lang="en">up to 80 guests</span></b><b class="rg-120"><span lang="fr">80 à 120 invités</span><span lang="en">80 to 120 guests</span></b><b class="rg-180"><span lang="fr">120 à 180 invités</span><span lang="en">120 to 180 guests</span></b><b class="rg-plus"><span lang="fr">plus de 180 invités</span><span lang="en">over 180 guests</span></b>.
+            <span class="recap-t"><span lang="fr">Votre choix :</span><span lang="en">Your choice:</span></span>
+            <b class="r-m-01"><span lang="fr">janvier</span><span lang="en">January</span></b><b class="r-m-02"><span lang="fr">février</span><span lang="en">February</span></b><b class="r-m-03"><span lang="fr">mars</span><span lang="en">March</span></b><b class="r-m-04"><span lang="fr">avril</span><span lang="en">April</span></b><b class="r-m-05"><span lang="fr">mai</span><span lang="en">May</span></b><b class="r-m-06"><span lang="fr">juin</span><span lang="en">June</span></b><b class="r-m-07"><span lang="fr">juillet</span><span lang="en">July</span></b><b class="r-m-08"><span lang="fr">août</span><span lang="en">August</span></b><b class="r-m-09"><span lang="fr">septembre</span><span lang="en">September</span></b><b class="r-m-10"><span lang="fr">octobre</span><span lang="en">October</span></b><b class="r-m-11"><span lang="fr">novembre</span><span lang="en">November</span></b><b class="r-m-12"><span lang="fr">décembre</span><span lang="en">December</span></b><span class="sep">, </span><b class="r-g-80"><span lang="fr">jusqu’à 80 invités</span><span lang="en">up to 80 guests</span></b><b class="r-g-120"><span lang="fr">80 à 120 invités</span><span lang="en">80 to 120 guests</span></b><b class="r-g-180"><span lang="fr">120 à 180 invités</span><span lang="en">120 to 180 guests</span></b><b class="r-g-plus"><span lang="fr">plus de 180 invités</span><span lang="en">over 180 guests</span></b><span class="sep">, </span><b class="r-e-mariage"><span lang="fr">mariage</span><span lang="en">wedding</span></b><b class="r-e-famille"><span lang="fr">fête de famille</span><span lang="en">family party</span></b><b class="r-e-seminaire"><span lang="fr">séminaire</span><span lang="en">seminar</span></b>.
             <a href="#date"><span lang="fr">Modifier</span><span lang="en">Change</span></a>
           </p>
           <div class="deux">
-            <div><label for="nom"><span lang="fr">Vos prénoms *</span><span lang="en">Your first names *</span></label><input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required></div>
-            <div><label for="email">Email *</label><input id="email" name="email" type="email" autocomplete="email" enterkeyhint="next" required></div>
+            <div class="champ"><label for="nom"><span lang="fr">Vos prénoms *</span><span lang="en">Your first names *</span></label><input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required></div>
+            <div class="champ"><label for="email">Email *</label><input id="email" name="email" type="email" autocomplete="email" enterkeyhint="next" required></div>
           </div>
           <div class="deux">
-            <div><label for="tel"><span lang="fr">Téléphone</span><span lang="en">Phone</span></label><input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next"></div>
-            <div>
+            <div class="champ"><label for="tel"><span lang="fr">Téléphone</span><span lang="en">Phone</span></label><input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next"></div>
+            <div class="champ">
               <label for="jour"><span lang="fr">Date souhaitée *</span><span lang="en">Preferred date *</span></label>
               <input id="jour" name="jour" aria-describedby="jour-aide" enterkeyhint="next" required>
-              <span class="aide" id="jour-aide"><span lang="fr">Un jour précis ou un mois</span><span lang="en">An exact day or a month</span></span>
+              <span class="aide" id="jour-aide"><span lang="fr">Un jour précis ou un week-end</span><span lang="en">An exact day or a weekend</span></span>
             </div>
           </div>
-          <fieldset class="type">
-            <legend class="form-legende"><span lang="fr">Votre événement</span><span lang="en">Your event</span></legend>
-            <div>
-              <label><input type="radio" name="evenement" value="mariage" checked><span lang="fr">Mariage</span><span lang="en">Wedding</span></label>
-              <label><input type="radio" name="evenement" value="famille"><span lang="fr">Fête de famille</span><span lang="en">Family celebration</span></label>
-              <label><input type="radio" name="evenement" value="seminaire"><span lang="fr">Séminaire</span><span lang="en">Seminar</span></label>
+          <fieldset class="choix-visite">
+            <legend><span lang="fr">Votre visite</span><span lang="en">Your visit</span></legend>
+            <div class="puces puces-3">
+              <label class="puce"><input type="radio" name="visite" value="semaine" checked><span lang="fr">Sur place, en semaine</span><span lang="en">On site, weekday</span></label>
+              <label class="puce"><input type="radio" name="visite" value="samedi"><span lang="fr">Sur place, samedi matin</span><span lang="en">On site, Saturday morning</span></label>
+              <label class="puce"><input type="radio" name="visite" value="visio"><span lang="fr">En visio, depuis l’étranger</span><span lang="en">Video call, from abroad</span></label>
             </div>
           </fieldset>
-          <div>
+          <div class="champ">
             <label for="mot"><span lang="fr">Un mot sur votre projet</span><span lang="en">Tell us about your plans</span></label>
             <textarea id="mot" name="mot" rows="3"></textarea>
           </div>
           <p class="discret"><span lang="fr">* obligatoire</span><span lang="en">* required</span></p>
-          <div><button class="btn" type="submit"><span lang="fr">Envoyer ma demande de date</span><span lang="en">Send my date request</span></button></div>
-          <p class="merci" role="status"><span lang="fr">Demande enregistrée. Dans la version en ligne, le mas vous répond sous 48 heures.</span><span lang="en">Request saved. On the live site, the mas replies within 48 hours.</span></p>
+          <p><button class="btn" type="submit"><span lang="fr">Demander ma visite</span><span lang="en">Book my visit</span></button></p>
+          <p class="merci" role="status"><span lang="fr">Demande de visite enregistrée. Dans la version en ligne, le mas vous répond sous 48 heures.</span><span lang="en">Visit request saved. On the live site, the mas replies within 48 hours.</span></p>
         </form>
-        <aside class="cote" aria-labelledby="cote-t">
-          <b id="cote-t"><span lang="fr">Vous préférez appeler ?</span><span lang="en">Rather call?</span></b>
-          <a href="tel:+33465713820"><span lang="fr">04 65 71 38 20</span><span lang="en">+33 4 65 71 38 20</span></a>
-          <p lang="fr">Du lundi au samedi, de 9 h à 19 h. Visites du mas sur rendez-vous.</p>
-          <p lang="en">Monday to Saturday, 9 am to 7 pm. Visits by appointment.</p>
+
+        <aside class="ensuite" aria-labelledby="ensuite-t">
+          <h3 id="ensuite-t"><span lang="fr">Et ensuite</span><span lang="en">What happens next</span></h3>
+          <ol>
+            <li><span lang="fr">Vous demandez votre visite, ici ou par téléphone.</span><span lang="en">You ask for a visit, here or by phone.</span></li>
+            <li><span lang="fr">On vous répond sous 48 heures : date libre ou non, et le devis détaillé.</span><span lang="en">We reply within 48 hours: whether the date is free, and a detailed quote.</span></li>
+            <li><span lang="fr">Vous visitez le mas, en semaine ou le samedi matin.</span><span lang="en">You visit the mas, on a weekday or a Saturday morning.</span></li>
+            <li><span lang="fr">Votre date est bloquée 15 jours, le temps de décider. Le contrat et un acompte de 30 % la confirment.</span><span lang="en">Your date is held for 15 days while you decide. The contract and a 30% deposit confirm it.</span></li>
+          </ol>
+          <p class="appel">
+            <span lang="fr">Vous préférez appeler ?</span><span lang="en">Rather call?</span>
+            <a href="tel:+33465713820"><span lang="fr">04 65 71 38 20</span><span lang="en">+33 4 65 71 38 20</span></a>
+          </p>
+          <p class="discret" lang="fr">Du lundi au samedi, de 9 h à 19 h. Visites sur rendez-vous.</p>
+          <p class="discret" lang="en">Monday to Saturday, 9 am to 7 pm. Visits by appointment.</p>
         </aside>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <b>Mas de l’Aiguier</b>
+<footer class="pied">
+  <div class="cadre">
+    <p class="pied-nom">Mas de l’Aiguier</p>
     <p><span lang="fr">Entre Gordes et Roussillon, Vaucluse.</span><span lang="en">Between Gordes and Roussillon, Vaucluse, France.</span> <a href="tel:+33465713820">04 65 71 38 20</a></p>
-    <p lang="fr">Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-lieu-de-reception" target="_top">4dayvelopment</a>. L’entreprise, son numéro et ses tarifs sont fictifs.</p>
-    <p lang="en">Demo site made by <a href="https://4dayvelopment.fr/services/site-internet-lieu-de-reception" target="_top">4dayvelopment</a>. The business, its phone number and its prices are fictional.</p>
-    <p lang="fr">Photos : <a href="https://commons.wikimedia.org/wiki/File:Saint-Alban-Auriolle,_Mas_de_la_Vignasse-2.jpg">« Saint-Alban-Auriolle, Mas de la Vignasse-2 »</a> et <a href="https://commons.wikimedia.org/wiki/File:Saint-Alban-Auriolle,_Mas_de_la_Vignasse,_couradou-2.jpg">« Saint-Alban-Auriolle, Mas de la Vignasse, couradou-2 »</a>, Eagertourist, <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.fr">CC0</a> ; <a href="https://commons.wikimedia.org/wiki/File:Grimaud-village-18.jpg">« Grimaud-village-18 »</a>, Patricia.fidi, domaine public ; via Wikimedia Commons, recadrées. Les photos montrent d’autres lieux, sans lien avec le mas fictif.</p>
-    <p lang="en">Photos: <a href="https://commons.wikimedia.org/wiki/File:Saint-Alban-Auriolle,_Mas_de_la_Vignasse-2.jpg">“Saint-Alban-Auriolle, Mas de la Vignasse-2”</a> and <a href="https://commons.wikimedia.org/wiki/File:Saint-Alban-Auriolle,_Mas_de_la_Vignasse,_couradou-2.jpg">“Saint-Alban-Auriolle, Mas de la Vignasse, couradou-2”</a>, Eagertourist, <a href="https://creativecommons.org/publicdomain/zero/1.0/deed.en">CC0</a>; <a href="https://commons.wikimedia.org/wiki/File:Grimaud-village-18.jpg">“Grimaud-village-18”</a>, Patricia.fidi, public domain; via Wikimedia Commons, cropped. Photos show other places, unrelated to this fictional venue.</p>
+    <p lang="fr">Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-lieu-de-reception" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs. Ses tarifs aussi.</p>
+    <p lang="en">Demo site made by <a href="https://4dayvelopment.fr/services/site-internet-lieu-de-reception" target="_top">4dayvelopment</a>. The business, its address and its phone number are fictional. So are its prices.</p>
+    <p lang="fr">Photos : Pexels. Les photos montrent d’autres lieux, sans lien avec le mas fictif.</p>
+    <p lang="en">Photos: Pexels. Photos show other places, unrelated to this fictional venue.</p>
   </div>
 </footer>
 
-<nav class="pouce" aria-label="Contact">
-  <a class="appel" href="tel:+33465713820"><span lang="fr">Appeler</span><span lang="en">Call</span></a>
-  <a class="btn" href="#demande"><span lang="fr">Demander une date</span><span lang="en">Request a date</span></a>
+<!-- Sommaire : onglets de tranche sur ordinateur, fenêtre (popover natif, sans JS) sur téléphone -->
+<nav class="index" id="sommaire" popover aria-labelledby="sommaire-t">
+  <p class="index-t" id="sommaire-t"><span lang="fr">Sommaire</span><span lang="en">Contents</span></p>
+  <ol>
+    <li><a href="#mas"><span class="i-num">I</span><span class="i-lib"><span lang="fr">La journée</span><span lang="en">The day</span></span></a></li>
+    <li><a href="#date"><span class="i-num">II</span><span class="i-lib"><span lang="fr">Votre date</span><span lang="en">Your date</span></span></a></li>
+    <li><a href="#espaces"><span class="i-num">III</span><span class="i-lib"><span lang="fr">Les espaces</span><span lang="en">The spaces</span></span></a></li>
+    <li><a href="#formules"><span class="i-num">IV</span><span class="i-lib"><span lang="fr">Les formules</span><span lang="en">Prices</span></span></a></li>
+    <li><a href="#photos"><span class="i-num">V</span><span class="i-lib"><span lang="fr">Les photos</span><span lang="en">Photos</span></span></a></li>
+    <li><a href="#sejour"><span class="i-num">VI</span><span class="i-lib"><span lang="fr">Dormir et venir</span><span lang="en">Stay and travel</span></span></a></li>
+    <li><a href="#visite"><span class="i-num">VII</span><span class="i-lib"><span lang="fr">La visite</span><span lang="en">Visit</span></span></a></li>
+  </ol>
+  <p class="index-langue"><label for="l-fr">Français</label><label for="l-en">English</label></p>
+  <button class="index-fermer" type="button" popovertarget="sommaire" popovertargetaction="hide"><span lang="fr">Fermer</span><span lang="en">Close</span></button>
 </nav>
 
-<script src="/exemples/lieu-de-reception.js" defer></script>
+<div class="barre">
+  <button class="barre-sommaire" type="button" popovertarget="sommaire"><span lang="fr">Chapitres</span><span lang="en">Chapters</span></button>
+  <a class="btn barre-date" href="#date"><span lang="fr">Vérifier ma date</span><span lang="en">Check my date</span></a>
+</div>
+
+<dialog class="visionneuse" id="visionneuse" aria-labelledby="vis-t">
+  <h2 class="vh" id="vis-t"><span lang="fr">Photo en grand</span><span lang="en">Full-size photo</span></h2>
+  <figure class="vis-cadre">
+    <img id="vis-img" src="/exemples/img/lieu-de-reception-table-480.webp" alt="" width="1200" height="800">
+    <figcaption><span id="vis-legende"></span> <span class="vis-compte" id="vis-compte"></span></figcaption>
+  </figure>
+  <div class="vis-actions">
+    <button type="button" class="vis-btn" id="vis-prec"><span lang="fr">Précédente</span><span lang="en">Previous</span></button>
+    <button type="button" class="vis-btn" id="vis-suiv"><span lang="fr">Suivante</span><span lang="en">Next</span></button>
+    <button type="button" class="vis-btn vis-fermer" id="vis-fermer"><span lang="fr">Fermer</span><span lang="en">Close</span></button>
+  </div>
+</dialog>
 </body>
 </html>

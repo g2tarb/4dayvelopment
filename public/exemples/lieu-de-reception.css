@@ -1,0 +1,420 @@
+/* Mas de l’Aiguier (démo 4dayvelopment), lieu de mariages et de réceptions dans le Luberon.
+   Concept « brochure de lieu » : la journée au mas en quatre planches plein cadre qui glissent
+   l’une sur l’autre, puis des chapitres numérotés comme un livret (onglets de tranche sur
+   ordinateur, sommaire sur téléphone), un vérificateur de date en CSS seul (:has), le plan du
+   mas dessiné, la grille de prix, la mosaïque, l’accès et la demande de visite.
+   Identité « pierre et lumière » : calcaire des murs de Gordes, cyprès pour l’encre, vert-de-gris
+   des volets pour les actions, lumière de fin de journée pour ce qui est choisi ou disponible.
+   Polices auto-hébergées (SIL OFL 1.1) : Cormorant Garamond variable 300-700, romain et italique
+   (titres, légendes, chiffres), Jost variable 100-900 (texte et interface). */
+@font-face{font-family:"Cormorant Garamond";font-style:normal;font-weight:300 700;font-display:swap;
+  src:url("/fonts/cormorant-garamond-var.woff2") format("woff2")}
+@font-face{font-family:"Cormorant Garamond";font-style:italic;font-weight:300 700;font-display:swap;
+  src:url("/fonts/cormorant-garamond-italic-var.woff2") format("woff2")}
+@font-face{font-family:"Jost";font-style:normal;font-weight:100 900;font-display:swap;
+  src:url("/fonts/jost-var.woff2") format("woff2")}
+@font-face{font-family:"Cormorant repli";src:local("Georgia");size-adjust:86%;ascent-override:96%;descent-override:30%}
+@font-face{font-family:"Jost repli";src:local("Arial");size-adjust:96%;ascent-override:104%;descent-override:30%}
+
+:root{
+  color-scheme:light;
+  --calcaire:#ECE9E3;   /* murs de pierre sèche : fond */
+  --pierre:#DCD5C7;     /* sections alternées */
+  --sable:#CFC6B4;      /* sol du plan */
+  --cypres:#1D2622;     /* encre, planches de nuit, formules */
+  --volet:#3D5B58;      /* vert-de-gris des volets : boutons, choix */
+  --volet-fonce:#2E4644;
+  --lumiere:#D8AE5E;    /* lumière de fin de journée : choisi, disponible */
+  --ombre:#55594F;      /* texte secondaire */
+  --blanc:#FBFAF7;
+  --trait:#7F7C72;      /* bords des champs et des choix */
+  --trait-doux:rgb(29 38 34 / .16);
+  --titre:"Cormorant Garamond","Cormorant repli",Georgia,serif;
+  --texte:"Jost","Jost repli",system-ui,sans-serif;
+  --gout:clamp(1rem,.5rem + 2.4vw,3rem);
+  --onglet:0rem;
+}
+*,*::before,*::after{box-sizing:border-box}
+*{margin:0}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-behavior:smooth}
+body{font-family:var(--texte);font-size:1.0625rem;line-height:1.6;font-weight:400;color:var(--cypres);
+  background:var(--calcaire);-webkit-font-smoothing:antialiased;font-synthesis:none;font-kerning:normal}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-underline-offset:.2em;text-decoration-thickness:1px}
+:focus-visible{outline:3px solid var(--volet);outline-offset:3px}
+h1,h2,h3{font-family:var(--titre);font-weight:400;line-height:1.05;text-wrap:balance}
+h2{font-size:clamp(2.25rem,1.55rem + 2.9vw,4rem);letter-spacing:-.01em;max-width:18ch}
+h3{font-size:1.75rem;font-weight:500;line-height:1.12}
+p,li{text-wrap:pretty}
+button{font:inherit;color:inherit}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.evite{position:absolute;left:-999px;top:.75rem;z-index:40;background:var(--blanc);color:var(--cypres);padding:.7rem 1rem;border-radius:4px}
+.evite:focus{left:.75rem}
+.discret{font-size:.9375rem;color:var(--ombre)}
+
+/* Deux langues dans la page : la case « English » masque le français, et inversement.
+   Sans JS, la bascule marche quand même (:has). Le sélecteur de langue garde ses deux libellés. */
+:root:not(:has(#l-en:checked)) [lang="en"]:not(.langue *){display:none}
+:root:has(#l-en:checked) [lang="fr"]:not(.langue *){display:none}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.75rem 1.4rem;
+  border:2px solid transparent;border-radius:4px;background:var(--volet);color:var(--blanc);font-weight:500;
+  letter-spacing:.01em;line-height:1.2;text-align:center;text-decoration:none;cursor:pointer;transition:background-color .15s}
+.btn:hover{background:var(--volet-fonce)}
+.btn:active{transform:translateY(1px)}
+.btn-clair{background:var(--blanc);color:var(--cypres)}
+.btn-clair:hover{background:#fff}
+.lien{font-weight:500;text-decoration:underline}
+.lien-clair{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--blanc);font-weight:500;text-decoration:underline}
+
+/* En-tête posé sur la première planche */
+.tete{position:absolute;top:0;left:0;right:calc(var(--onglet));z-index:20;display:flex;align-items:center;gap:.75rem;
+  padding:max(.75rem,env(safe-area-inset-top)) var(--gout) .75rem;color:var(--blanc)}
+.tete :focus-visible{outline-color:var(--blanc)}
+.marque{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;text-decoration:none;line-height:1.1}
+.marque-nom{font-family:var(--titre);font-weight:500;font-size:clamp(1.3rem,1.1rem + .9vw,1.75rem);letter-spacing:.01em}
+.marque-lieu{font-size:.75rem;letter-spacing:.02em;opacity:.88;margin-top:.15rem}
+.langue{display:flex;border:1px solid rgb(251 250 247 / .75);border-radius:4px;padding:0;min-width:0;overflow:hidden;flex:none}
+.langue label{position:relative;display:grid;place-items:center;min-width:2.75rem;min-height:2.75rem;padding:0 .55rem;
+  font-weight:600;font-size:.875rem;letter-spacing:.06em;cursor:pointer}
+.langue label + label{border-left:1px solid rgb(251 250 247 / .75)}
+.langue input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.langue label:has(input:checked){background:var(--blanc);color:var(--cypres)}
+.langue label:has(input:focus-visible){outline:3px solid var(--blanc);outline-offset:-5px}
+.tete-visite{flex:none;min-height:2.75rem;padding:.55rem 1rem;font-size:.9375rem}
+/* téléphone : l’en-tête garde le lien de visite, en court */
+@media (max-width:40rem){.marque-lieu{display:none}.tete-visite{padding-inline:.8rem}}
+.court{display:none}
+@media (max-width:40rem){.long{display:none}.court{display:inline}}
+
+/* I. La journée : quatre planches plein cadre, collées en haut de l’écran ; chacune glisse
+   sur la précédente comme une page de brochure qu’on tourne. */
+.sequence{position:relative;background:var(--cypres)}
+.planche{position:sticky;top:0;height:100vh;height:100svh;margin:0;display:grid;grid-template:auto minmax(0,1fr) auto/minmax(0,1fr);
+  overflow:hidden;color:var(--blanc);isolation:isolate;background:var(--cypres)}
+.planche picture{grid-area:1/1/-1/-1;z-index:-2;display:block;overflow:hidden;min-height:0}
+.planche img{width:100%;height:100%;object-fit:cover;background:var(--cypres)}
+.planche::after{content:"";grid-area:1/1/-1/-1;z-index:-1;
+  background:linear-gradient(to top,rgb(20 27 24 / .82),rgb(20 27 24 / .3) 30%,rgb(20 27 24 / 0) 52%)}
+.planche-1::after{background:linear-gradient(to bottom,rgb(20 27 24 / .66),rgb(20 27 24 / .3) 34%,rgb(20 27 24 / .1) 52%,rgb(20 27 24 / .3) 70%,rgb(20 27 24 / .86))}
+/* écran large : un voile de plus à gauche, sous le titre et le chapô */
+@media (min-aspect-ratio:4/5){.planche-1::after{background:linear-gradient(90deg,rgb(20 27 24 / .62),rgb(20 27 24 / .3) 38%,rgb(20 27 24 / 0) 62%),linear-gradient(to bottom,rgb(20 27 24 / .5),rgb(20 27 24 / 0) 30%,rgb(20 27 24 / 0) 62%,rgb(20 27 24 / .82))}}
+.ouverture{grid-area:1/1;align-self:start;padding:clamp(6rem,4.5rem + 5vh,9rem) var(--gout) 0;padding-right:calc(var(--gout) + var(--onglet))}
+.ouverture h1{font-size:clamp(2.6rem,1.35rem + 5.3vw,6.1rem);font-weight:400;line-height:.98;letter-spacing:-.015em;max-width:13ch;
+  text-shadow:0 1px 18px rgb(20 27 24 / .35)}
+.chapo{max-width:40ch;margin-top:1.1rem;font-size:clamp(1.0625rem,1rem + .3vw,1.2rem);line-height:1.5}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.5rem;margin-top:1.5rem}
+.legende{grid-area:3/1;align-self:end;display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:1.5rem;align-items:end;
+  padding:0 calc(var(--gout) + var(--onglet)) calc(clamp(1.5rem,1rem + 2vh,2.75rem) + var(--barre,0rem)) var(--gout);
+  font-family:var(--titre);font-size:clamp(1.45rem,1.1rem + 1.5vw,2.5rem);line-height:1.15;font-weight:400}
+.legende > :not(.heure,.folio){grid-column:1;max-width:28ch}
+.heure{grid-column:1;font-style:italic;font-weight:500;font-size:.72em;color:var(--lumiere);letter-spacing:.01em;margin-bottom:.15rem}
+.folio{grid-column:2;grid-row:1 / span 2;align-self:end;font-style:italic;font-size:.75em;font-variant-numeric:lining-nums;opacity:.9}
+.planche-1 .legende{font-size:clamp(1.25rem,1.05rem + .8vw,1.75rem)}
+/* écran bas (téléphone couché) : les planches se suivent sans se recouvrir, pour que tout le texte reste lisible */
+@media (max-height:34rem){.planche{position:relative;height:auto;min-height:100svh}.ouverture{padding-top:5rem}
+  .ouverture h1{font-size:clamp(2.2rem,1.6rem + 2.4vw,3.2rem);max-width:22ch}}
+/* téléphone court : la première planche garde le titre et les boutons, la légende attend la planche suivante */
+@media (max-height:44rem) and (min-height:34.01rem){.planche-1 .legende{display:none}}
+/* mouvement : l’image se pose en entrant (défilement), jamais si l’on a demandé moins d’animations */
+@media (prefers-reduced-motion:no-preference){
+  @supports (animation-timeline:view()){
+    .planche:not(.planche-1) img{animation:pose linear both;animation-timeline:view();animation-range:entry 0% entry 100%}
+    @keyframes pose{from{transform:scale(1.14)}to{transform:none}}
+  }
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.planche{position:relative}}
+
+/* Chapitres du livret */
+.chapitre{padding-block:clamp(4rem,3rem + 5vw,8rem)}
+.cadre{width:min(100% - 2 * var(--gout) - var(--onglet),76rem);margin-inline:auto;margin-inline-start:max(var(--gout),(100% - var(--onglet) - 76rem) / 2)}
+.chap-tete{display:grid;grid-template-columns:minmax(0,1fr);row-gap:.4rem}
+.chap-num{font-family:var(--titre);font-style:italic;font-weight:300;font-size:clamp(2.2rem,1.8rem + 1.5vw,3.25rem);line-height:1;color:var(--volet)}
+.chap-intro{max-width:56ch;margin-top:.9rem;color:var(--ombre);font-size:1.0625rem}
+@media (min-width:60rem){
+  .chap-tete{grid-template-columns:5.5rem minmax(0,1fr);column-gap:1rem}
+  .chap-num{grid-row:1 / span 3;padding-top:.35rem}
+  .chap-tete > :not(.chap-num){grid-column:2}
+}
+
+/* II. Le vérificateur de date */
+.verif{display:grid;gap:2.5rem;margin-top:clamp(2rem,1.5rem + 2vw,3.25rem)}
+.choix{border:0;padding:0;min-width:0}
+.choix + .choix{margin-top:1.75rem}
+.choix legend{padding:0;margin-bottom:.65rem;font-family:var(--titre);font-size:1.45rem;font-weight:500;line-height:1.2}
+.puces{display:grid;gap:.4rem;grid-template-columns:repeat(2,minmax(0,1fr))}
+.puces-mois{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (min-width:26rem){.puces-mois{grid-template-columns:repeat(4,minmax(0,1fr))}.puces-4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.puces-3{grid-template-columns:repeat(auto-fit,minmax(min(100%,8.5rem),1fr))}
+.puce{position:relative;display:flex;align-items:center;justify-content:center;min-height:2.9rem;padding:.45rem .5rem;
+  border:1px solid var(--trait);border-radius:4px;background:var(--blanc);cursor:pointer;text-align:center;
+  font-size:.9375rem;line-height:1.2;transition:background-color .15s,border-color .15s}
+.puce input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
+.puce:hover{border-color:var(--cypres)}
+.puce:has(input:checked){background:var(--volet);border-color:var(--volet);color:var(--blanc);font-weight:500}
+.puce:has(input:focus-visible){outline:3px solid var(--cypres);outline-offset:2px}
+@media (forced-colors:active){.puce:has(input:checked){outline:3px solid Highlight;outline-offset:-4px}}
+.saison-dite{margin-top:.7rem;font-family:var(--titre);font-style:italic;font-size:1.2rem;line-height:1.35;color:var(--volet)}
+.saison-dite > span{display:none}
+.date:has(.s-ete input:checked) .sd-ete,.date:has(.s-mi input:checked) .sd-mi,.date:has(.s-hiver input:checked) .sd-hiver{display:inline}
+
+/* la réponse, comme une carte-réponse glissée dans la brochure */
+.reponse{align-self:start;background:var(--blanc);border:1px solid var(--trait-doux);border-radius:6px;
+  padding:clamp(1.35rem,1rem + 2vw,2.5rem);box-shadow:0 1px 0 rgb(29 38 34 / .06),0 24px 48px -32px rgb(29 38 34 / .45)}
+.verdict,.v-ete-plus,.journee,.prix{display:none}
+.verdict{font-family:var(--titre);font-size:clamp(1.6rem,1.3rem + 1.3vw,2.25rem);line-height:1.12;font-weight:500;max-width:24ch}
+.verdict::before{content:"";display:block;width:2.25rem;height:3px;margin-bottom:1rem;background:var(--lumiere)}
+.v-non::before,.v-ete::before{background:var(--cypres)}
+.v-oui{display:block}
+.v-ete-plus{margin-top:.9rem;color:var(--ombre)}
+.deroule{margin-top:1.6rem;padding-top:1.25rem;border-top:1px solid var(--trait-doux)}
+.deroule h3{font-size:1.3rem}
+.journee{list-style:none;padding:0;margin-top:.8rem}
+.journee li{display:grid;grid-template-columns:minmax(0,7.5rem) minmax(0,1fr);gap:.2rem 1rem;padding:.55rem 0;border-bottom:1px solid var(--trait-doux)}
+.journee li:last-child{border-bottom:0}
+.journee b{font-weight:500}
+.journee a{color:var(--volet);font-weight:500}
+.prix{margin-top:1.25rem;font-size:1.0625rem}
+.prix-montant{display:block;margin-bottom:.3rem;font-family:var(--titre);font-size:clamp(2.4rem,2rem + 1.6vw,3.2rem);font-weight:400;line-height:1;font-variant-numeric:lining-nums}
+.prix-montant small{display:block;margin-bottom:.3rem;font-family:var(--texte);font-size:.875rem;color:var(--ombre)}
+.ensemble{white-space:nowrap}
+.note{margin-top:.6rem;font-size:.9375rem;color:var(--ombre)}
+.reponse-cta{margin-top:1.5rem}
+.date:has(.s-ete input:checked) .j-ete,.date:has(.s-mi input:checked) .j-mi,.date:has(.s-hiver input:checked) .j-hiver{display:block}
+.date:has(.s-ete input:checked) .p-ete,.date:has(.s-mi input:checked) .p-mi,.date:has(.s-hiver input:checked) .p-hiver{display:block}
+/* plus de 180 invités : non ; 120 à 180 hors été : seulement de juin à septembre */
+.date:has(#g-plus:checked) .v-oui,
+.date:has(#g-180:checked):not(:has(.s-ete input:checked)) .v-oui{display:none}
+.date:has(#g-plus:checked) .v-non{display:block}
+.date:has(#g-180:checked):not(:has(.s-ete input:checked)) :is(.v-ete,.v-ete-plus){display:block}
+.date:has(#g-plus:checked) :is(.deroule,.prix,.note,.reponse-cta),
+.date:has(#g-180:checked):not(:has(.s-ete input:checked)) :is(.deroule,.prix,.note,.reponse-cta){display:none}
+/* un séminaire n’a pas de cérémonie */
+.date:has(#e-seminaire:checked) .j-ceremonie{display:none}
+@media (min-width:60rem){
+  .verif{grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:clamp(2.5rem,1rem + 4vw,5rem);margin-left:6.5rem}
+  .reponse{position:sticky;top:1.5rem}
+}
+
+/* III. Le plan du mas et les fiches d’espace */
+.espaces{background:var(--pierre)}
+.espaces-grille{display:grid;gap:1.75rem;margin-top:clamp(2rem,1.5rem + 2vw,3.25rem)}
+.plan{margin:0}
+.plan svg{display:block;width:100%;height:auto;overflow:visible}
+.plan text{font-family:var(--texte);font-weight:500;fill:var(--cypres);letter-spacing:.01em}
+.plan .petit{font-size:11px;font-weight:400}
+.plan figcaption{margin-top:.7rem;font-size:.875rem;color:var(--ombre)}
+.sol{fill:var(--sable)}
+.pre rect{fill:none;stroke:var(--ombre);stroke-width:1;stroke-dasharray:4 3}
+.pre path{fill:none;stroke:var(--ombre);stroke-width:.8;opacity:.35}
+.allee ellipse{fill:var(--volet)}
+.portail,.nord{fill:none;stroke:var(--cypres);stroke-width:1.4}
+text.nord{fill:var(--cypres);stroke:none;font-size:11px}
+.aiguier circle,.aiguier path{fill:var(--pierre);stroke:var(--cypres);stroke-width:1}
+.zone{cursor:pointer}
+.zone .forme{fill:var(--blanc);stroke:var(--cypres);stroke-width:1.2;transition:fill .2s}
+.zone .detail{fill:none;stroke:var(--ombre);stroke-width:1}
+.zone:hover .forme{fill:#fff}
+.zone:focus{outline:none}
+.zone:focus-visible .forme{stroke:var(--volet);stroke-width:3.5}
+/* espace choisi : sans JS par :target, avec JS par data-esp sur la section */
+:is(.espaces:not([data-esp]):has(#esp-aire:target),.espaces:not([data-esp]):not(:has(.fiche:target)),.espaces[data-esp="aire"]) .z-aire .forme,
+:is(.espaces:not([data-esp]):has(#esp-cour:target),.espaces[data-esp="cour"]) .z-cour .forme,
+:is(.espaces:not([data-esp]):has(#esp-platanes:target),.espaces[data-esp="platanes"]) .z-platanes .forme,
+:is(.espaces:not([data-esp]):has(#esp-magnanerie:target),.espaces[data-esp="magnanerie"]) .z-magnanerie .forme,
+:is(.espaces:not([data-esp]):has(#esp-chambres:target),.espaces[data-esp="chambres"]) .z-chambres .forme{fill:var(--lumiere)}
+@media (forced-colors:active){.zone .forme{fill:Canvas}.espaces[data-esp] .zone[aria-current] .forme{fill:Highlight}}
+
+.onglets{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem}
+.onglets a{display:inline-flex;align-items:center;min-height:2.6rem;padding:.35rem .8rem;border:1px solid var(--trait);border-radius:999px;
+  font-size:.9375rem;text-decoration:none;background:var(--calcaire)}
+.onglets a:hover{border-color:var(--cypres)}
+.onglets a[aria-current="true"]{background:var(--cypres);border-color:var(--cypres);color:var(--blanc)}
+.fiche{display:none;background:var(--calcaire);border-radius:6px;overflow:hidden}
+.espaces:not([data-esp]) .fiche:target,
+.espaces:not([data-esp]):not(:has(.fiche:target)) #esp-aire,
+.espaces[data-esp="aire"] #esp-aire,.espaces[data-esp="cour"] #esp-cour,.espaces[data-esp="platanes"] #esp-platanes,
+.espaces[data-esp="magnanerie"] #esp-magnanerie,.espaces[data-esp="chambres"] #esp-chambres{display:grid}
+.fiche img{width:100%;aspect-ratio:3/2;object-fit:cover;background:var(--sable)}
+.fiche-texte{padding:clamp(1.25rem,1rem + 1.2vw,2rem)}
+.fiche-texte > p{max-width:52ch;margin-top:.75rem}
+.jauge{display:flex;flex-wrap:wrap;gap:.5rem 2.25rem;margin-top:1rem}
+.jauge div{display:flex;flex-direction:column-reverse}
+.jauge dd{margin:0;font-family:var(--titre);font-size:clamp(2.75rem,2.2rem + 2vw,3.75rem);font-weight:400;line-height:.95;font-variant-numeric:lining-nums}
+.jauge dt{font-size:.875rem;color:var(--ombre);letter-spacing:.02em}
+.fiche-saison{margin-top:.85rem;font-family:var(--titre);font-style:italic;font-size:1.25rem;color:var(--volet)}
+@media (prefers-reduced-motion:no-preference){.espaces[data-esp] .fiche{animation:ouvre .35s ease-out}}
+@keyframes ouvre{from{opacity:0}to{opacity:1}}
+@media (min-width:60rem){
+  .espaces-grille{grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(2rem,1rem + 3vw,4rem);align-items:start}
+  .plan{position:sticky;top:1.5rem}
+}
+
+/* IV. Les formules, en page de nuit */
+.formules{background:var(--cypres);color:var(--blanc)}
+.formules :focus-visible{outline-color:var(--lumiere)}
+.formules .chap-num{color:var(--lumiere)}
+.formules .chap-intro,.formules .tarifs-note{color:rgb(251 250 247 / .78)}
+.tarifs{display:grid;margin-top:clamp(2rem,1.5rem + 2vw,3.25rem);border-top:1px solid rgb(251 250 247 / .22)}
+.tarif{padding:1.75rem 0;border-bottom:1px solid rgb(251 250 247 / .22)}
+.tarif-votre{visibility:hidden;display:inline-block;margin-bottom:.8rem;padding:.2rem .6rem;border-radius:3px;background:var(--lumiere);
+  color:var(--cypres);font-size:.8125rem;font-weight:500;letter-spacing:.02em}
+:root:has(.s-ete input:checked) .t-ete .tarif-votre,:root:has(.s-mi input:checked) .t-mi .tarif-votre,
+:root:has(.s-hiver input:checked) .t-hiver .tarif-votre{visibility:visible}
+.tarif h3{font-size:clamp(1.9rem,1.6rem + 1vw,2.4rem)}
+.tarif-mois{font-family:var(--titre);font-style:italic;font-size:1.25rem;color:rgb(251 250 247 / .75)}
+.tarif-prix{margin:1.1rem 0 1.25rem;font-family:var(--titre);font-size:clamp(3rem,2.3rem + 2.6vw,4.4rem);line-height:.95;font-weight:400;
+  font-variant-numeric:lining-nums;white-space:nowrap}
+.tarif-prix small{display:block;margin-bottom:.35rem;font-family:var(--texte);font-size:.8125rem;letter-spacing:.02em;color:rgb(251 250 247 / .72)}
+.tarif ul{list-style:none;padding:0;display:grid;align-content:start;gap:.55rem;font-size:.9875rem}
+.tarif li{display:grid;grid-template-columns:.9rem minmax(0,1fr);gap:.4rem}
+.tarif li::before{content:"";width:5px;height:5px;margin-top:.6em;border-radius:50%;background:var(--lumiere)}
+.tarifs-note{max-width:62ch;margin-top:1.75rem;font-size:.9375rem}
+@media (min-width:56rem){
+  .tarifs{grid-template-columns:repeat(3,minmax(0,1fr));border-top:0}
+  .tarif{display:grid;grid-row:span 5;grid-template-rows:subgrid;align-content:start;padding:0 clamp(1.25rem,.5rem + 1.6vw,2.5rem);border-bottom:0;border-left:1px solid rgb(251 250 247 / .22)}
+  .tarif-votre{justify-self:start}
+  .tarif h3{align-self:end}
+  .tarif:first-child{border-left:0;padding-left:0}
+}
+@media (min-width:60rem){.tarifs,.tarifs-note{margin-left:6.5rem}}
+
+/* V. La mosaïque et la visionneuse */
+.mosaique{list-style:none;padding:0;margin:clamp(2rem,1.5rem + 2vw,3.25rem) 0 0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-auto-rows:clamp(8rem,5rem + 16vw,15rem);grid-auto-flow:dense;gap:.5rem}
+.mosaique :is(.m-1,.m-3,.m-5,.m-7){grid-row:span 2}
+.mosaique li{position:relative;min-width:0}
+.mosaique figure{margin:0;height:100%}
+.mosaique figcaption{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.vignette{display:block;height:100%;overflow:hidden;border-radius:3px;background:var(--sable)}
+.vignette img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+@media (hover:hover){.vignette:hover img{transform:scale(1.035)}}
+@media (min-width:60rem){
+  .mosaique{grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:clamp(9rem,4rem + 9vw,14rem);gap:.6rem}
+  .mosaique :is(.m-2,.m-6){grid-column:span 2}
+}
+.visionneuse{width:100%;height:100%;max-width:none;max-height:none;margin:0;padding:0;border:0;background:rgb(16 21 19 / .97);color:var(--blanc)}
+.visionneuse[open]{display:grid;grid-template-rows:minmax(0,1fr) auto}
+.visionneuse::backdrop{background:rgb(16 21 19 / .9)}
+.visionneuse :focus-visible{outline-color:var(--lumiere)}
+.vis-cadre{margin:0;min-height:0;display:grid;grid-template-rows:minmax(0,1fr) auto;gap:.8rem;padding:clamp(1rem,.5rem + 3vw,2.5rem) var(--gout) .5rem}
+#vis-img{width:100%;height:100%;min-height:0;object-fit:contain}
+.vis-cadre figcaption{font-family:var(--titre);font-size:clamp(1.2rem,1rem + .8vw,1.6rem);text-align:center}
+.vis-compte{font-style:italic;opacity:.75;margin-left:.5rem}
+.vis-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;padding:.5rem var(--gout) max(1.25rem,env(safe-area-inset-bottom))}
+.vis-btn{min-height:2.9rem;padding:.5rem 1.2rem;border:1px solid rgb(251 250 247 / .55);border-radius:4px;background:transparent;cursor:pointer}
+.vis-btn:hover{background:rgb(251 250 247 / .1)}
+.vis-fermer{background:var(--blanc);color:var(--cypres);border-color:var(--blanc)}
+.vis-fermer:hover{background:#fff}
+
+/* VI. Dormir et venir */
+.dormir,.venir{display:grid;gap:2rem;margin-top:clamp(2rem,1.5rem + 2vw,3.25rem)}
+.dormir-photos img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:3px;background:var(--sable)}
+.dormir-texte > p{max-width:56ch;margin-top:.8rem}
+.chambres{list-style:none;padding:0;margin:1.5rem 0 1rem;border-top:1px solid var(--trait-doux)}
+.chambres li{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.1rem 1rem;padding:.65rem 0;border-bottom:1px solid var(--trait-doux)}
+.chambres b{font-family:var(--titre);font-size:1.3rem;font-weight:500}
+.chambres li > span{color:var(--ombre);font-size:.9375rem}
+.venir-photo{margin:0}
+.venir-photo img{width:100%;aspect-ratio:5/4;object-fit:cover;border-radius:3px;background:var(--sable)}
+.venir-texte > p{max-width:56ch;margin-top:.8rem}
+.trajets{width:100%;margin:1.5rem 0 .75rem;border-collapse:collapse;font-size:.9875rem}
+.trajets caption{caption-side:top;text-align:left;padding-bottom:.6rem;font-family:var(--titre);font-style:italic;font-size:1.2rem;color:var(--volet)}
+.trajets th,.trajets td{padding:.6rem 0;border-bottom:1px solid var(--trait-doux);text-align:left;font-weight:400;vertical-align:baseline}
+.trajets td{text-align:right;white-space:nowrap;padding-left:1rem;font-variant-numeric:tabular-nums}
+@media (min-width:56rem){
+  .dormir{grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(2.5rem,1rem + 4vw,5rem);align-items:start}
+  .venir{grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:clamp(2.5rem,1rem + 4vw,5rem);align-items:start;margin-top:5rem}
+}
+@media (min-width:60rem){.dormir,.venir{margin-left:6.5rem}}
+
+/* VII. La visite */
+.visite{background:var(--pierre)}
+.visite-grille{display:grid;gap:3rem;margin-top:clamp(2rem,1.5rem + 2vw,3.25rem)}
+form{display:grid;gap:1.15rem;min-width:0}
+.recap{padding:.9rem 1rem;border:1px solid var(--trait);border-radius:4px;background:var(--calcaire);line-height:1.5}
+.recap-t{color:var(--ombre);margin-right:.25rem}
+.recap b{display:none;font-weight:500}
+.recap a{margin-left:.35rem;color:var(--volet);font-weight:500}
+:root:has(#m-01:checked) .r-m-01,:root:has(#m-02:checked) .r-m-02,:root:has(#m-03:checked) .r-m-03,:root:has(#m-04:checked) .r-m-04,
+:root:has(#m-05:checked) .r-m-05,:root:has(#m-06:checked) .r-m-06,:root:has(#m-07:checked) .r-m-07,:root:has(#m-08:checked) .r-m-08,
+:root:has(#m-09:checked) .r-m-09,:root:has(#m-10:checked) .r-m-10,:root:has(#m-11:checked) .r-m-11,:root:has(#m-12:checked) .r-m-12,
+:root:has(#g-80:checked) .r-g-80,:root:has(#g-120:checked) .r-g-120,:root:has(#g-180:checked) .r-g-180,:root:has(#g-plus:checked) .r-g-plus,
+:root:has(#e-mariage:checked) .r-e-mariage,:root:has(#e-famille:checked) .r-e-famille,:root:has(#e-seminaire:checked) .r-e-seminaire{display:inline}
+.deux{display:grid;gap:1.15rem}
+@media (min-width:36rem){.deux{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.champ{min-width:0}
+.champ label{display:block;font-weight:500;margin-bottom:.35rem}
+.champ :is(input,textarea){width:100%;font:inherit;font-size:1rem;color:var(--cypres);background:var(--blanc);
+  border:1px solid var(--trait);border-radius:4px;padding:.75rem .85rem}
+.champ input{height:3.2rem}
+.champ textarea{min-height:6.5rem;resize:vertical}
+.champ :is(input,textarea):focus-visible{outline:3px solid var(--volet);outline-offset:1px;border-color:var(--cypres)}
+.aide{display:block;margin-top:.3rem;font-size:.875rem;color:var(--ombre)}
+.choix-visite{border:0;padding:0;min-width:0}
+.choix-visite legend{padding:0;margin-bottom:.5rem;font-weight:500}
+.merci{display:none;padding:1rem 1.1rem;border:1px solid var(--volet);border-left-width:1px;border-radius:4px;background:var(--blanc);font-weight:500}
+form.envoye .merci{display:block}
+.ensuite h3{font-size:1.6rem}
+.ensuite ol{list-style:none;padding:0;margin-top:1rem;display:grid;gap:.9rem;counter-reset:etape}
+.ensuite li{counter-increment:etape;display:grid;grid-template-columns:2rem minmax(0,1fr);gap:.75rem}
+.ensuite li::before{content:counter(etape);font-family:var(--titre);font-style:italic;font-size:1.9rem;line-height:1;color:var(--volet)}
+.appel{display:grid;margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--trait-doux);font-family:var(--titre);font-size:1.35rem;font-weight:500}
+.appel a{font-size:2rem;text-decoration:none;font-variant-numeric:lining-nums}
+.appel a:hover{text-decoration:underline}
+.appel + .discret{margin-top:.25rem}
+@media (min-width:60rem){.visite-grille{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(3rem,1rem + 4vw,5rem);margin-left:6.5rem}}
+
+/* Pied de page */
+.pied{background:var(--cypres);color:rgb(251 250 247 / .78);padding:3rem 0 calc(3rem + var(--barre,0rem));font-size:.9375rem}
+.pied .cadre{display:grid;gap:.6rem}
+.pied p{max-width:70ch}
+.pied-nom{font-family:var(--titre);font-size:2rem;color:var(--blanc);line-height:1.1}
+.pied a{color:var(--blanc)}
+.pied :focus-visible{outline-color:var(--lumiere)}
+
+/* Sommaire. Ordinateur : onglets de tranche sur le bord droit, comme un guide imprimé ;
+   le chapitre en cours est marqué. Téléphone : fenêtre qui monte du bas (popover natif). */
+.i-num{font-family:var(--titre);font-style:italic;font-weight:500;font-variant-numeric:lining-nums}
+@media (min-width:64rem){
+  :root{--onglet:2.75rem}
+  .index{display:block;position:fixed;inset:50% 0 auto auto;translate:0 -50%;width:auto;height:auto;margin:0;padding:0;border:0;
+    overflow:visible;background:none;color:var(--cypres);z-index:15}
+  .index-t,.index-langue,.index-fermer{display:none}
+  .index ol{list-style:none;margin:0;padding:0;display:grid;gap:3px;justify-items:end}
+  .index a{display:flex;align-items:center;gap:.55rem;height:2.55rem;padding:0 1rem 0 .55rem;border-radius:4px 0 0 4px;
+    background:var(--calcaire);box-shadow:inset 1px 0 0 var(--trait-doux),inset 0 1px 0 var(--trait-doux),inset 0 -1px 0 var(--trait-doux);
+    text-decoration:none;translate:calc(100% - var(--onglet)) 0;transition:translate .25s ease,background-color .2s}
+  .index a:hover,.index a:focus-visible{translate:0 0}
+  .index .i-num{width:1.65rem;text-align:center;font-size:1.1rem}
+  .index .i-lib{font-size:.875rem;white-space:nowrap}
+  .index a[aria-current]{background:var(--volet);color:var(--blanc);box-shadow:none}
+  .barre{display:none}
+}
+@media (max-width:63.99rem){
+  :root{--barre:4.4rem}
+  html{scroll-padding-bottom:5rem}
+  .index:popover-open{display:grid;gap:1rem;position:fixed;inset:auto 0 0 0;width:100%;max-width:none;max-height:88svh;margin:0;
+    padding:1.4rem var(--gout) max(1.25rem,env(safe-area-inset-bottom));border:0;border-radius:10px 10px 0 0;overflow:auto;
+    background:var(--calcaire);color:var(--cypres);box-shadow:0 -20px 50px -20px rgb(16 21 19 / .5)}
+  .index::backdrop{background:rgb(16 21 19 / .55)}
+  .index-t{font-family:var(--titre);font-size:1.9rem;line-height:1}
+  .index ol{list-style:none;margin:0;padding:0;border-top:1px solid var(--trait-doux)}
+  .index a{display:grid;grid-template-columns:2.6rem minmax(0,1fr);align-items:baseline;min-height:3.1rem;padding:.55rem 0;
+    border-bottom:1px solid var(--trait-doux);text-decoration:none}
+  .index .i-num{font-size:1.3rem;color:var(--volet)}
+  .index .i-lib{font-family:var(--titre);font-size:1.55rem;font-weight:500;line-height:1.15}
+  .index a[aria-current] .i-lib{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em}
+  .index-langue{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--cypres);border-radius:4px;overflow:hidden}
+  .index-langue label{display:grid;place-items:center;min-height:2.9rem;cursor:pointer;font-weight:500}
+  .index-langue label + label{border-left:1px solid var(--cypres)}
+  :root:not(:has(#l-en:checked)) .index-langue label[for="l-fr"],:root:has(#l-en:checked) .index-langue label[for="l-en"]{background:var(--cypres);color:var(--blanc)}
+  .index-fermer{min-height:2.9rem;border:1px solid var(--trait);border-radius:4px;background:transparent;cursor:pointer}
+  .barre{position:fixed;left:0;right:0;bottom:0;z-index:12;display:grid;grid-template-columns:auto minmax(0,1fr);gap:.5rem;
+    padding:.6rem var(--gout) max(.6rem,env(safe-area-inset-bottom));background:var(--calcaire);border-top:1px solid var(--trait-doux);
+    transition:translate .25s ease}
+  .barre.rangee{translate:0 110%}
+  .barre-sommaire{min-height:3rem;padding:0 1.1rem;border:1px solid var(--cypres);border-radius:4px;background:transparent;font-weight:500;cursor:pointer}
+  .barre-date{min-height:3rem}
+}
+@media (max-width:63.99rem) and (max-height:30rem){:root{--barre:3.8rem}.barre-sommaire,.barre-date{min-height:2.6rem}.barre{padding-block:.4rem}}
