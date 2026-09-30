@@ -471,3 +471,9 @@ body{padding-bottom:calc(3.5rem + env(safe-area-inset-bottom))}
 @media (max-width:29.99rem){
   .hero-texte .btn-contour-clair{display:none}
 }
+
+/* cibles tactiles : numéros cliquables du pied de page et de la barre du haut portés à 44 px de haut, sans décaler les lignes */
+address a[href^="tel:"]{padding-block:.85rem}
+
+/* liens du pied de page : 44 px de haut au doigt */
+footer li > a{display:inline-flex;align-items:center;min-height:2.75rem}

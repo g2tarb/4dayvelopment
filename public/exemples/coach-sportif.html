@@ -29,7 +29,7 @@ html{scroll-behavior:smooth}
 body{
   font-family:'Inter',system-ui,sans-serif;background:var(--noir);color:var(--argent);
   font-weight:300;line-height:1.7;font-size:16px;overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:lining-nums;
 }
 /* texture béton : grain coulé + traînées de coffrage */
 body::before{
@@ -61,7 +61,7 @@ h1,h2,h3,.disp{
 .topbar__inner{max-width:1240px;margin:0 auto;padding:.85rem 1.4rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
 .brand{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:var(--blanc);min-height:44px;white-space:nowrap}
 .brand b{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;letter-spacing:.05em}
-.brand span{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--argent-dim);font-weight:500}
+.brand span{font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--argent-dim);font-weight:500}
 
 /* ── Boutons ── */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.7rem;flex-wrap:wrap;text-align:center;
@@ -75,7 +75,7 @@ h1,h2,h3,.disp{
 .btn:hover .fl{transform:translateX(5px)}
 .btn--ghost{background:transparent;color:var(--blanc);box-shadow:inset 0 0 0 1px var(--ligne)}
 .btn--ghost:hover{background:rgba(255,95,31,.07);box-shadow:inset 0 0 0 1px var(--orange);color:var(--orange)}
-.btn--top{min-height:44px;padding:.5rem 1rem;font-size:.7rem;flex-wrap:nowrap;white-space:nowrap}
+.btn--top{min-height:44px;padding:.5rem 1rem;font-size:12px;flex-wrap:nowrap;white-space:nowrap}
 
 /* ── Hero ── */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;
@@ -88,7 +88,7 @@ h1,h2,h3,.disp{
   background:radial-gradient(ellipse at 50% 38%,transparent 0%,rgba(10,10,11,.38) 62%,rgba(10,10,11,.86) 100%),
              linear-gradient(180deg,rgba(10,10,11,.55) 0%,transparent 30%,transparent 52%,rgba(10,10,11,.96) 100%)}
 .hero__inner{position:relative;max-width:1240px;margin:0 auto;width:100%;padding:0 1.4rem}
-.eyebrow{font-size:11px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--argent-dim);margin-bottom:1.9rem}
+.eyebrow{font-size:12px;font-weight:500;letter-spacing:.32em;text-transform:uppercase;color:var(--argent-dim);margin-bottom:1.9rem}
 .eyebrow i{display:inline-block;width:8px;height:8px;background:var(--orange);vertical-align:middle;margin-right:.9rem;font-style:normal}
 h1{display:flex;flex-direction:column;gap:.12em}
 h1 .h1a,h1 .h1c{font-size:clamp(1.6rem,6.9vw,6.2rem);white-space:nowrap}
@@ -96,8 +96,8 @@ h1 .h1b{font-size:clamp(1.25rem,4.8vw,3.4rem);color:var(--orange);font-weight:40
 .hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin:2.2rem 0 2.8rem}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ligne-soft);border-top:1px solid var(--ligne-soft)}
 .stat{background:rgba(10,10,11,.55);backdrop-filter:blur(4px);padding:1.15rem .6rem 1rem;text-align:center}
-.stat b{display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.55rem,5.6vw,2.7rem);color:var(--orange);line-height:1;font-variant-numeric:tabular-nums}
-.stat span{display:block;margin-top:.5rem;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--argent-dim)}
+.stat b{display:block;font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.55rem,5.6vw,2.7rem);color:var(--orange);line-height:1;font-variant-numeric:tabular-nums lining-nums}
+.stat span{display:block;margin-top:.5rem;font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--argent-dim)}
 
 /* ── Ticker ── */
 .ticker{border-top:1px solid var(--ligne-soft);border-bottom:1px solid var(--ligne-soft);
@@ -112,7 +112,7 @@ h1 .h1b{font-size:clamp(1.25rem,4.8vw,3.4rem);color:var(--orange);font-weight:40
 /* ── Sections ── */
 section{padding:6.5rem 1.4rem;position:relative}
 .wrap{max-width:1240px;margin:0 auto}
-.s-label{font-size:11px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--argent-dim);margin-bottom:1.5rem}
+.s-label{font-size:12px;font-weight:600;letter-spacing:.32em;text-transform:uppercase;color:var(--argent-dim);margin-bottom:1.5rem}
 .s-label b{color:var(--orange);font-weight:700;margin-right:.35rem}
 h2{font-size:clamp(1.9rem,7.6vw,4.6rem);margin-bottom:.5rem}
 .s-inc{font-size:clamp(1.05rem,3.4vw,1.5rem);color:var(--argent-dim);display:block;margin-bottom:1.2rem}
@@ -126,7 +126,7 @@ h2{font-size:clamp(1.9rem,7.6vw,4.6rem);margin-bottom:.5rem}
 .qz__bar i{display:block;height:100%;width:0;background:var(--orange);box-shadow:0 0 14px rgba(255,95,31,.7);
   transition:width .6s var(--ease)}
 .qz__meta{display:flex;align-items:center;justify-content:space-between;gap:1rem;min-height:44px}
-.qz__step{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--argent-dim);font-weight:500}
+.qz__step{font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--argent-dim);font-weight:500}
 .qz__restart{background:none;border:0;cursor:pointer;color:var(--argent-dim);font-family:'Inter',sans-serif;
   font-size:12px;letter-spacing:.14em;text-transform:uppercase;min-height:44px;padding:0 .5rem;
   border-bottom:1px solid transparent;transition:color .3s}
@@ -152,7 +152,7 @@ h2{font-size:clamp(1.9rem,7.6vw,4.6rem);margin-bottom:.5rem}
 /* résultat */
 .res{display:grid;grid-template-columns:minmax(0,1fr);gap:2.4rem}
 @media(min-width:900px){.res{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:3.5rem}}
-.res__label{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--argent-dim);margin-bottom:.9rem}
+.res__label{font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--argent-dim);margin-bottom:.9rem}
 .res__namebox{overflow:hidden;margin-bottom:1rem}
 .res__name{display:block;font-family:'Syne',sans-serif;font-weight:800;text-transform:uppercase;
   font-size:clamp(1.6rem,6.8vw,4.6rem);line-height:1;color:var(--orange);letter-spacing:-.01em}
@@ -165,10 +165,10 @@ h2{font-size:clamp(1.9rem,7.6vw,4.6rem);margin-bottom:.5rem}
 .price{position:relative;display:flex;align-items:baseline;justify-content:space-between;gap:1rem;
   border:1px solid var(--ligne);padding:1rem 1.2rem;transition:border-color .3s,background .3s}
 .price__l{font-size:.9rem;color:var(--argent)}
-.price__l small{display:block;font-size:.74rem;color:var(--argent-dim)}
-.price b{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;color:var(--orange);white-space:nowrap;font-variant-numeric:tabular-nums}
+.price__l small{display:block;font-size:12px;color:var(--argent-dim)}
+.price b{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;color:var(--orange);white-space:nowrap;font-variant-numeric:tabular-nums lining-nums}
 .price__tag{display:none;position:absolute;top:-9px;right:12px;background:var(--orange);color:var(--noir);
-  font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:2px 9px}
+  font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;padding:2px 9px}
 .price.reco{border-color:var(--orange);background:rgba(255,95,31,.06)}
 .price.reco .price__tag{display:block}
 .res__actions{display:flex;flex-wrap:wrap;align-items:center;gap:1rem;margin-top:1.6rem}
@@ -197,7 +197,7 @@ h2{font-size:clamp(1.9rem,7.6vw,4.6rem);margin-bottom:.5rem}
 .band__quote{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
   text-align:center;padding:0 1.4rem}
 .band__quote p{font-size:clamp(1.35rem,4.6vw,2.5rem);color:var(--blanc);max-width:22ch}
-.band__quote small{margin-top:1rem;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--argent-dim)}
+.band__quote small{margin-top:1rem;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--argent-dim)}
 .band__quote small::before{content:'';display:block;width:34px;height:2px;background:var(--orange);margin:0 auto .8rem}
 
 /* ── Coach ── */
@@ -213,7 +213,7 @@ h2{font-size:clamp(1.9rem,7.6vw,4.6rem);margin-bottom:.5rem}
 .coach .bio{font-size:.95rem;margin-bottom:1rem}
 .coach .bio strong{color:var(--blanc);font-weight:600}
 .badges{display:flex;flex-wrap:wrap;gap:.55rem;margin-top:1.5rem}
-.badge{font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--ligne);
+.badge{font-size:12px;letter-spacing:.1em;text-transform:uppercase;border:1px solid var(--ligne);
   padding:.55rem .85rem;color:var(--argent);background:var(--noir3);transition:border-color .3s,color .3s}
 .badge:hover{border-color:var(--orange);color:var(--blanc)}
 .badge--o{border-color:rgba(255,95,31,.5);color:var(--orange)}
@@ -225,12 +225,12 @@ h2{font-size:clamp(1.9rem,7.6vw,4.6rem);margin-bottom:.5rem}
 .lieu h3{font-size:1.15rem;margin-bottom:.5rem}
 .lieu p{font-size:.92rem;color:var(--argent-dim);max-width:46ch}
 .horaires{background:var(--noir3);border:1px solid var(--ligne);padding:1.8rem 1.6rem}
-.horaires .disp{font-size:clamp(2.1rem,8.4vw,3.6rem);color:var(--orange);line-height:1;font-variant-numeric:tabular-nums}
+.horaires .disp{font-size:clamp(2.1rem,8.4vw,3.6rem);color:var(--orange);line-height:1;font-variant-numeric:tabular-nums lining-nums}
 .horaires>p{font-size:.9rem;color:var(--argent-dim);margin:.8rem 0 1.6rem}
 .tarifs{list-style:none;border-top:1px solid var(--ligne-soft)}
 .tarifs li{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
   padding:.85rem 0;border-bottom:1px solid var(--ligne-soft);font-size:.9rem}
-.tarifs b{font-family:'Syne',sans-serif;font-weight:800;color:var(--orange);white-space:nowrap;font-variant-numeric:tabular-nums}
+.tarifs b{font-family:'Syne',sans-serif;font-weight:800;color:var(--orange);white-space:nowrap;font-variant-numeric:tabular-nums lining-nums}
 .tarifs .inc{color:var(--argent-dim);font-size:.86rem}
 
 /* ── CTA final ── */
@@ -240,7 +240,7 @@ h2{font-size:clamp(1.9rem,7.6vw,4.6rem);margin-bottom:.5rem}
 .final .s-inc{margin:0 auto 1rem}
 .final .s-lead{margin:0 auto 2.6rem}
 form{max-width:460px;margin:0 auto;display:grid;gap:.9rem;text-align:left}
-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--argent-dim);display:block;margin-bottom:.35rem}
+label{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--argent-dim);display:block;margin-bottom:.35rem}
 input,select{width:100%;min-height:52px;padding:.8rem 1rem;font-size:16px;color:var(--blanc);
   font-family:'Inter',sans-serif;background:var(--noir3);border:1px solid var(--ligne);border-radius:0;
   transition:border-color .3s}
@@ -258,7 +258,7 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
 .foot__demo{display:flex;flex-direction:column;align-items:center;gap:1.1rem}
 .foot__demo p{font-size:.9rem;color:var(--argent-dim)}
 .foot__demo p strong{color:var(--blanc);font-weight:600}
-.foot__credit{font-size:11px;color:rgba(200,200,200,.4);margin-top:1.6rem;line-height:1.8}
+.foot__credit{font-size:12px;color:rgba(200,200,200,.4);margin-top:1.6rem;line-height:1.8}
 .foot__credit a{color:rgba(200,200,200,.55)}
 
 /* ── Toast ── */
@@ -275,7 +275,7 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
 }
 @media(max-width:560px){
   .brand span{display:none}
-  .eyebrow{font-size:10px;letter-spacing:.16em}
+  .eyebrow{font-size:12px;letter-spacing:.16em}
 }
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -291,14 +291,14 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
   /* Le hero doit tenir dans le cadre : sinon on ouvre l'exemple sur une photo et du
      vide, le titre et le bouton restant sous le bord de l'ecran du mockup. */
   .hero{padding:3.2rem 0 1.4rem}
-  .hero__eyebrow,.eyebrow,.badge{margin-bottom:.8rem;font-size:9.5px;letter-spacing:.2em;line-height:1.5}
+  .hero__eyebrow,.eyebrow,.badge{margin-bottom:.8rem;font-size:12px;letter-spacing:.2em;line-height:1.5}
   .hero__sub,.hero__hum{margin:.7rem 0 1.1rem;font-size:.88rem;line-height:1.55}
   .hero__actions{gap:.55rem}
-  .hero__actions a,.hero__actions button{min-height:42px;padding:.6rem 1.1rem;font-size:11px;letter-spacing:.06em}
+  .hero__actions a,.hero__actions button{min-height:42px;padding:.6rem 1.1rem;font-size:12px;letter-spacing:.06em}
   .stats{gap:1px;margin-top:.9rem;grid-template-columns:repeat(3,minmax(0,1fr))}
   .stat{padding:.7rem .35rem .65rem}
   .stat b{font-size:1.05rem}
-  .stat span{font-size:8px;letter-spacing:.04em;line-height:1.25;margin-top:.3rem;hyphens:none;word-break:normal}
+  .stat span{font-size:12px;letter-spacing:.04em;line-height:1.25;margin-top:.3rem;hyphens:none;word-break:normal}
   /* Mockup telephone (~244 px de large) : les paddings de section restaient ceux
      du grand ecran, ce qui laissait un grand vide entre la derniere section et
      le pied de page au lieu de montrer la fin du site. */
@@ -315,7 +315,7 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
   .brand{min-width:0;overflow:hidden;text-overflow:ellipsis}
   .btn.btn--top{flex:0 0 auto}
 
-  .top-cta,.top-tel,.btn.btn--top{font-size:8px;padding:.35rem .6rem;min-height:34px;letter-spacing:.02em;white-space:nowrap}
+  .top-cta,.top-tel,.btn.btn--top{font-size:12px;padding:.35rem .6rem;min-height:34px;letter-spacing:.02em;white-space:nowrap}
   .stamp{display:none}
   h1 .h1a,h1 .h1c{white-space:normal;font-size:1.15rem;line-height:1.05}
   h1 .h1b{font-size:1rem}
@@ -435,7 +435,7 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
                 <div class="price" data-offer="indiv">
                   <span class="price__tag">Conseillé pour toi</span>
                   <span class="price__l">Coaching individuel<small>1 h, en salle ou au parc</small></span>
-                  <b>60&nbsp;€ <span style="font-size:.72rem;color:var(--argent-dim);font-family:Inter,sans-serif;font-weight:400">/ séance</span></b>
+                  <b>60&nbsp;€ <span style="font-size:.75rem;color:var(--argent-dim);font-family:Inter,sans-serif;font-weight:400">/ séance</span></b>
                 </div>
                 <div class="price" data-offer="pack">
                   <span class="price__tag">Conseillé pour toi</span>
@@ -445,7 +445,7 @@ footer{border-top:1px solid var(--ligne-soft);padding:2.6rem 1.4rem calc(2.2rem 
                 <div class="price" data-offer="online">
                   <span class="price__tag">Conseillé pour toi</span>
                   <span class="price__l">Suivi en ligne<small>programme + check-in hebdo</small></span>
-                  <b>89&nbsp;€ <span style="font-size:.72rem;color:var(--argent-dim);font-family:Inter,sans-serif;font-weight:400">/ mois</span></b>
+                  <b>89&nbsp;€ <span style="font-size:.75rem;color:var(--argent-dim);font-family:Inter,sans-serif;font-weight:400">/ mois</span></b>
                 </div>
               </div>
               <div class="res__actions">

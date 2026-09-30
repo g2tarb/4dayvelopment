@@ -418,3 +418,6 @@ form.envoye .merci{display:block}
   .barre-date{min-height:3rem}
 }
 @media (max-width:63.99rem) and (max-height:30rem){:root{--barre:3.8rem}.barre-sommaire,.barre-date{min-height:2.6rem}.barre{padding-block:.4rem}}
+
+/* logo : cible de 44 px de haut */
+.marque{min-height:2.75rem}

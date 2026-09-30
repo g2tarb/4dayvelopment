@@ -609,3 +609,6 @@ body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parc
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none !important;transition:none !important}
 }
+
+/* cibles tactiles : numéros cliquables du pied de page et de la barre du haut portés à 44 px de haut, sans décaler les lignes */
+address a[href^="tel:"]{padding-block:.85rem}

@@ -627,7 +627,7 @@ ${d.description}
     (PH[lang] || []).forEach(([sel, text]) => setPH(sel, text));
     document.documentElement.lang = lang;
     const btn = document.getElementById('lang-btn');
-    if (btn) btn.textContent = lang === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR';
+    if (btn) { btn.textContent = lang === 'fr' ? 'EN' : 'FR'; btn.setAttribute('aria-label', lang === 'fr' ? 'EN, English version' : 'FR, version française'); }
     localStorage.setItem('lang', lang);
   }
 
@@ -641,7 +641,8 @@ ${d.description}
   const saved = localStorage.getItem('lang') || 'fr';
   const btn = document.getElementById('lang-btn');
   if (btn) {
-    btn.textContent = saved === 'fr' ? '🇬🇧 EN' : '🇫🇷 FR';
+    btn.textContent = saved === 'fr' ? 'EN' : 'FR';
+    btn.setAttribute('aria-label', saved === 'fr' ? 'EN, English version' : 'FR, version française');
     btn.addEventListener('click', toggleLang);
   }
   if (saved === 'en') applyLang('en');

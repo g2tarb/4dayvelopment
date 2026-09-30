@@ -462,3 +462,6 @@ sup{font-size:.7em;line-height:0}
 /* une barre fixe en bas n'a pas sa place sur un téléphone à l'horizontale : elle mangerait un tiers de l'écran */
 @media (max-height: 30rem) and (orientation: landscape){.suivi{display:none}}
 .bon-champs[hidden],.bon-pied[hidden]{display:none}
+
+/* repères de la carte : zone de clic élargie, invisible */
+.reperes .zone-clic{fill:transparent}

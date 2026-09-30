@@ -35,6 +35,11 @@
   --accent2:     #f2b13b;
   --accent3:     #884083;
   --gradient:    linear-gradient(135deg, #DA5426 0%, #f2b13b 40%, #884083 100%);
+  /* Boutons et pastilles pleins : orange -> or seulement, texte sombre.
+     Le blanc tombait a 1,9:1 sur l'or ; un texte sombre, a 3,1:1 sur le
+     violet que le survol devoilait. Ici : 5,3:1 sur l'orange, 10,9 sur l'or. */
+  --gradient-cta: linear-gradient(135deg, #DA5426 0%, #f2b13b 100%);
+  --on-cta:      #0b0b0b;
   --gradient-bg: linear-gradient(135deg, rgba(218,84,38,0.12), rgba(136,64,131,0.08));
 
   --text:        #f0f0f0;
@@ -42,7 +47,7 @@
   /* #555 donnait 2,68:1 sur le fond sombre, sous le minimum legal de
      4,5:1, et servait du texte de 13 px : pied de page, mentions legales,
      liens juridiques. #7a7a7a passe a 4,66:1 en restant discret. */
-  --muted2:      #7a7a7a;
+  --muted2:      #858585; /* 4,5:1 minimum sur les fonds #080808 a #1a1a1a */
 
   --radius:      16px;
   --radius-lg:   24px;
@@ -91,12 +96,20 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.65;
+  /* Syne sert par defaut des chiffres a l'ancienne : le 0 a hauteur de
+     minuscule, le 9 qui descend. « 80€ » se lisait « 8o€ » dans les prix. */
+  font-variant-numeric: lining-nums;
   /* cursor natif conservé par défaut — remplacé uniquement sur dispositifs pointeurs précis */
 }
 
 a { text-decoration: none; color: inherit; }
 img { max-width: 100%; display: block; }
 button { border: none; background: none; }
+/* Titres : interligne serre par defaut. Sans cette base, un titre sans
+   classe heritait de l'interligne du texte (1,65, et 1,9 dans les blocs de
+   contenu des pages services et du blog) : ses lignes flottaient.
+   L'equilibrage (text-wrap) est regle plus bas, hors du titre anime du hero. */
+h1, h2, h3, h4, h5, h6 { line-height: 1.2; }
 
 /* ── Skip-link : hors ecran jusqu'au focus clavier ── */
 .skip-link {
@@ -107,7 +120,7 @@ button { border: none; background: none; }
   padding: 12px 20px;
   border-radius: 99px;
   background: var(--accent);
-  color: #fff;
+  color: var(--on-cta);
   font-weight: 700;
   font-size: 0.9375rem;
   transform: translateY(calc(-100% - 20px));
@@ -262,12 +275,18 @@ nav.scrolled {
   box-shadow: 0 4px 30px rgba(0,0,0,0.4);
 }
 /* Fil d'Ariane : c'est aussi un <nav>, mais il ne doit PAS hériter du
-   positionnement fixe de la barre de navigation principale. */
+   positionnement fixe ni du fond flouté de la barre de navigation
+   principale (bande sombre visible derrière « Accueil › … » en mobile). */
 .breadcrumb {
   position: static;
   z-index: auto;
   display: block;
   padding: 0;
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border: 0;
+  box-shadow: none;
 }
 
 .nav-logo { display: flex; align-items: center; }
@@ -301,9 +320,9 @@ nav.scrolled {
 
 
 .nav-cta {
-  background: var(--gradient);
+  background: var(--gradient-cta);
   background-size: 200% auto;
-  color: #fff;
+  color: var(--on-cta);
   padding: 10px 24px;
   border-radius: var(--radius-full);
   font-size: 0.875rem;
@@ -378,8 +397,8 @@ nav.scrolled {
 .mobile-menu a:hover { color: var(--text); }
 .mobile-cta {
   margin-top: 24px;
-  background: var(--gradient) !important;
-  color: #fff !important;
+  background: var(--gradient-cta) !important;
+  color: var(--on-cta) !important;
   padding: 14px 24px !important;
   border-radius: var(--radius) !important;
   text-align: center;
@@ -466,6 +485,10 @@ nav.scrolled {
   hyphens: auto;
   hyphenate-limit-chars: 10 4 4; /* seuls les mots longs se coupent : pas de « mé-thode » */
 }
+/* Le nom de marque ne se coupe pas au hasard (« 4dayvelop-ment ») : seule
+   coupure permise, 4day / velopment, comme sur le logo (<wbr>). Sans
+   césure, « velopment » (8,4 em) doit tenir seul : 10vi le borne à 320 px. */
+.brand-word { hyphens: manual; font-size: min(1em, 10vi); }
 
 .hero-title {
   font-family: 'Syne', sans-serif;
@@ -535,7 +558,7 @@ p.maj {
 .hero-note {
   flex-basis: 100%;
   margin: 0;
-  font-size: clamp(0.75rem, 0.72rem + 0.1vi, 0.8125rem);
+  font-size: clamp(0.8125rem, 0.78rem + 0.1vi, 0.875rem); /* conditions de la garantie : pas une mention en 12 px */
   line-height: 1.5;
   color: var(--muted);
 }
@@ -556,9 +579,9 @@ p.maj {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: var(--gradient);
+  background: var(--gradient-cta);
   background-size: 200% auto;
-  color: #fff;
+  color: var(--on-cta);
   padding: 16px 36px;
   border-radius: var(--radius-full);
   font-weight: 700;
@@ -596,7 +619,7 @@ p.maj {
   overflow: hidden;
   border-radius: 50px;
   padding: 0;
-  background: linear-gradient(135deg, #DA5426, #884083, #f2b13b, #DA5426);
+  background: linear-gradient(135deg, #DA5426, #f2b13b, #e8792f, #DA5426); /* sans violet : texte sombre lisible a chaque instant de l'animation */
   background-size: 300% 300%;
   animation: prospect-glow 2.5s ease-in-out infinite,
              gradientShift 4s ease infinite;
@@ -622,7 +645,7 @@ p.maj {
   font-family: 'Syne', sans-serif;
   font-size: 0.9375rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--on-cta);
   letter-spacing: -0.3px;
   z-index: 1;
 }
@@ -714,7 +737,7 @@ p.maj {
 .logos-label {
   text-align: center;
   color: var(--accent2);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -814,7 +837,7 @@ section { padding: 100px var(--gutter-x); }
 }
 .section-label {
   color: var(--accent2);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 3px;
   text-transform: uppercase;
@@ -896,6 +919,7 @@ section { padding: 100px var(--gutter-x); }
   transition: transform .3s var(--ease-spring);
   position: relative;
   z-index: 1;
+  color: var(--accent2);
 }
 .service-card:hover .service-icon { transform: scale(1.1) rotate(-5deg); }
 
@@ -967,7 +991,7 @@ section { padding: 100px var(--gutter-x); }
 }
 .maintenance-price { flex-wrap: wrap; }
 .mo-detail {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--muted);
   line-height: 1.4;
   flex: 1;
@@ -998,7 +1022,7 @@ section { padding: 100px var(--gutter-x); }
   background: rgba(218,84,38,0.1);
   border: 1px solid rgba(218,84,38,0.2);
   color: var(--accent2);
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   border-radius: var(--radius-full);
   letter-spacing: 0.5px;
@@ -1095,14 +1119,14 @@ section { padding: 100px var(--gutter-x); }
 .step-num {
   width: 52px; height: 52px;
   min-width: 52px;
-  background: var(--gradient);
+  background: var(--gradient-cta);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 900;
   font-size: 1.1rem;
-  color: #fff;
+  color: var(--on-cta);
   box-shadow: 0 0 30px rgba(218,84,38,0.4);
   position: relative;
   z-index: 1;
@@ -1166,8 +1190,8 @@ section { padding: 100px var(--gutter-x); }
   background: rgba(218,84,38,0.08);
 }
 .btn-plan-filled {
-  background: var(--gradient);
-  color: #fff;
+  background: var(--gradient-cta);
+  color: var(--on-cta);
   box-shadow: 0 4px 24px rgba(218,84,38,0.35);
 }
 .btn-plan-filled:hover {
@@ -1289,14 +1313,14 @@ section { padding: 100px var(--gutter-x); }
   margin-bottom: 10px;
 }
 .duel-tag {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   color: var(--muted);
 }
 .duel-pop {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 700;
   color: var(--accent2);
   letter-spacing: .5px;
@@ -1342,12 +1366,28 @@ section { padding: 100px var(--gutter-x); }
    transformes et les chiffres disparaitraient. */
 .duel-digits .roll {
   display: inline-block;
+  position: relative;
   height: 1em;
   overflow: hidden;
 }
+/* Rouleaux construits : le degrade du conteneur ne sert plus qu'au prix
+   sans JS. Laisse en place, il peignait un eclat du texte masque devant
+   le premier chiffre. */
+.duel-digits[data-digits] { background: none; }
+/* Chaque rouleau prend la largeur de SON chiffre (data-d), pas celle du
+   plus large des dix : le 1 de "1 990" laissait un trou d'un chiffre. */
+.duel-digits .roll::before {
+  content: attr(data-d);
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
 /* espace des milliers de "1 990" */
-.duel-digits .gap { display: inline-block; width: .09em; }
+.duel-digits .gap { display: inline-block; width: .36em; }
 .duel-digits .roll > span {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
   display: block;
   line-height: 1;
   transition: transform .7s cubic-bezier(.22,1,.36,1);
@@ -1427,7 +1467,7 @@ html:not(.js-enabled) .duel-more {
   border: 1px solid rgba(255,255,255,.14);
   background: rgba(255,255,255,.04);
   color: var(--muted2);
-  font-size: 0.7188rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: .05em;
   text-transform: uppercase;
@@ -1487,8 +1527,8 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   height: 22px;
   padding: 0 5px;
   border-radius: 6px;
-  background: var(--gradient);
-  color: #fff;
+  background: var(--gradient-cta);
+  color: var(--on-cta);
   font-size: 0.75rem;
 }
 
@@ -1547,6 +1587,10 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   inset: 0;
   pointer-events: none;
   z-index: 4;
+  /* un canvas ne s'etire pas avec inset: 0 : sans taille CSS il prend celle
+     de son tampon (1,5 x la zone sur ecran dense) et deborde de la page */
+  width: 100%;
+  height: 100%;
 }
 
 /* ── Mobile : les camps s'empilent, le tap donne la main ── */
@@ -1661,7 +1705,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 }
 .wp-option-text {
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.6;
   margin-bottom: 20px;
 }
@@ -1681,7 +1725,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   border-radius: var(--radius);
 }
 .wp-option-price-item span {
-  font-size: 0.625rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -1722,7 +1766,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   color: var(--muted);
   font-weight: 500;
 }
-.g-icon { font-size: 1rem; }
+.g-icon { font-size: 1rem; color: var(--accent2); display: inline-flex; }
 
 /* ── TESTIMONIALS ──────────────────────────────────────────── */
 .testimonials {
@@ -1785,7 +1829,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 
 .testimonial-card blockquote {
   color: var(--text);
-  font-size: 0.97rem;
+  font-size: 1rem;
   line-height: 1.75;
   margin-bottom: 24px;
   font-style: italic;
@@ -1809,9 +1853,9 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   font-weight: 800;
   font-size: 1.0625rem;
   line-height: 1;
-  color: #fff;
+  color: var(--on-cta);
   flex-shrink: 0;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  background: var(--gradient-cta);
 }
 .author-info strong { display: block; font-size: 0.875rem; font-weight: 700; }
 .author-info span   { font-size: 0.75rem; color: var(--muted); }
@@ -1905,7 +1949,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 }
 .faq-num {
   font-family: 'Syne', sans-serif;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 800;
   color: var(--accent);
   opacity: 0.6;
@@ -1945,7 +1989,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 }
 .faq-answer p {
   color: var(--muted);
-  font-size: 0.875rem;
+  font-size: 1rem;
   line-height: 1.8;
   margin: 0;
 }
@@ -1958,7 +2002,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   gap: 8px;
 }
 .faq-list-items li {
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--muted);
   display: flex;
   align-items: center;
@@ -2037,7 +2081,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   font-size: 0.875rem;
   color: var(--muted);
 }
-.cg-icon { font-size: 1.125rem; flex-shrink: 0; }
+.cg-icon { font-size: 1.125rem; flex-shrink: 0; color: var(--accent2); display: inline-flex; }
 
 /* Colonne droite — Formulaire card */
 .contact-right {
@@ -2140,7 +2184,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
 /* Bouton submit */
 .btn-submit {
   background-size: 200% auto;
-  color: #fff;
+  color: var(--on-cta);
   font-family: 'Inter', sans-serif;
   cursor: pointer;
   display: flex;
@@ -2355,14 +2399,14 @@ footer {
   line-height: 1.2;
   margin-bottom: 12px;
 }
-.exit-desc { color: var(--muted); font-size: 0.9375rem; margin-bottom: 28px; line-height: 1.6; }
+.exit-desc { color: var(--muted); font-size: 1rem; margin-bottom: 28px; line-height: 1.6; }
 .exit-cta {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--gradient);
-  color: #fff;
+  background: var(--gradient-cta);
+  color: var(--on-cta);
   padding: 16px 36px;
   border-radius: var(--radius-full);
   font-weight: 700;
@@ -2532,7 +2576,7 @@ footer {
   }
   .hero-inner { width: 100%; }
 
-  .badge { font-size: 0.6875rem; padding: 6px 14px; }
+  .badge { font-size: 0.75rem; padding: 6px 14px; }
   .btn-primary,
   .btn-secondary {
     justify-content: center;
@@ -2562,8 +2606,8 @@ footer {
 
   /* ─ Logos ticker ─ */
   .logos-section { padding: 28px 0; }
-  .logos-label { font-size: 0.625rem; margin-bottom: 18px; }
-  .logo-item { font-size: 0.72rem; padding: 9px 14px 9px 12px; gap: 9px; letter-spacing: .07em; }
+  .logos-label { font-size: 0.75rem; margin-bottom: 18px; }
+  .logo-item { font-size: 0.75rem; padding: 9px 14px 9px 12px; gap: 9px; letter-spacing: .07em; }
   .logos-track { gap: 18px; animation-duration: 16s; }
   .logo-dot { width: 10px; }
 
@@ -2576,7 +2620,7 @@ footer {
     font-size: clamp(1.7rem, 7vw, 2.4rem);
     letter-spacing: -0.5px;
   }
-  .section-sub { font-size: 0.97rem; }
+  .section-sub { font-size: 1rem; } /* texte de lecture : 16 px minimum (charte, --step-0) */
 
   /* ─ Services ─ */
   .services-grid {
@@ -2678,7 +2722,7 @@ footer {
   }
   .footer-brand .logo-img { height: clamp(24px, 4vw, 32px); }
   .footer-brand p { font-size: 0.8125rem; }
-  .footer-links-group h4, .footer-links-group .footer-col-h { font-size: 0.6875rem; margin-bottom: 14px; }
+  .footer-links-group h4, .footer-links-group .footer-col-h { font-size: 0.75rem; margin-bottom: 14px; }
   .footer-links-group a { font-size: 0.8125rem; }
   .footer-bottom {
     flex-direction: column;
@@ -2701,7 +2745,7 @@ footer {
   }
   .exit-emoji { font-size: 2.5rem; }
   .exit-title { font-size: 1.6rem; }
-  .exit-desc { font-size: 0.875rem; margin-bottom: 24px; }
+  .exit-desc { margin-bottom: 24px; }
   .exit-cta { padding: 14px 28px; font-size: 0.875rem; }
 }
 
@@ -2714,7 +2758,9 @@ footer {
 
   /* ─ Hero ─ */
   .hero { padding: 100px 16px 64px; }
-  .badge { font-size: 0.625rem; padding: 5px 12px; }
+  /* 12 px (plancher de lisibilite) : interlettrage reduit pour tenir sur une
+     ligne des 360 px ; a 320 px, deux lignes equilibrees et centrees */
+  .badge { font-size: 0.75rem; padding: 5px 12px; letter-spacing: .02em; text-wrap: balance; text-align: center; }
 
   /* Stats — empilement vertical */
 
@@ -2873,9 +2919,17 @@ footer {
   .type-chip, .faq-question, .nav-toggle,
   .hamburger,
   .btn-primary, .btn-secondary, .btn-plan,
-  .btn-submit, .mobile-cta, .exit-cta, .exit-close {
+  .btn-submit, .mobile-cta, .exit-cta, .exit-close, .exit-close-icon {
     min-height: 48px;
     min-width: 48px;
+  }
+  /* min-height n'agit pas sur un lien en ligne (fil d'Ariane, « Lire
+     l'article », logo du pied de page), et .t-link fixait 36 px. */
+  .t-link { min-height: 44px; }
+  .breadcrumb a, .blog-more, .footer-logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
   }
 
   /* Active state tactile — feedback visuel instantane */
@@ -3130,17 +3184,17 @@ footer {
   .faq-num {
     min-width: 28px;
     height: 28px;
-    font-size: 0.6875rem;
+    font-size: 0.75rem;
   }
   .faq-answer-inner {
     padding: 0 16px 20px;
   }
   .faq-answer-inner p {
-    font-size: 0.875rem;
+    font-size: 1rem;
     line-height: 1.7;
   }
   .faq-list-items li {
-    font-size: 0.8125rem;
+    font-size: 1rem;
     padding: 4px 0;
   }
 }
@@ -3225,9 +3279,15 @@ footer {
   section { padding: 30px 0; }
 }
 
-/* ── Ultra-mobile : rendu paresseux des sections below-fold ── */
+/* ── Ultra-mobile : rendu paresseux sous la ligne de flottaison ──
+   Pas sur les sections de la home : ce sont des cibles d'ancre (onglets
+   Offres et Réalisations, « Voir les offres », /#tarifs depuis les autres
+   pages). Rendues seulement à l'approche, avec une hauteur estimée à 900 px
+   pour 1 000 à 2 600 px réels, elles grandissaient pendant et après le saut
+   et l'ancre s'arrêtait 700 à 1 800 px avant sa cible. Le pied de page,
+   qu'aucune ancre ne franchit, garde le rendu paresseux. */
 @media (max-width: 768px) {
-  #services, #process, #tarifs, #avis, #faq, #contact, footer {
+  footer {
     content-visibility: auto;
     contain-intrinsic-size: auto 900px;
   }
@@ -3465,7 +3525,7 @@ footer {
   background: linear-gradient(90deg, transparent, rgba(242,177,59,.55), transparent);
 }
 .form-group label {
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: .16em;
   color: var(--muted);
@@ -3503,9 +3563,9 @@ footer {
 }
 .type-chip:hover { transform: translateY(-2px); border-color: rgba(242,177,59,.4); }
 .type-chip.active {
-  background: var(--gradient);
+  background: var(--gradient-cta);
   border-color: transparent;
-  color: #fff;
+  color: var(--on-cta);
   box-shadow: 0 10px 26px -10px rgba(218,84,38,.6);
 }
 .btn-submit {
@@ -3515,21 +3575,21 @@ footer {
   font-size: 0.9375rem;
   font-weight: 700;
   letter-spacing: .02em;
-  background: var(--gradient);
+  background: var(--gradient-cta);
   border: 0;
   box-shadow: 0 18px 44px -16px rgba(218,84,38,.6);
   transition: transform .3s var(--ease-spring), box-shadow .3s, filter .3s;
 }
 .btn-submit:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 24px 52px -16px rgba(218,84,38,.7); }
 .btn-submit:active { transform: translateY(0); }
-.form-legal { font-size: 0.7188rem; line-height: 1.6; }
+.form-legal { font-size: 0.75rem; line-height: 1.6; }
 @media (max-width: 768px) {
   .contact-right { padding: 26px 18px; border-radius: 20px; }
 }
 
 /* ── Hero épuré : tout tient dans l'écran ── */
 #hero .hero-title { font-size: clamp(2.6rem, 5.9vi, 4.8rem); line-height: 1.02; margin-bottom: 18px; }
-#hero .hero-desc { font-size: clamp(0.98rem, 1.3vw, 1.12rem); margin-bottom: 4px; max-width: 560px; }
+#hero .hero-desc { font-size: clamp(1rem, 1.3vw, 1.12rem); margin-bottom: 4px; max-width: 560px; }
 #hero .badge { margin-bottom: 22px; }
 
 
@@ -3631,7 +3691,7 @@ footer {
   color: #fff;
   padding: 5px 12px;
   border-radius: var(--radius-full);
-  font-size: 0.6563rem;
+  font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -3727,6 +3787,10 @@ footer {
   position: relative;
   padding: 26px 0 0 26px;   /* place pour la fenêtre décalée en arrière-plan */
 }
+/* Le halo deborde de 50 px autour de la pile : sur telephone, il elargissait
+   la page de 31 px (la zone d'affichage s'etirait a 421 px pour 390). La
+   section coupe l'horizontale, le halo garde son debord vertical. */
+.process { overflow-x: clip; }
 .browser-stack::after {
   /* halo chaud derrière la pile */
   content: '';
@@ -4395,6 +4459,10 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  /* un canvas ne s'etire pas avec inset: 0 : sans taille CSS il prend celle
+     de son tampon (1,5 x la zone sur ecran dense) et deborde de la page */
+  width: 100%;
+  height: 100%;
 }
 /* le contenu du hero passe au-dessus du canvas */
 .hero-inner { position: relative; z-index: 1; }
@@ -4542,7 +4610,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     padding: 7px 4px;
     border-radius: 13px;
     color: var(--muted);
-    font-size: 0.6563rem;
+    font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: .02em;
     text-align: center;
@@ -4560,8 +4628,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     gap: 7px;
     padding: 13px 12px;
     border-radius: 14px;
-    background: var(--gradient);
-    color: #fff;
+    background: var(--gradient-cta);
+    color: var(--on-cta);
     font-size: 0.8438rem;
     font-weight: 800;
     white-space: nowrap;
@@ -4583,6 +4651,14 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   body.has-appbar:has(.appbar.is-on:not(.is-up)) .lang-fab {
     transform: translateY(-76px);
   }
+}
+/* Sur telephone, i18n.js place le bouton de langue dans la barre du haut,
+   a gauche du menu : il ne suit plus la barre d'onglets. */
+#navbar .lang-fab {
+  margin-inline-start: auto;
+  margin-inline-end: 8px;
+  height: 44px;
+  transform: none;
 }
 
 /* Ordinateur : aucune barre, aucun indice de defilement */
@@ -4800,59 +4876,57 @@ p { text-wrap: pretty; }
   nav.scrolled, footer, .mobile-menu, .logos-section { border-width: 0.5px; }
 }
 
-/* ── 6. Les pastilles du carrousel d'avis ──
-   Pilotees par js/modules/carousel.js, qui ne les pose que si la piste
-   defile reellement. La pastille courante s'allonge en pilule au lieu de
-   changer de couleur : la position se lit d'un coup d'oeil, sans compter.
-   La cible tactile fait 44 px, l'ecart entre deux pastilles n'en fait
-   que 8 : c'est la zone qui est large, pas le point. */
-.car-dots {
+/* ── 6. La navigation des carrousels ──
+   Posee par js/modules/carousel.js, seulement si la piste defile
+   reellement. Deux boutons de 44 px encadrent les pastilles : ce sont eux
+   les cibles, au doigt comme au clavier. Les pastilles ne font plus
+   qu'indiquer la position : la courante s'allonge en pilule, la position
+   se lit d'un coup d'oeil, sans compter. */
+.car-nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 2px;
+  gap: 12px;
   margin-top: 10px;
 }
-.car-dot {
-  position: relative;
-  /* La regle tactile globale impose 48 px de large a tout bouton. Ici elle
-     se retournait contre nous : huit pastilles a 48 px depassent la largeur
-     d'un telephone, le navigateur les comprimait, et la rangee s'etalait
-     d'un bord a l'autre au lieu de rester un petit groupe centre. La base
-     flex fige la largeur, min-width la defend, et la hauteur de 44 px suffit
-     a tenir la regle du pouce. */
-  flex: 0 0 22px;
-  width: 22px;
-  min-width: 22px;
+.car-step {
+  display: grid;
+  place-items: center;
+  width: 44px;
   height: 44px;
   padding: 0;
-  border: 0;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 50%;
   background: none;
+  color: var(--text);
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+  transition: border-color .2s, opacity .2s;
 }
-.car-dot::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
+.car-step[aria-disabled="true"] { opacity: .35; cursor: default; }
+.car-step:active:not([aria-disabled="true"]) { border-color: var(--accent2); }
+@media (hover: hover) and (pointer: fine) {
+  .car-step:hover:not([aria-disabled="true"]) { border-color: rgba(242,177,59,.55); }
+}
+.car-dots {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.car-dot {
   width: 6px;
   height: 6px;
   border-radius: 99px;
   background: rgba(255,255,255,.22);
   transition: width .35s var(--ease-spring), background .35s var(--ease-out);
 }
-.car-dot.is-here::before {
+.car-dot.is-here {
   width: 20px;
   background: var(--accent2);
 }
-.car-dot:active::before { background: rgba(255,255,255,.4); }
-.car-dot.is-here:active::before { background: var(--accent2); }
-.car-dot:focus-visible { outline: 2px solid var(--accent2); outline-offset: -8px; border-radius: 10px; }
 
 @media (prefers-reduced-motion: reduce) {
-  .car-dot::before { transition: none; }
+  .car-dot { transition: none; }
 }
 
 /* ── 7. Les realisations defilent au lieu de s'empiler ──

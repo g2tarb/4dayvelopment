@@ -45,6 +45,9 @@
   <!-- Fonts -->
   <link rel="preload" as="font" type="font/woff2" href="/fonts/syne-var.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-var.woff2" crossorigin>
+  <!-- utils.js est importé par les modules eux-mêmes : sans ce préchargement,
+       il formait un troisième niveau de requêtes (main.js, modules, utils.js). -->
+  <link rel="modulepreload" href="/js/modules/utils.js">
 
   <!-- CSS -->
   <link rel="stylesheet" href="style.css">
@@ -54,10 +57,6 @@
   <script src="/js/boot.js"></script>
 </head>
 <body>
-
-  <!-- Un visiteur au clavier ne doit pas traverser toute la navigation pour
-       atteindre le contenu : premier element focusable de la page. -->
-  <a class="skip-link" href="#contenu">Aller au contenu</a>
 
   <!-- ── ÉCRAN D'ENTRÉE ──
        Masqué par défaut : il ne s'affiche que si boot.js a posé .has-intro. -->
@@ -108,6 +107,8 @@
 
   <!-- ── NAV ── -->
   <!-- partial:nav -->
+  <!-- Premier element focusable : au clavier, on saute la navigation. -->
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
   <nav id="navbar">
     <a href="/" class="nav-logo">
       <img src="/logo/logo4day.svg" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="89">
@@ -272,37 +273,37 @@
 
       <div class="services-grid">
         <a href="/services/site-vitrine" class="service-card reveal" data-delay="0" style="text-decoration:none;color:inherit;">
-          <div class="service-icon" aria-hidden="true">🌐</div>
+          <div class="service-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></div>
           <h3 data-i18n="srv-vitrine-h">Site Vitrine</h3>
           <p data-i18n="srv-vitrine-p">Un site élégant et professionnel pour présenter votre activité, rassurer vos visiteurs et générer des contacts qualifiés.</p>
           <div class="service-tag">Dès 890€ TTC</div>
         </a>
         <a href="/services/e-commerce" class="service-card reveal" data-delay="100" style="text-decoration:none;color:inherit;">
-          <div class="service-icon" aria-hidden="true">🛒</div>
+          <div class="service-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg></div>
           <h3 data-i18n="srv-ecom-h">E-commerce</h3>
           <p data-i18n="srv-ecom-p">Vendez vos produits ou services en ligne avec une boutique optimisée pour la conversion et la performance maximale.</p>
           <div class="service-tag">Dès 890€ TTC</div>
         </a>
         <div class="service-card reveal" data-delay="200">
-          <div class="service-icon" aria-hidden="true">📱</div>
+          <div class="service-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg></div>
           <h3 data-i18n="srv-responsive-h">Design Responsive</h3>
           <p data-i18n="srv-responsive-p">Chaque site est parfait sur mobile, tablette et ordinateur. Plus de 60&nbsp;% du trafic web vient du mobile (StatCounter 2025), on ne laisse rien au hasard.</p>
           <div class="service-tag">Inclus</div>
         </div>
         <a href="/services/referencement-seo" class="service-card reveal" data-delay="300" style="text-decoration:none;color:inherit;">
-          <div class="service-icon" aria-hidden="true">🔍</div>
+          <div class="service-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></div>
           <h3 data-i18n="srv-seo-h">SEO & Référencement</h3>
           <p data-i18n="srv-seo-p">Vos pages sont optimisées dès le départ pour apparaître dans Google et attirer des visiteurs qualifiés prêts à acheter.</p>
           <div class="service-tag">Inclus</div>
         </a>
         <div class="service-card reveal" data-delay="400">
-          <div class="service-icon" aria-hidden="true">⚡</div>
+          <div class="service-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
           <h3 data-i18n="srv-perf-h">Performance</h3>
           <p data-i18n="srv-perf-p">Sites ultra-rapides, score Lighthouse >90, hébergement premium. Chaque seconde de chargement coûte des clients.</p>
           <div class="service-tag">Score >90</div>
         </div>
         <div class="service-card reveal" data-delay="500">
-          <div class="service-icon" aria-hidden="true">🛠️</div>
+          <div class="service-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
           <h3 data-i18n="srv-maint-h">Maintenance</h3>
           <p data-i18n="srv-maint-p">Mises à jour de sécurité, correction de bugs, sauvegardes régulières et support technique par email. Vous vous concentrez sur votre business, on gère le reste.</p>
           <div class="maintenance-offer">
@@ -368,7 +369,7 @@
           </div>
         </a>
 
-        <a class="show-card reveal" data-cursor-arrow data-delay="200" style="--brand:#A64BF0;" href="https://flaynn.io/" target="_blank" rel="noopener" aria-label="Voir le site Flaynn (nouvel onglet)">
+        <a class="show-card reveal" data-cursor-arrow data-delay="200" style="--brand:#AD55F2;" href="https://flaynn.io/" target="_blank" rel="noopener" aria-label="Voir le site Flaynn (nouvel onglet)">
           <div class="show-visual">
             <img src="/portfolio/da/flaynn.webp" alt="Page d'accueil de Flaynn, plateforme de scoring de startups" width="800" height="500" loading="lazy" decoding="async">
           </div>
@@ -420,7 +421,7 @@
           </div>
         </a>
 
-        <a class="show-card reveal" data-cursor-arrow data-delay="0" style="--brand:#2F6BFF;" href="https://www.secoursparebrise.fr/" target="_blank" rel="noopener" aria-label="Voir le site Secours Pare-Brise (nouvel onglet)">
+        <a class="show-card reveal" data-cursor-arrow data-delay="0" style="--brand:#3D76FF;" href="https://www.secoursparebrise.fr/" target="_blank" rel="noopener" aria-label="Voir le site Secours Pare-Brise (nouvel onglet)">
           <div class="show-visual">
             <img src="/portfolio/da/secours-pare-brise.webp" alt="Page d'accueil du site Secours Pare-Brise, réparation de pare-brise" width="800" height="500" loading="lazy" decoding="async">
           </div>
@@ -524,7 +525,7 @@
             <div class="browser-bar"><i></i><i></i><i></i><span class="browser-url" data-browser-url>clara-martinez.fr</span></div>
             <div class="browser-view">
               <div class="browser-reel" data-browser-reel>
-                <img src="/portfolio/da/clara-martinez.webp" alt="Aperçu d'un site livré par 4dayvelopment, affiché dans une fenêtre de navigateur" width="800" height="500" data-url="clara-martinez.fr" decoding="async">
+                <img src="/portfolio/da/clara-martinez.webp" alt="Aperçu d'un site livré par 4dayvelopment, affiché dans une fenêtre de navigateur" width="800" height="500" data-url="clara-martinez.fr" loading="lazy" decoding="async">
                 <img data-src="/portfolio/da/thieps.webp" alt="" width="800" height="500" data-url="thiepsrestaurant.fr" decoding="async">
                 <img data-src="/portfolio/da/emoi-agency.webp" alt="" width="800" height="500" data-url="emoi-agency.fr" decoding="async">
                 <img data-src="/portfolio/da/secureats.webp" alt="" width="800" height="500" data-url="secureats.fr" decoding="async">
@@ -680,15 +681,15 @@
 <!-- Guarantees -->
 <div class="guarantees reveal">
   <div class="guarantee-item">
-    <span class="g-icon" aria-hidden="true">⚡</span>
+    <span class="g-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
     <span data-i18n="guar-1">Livré en 4 jours ouvrés</span>
   </div>
   <div class="guarantee-item">
-    <span class="g-icon" aria-hidden="true">🔒</span>
+    <span class="g-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
     <span data-i18n="guar-2">Paiement 100% sécurisé</span>
   </div>
   <div class="guarantee-item">
-    <span class="g-icon" aria-hidden="true">📅</span>
+    <span class="g-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span>
     <span data-i18n="guar-3">Délai garanti contractuellement</span>
   </div>
     </div>
@@ -870,10 +871,10 @@
           <p class="reveal" data-i18n="contact-p">Décrivez votre projet ci-contre. On vous répond <strong>sous 24h</strong> avec un plan d'action concret et un devis personnalisé.</p>
 
           <div class="contact-guarantees reveal">
-            <div class="cg-item"><span class="cg-icon" aria-hidden="true">⚡</span><span data-i18n="cg-1">Réponse sous 24h garantie</span></div>
-            <div class="cg-item"><span class="cg-icon" aria-hidden="true">🔒</span><span data-i18n="cg-2">Données 100% confidentielles</span></div>
-            <div class="cg-item"><span class="cg-icon" aria-hidden="true">🎯</span><span data-i18n="cg-3">Devis gratuit & personnalisé</span></div>
-<div class="cg-item"><span class="cg-icon" aria-hidden="true">⚡</span><span>Livré en 4 jours ouvrés</span></div>          </div>
+            <div class="cg-item"><span class="cg-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span data-i18n="cg-1">Réponse sous 24h garantie</span></div>
+            <div class="cg-item"><span class="cg-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span><span data-i18n="cg-2">Données 100% confidentielles</span></div>
+            <div class="cg-item"><span class="cg-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span><span data-i18n="cg-3">Devis gratuit & personnalisé</span></div>
+<div class="cg-item"><span class="cg-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span><span>Livré en 4 jours ouvrés</span></div>          </div>
 
           <div class="reveal" style="margin-top:28px;">
             <a href="/devis" class="btn-prospect magnetic" style="text-decoration:none;">
@@ -882,7 +883,7 @@
                 <span class="btn-prospect-text" data-i18n="prospect-btn">Vous avez un grand projet sur-mesure ? Dites-nous tout →</span>
               </span>
             </a>
-            <p style="font-size:13px;color:#555;margin-top:10px;" data-i18n="prospect-note">Projet ambitieux · Brief complet · Devis ultra-précis sous 24h</p>
+            <p style="font-size:13px;color:var(--muted2);margin-top:10px;" data-i18n="prospect-note">Projet ambitieux · Brief complet · Devis ultra-précis sous 24h</p>
           </div>
         </div>
 
@@ -1017,7 +1018,7 @@
 
   <!-- ── FLOATING CTA ── -->
   <div id="floating-cta">
-    <button id="lang-toggle" class="lang-fab" aria-label="Langue" title="Switch language">🇬🇧 EN</button>
+    <button id="lang-toggle" class="lang-fab" aria-label="EN, English version">EN</button>
   </div>
 
   <!-- Toasts social proof desactives — a reactiver avec de vrais temoignages -->

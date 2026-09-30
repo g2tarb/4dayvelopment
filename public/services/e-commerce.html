@@ -29,6 +29,8 @@
 <body>
 
   <!-- partial:nav -->
+  <!-- Premier element focusable : au clavier, on saute la navigation. -->
+  <a class="skip-link" href="#contenu">Aller au contenu</a>
   <nav id="navbar">
     <a href="/" class="nav-logo">
       <img src="/logo/logo4day.svg" alt="4dayvelopment, agence web Paris, sites livrés en 4 jours" class="logo-img" width="240" height="89">
@@ -48,7 +50,7 @@
   </nav>
   <!-- /partial:nav -->
 
-  <main>
+  <main id="contenu">
 
   <section class="hero" style="min-height:auto;padding:140px 24px 80px;">
     <div class="container" style="max-width:800px;">
@@ -145,8 +147,8 @@
         </ul>
 
         <div style="margin-top:48px;padding-top:20px;border-top:1px solid #222;">
-          <p style="font-size:12px;color:#666;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Sources</p>
-          <ol style="font-size:13px;color:#777;line-height:1.7;padding-left:18px;margin:0;">
+          <p style="font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Sources</p>
+          <ol style="font-size:13px;color:var(--muted2);line-height:1.7;padding-left:18px;margin:0;">
             <li id="src-1" style="margin:6px 0;">FEVAD, <em>Bilan du e-commerce en France en 2024</em> : 175,3 milliards d'euros, en hausse de 9,6% sur un an. <a href="https://www.fevad.com/bilan-du-e-commerce-en-france-en-2024-les-ventes-sur-internet-franchissent-le-cap-des-175-milliards-deuros-en-hausse-de-96-sur-un-an/" target="_blank" rel="noopener" style="color:#999;">fevad.com</a></li>
           </ol>
         </div>

@@ -1,4 +1,8 @@
-/* ── Navigation : bar, progress, navbar, smooth scroll, floating CTA ── */
+/* ── Navigation : bar, progress, navbar, floating CTA ──
+   Pas de défilement JS vers les ancres : html { scroll-behavior: smooth }
+   le fait, respecte prefers-reduced-motion et, contrairement à un
+   scrollIntoView après preventDefault, déplace le focus clavier (le lien
+   « Aller au contenu » ne menait nulle part). */
 import { $, $$, on } from './utils.js';
 
 export function initPageTransition() {
@@ -145,17 +149,6 @@ export function initNav() {
       cta.classList.add('bounce');
     }, 6000);
   }
-}
-
-export function initSmoothScroll() {
-  $$('a[href^="#"]').forEach(a => {
-    on(a, 'click', e => {
-      const t = document.querySelector(a.getAttribute('href'));
-      if (!t) return;
-      e.preventDefault();
-      t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  });
 }
 
 /* ── Sticky CTA mobile (apparait apres hero) ──────────── */
