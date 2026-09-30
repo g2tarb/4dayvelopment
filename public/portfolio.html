@@ -64,7 +64,7 @@
       transition:filter .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);
     }
     .pcard:hover .pcard-visual, .pcard:focus-visible .pcard-visual {
-      filter:saturate(1.06) brightness(1);
+      filter:saturate(1) brightness(.86);
       transform:scale(1.1);
     }
     /* Fallback dégradé (sites à loader/vidéo non capturables) */
@@ -81,8 +81,9 @@
     /* Voile pour lisibilité du texte */
     .pcard-overlay {
       position:absolute; inset:0; z-index:1;
+      /* le titre monte jusqu'a mi-carte : le voile tient jusque-la, puis s'efface */
       background:linear-gradient(to top,
-        rgba(8,8,8,.96) 0%, rgba(8,8,8,.8) 30%, rgba(8,8,8,.28) 60%, transparent 100%);
+        rgba(8,8,8,.96) 0%, rgba(8,8,8,.9) 55%, rgba(8,8,8,.74) 80%, rgba(8,8,8,.42) 100%);
       transition:opacity .4s ease;
     }
     /* Contenu */
