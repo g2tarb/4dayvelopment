@@ -675,7 +675,7 @@ ${ARTICLE_NAV}  <!-- /partial:nav -->
     </div>
   </section>
 
-  <article style="padding:20px var(--gutter-x) 80px;">
+  <article style="padding:20px var(--gutter) 80px;">
     <div class="container" style="max-width:800px;">
       <div style="color:#bbb;line-height:1.9;font-size:16px;">
         ${content}
