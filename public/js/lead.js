@@ -359,8 +359,7 @@ ${d.description}
       /* header */
       ['#secure-text',   'Données sécurisées · Sans engagement'],
       /* hero */
-      ['.lead-badge',    'Devis personnalisé sous 24h'],
-      ['.lead-hero h1',  'Démarrons votre<br><span class="g">projet ensemble</span>'],
+      ['.lead-hero h1',  'Démarrons votre<br>projet ensemble'],
       ['.lead-hero p',   'Remplissez ce formulaire en 3 minutes et recevez une proposition sur-mesure.'],
       /* steps */
       ['.si-step span',  'Identité', 0],
@@ -472,7 +471,7 @@ ${d.description}
       ['.recap-header h3', 'Résumé de votre demande'],
       ['#lead-legal',      'En soumettant ce formulaire, vous acceptez que vos données soient utilisées pour vous recontacter. Aucun spam.'],
       /* success */
-      ['#success-screen h2', 'Demande envoyée <span class="g">avec succès !</span>'],
+      ['#success-screen h2', 'Demande envoyée avec succès !'],
       ['#success-screen p',  'Notre équipe analyse votre projet et vous contactera <strong style="color:var(--c-text)">sous 24h</strong> avec une proposition personnalisée.'],
       ['.success-actions .btn-outline', '← Retour au site', 0],
       ['.success-actions .btn-outline', 'Discuter sur WhatsApp', 1],
@@ -481,8 +480,7 @@ ${d.description}
       /* header */
       ['#secure-text',   'Secured data · No commitment'],
       /* hero */
-      ['.lead-badge',    'Personalised quote within 24h'],
-      ['.lead-hero h1',  'Let\'s build your<br><span class="g">project together</span>'],
+      ['.lead-hero h1',  'Let\'s build your<br>project together'],
       ['.lead-hero p',   'Fill in this form in 3 minutes and receive a tailor-made proposal.'],
       /* steps */
       ['.si-step span',  'Identity', 0],
@@ -594,7 +592,7 @@ ${d.description}
       ['.recap-header h3', 'Summary of your request'],
       ['#lead-legal',      'By submitting this form, you agree that your data will be used to contact you back. No spam.'],
       /* success */
-      ['#success-screen h2', 'Request sent <span class="g">successfully!</span>'],
+      ['#success-screen h2', 'Request sent successfully!'],
       ['#success-screen p',  'Our team will analyse your project and contact you <strong style="color:var(--c-text)">within 24h</strong> with a personalised proposal.'],
       ['.success-actions .btn-outline', '← Back to website', 0],
       ['.success-actions .btn-outline', 'Chat on WhatsApp', 1],

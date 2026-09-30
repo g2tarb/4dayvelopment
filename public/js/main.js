@@ -4,7 +4,7 @@
    ================================================================ */
 
 import { initProgress, initNav, initPageTransition, initBottomSheetSwipe } from './modules/navigation.js';
-import { initCursor, initGlow, initMagnetic, initReveal } from './modules/animations.js';
+import { initCursor, initMagnetic, initReveal } from './modules/animations.js';
 import { initLang } from './modules/i18n.js';
 import { checkMotion, initFAQ } from './modules/ui.js';
 import { initPreloader } from './modules/preloader.js';
@@ -58,9 +58,8 @@ async function init() {
   initProgress();
   initPageTransition();
   initNav();
-  // Pages métier : ni halo qui suit la souris ni curseur remplacé (décor hérité)
+  // Pages métier : pas de curseur remplacé (décor hérité)
   const sobre = document.body.classList.contains('lp');
-  if (!sobre) initGlow();
   initSplitTitles();   // avant initReveal : les masques sont en place quand .visible tombe
   initReveal();
   initFAQ();

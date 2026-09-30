@@ -86,8 +86,6 @@ export function initTilt() {
         card.style.transform =
           `perspective(900px) rotateX(${((0.5 - py) * 5).toFixed(2)}deg)` +
           ` rotateY(${((px - 0.5) * 6).toFixed(2)}deg) translateY(-4px)`;
-        card.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
-        card.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
       });
     });
 

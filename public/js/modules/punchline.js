@@ -2,7 +2,7 @@
    A intervalle regulier, "livre en 4 jours." se change en "ou c'est
    gratuit*." : l'asterisque renvoie aux conditions de la note sous les
    boutons du hero (CGV, article 6). Une roulette de lettres se pose de gauche a droite, la
-   phrase s'embrase le temps d'etre lue, puis la roulette la ramene a
+   phrase reste le temps d'etre lue, puis la roulette la ramene a
    l'original. Un eclat de particules marque la bascule.
 
    Les cometes qui traversaient le hero pour venir la percuter ont ete
@@ -24,7 +24,7 @@ export function initPunchline() {
   const hero = document.getElementById('hero');
   // L'effet vise la punchline du hero de l'accueil : sans elle (pages métier,
   // qui ont aussi un #hero pour la barre d'action), pas de canvas du tout.
-  if (!hero || !hero.querySelector('.hero-title .gradient-text')) return;
+  if (!hero || !hero.querySelector('.hero-title .punchline')) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const canvas = document.createElement('canvas');
@@ -53,7 +53,7 @@ export function initPunchline() {
   /* La cible : le centre de la punchline, en coordonnees du hero.
      Relue a chaque bascule : l'i18n peut reecrire le H1 a tout moment. */
   function cible() {
-    const em = hero.querySelector('.hero-title .gradient-text');
+    const em = hero.querySelector('.hero-title .punchline');
     if (!em) return null;
     const re = em.getBoundingClientRect();
     const rh = hero.getBoundingClientRect();
@@ -119,11 +119,9 @@ export function initPunchline() {
     if (h1) h1.style.minHeight = h1.offsetHeight + 'px';
 
     eclate(c.x, c.y);
-    em.classList.add('is-fused');
     await deroule(em, alternative, 1100);
     await new Promise(ok => setTimeout(ok, POSE_MS));
     await deroule(em, original, 900);
-    em.classList.remove('is-fused');
     if (h1) h1.style.minHeight = '';
     enRoulette = false;
   }
