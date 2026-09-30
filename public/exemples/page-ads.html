@@ -2,399 +2,384 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Dépannage chaudière gaz à Lyon | Démo 4dayvelopment</title>
-<meta name="description" content="Démo : page de destination d’un chauffagiste fictif à Lyon. Dépannage de chaudière gaz dans la journée, prix du déplacement affiché, rappel dans l’heure.">
+<meta name="description" content="Démo 4dayvelopment&#8239;: page d’arrivée d’annonce d’un chauffagiste fictif à Lyon. Technicien le jour même, prix affichés avant l’appel, tri de la panne.">
 <meta name="robots" content="noindex, follow">
-<meta name="theme-color" content="#F5F6F3">
+<meta name="theme-color" content="#0E1B3D">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/atkinson-hyperlegible-next-var.woff2" crossorigin>
-<style>
-@font-face{font-family:'Atkinson Hyperlegible Next';font-style:normal;font-weight:200 800;font-display:swap;src:url('/fonts/atkinson-hyperlegible-next-var.woff2') format('woff2')}
-
-:root{
-  --faience:#F5F6F3;   /* fond : le carrelage blanc sous la chaudière */
-  --joint:#D3D8D5;     /* filets : les joints du carrelage */
-  --gaine:#1D2226;     /* texte et boutons : la gaine noire des tuyaux */
-  --gaine-2:#4A545B;   /* texte secondaire */
-  --jaune:#F1B21E;     /* l'unique accent : le jaune des conduites de gaz */
-  --alerte:#A3231B;    /* réservé à la consigne « odeur de gaz » */
-  --mesure:60ch;
-  --pas:clamp(1rem,.6rem + 1.6vi,1.75rem);
-}
-*,*::before,*::after{box-sizing:border-box}
-*{margin:0}
-html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
-body{
-  font-family:'Atkinson Hyperlegible Next',system-ui,sans-serif;font-weight:400;
-  font-size:1.0625rem;line-height:1.55;color:var(--gaine);background:var(--faience);
-  -webkit-font-smoothing:antialiased;
-}
-img{display:block;max-width:100%;height:auto;background:var(--joint)} /* fond visible pendant le chargement ou si l'image manque */
-a{color:inherit;text-underline-offset:.2em}
-:focus-visible{outline:3px solid var(--gaine);outline-offset:3px}
-h1,h2,h3{font-weight:800;line-height:1.08;letter-spacing:-.012em;text-wrap:balance}
-h2{font-size:clamp(1.6rem,1.1rem + 2.2vi,2.4rem)}
-p{text-wrap:pretty}
-sup{font-size:.7em;line-height:0}
-.wrap{width:min(100% - 2*var(--pas),72rem);margin-inline:auto}
-.skip{position:absolute;left:-999px}
-.skip:focus{left:1rem;top:1rem;background:var(--gaine);color:#fff;padding:.6rem 1rem;z-index:10}
-.btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.75rem 1.3rem;
-  background:var(--gaine);color:#fff;border:2px solid transparent;border-radius:4px;font:inherit;font-weight:700;
-  text-decoration:none;cursor:pointer;transition:background-color .15s}
-.btn:hover{background:#000}
-.btn:active{transform:translateY(1px)}
-.lien{display:inline-flex;align-items:center;min-height:2.75rem;font-weight:700}
-
-/* Barre du haut : le nom et le numéro, rien d'autre. Une page d'annonce n'a
-   pas de menu : le visiteur est venu pour appeler. */
-.top{border-bottom:1px solid var(--joint)}
-.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:.5rem 1rem;min-height:3.75rem;flex-wrap:wrap}
-.marque{display:flex;flex-direction:column;line-height:1.15;padding-block:.5rem}
-.marque b{font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
-.marque span{font-size:.875rem;color:var(--gaine-2)}
-.top .tel{font-weight:700;text-decoration:none;white-space:nowrap;font-variant-numeric:tabular-nums;
-  padding:.55rem .1rem;border-bottom:3px solid var(--jaune)}
-
-/* Ouverture : l'appel d'abord, puis ce qu'on veut savoir avant de décrocher */
-.ouv{padding-block:var(--pas) calc(var(--pas)*1.75)}
-.ouv .wrap{display:grid;gap:calc(var(--pas)*1.5)}
-.ouv-texte{container-type:inline-size;min-width:0}
-.ouv h1{font-size:clamp(2rem,1.3rem + 3vi,3.4rem);max-width:16ch}
-.chapo{font-size:1.125rem;max-width:40ch;margin-top:.9rem}
-/* Le numéro est l'image principale de la page : il grandit avec sa colonne */
-.appel{display:grid;gap:.1rem;inline-size:fit-content;max-inline-size:100%;margin-top:1.5rem;
-  padding:.85rem 1.25rem 1rem;background:var(--gaine);color:#fff;border:2px solid transparent;border-radius:6px;
-  text-decoration:none;transition:background-color .15s}
-.appel:hover{background:#000}
-.appel span{font-weight:600;color:#D7DDE0}
-.appel b{font-size:clamp(1.8rem,9cqi,3.1rem);font-weight:800;line-height:1.05;letter-spacing:-.01em;
-  font-variant-numeric:tabular-nums;white-space:nowrap}
-.ou{margin-top:.6rem;color:var(--gaine-2)}
-.ou a{font-weight:700;color:var(--gaine)}
-.faits{margin-top:1.75rem;max-width:34rem;border-top:1px solid var(--joint)}
-.faits div{display:flex;flex-wrap:wrap;gap:.1rem 1rem;padding-block:.65rem;border-bottom:1px solid var(--joint)}
-.faits dt{flex:1 1 11rem;color:var(--gaine-2)}
-.faits dd{flex:999 1 13rem;font-weight:700}
-.ouv figure img{width:100%;aspect-ratio:3/2;object-fit:cover;object-position:50% 30%;border-radius:4px}
-figcaption{font-size:.875rem;color:var(--gaine-2);margin-top:.5rem;max-width:44ch}
-/* ordinateur : texte et photo côte à côte, la photo reprend son cadrage en hauteur */
-@media (min-width:60rem){
-  .ouv .wrap{grid-template-columns:1.2fr .8fr;align-items:start;gap:3.5rem}
-  .ouv figure img{aspect-ratio:4/5}
-}
-
-/* Signature : le tri de la panne, en CSS seul (:has). Fond jaune gaz, parce
-   que c'est la section qui décide quoi faire, y compris quand il ne faut pas
-   nous appeler. */
-.panne{background:var(--jaune);padding-block:calc(var(--pas)*2)}
-.panne .intro{max-width:var(--mesure);margin-top:.75rem}
-.questions{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,17rem),1fr));gap:1.5rem 2rem;
-  margin-top:1.75rem;counter-reset:q}
-.questions fieldset{border:0;padding:0;min-width:0;display:grid;gap:.5rem;align-content:start;counter-increment:q}
-.questions legend{font-weight:800;font-size:1.125rem;line-height:1.25;margin-bottom:.6rem;padding:0}
-.questions legend::before{content:counter(q) ". "}
-.questions legend small{display:block;font-weight:400;font-size:.9375rem}
-.choix{display:flex;align-items:center;gap:.7rem;min-height:3rem;padding:.6rem .85rem;background:#fff;
-  border:2px solid var(--gaine);border-radius:4px;cursor:pointer;line-height:1.25;font-weight:600;
-  transition:background-color .12s,color .12s}
-.choix input{flex:none;width:1.2rem;height:1.2rem;margin:0;accent-color:var(--jaune);cursor:pointer}
-.choix:has(input:checked){background:var(--gaine);color:#fff}
-.choix:has(input:focus-visible){outline:3px solid var(--gaine);outline-offset:3px}
-.choix.gaz{border-color:var(--alerte);color:var(--alerte)}
-.choix.gaz:has(input:checked){background:var(--alerte);color:#fff}
-
-.verdict{margin-top:2rem;max-width:46rem}
-.v{display:none;background:#fff;border:2px solid var(--gaine);border-radius:4px;padding:1.1rem 1.25rem 1.25rem}
-.v > * + *{margin-top:.6rem}
-.v .titre{font-size:1.375rem;font-weight:800;line-height:1.2}
-.v .boutons{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem 1.25rem;margin-top:1rem}
-.v .si-fragile,.v .si-fuite{display:none}
-.v-gaz{border-color:var(--alerte)}
-.v-gaz .titre{color:var(--alerte)}
-.v-gaz ol{padding-left:1.4rem;display:grid;gap:.35rem}
-.v-gaz li::marker{font-weight:800}
-.v-gaz .source{font-size:.9375rem;color:var(--gaine-2)}
-.urgence{white-space:nowrap;font-weight:800}
-/* Priorité des réponses : odeur de gaz, puis hors zone, puis urgence, puis code.
-   Chaque règle exclut les cas plus prioritaires. */
-.panne:has(#p-gaz:checked) .v-gaz{display:block}
-.panne:has(#z-loin:checked):not(:has(#p-gaz:checked)) .v-loin{display:block}
-.panne:has(#p-eau:checked,#p-fuite:checked,#p-bruit:checked,#f-oui:checked):not(:has(#p-gaz:checked,#z-loin:checked)) .v-appel{display:block}
-.panne:has(#p-code:checked):not(:has(#p-gaz:checked,#z-loin:checked,#f-oui:checked)) .v-code{display:block}
-.panne:not(:has(#p-eau:checked,#p-code:checked,#p-fuite:checked,#p-bruit:checked,#p-gaz:checked,#f-oui:checked,#z-loin:checked)) .v-attente{display:block}
-.panne:has(#f-oui:checked) .si-fragile,.panne:has(#p-fuite:checked) .si-fuite{display:block}
-.v-attente{border-style:dashed}
-
-/* Les prix : une ligne par poste, le montant en regard dès qu'il y a la place */
-.prix{padding-block:calc(var(--pas)*2)}
-.tarifs{margin-top:1.5rem;max-width:52rem;border-top:1px solid var(--joint)}
-.tarifs div{display:flex;flex-wrap:wrap;gap:.2rem 2rem;padding-block:1rem;border-bottom:1px solid var(--joint)}
-.tarifs dt{flex:1 1 13rem;font-weight:700;font-size:1.125rem}
-.tarifs dd{flex:999 1 20rem;max-width:var(--mesure)}
-.tarifs dd b{display:block;font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums}
-.prix .note{margin-top:1rem;color:var(--gaine-2)}
-
-/* Ce qu'on répare, et où */
-.parc{border-top:1px solid var(--joint);padding-block:calc(var(--pas)*2)}
-.parc .wrap{display:grid;gap:calc(var(--pas)*1.5)}
-.parc .wrap > div{min-width:0}
-.parc p{max-width:var(--mesure);margin-top:.85rem}
-.parc h3{font-size:1.25rem;margin-top:2rem}
-.communes{list-style:none;padding:0;margin-top:.75rem;columns:10rem;column-gap:1.5rem}
-.communes li{padding-block:.15rem;break-inside:avoid}
-.parc figure img{width:100%;aspect-ratio:4/3;object-fit:cover;object-position:50% 45%;border-radius:4px}
-/* ordinateur : le texte et la photo côte à côte */
-@media (min-width:60rem){
-  .parc .wrap{grid-template-columns:1.2fr .8fr;align-items:start;gap:3.5rem}
-  .parc figure img{aspect-ratio:3/4}
-}
-
-/* Demande de rappel */
-.rappel{background:#fff;border-top:1px solid var(--joint);padding-block:calc(var(--pas)*2)}
-.rappel > .wrap > p{max-width:var(--mesure);margin-top:.75rem}
-.grille{display:flex;flex-wrap:wrap;gap:2.5rem 4rem;margin-top:1.5rem}
-form{flex:3 1 22rem;display:grid;gap:1rem;max-width:36rem;align-content:start}
-label{display:block;font-weight:700;margin-bottom:.35rem}
-input:not([type=radio]),select{width:100%;font:inherit;font-size:1rem;color:var(--gaine);background:#fff;
-  border:1.5px solid #6D767C;border-radius:4px;padding:.7rem .8rem;min-height:3.1rem}
-input:not([type=radio]):focus-visible,select:focus-visible{outline:3px solid var(--jaune);outline-offset:1px;border-color:var(--gaine)}
-.deux{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,12rem),1fr));gap:1rem}
-.discret{font-size:.9375rem;color:var(--gaine-2)}
-.merci{display:none;padding:1rem 1.1rem;border:2px solid var(--gaine);border-radius:4px;font-weight:700}
-form.envoye .merci{display:block}
-.cote{flex:1 1 15rem;display:grid;gap:.6rem;align-content:start}
-.cote b{font-size:1.125rem}
-.cote .num{font-weight:800;font-size:1.6rem;font-variant-numeric:tabular-nums;white-space:nowrap}
-.cote .avert{margin-top:.75rem;padding:.9rem 1rem;background:var(--faience);border-radius:4px;font-weight:600}
-
-footer{background:var(--gaine);color:#C9D0D4;padding-block:2.5rem;font-size:.9375rem}
-footer .wrap{display:grid;gap:.75rem}
-footer b{color:#fff;font-size:1.125rem}
-footer a{color:#fff}
-footer p{max-width:70ch}
-
-/* Barre d'appel sous le pouce, en mobile et en paysage téléphone : rangée
-   quand le gros numéro ou le formulaire sont déjà à l'écran. */
-.pouce{display:none}
-@media (max-width:48rem),(max-height:30rem) and (orientation:landscape){
-  html{scroll-padding-bottom:6rem}
-  .pouce{display:grid;grid-template-columns:1.3fr 1fr;gap:.5rem;position:fixed;left:0;right:0;bottom:0;z-index:5;
-    padding:.6rem .75rem max(.6rem,env(safe-area-inset-bottom));background:var(--faience);border-top:1px solid var(--joint);
-    transition:transform .2s ease-out}
-  .pouce a{display:flex;align-items:center;justify-content:center;min-height:2.9rem;border-radius:4px;font-weight:700;text-decoration:none}
-  .pouce .p-appel{background:var(--gaine);color:#fff;border:2px solid transparent}
-  .pouce .p-rappel{border:2px solid var(--gaine)}
-  .pouce.cache{transform:translateY(110%)}
-  footer{padding-bottom:calc(5.5rem + env(safe-area-inset-bottom))}
-}
-/* odeur de gaz cochée : plus de bouton « Appeler » vers nous, la consigne passe avant */
-body:has(#p-gaz:checked) .pouce{display:none}
-/* téléphone en paysage : l'ouverture se resserre pour garder le numéro visible */
-@media (max-height:30rem) and (orientation:landscape){
-  .ouv h1{font-size:1.9rem;max-width:none}
-  .chapo{margin-top:.5rem}
-  .appel{margin-top:1rem}
-}
-/* un seul mouvement : la réponse du tri qui se pose quand elle change */
-@media (prefers-reduced-motion:no-preference){
-  .panne .v{animation:pose .3s ease-out}
-  @keyframes pose{from{opacity:0;transform:translateY(.4rem)}to{opacity:1;transform:none}}
-}
-/* mouvement réduit : aucune transition */
-@media (prefers-reduced-motion:reduce){
-  .btn,.appel,.choix,.pouce{transition:none}
-}
-</style>
+<link rel="stylesheet" href="/exemples/page-ads.css">
+<script src="/exemples/page-ads.js" defer></script>
 </head>
-<body>
-<a class="skip" href="#rappel">Aller à la demande de rappel</a>
+<body data-ligne="ouverte">
+<a class="skip" href="#tri">Aller au tri de la panne</a>
 
-<header class="top">
-  <div class="wrap">
-    <p class="marque"><b>Montagnon Chauffage</b><span>Chaudières gaz, Lyon</span></p>
-    <a class="tel" href="tel:+33465712038" aria-label="Appeler Montagnon Chauffage au 04 65 71 20 38">04 65 71 20 38</a>
+<!-- Pictogrammes au trait, réutilisés par <use> -->
+<svg width="0" height="0" class="vs" aria-hidden="true" focusable="false">
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M6.6 3.5h3l1.6 4.3-2.1 1.4a12 12 0 0 0 5.7 5.7l1.4-2.1 4.3 1.6v3a2 2 0 0 1-2.2 2A17 17 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></symbol>
+  <symbol id="i-froid" viewBox="0 0 24 24"><path d="M4 8.5h16M4 17.5h16M6.5 5.5v15M10.2 5.5v15M13.8 5.5v15M17.5 5.5v15"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M11 9H7.5v6H11M7.5 12H10M13.5 9H17v3h-3.5v3H17"/></symbol>
+  <symbol id="i-goutte" viewBox="0 0 24 24"><path d="M12 3.5c3.2 4.2 6 7.6 6 10.8a6 6 0 0 1-12 0c0-3.2 2.8-6.6 6-10.8z"/></symbol>
+  <symbol id="i-bruit" viewBox="0 0 24 24"><path d="M3.5 9.5v5H7l4.5 3.5v-12L7 9.5zM15.2 9.2a4 4 0 0 1 0 5.6M18 6.5a8 8 0 0 1 0 11"/></symbol>
+  <symbol id="i-gaz" viewBox="0 0 24 24"><path d="M12 3.8 2.8 19.5h18.4zM12 10v4.5M12 17.2v.3"/></symbol>
+  <symbol id="i-retour" viewBox="0 0 24 24"><path d="M14.5 6 8.5 12l6 6"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-bouclier" viewBox="0 0 24 24"><path d="M12 3 19.5 6v5.5c0 4.6-3.2 8.1-7.5 9.5-4.3-1.4-7.5-4.9-7.5-9.5V6zM8.8 12.2l2.2 2.2 4.3-4.6"/></symbol>
+  <symbol id="i-devis" viewBox="0 0 24 24"><path d="M6.5 3.5h8L18 7v13.5H6.5zM14.5 3.5V7H18M9.5 12H15M9.5 15.5h4"/></symbol>
+  <symbol id="i-epingle" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="9.8" r="2.3"/></symbol>
+</svg>
+
+<header class="tete">
+  <div class="tete-in">
+    <a class="logo" href="#haut" aria-label="Montagnon Chauffage, haut de page">
+      <svg class="logo-marque" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <rect class="lm-fond" width="40" height="40" rx="10"/>
+        <path class="lm-flamme" d="M20 7c1.2 5 8 9 8 16a8 8 0 0 1-16 0c0-3.8 2-6.4 4.1-8.6.3 2.8 1.5 4.7 3.4 5.6-.9-4.8-.3-8.8.5-13z"/>
+        <path class="lm-coeur" d="M20 21c.4 2 3 3.6 3 6.2a3 3 0 0 1-6 0c0-1.9 1.4-3.3 3-6.2z"/>
+      </svg>
+      <span class="logo-txt"><b>Montagnon Chauffage</b><span>Chaudières gaz, Lyon et Villeurbanne</span></span>
+    </a>
+    <!-- La veilleuse : l’état de la ligne, recalculé à l’heure de Lyon (page-ads.js).
+         Le texte servi par défaut est la règle, vraie à toute heure. -->
+    <p class="statut" data-etat="jour">
+      <svg class="veilleuse" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path class="v-flamme" d="M12 2.5c.8 3.4 5.5 6.2 5.5 11a5.5 5.5 0 0 1-11 0c0-2.6 1.4-4.4 2.8-5.9.2 1.9 1 3.2 2.3 3.8-.6-3.3-.2-6 .4-8.9z"/>
+        <path class="v-coeur" d="M12 12.2c.3 1.4 2.2 2.6 2.2 4.5a2.2 2.2 0 0 1-4.4 0c0-1.4 1-2.4 2.2-4.5z"/>
+      </svg>
+      <span class="statut-txt"><b data-statut="titre">Technicien chez vous aujourd’hui si vous appelez avant 14&nbsp;h</b> <span data-statut="detail">Du lundi au samedi, de 7&nbsp;h&nbsp;30 à 19&nbsp;h.</span></span>
+    </p>
+    <a class="tete-tel" href="tel:+33465712038" aria-label="Appeler Montagnon Chauffage au 04 65 71 20 38">
+      <svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span>04 65 71 20 38</span>
+    </a>
   </div>
 </header>
 
-<main>
-  <section class="ouv" aria-labelledby="ouv-t">
-    <div class="wrap">
-      <div class="ouv-texte">
-        <h1 id="ouv-t">Dépannage de chaudière gaz à Lyon et Villeurbanne</h1>
-        <p class="chapo">Un technicien chez vous aujourd’hui si vous appelez avant 14 h, demain matin sinon. Le prix du déplacement est affiché ici, avant que vous décrochiez.</p>
-        <a class="appel" href="tel:+33465712038"><span>Appeler maintenant</span><b>04 65 71 20 38</b></a>
-        <p class="ou"><a href="#rappel">Être rappelé</a> dans l’heure, du lundi au samedi.</p>
-        <dl class="faits">
-          <div><dt>Déplacement et diagnostic</dt><dd>79 € TTC, déduits si vous faites réparer</dd></div>
-          <div><dt>Horaires</dt><dd>Du lundi au samedi, de 7 h 30 à 19 h</dd></div>
-          <div><dt>Devis</dt><dd>Écrit, avant toute réparation</dd></div>
-        </dl>
+<main id="haut">
+  <!-- Premier écran : le numéro est l’élément dominant, les prix juste dessous. -->
+  <section class="une" aria-labelledby="une-t">
+    <div class="wrap une-grille">
+      <h1 id="une-t">Dépannage de chaudière gaz à Lyon et Villeurbanne</h1>
+      <p class="chapo">Deux techniciens salariés, installés à Villeurbanne depuis 2009. Toutes les marques courantes. Le prix est affiché ici, avant que vous décrochiez.</p>
+
+      <a class="appel" id="appel" href="tel:+33465712038">
+        <img class="appel-flamme" src="/exemples/img/page-ads-flamme-800.webp"
+             srcset="/exemples/img/page-ads-flamme-480.webp 480w, /exemples/img/page-ads-flamme-800.webp 800w, /exemples/img/page-ads-flamme-1200.webp 1200w"
+             sizes="(min-width: 60rem) 24rem, 100vw" width="1200" height="900" alt="">
+        <span class="appel-ico" aria-hidden="true"><svg class="ico"><use href="#i-tel"/></svg></span>
+        <span class="appel-txt">
+          <span class="appel-lib" data-appel-lib>Appeler maintenant</span>
+          <b class="appel-num">04 65 71 20 38</b>
+          <span class="appel-sous">Numéro fixe, non surtaxé. Du lundi au samedi, de 7&nbsp;h&nbsp;30 à 19&nbsp;h.</span>
+        </span>
+      </a>
+
+      <div class="une-suite">
+        <a class="bouton-2 vers-rappel" href="#rappel" data-rappel-lib>Être rappelé dans l’heure</a>
+        <a class="bouton-gaz" href="#gaz" data-gaz><svg class="ico" aria-hidden="true"><use href="#i-gaz"/></svg>Ça sent le gaz&#8239;?</a>
       </div>
-      <figure>
-        <img src="/exemples/img/page-ads-ouverte-800.webp"
-             srcset="/exemples/img/page-ads-ouverte-480.webp 480w, /exemples/img/page-ads-ouverte-800.webp 800w, /exemples/img/page-ads-ouverte-1200.webp 1200w"
-             sizes="(min-width: 60rem) 27rem, calc(100vi - 2rem)"
-             width="1200" height="1578" fetchpriority="high"
-             alt="Chaudière murale gaz ouverte, capot retiré : corps de chauffe, tuyaux de cuivre, manomètre et robinet d’arrivée de gaz">
-        <figcaption>Capot retiré pour le diagnostic : on regarde avant de chiffrer.</figcaption>
-      </figure>
+
+      <!-- Le ticket : ce que coûte le passage, lisible avant d’appeler -->
+      <section class="ticket" aria-labelledby="ticket-t">
+        <div class="t-principal">
+          <h2 id="ticket-t">Les prix, avant qu’on se déplace</h2>
+          <dl>
+            <dt>Déplacement et diagnostic</dt>
+            <dd><b class="t-prix">79&nbsp;€ <small>TTC</small></b><span>Déduits de la réparation si vous l’acceptez.</span></dd>
+          </dl>
+        </div>
+        <dl class="t-lignes">
+          <div><dt>Main-d’œuvre</dt><dd><b>64&nbsp;€ <small>TTC de l’heure</small></b><span>Comptée par demi-heure, une fois sur place.</span></dd></div>
+          <div><dt>Pièces</dt><dd><b>Sur devis</b><span>Devis écrit avant toute réparation. Sans votre accord, on ne touche à rien.</span></dd></div>
+          <div><dt>Le samedi</dt><dd><b>Même prix</b><span>Pas de majoration le samedi. Nous n’intervenons pas le dimanche.</span></dd></div>
+        </dl>
+      </section>
     </div>
   </section>
 
-  <section class="panne" aria-labelledby="panne-t">
+  <!-- Le tri : deux questions, gros boutons, une réponse. L’odeur de gaz passe avant tout. -->
+  <section class="tri" id="tri" aria-labelledby="tri-t">
     <div class="wrap">
-      <h2 id="panne-t">Votre panne en 3 questions</h2>
-      <p class="intro">Vos réponses disent s’il vaut mieux appeler tout de suite ou être rappelé. Si vous demandez un rappel, elles sont jointes à votre demande.</p>
-      <div class="questions">
-        <fieldset>
-          <legend>Qu’est-ce qui se passe ?</legend>
-          <label class="choix"><input type="radio" name="panne" id="p-eau" value="Plus d’eau chaude ou plus de chauffage" form="rappel-form">Plus d’eau chaude ou plus de chauffage</label>
-          <label class="choix"><input type="radio" name="panne" id="p-code" value="Un code erreur s’affiche" form="rappel-form">Un code erreur s’affiche</label>
-          <label class="choix"><input type="radio" name="panne" id="p-fuite" value="Une fuite d’eau" form="rappel-form">Une fuite d’eau</label>
-          <label class="choix"><input type="radio" name="panne" id="p-bruit" value="Un bruit anormal" form="rappel-form">Un bruit anormal</label>
-          <label class="choix gaz"><input type="radio" name="panne" id="p-gaz" value="Une odeur de gaz" form="rappel-form">Une odeur de gaz</label>
-        </fieldset>
-        <fieldset>
-          <legend>Quelqu’un de fragile vit-il chez vous ?<small>Un bébé, une personne âgée ou malade.</small></legend>
-          <label class="choix"><input type="radio" name="fragile" id="f-oui" value="Oui" form="rappel-form">Oui</label>
-          <label class="choix"><input type="radio" name="fragile" id="f-non" value="Non" form="rappel-form">Non</label>
-        </fieldset>
-        <fieldset>
-          <legend>Où est la chaudière ?</legend>
-          <label class="choix"><input type="radio" name="zone" id="z-lyon" value="Lyon ou Villeurbanne" form="rappel-form">À Lyon ou à Villeurbanne</label>
-          <label class="choix"><input type="radio" name="zone" id="z-voisine" value="Commune voisine" form="rappel-form">Dans une commune voisine (liste plus bas)</label>
-          <label class="choix"><input type="radio" name="zone" id="z-loin" value="Plus loin" form="rappel-form">Plus loin</label>
-        </fieldset>
+      <div class="tri-tete">
+        <h2 id="tri-t">Que se passe-t-il&#8239;?</h2>
+        <p>Deux questions, et on vous dit quoi faire&#8239;: appeler tout de suite, être rappelé, ou d’abord vous mettre en sécurité. Si vous demandez un rappel, vos réponses partent avec la demande.</p>
       </div>
 
-      <div class="verdict" aria-live="polite">
-        <div class="v v-attente">
-          <p>Répondez à la première question : ce qu’il faut faire s’affiche ici.</p>
-        </div>
-        <div class="v v-appel">
-          <p class="titre">Appelez-nous maintenant.</p>
-          <p>Avant 14 h, un technicien passe dans la journée. Après, il vient demain matin à la première heure.</p>
-          <p class="si-fragile">Dites-le dès le début de l’appel : quand une personne fragile vit chez vous, votre dépannage passe en premier.</p>
-          <p class="si-fuite">S’il y a une fuite : arrêtez la chaudière, fermez le robinet d’arrivée d’eau froide, souvent sous l’appareil, et posez une bassine.</p>
-          <div class="boutons">
-            <a class="btn" href="tel:+33465712038">Appeler le 04 65 71 20 38</a>
-            <a class="lien" href="#rappel">Être rappelé</a>
+      <div class="assistant" data-etape="q1">
+        <ol class="etapes" aria-label="Progression">
+          <li data-etape-pour="q1" aria-current="step">Votre panne</li>
+          <li data-etape-pour="q2">Chez vous</li>
+          <li data-etape-pour="fin">Que faire</li>
+        </ol>
+
+        <div class="pan" data-pan="q1" role="group" aria-labelledby="q1-t">
+          <h3 id="q1-t" tabindex="-1" data-focus>Qu’est-ce qui se passe&#8239;?</h3>
+          <div class="tuiles">
+            <button type="button" class="tuile tuile-gaz" data-panne="gaz">
+              <svg class="ico" aria-hidden="true"><use href="#i-gaz"/></svg>
+              <span>Ça sent le gaz<small>Les consignes de sécurité d’abord</small></span>
+            </button>
+            <button type="button" class="tuile" data-panne="froid">
+              <svg class="ico" aria-hidden="true"><use href="#i-froid"/></svg>
+              <span>Plus de chauffage ou plus d’eau chaude</span>
+            </button>
+            <button type="button" class="tuile" data-panne="code">
+              <svg class="ico" aria-hidden="true"><use href="#i-code"/></svg>
+              <span>Un code erreur s’affiche</span>
+            </button>
+            <button type="button" class="tuile" data-panne="fuite">
+              <svg class="ico" aria-hidden="true"><use href="#i-goutte"/></svg>
+              <span>Une fuite d’eau</span>
+            </button>
+            <button type="button" class="tuile" data-panne="bruit">
+              <svg class="ico" aria-hidden="true"><use href="#i-bruit"/></svg>
+              <span>Un bruit anormal</span>
+            </button>
           </div>
         </div>
-        <div class="v v-code">
-          <p class="titre">Notez le code, puis faites-vous rappeler.</p>
+
+        <div class="pan" data-pan="q2" role="group" aria-labelledby="q2-t" hidden>
+          <h3 id="q2-t" tabindex="-1" data-focus>Quelqu’un de fragile vit-il chez vous&#8239;?</h3>
+          <p class="pan-aide">Un bébé, une personne âgée ou malade.</p>
+          <div class="tuiles tuiles-2">
+            <button type="button" class="tuile tuile-courte" data-fragile="oui">Oui</button>
+            <button type="button" class="tuile tuile-courte" data-fragile="non">Non</button>
+          </div>
+          <button type="button" class="retour" data-aller="q1"><svg class="ico" aria-hidden="true"><use href="#i-retour"/></svg>Revenir à la question 1</button>
+        </div>
+
+        <div class="pan v" data-pan="appel" hidden>
+          <h3 tabindex="-1" data-focus><span class="si-ouverte">Appelez-nous maintenant.</span><span class="si-fermee">Laissez votre numéro, on vous rappelle à l’ouverture.</span></h3>
+          <p data-quand>Avant 14&nbsp;h, un technicien passe dans la journée. Après, il vient le lendemain matin à la première heure.</p>
+          <p class="v-note si-fragile" hidden>Dites-le dès le début de l’appel&#8239;: quand une personne fragile vit chez vous, votre dépannage passe en premier.</p>
+          <p class="v-conseil si-fuite" hidden><b>En attendant&#8239;:</b> arrêtez la chaudière, fermez le robinet d’arrivée d’eau froide, souvent sous l’appareil, et posez une bassine.</p>
+          <div class="v-actions">
+            <a class="bouton v-appel" href="tel:+33465712038"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span>Appeler le <span class="nw">04 65 71 20 38</span></span></a>
+            <a class="bouton-2 vers-rappel" href="#rappel">Être rappelé</a>
+          </div>
+          <button type="button" class="retour" data-aller="q1"><svg class="ico" aria-hidden="true"><use href="#i-retour"/></svg>Recommencer</button>
+        </div>
+
+        <div class="pan v" data-pan="code" hidden>
+          <h3 tabindex="-1" data-focus>Notez le code, puis faites-vous rappeler.</h3>
           <p>Relevez les lettres et les chiffres affichés, et la marque de la chaudière. Au téléphone, ils nous disent souvent quelle pièce apporter.</p>
-          <div class="boutons">
-            <a class="btn" href="#rappel">Être rappelé</a>
-            <a class="lien" href="tel:+33465712038">Appeler maintenant</a>
+          <div class="v-code">
+            <label for="v-code-in">Le code affiché, si vous l’avez sous les yeux</label>
+            <input id="v-code-in" name="code" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" enterkeyhint="done">
           </div>
+          <div class="v-actions">
+            <a class="bouton vers-rappel" href="#rappel">Être rappelé avec ce code</a>
+            <a class="bouton-2" href="tel:+33465712038">Appeler maintenant</a>
+          </div>
+          <button type="button" class="retour" data-aller="q1"><svg class="ico" aria-hidden="true"><use href="#i-retour"/></svg>Recommencer</button>
         </div>
-        <div class="v v-loin">
-          <p class="titre">C’est trop loin pour nous.</p>
-          <p>Nous ne pourrions pas venir vite. Appelez plutôt un chauffagiste proche de chez vous : nous préférons vous le dire avant que vous perdiez du temps.</p>
-        </div>
-        <div class="v v-gaz">
-          <p class="titre">Odeur de gaz : ne restez pas à l’intérieur.</p>
-          <ol>
+
+        <div class="pan v v-gaz" id="gaz" data-pan="gaz" hidden>
+          <h3 tabindex="-1" data-focus>Odeur de gaz&#8239;: ne restez pas à l’intérieur.</h3>
+          <ol class="gaz-etapes">
             <li>Ouvrez les fenêtres.</li>
             <li>Fermez l’arrivée de gaz.</li>
             <li>N’allumez rien, ne touchez à aucun appareil électrique ni téléphone.</li>
-            <li>Sortez, puis appelez Urgence sécurité gaz au <span class="urgence">0 800 47 33 33</span>, service et appel gratuits, 24 h sur 24.</li>
+            <li>Sortez, puis appelez Urgence sécurité gaz, service et appel gratuits, 24&nbsp;h sur 24&#8239;:
+              <span class="gaz-num">0 800 47 33 33</span></li>
             <li>Attendez le technicien GRDF devant chez vous.</li>
           </ol>
-          <p class="source">Consignes de GRDF, le distributeur du gaz à Lyon. Une fois l’installation mise en sécurité, appelez-nous pour réparer la chaudière.</p>
+          <p class="gaz-source">Consignes de GRDF, le distributeur du gaz à Lyon. Une fois l’installation mise en sécurité, appelez-nous pour réparer la chaudière.</p>
+          <button type="button" class="retour" data-aller="q1"><svg class="ico" aria-hidden="true"><use href="#i-retour"/></svg>Revenir aux questions</button>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="prix" aria-labelledby="prix-t">
-    <div class="wrap">
-      <h2 id="prix-t">Les prix, avant qu’on se déplace</h2>
-      <dl class="tarifs">
-        <div><dt>Déplacement et diagnostic</dt><dd><b>79 € TTC</b>Déduits de la réparation si vous l’acceptez.</dd></div>
-        <div><dt>Main-d’œuvre</dt><dd><b>64 € TTC de l’heure</b>Comptée par demi-heure, une fois sur place.</dd></div>
-        <div><dt>Pièces</dt><dd><b>Sur devis</b>Devis écrit avant toute réparation. Sans votre accord, on ne touche à rien.</dd></div>
-        <div><dt>Entretien annuel</dt><dd><b>129 € TTC</b>Obligatoire chaque année pour une chaudière gaz. Attestation remise sur place.</dd></div>
-      </dl>
-      <p class="note">Pas de majoration le samedi. Nous n’intervenons pas le dimanche.</p>
-    </div>
-  </section>
+  <!-- La zone : une question, une réponse immédiate, le plan pour se situer -->
+  <section class="zone" id="zone" aria-labelledby="zone-t">
+    <div class="wrap zone-grille">
+      <div class="zone-txt">
+        <h2 id="zone-t">Est-ce que vous venez chez moi&#8239;?</h2>
+        <form class="zone-form" id="zone-form" action="#zone" novalidate>
+          <label for="zone-in">Votre commune ou votre code postal</label>
+          <p class="aide" id="zone-aide">Par exemple Bron, ou 69500.</p>
+          <div class="zone-ligne">
+            <input id="zone-in" name="commune" list="communes-liste" autocomplete="address-level2" enterkeyhint="search" aria-describedby="zone-aide">
+            <button class="bouton" type="submit">Vérifier</button>
+          </div>
+        </form>
+        <div class="zone-rep" id="zone-rep" aria-live="polite" hidden></div>
 
-  <section class="parc" aria-labelledby="parc-t">
-    <div class="wrap">
-      <div>
-        <h2 id="parc-t">Les chaudières qu’on répare, et où</h2>
-        <p>Murales ou au sol, à condensation ou non, de toutes les marques courantes : Saunier Duval, ELM Leblanc, Frisquet, De Dietrich, Chaffoteaux, Vaillant, Viessmann, Bosch, Atlantic, Chappée, Ariston et Geminox.</p>
-        <p>Pas de chaudière fioul ni de pompe à chaleur : dans ce cas, on vous donne le nom d’un confrère.</p>
-        <h3>Les communes où nous venons</h3>
+        <h3>Les 14 communes où nous venons</h3>
         <ul class="communes">
-          <li>Lyon, tous les arrondissements</li><li>Villeurbanne</li><li>Caluire-et-Cuire</li><li>Vaulx-en-Velin</li>
-          <li>Bron</li><li>Vénissieux</li><li>Saint-Fons</li><li>Oullins-Pierre-Bénite</li>
-          <li>Sainte-Foy-lès-Lyon</li><li>Tassin-la-Demi-Lune</li><li>Écully</li><li>Rillieux-la-Pape</li>
-          <li>Décines-Charpieu</li><li>Champagne-au-Mont-d’Or</li>
+          <li><button type="button" data-commune="lyon">Lyon, les 9 arrondissements</button></li>
+          <li><button type="button" data-commune="villeurbanne">Villeurbanne</button></li>
+          <li><button type="button" data-commune="caluire">Caluire-et-Cuire</button></li>
+          <li><button type="button" data-commune="vaulx">Vaulx-en-Velin</button></li>
+          <li><button type="button" data-commune="bron">Bron</button></li>
+          <li><button type="button" data-commune="venissieux">Vénissieux</button></li>
+          <li><button type="button" data-commune="saint-fons">Saint-Fons</button></li>
+          <li><button type="button" data-commune="oullins">Oullins-Pierre-Bénite</button></li>
+          <li><button type="button" data-commune="sainte-foy">Sainte-Foy-lès-Lyon</button></li>
+          <li><button type="button" data-commune="tassin">Tassin-la-Demi-Lune</button></li>
+          <li><button type="button" data-commune="ecully">Écully</button></li>
+          <li><button type="button" data-commune="rillieux">Rillieux-la-Pape</button></li>
+          <li><button type="button" data-commune="decines">Décines-Charpieu</button></li>
+          <li><button type="button" data-commune="champagne">Champagne-au-Mont-d’Or</button></li>
         </ul>
+        <p class="zone-loin">Plus loin, nous ne pourrions pas venir vite&#8239;: nous préférons vous le dire avant que vous perdiez du temps.</p>
+        <datalist id="communes-liste">
+          <option value="Lyon"></option><option value="Villeurbanne"></option><option value="Caluire-et-Cuire"></option>
+          <option value="Vaulx-en-Velin"></option><option value="Bron"></option><option value="Vénissieux"></option>
+          <option value="Saint-Fons"></option><option value="Oullins-Pierre-Bénite"></option><option value="Sainte-Foy-lès-Lyon"></option>
+          <option value="Tassin-la-Demi-Lune"></option><option value="Écully"></option><option value="Rillieux-la-Pape"></option>
+          <option value="Décines-Charpieu"></option><option value="Champagne-au-Mont-d’Or"></option>
+        </datalist>
       </div>
-      <figure>
-        <img src="/exemples/img/page-ads-murale-800.webp"
-             srcset="/exemples/img/page-ads-murale-480.webp 480w, /exemples/img/page-ads-murale-800.webp 800w, /exemples/img/page-ads-murale-1200.webp 1200w"
-             sizes="(min-width: 60rem) 27rem, calc(100vi - 2rem)"
-             width="1200" height="1601" loading="lazy" decoding="async"
-             alt="Chaudière murale gaz blanche refermée dans une cuisine carrelée, voyant bleu allumé">
-        <figcaption>On ne repart qu’une fois l’eau chaude revenue au robinet.</figcaption>
+
+      <figure class="plan">
+        <svg viewBox="0 0 640 550" role="img" aria-labelledby="plan-t">
+          <title id="plan-t">Plan simplifié&#8239;: Lyon au confluent du Rhône et de la Saône, Villeurbanne à l’est, et les douze communes voisines où nous intervenons.</title>
+          <circle class="p-lyon" cx="246" cy="282" r="58" data-point="lyon"/>
+          <polyline class="p-eau" points="264,0 259,84 251,147 212,180 187,212 212,238 236,264 233,304 228,341 212,377"/>
+          <polyline class="p-eau" points="640,106 550,117 461,139 384,165 320,180 289,205 276,238 269,275 259,319 238,355 212,377 228,421 241,469 248,513 256,550"/>
+          <text class="p-riv" x="272" y="58">Saône</text>
+          <text class="p-riv" x="566" y="96">Rhône</text>
+          <text class="p-lib p-lib-lyon" x="246" y="289" text-anchor="middle" data-point="lyon">Lyon</text>
+          <g class="p-pt" data-point="villeurbanne"><circle cx="371" cy="249" r="8"/><text x="371" y="279" text-anchor="middle">Villeurbanne</text></g>
+          <g class="p-pt" data-point="caluire"><circle cx="284" cy="139" r="8"/><text x="298" y="134">Caluire-et-Cuire</text></g>
+          <g class="p-pt" data-point="rillieux"><circle cx="417" cy="51" r="8"/><text x="431" y="57">Rillieux-la-Pape</text></g>
+          <g class="p-pt" data-point="vaulx"><circle cx="476" cy="209" r="8"/><text x="490" y="203">Vaulx-en-Velin</text></g>
+          <g class="p-pt" data-point="decines"><circle cx="573" cy="242" r="8"/><text x="604" y="274" text-anchor="end">Décines-Charpieu</text></g>
+          <g class="p-pt" data-point="bron"><circle cx="456" cy="352" r="8"/><text x="470" y="358">Bron</text></g>
+          <g class="p-pt" data-point="venissieux"><circle cx="387" cy="506" r="8"/><text x="401" y="512">Vénissieux</text></g>
+          <g class="p-pt" data-point="saint-fons"><circle cx="302" cy="465" r="8"/><text x="316" y="471">Saint-Fons</text></g>
+          <g class="p-pt" data-point="oullins"><circle cx="202" cy="462" r="8"/><text x="196" y="493" text-anchor="middle">Oullins-Pierre-Bénite</text></g>
+          <g class="p-pt" data-point="sainte-foy"><circle cx="154" cy="370" r="8"/><text x="150" y="399" text-anchor="middle">Sainte-Foy-lès-Lyon</text></g>
+          <g class="p-pt" data-point="tassin"><circle cx="115" cy="260" r="8"/><text x="100" y="291" text-anchor="middle">Tassin-la-Demi-Lune</text></g>
+          <g class="p-pt" data-point="ecully"><circle cx="105" cy="220" r="8"/><text x="98" y="202" text-anchor="middle">Écully</text></g>
+          <g class="p-pt" data-point="champagne"><circle cx="141" cy="139" r="8"/><text x="141" y="122" text-anchor="middle">Champagne-au-Mont-d’Or</text></g>
+        </svg>
+        <figcaption>Plan simplifié. L’atelier est à Villeurbanne, au milieu de la zone.</figcaption>
       </figure>
     </div>
   </section>
 
-  <section class="rappel" id="rappel" aria-labelledby="rappel-t">
+  <!-- Le passage du technicien, dans l’ordre : c’est une vraie suite d’étapes -->
+  <section class="passage" aria-labelledby="passage-t">
     <div class="wrap">
-      <h2 id="rappel-t">Être rappelé</h2>
-      <p>On vous rappelle dans l’heure, du lundi au samedi de 7 h 30 à 19 h. En dehors de ces horaires, le lendemain dès 7 h 30.</p>
-      <div class="grille">
-        <form id="rappel-form" action="#rappel" novalidate>
-          <div class="deux">
-            <div><label for="nom">Nom *</label><input id="nom" name="nom" autocomplete="name" enterkeyhint="next" required></div>
-            <div><label for="tel">Téléphone *</label><input id="tel" name="tel" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="next" required></div>
-          </div>
-          <div class="deux">
-            <div><label for="commune">Commune *</label><input id="commune" name="commune" list="liste-communes" autocomplete="address-level2" enterkeyhint="next" required></div>
-            <div>
-              <label for="quand">Quand vous rappeler</label>
-              <select id="quand" name="quand"><option>Dès que possible</option><option>Entre 12 h et 14 h</option><option>Après 17 h</option></select>
-            </div>
-          </div>
-          <datalist id="liste-communes">
-            <option value="Lyon"></option><option value="Villeurbanne"></option><option value="Caluire-et-Cuire"></option><option value="Vaulx-en-Velin"></option><option value="Bron"></option><option value="Vénissieux"></option>
-          </datalist>
-          <p class="discret">* obligatoire. Si vous avez répondu aux 3 questions plus haut, vos réponses partent avec la demande.</p>
-          <div><button class="btn" type="submit">Être rappelé</button></div>
-          <p class="merci" role="status">Demande enregistrée. Dans la version en ligne, Montagnon Chauffage vous rappelle dans l’heure, aux horaires d’ouverture.</p>
-        </form>
-        <aside class="cote" aria-label="Nous joindre">
-          <b>Vous préférez appeler ?</b>
-          <a class="num" href="tel:+33465712038">04 65 71 20 38</a>
-          <p>Du lundi au samedi, de 7 h 30 à 19 h. Entreprise installée à Villeurbanne depuis 2009, deux techniciens salariés, pas de sous-traitance.</p>
-          <p class="avert">Nous ne démarchons jamais. Personne ne vient « de la part du gaz » contrôler votre chaudière sans que vous l’ayez demandé : ne faites pas entrer.</p>
-        </aside>
+      <h2 id="passage-t">Quand le technicien arrive chez vous</h2>
+      <figure class="bandeau">
+        <img src="/exemples/img/page-ads-diagnostic-1200.webp"
+             srcset="/exemples/img/page-ads-diagnostic-480.webp 480w, /exemples/img/page-ads-diagnostic-800.webp 800w, /exemples/img/page-ads-diagnostic-1200.webp 1200w, /exemples/img/page-ads-diagnostic-1600.webp 1600w"
+             sizes="(min-width: 76rem) 72rem, 200vw" width="1600" height="496" loading="lazy" decoding="async"
+             alt="Mains gantées sur le tableau de commande d’une chaudière murale ouverte : afficheur, boutons de réglage et manomètre en bar">
+        <figcaption>Capot retiré pour le diagnostic&#8239;: on regarde avant de chiffrer.</figcaption>
+      </figure>
+      <ol class="etapes-passage">
+        <li><b>Il cherche la panne</b><span>Déplacement et diagnostic&#8239;: 79&nbsp;€&nbsp;TTC. On ouvre, on mesure, on vous explique.</span></li>
+        <li><b>Il vous remet un devis écrit</b><span>Le prix des pièces et le temps prévu. Sans votre accord, on ne touche à rien.</span></li>
+        <li><b>Il répare</b><span>Main-d’œuvre à 64&nbsp;€&nbsp;TTC de l’heure, comptée par demi-heure. Les 79&nbsp;€ du diagnostic sont déduits.</span></li>
+        <li><b>Il repart quand l’eau chaude revient</b><span>On ne repart qu’une fois l’eau chaude revenue au robinet.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- Ce qu’on répare, l’entretien, qui sonne chez vous -->
+  <section class="parc" aria-labelledby="parc-t">
+    <div class="wrap parc-grille">
+      <div class="parc-marques">
+        <h2 id="parc-t">Les chaudières qu’on répare</h2>
+        <p>Murales ou au sol, à condensation ou non, de toutes les marques courantes&#8239;:</p>
+        <ul class="marques">
+          <li>Saunier Duval</li><li>ELM Leblanc</li><li>Frisquet</li><li>De Dietrich</li>
+          <li>Chaffoteaux</li><li>Vaillant</li><li>Viessmann</li><li>Bosch</li>
+          <li>Atlantic</li><li>Chappée</li><li>Ariston</li><li>Geminox</li>
+        </ul>
+        <p class="parc-non">Pas de chaudière fioul ni de pompe à chaleur&#8239;: dans ce cas, on vous donne le nom d’un confrère.</p>
       </div>
+      <article class="entretien" aria-labelledby="entretien-t">
+        <img src="/exemples/img/page-ads-radiateur-800.webp"
+             srcset="/exemples/img/page-ads-radiateur-480.webp 480w, /exemples/img/page-ads-radiateur-800.webp 800w, /exemples/img/page-ads-radiateur-1200.webp 1200w"
+             sizes="(min-width: 60rem) 26rem, calc(100vw - 2rem)" width="1200" height="797" loading="lazy" decoding="async"
+             alt="Une main tourne le robinet thermostatique d’un radiateur blanc">
+        <div class="entretien-txt">
+          <h3 id="entretien-t">Entretien annuel&#8239;: 129&nbsp;€&nbsp;TTC</h3>
+          <p>Obligatoire chaque année pour une chaudière gaz. Attestation remise sur place.</p>
+          <a class="lien vers-rappel" href="#rappel" data-motif="Entretien annuel">Demander un rendez-vous d’entretien</a>
+        </div>
+      </article>
+    </div>
+    <div class="wrap">
+      <div class="porte">
+        <div class="porte-qui">
+          <h3>Qui sonne chez vous</h3>
+          <ul class="techs">
+            <li><span class="pastille" aria-hidden="true">K</span>Karim</li>
+            <li><span class="pastille" aria-hidden="true">J</span>Julien</li>
+          </ul>
+          <p>Nos deux techniciens, salariés de l’entreprise. Pas de sous-traitance.</p>
+        </div>
+        <p class="porte-alerte"><svg class="ico" aria-hidden="true"><use href="#i-bouclier"/></svg><span><b>Nous ne démarchons jamais.</b> Personne ne vient «&nbsp;de la part du gaz&nbsp;» contrôler votre chaudière sans que vous l’ayez demandé&#8239;: ne faites pas entrer.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Être rappelé : trois champs, pas un de plus -->
+  <section class="rappel" id="rappel" aria-labelledby="rappel-t">
+    <div class="wrap rappel-in">
+      <h2 id="rappel-t">Être rappelé</h2>
+      <p class="rappel-delai"><span data-rappel-delai>On vous rappelle dans l’heure.</span> Du lundi au samedi de 7&nbsp;h&nbsp;30 à 19&nbsp;h&#8239;; en dehors de ces horaires, le lendemain dès 7&nbsp;h&nbsp;30.</p>
+      <form id="rappel-form" action="#rappel" novalidate>
+        <p class="resume" data-resume hidden><svg class="ico" aria-hidden="true"><use href="#i-devis"/></svg><span>Votre demande&#8239;: <b data-resume-txt></b></span></p>
+        <input type="hidden" name="demande" data-demande>
+        <div class="champ">
+          <label for="r-tel">Votre téléphone</label>
+          <input id="r-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" required aria-describedby="r-tel-err">
+          <p class="err" id="r-tel-err" hidden></p>
+        </div>
+        <div class="champ">
+          <label for="r-nom">Votre nom</label>
+          <input id="r-nom" name="nom" autocomplete="name" enterkeyhint="next" required aria-describedby="r-nom-err">
+          <p class="err" id="r-nom-err" hidden></p>
+        </div>
+        <div class="champ">
+          <label for="r-commune">Votre commune</label>
+          <input id="r-commune" name="commune" list="communes-liste" autocomplete="address-level2" enterkeyhint="done" required aria-describedby="r-commune-err">
+          <p class="err" id="r-commune-err" hidden></p>
+        </div>
+        <fieldset class="quand">
+          <legend>Quand vous rappeler</legend>
+          <label><input type="radio" name="quand" value="dès que possible" checked>Dès que possible</label>
+          <label><input type="radio" name="quand" value="entre 12&nbsp;h et 14&nbsp;h">Entre 12&nbsp;h et 14&nbsp;h</label>
+          <label><input type="radio" name="quand" value="après 17&nbsp;h">Après 17&nbsp;h</label>
+        </fieldset>
+        <button class="bouton bouton-plein" type="submit">Être rappelé</button>
+      </form>
+      <div class="merci" role="status" tabindex="-1" hidden>
+        <svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>
+        <div><p class="merci-t">Demande enregistrée.</p><div data-merci></div></div>
+      </div>
+      <p class="rappel-ou">Vous préférez appeler&#8239;? <a href="tel:+33465712038">04 65 71 20 38</a></p>
     </div>
   </section>
 </main>
 
-<footer>
-  <div class="wrap">
-    <b>Montagnon Chauffage</b>
-    <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/gestion-google-ads" target="_top">4dayvelopment</a>. L’entreprise et son numéro sont fictifs.</p>
-    <p>Photos : « Calderacondensació », Chixoy, sous licence <a href="https://creativecommons.org/licenses/by-sa/3.0/deed.fr">CC BY-SA 3.0</a>, et « Wandhängende Kombi-Gastherme von Junkers », Kai Kemmann, sous licence <a href="https://creativecommons.org/licenses/by-sa/4.0/deed.fr">CC BY-SA 4.0</a>, via Wikimedia Commons. Marques retirées des deux photos.</p>
+<footer class="pied">
+  <div class="wrap pied-in">
+    <div>
+      <p class="pied-nom">Montagnon Chauffage</p>
+      <p>Dépannage et entretien de chaudières gaz.<br>Atelier à Villeurbanne, depuis 2009.</p>
+    </div>
+    <div>
+      <p>Du lundi au samedi, de 7&nbsp;h&nbsp;30 à 19&nbsp;h.<br>Fermé le dimanche.</p>
+      <p><a href="tel:+33465712038">04 65 71 20 38</a></p>
+    </div>
+    <div class="pied-bas">
+      <p>Site de démonstration réalisé par <a href="/services/gestion-google-ads" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs.</p>
+      <p>Photos&#8239;: Pexels.</p>
+    </div>
   </div>
 </footer>
 
-<nav class="pouce" aria-label="Contact rapide">
-  <a class="p-appel" href="tel:+33465712038">Appeler</a>
-  <a class="p-rappel" href="#rappel">Être rappelé</a>
-</nav>
-
-<script src="/exemples/page-ads.js" defer></script>
+<!-- Sous le pouce, en mobile : rangé quand le gros numéro, le formulaire ou les consignes gaz sont à l’écran -->
+<a class="pouce cache" inert href="tel:+33465712038" aria-label="Appeler Montagnon Chauffage au 04 65 71 20 38">
+  <svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span>Appeler le 04 65 71 20 38</span>
+</a>
 </body>
 </html>
