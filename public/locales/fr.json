@@ -135,12 +135,7 @@
   "exit-desc": "Avant de partir, parlons de votre projet : 30 minutes pour cadrer vos besoins et repartir avec un devis clair. Sans engagement.",
   "exit-cta": "Réserver mon appel offert →",
   "exit-close": "Non merci, une autre fois",
-  "ex-chip-burger": "Restauration",
-  "ex-chip-ongles": "Beauté",
   "ex-chip-borne": "Borne",
-  "ex-chip-coach": "Coach",
-  "ex-chip-barbier": "Barbier",
-  "ex-chip-plombier": "Plombier",
   "ex-open": "Ouvrir en plein écran ↗",
   "ex-all": "Toutes les démos par métier →",
   "hero-cta-pro": "Obtenir mon site professionnel",
@@ -179,5 +174,10 @@
   "real-7-desc": "Formulaire de devis en ligne et référencement local pour un artisan du pare-brise.",
   "real-8-cat": "Site vitrine",
   "real-8-kpi": "Agence marketing, Paris",
-  "real-8-desc": "Site de présentation d'offres avec formulaire de contact qualifiant les demandes entrantes."
+  "real-8-desc": "Site de présentation d'offres avec formulaire de contact qualifiant les demandes entrantes.",
+  "ex-chip-pilates": "Pilates",
+  "ex-chip-reception": "Réception",
+  "ex-chip-reno": "Rénovation",
+  "ex-chip-gite": "Gîte",
+  "ex-chip-pac": "Pompe à chaleur"
 }

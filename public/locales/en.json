@@ -135,12 +135,7 @@
   "exit-desc": "Before you go, let's talk about your project: 30 minutes to scope your needs and leave with a clear quote. No commitment.",
   "exit-cta": "Book my free call →",
   "exit-close": "No thanks, another time",
-  "ex-chip-burger": "Food",
-  "ex-chip-ongles": "Beauty",
   "ex-chip-borne": "EV charger",
-  "ex-chip-coach": "Coach",
-  "ex-chip-barbier": "Barber",
-  "ex-chip-plombier": "Plumber",
   "ex-open": "Open full screen ↗",
   "ex-all": "All demos by trade →",
   "hero-cta-pro": "Get my professional website",
@@ -179,5 +174,10 @@
   "real-7-desc": "Online quote form and local search pages for a windscreen repair craftsman.",
   "real-8-cat": "Showcase site",
   "real-8-kpi": "Marketing agency, Paris",
-  "real-8-desc": "Service pages structured by search intent, with a form that qualifies incoming leads."
+  "real-8-desc": "Service pages structured by search intent, with a form that qualifies incoming leads.",
+  "ex-chip-pilates": "Pilates",
+  "ex-chip-reception": "Wedding venue",
+  "ex-chip-reno": "Renovation",
+  "ex-chip-gite": "B&B",
+  "ex-chip-pac": "Heat pump"
 }
