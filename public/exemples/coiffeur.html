@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Trois Fauteuils, coiffeur et barbier | Démo 4dayvelopment</title>
+<meta name="description" content="Démo 4dayvelopment&#8239;: Trois Fauteuils, coiffeur et barbier rue des Martyrs, Paris 9e. Fauteuils libres en direct, réservation en trois choix, carte des prix.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#123B30">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/bodoni-moda-var.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/figtree-var.woff2" crossorigin>
+<link rel="stylesheet" href="/exemples/coiffeur.css">
+<script src="/exemples/coiffeur.js" defer></script>
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
+
+<svg width="0" height="0" class="vs" aria-hidden="true" focusable="false">
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5.2 3.5h3.1l1.6 4.1-2.1 1.3a11.5 11.5 0 0 0 5.3 5.3l1.3-2.1 4.1 1.6v3.1a2 2 0 0 1-2.1 2A16 16 0 0 1 3.2 5.6a2 2 0 0 1 2-2.1z"/></symbol>
+  <symbol id="i-ciseaux" viewBox="0 0 24 24"><circle cx="6" cy="6.5" r="2.8"/><circle cx="6" cy="17.5" r="2.8"/><path d="M8.3 8.2 20 18M8.3 15.8 20 6"/></symbol>
+  <symbol id="i-fleche" viewBox="0 0 24 24"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5"/></symbol>
+  <symbol id="i-retour" viewBox="0 0 24 24"><path d="M20 12H5M10.5 6.5 5 12l5.5 5.5"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+  <symbol id="i-fermer" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-metro" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M7.5 16.5v-9l4.5 6 4.5-6v9"/></symbol>
+  <symbol id="i-horloge" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-agenda" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4"/></symbol>
+</svg>
+
+<header class="devanture">
+  <div class="devanture-in">
+    <a class="enseigne" href="#accueil" aria-label="Trois Fauteuils, retour en haut de page">
+      <span class="enseigne-nom">Trois Fauteuils</span>
+      <span class="enseigne-sous">coiffure &amp; barbe, Paris 9e</span>
+    </a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="nav-principale">
+      <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg><span>Menu</span>
+    </button>
+    <nav class="nav" id="nav-principale" aria-label="Navigation principale">
+      <ul>
+        <li><a href="#fauteuils">Les fauteuils</a></li>
+        <li><a href="#carte">La carte</a></li>
+        <li><a href="#coupes">Les coupes</a></li>
+        <li><a href="#salon">Le salon</a></li>
+        <li><a href="#venir">Venir</a></li>
+      </ul>
+      <a class="nav-tel" href="tel:+33199004217"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>01&nbsp;99&nbsp;00&nbsp;42&nbsp;17</a>
+      <a class="btn btn-or" href="#reserver">Réserver</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+
+<section class="accueil" id="accueil" aria-labelledby="titre">
+  <div class="accueil-in">
+    <div class="accueil-texte">
+      <p class="etat-salon" data-etat-salon><span class="lampe" data-lampe-salon></span><span data-etat-salon-txt>Ouvert du mardi au samedi</span></p>
+      <h1 id="titre">Coiffeur et barbier, <span class="insecable">rue des Martyrs</span></h1>
+      <p class="chapo">Coupes homme, femme et enfant, barbe au rasoir, couleur. Les lampes au-dessus des miroirs disent en direct quel fauteuil est libre&#8239;; réservez le vôtre en trois choix.</p>
+      <div class="actions">
+        <a class="btn btn-vert" href="#reserver">Réserver un fauteuil <svg class="ico" aria-hidden="true"><use href="#i-fleche"/></svg></a>
+        <a class="btn btn-ligne" href="tel:+33199004217"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Appeler le salon</a>
+      </div>
+      <div class="sansrdv" data-sansrdv>
+        <h2 class="sansrdv-q">Je peux passer sans rendez-vous&#8239;?</h2>
+        <p class="sansrdv-r" data-sansrdv-r>Oui, dès qu’une lampe est verte. Sinon, l’heure du prochain fauteuil libre s’affiche sous chaque miroir.</p>
+      </div>
+    </div>
+
+    <section class="postes" id="fauteuils" aria-labelledby="fauteuils-t">
+      <h2 class="vs" id="fauteuils-t">Les trois fauteuils, en direct</h2>
+      <article class="poste" data-pers="ines">
+        <div class="miroir">
+          <span class="ampoule" data-lampe aria-hidden="true"></span>
+          <img src="/exemples/img/coiffeur-ines-480.webp" srcset="/exemples/img/coiffeur-ines-480.webp 480w, /exemples/img/coiffeur-ines-800.webp 800w" sizes="(min-width: 1080px) 250px, 31vw" width="480" height="640" fetchpriority="high" alt="Mains qui coupent une mèche de cheveux roux entre peigne et ciseaux">
+          </div>
+        <p class="etiquette" data-etat><span class="point"></span><span data-etat-txt>Planning du jour</span></p>
+        <div class="tablette">
+          <span class="pastille" aria-hidden="true">I</span>
+          <h3>Inès</h3>
+          <p>Coupes femme, couleur, balayage</p>
+          <button class="lien-fauteuil" type="button" data-choisir-pers="ines"><span class="cq-long">Réserver avec Inès</span><span class="cq-court" aria-hidden="true">Réserver</span> <svg class="ico" aria-hidden="true"><use href="#i-fleche"/></svg></button>
+        </div>
+      </article>
+      <article class="poste" data-pers="malik">
+        <div class="miroir">
+          <span class="ampoule" data-lampe aria-hidden="true"></span>
+          <img src="/exemples/img/coiffeur-malik-480.webp" srcset="/exemples/img/coiffeur-malik-480.webp 480w, /exemples/img/coiffeur-malik-800.webp 800w" sizes="(min-width: 1080px) 250px, 31vw" width="480" height="640" alt="Tondeuse dorée et peigne qui dessinent un dégradé sur une nuque">
+          </div>
+        <p class="etiquette" data-etat><span class="point"></span><span data-etat-txt>Planning du jour</span></p>
+        <div class="tablette">
+          <span class="pastille" aria-hidden="true">M</span>
+          <h3>Malik</h3>
+          <p>Dégradés, barbe, rasage au coupe-chou</p>
+          <button class="lien-fauteuil" type="button" data-choisir-pers="malik"><span class="cq-long">Réserver avec Malik</span><span class="cq-court" aria-hidden="true">Réserver</span> <svg class="ico" aria-hidden="true"><use href="#i-fleche"/></svg></button>
+        </div>
+      </article>
+      <article class="poste" data-pers="lou">
+        <div class="miroir">
+          <span class="ampoule" data-lampe aria-hidden="true"></span>
+          <img src="/exemples/img/coiffeur-lou-480.webp" srcset="/exemples/img/coiffeur-lou-480.webp 480w, /exemples/img/coiffeur-lou-800.webp 800w" sizes="(min-width: 1080px) 250px, 31vw" width="480" height="639" alt="Coupe aux ciseaux sur des cheveux bruns mouillés, vue de dessus">
+          </div>
+        <p class="etiquette" data-etat><span class="point"></span><span data-etat-txt>Planning du jour</span></p>
+        <div class="tablette">
+          <span class="pastille" aria-hidden="true">L</span>
+          <h3>Lou</h3>
+          <p>Coupes courtes, cheveux bouclés, enfants</p>
+          <button class="lien-fauteuil" type="button" data-choisir-pers="lou"><span class="cq-long">Réserver avec Lou</span><span class="cq-court" aria-hidden="true">Réserver</span> <svg class="ico" aria-hidden="true"><use href="#i-fleche"/></svg></button>
+        </div>
+      </article>
+    </section>
+  </div>
+  <div class="carrelage" aria-hidden="true"></div>
+</section>
+
+<section class="resa-zone" id="reserver" aria-labelledby="resa-titre">
+  <div class="cadre">
+    <div class="resa-tete">
+      <h2 id="resa-titre">Réserver un fauteuil</h2>
+      <p>La prestation, la personne, l’heure. Le carton se remplit à mesure&#8239;; le salon vous confirme par SMS.</p>
+    </div>
+    <form class="resa" id="resa" novalidate>
+      <ol class="resa-etapes">
+        <li><button type="button" data-aller="1" aria-current="step"><span class="num">1</span><span class="nom-etape">La prestation<small data-resume="1">à choisir</small></span></button></li>
+        <li><button type="button" data-aller="2" disabled><span class="num">2</span><span class="nom-etape">Avec qui<small data-resume="2">à choisir</small></span></button></li>
+        <li><button type="button" data-aller="3" disabled><span class="num">3</span><span class="nom-etape">Le créneau<small data-resume="3">à choisir</small></span></button></li>
+      </ol>
+
+      <div class="resa-pan">
+        <fieldset class="etape" data-etape="1">
+          <legend tabindex="-1">Quelle prestation&#8239;?</legend>
+          <div class="choix-presta" data-liste-presta><p class="attente">La liste des prestations se charge.</p></div>
+        </fieldset>
+
+        <fieldset class="etape" data-etape="2" hidden>
+          <legend tabindex="-1">Avec qui&#8239;?</legend>
+          <div class="choix-pers">
+            <label class="opt-pers"><input type="radio" name="pers" value="premier"><span class="pastille pastille-vide" aria-hidden="true"><svg class="ico" aria-hidden="true"><use href="#i-ciseaux"/></svg></span><span class="opt-txt"><strong>Le premier fauteuil libre</strong><small data-pers-info="premier">le plus tôt possible</small></span></label>
+            <label class="opt-pers"><input type="radio" name="pers" value="ines"><span class="pastille" aria-hidden="true">I</span><span class="opt-txt"><strong>Inès</strong><small data-pers-info="ines">coupes femme, couleur</small></span></label>
+            <label class="opt-pers"><input type="radio" name="pers" value="malik"><span class="pastille" aria-hidden="true">M</span><span class="opt-txt"><strong>Malik</strong><small data-pers-info="malik">dégradés, barbe</small></span></label>
+            <label class="opt-pers"><input type="radio" name="pers" value="lou"><span class="pastille" aria-hidden="true">L</span><span class="opt-txt"><strong>Lou</strong><small data-pers-info="lou">coupes courtes, bouclés</small></span></label>
+          </div>
+        </fieldset>
+
+        <fieldset class="etape" data-etape="3" hidden>
+          <legend tabindex="-1">Quel créneau&#8239;?</legend>
+          <div class="jours" data-jours></div>
+          <div class="creneaux" data-creneaux></div>
+        </fieldset>
+
+        <div class="etape" data-etape="4" hidden>
+          <h3 class="etape-titre" tabindex="-1">Un prénom et c’est noté</h3>
+          <div class="champ">
+            <label for="prenom">Votre prénom</label>
+            <input id="prenom" name="prenom" autocomplete="given-name" enterkeyhint="done" required aria-describedby="prenom-err">
+            <p class="erreur" id="prenom-err" data-erreur hidden>Indiquez votre prénom pour que le salon vous reconnaisse.</p>
+          </div>
+          <div class="champ">
+            <label for="mobile">Mobile, pour le rappel la veille <span class="facultatif">(facultatif)</span></label>
+            <input id="mobile" name="mobile" type="tel" autocomplete="tel" inputmode="tel" enterkeyhint="done">
+          </div>
+          <p class="petit">Annulation gratuite jusqu’à 2&nbsp;h avant, d’un simple appel.</p>
+          <button class="btn btn-or btn-large" type="submit">Confirmer le rendez-vous</button>
+        </div>
+
+        <div class="etape etape-fin" data-etape="5" hidden>
+          <h3 class="etape-titre" tabindex="-1" data-fin-titre>C’est noté.</h3>
+          <p data-fin-texte>Votre fauteuil est retenu.</p>
+          <p class="demo-note">Démonstration&#8239;: aucune demande n’est partie. Sur le vrai site, le salon reçoit votre rendez-vous et vous confirme par SMS.</p>
+          <button class="btn btn-ligne" type="button" data-recommencer>Prendre un autre rendez-vous</button>
+        </div>
+
+        <div class="resa-nav" data-resa-nav>
+          <button type="button" class="btn-retour" data-precedent hidden><svg class="ico" aria-hidden="true"><use href="#i-retour"/></svg>Retour</button>
+          <button type="button" class="btn btn-vert" data-suivant disabled>Continuer <svg class="ico" aria-hidden="true"><use href="#i-fleche"/></svg></button>
+        </div>
+      </div>
+
+      <aside class="carton" aria-label="Votre carton de rendez-vous">
+        <p class="carton-tete"><span class="carton-nom">Trois Fauteuils</span><span>54 rue des Martyrs, 01&nbsp;99&nbsp;00&nbsp;42&nbsp;17</span></p>
+        <p class="carton-titre">Carton de rendez-vous</p>
+        <dl class="carton-lignes">
+          <div><dt>Pour</dt><dd data-c="prenom">&nbsp;</dd></div>
+          <div><dt>Prestation</dt><dd data-c="presta">&nbsp;</dd></div>
+          <div><dt>Avec</dt><dd data-c="pers">&nbsp;</dd></div>
+          <div><dt>Le</dt><dd data-c="date">&nbsp;</dd></div>
+          <div><dt>Durée</dt><dd data-c="duree">&nbsp;</dd></div>
+          <div><dt>Prix</dt><dd data-c="prix">&nbsp;</dd></div>
+        </dl>
+        <p class="tampon" data-tampon hidden>Retenu</p>
+      </aside>
+    </form>
+  </div>
+</section>
+
+<section class="carte-zone" id="carte" aria-labelledby="carte-titre">
+  <div class="cadre carte-grille">
+    <div class="carte-intro">
+      <h2 id="carte-titre">La carte, gravée sur le miroir</h2>
+      <p>Shampoing compris dans chaque coupe. La durée indiquée est celle que l’on bloque pour vous dans l’agenda, pas une estimation.</p>
+      <p>Touchez une ligne&#8239;: elle passe directement dans votre réservation.</p>
+      <p class="note">Cheveux très longs ou très épais&#8239;? On vous annonce un éventuel supplément avant de commencer, jamais après.</p>
+    </div>
+    <div class="glace">
+      <div class="glace-in">
+        <section class="rayon" aria-labelledby="r-homme">
+          <h3 id="r-homme">Homme et barbe</h3>
+          <ul>
+            <li><button type="button" class="ligne" data-presta="coupe-h" data-cat="homme" data-duree="30" data-prix="32" data-pers="malik lou"><span class="l-nom" data-nom>Coupe homme</span><small class="l-detail">shampoing, coupe, coiffage</small><span class="l-duree">30&nbsp;min</span><span class="l-prix">32&nbsp;€</span></button></li>
+            <li><button type="button" class="ligne" data-presta="degrade" data-cat="homme" data-duree="45" data-prix="38" data-pers="malik lou"><span class="l-nom" data-nom>Dégradé</span><small class="l-detail">à blanc, américain ou bas</small><span class="l-duree">45&nbsp;min</span><span class="l-prix">38&nbsp;€</span></button></li>
+            <li><button type="button" class="ligne" data-presta="barbe" data-cat="barbe" data-duree="30" data-prix="25" data-pers="malik"><span class="l-nom" data-nom>Taille de barbe</span><small class="l-detail">contours au rasoir, serviette chaude</small><span class="l-duree">30&nbsp;min</span><span class="l-prix">25&nbsp;€</span></button></li>
+            <li><button type="button" class="ligne" data-presta="coupe-barbe" data-cat="barbe" data-duree="60" data-prix="52" data-pers="malik"><span class="l-nom" data-nom>Coupe et barbe</span><small class="l-detail">le duo, sans repasser au bac</small><span class="l-duree">1&nbsp;h</span><span class="l-prix">52&nbsp;€</span></button></li>
+            <li><button type="button" class="ligne" data-presta="rasage" data-cat="barbe" data-duree="30" data-prix="30" data-pers="malik"><span class="l-nom" data-nom>Rasage au coupe-chou</span><small class="l-detail">à l’ancienne, baume après-rasage</small><span class="l-duree">30&nbsp;min</span><span class="l-prix">30&nbsp;€</span></button></li>
+          </ul>
+        </section>
+        <section class="rayon" aria-labelledby="r-femme">
+          <h3 id="r-femme">Femme</h3>
+          <ul>
+            <li><button type="button" class="ligne" data-presta="coupe-fc" data-cat="femme" data-duree="45" data-prix="48" data-pers="ines lou"><span class="l-nom" data-nom>Coupe cheveux courts</span><small class="l-detail">shampoing, coupe, brushing</small><span class="l-duree">45&nbsp;min</span><span class="l-prix">48&nbsp;€</span></button></li>
+            <li><button type="button" class="ligne" data-presta="coupe-fl" data-cat="femme" data-duree="60" data-prix="62" data-pers="ines lou"><span class="l-nom" data-nom>Coupe mi-longs ou longs</span><small class="l-detail">shampoing, coupe, brushing</small><span class="l-duree">1&nbsp;h</span><span class="l-prix">62&nbsp;€</span></button></li>
+            <li><button type="button" class="ligne" data-presta="boucles" data-cat="femme" data-duree="60" data-prix="58" data-pers="lou"><span class="l-nom" data-nom>Coupe cheveux bouclés</span><small class="l-detail">à sec, boucle par boucle</small><span class="l-duree">1&nbsp;h</span><span class="l-prix">58&nbsp;€</span></button></li>
+            <li><button type="button" class="ligne" data-presta="brushing" data-cat="femme" data-duree="30" data-prix="32" data-pers="ines lou"><span class="l-nom" data-nom>Brushing</span><small class="l-detail">lisse ou ondulé</small><span class="l-duree">30&nbsp;min</span><span class="l-prix">32&nbsp;€</span></button></li>
+          </ul>
+        </section>
+        <section class="rayon" aria-labelledby="r-couleur">
+          <h3 id="r-couleur">Couleur</h3>
+          <ul>
+            <li><button type="button" class="ligne" data-presta="couleur" data-cat="femme" data-duree="105" data-prix="95" data-pers="ines"><span class="l-nom" data-nom>Couleur racines et coupe</span><small class="l-detail">sans ammoniaque, brushing compris</small><span class="l-duree">1&nbsp;h&nbsp;45</span><span class="l-prix">95&nbsp;€</span></button></li>
+            <li><button type="button" class="ligne" data-presta="balayage" data-cat="femme" data-duree="150" data-prix="150" data-pers="ines"><span class="l-nom" data-nom>Balayage, patine et coupe</span><small class="l-detail">cheveux mi-longs</small><span class="l-duree">2&nbsp;h&nbsp;30</span><span class="l-prix">150&nbsp;€</span></button></li>
+          </ul>
+        </section>
+        <section class="rayon" aria-labelledby="r-enfant">
+          <h3 id="r-enfant">Enfant</h3>
+          <ul>
+            <li><button type="button" class="ligne" data-presta="enfant" data-cat="homme femme" data-duree="30" data-prix="22" data-pers="ines malik lou"><span class="l-nom" data-nom>Coupe enfant</span><small class="l-detail">moins de 12 ans, réhausseur fourni</small><span class="l-duree">30&nbsp;min</span><span class="l-prix">22&nbsp;€</span></button></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="coupes" id="coupes" aria-labelledby="coupes-titre">
+  <div class="cadre">
+    <div class="coupes-tete">
+      <div>
+        <h2 id="coupes-titre">Sorties de fauteuil</h2>
+        <p>Des coupes faites au salon cette saison. Une vous plaît&#8239;? Elle se réserve avec la même personne, en un geste.</p>
+      </div>
+      <div class="filtres" role="group" aria-label="Filtrer les coupes">
+        <button type="button" aria-pressed="true" data-filtre="tout">Tout</button>
+        <button type="button" aria-pressed="false" data-filtre="homme">Homme</button>
+        <button type="button" aria-pressed="false" data-filtre="femme">Femme</button>
+        <button type="button" aria-pressed="false" data-filtre="barbe">Barbe</button>
+      </div>
+    </div>
+    <ul class="mur" data-mur>
+      <li class="coupe" data-cat="homme"><figure><img src="/exemples/img/coiffeur-degrade-480.webp" srcset="/exemples/img/coiffeur-degrade-480.webp 480w, /exemples/img/coiffeur-degrade-800.webp 800w" sizes="(min-width: 1080px) 380px, (min-width: 640px) 45vw, 88vw" width="480" height="600" loading="lazy" alt="Tondeuse avec sabot qui fond un dégradé sur une nuque, en noir et blanc"><figcaption><strong>Dégradé à blanc</strong><span>Malik, 45&nbsp;min, 38&nbsp;€</span></figcaption></figure><button type="button" class="meme" data-presta="degrade" data-pers="malik">Je veux le même<span class="vs">&#8239;: dégradé à blanc</span></button></li>
+      <li class="coupe" data-cat="femme"><figure><img src="/exemples/img/coiffeur-carre-480.webp" srcset="/exemples/img/coiffeur-carre-480.webp 480w, /exemples/img/coiffeur-carre-800.webp 800w" sizes="(min-width: 1080px) 380px, (min-width: 640px) 45vw, 88vw" width="480" height="600" loading="lazy" alt="Ciseaux qui coupent droit une longueur blonde au-dessus d’une cape noire"><figcaption><strong>Carré net, pointes coupées droit</strong><span>Inès, 1&nbsp;h, 62&nbsp;€</span></figcaption></figure><button type="button" class="meme" data-presta="coupe-fl" data-pers="ines">Je veux le même<span class="vs">&#8239;: carré net, pointes coupées droit</span></button></li>
+      <li class="coupe" data-cat="barbe"><figure><img src="/exemples/img/coiffeur-barbe-480.webp" srcset="/exemples/img/coiffeur-barbe-480.webp 480w, /exemples/img/coiffeur-barbe-800.webp 800w" sizes="(min-width: 1080px) 380px, (min-width: 640px) 45vw, 88vw" width="480" height="600" loading="lazy" alt="Rasoir qui trace le contour d’une barbe près de l’oreille, en noir et blanc"><figcaption><strong>Contour de barbe au rasoir</strong><span>Malik, 30&nbsp;min, 25&nbsp;€</span></figcaption></figure><button type="button" class="meme" data-presta="barbe" data-pers="malik">Je veux le même<span class="vs">&#8239;: contour de barbe au rasoir</span></button></li>
+      <li class="coupe" data-cat="femme"><figure><img src="/exemples/img/coiffeur-brushing-480.webp" srcset="/exemples/img/coiffeur-brushing-480.webp 480w, /exemples/img/coiffeur-brushing-800.webp 800w" sizes="(min-width: 1080px) 380px, (min-width: 640px) 45vw, 88vw" width="480" height="600" loading="lazy" alt="Brosse ronde et sèche-cheveux qui lissent une longueur châtain"><figcaption><strong>Brushing lisse à la brosse ronde</strong><span>Lou, 30&nbsp;min, 32&nbsp;€</span></figcaption></figure><button type="button" class="meme" data-presta="brushing" data-pers="lou">Je veux le même<span class="vs">&#8239;: brushing lisse à la brosse ronde</span></button></li>
+      <li class="coupe" data-cat="femme"><figure><img src="/exemples/img/coiffeur-polaire-480.webp" srcset="/exemples/img/coiffeur-polaire-480.webp 480w, /exemples/img/coiffeur-polaire-800.webp 800w" sizes="(min-width: 1080px) 380px, (min-width: 640px) 45vw, 88vw" width="480" height="600" loading="lazy" alt="Mains tatouées qui coupent une mèche blond polaire avec un peigne orange"><figcaption><strong>Blond polaire, patine et coupe</strong><span>Inès, 2&nbsp;h&nbsp;30, 150&nbsp;€</span></figcaption></figure><button type="button" class="meme" data-presta="balayage" data-pers="ines">Je veux le même<span class="vs">&#8239;: blond polaire, patine et coupe</span></button></li>
+      <li class="coupe" data-cat="homme"><figure><img src="/exemples/img/coiffeur-nuque-480.webp" srcset="/exemples/img/coiffeur-nuque-480.webp 480w, /exemples/img/coiffeur-nuque-800.webp 800w" sizes="(min-width: 1080px) 380px, (min-width: 640px) 45vw, 88vw" width="480" height="600" loading="lazy" alt="Peigne et tondeuse dorée qui reprennent une nuque courte, vue de dos"><figcaption><strong>Coupe courte, nuque reprise</strong><span>Lou, 30&nbsp;min, 32&nbsp;€</span></figcaption></figure><button type="button" class="meme" data-presta="coupe-h" data-pers="lou">Je veux la même<span class="vs">&#8239;: coupe courte, nuque reprise</span></button></li>
+    </ul>
+  </div>
+</section>
+
+<section class="salon" id="salon" aria-labelledby="salon-titre">
+  <div class="cadre salon-grille">
+    <figure class="salon-photo">
+      <img src="/exemples/img/coiffeur-salon-800.webp" srcset="/exemples/img/coiffeur-salon-480.webp 480w, /exemples/img/coiffeur-salon-800.webp 800w, /exemples/img/coiffeur-salon-1200.webp 1200w" sizes="(min-width: 1080px) 520px, (min-width: 760px) 45vw, 92vw" width="800" height="1000" loading="lazy" alt="Fauteuils de barbier en cuir, miroirs encadrés de bois et carrelage noir et blanc sur un mur vert">
+      <figcaption>Côté miroirs, le carrelage d’origine.</figcaption>
+    </figure>
+    <div class="salon-texte">
+      <h2 id="salon-titre">Une ancienne mercerie, trois fauteuils</h2>
+      <p>Le salon a repris en 2021 la mercerie du 54, ses moulures et son carrelage noir et blanc. Trois postes, un bac à shampoing qui s’incline vraiment, et toujours un café pour la pose.</p>
+      <ul class="maison">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Shampoing compris dans chaque coupe, au bac.</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Cheveux bouclés, frisés et crépus coupés à sec, par Lou.</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Enfants bienvenus dès 3&nbsp;ans, réhausseur et cape à leur taille.</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Carte, sans contact et espèces.</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg>Plus de 15&nbsp;minutes de retard&#8239;? Appelez, on décale ou on adapte.</li>
+      </ul>
+      <h3 class="semaine-titre">Qui est là quel jour</h3>
+      <div class="semaine-cadre">
+        <table class="semaine">
+          <thead><tr><th scope="col"><span class="vs">Personne</span></th><th scope="col" data-jour="2">Mar</th><th scope="col" data-jour="3">Mer</th><th scope="col" data-jour="4">Jeu</th><th scope="col" data-jour="5">Ven</th><th scope="col" data-jour="6">Sam</th></tr></thead>
+          <tbody>
+            <tr><th scope="row"><span class="pastille pastille-mini" aria-hidden="true">I</span>Inès</th><td data-jour="2" class="la">là</td><td data-jour="3" class="repos">repos</td><td data-jour="4" class="la">là</td><td data-jour="5" class="la">là</td><td data-jour="6" class="la">là</td></tr>
+            <tr><th scope="row"><span class="pastille pastille-mini" aria-hidden="true">M</span>Malik</th><td data-jour="2" class="repos">repos</td><td data-jour="3" class="la">là</td><td data-jour="4" class="la">là</td><td data-jour="5" class="la">là</td><td data-jour="6" class="la">là</td></tr>
+            <tr><th scope="row"><span class="pastille pastille-mini" aria-hidden="true">L</span>Lou</th><td data-jour="2" class="la">là</td><td data-jour="3" class="la">là</td><td data-jour="4" class="la">là</td><td data-jour="5" class="repos">repos</td><td data-jour="6" class="la">là</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="venir" id="venir" aria-labelledby="venir-titre">
+  <div class="cadre venir-grille">
+    <div class="venir-adresse">
+      <h2 id="venir-titre">Venir au salon</h2>
+      <address class="adresse">54 rue des Martyrs<br>75009 Paris</address>
+      <p class="petit">À mi-pente de la rue des Martyrs, côté pair, entre le primeur et la librairie.</p>
+      <ul class="metros">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-metro"/></svg><span><strong>Saint-Georges</strong>, ligne 12, à 4&nbsp;min à pied</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-metro"/></svg><span><strong>Pigalle</strong>, lignes 2 et 12, à 6&nbsp;min</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-metro"/></svg><span><strong>Notre-Dame-de-Lorette</strong>, ligne 12, à 7&nbsp;min</span></li>
+      </ul>
+      <a class="btn btn-ligne" href="tel:+33199004217"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>01&nbsp;99&nbsp;00&nbsp;42&nbsp;17</a>
+    </div>
+    <div class="venir-horaires">
+      <h3><svg class="ico" aria-hidden="true"><use href="#i-horloge"/></svg>Horaires</h3>
+      <p class="ouvert" data-ouvert>Sans rendez-vous aux heures d’ouverture, selon les fauteuils libres.</p>
+      <table class="horaires">
+        <tbody>
+          <tr data-jour="2"><th scope="row">Mardi</th><td>10&nbsp;h-19&nbsp;h&nbsp;30</td></tr>
+          <tr data-jour="3"><th scope="row">Mercredi</th><td>10&nbsp;h-19&nbsp;h&nbsp;30</td></tr>
+          <tr data-jour="4"><th scope="row">Jeudi</th><td>10&nbsp;h-21&nbsp;h, nocturne</td></tr>
+          <tr data-jour="5"><th scope="row">Vendredi</th><td>10&nbsp;h-19&nbsp;h&nbsp;30</td></tr>
+          <tr data-jour="6"><th scope="row">Samedi</th><td>9&nbsp;h-18&nbsp;h</td></tr>
+          <tr data-jour="0"><th scope="row">Dimanche</th><td>Fermé</td></tr>
+          <tr data-jour="1"><th scope="row">Lundi</th><td>Fermé</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="venir-faq">
+      <h3>Questions du comptoir</h3>
+      <details>
+        <summary>Je peux venir sans rendez-vous&#8239;?</summary>
+        <p>Oui, dès qu’une lampe est verte en haut de la page. Sinon, l’heure du prochain fauteuil libre s’y affiche&#8239;: un appel suffit pour le garder.</p>
+      </details>
+      <details>
+        <summary>Combien de temps dure une couleur&#8239;?</summary>
+        <p>Comptez 1&nbsp;h&nbsp;45 pour une couleur racines avec la coupe, 2&nbsp;h&nbsp;30 pour un balayage. Ce temps est bloqué pour vous dès la réservation.</p>
+      </details>
+      <details>
+        <summary>Vous coupez les cheveux bouclés&#8239;?</summary>
+        <p>Oui. Lou les coupe à sec, boucle par boucle, pour voir le volume à mesure. Venez cheveux propres et sans produit, prévoyez une heure.</p>
+      </details>
+      <details>
+        <summary>Et pour annuler&#8239;?</summary>
+        <p>Gratuit jusqu’à 2&nbsp;h avant, par téléphone. Votre fauteuil repasse au vert pour quelqu’un d’autre.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pied">
+  <div class="cadre">
+    <div class="pied-grille">
+      <div>
+        <p class="pied-nom">Trois Fauteuils</p>
+        <address>54 rue des Martyrs, 75009 Paris<br>
+          <a href="tel:+33199004217">01&nbsp;99&nbsp;00&nbsp;42&nbsp;17</a><br>
+          Métro Saint-Georges, ligne 12</address>
+      </div>
+      <nav aria-label="Plan du site">
+        <h2>Le salon</h2>
+        <ul>
+          <li><a href="#fauteuils">Les fauteuils en direct</a></li>
+          <li><a href="#reserver">Réserver</a></li>
+          <li><a href="#carte">La carte et les prix</a></li>
+          <li><a href="#coupes">Les coupes</a></li>
+          <li><a href="#venir">Venir au salon</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2>Horaires</h2>
+        <ul>
+          <li>Mardi, mercredi, vendredi&#8239;: 10&nbsp;h-19&nbsp;h&nbsp;30</li>
+          <li>Jeudi&#8239;: 10&nbsp;h-21&nbsp;h</li>
+          <li>Samedi&#8239;: 9&nbsp;h-18&nbsp;h</li>
+          <li>Fermé le dimanche et le lundi</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-vitrine" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs.</p>
+      <p>Photos&#8239;: Pexels.</p>
+    </div>
+  </div>
+</footer>
+
+<nav class="barre-bas" aria-label="Actions rapides">
+  <a class="bb-appel" href="tel:+33199004217"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Appeler</a>
+  <a class="bb-resa" href="#reserver"><span class="lampe" data-lampe-barre aria-hidden="true"></span><span class="bb-txt">Réserver<small data-barre-etat>un fauteuil</small></span></a>
+</nav>
+</body>
+</html>
