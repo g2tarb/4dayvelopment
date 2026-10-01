@@ -6,12 +6,12 @@
 import { on } from './utils.js';
 
 const DEMOS = {
-  'burger':         { label: 'Restauration',      url: '/exemples/burger' },
-  'ongles':         { label: 'Beauté',            url: '/exemples/ongles' },
-  'coach-sportif':  { label: 'Coach sportif',     url: '/exemples/coach-sportif' },
-  'barbier':        { label: 'Barbier',           url: '/exemples/barbier' },
-  'plombier':       { label: 'Plombier',          url: '/exemples/plombier' },
-  'borne-irve':     { label: 'Borne de recharge', url: '/exemples/borne-irve' },
+  'studio-pilates':     { label: 'Studio de Pilates', url: '/exemples/studio-pilates' },
+  'lieu-de-reception':  { label: 'Lieu de réception', url: '/exemples/lieu-de-reception' },
+  'renovation':         { label: 'Rénovation', url: '/exemples/renovation' },
+  'gite':               { label: "Chambres d'hôtes", url: '/exemples/gite' },
+  'pompe-a-chaleur':    { label: 'Pompe à chaleur', url: '/exemples/pompe-a-chaleur' },
+  'borne-irve':         { label: 'Borne de recharge', url: '/exemples/borne-irve' },
 };
 
 const ORDER    = Object.keys(DEMOS);
