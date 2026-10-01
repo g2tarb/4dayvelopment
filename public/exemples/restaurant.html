@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Craie, bistrot à Paris 20e | Démo 4dayvelopment</title>
+<meta name="description" content="Démo 4dayvelopment&#8239;: La Craie, bistrot de quartier à Paris 20e. L’ardoise du jour, ouvert ou fermé en direct, réservation de table, carte et allergènes.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#7A1E2C">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/bitter-var.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/fonts/playwrite-fr-trad-var.woff2" crossorigin>
+<link rel="stylesheet" href="/exemples/restaurant.css">
+<script src="/exemples/restaurant.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<!-- Pictogrammes au trait, réutilisés par <use> ; filtre « craie » pour l’ardoise -->
+<svg width="0" height="0" class="vs" aria-hidden="true" focusable="false">
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5.2 3.5h3.1l1.6 4.1-2.1 1.3a11.5 11.5 0 0 0 5.3 5.3l1.3-2.1 4.1 1.6v3.1a2 2 0 0 1-2.1 2A16 16 0 0 1 3.2 5.6a2 2 0 0 1 2-2.1z"/></symbol>
+  <symbol id="i-fleche" viewBox="0 0 24 24"><path d="M4 12h15M13.5 6.5 19 12l-5.5 5.5"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-metro" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M7.5 16.5v-9l4.5 6 4.5-6v9"/></symbol>
+  <symbol id="i-marche" viewBox="0 0 24 24"><path d="M3 19h6v-5h6V9h6"/></symbol>
+  <symbol id="i-epingle" viewBox="0 0 24 24"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></symbol>
+  <!-- la marque : un bâton de craie posé en biais, son trait sur l’ardoise -->
+  <symbol id="i-marque" viewBox="0 0 48 48">
+    <rect width="48" height="48" rx="10" fill="#23302D"/>
+    <path d="M9 34c5-1 9-6 14-6s6 4 10 3 5-4 6-5" fill="none" stroke="#EFEFE8" stroke-width="2.6" stroke-linecap="round"/>
+    <rect x="25" y="9" width="7" height="17" rx="2" transform="rotate(38 28.5 17.5)" fill="#EFEFE8"/>
+  </symbol>
+  <filter id="craie" x="-2%" y="-10%" width="104%" height="120%">
+    <feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4" result="grain"/>
+    <feDisplacementMap in="SourceGraphic" in2="grain" scale="1.4" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
+<!-- Le store de la devanture : nom peint, navigation, téléphone -->
+<header class="store" id="haut">
+  <div class="shell store-in">
+    <a class="logo" href="#haut" aria-label="La Craie, retour en haut de page">
+      <svg class="logo-marque" aria-hidden="true"><use href="#i-marque"/></svg>
+      <span class="logo-txt"><span class="logo-nom">La Craie</span><span class="logo-sous">bistrot, Paris 20<sup>e</sup></span></span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <ul>
+        <li><a href="#ardoise">L’ardoise</a></li>
+        <li><a href="#reserver">Réserver</a></li>
+        <li><a href="#carte">La carte</a></li>
+        <li><a href="#salle">La salle</a></li>
+        <li><a href="#groupes">Groupes</a></li>
+        <li><a href="#venir">Venir</a></li>
+      </ul>
+    </nav>
+    <a class="store-tel" href="tel:+33199005231" aria-label="Appeler le 01 99 00 52 31"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span>01&nbsp;99&nbsp;00&nbsp;52&nbsp;31</span></a>
+    <a class="btn btn-craie store-resa" href="#reserver">Réserver</a>
+  </div>
+</header>
+
+<main id="contenu">
+
+<!-- L’ardoise du jour : ce qu’on mange, si c’est ouvert, et le geste de réserver -->
+<section class="une" id="ardoise" aria-labelledby="une-t">
+  <div class="shell une-grille">
+    <!-- La pancarte de la porte : bascule selon l’heure de Paris -->
+    <p class="pancarte" id="pancarte" data-etat="ouvert">
+      <span class="pancarte-mot" id="pancarte-mot">Ouvert</span>
+      <span class="pancarte-detail" id="pancarte-detail">service jusqu’à 14&nbsp;h&nbsp;30</span>
+    </p>
+    <h1 id="une-t">Aujourd’hui, c’est écrit à&nbsp;la&nbsp;craie.</h1>
+    <div class="ardoise-zone">
+      <div class="ardoise-cadre">
+        <article class="ardoise" aria-labelledby="ardoise-date">
+          <div class="ardoise-haut">
+            <p class="ardoise-date" id="ardoise-date">Jeudi 1<sup>er</sup> octobre</p>
+            <div class="ardoise-service" role="group" aria-label="Service">
+              <button type="button" class="ardoise-onglet" data-service="midi" aria-pressed="true">Midi</button>
+              <button type="button" class="ardoise-onglet" data-service="soir" aria-pressed="false">Ce soir</button>
+            </div>
+          </div>
+
+          <div class="ardoise-midi" id="ardoise-midi">
+            <dl class="ardoise-plats">
+              <div><dt>Entrée</dt><dd id="a-entree">Terrine de campagne, pickles d’oignon</dd></div>
+              <div><dt>Plat</dt><dd id="a-plat">Bœuf bourguignon, pommes vapeur</dd></div>
+              <div><dt>Dessert</dt><dd id="a-dessert">Mousse au chocolat noir</dd></div>
+            </dl>
+            <ul class="ardoise-prix">
+              <li><span>Entrée et plat, ou plat et dessert</span><b>21&nbsp;€</b></li>
+              <li><span>Les trois</span><b>25&nbsp;€</b></li>
+              <li><span>Le plat seul</span><b>16&nbsp;€</b></li>
+            </ul>
+          </div>
+
+          <div class="ardoise-soir" id="ardoise-soir" hidden>
+            <p class="ardoise-soir-t">Le soir, c’est à la carte</p>
+            <p class="ardoise-sugg"><span>En plus ce soir</span><b id="a-soir">Côte de cochon fermier pour deux, jus corsé</b><b id="a-soir-prix">48&nbsp;€</b></p>
+            <p class="ardoise-soir-txt">Entrées de 7 à 13&nbsp;€, plats de 19 à 24&nbsp;€, desserts à 8 ou 9&nbsp;€. <a href="#carte">Voir la carte</a></p>
+          </div>
+
+          <p class="ardoise-verre"><span>Le verre du jour</span> <b id="a-verre">Morgon, 8&nbsp;€</b></p>
+        </article>
+      </div>
+    </div>
+
+    <p class="une-chapo">Bistrot de quartier rue de la Mare, à Ménilmontant. Chaque midi, Théo écrit l’ardoise avec ce qu’il a trouvé au marché. Le soir, la carte, et des vins de vignerons au verre.</p>
+    <div class="une-actions">
+      <a class="btn btn-bordeaux" href="#reserver">Réserver une table</a>
+      <a class="btn btn-ligne" href="tel:+33199005231"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>01&nbsp;99&nbsp;00&nbsp;52&nbsp;31</a>
+    </div>
+    <div class="equipe">
+      <p class="pastilles" aria-hidden="true"><span class="pastille p-theo">T</span><span class="pastille p-lucie">L</span><span class="pastille p-amadou">A</span></p>
+      <p>Théo en cuisine, Lucie et Amadou en salle. Du mardi au samedi, midi et soir.</p>
+    </div>
+  </div>
+
+  <!-- Le plat de chaque jour : la tradition du jeudi bourguignon, du vendredi poisson -->
+  <div class="shell">
+    <div class="semaine" role="group" aria-labelledby="semaine-t">
+      <figure class="semaine-photo">
+        <img src="/exemples/img/restaurant-plat-800.webp" srcset="/exemples/img/restaurant-plat-480.webp 480w, /exemples/img/restaurant-plat-800.webp 800w, /exemples/img/restaurant-plat-1200.webp 1200w" sizes="(min-width: 64rem) 18rem, (min-width: 40rem) 40vw, 92vw" width="800" height="600" loading="lazy" decoding="async" alt="Deux mains posent sur une table en bois une assiette de viande braisée, carottes glacées et purée, nappée de sauce">
+        <figcaption>Le plat du jour, à midi pile</figcaption>
+      </figure>
+      <p class="semaine-t" id="semaine-t">Le plat du jour, toute la semaine</p>
+      <ol class="semaine-liste">
+        <li><button type="button" data-jour="2" aria-pressed="false"><span class="semaine-j">Mardi</span><span class="semaine-p">Joue de porc confite</span></button></li>
+        <li><button type="button" data-jour="3" aria-pressed="false"><span class="semaine-j">Mercredi</span><span class="semaine-p">Merlu, beurre blanc</span></button></li>
+        <li><button type="button" data-jour="4" aria-pressed="true"><span class="semaine-j">Jeudi</span><span class="semaine-p">Bœuf bourguignon</span></button></li>
+        <li><button type="button" data-jour="5" aria-pressed="false"><span class="semaine-j">Vendredi</span><span class="semaine-p">Lieu jaune, poireaux</span></button></li>
+        <li><button type="button" data-jour="6" aria-pressed="false"><span class="semaine-j">Samedi</span><span class="semaine-p">Blanquette de veau</span></button></li>
+      </ol>
+      <p class="semaine-ferme">Dimanche et lundi, on ferme.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Le carnet de réservations : couverts, jour, service, créneau, nom -->
+<section class="resa" id="reserver" aria-labelledby="resa-t">
+  <div class="shell resa-grille">
+    <div class="resa-intro">
+      <h2 id="resa-t">Réserver une table</h2>
+      <p>Pendant le service, Lucie ne décroche pas toujours. Ici, vous choisissez votre créneau en quatre gestes, et c’est noté dans le carnet.</p>
+      <ul class="regles">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg><span>On garde la table quinze minutes. Un retard&#8239;? Un coup de fil suffit.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg><span>Le midi, les six tabourets du comptoir restent sans réservation.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg><span>À partir de neuf, c’est un repas de groupe&#8239;: <a href="#groupes">menu unique et devis</a>.</span></li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-coche"/></svg><span>Une allergie, une poussette, un anniversaire&#8239;: dites-le dans la note.</span></li>
+      </ul>
+    </div>
+
+    <div class="carnet">
+      <div class="carnet-tete">
+        <p class="carnet-titre">Le carnet</p>
+        <p class="carnet-resume" id="carnet-resume" aria-live="polite">2 couverts, choisissez un jour</p>
+      </div>
+
+      <form class="carnet-form" id="carnet-form" novalidate>
+        <fieldset class="etape">
+          <legend><span class="etape-n">1</span>Combien de couverts&#8239;?</legend>
+          <div class="puces" id="couverts">
+            <label class="puce"><input type="radio" name="couverts" value="1"><span>1</span></label>
+            <label class="puce"><input type="radio" name="couverts" value="2" checked><span>2</span></label>
+            <label class="puce"><input type="radio" name="couverts" value="3"><span>3</span></label>
+            <label class="puce"><input type="radio" name="couverts" value="4"><span>4</span></label>
+            <label class="puce"><input type="radio" name="couverts" value="5"><span>5</span></label>
+            <label class="puce"><input type="radio" name="couverts" value="6"><span>6</span></label>
+            <label class="puce"><input type="radio" name="couverts" value="7"><span>7</span></label>
+            <label class="puce"><input type="radio" name="couverts" value="8"><span>8</span></label>
+          </div>
+          <p class="aide">Plus de huit&#8239;? Voyez <a href="#groupes">les repas de groupe</a>.</p>
+        </fieldset>
+
+        <fieldset class="etape">
+          <legend><span class="etape-n">2</span>Quel jour&#8239;?</legend>
+          <div class="jours" id="jours">
+            <p class="aide">Les jours s’affichent ici. Sans JavaScript, appelez le 01&nbsp;99&nbsp;00&nbsp;52&nbsp;31.</p>
+          </div>
+        </fieldset>
+
+        <fieldset class="etape">
+          <legend><span class="etape-n">3</span>Midi ou soir&#8239;?</legend>
+          <div class="services">
+            <label class="service"><input type="radio" name="service" value="midi" checked><span><b>Midi</b><small>de 12&nbsp;h à 13&nbsp;h&nbsp;30</small></span></label>
+            <label class="service"><input type="radio" name="service" value="soir"><span><b>Soir</b><small>de 19&nbsp;h à 21&nbsp;h&nbsp;30</small></span></label>
+          </div>
+          <p class="aide aide-creneaux">Et à quelle heure&#8239;?</p>
+          <div class="creneaux" id="creneaux" aria-live="polite"></div>
+          <p class="err" id="err-creneau"></p>
+        </fieldset>
+
+        <fieldset class="etape">
+          <legend><span class="etape-n">4</span>À quel nom&#8239;?</legend>
+          <div class="champs">
+            <div class="champ">
+              <label for="r-nom">Nom</label>
+              <input id="r-nom" name="nom" autocomplete="family-name" enterkeyhint="next" aria-describedby="err-nom">
+              <p class="err" id="err-nom"></p>
+            </div>
+            <div class="champ">
+              <label for="r-tel">Téléphone mobile</label>
+              <input id="r-tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="next" aria-describedby="err-tel aide-tel">
+              <p class="err" id="err-tel"></p>
+              <p class="aide" id="aide-tel">Un SMS la veille, pour confirmer.</p>
+            </div>
+          </div>
+          <div class="champ">
+            <label for="r-place">Plutôt</label>
+            <select id="r-place" name="place">
+              <option value="">Peu importe</option>
+              <option value="en salle">En salle</option>
+              <option value="en terrasse">En terrasse, si le temps le permet</option>
+            </select>
+          </div>
+          <div class="champ">
+            <label for="r-note">Une note pour nous <small>(facultatif)</small></label>
+            <textarea id="r-note" name="note" rows="2" maxlength="240" enterkeyhint="done"></textarea>
+          </div>
+        </fieldset>
+
+        <div class="carnet-envoi">
+          <button type="submit" class="btn btn-bordeaux" id="carnet-ok">Réserver la table</button>
+          <p class="aide">Démonstration&#8239;: rien n’est envoyé.</p>
+        </div>
+      </form>
+
+      <div class="carnet-fait" id="carnet-fait" hidden>
+        <p class="carnet-ligne" id="carnet-ligne"></p>
+        <h3 id="fait-t" tabindex="-1">C’est noté dans le carnet</h3>
+        <p id="fait-txt"></p>
+        <p class="aide">Démonstration&#8239;: aucune donnée n’a été transmise.</p>
+        <button type="button" class="btn btn-ligne" id="carnet-refaire">Faire une autre réservation</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- La carte : prix, allergènes plat par plat, filtre « sans » -->
+<section class="carte" id="carte" aria-labelledby="carte-t">
+  <div class="shell">
+    <div class="carte-tete">
+      <h2 id="carte-t">La carte</h2>
+      <p>Le soir, et le midi pour qui ne prend pas l’ardoise. Elle suit les saisons&#8239;; les allergènes sont notés sous chaque plat. Un doute&#8239;: demandez en salle, Théo vous dira ce qu’il peut changer.</p>
+    </div>
+
+    <div class="filtre" role="group" aria-labelledby="filtre-t">
+      <p class="filtre-t" id="filtre-t">Je ne mange pas</p>
+      <div class="filtre-puces">
+        <button type="button" data-sans="gluten" aria-pressed="false">de gluten</button>
+        <button type="button" data-sans="lait" aria-pressed="false">de lait</button>
+        <button type="button" data-sans="oeufs" aria-pressed="false">d’œufs</button>
+        <button type="button" data-sans="fruits-a-coque" aria-pressed="false">de fruits à coque</button>
+        <button type="button" data-sans="poisson" aria-pressed="false">de poisson</button>
+        <button type="button" data-sans="viande" aria-pressed="false">de viande</button>
+      </div>
+      <p class="filtre-compte" id="filtre-compte" aria-live="polite">Tous les plats sont affichés.</p>
+    </div>
+
+    <div class="feuille">
+      <section class="rubrique" aria-labelledby="ru-entrees">
+        <h3 id="ru-entrees">Entrées</h3>
+        <ul class="plats">
+          <li class="plat" data-contient="fruits-a-coque moutarde sulfites"><p class="plat-ligne"><span class="plat-nom">Poireaux vinaigrette, noisettes torréfiées</span><span class="plat-prix">9&nbsp;€</span></p><p class="plat-all">Fruits à coque, moutarde, sulfites</p></li>
+          <li class="plat" data-contient="oeufs moutarde"><p class="plat-ligne"><span class="plat-nom">Œuf mayonnaise, cresson</span><span class="plat-prix">7&nbsp;€</span></p><p class="plat-all">Œufs, moutarde</p></li>
+          <li class="plat" data-contient="viande gluten oeufs sulfites"><p class="plat-ligne"><span class="plat-nom">Terrine de campagne maison, pickles d’oignon</span><span class="plat-prix">11&nbsp;€</span></p><p class="plat-all">Gluten, œufs, sulfites</p></li>
+          <li class="plat" data-contient="lait celeri"><p class="plat-ligne"><span class="plat-nom">Velouté de potimarron, crème crue</span><span class="plat-prix">9&nbsp;€</span></p><p class="plat-all">Lait, céleri</p></li>
+          <li class="plat" data-contient="lait fruits-a-coque"><p class="plat-ligne"><span class="plat-nom">Burrata, figues rôties, huile de noisette</span><span class="plat-prix">13&nbsp;€</span></p><p class="plat-all">Lait, fruits à coque</p></li>
+        </ul>
+      </section>
+
+      <section class="rubrique" aria-labelledby="ru-plats">
+        <h3 id="ru-plats">Plats</h3>
+        <ul class="plats">
+          <li class="plat" data-contient="viande celeri gluten sulfites"><p class="plat-ligne"><span class="plat-nom">Bœuf bourguignon, pommes vapeur</span><span class="plat-prix">22&nbsp;€</span></p><p class="plat-all">Céleri, gluten, sulfites</p></li>
+          <li class="plat" data-contient="poisson lait sulfites"><p class="plat-ligne"><span class="plat-nom">Merlu rôti, beurre blanc, fenouil</span><span class="plat-prix">24&nbsp;€</span></p><p class="plat-all">Poisson, lait, sulfites</p></li>
+          <li class="plat" data-contient="viande celeri lait sulfites"><p class="plat-ligne"><span class="plat-nom">Joue de porc confite, purée de céleri</span><span class="plat-prix">23&nbsp;€</span></p><p class="plat-all">Céleri, lait, sulfites</p></li>
+          <li class="plat" data-contient="gluten lait"><p class="plat-ligne"><span class="plat-nom">Épeautre aux champignons, parmesan</span><span class="plat-prix">19&nbsp;€</span></p><p class="plat-all">Gluten, lait</p></li>
+          <li class="plat" data-contient="viande celeri sulfites"><p class="plat-ligne"><span class="plat-nom">Côte de cochon fermier pour deux, jus corsé</span><span class="plat-prix">48&nbsp;€</span></p><p class="plat-all">Céleri, sulfites</p></li>
+        </ul>
+      </section>
+
+      <section class="rubrique" aria-labelledby="ru-desserts">
+        <h3 id="ru-desserts">Fromage et desserts</h3>
+        <ul class="plats">
+          <li class="plat" data-contient="lait"><p class="plat-ligne"><span class="plat-nom">Comté 18 mois et saint-nectaire</span><span class="plat-prix">10&nbsp;€</span></p><p class="plat-all">Lait</p></li>
+          <li class="plat" data-contient="oeufs lait"><p class="plat-ligne"><span class="plat-nom">Mousse au chocolat noir</span><span class="plat-prix">8&nbsp;€</span></p><p class="plat-all">Œufs, lait</p></li>
+          <li class="plat" data-contient="lait"><p class="plat-ligne"><span class="plat-nom">Riz au lait, caramel au beurre salé</span><span class="plat-prix">8&nbsp;€</span></p><p class="plat-all">Lait</p></li>
+          <li class="plat" data-contient="gluten lait oeufs"><p class="plat-ligne"><span class="plat-nom">Tarte fine aux pommes, crème fraîche</span><span class="plat-prix">9&nbsp;€</span></p><p class="plat-all">Gluten, lait, œufs</p></li>
+          <li class="plat" data-contient="gluten lait oeufs sulfites"><p class="plat-ligne"><span class="plat-nom">Poire pochée au vin, sablé breton</span><span class="plat-prix">9&nbsp;€</span></p><p class="plat-all">Gluten, lait, œufs, sulfites</p></li>
+        </ul>
+      </section>
+
+      <section class="rubrique rubrique-vins" aria-labelledby="ru-vins">
+        <h3 id="ru-vins">Au verre</h3>
+        <ul class="plats">
+          <li class="vin"><p class="plat-ligne"><span class="plat-nom">Muscadet sur lie</span><span class="plat-prix">6&nbsp;€</span></p><p class="plat-all">Blanc sec, iodé</p></li>
+          <li class="vin"><p class="plat-ligne"><span class="plat-nom">Chardonnay du Jura</span><span class="plat-prix">8&nbsp;€</span></p><p class="plat-all">Blanc, noisette</p></li>
+          <li class="vin"><p class="plat-ligne"><span class="plat-nom">Côtes-du-rhône</span><span class="plat-prix">6&nbsp;€</span></p><p class="plat-all">Rouge, en carafe de 46&nbsp;cl à 19&nbsp;€</p></li>
+          <li class="vin"><p class="plat-ligne"><span class="plat-nom">Morgon</span><span class="plat-prix">8&nbsp;€</span></p><p class="plat-all">Rouge, fruité</p></li>
+          <li class="vin"><p class="plat-ligne"><span class="plat-nom">Saint-joseph</span><span class="plat-prix">9&nbsp;€</span></p><p class="plat-all">Rouge, épicé</p></li>
+        </ul>
+        <p class="feuille-note">Le café 2,50&nbsp;€. La carafe d’eau est offerte, la limonade vient de Montreuil.</p>
+      </section>
+    </div>
+  </div>
+</section>
+
+<!-- La salle, le comptoir, la terrasse : où l’on s’assoit -->
+<section class="salle" id="salle" aria-labelledby="salle-t">
+  <div class="shell">
+    <div class="salle-tete">
+      <h2 id="salle-t">La salle et la terrasse</h2>
+      <dl class="places">
+        <div><dt>en salle</dt><dd>32</dd></div>
+        <div><dt>en terrasse</dt><dd>14</dd></div>
+        <div><dt>au comptoir</dt><dd>6</dd></div>
+      </dl>
+    </div>
+    <ul class="galerie">
+      <li class="g-terrasse">
+        <img src="/exemples/img/restaurant-terrasse-800.webp" srcset="/exemples/img/restaurant-terrasse-480.webp 480w, /exemples/img/restaurant-terrasse-800.webp 800w, /exemples/img/restaurant-terrasse-1200.webp 1200w" sizes="(min-width: 64rem) 30rem, 80vw" width="800" height="1000" loading="lazy" decoding="async" alt="Chaises de terrasse en rotin tressé vert d’eau autour de petites tables rondes, sur le trottoir">
+        <p><b>La terrasse</b> Quatorze couverts sur le trottoir, au soleil l’après-midi.</p>
+      </li>
+      <li class="g-salle">
+        <img src="/exemples/img/restaurant-salle-800.webp" srcset="/exemples/img/restaurant-salle-480.webp 480w, /exemples/img/restaurant-salle-800.webp 800w" sizes="(min-width: 64rem) 20rem, 80vw" width="800" height="1000" loading="lazy" decoding="async" alt="Chaise bistrot en bois courbé et guéridon à pied doré sur un carrelage noir et blanc, boiseries au mur">
+        <p><b>La salle</b> Boiseries, carreaux de ciment, et les guéridons d’origine.</p>
+      </li>
+      <li class="g-comptoir">
+        <img src="/exemples/img/restaurant-comptoir-800.webp" srcset="/exemples/img/restaurant-comptoir-480.webp 480w, /exemples/img/restaurant-comptoir-800.webp 800w" sizes="(min-width: 64rem) 20rem, 80vw" width="800" height="1000" loading="lazy" decoding="async" alt="Rangée de tabourets hauts noirs à assise dorée devant un comptoir, une lampe à abat-jour posée au fond">
+        <p><b>Le comptoir</b> Six tabourets, sans réservation le midi.</p>
+      </li>
+      <li class="g-cuisine">
+        <img src="/exemples/img/restaurant-cuisine-800.webp" srcset="/exemples/img/restaurant-cuisine-480.webp 480w, /exemples/img/restaurant-cuisine-800.webp 800w, /exemples/img/restaurant-cuisine-1200.webp 1200w" sizes="(min-width: 64rem) 30rem, 80vw" width="800" height="534" loading="lazy" decoding="async" alt="Mains d’un cuisinier qui râpe du fromage sur une rangée d’assiettes, sur le passe de la cuisine">
+        <p><b>La cuisine</b> Ouverte sur la salle&#8239;: on voit Théo dresser.</p>
+      </li>
+      <li class="g-vin">
+        <img src="/exemples/img/restaurant-vin-800.webp" srcset="/exemples/img/restaurant-vin-480.webp 480w, /exemples/img/restaurant-vin-800.webp 800w" sizes="(min-width: 64rem) 20rem, 80vw" width="800" height="1000" loading="lazy" decoding="async" alt="Vin rouge versé dans un verre à pied, en contre-jour">
+        <p><b>La cave</b> Une quarantaine de bouteilles, cinq vins au verre.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- Groupes et privatisation : un estimateur plutôt qu’un formulaire -->
+<section class="groupes" id="groupes" aria-labelledby="groupes-t">
+  <div class="shell groupes-grille">
+    <div class="groupes-texte">
+      <h2 id="groupes-t">À plusieurs, ou toute la salle</h2>
+      <p>Anniversaire, pot de départ, repas d’équipe. De neuf à vingt, on dresse la grande table du fond avec un menu unique. Au-delà, le dimanche ou le lundi, la salle est à vous.</p>
+      <div class="offres">
+        <div class="offre">
+          <h3>La grande tablée</h3>
+          <p class="offre-prix">39&nbsp;€ <small>par personne</small></p>
+          <p>Entrée, plat, dessert, choisis ensemble trois jours avant. Avec les vins&#8239;: 52&nbsp;€.</p>
+        </div>
+        <div class="offre">
+          <h3>La salle privatisée</h3>
+          <p class="offre-prix">1&nbsp;600&nbsp;€ <small>minimum</small></p>
+          <p>Le dimanche ou le lundi. Trente-deux assis, cinquante debout.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="estime" aria-labelledby="estime-t">
+      <img class="estime-photo" src="/exemples/img/restaurant-table-800.webp" srcset="/exemples/img/restaurant-table-480.webp 480w, /exemples/img/restaurant-table-800.webp 800w" sizes="(min-width: 64rem) 26rem, 92vw" width="800" height="1000" loading="lazy" decoding="async" alt="Table dressée d’une nappe à petits carreaux rouges, verres à pied, chaises en rotin">
+      <div class="estime-in">
+        <h3 id="estime-t">Combien ça coûterait&#8239;?</h3>
+        <div class="champ">
+          <label for="g-nb">Nombre de personnes&#8239;: <output id="g-nb-val" for="g-nb">12</output></label>
+          <input type="range" id="g-nb" min="9" max="32" step="1" value="12">
+        </div>
+        <div class="services services-mini" role="radiogroup" aria-label="Formule">
+          <label class="service"><input type="radio" name="g-formule" value="39" checked><span><b>Menu</b><small>39&nbsp;€</small></span></label>
+          <label class="service"><input type="radio" name="g-formule" value="52"><span><b>Menu et vins</b><small>52&nbsp;€</small></span></label>
+        </div>
+        <p class="estime-total"><output id="g-total" for="g-nb">468&nbsp;€</output> <span>environ</span></p>
+        <p class="estime-ou" id="g-ou">On vous installe à la grande table du fond.</p>
+        <a class="btn btn-bordeaux" href="tel:+33199005231"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>En parler avec Lucie</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Venir : adresse, métro, horaires du jour en surbrillance -->
+<section class="venir" id="venir" aria-labelledby="venir-t">
+  <div class="shell venir-grille">
+    <div class="venir-adresse">
+      <h2 id="venir-t">Venir rue de la Mare</h2>
+      <address>
+        <span class="adresse-l">41 rue de la Mare</span>
+        <span class="adresse-l">75020 Paris</span>
+      </address>
+      <ul class="acces">
+        <li><svg class="ico" aria-hidden="true"><use href="#i-metro"/></svg>Métro Pyrénées, ligne 11, ou Couronnes, ligne 2</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-marche"/></svg>Une petite marche à l’entrée&#8239;; salle et toilettes de plain-pied</li>
+        <li><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><a href="tel:+33199005231">01&nbsp;99&nbsp;00&nbsp;52&nbsp;31</a></li>
+      </ul>
+      <a class="btn btn-ligne" href="https://www.openstreetmap.org/search?query=rue%20de%20la%20Mare%2075020%20Paris" target="_blank" rel="noopener"><svg class="ico" aria-hidden="true"><use href="#i-epingle"/></svg>Ouvrir le plan</a>
+    </div>
+
+    <div class="horaires">
+      <h3>Horaires</h3>
+      <table>
+        <caption class="vs">Horaires d’ouverture de La Craie</caption>
+        <thead><tr><th scope="col">Jour</th><th scope="col">Midi</th><th scope="col">Soir</th></tr></thead>
+        <tbody id="horaires">
+          <tr data-jour="2"><th scope="row">Mardi</th><td>12&nbsp;h-14&nbsp;h&nbsp;30</td><td>19&nbsp;h-22&nbsp;h&nbsp;30</td></tr>
+          <tr data-jour="3"><th scope="row">Mercredi</th><td>12&nbsp;h-14&nbsp;h&nbsp;30</td><td>19&nbsp;h-22&nbsp;h&nbsp;30</td></tr>
+          <tr data-jour="4"><th scope="row">Jeudi</th><td>12&nbsp;h-14&nbsp;h&nbsp;30</td><td>19&nbsp;h-22&nbsp;h&nbsp;30</td></tr>
+          <tr data-jour="5"><th scope="row">Vendredi</th><td>12&nbsp;h-14&nbsp;h&nbsp;30</td><td>19&nbsp;h-22&nbsp;h&nbsp;30</td></tr>
+          <tr data-jour="6"><th scope="row">Samedi</th><td>12&nbsp;h-14&nbsp;h&nbsp;30</td><td>19&nbsp;h-22&nbsp;h&nbsp;30</td></tr>
+          <tr data-jour="0" class="ferme"><th scope="row">Dimanche</th><td colspan="2">Fermé</td></tr>
+          <tr data-jour="1" class="ferme"><th scope="row">Lundi</th><td colspan="2">Fermé</td></tr>
+        </tbody>
+      </table>
+      <p class="aide">La cuisine prend les dernières commandes une demi-heure avant la fin du service.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="pied">
+  <div class="shell">
+    <div class="pied-grille">
+      <div>
+        <a class="logo logo-pied" href="#haut" aria-label="La Craie, retour en haut de page">
+          <svg class="logo-marque" aria-hidden="true"><use href="#i-marque"/></svg>
+          <span class="logo-nom">La Craie</span>
+        </a>
+        <p>Bistrot de quartier, cuisine du marché et vins de vignerons.</p>
+      </div>
+      <address>41 rue de la Mare, 75020 Paris<br>
+        <a href="tel:+33199005231">01&nbsp;99&nbsp;00&nbsp;52&nbsp;31</a><br>
+        Du mardi au samedi, midi et soir</address>
+      <nav aria-label="Plan du site">
+        <ul>
+          <li><a href="#ardoise">L’ardoise du jour</a></li>
+          <li><a href="#reserver">Réserver</a></li>
+          <li><a href="#carte">La carte</a></li>
+          <li><a href="#groupes">Groupes et privatisation</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="pied-bas">
+      <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-internet-restaurant" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs.</p>
+      <p>Photos&#8239;: Pexels.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Sous le pouce : rangée quand le carnet est à l’écran -->
+<div class="barre-action" id="barre-action">
+  <a class="btn btn-bordeaux" href="#reserver">Réserver</a>
+  <a class="btn btn-ligne-clair" href="tel:+33199005231"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Appeler</a>
+</div>
+</body>
+</html>

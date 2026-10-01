@@ -21,7 +21,7 @@ test('routes : chaque URL du sitemap résout vers un fichier de public/', () => 
 });
 
 test('routes : conventions /exemples/:slug et /blog/:slug', () => {
-  assert.equal(resolve('/exemples/burger'), 'exemples/burger.html');
+  assert.equal(resolve('/exemples/restaurant'), 'exemples/restaurant.html');
   assert.equal(resolve('/exemples/pas-une-demo'), null);
   assert.equal(resolve('/blog/index'), null);
   assert.equal(resolve('/pas-une-page'), null);
@@ -46,7 +46,7 @@ test('serveur : routes propres, 301 et 404 (intégration)', async () => {
         await new Promise(r => setTimeout(r, 100));
       }
     }
-    for (const route of ['/', ...Object.keys(cleanPages), '/exemples/burger']) {
+    for (const route of ['/', ...Object.keys(cleanPages), '/exemples/restaurant']) {
       assert.equal((await get(route)).status, 200, route);
     }
     const redirects = { '/lead.html': '/devis', '/cgv.html': '/cgv', '/agence/': '/agence', '/index.html': '/' };

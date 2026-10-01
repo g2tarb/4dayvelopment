@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr" data-forme="amande">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lunule, institut et onglerie Paris 17e | Démo 4dayvelopment</title>
+<meta name="description" content="Démo 4dayvelopment&#8239;: Lunule, institut et onglerie aux Batignolles. Nuancier pour essayer sa teinte, carte des soins avec prix et réservation en ligne.">
+<meta name="robots" content="noindex, follow">
+<meta name="theme-color" content="#5A1E47">
+<link rel="preload" as="font" type="font/woff2" href="/fonts/gloock-400.woff2" crossorigin>
+<link rel="stylesheet" href="/exemples/institut.css">
+<script src="/exemples/institut.js" defer></script>
+</head>
+<body>
+<a class="saut" href="#contenu">Aller au contenu</a>
+
+<svg width="0" height="0" class="vh" aria-hidden="true" focusable="false">
+  <symbol id="i-tel" viewBox="0 0 24 24"><path d="M5.2 3.5h3.1l1.6 4.1-2.1 1.3a11.5 11.5 0 0 0 5.3 5.3l1.3-2.1 4.1 1.6v3.1a2 2 0 0 1-2.1 2A16 16 0 0 1 3.2 5.6a2 2 0 0 1 2-2.1z"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+  <symbol id="i-fermer" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+  <symbol id="i-metro" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M7.5 16.5v-9l4.5 6 4.5-6v9"/></symbol>
+  <symbol id="i-coche" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-pinceau" viewBox="0 0 24 24"><path d="M14.5 4.5 19.5 9.5 11 18l-5-5z"/><path d="M6 13c-1.8.6-2.6 2-2.6 3.6 0 1.4-.6 2.4-1.4 2.9 3.4.7 6.6-.2 8-2.5"/></symbol>
+  <!-- la marque : un ongle en amande et sa lunule -->
+  <symbol id="i-marque" viewBox="0 0 32 40">
+    <path d="M16 2.5c7.2 0 11.5 9 11.5 18.5v8.2c0 5.6-5.2 8.3-11.5 8.3S4.5 34.8 4.5 29.2V21C4.5 11.5 8.8 2.5 16 2.5z" fill="currentColor"/>
+    <path d="M8.5 31.5c2.2-4.4 12.8-4.4 15 0-3.6 2.4-11.4 2.4-15 0z" fill="#F7F2F1" opacity=".6"/>
+  </symbol>
+  <!-- les trois formes d’ongle, au trait -->
+  <symbol id="f-amande" viewBox="0 0 20 28"><path d="M3.5 25V14C3.5 8 6.5 2 10 2s6.5 6 6.5 12v11c-2 2-11 2-13 0z"/></symbol>
+  <symbol id="f-carre" viewBox="0 0 20 28"><path d="M3.5 25V5.2q0-1.7 1.7-1.7h9.6q1.7 0 1.7 1.7V25c-2 2-11 2-13 0z"/></symbol>
+  <symbol id="f-ovale" viewBox="0 0 20 28"><path d="M3.5 25V10c0-4.4 2.9-6.5 6.5-6.5s6.5 2.1 6.5 6.5v15c-2 2-11 2-13 0z"/></symbol>
+</svg>
+
+<header class="tete">
+  <div class="cadre tete-in">
+    <a class="logo" href="#nuancier" aria-label="Lunule, retour au nuancier">
+      <svg class="logo-marque" aria-hidden="true"><use href="#i-marque"/></svg>
+      <span class="logo-nom">Lunule</span>
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <button class="nav-bouton" type="button" aria-expanded="false" aria-controls="nav-liste">
+        <svg class="ico" aria-hidden="true"><use href="#i-menu"/></svg><span>Menu</span>
+      </button>
+      <ul class="nav-liste" id="nav-liste">
+        <li><a href="#nuancier">Nuancier</a></li>
+        <li><a href="#carte">Carte des soins</a></li>
+        <li><a href="#realisations">Réalisations</a></li>
+        <li><a href="#equipe">L’équipe</a></li>
+        <li><a href="#venir">Venir</a></li>
+      </ul>
+    </nav>
+    <a class="tete-tel" href="tel:+33199004163"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span>01&nbsp;99&nbsp;00&nbsp;41&nbsp;63</span></a>
+    <a class="btn btn-prune tete-resa" href="#carnet" data-resa-teinte>Prendre rendez-vous</a>
+  </div>
+</header>
+
+<main id="contenu" tabindex="-1">
+  <section class="essai" id="nuancier" aria-labelledby="essai-t">
+    <div class="cadre essai-in">
+      <div class="essai-titre">
+        <p class="lieu">Institut et onglerie, rue Lemercier, Paris&nbsp;17<sup>e</sup></p>
+        <h1 id="essai-t">Essayez votre couleur avant la pose</h1>
+      </div>
+
+      <div class="atelier" id="atelier">
+        <p class="plaque" aria-live="polite">
+          <span class="plaque-num" id="plaque-num">N°05</span>
+          <span class="plaque-nom" id="plaque-nom">Cerise</span>
+          <span class="plaque-detail" id="plaque-detail">Forme amande, peau médium</span>
+        </p>
+
+        <div class="main-zone">
+          <svg class="main" id="main" viewBox="20 0 400 360" role="img" aria-labelledby="main-alt">
+            <title id="main-alt">Une main aux ongles vernis dans la teinte et la forme choisies</title>
+            <defs>
+              <linearGradient id="g-doigt" x1="0" x2="1" y1="0" y2="0">
+                <stop offset="0" class="peau-ombre"/><stop offset=".45" class="peau-clair"/><stop offset="1" class="peau-ombre"/>
+              </linearGradient>
+              <linearGradient id="g-fondu" x1="0" x2="0" y1="0" y2="1">
+                <stop offset=".72" stop-color="#fff"/><stop offset="1" stop-color="#000"/>
+              </linearGradient>
+              <mask id="m-fondu"><rect width="440" height="360" fill="url(#g-fondu)"/></mask>
+            </defs>
+            <g mask="url(#m-fondu)">
+              <g class="doigt" data-cx="110" data-top="104" data-l="64" transform="rotate(-8 110 380)">
+                <rect class="doigt-chair" x="78" y="104" width="64" height="300" rx="32"/>
+                <path class="pli" d="M88 236q22 7 44 0M90 248q20 5 40 0"/>
+                <path class="ongle" d="M87.6 111.7L87.6 162.9C87.6 181.7 132.4 181.7 132.4 162.9L132.4 111.7C132.4 92.7 117.6 77.1 110 77.1C102.4 77.1 87.6 92.7 87.6 111.7Z"/><path class="reflet" d="M98.4 156.5L98.4 104"/>
+              </g>
+              <g class="doigt" data-cx="186" data-top="58" data-l="68" transform="rotate(-2.5 186 380)">
+                <rect class="doigt-chair" x="152" y="58" width="68" height="340" rx="34"/>
+                <path class="pli" d="M162 196q24 7 48 0M164 208q22 5 44 0"/>
+                <path class="ongle" d="M162.2 66.2L162.2 120.6C162.2 140.6 209.8 140.6 209.8 120.6L209.8 66.2C209.8 46.0 194.1 29.4 186 29.4C177.9 29.4 162.2 46.0 162.2 66.2Z"/><path class="reflet" d="M173.6 113.8L173.6 58"/>
+              </g>
+              <g class="doigt" data-cx="262" data-top="84" data-l="64" transform="rotate(3.5 262 380)">
+                <rect class="doigt-chair" x="230" y="84" width="64" height="320" rx="32"/>
+                <path class="pli" d="M240 218q22 7 44 0M242 230q20 5 40 0"/>
+                <rect class="bague" x="229" y="270" width="66" height="11" rx="5.5"/>
+                <path class="ongle" d="M239.6 91.7L239.6 142.9C239.6 161.7 284.4 161.7 284.4 142.9L284.4 91.7C284.4 72.7 269.6 57.1 262 57.1C254.4 57.1 239.6 72.7 239.6 91.7Z"/><path class="reflet" d="M250.4 136.5L250.4 84"/>
+              </g>
+              <g class="doigt" data-cx="330" data-top="156" data-l="54" transform="rotate(10 330 380)">
+                <rect class="doigt-chair" x="303" y="156" width="54" height="250" rx="27"/>
+                <path class="pli" d="M312 270q18 6 36 0M314 281q16 4 32 0"/>
+                <path class="ongle" d="M311.1 162.5L311.1 205.7C311.1 221.6 348.9 221.6 348.9 205.7L348.9 162.5C348.9 146.4 336.4 133.3 330 133.3C323.6 133.3 311.1 146.4 311.1 162.5Z"/><path class="reflet" d="M320.2 200.3L320.2 156"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+
+        <fieldset class="peaux">
+          <legend>Peau</legend>
+          <label class="peau p1"><input type="radio" name="peau" value="claire"><span class="vh">Peau claire</span></label>
+          <label class="peau p2"><input type="radio" name="peau" value="médium" checked><span class="vh">Peau médium</span></label>
+          <label class="peau p3"><input type="radio" name="peau" value="mate"><span class="vh">Peau mate</span></label>
+          <label class="peau p4"><input type="radio" name="peau" value="foncée"><span class="vh">Peau foncée</span></label>
+        </fieldset>
+
+        <fieldset class="formes">
+          <legend class="vh">Forme de l’ongle</legend>
+          <label class="forme"><input type="radio" name="forme" value="amande" checked><svg class="forme-ico" aria-hidden="true"><use href="#f-amande"/></svg><span>Amande</span></label>
+          <label class="forme"><input type="radio" name="forme" value="carre"><svg class="forme-ico" aria-hidden="true"><use href="#f-carre"/></svg><span>Carré</span></label>
+          <label class="forme"><input type="radio" name="forme" value="ovale"><svg class="forme-ico" aria-hidden="true"><use href="#f-ovale"/></svg><span>Ovale</span></label>
+        </fieldset>
+
+        <fieldset class="presentoir">
+          <legend class="vh">Teinte</legend>
+          <div class="famille">
+            <p class="famille-nom" aria-hidden="true">Nudes</p>
+            <div class="tips">
+              <label class="tip t01"><input type="radio" name="teinte" value="t01"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">01</span><span class="vh" data-nom>N°01 Lait d’amande</span></label>
+              <label class="tip t02"><input type="radio" name="teinte" value="t02"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">02</span><span class="vh" data-nom>N°02 Rose thé</span></label>
+              <label class="tip t03"><input type="radio" name="teinte" value="t03"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">03</span><span class="vh" data-nom>N°03 Biscuit</span></label>
+            </div>
+          </div>
+          <div class="famille">
+            <p class="famille-nom" aria-hidden="true">Rouges</p>
+            <div class="tips">
+              <label class="tip t04"><input type="radio" name="teinte" value="t04"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">04</span><span class="vh" data-nom>N°04 Coquelicot</span></label>
+              <label class="tip t05"><input type="radio" name="teinte" value="t05" checked><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">05</span><span class="vh" data-nom>N°05 Cerise</span></label>
+              <label class="tip t06"><input type="radio" name="teinte" value="t06"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">06</span><span class="vh" data-nom>N°06 Bordeaux</span></label>
+            </div>
+          </div>
+          <div class="famille">
+            <p class="famille-nom" aria-hidden="true">Couleurs</p>
+            <div class="tips">
+              <label class="tip t07"><input type="radio" name="teinte" value="t07"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">07</span><span class="vh" data-nom>N°07 Lilas</span></label>
+              <label class="tip t08"><input type="radio" name="teinte" value="t08"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">08</span><span class="vh" data-nom>N°08 Sauge</span></label>
+              <label class="tip t09"><input type="radio" name="teinte" value="t09"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">09</span><span class="vh" data-nom>N°09 Corail</span></label>
+              <label class="tip t10"><input type="radio" name="teinte" value="t10"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">10</span><span class="vh" data-nom>N°10 Bleu nuit</span></label>
+              <label class="tip t11"><input type="radio" name="teinte" value="t11"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">11</span><span class="vh" data-nom>N°11 Prune</span></label>
+              <label class="tip t12"><input type="radio" name="teinte" value="t12"><span class="tip-ongle" aria-hidden="true"></span><span class="tip-num" aria-hidden="true">12</span><span class="vh" data-nom>N°12 Réglisse</span></label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div class="essai-suite">
+        <p class="essai-sous">Touchez une teinte, puis une forme&#8239;: la main se met à jour. Vous réservez ensuite votre pose avec la couleur déjà choisie, et Inès ou Sofia la sortent du nuancier avant votre arrivée.</p>
+        <div class="essai-actions">
+          <a class="btn btn-prune" href="#carnet" data-resa-teinte>Réserver avec cette teinte</a>
+          <a class="btn btn-clair" href="#carte">Voir les prix</a>
+        </div>
+        <dl class="direct">
+          <div><dt>Aujourd’hui</dt><dd id="etat-jour">Du mardi au dimanche, fermé le lundi</dd></div>
+          <div><dt>Prochain créneau pour une pose</dt><dd id="prochain">Mardi, dès 10&nbsp;h</dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="carte" id="carte" aria-labelledby="carte-t">
+    <div class="cadre">
+      <div class="carte-tete">
+        <h2 id="carte-t">La carte des soins</h2>
+        <p>Les durées sont celles du fauteuil, les prix sont ceux que vous payez. Touchez «&#8239;Choisir&#8239;» et la prestation passe dans votre rendez-vous.</p>
+      </div>
+      <div class="onglets" role="tablist" aria-label="Familles de soins">
+        <button type="button" role="tab" id="o-ongles" aria-controls="p-ongles" aria-selected="true">Ongles</button>
+        <button type="button" role="tab" id="o-visage" aria-controls="p-visage" aria-selected="false" tabindex="-1">Visage</button>
+        <button type="button" role="tab" id="o-epil" aria-controls="p-epil" aria-selected="false" tabindex="-1">Épilation</button>
+      </div>
+
+      <div class="panneau" role="tabpanel" id="p-ongles" aria-labelledby="o-ongles" data-famille="Ongles">
+        <figure class="panneau-photo">
+          <img src="/exemples/img/institut-nuancier-800.webp" srcset="/exemples/img/institut-nuancier-480.webp 480w, /exemples/img/institut-nuancier-800.webp 800w, /exemples/img/institut-nuancier-1200.webp 1200w" sizes="(min-width: 60rem) 26rem, 92vw" width="1200" height="800" loading="lazy" decoding="async" alt="Deux mains passent en revue un nuancier en éventail de faux ongles vernis, posé sur une serviette au comptoir">
+          <figcaption>Le nuancier du comptoir&#8239;: les douze teintes de la page, et une centaine d’autres.</figcaption>
+        </figure>
+        <ul class="soins">
+          <li class="soin" data-id="manu-express" data-duree="20" data-prix="25" data-qui="ines sofia"><div class="soin-txt"><h3>Manucure express</h3><p>Limage, cuticules repoussées, base fortifiante. Sans couleur.</p></div><p class="soin-meta"><span>20&nbsp;min</span><strong>25&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="manu-vernis" data-duree="40" data-prix="35" data-qui="ines sofia" data-teinte><div class="soin-txt"><h3>Manucure et vernis classique</h3><p>Le soin complet, deux couches de votre teinte et un top coat brillant.</p></div><p class="soin-meta"><span>40&nbsp;min</span><strong>35&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="semi-mains" data-duree="45" data-prix="42" data-qui="ines sofia" data-teinte><div class="soin-txt"><h3>Semi-permanent mains</h3><p>Vernis gel séché sous lampe. Comptez deux à trois semaines de brillant.</p></div><p class="soin-meta"><span>45&nbsp;min</span><strong>42&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="depose-repose" data-duree="60" data-prix="48" data-qui="ines sofia" data-teinte><div class="soin-txt"><h3>Dépose et nouvelle pose semi-permanent</h3><p>Dépose douce à la ponceuse, soin des cuticules, nouvelle couleur.</p></div><p class="soin-meta"><span>1&nbsp;h</span><strong>48&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="gainage" data-duree="75" data-prix="58" data-qui="ines" data-teinte><div class="soin-txt"><h3>Gainage et semi-permanent</h3><p>Une fine couche de gel pour l’ongle naturel qui casse ou se dédouble.</p></div><p class="soin-meta"><span>1&nbsp;h&nbsp;15</span><strong>58&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="extensions" data-duree="105" data-prix="85" data-qui="ines" data-teinte><div class="soin-txt"><h3>Extensions gel, pose complète</h3><p>Capsules ou chablons, longueur et forme au choix, couleur comprise.</p></div><p class="soin-meta"><span>1&nbsp;h&nbsp;45</span><strong>85&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="remplissage" data-duree="75" data-prix="60" data-qui="ines" data-teinte><div class="soin-txt"><h3>Remplissage gel</h3><p>Toutes les trois à quatre semaines, pour garder la pose nette.</p></div><p class="soin-meta"><span>1&nbsp;h&nbsp;15</span><strong>60&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="semi-pieds" data-duree="50" data-prix="45" data-qui="ines sofia" data-teinte><div class="soin-txt"><h3>Semi-permanent pieds</h3><p>Limage, cuticules et couleur gel, dans le fauteuil de pédicure.</p></div><p class="soin-meta"><span>50&nbsp;min</span><strong>45&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="beaute-pieds" data-duree="60" data-prix="55" data-qui="sofia" data-teinte><div class="soin-txt"><h3>Beauté des pieds complète</h3><p>Bain, gommage, callosités poncées, massage et vernis classique.</p></div><p class="soin-meta"><span>1&nbsp;h</span><strong>55&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+        </ul>
+        <p class="panneau-note">French ou baby boomer&#8239;: 8&nbsp;€ de plus. Nail art à partir de 3&nbsp;€ l’ongle. Dépose seule&#8239;: 15&nbsp;€.</p>
+      </div>
+
+      <div class="panneau" role="tabpanel" id="p-visage" aria-labelledby="o-visage" data-famille="Visage">
+        <figure class="panneau-photo">
+          <img src="/exemples/img/institut-creme-800.webp" srcset="/exemples/img/institut-creme-480.webp 480w, /exemples/img/institut-creme-800.webp 800w, /exemples/img/institut-creme-1200.webp 1200w" sizes="(min-width: 60rem) 26rem, 92vw" width="1200" height="800" loading="lazy" decoding="async" alt="Pot de crème rose ouvert et traits de crème sur un plateau de marbre blanc, entre des feuilles séchées">
+          <figcaption>Margaux choisit le masque et la crème en regardant votre peau, pas sur une fiche.</figcaption>
+        </figure>
+        <ul class="soins">
+          <li class="soin" data-id="eclat" data-duree="30" data-prix="45" data-qui="margaux"><div class="soin-txt"><h3>Soin éclat express</h3><p>Nettoyage, gommage enzymatique, masque et crème&#8239;: le coup de frais avant un dîner.</p></div><p class="soin-meta"><span>30&nbsp;min</span><strong>45&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="hydratant" data-duree="60" data-prix="75" data-qui="margaux"><div class="soin-txt"><h3>Soin hydratant profond</h3><p>Pour la peau qui tiraille&#8239;: sérum, masque crème et modelage du visage.</p></div><p class="soin-meta"><span>1&nbsp;h</span><strong>75&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="purifiant" data-duree="60" data-prix="79" data-qui="margaux"><div class="soin-txt"><h3>Soin purifiant</h3><p>Vapeur, extractions douces et masque à l’argile, pour les peaux mixtes à grasses.</p></div><p class="soin-meta"><span>1&nbsp;h</span><strong>79&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="fermete" data-duree="75" data-prix="95" data-qui="margaux"><div class="soin-txt"><h3>Soin fermeté et modelage</h3><p>Long modelage du visage, du cou et du décolleté, puis masque tenseur.</p></div><p class="soin-meta"><span>1&nbsp;h&nbsp;15</span><strong>95&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="sourcils" data-duree="20" data-prix="22" data-qui="margaux"><div class="soin-txt"><h3>Restructuration des sourcils</h3><p>Cire et pince, en suivant la ligne naturelle du sourcil.</p></div><p class="soin-meta"><span>20&nbsp;min</span><strong>22&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="cils" data-duree="60" data-prix="65" data-qui="margaux"><div class="soin-txt"><h3>Rehaussement de cils et teinture</h3><p>Vos cils naturels courbés à la racine, sans extensions ni mascara.</p></div><p class="soin-meta"><span>1&nbsp;h</span><strong>65&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+        </ul>
+        <p class="panneau-note">Premier soin du visage&#8239;: Margaux commence par dix minutes de diagnostic, comprises dans la durée.</p>
+      </div>
+
+      <div class="panneau" role="tabpanel" id="p-epil" aria-labelledby="o-epil" data-famille="Épilation">
+        <figure class="panneau-photo">
+          <img src="/exemples/img/institut-cire-800.webp" srcset="/exemples/img/institut-cire-480.webp 480w, /exemples/img/institut-cire-800.webp 800w" sizes="(min-width: 60rem) 26rem, 92vw" width="800" height="877" loading="lazy" decoding="async" alt="Main gantée de noir qui remue la cire tiède violette dans un chauffe-cire blanc">
+          <figcaption>Cire tiède à usage unique pour le maillot et les aisselles. Une spatule ne retourne jamais dans le pot.</figcaption>
+        </figure>
+        <ul class="soins soins-courts">
+          <li class="soin" data-id="ep-sourcils" data-duree="15" data-prix="13" data-qui="margaux sofia"><div class="soin-txt"><h3>Sourcils</h3></div><p class="soin-meta"><span>15&nbsp;min</span><strong>13&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="ep-levre" data-duree="10" data-prix="10" data-qui="margaux sofia"><div class="soin-txt"><h3>Lèvre ou menton</h3></div><p class="soin-meta"><span>10&nbsp;min</span><strong>10&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="ep-aisselles" data-duree="15" data-prix="15" data-qui="margaux sofia"><div class="soin-txt"><h3>Aisselles</h3></div><p class="soin-meta"><span>15&nbsp;min</span><strong>15&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="ep-maillot" data-duree="15" data-prix="20" data-qui="margaux sofia"><div class="soin-txt"><h3>Maillot classique</h3></div><p class="soin-meta"><span>15&nbsp;min</span><strong>20&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="ep-echancre" data-duree="20" data-prix="28" data-qui="margaux sofia"><div class="soin-txt"><h3>Maillot échancré</h3></div><p class="soin-meta"><span>20&nbsp;min</span><strong>28&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="ep-integral" data-duree="30" data-prix="38" data-qui="margaux sofia"><div class="soin-txt"><h3>Maillot intégral</h3></div><p class="soin-meta"><span>30&nbsp;min</span><strong>38&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="ep-demi" data-duree="20" data-prix="25" data-qui="margaux sofia"><div class="soin-txt"><h3>Demi-jambes</h3></div><p class="soin-meta"><span>20&nbsp;min</span><strong>25&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="ep-jambes" data-duree="40" data-prix="38" data-qui="margaux sofia"><div class="soin-txt"><h3>Jambes entières</h3></div><p class="soin-meta"><span>40&nbsp;min</span><strong>38&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+          <li class="soin" data-id="ep-forfait" data-duree="60" data-prix="65" data-qui="margaux sofia"><div class="soin-txt"><h3>Jambes entières, maillot classique et aisselles</h3></div><p class="soin-meta"><span>1&nbsp;h</span><strong>65&nbsp;€</strong></p><button type="button" class="choisir">Choisir</button></li>
+        </ul>
+        <p class="panneau-note">Hommes bienvenus pour le dos et le torse&#8239;: 35&nbsp;€ chacun, sur rendez-vous par téléphone.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="carnet" id="carnet" aria-labelledby="carnet-t">
+    <div class="cadre">
+      <div class="carnet-tete">
+        <h2 id="carnet-t">Prendre rendez-vous</h2>
+        <p>Trois choix, votre prénom et votre numéro. Le créneau affiché est libre dans le carnet de l’institut à cet instant.</p>
+      </div>
+
+      <form class="resa" id="resa" novalidate>
+        <ol class="etapes">
+          <li class="etape">
+            <fieldset>
+              <legend><span class="etape-n" aria-hidden="true">1</span>La prestation</legend>
+              <label class="vh" for="presta">Prestation</label>
+              <select id="presta" name="presta" required>
+                <option value="">Choisissez dans la carte</option>
+              </select>
+              <div class="teinte-choisie" id="teinte-choisie" hidden>
+                <span class="mini-ongle" aria-hidden="true"></span>
+                <p><span id="teinte-txt">N°05 Cerise, forme amande</span> <a href="#nuancier">Changer de teinte</a></p>
+              </div>
+            </fieldset>
+          </li>
+          <li class="etape">
+            <fieldset>
+              <legend><span class="etape-n" aria-hidden="true">2</span>La praticienne</legend>
+              <div class="pros">
+                <label class="pro"><input type="radio" name="pro" value="" checked><span class="pastille pastille-toutes" aria-hidden="true">&#8239;</span><span class="pro-txt"><strong>Peu importe</strong><small>La première disponible</small></span></label>
+                <label class="pro" data-pro="ines"><input type="radio" name="pro" value="ines"><span class="pastille pa-ines" aria-hidden="true">I</span><span class="pro-txt"><strong>Inès</strong><small>Prothésiste ongulaire</small></span></label>
+                <label class="pro" data-pro="sofia"><input type="radio" name="pro" value="sofia"><span class="pastille pa-sofia" aria-hidden="true">S</span><span class="pro-txt"><strong>Sofia</strong><small>Esthéticienne</small></span></label>
+                <label class="pro" data-pro="margaux"><input type="radio" name="pro" value="margaux"><span class="pastille pa-margaux" aria-hidden="true">M</span><span class="pro-txt"><strong>Margaux</strong><small>Esthéticienne</small></span></label>
+              </div>
+            </fieldset>
+          </li>
+          <li class="etape">
+            <fieldset>
+              <legend><span class="etape-n" aria-hidden="true">3</span>Le créneau</legend>
+              <div class="jours" id="jours"></div>
+              <div class="heures" id="heures"><p class="vide">Choisissez d’abord une prestation.</p></div>
+            </fieldset>
+          </li>
+        </ol>
+
+        <div class="recap" id="recap">
+          <h3>Votre rendez-vous</h3>
+          <dl class="recap-liste">
+            <div><dt>Prestation</dt><dd id="r-presta">À choisir</dd></div>
+            <div><dt>Durée et prix</dt><dd id="r-prix">&#8239;</dd></div>
+            <div><dt>Avec</dt><dd id="r-pro">La première disponible</dd></div>
+            <div><dt>Quand</dt><dd id="r-quand">À choisir</dd></div>
+          </dl>
+          <div class="champ">
+            <label for="prenom">Prénom</label>
+            <input id="prenom" name="prenom" type="text" autocomplete="given-name" enterkeyhint="next" maxlength="40" required>
+          </div>
+          <div class="champ">
+            <label for="tel">Téléphone mobile</label>
+            <input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" enterkeyhint="done" maxlength="20" required aria-describedby="tel-aide">
+            <p class="aide" id="tel-aide">Pour le SMS de rappel, la veille.</p>
+          </div>
+          <p class="erreur" id="resa-erreur" role="alert"></p>
+          <button type="submit" class="btn btn-prune">Confirmer le rendez-vous</button>
+          <p class="aide">Annulation gratuite jusqu’à 24&nbsp;h avant, par téléphone.</p>
+        </div>
+      </form>
+
+      <div class="resa-ok" id="resa-ok" hidden>
+        <span class="mini-ongle mini-ongle-grand" aria-hidden="true"></span>
+        <h3 id="ok-t" tabindex="-1">C’est noté</h3>
+        <p id="ok-txt"></p>
+        <p class="aide">Démonstration&#8239;: rien n’a été envoyé, aucun créneau n’a été bloqué.</p>
+        <button type="button" class="btn btn-clair" id="ok-encore">Prendre un autre rendez-vous</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="realisations" id="realisations" aria-labelledby="real-t">
+    <div class="cadre">
+      <div class="real-tete">
+        <h2 id="real-t">Sorties de cabine</h2>
+        <p>Des poses faites ici cette saison. Une teinte vous plaît&#8239;? Essayez-la sur la main du nuancier.</p>
+      </div>
+      <ul class="mur">
+        <li><figure class="tuile"><img src="/exemples/img/institut-rouge-480.webp" srcset="/exemples/img/institut-rouge-480.webp 480w, /exemples/img/institut-rouge-800.webp 800w" sizes="(min-width: 60rem) 18rem, 68vw" width="480" height="600" loading="lazy" decoding="async" alt="Deux mains posées l’une sur l’autre, ongles courts vernis rouge vif, sur une serviette blanche"><figcaption><span>Semi-permanent N°04 Coquelicot, ongles courts</span><button type="button" class="essayer" data-teinte="t04" data-forme="ovale" aria-label="Essayer N°04 Coquelicot, forme ovale">Essayer</button></figcaption></figure></li>
+        <li><figure class="tuile"><img src="/exemples/img/institut-nude-480.webp" srcset="/exemples/img/institut-nude-480.webp 480w, /exemples/img/institut-nude-800.webp 800w" sizes="(min-width: 60rem) 18rem, 68vw" width="480" height="600" loading="lazy" decoding="async" alt="Ongles en amande nude rosé, traversés d’une volute blanche, main posée sur une épaule"><figcaption><span>Gel sur ongle naturel, N°02 Rose thé et volutes blanches</span><button type="button" class="essayer" data-teinte="t02" data-forme="amande" aria-label="Essayer N°02 Rose thé, forme amande">Essayer</button></figcaption></figure></li>
+        <li><figure class="tuile"><img src="/exemples/img/institut-prune-480.webp" srcset="/exemples/img/institut-prune-480.webp 480w, /exemples/img/institut-prune-800.webp 800w" sizes="(min-width: 60rem) 18rem, 68vw" width="480" height="600" loading="lazy" decoding="async" alt="Main aux ongles en amande vernis prune mat, bagues fines aux doigts"><figcaption><span>Semi-permanent mat N°11 Prune, forme amande</span><button type="button" class="essayer" data-teinte="t11" data-forme="amande" aria-label="Essayer N°11 Prune, forme amande">Essayer</button></figcaption></figure></li>
+        <li><figure class="tuile"><img src="/exemples/img/institut-bordeaux-480.webp" srcset="/exemples/img/institut-bordeaux-480.webp 480w, /exemples/img/institut-bordeaux-800.webp 800w" sizes="(min-width: 60rem) 18rem, 68vw" width="480" height="600" loading="lazy" decoding="async" alt="Deux mains à plat sur une serviette, ongles très courts vernis bordeaux"><figcaption><span>Vernis classique N°06 Bordeaux, ongles très courts</span><button type="button" class="essayer" data-teinte="t06" data-forme="carre" aria-label="Essayer N°06 Bordeaux, forme carré">Essayer</button></figcaption></figure></li>
+        <li><figure class="tuile"><img src="/exemples/img/institut-french-480.webp" srcset="/exemples/img/institut-french-480.webp 480w, /exemples/img/institut-french-800.webp 800w" sizes="(min-width: 60rem) 18rem, 68vw" width="480" height="600" loading="lazy" decoding="async" alt="Main aux ongles longs et carrés, French blanche sur base laiteuse, sur fond bleu nuit"><figcaption><span>French blanche sur N°01 Lait d’amande, forme carrée</span><button type="button" class="essayer" data-teinte="t01" data-forme="carre" aria-label="Essayer N°01 Lait d’amande, forme carré">Essayer</button></figcaption></figure></li>
+        <li><figure class="tuile"><img src="/exemples/img/institut-pose-480.webp" srcset="/exemples/img/institut-pose-480.webp 480w, /exemples/img/institut-pose-800.webp 800w" sizes="(min-width: 60rem) 18rem, 68vw" width="480" height="600" loading="lazy" decoding="async" alt="Pinceau qui pose un vernis lilas pâle sur une main à plat, sur une table en bois clair"><figcaption><span>Pose classique N°07 Lilas, ongles naturels</span><button type="button" class="essayer" data-teinte="t07" data-forme="ovale" aria-label="Essayer N°07 Lilas, forme ovale">Essayer</button></figcaption></figure></li>
+        <li><figure class="tuile"><img src="/exemples/img/institut-gel-480.webp" srcset="/exemples/img/institut-gel-480.webp 480w, /exemples/img/institut-gel-800.webp 800w" sizes="(min-width: 60rem) 18rem, 68vw" width="480" height="600" loading="lazy" decoding="async" alt="Praticienne gantée qui lime un ongle en gel devant la lampe de séchage"><figcaption><span>Extensions gel&#8239;: la forme se lime avant la couleur</span></figcaption></figure></li>
+        <li><figure class="tuile"><img src="/exemples/img/institut-flacons-480.webp" srcset="/exemples/img/institut-flacons-480.webp 480w, /exemples/img/institut-flacons-800.webp 800w" sizes="(min-width: 60rem) 18rem, 68vw" width="480" height="600" loading="lazy" decoding="async" alt="Deux flacons de vernis rose pâle et blanc laiteux sur un plateau en bois"><figcaption><span>Les nudes du nuancier, N°01 et N°02</span><button type="button" class="essayer" data-teinte="t02" data-forme="ovale" aria-label="Essayer N°02 Rose thé, forme ovale">Essayer</button></figcaption></figure></li>
+      </ul>
+    </div>
+  </section>
+  <section class="equipe" id="equipe" aria-labelledby="equipe-t">
+    <div class="cadre">
+      <div class="equipe-tete">
+        <h2 id="equipe-t">Qui vous reçoit</h2>
+        <p>Trois praticiennes, trois postes&#8239;: la table de manucure près de la vitrine, le fauteuil de pédicure, la cabine du fond.</p>
+      </div>
+      <ul class="pros-liste">
+        <li class="carte-pro">
+          <span class="pastille pastille-grande pa-ines" aria-hidden="true">I</span>
+          <h3>Inès</h3>
+          <p class="pro-role">Prothésiste ongulaire, elle a ouvert Lunule en 2021</p>
+          <p>Gel, extensions et nail art fin. Elle conseille la forme selon la longueur de vos doigts, et vous déconseille l’amande très longue si vous tapez toute la journée.</p>
+          <p class="pro-jours">Du mardi au samedi</p>
+          <div class="pro-actions">
+            <button type="button" class="essayer essayer-pro" data-teinte="t11" data-forme="amande"><span class="puce t11" aria-hidden="true"></span>Essayer sa teinte, N°11 Prune</button>
+            <a class="lien-resa" href="#carnet" data-pro="ines">Réserver avec Inès</a>
+          </div>
+        </li>
+        <li class="carte-pro">
+          <span class="pastille pastille-grande pa-sofia" aria-hidden="true">S</span>
+          <h3>Sofia</h3>
+          <p class="pro-role">Esthéticienne, à l’institut depuis l’ouverture</p>
+          <p>Semi-permanent, beauté des pieds et épilation. C’est elle qui fait les poses du dimanche matin et les semi-permanents express avant le bureau.</p>
+          <p class="pro-jours">Mardi, mercredi, vendredi, samedi et dimanche</p>
+          <div class="pro-actions">
+            <button type="button" class="essayer essayer-pro" data-teinte="t09" data-forme="ovale"><span class="puce t09" aria-hidden="true"></span>Essayer sa teinte, N°09 Corail</button>
+            <a class="lien-resa" href="#carnet" data-pro="sofia">Réserver avec Sofia</a>
+          </div>
+        </li>
+        <li class="carte-pro">
+          <span class="pastille pastille-grande pa-margaux" aria-hidden="true">M</span>
+          <h3>Margaux</h3>
+          <p class="pro-role">Esthéticienne, en cabine visage</p>
+          <p>Soins du visage, cils, sourcils et épilation. Ses modelages se font mains nues, sans appareil, et elle note vos réactions de peau d’une visite à l’autre.</p>
+          <p class="pro-jours">Mardi, jeudi, vendredi et samedi</p>
+          <div class="pro-actions">
+            <button type="button" class="essayer essayer-pro" data-teinte="t02" data-forme="ovale"><span class="puce t02" aria-hidden="true"></span>Essayer sa teinte, N°02 Rose thé</button>
+            <a class="lien-resa" href="#carnet" data-pro="margaux">Réserver avec Margaux</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="venir" id="venir" aria-labelledby="venir-t">
+    <div class="cadre venir-in">
+      <div class="venir-txt">
+        <h2 id="venir-t">Venir à l’institut</h2>
+        <p class="adresse">14 rue Lemercier, 75017 Paris<br>Entre la rue des Dames et la rue Legendre</p>
+        <ul class="acces">
+          <li><svg class="ico" aria-hidden="true"><use href="#i-metro"/></svg>Brochant ou La Fourche, ligne&nbsp;13, à cinq minutes à pied</li>
+          <li><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg><span><a href="tel:+33199004163">01&nbsp;99&nbsp;00&nbsp;41&nbsp;63</a>, pour un retard ou une annulation</span></li>
+        </ul>
+        <h3 class="horaires-t">Horaires <span class="etat" id="etat-venir"></span></h3>
+        <table class="horaires">
+          <caption class="vh">Horaires d’ouverture de l’institut</caption>
+          <tbody>
+            <tr data-j="2"><th scope="row">Mardi</th><td>10&nbsp;h-19&nbsp;h&nbsp;30</td></tr>
+            <tr data-j="3"><th scope="row">Mercredi</th><td>10&nbsp;h-19&nbsp;h&nbsp;30</td></tr>
+            <tr data-j="4"><th scope="row">Jeudi</th><td>10&nbsp;h-21&nbsp;h, nocturne</td></tr>
+            <tr data-j="5"><th scope="row">Vendredi</th><td>10&nbsp;h-19&nbsp;h&nbsp;30</td></tr>
+            <tr data-j="6"><th scope="row">Samedi</th><td>9&nbsp;h&nbsp;30-19&nbsp;h</td></tr>
+            <tr data-j="0"><th scope="row">Dimanche</th><td>10&nbsp;h-14&nbsp;h</td></tr>
+            <tr data-j="1"><th scope="row">Lundi</th><td>Fermé</td></tr>
+          </tbody>
+        </table>
+        <p class="paiement">Carte bancaire, espèces et cartes cadeaux de l’institut.</p>
+      </div>
+      <figure class="venir-photo">
+        <img src="/exemples/img/institut-cabine-800.webp" srcset="/exemples/img/institut-cabine-480.webp 480w, /exemples/img/institut-cabine-800.webp 800w, /exemples/img/institut-cabine-1200.webp 1200w" sizes="(min-width: 60rem) 38rem, 92vw" width="1200" height="800" loading="lazy" decoding="async" alt="Cabine claire avec table de soin en bois, volets roses, lampe loupe et fauteuil blanc">
+        <figcaption>La cabine du fond, pour les soins du visage et l’épilation.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="questions" id="questions" aria-labelledby="questions-t">
+    <div class="cadre questions-in">
+      <h2 id="questions-t">Avant de venir</h2>
+      <div class="faq">
+        <details>
+          <summary>Combien de temps tient un semi-permanent&#8239;?</summary>
+          <p>Deux à trois semaines en général, selon la pousse de l’ongle et ce que vos mains font dans la journée. Ensuite, réservez une dépose et nouvelle pose&#8239;: la dépose est comprise.</p>
+        </details>
+        <details>
+          <summary>Je peux apporter mon propre vernis&#8239;?</summary>
+          <p>Oui pour une pose classique. Pour le semi-permanent et le gel, on utilise nos produits&#8239;: ils sont faits pour sécher sous nos lampes.</p>
+        </details>
+        <details>
+          <summary>Comment sont nettoyés les instruments&#8239;?</summary>
+          <p>Pinces et repousse-cuticules passent au stérilisateur entre chaque cliente. Limes et polissoirs sont à usage unique&#8239;: on vous les donne en partant.</p>
+        </details>
+        <details>
+          <summary>Et si je suis en retard&#8239;?</summary>
+          <p>Appelez le 01&nbsp;99&nbsp;00&nbsp;41&nbsp;63. Au-delà de quinze minutes, on raccourcit la prestation ou on vous propose un autre créneau, pour ne pas faire attendre la personne suivante.</p>
+        </details>
+        <details>
+          <summary>Vous faites des cartes cadeaux&#8239;?</summary>
+          <p>Oui, au comptoir, d’un montant libre ou pour une prestation précise. Elles sont valables un an.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pied">
+  <div class="cadre">
+    <div class="pied-grille">
+      <div>
+        <a class="logo logo-clair" href="#nuancier" aria-label="Lunule, retour au nuancier">
+          <svg class="logo-marque" aria-hidden="true"><use href="#i-marque"/></svg>
+          <span class="logo-nom">Lunule</span>
+        </a>
+        <address>14 rue Lemercier, 75017 Paris<br>
+          <a href="tel:+33199004163">01&nbsp;99&nbsp;00&nbsp;41&nbsp;63</a><br>
+          Métro Brochant ou La Fourche, ligne&nbsp;13</address>
+      </div>
+      <nav aria-label="Plan du site">
+        <h2>L’institut</h2>
+        <ul>
+          <li><a href="#nuancier">Nuancier</a></li>
+          <li><a href="#carte">Carte des soins</a></li>
+          <li><a href="#carnet">Prendre rendez-vous</a></li>
+          <li><a href="#realisations">Réalisations</a></li>
+          <li><a href="#equipe">L’équipe</a></li>
+          <li><a href="#venir">Venir</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2>Horaires</h2>
+        <ul>
+          <li>Du mardi au vendredi, 10&nbsp;h-19&nbsp;h&nbsp;30, jeudi jusqu’à 21&nbsp;h</li>
+          <li>Samedi, 9&nbsp;h&nbsp;30-19&nbsp;h</li>
+          <li>Dimanche, 10&nbsp;h-14&nbsp;h</li>
+          <li>Fermé le lundi</li>
+        </ul>
+      </div>
+    </div>
+    <div class="pied-bas">
+      <p>Site de démonstration réalisé par <a href="https://4dayvelopment.fr/services/site-vitrine" target="_top">4dayvelopment</a>. L’entreprise, son adresse et son numéro sont fictifs.</p>
+      <p>Photos&#8239;: Pexels.</p>
+    </div>
+  </div>
+</footer>
+
+<nav class="pouce" aria-label="Actions rapides">
+  <a class="pouce-resa" href="#carnet" data-resa-teinte><span class="mini-ongle" aria-hidden="true"></span>Réserver</a>
+  <a class="pouce-tel" href="tel:+33199004163"><svg class="ico" aria-hidden="true"><use href="#i-tel"/></svg>Appeler</a>
+</nav>
+</body>
+</html>
