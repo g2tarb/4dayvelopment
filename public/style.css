@@ -4321,9 +4321,16 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 }
 /* Sur telephone, i18n.js place le bouton de langue dans la barre du haut,
    a gauche du menu : il ne suit plus la barre d'onglets. */
+/* L'espace libre va au bloc du CTA, pas au bouton de langue : avec la marge
+   auto sur .lang-fab, « Devis gratuit » restait colle au logo de 480 a
+   768 px. Le CTA rejoint le groupe de droite. */
+#navbar:has(> .lang-fab) .nav-right { margin-inline-start: auto; }
+/* L'ecart avec le menu est porte par le hamburger : masque au-dessus de
+   48rem, il ne prend alors pas de place dans une barre deja pleine. */
+#navbar .lang-fab + .hamburger { margin-inline-start: 8px; }
 #navbar .lang-fab {
-  margin-inline-start: auto;
-  margin-inline-end: 8px;
+  margin-inline-start: 8px;
+  margin-inline-end: 0;
   height: 44px;
   transform: none;
 }
