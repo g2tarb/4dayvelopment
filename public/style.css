@@ -1894,12 +1894,13 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   font-family: 'Syne', sans-serif;
   font-size: 0.75rem;
   font-weight: 800;
-  color: var(--accent);
-  opacity: 0.6;
+  /* Fermee : gris du texte secondaire (5,6:1). L'orange a 60 % d'opacite
+     tombait a 2,4:1 ; il marque maintenant la question ouverte. */
+  color: var(--muted);
   letter-spacing: 1px;
   flex-shrink: 0;
 }
-.faq-item.open .faq-num { opacity: 1; }
+.faq-item.open .faq-num { color: var(--accent); }
 
 .faq-icon {
   width: 28px; height: 28px;
