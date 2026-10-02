@@ -63,7 +63,9 @@
       /* encoche en paysage (viewport-fit=cover) : tout le contenu recule de la zone masquee */
       padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
       line-height: 1.6;
-      animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+      /* backwards et non both : une animation qui reste en vigueur sur body
+         casse le flou de l'en-tete collant (le texte passe net dessous) */
+      animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
     }
     @keyframes pageEnter {
       from { opacity: 0; transform: translateY(18px); }
