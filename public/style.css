@@ -4575,6 +4575,14 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   .hero .demo-device { width: min(9.375rem, 38svh); }
   .appbar { display: none !important; }
   body.has-appbar { padding-block-end: 0; }
+  /* Encoche sur le cote : la nav et le bloc flottant sont places sur la
+     fenetre, le padding env() du body ne les atteint pas. Le logo et le CTA
+     passaient sous l'encoche (environ 47 px contre 28 de marge). */
+  nav, nav.scrolled {
+    padding-inline-start: max(1.75rem, env(safe-area-inset-left));
+    padding-inline-end: max(1.75rem, env(safe-area-inset-right));
+  }
+  #floating-cta { inset-inline-end: max(1.75rem, env(safe-area-inset-right)); }
 }
 
 /* ================================================================

@@ -16,7 +16,7 @@
 .lp-wrap { width: min(100% - 2 * var(--lp-marge), 90rem); margin-inline: auto; }
 /* au-delà de 90rem de contenu (écrans très larges), la navigation et le pied
    de page suivent le contenu centré au lieu de rester collés aux bords */
-.lp nav, .lp nav.scrolled, .lp footer { padding-inline-start: max(var(--lp-marge), (100% - 90rem) / 2); padding-inline-end: max(var(--lp-marge), (100% - 90rem) / 2); }
+.lp nav, .lp nav.scrolled, .lp footer { padding-inline-start: max(var(--lp-marge), (100% - 90rem) / 2, env(safe-area-inset-left)); padding-inline-end: max(var(--lp-marge), (100% - 90rem) / 2, env(safe-area-inset-right)); }
 /* le pied de page s'aligne sur la même marge que la navigation et le contenu */
 .lp .footer-inner, .lp .footer-bottom { max-width: none; }
 .lp h1, .lp h2, .lp h3 { font-family: 'Syne', sans-serif; color: var(--text); text-wrap: balance; }
