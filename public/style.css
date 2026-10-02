@@ -4105,7 +4105,8 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   position: relative;
   display: grid;
   place-items: center;
-  animation: preIn .8s var(--ease-out) both;
+  /* courte : le logo doit etre pose avant la sortie, a 800 ms */
+  animation: preIn .45s var(--ease-out) both;
 }
 @keyframes preIn {
   from { opacity: 0; transform: scale(.94); }

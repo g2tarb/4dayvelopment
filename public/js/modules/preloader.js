@@ -1,11 +1,10 @@
 /* ── Ecran d'entree : logo + phrase qui tourne autour ──
    Affiche seulement si js/boot.js a pose la classe has-intro (une fois par
-   session, hors prefers-reduced-motion). Il se retire quand la page a fini
-   de charger, avec un temps d'affichage minimum pour que l'animation ait le
-   temps d'exister, et un plafond pour ne jamais retenir le visiteur. */
+   session, hors prefers-reduced-motion). Il se retire a 800 ms apres le
+   debut de la navigation : c'est le plafond de la charte (section 12) pour
+   une entree bloquante. */
 
-const MIN_MS = 1150;   // temps d'affichage minimum
-const MAX_MS = 2600;   // filet de securite si `load` n'arrive jamais
+const SHOW_MS = 800;   // plafond charte : jamais plus de 800 ms bloquees
 const OUT_MS = 650;    // duree du fondu de sortie, alignee sur style.css
 
 export function initPreloader() {
@@ -29,23 +28,10 @@ export function initPreloader() {
     setTimeout(() => el.remove(), OUT_MS);
   }
 
-  // On n'attend PAS `window.load` : il inclut l'iframe du diaporama et les
-  // images en lazy, ce qui retenait le visiteur 3 s devant l'intro. Le contenu
-  // critique est deja peint a ce stade ; il suffit d'attendre les polices,
-  // sinon le titre s'affiche en fallback et saute une fois l'intro partie.
-  const fonts = document.fonts
-    ? Promise.race([document.fonts.ready, wait(700)])
-    : Promise.resolve();
-
-  fonts.then(() => {
-    // performance.now() part du debut de la navigation : c'est bien le temps
-    // total vu par le visiteur, pas le temps depuis l'execution de ce module.
-    setTimeout(close, Math.max(0, MIN_MS - performance.now()));
-  });
-
-  setTimeout(close, MAX_MS);   // filet : une promesse qui ne resout jamais
-}
-
-function wait(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  // On n'attend ni `window.load` (iframe du diaporama, images en lazy) ni les
+  // polices : elles sont en preload dans le <head> et presque toujours pretes
+  // avant 800 ms ; au pire le titre passe en fallback un instant (swap).
+  // performance.now() part du debut de la navigation : c'est bien le temps
+  // total vu par le visiteur, pas le temps depuis l'execution de ce module.
+  setTimeout(close, Math.max(0, SHOW_MS - performance.now()));
 }
