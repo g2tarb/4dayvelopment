@@ -226,6 +226,11 @@ app.use(express.static(path.join(__dirname, 'public'), {
   etag: true,
   redirect: false, // pas de 301 /dir -> /dir/ : /blog et /portfolio servis directement par leurs routes propres
   setHeaders(res, filePath) {
+    // Les maquettes prospects (maquettes.4dayvelopment.fr) affichent les photos des démos :
+    // Helmet pose same-origin, qui les bloquait. same-site n'ouvre qu'aux sous-domaines.
+    if (filePath.includes(`${path.sep}exemples${path.sep}img${path.sep}`)) {
+      res.setHeader('Cross-Origin-Resource-Policy', 'same-site');
+    }
     if (filePath.endsWith('.html')) {
       res.setHeader('Cache-Control', 'no-cache');
     }

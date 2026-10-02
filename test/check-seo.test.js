@@ -49,6 +49,9 @@ test('serveur : routes propres, 301 et 404 (intégration)', async () => {
     for (const route of ['/', ...Object.keys(cleanPages), '/exemples/restaurant']) {
       assert.equal((await get(route)).status, 200, route);
     }
+    // photos des démos affichables par les maquettes (sous-domaine), pas par d'autres sites
+    assert.equal((await get('/exemples/img/gite-maison-1200.webp')).headers.get('cross-origin-resource-policy'), 'same-site');
+    assert.equal((await get('/')).headers.get('cross-origin-resource-policy'), 'same-origin');
     const redirects = { '/lead.html': '/devis', '/cgv.html': '/cgv', '/agence/': '/agence', '/index.html': '/' };
     for (const [from, to] of Object.entries(redirects)) {
       const r = await get(from);
