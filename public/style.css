@@ -167,8 +167,10 @@ html { overscroll-behavior-y: none; }
 
 /* ── CUSTOM CURSOR — uniquement souris / trackpad précis ───── */
 @media (pointer: fine) {
-  body { cursor: none; }
-  button { cursor: none; }
+  /* Curseur systeme masque seulement une fois le curseur maison en place
+     (classe posee par initCursor) : sans JS, pendant le chargement ou si le
+     module echoue, la souris reste visible. */
+  .has-cursor body, .has-cursor button { cursor: none; }
 
   #cursor-dot, #cursor-ring {
     position: fixed;
