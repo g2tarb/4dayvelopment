@@ -25,7 +25,7 @@ body{visibility:visible}
   --ouvert:#1E7A4C;
   /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
   --pas:max(clamp(1rem,.55rem + 2vw,2rem), env(safe-area-inset-left), env(safe-area-inset-right));
-  --rayon:6px;
+  --rayon:.375rem;
 }
 *,*::before,*::after{box-sizing:border-box}
 *{margin:0}
@@ -46,7 +46,7 @@ small{font-size:.8em}
 .vs{position:absolute;width:0;height:0;overflow:hidden}
 .ico{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .shell{width:min(100% - 2*var(--pas),76rem);margin-inline:auto}
-.skip{position:absolute;left:-999px;top:0}
+.skip{position:absolute;left:-62.4375rem;top:0}
 .skip:focus{left:max(1rem,env(safe-area-inset-left));top:1rem;z-index:30;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--rayon)}
 .petit{font-size:.9375rem;color:var(--gris)}
 .lien{background:none;border:0;padding:.5rem 0;min-height:2.75rem;font-weight:700;text-decoration:underline;text-decoration-thickness:2px;
@@ -327,7 +327,7 @@ small{font-size:.8em}
 .j-info{font-size:.75rem;font-weight:600;color:var(--gris)}
 .jour.passe{background:transparent;color:#A3ABA7;cursor:default}
 .jour.ferme{cursor:not-allowed;color:var(--gris);
-  background:repeating-linear-gradient(135deg,var(--mur) 0 5px,#E7CFC9 5px 7px)}
+  background:repeating-linear-gradient(135deg,var(--mur) 0 .3125rem,#E7CFC9 .3125rem .4375rem)}
 .jour:has(input:checked){background:var(--jaune);box-shadow:inset 0 0 0 2px var(--encre)}
 .jour:has(input:focus-visible){outline:3px solid var(--rouge);outline-offset:2px}
 .jour.ferme .j-num{text-decoration:line-through;text-decoration-color:var(--rouge);text-decoration-thickness:2px}
@@ -378,16 +378,16 @@ small{font-size:.8em}
 .p-axe path{stroke:#fff;stroke-width:13}
 .p-place{fill:#B5CCB8;stroke:#fff;stroke-width:8}
 .p-auxonne{stroke:var(--jaune);stroke-width:18}
-.p-nom text,.p-fleche text,.p-atelier text{font-size:22px;font-weight:700;fill:var(--encre);paint-order:stroke;stroke:#D6DDD7;stroke-width:5px;stroke-linejoin:round}
-.p-nom .p-petit,.p-atelier .p-petit{font-size:18px;font-weight:600}
+.p-nom text,.p-fleche text,.p-atelier text{font-size:1.375rem;font-weight:700;fill:var(--encre);paint-order:stroke;stroke:#D6DDD7;stroke-width:5px;stroke-linejoin:round}
+.p-nom .p-petit,.p-atelier .p-petit{font-size:1.125rem;font-weight:600}
 .p-bus rect{fill:var(--vert)}
-.p-bus text{font-size:15px;font-weight:700;fill:#fff}
+.p-bus text{font-size:.9375rem;font-weight:700;fill:#fff}
 .p-fleche path{fill:none;stroke:var(--encre);stroke-width:3;stroke-linecap:round}
 .p-atelier{color:var(--vert);--logo-trait:var(--jaune)}
 .p-atelier .p-halo{fill:rgba(181,57,42,.2)}
-.p-atelier text{font-size:26px;font-weight:800;font-stretch:75%}
+.p-atelier text{font-size:1.625rem;font-weight:800;font-stretch:75%}
 .p-nord path{fill:var(--encre)}
-.p-nord text{font-size:16px;font-weight:700;fill:var(--encre)}
+.p-nord text{font-size:1rem;font-weight:700;fill:var(--encre)}
 .infos address{font-style:normal;font-size:1.125rem;line-height:1.45}
 .infos address b{font-stretch:75%;font-weight:800;font-size:1.6rem}
 .infos .tel{margin-top:.4rem}

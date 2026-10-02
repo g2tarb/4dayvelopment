@@ -266,9 +266,9 @@ sup{font-size:.62em;line-height:0}
 .jalon{position:relative;display:flex;flex-direction:column;gap:.4rem;padding:0 0 2.25rem 3.25rem;counter-increment:jalon}
 .jalon::before{content:counter(jalon);position:absolute;left:0;top:0;display:grid;place-items:center;width:2.25rem;height:2.25rem;
   border-radius:50%;background:var(--encre);color:#fff;font-family:var(--titre);font-weight:700;font-size:1.05rem}
-.jalon:not(:last-child)::after{content:"";position:absolute;left:1.125rem;top:2.6rem;bottom:.35rem;width:10px;margin-left:-1px;
+.jalon:not(:last-child)::after{content:"";position:absolute;left:1.125rem;top:2.6rem;bottom:.35rem;width:.625rem;margin-left:-1px;
   background:linear-gradient(var(--encre),var(--encre)) left / 2px 100% no-repeat,
-             repeating-linear-gradient(to bottom, var(--trait-2) 0 1px, transparent 1px 9px) 2px 0 / 7px 100% no-repeat}
+             repeating-linear-gradient(to bottom, var(--trait-2) 0 1px, transparent 1px .5625rem) 2px 0 / .4375rem 100% no-repeat}
 .jalon-quand{font-weight:750;color:var(--chene-fonce);font-size:.9375rem}
 .jalon h3{font-size:1.4rem}
 .jalon > p:not([class]){color:var(--texte-2)}
@@ -277,8 +277,8 @@ sup{font-size:.62em;line-height:0}
 @media (min-width:64rem){
   .frise{grid-template-columns:repeat(5,minmax(0,1fr));column-gap:1.75rem;padding-top:3.5rem;
     background:linear-gradient(var(--encre),var(--encre)) 0 1.1rem / 100% 2px no-repeat,
-               repeating-linear-gradient(to right, var(--trait-2) 0 1px, transparent 1px 12px) 0 .45rem / 100% .65rem no-repeat,
-               repeating-linear-gradient(to right, var(--encre) 0 1.5px, transparent 1.5px 60px) 0 .2rem / 100% .9rem no-repeat}
+               repeating-linear-gradient(to right, var(--trait-2) 0 1px, transparent 1px .75rem) 0 .45rem / 100% .65rem no-repeat,
+               repeating-linear-gradient(to right, var(--encre) 0 1.5px, transparent 1.5px 3.75rem) 0 .2rem / 100% .9rem no-repeat}
   .jalon{padding:0}
   .jalon::before{top:calc(1.1rem + 1px - 1.125rem - 3.5rem);left:0;box-shadow:0 0 0 6px var(--blanc)}
   .jalon:not(:last-child)::after{display:none}
@@ -315,7 +315,7 @@ sup{font-size:.62em;line-height:0}
 .assistant{background:var(--blanc);color:var(--texte);padding:clamp(1.25rem,.9rem + 1.6vi,2.25rem);border-radius:4px;min-width:0}
 .assistant :focus-visible{outline-color:var(--chene-fonce)}
 .progression{display:grid;gap:.5rem;margin-bottom:1.5rem;font-size:.9375rem;font-weight:650;color:var(--texte-2)}
-.progression-barre{height:4px;background:var(--trait);overflow:hidden}
+.progression-barre{height:.25rem;background:var(--trait);overflow:hidden}
 .progression-barre span{display:block;height:100%;background:var(--chene-fonce);transform-origin:left;transform:scaleX(.2);transition:transform .3s ease-out}
 .etape{border:0;padding:0;min-width:0}
 .etape legend,.titre-etape{font-family:var(--titre);font-weight:650;font-size:clamp(1.4rem,1.2rem + .8vi,1.75rem);line-height:1.15;padding:0;margin-bottom:1.1rem}
@@ -415,18 +415,18 @@ sup{font-size:.62em;line-height:0}
 .carte-svg .bois{fill:#D6E0D8}
 .carte-svg .periph{fill:none;stroke:var(--blanc);stroke-width:5;stroke-linejoin:round}
 .carte-svg .eau{fill:none;stroke:#A4BAC4;stroke-width:6;stroke-linecap:round;stroke-linejoin:round}
-.carte-svg .eau-nom{font-family:var(--texte-f);font-style:italic;font-size:14px;fill:#4F6B78}
-.carte-svg .bois-nom{font-family:var(--texte-f);font-style:italic;font-size:13px;fill:#4A6656}
+.carte-svg .eau-nom{font-family:var(--texte-f);font-style:italic;font-size:.875rem;fill:#4F6B78}
+.carte-svg .bois-nom{font-family:var(--texte-f);font-style:italic;font-size:.8125rem;fill:#4A6656}
 .carte-svg text{paint-order:stroke;stroke:var(--blanc);stroke-width:4px;stroke-linejoin:round}
 .carte-svg .lieux circle{fill:var(--encre)}
-.carte-svg .lieux text{font-family:var(--texte-f);font-size:14px;font-weight:650;fill:var(--encre)}
-.carte-svg .arr text{font-family:var(--titre);font-size:15px;font-weight:700}
+.carte-svg .lieux text{font-family:var(--texte-f);font-size:.875rem;font-weight:650;fill:var(--encre)}
+.carte-svg .arr text{font-family:var(--titre);font-size:.9375rem;font-weight:700}
 .carte-svg .exp{font-size:.68em}
 .carte-svg .siege rect{fill:var(--chene);stroke:var(--encre);stroke-width:2.5}
-.carte-svg .siege text{font-family:var(--titre);font-weight:700;font-size:16px;fill:var(--encre)}
+.carte-svg .siege text{font-family:var(--titre);font-weight:700;font-size:1rem;fill:var(--encre)}
 @media (max-width:30rem){
-  .carte-svg .lieux text{font-size:18px}
-  .carte-svg .arr text{font-size:19px}
+  .carte-svg .lieux text{font-size:1.125rem}
+  .carte-svg .arr text{font-size:1.1875rem}
   .carte-svg .lieux .mineur{display:none}
 }
 .carte-legende{display:flex;align-items:center;gap:.5rem;margin-top:.75rem;font-size:.9375rem;color:var(--texte-2)}

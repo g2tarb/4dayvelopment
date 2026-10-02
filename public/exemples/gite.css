@@ -284,15 +284,15 @@ ul,ol{padding:0;list-style:none}
 .riviere{fill:none;stroke:var(--eau);stroke-width:8;stroke-linecap:round}
 .trajet{fill:none;stroke:var(--basalte-2);stroke-width:3;stroke-dasharray:1 9;stroke-linecap:round;opacity:.45}
 .lieu-pt circle{fill:var(--basalte);stroke:var(--pierre-2);stroke-width:3;transform-box:fill-box;transform-origin:center}
-.lieu-pt text{font-size:25px;font-weight:700;fill:var(--basalte)}
-.nom-riviere{font-family:var(--titre);font-style:italic;font-size:25px;fill:var(--eau)}
-.nom-puys{font-size:19px;font-weight:600;fill:#6B716A}
+.lieu-pt text{font-size:1.5625rem;font-weight:700;fill:var(--basalte)}
+.nom-riviere{font-family:var(--titre);font-style:italic;font-size:1.5625rem;fill:var(--eau)}
+.nom-puys{font-size:1.1875rem;font-weight:600;fill:#6B716A}
 .pill rect{fill:var(--blanc);stroke:var(--trait);stroke-width:1.5}
-.pill text{font-size:19px;font-weight:700;fill:var(--basalte);text-anchor:middle}
+.pill text{font-size:1.1875rem;font-weight:700;fill:var(--basalte);text-anchor:middle}
 .maison path{fill:var(--pouzzolane);stroke:var(--blanc);stroke-width:2.5;stroke-linejoin:round}
-.maison text{font-family:var(--titre);font-style:italic;font-size:24px;fill:var(--pouzzolane-f)}
+.maison text{font-family:var(--titre);font-style:italic;font-size:1.5rem;fill:var(--pouzzolane-f)}
 .nord path{fill:var(--basalte)}
-.nord text{font-size:17px;font-weight:700;text-anchor:middle;fill:var(--basalte)}
+.nord text{font-size:1.0625rem;font-weight:700;text-anchor:middle;fill:var(--basalte)}
 .carte[data-lieu="allier"] .trajet.t-allier,.carte[data-lieu="issoire"] .trajet.t-issoire,
 .carte[data-lieu="clermont"] .trajet.t-clermont,.carte[data-lieu="dore"] .trajet.t-dore{opacity:1;stroke:var(--pouzzolane);stroke-width:4.5;stroke-dasharray:2 10}
 .carte[data-lieu="allier"] .pill.t-allier rect,.carte[data-lieu="issoire"] .pill.t-issoire rect,
@@ -344,19 +344,19 @@ ul,ol{padding:0;list-style:none}
 @media (hover: hover) and (pointer: fine) {
   .jour:hover {background:var(--blanc)}
 }
-.jour.pris{background:repeating-linear-gradient(to bottom,var(--volet) 0 4px,var(--volet-f) 4px 6.5px);color:#BFD2CA}
+.jour.pris{background:repeating-linear-gradient(to bottom,var(--volet) 0 .25rem,var(--volet-f) .25rem .40625rem);color:#BFD2CA}
 @media (hover: hover) and (pointer: fine) {
-  .jour.pris:hover {background:repeating-linear-gradient(to bottom,var(--volet) 0 4px,var(--volet-f) 4px 6.5px)}
+  .jour.pris:hover {background:repeating-linear-gradient(to bottom,var(--volet) 0 .25rem,var(--volet-f) .25rem .40625rem)}
 }
 .jour.nuit{background:var(--pouzzolane);color:var(--blanc)}
 .jour.debut{box-shadow:inset 0 0 0 2px var(--blanc)}
 .jour.fin{background:var(--pierre);color:var(--pouzzolane-f);border-color:var(--pouzzolane);font-weight:700}
-.jour.fin.pris{background:repeating-linear-gradient(to bottom,var(--volet) 0 4px,var(--volet-f) 4px 6.5px);color:var(--blanc);border-color:var(--pouzzolane)}
+.jour.fin.pris{background:repeating-linear-gradient(to bottom,var(--volet) 0 .25rem,var(--volet-f) .25rem .40625rem);color:var(--blanc);border-color:var(--pouzzolane)}
 .jour.fin::after{content:"départ";position:absolute;bottom:.12rem;font-family:var(--texte);font-size:.55rem;font-weight:800;letter-spacing:.02em}
 .legende{display:flex;flex-wrap:wrap;gap:.5rem 1.2rem;margin-top:1.3rem;font-size:.88rem;color:#C9CDC8}
 .legende span{display:inline-flex;align-items:center;gap:.45rem}
 .legende i{width:1rem;height:1rem;border-radius:3px;background:var(--pierre)}
-.legende .l-prise{background:repeating-linear-gradient(to bottom,var(--volet) 0 3px,var(--volet-f) 3px 4.5px)}
+.legende .l-prise{background:repeating-linear-gradient(to bottom,var(--volet) 0 .1875rem,var(--volet-f) .1875rem .28125rem)}
 .legende .l-choix{background:var(--pouzzolane)}
 @media (min-width:64rem){
   .cal-choix{display:none}

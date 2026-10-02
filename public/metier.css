@@ -42,7 +42,7 @@
   .lp-btn:hover { background: #f6c566; }
 }
 .lp-btn:active { transform: translateY(1px); }
-.lp-lien { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 0.25em; text-decoration-color: rgba(242, 177, 59, 0.6); min-height: 44px; display: inline-flex; align-items: center; }
+.lp-lien { color: var(--text); font-weight: 600; text-decoration: underline; text-underline-offset: 0.25em; text-decoration-color: rgba(242, 177, 59, 0.6); min-height: 2.75rem; display: inline-flex; align-items: center; }
 @media (hover: hover) and (pointer: fine) {
   .lp-lien:hover { text-decoration-color: var(--accent2); }
 }
@@ -53,7 +53,7 @@
 .lp-demo .demo-device::after { display: none; } /* pas de halo derrière le téléphone */
 .lp-demo .demo-frame { opacity: 1; pointer-events: auto; z-index: 1; }
 .lp-demo-legende { display: flex; flex-direction: column; align-items: center; font-size: var(--step--1); color: var(--muted); text-align: center; }
-.lp-demo-legende .lp-lien { min-height: 44px; }
+.lp-demo-legende .lp-lien { min-height: 2.75rem; }
 
 @media (min-width: 62rem) {
   /* assez large pour mettre le texte et le téléphone côte à côte */
@@ -138,7 +138,7 @@
 .lp-faq { margin-block-start: var(--space-l); max-width: var(--lp-mesure); }
 .lp-faq details { border-block-end: 1px solid var(--lp-ligne); }
 .lp-faq details:first-child { border-block-start: 1px solid var(--lp-ligne); }
-.lp-faq summary { cursor: pointer; list-style: none; padding: var(--space-m) var(--space-l) var(--space-m) 0; position: relative; font-weight: 600; color: var(--text); font-size: var(--step-0); min-height: 44px; }
+.lp-faq summary { cursor: pointer; list-style: none; padding: var(--space-m) var(--space-l) var(--space-m) 0; position: relative; font-weight: 600; color: var(--text); font-size: var(--step-0); min-height: 2.75rem; }
 .lp-faq summary::-webkit-details-marker { display: none; }
 .lp-faq summary::after { content: '+'; position: absolute; inset-inline-end: 0.25rem; inset-block-start: 1rem; font-size: var(--step-1); line-height: 1; color: var(--accent2); }
 .lp-faq details[open] summary::after { content: '−'; }

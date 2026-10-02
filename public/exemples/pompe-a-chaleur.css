@@ -24,13 +24,13 @@ body{visibility:visible}
   --trait:#DCD8CE;
   --trait-2:#C9C4B8;
   --erreur:#A3281F;
-  --r:8px;
+  --r:.5rem;
   /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
   --gut:max(clamp(1rem, 0.4rem + 3vi, 2.5rem), env(safe-area-inset-left), env(safe-area-inset-right));
   --max:76rem;
   --carte:27rem;
   --section:clamp(3.5rem, 2rem + 5vi, 6.5rem);
-  --ombre:0 1px 2px rgb(30 58 95 / .08), 0 18px 40px -12px rgb(30 58 95 / .35);
+  --ombre:0 1px 2px rgb(30 58 95 / .08), 0 1.125rem 2.5rem -.75rem rgb(30 58 95 / .35);
   /* catégories MaPrimeRénov' (couleurs Anah), réservées au simulateur */
   --c-bleu:#2B59C3; --c-jaune:#E8B400; --c-violet:#7B4FB5; --c-rose:#D95C94;
   --display:"Red Hat Display","Red Hat Display repli",system-ui,sans-serif;
@@ -180,7 +180,7 @@ p{text-wrap:pretty}
 .devis-tete h2{font-size:1.5rem;letter-spacing:-.02em}
 .devis-tete p{font-size:.9375rem;color:var(--texte-2);margin-top:.2rem}
 .progression{margin-top:1.1rem;display:flex;align-items:center;gap:.75rem;font-size:.8125rem;font-weight:600;color:var(--texte-2)}
-.progression-barre{flex:1;height:6px;border-radius:3px;background:#E7E4DC;overflow:hidden}
+.progression-barre{flex:1;height:.375rem;border-radius:3px;background:#E7E4DC;overflow:hidden}
 .progression-barre span{display:block;height:100%;width:100%;background:var(--sapin);border-radius:3px;transform-origin:left;transform:scaleX(.25);transition:transform .3s ease}
 .etape{border:0;padding:1.25rem 1.5rem .25rem;min-width:0}
 .etape[hidden]{display:none}
@@ -339,20 +339,20 @@ p{text-wrap:pretty}
 .carte-svg{width:100%;height:auto;overflow:visible}
 .carte-svg .riv{fill:none;stroke:#9DB3C9;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .carte-svg .riv-loire{stroke-width:6;stroke:#8AA6C1}
-.carte-svg .riv-nom{font-family:var(--text);font-style:italic;font-size:13px;fill:#5F7B97}
+.carte-svg .riv-nom{font-family:var(--text);font-style:italic;font-size:.8125rem;fill:#5F7B97}
 .carte-svg .villes circle{fill:var(--ardoise)}
 .carte-svg text{paint-order:stroke;stroke:var(--pierre);stroke-width:4px;stroke-linejoin:round}
-.carte-svg .villes text{font-family:var(--text);font-size:13.5px;font-weight:500;fill:var(--ardoise)}
-.carte-svg .villes text.grande{font-family:var(--display);font-weight:800;font-size:17px}
+.carte-svg .villes text{font-family:var(--text);font-size:.84375rem;font-weight:500;fill:var(--ardoise)}
+.carte-svg .villes text.grande{font-family:var(--display);font-weight:800;font-size:1.0625rem}
 .carte-svg .siege rect{fill:var(--sapin);stroke:#fff;stroke-width:3}
-.carte-svg .siege text{font-family:var(--display);font-weight:700;font-size:14px;fill:var(--sapin)}
+.carte-svg .siege text{font-family:var(--display);font-weight:700;font-size:.875rem;fill:var(--sapin)}
 /* téléphone : noms de villes agrandis, villes secondaires masquées */
 @media (max-width:40rem){
-  .carte-svg .villes text{font-size:19px}
-  .carte-svg .villes text.grande{font-size:23px}
+  .carte-svg .villes text{font-size:1.1875rem}
+  .carte-svg .villes text.grande{font-size:1.4375rem}
   .carte-svg .villes text.mineure{display:none}
-  .carte-svg .siege text{font-size:19px}
-  .carte-svg .riv-nom{font-size:17px}
+  .carte-svg .siege text{font-size:1.1875rem}
+  .carte-svg .riv-nom{font-size:1.0625rem}
 }
 .carte-legende{font-size:.875rem;color:var(--texte-2);margin-top:1rem}
 .carre-atelier{display:inline-block;width:.8rem;height:.8rem;border-radius:3px;background:var(--sapin);margin-right:.5rem;vertical-align:-.05em}

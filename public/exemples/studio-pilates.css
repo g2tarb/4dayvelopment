@@ -425,14 +425,14 @@ main > section{padding-block:var(--space-2xl)}
 .rue-grande{stroke-width:22}
 .rue-petite{stroke-width:12}
 .trajet{fill:none;stroke:var(--acajou);stroke-width:4;stroke-dasharray:2 8;stroke-linecap:round}
-.nom-rue{font:600 13px var(--texte);fill:var(--gris)}
-.arr{font:800 42px var(--texte);fill:oklch(0.213 0.025 40.5 / .1)}
-.direction{font:600 12px var(--texte);fill:var(--gris)}
+.nom-rue{font:600 .8125rem var(--texte);fill:var(--gris)}
+.arr{font:800 2.625rem var(--texte);fill:oklch(0.213 0.025 40.5 / .1)}
+.direction{font:600 .75rem var(--texte);fill:var(--gris)}
 .station circle{fill:var(--acajou)}
-.station text{font:650 13px var(--texte);fill:var(--noyer)}
+.station text{font:650 .8125rem var(--texte);fill:var(--noyer)}
 .station .m{fill:var(--blanc);font-weight:800}
 .studio rect{fill:var(--laiton);stroke:var(--noyer);stroke-width:2.5}
-.studio text{font:800 16px var(--texte);fill:var(--noyer)}
+.studio text{font:800 1rem var(--texte);fill:var(--noyer)}
 .coord{display:grid;gap:.7rem;align-content:start;padding:var(--space-m);border-radius:var(--r-m);background:var(--blanc)}
 .coord-nom{font-size:var(--step-2);font-weight:780;letter-spacing:-.02em}
 .coord address{font-style:normal;font-size:var(--step-1);line-height:1.35}

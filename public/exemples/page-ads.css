@@ -28,8 +28,8 @@ body{visibility:visible}
   --gaz:#B3261E;           /* réservé à l’odeur de gaz et aux erreurs */
   --gaz-fonce:#8E1C16;
   --gaz-pale:#FCEBE9;
-  --r:14px;
-  --r-s:8px;
+  --r:.875rem;
+  --r-s:.5rem;
   /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
   --pas:max(clamp(1rem,.5rem + 2vw,2rem), env(safe-area-inset-left), env(safe-area-inset-right));
   --section:clamp(3rem,2rem + 4vw,5.5rem);
@@ -55,7 +55,7 @@ p{text-wrap:pretty}
 .vs{position:absolute;width:0;height:0;overflow:hidden}
 .ico{width:1.3em;height:1.3em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .wrap{width:min(100% - 2*var(--pas),74rem);margin-inline:auto}
-.skip{position:absolute;left:-999px;top:.5rem;z-index:50;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--r-s)}
+.skip{position:absolute;left:-62.4375rem;top:.5rem;z-index:50;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--r-s)}
 .skip:focus{left:max(.5rem,env(safe-area-inset-left))}
 
 /* Boutons : grands, contrastés, jamais plus petits que 56 px de haut */
@@ -193,10 +193,10 @@ body[data-ligne="fermee"] .une-suite .vers-rappel{background:var(--encre);border
 .t-lignes dd b small{display:block;font-size:.8em;font-weight:700;color:var(--encre-2)}
 .t-lignes dd span{grid-column:1/-1}
 /* les encoches de la ligne de découpe */
-.t-lignes::before,.t-lignes::after{content:"";position:absolute;top:-13px;width:24px;height:24px;border-radius:50%;
+.t-lignes::before,.t-lignes::after{content:"";position:absolute;top:-.8125rem;width:1.5rem;height:1.5rem;border-radius:50%;
   background:var(--fond);border:2px solid var(--encre)}
-.t-lignes::before{left:-13px;clip-path:inset(0 0 0 11px)}
-.t-lignes::after{right:-13px;clip-path:inset(0 11px 0 0)}
+.t-lignes::before{left:-.8125rem;clip-path:inset(0 0 0 .6875rem)}
+.t-lignes::after{right:-.8125rem;clip-path:inset(0 .6875rem 0 0)}
 @media (min-width:48rem){
   .ticket{grid-template-columns:minmax(0,1fr) minmax(0,2fr)}
   .t-principal{padding:1.4rem 1.75rem 1.5rem}
@@ -206,9 +206,9 @@ body[data-ligne="fermee"] .une-suite .vers-rappel{background:var(--encre);border
   .t-lignes dd{display:block}
   .t-lignes dd b{display:block;margin-top:.35rem;text-align:left;font-size:clamp(1.5rem,1rem + 1vw,2rem);line-height:1.1}
   .t-lignes dd b small{display:inline;font-size:.55em}
-  .t-lignes::before,.t-lignes::after{left:-13px;right:auto}
-  .t-lignes::before{top:-14px;clip-path:inset(11px 0 0 0)}
-  .t-lignes::after{top:auto;bottom:-14px;clip-path:inset(0 0 11px 0)}
+  .t-lignes::before,.t-lignes::after{left:-.8125rem;right:auto}
+  .t-lignes::before{top:-.875rem;clip-path:inset(.6875rem 0 0 0)}
+  .t-lignes::after{top:auto;bottom:-.875rem;clip-path:inset(0 0 .6875rem 0)}
 }
 /* ordinateur : titre et chapeau côte à côte, le bouton puis le ticket en pleine largeur */
 @media (min-width:60rem){
@@ -323,18 +323,18 @@ input[aria-invalid="true"]{border-color:var(--gaz)}
 .p-lyon{fill:var(--flamme-pale);stroke:var(--flamme);stroke-width:2}
 .p-lyon.est-choisi{fill:#C3D1FA;stroke-width:4}
 .p-eau{fill:none;stroke:#A9C3F4;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}
-.p-riv{font-size:15px;font-style:italic;fill:#3F63BF}
+.p-riv{font-size:.9375rem;font-style:italic;fill:#3F63BF}
 .p-pt circle{fill:var(--blanc);stroke:var(--flamme);stroke-width:3;transform-box:fill-box;transform-origin:center;transition:transform .2s}
-.p-pt text,.p-lib{font-size:16px;fill:var(--encre);paint-order:stroke;stroke:var(--blanc);stroke-width:5px;stroke-linejoin:round}
-.p-lib-lyon{font-size:24px;font-weight:800}
+.p-pt text,.p-lib{font-size:1rem;fill:var(--encre);paint-order:stroke;stroke:var(--blanc);stroke-width:5px;stroke-linejoin:round}
+.p-lib-lyon{font-size:1.5rem;font-weight:800}
 .p-pt.est-choisi circle{fill:var(--flamme);transform:scale(1.35)}
 .p-pt.est-choisi text{font-weight:800;fill:var(--flamme-fonce)}
 .plan figcaption{margin-top:.75rem;font-size:1rem;color:var(--encre-2)}
 /* plan étroit : les noms deviendraient illisibles, on garde les points et la réponse dit le nom */
 @container (max-width:30rem){
   .p-pt text{display:none}
-  .p-lib-lyon{font-size:34px}
-  .p-riv{font-size:22px}
+  .p-lib-lyon{font-size:2.125rem}
+  .p-riv{font-size:1.375rem}
 }
 @media (min-width:60rem){
   .zone-grille{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:start;gap:4rem}

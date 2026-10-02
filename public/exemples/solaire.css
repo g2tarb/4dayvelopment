@@ -49,7 +49,7 @@ body{visibility:visible}
   --r-s:.5rem;
   --r-m:1rem;
   --r-l:1.5rem;
-  --ombre:0 1px 2px oklch(0.25 0.06 255 / .08), 0 18px 40px -18px oklch(0.25 0.06 255 / .4);
+  --ombre:0 1px 2px oklch(0.25 0.06 255 / .08), 0 1.125rem 2.5rem -1.125rem oklch(0.25 0.06 255 / .4);
   --police:"Saira","Saira repli",system-ui,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -143,13 +143,13 @@ sup{font-size:.7em;line-height:0}
 /* Le dessin : le ciel est celui de la section, le SVG n'apporte que le toit, la maison et le soleil */
 .toit{inline-size:100%;block-size:auto;aspect-ratio:800 / 425;overflow:hidden;touch-action:manipulation}
 .trajet{fill:none;stroke:#fff;stroke-opacity:.8;stroke-width:2;stroke-dasharray:3 9;stroke-linecap:round}
-.soleil{transform:translate(400px,52px)}
+.soleil{transform:translate(25rem,3.25rem)}
 .soleil-halo{fill:#FFE793;opacity:.55}
 .soleil-disque{fill:#FFCB3C;stroke:#F2AE12;stroke-width:2}
-.simu[data-o="sud-est"] .soleil{transform:translate(585px,92px)}
-.simu[data-o="sud-ouest"] .soleil{transform:translate(215px,92px)}
+.simu[data-o="sud-est"] .soleil{transform:translate(36.5625rem,5.75rem)}
+.simu[data-o="sud-ouest"] .soleil{transform:translate(13.4375rem,5.75rem)}
 .rose-fond{fill:oklch(1 0 0 / .8);stroke:var(--encre);stroke-width:1.5}
-.rose-l{font:700 11px var(--police);fill:var(--encre);text-anchor:middle}
+.rose-l{font:700 .6875rem var(--police);fill:var(--encre);text-anchor:middle}
 .rose-axe{fill:var(--encre)}
 .rose-aiguille{fill:var(--tuile);stroke:var(--encre);stroke-width:1;transform:rotate(0deg)}
 .simu[data-o="sud-est"] .rose-simple{transform:rotate(-45deg)}
@@ -308,7 +308,7 @@ sup{font-size:.7em;line-height:0}
   overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:inline mandatory;scrollbar-width:thin;padding-block:.25rem 1rem;
   scroll-padding-inline:var(--gutter)}
 .etape-btn::before{content:"";position:absolute;z-index:-1;inset-block-start:calc(1.6rem - 2px);inset-inline-start:50%;
-  inline-size:calc(100% + .5rem);block-size:4px;background:oklch(1 0 0 / .22)}
+  inline-size:calc(100% + .5rem);block-size:.25rem;background:oklch(1 0 0 / .22)}
 .etape-btn:last-of-type::before{content:none}
 .etape-btn.fait::before{background:var(--soleil)}
 @media (prefers-reduced-motion: no-preference){.etape-btn::before{transition:background-color .3s}}
@@ -320,7 +320,7 @@ sup{font-size:.7em;line-height:0}
 .etape-btn[aria-selected="true"] .etape-num{background:var(--soleil);border-color:var(--soleil);color:var(--encre)}
 .etape-nom{font-weight:700;font-stretch:80%;font-size:var(--step-0);line-height:1.15}
 .etape-qui{font-size:.8rem;line-height:1.2;color:oklch(1 0 0 / .75);border:1px solid oklch(1 0 0 / .3);border-radius:999px;padding:.1rem .5rem}
-.etape-btn[aria-selected="true"] .etape-nom{text-decoration:underline;text-decoration-color:var(--soleil);text-decoration-thickness:3px;text-underline-offset:.3em}
+.etape-btn[aria-selected="true"] .etape-nom{text-decoration:underline;text-decoration-color:var(--soleil);text-decoration-thickness:.1875rem;text-underline-offset:.3em}
 .etape-btn:focus-visible{outline-color:var(--soleil)}
 @media (hover: hover) and (pointer: fine){.etape-btn:not([aria-selected="true"]):hover .etape-num{border-color:#fff}}
 .etape-panneau{display:grid;gap:var(--space-m);grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));
@@ -399,16 +399,16 @@ sup{font-size:.7em;line-height:0}
 .carte-svg{inline-size:100%;block-size:auto;overflow:visible}
 .carte-svg .mer{fill:oklch(0.83 0.06 238)}
 .carte-svg .cote{fill:none;stroke:oklch(0.6 0.08 245);stroke-width:2}
-.carte-svg .mer-nom,.carte-svg .riv-nom{font-family:var(--police);font-style:italic;font-size:15px;fill:oklch(0.42 0.08 245)}
+.carte-svg .mer-nom,.carte-svg .riv-nom{font-family:var(--police);font-style:italic;font-size:.9375rem;fill:oklch(0.42 0.08 245)}
 .carte-svg .riv{fill:none;stroke:oklch(0.66 0.08 240);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .carte-svg .canal{fill:none;stroke:var(--garrigue);stroke-width:2.5;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round}
-.carte-svg .canal-nom{font-family:var(--police);font-style:italic;font-size:13px;fill:var(--garrigue)}
+.carte-svg .canal-nom{font-family:var(--police);font-style:italic;font-size:.8125rem;fill:var(--garrigue)}
 .carte-svg .villes circle{fill:var(--encre)}
 .carte-svg text{paint-order:stroke;stroke:oklch(0.93 0.03 238);stroke-width:4px;stroke-linejoin:round}
 .carte-svg .mer-nom{stroke:oklch(0.83 0.06 238)}
-.carte-svg .villes text{font-family:var(--police);font-size:14px;font-weight:500;fill:var(--encre)}
+.carte-svg .villes text{font-family:var(--police);font-size:.875rem;font-weight:500;fill:var(--encre)}
 .carte-svg .siege rect{fill:var(--tuile);stroke:var(--encre);stroke-width:2.5}
-.carte-svg .siege text{font-family:var(--police);font-stretch:70%;font-weight:760;font-size:22px;fill:var(--encre)}
+.carte-svg .siege text{font-family:var(--police);font-stretch:70%;font-weight:760;font-size:1.375rem;fill:var(--encre)}
 .carte-svg .reperes rect{fill:#1A2F4E;stroke:var(--soleil);stroke-width:2}
 .carte-svg .reperes a{cursor:pointer}
 .carte-svg .reperes a:focus-visible{outline:none}
@@ -418,9 +418,9 @@ sup{font-size:.7em;line-height:0}
 }
 /* carte étroite : les petites communes s'effacent, les autres grossissent pour rester lisibles */
 @container carte (max-width: 26rem){
-  .carte-svg .villes text{font-size:19px}
+  .carte-svg .villes text{font-size:1.1875rem}
   .carte-svg .villes .mineure{display:none}
-  .carte-svg .siege text{font-size:26px}
+  .carte-svg .siege text{font-size:1.625rem}
 }
 .zone-carte{container:carte / inline-size}
 .carte-legende{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;font-size:var(--step--1);color:var(--encre-2);margin-block-start:1rem}

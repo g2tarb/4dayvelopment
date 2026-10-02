@@ -596,10 +596,10 @@ function buildArticleHTML(data) {
   const url      = `https://4dayvelopment.fr/blog/${slug}`;
 
   const faqHtml = (faq && faq.length) ? `
-        <section style="margin-block-start:50px;">
-          <h2 style="color:#e8e8e8;font-size:1.8rem;margin-block-end:24px;">Questions fréquentes</h2>
-          ${faq.map(f => `<div style="margin-block-end:22px;">
-            <h3 style="color:#e8e8e8;font-size:1.2rem;margin-block-end:8px;">${escapeHtml(f.question)}</h3>
+        <section style="margin-block-start:3.125rem;">
+          <h2 style="color:#e8e8e8;font-size:1.8rem;margin-block-end:1.5rem;">Questions fréquentes</h2>
+          ${faq.map(f => `<div style="margin-block-end:1.375rem;">
+            <h3 style="color:#e8e8e8;font-size:1.2rem;margin-block-end:0.5rem;">${escapeHtml(f.question)}</h3>
             <p style="color:#bbb;line-height:1.8;">${escapeHtml(f.answer)}</p>
           </div>`).join('')}
         </section>` : '';
@@ -649,18 +649,18 @@ ${ARTICLE_NAV}  <!-- /partial:nav -->
 
   <main id="contenu">
 
-  <section class="hero" style="min-height:auto;padding:140px 24px 60px;">
-    <div class="container" style="max-width:800px;">
+  <section class="hero" style="min-height:auto;padding:8.75rem 1.5rem 3.75rem;">
+    <div class="container" style="max-width:50rem;">
 
-      <nav aria-label="Fil d'Ariane" class="breadcrumb" style="margin-block-start:24px;">
-        <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0;font-size:14px;color:var(--muted2);">
+      <nav aria-label="Fil d'Ariane" class="breadcrumb" style="margin-block-start:1.5rem;">
+        <ol itemscope itemtype="https://schema.org/BreadcrumbList" style="display:flex;flex-wrap:wrap;gap:0.5rem;list-style:none;padding:0;font-size:0.875rem;color:var(--muted2);">
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
             <a itemprop="item" href="/" style="color:#888;text-decoration:none;"><span itemprop="name">Accueil</span></a>
-            <meta itemprop="position" content="1"><span style="margin-inline-start:8px;color:#444;">›</span>
+            <meta itemprop="position" content="1"><span style="margin-inline-start:0.5rem;color:#444;">›</span>
           </li>
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
             <a itemprop="item" href="/blog" style="color:#888;text-decoration:none;"><span itemprop="name">Blog</span></a>
-            <meta itemprop="position" content="2"><span style="margin-inline-start:8px;color:#444;">›</span>
+            <meta itemprop="position" content="2"><span style="margin-inline-start:0.5rem;color:#444;">›</span>
           </li>
           <li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
             <span itemprop="name" style="color:#f2b13b;">${escapeHtml(title)}</span>
@@ -669,30 +669,30 @@ ${ARTICLE_NAV}  <!-- /partial:nav -->
         </ol>
       </nav>
 
-      <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-block-start:20px;margin-block-end:20px;">
-        <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:4px 12px;border-radius:100px;font-size:12px;font-weight:600;">${escapeHtml(category)}</span>
-        <time datetime="${date}" style="font-size:13px;color:var(--muted2);">${dateFR}</time>
-        <span style="font-size:13px;color:var(--muted2);">· ${escapeHtml(readTime)}</span>
+      <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-block-start:1.25rem;margin-block-end:1.25rem;">
+        <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:0.25rem 0.75rem;border-radius:100px;font-size:0.75rem;font-weight:600;">${escapeHtml(category)}</span>
+        <time datetime="${date}" style="font-size:0.8125rem;color:var(--muted2);">${dateFR}</time>
+        <span style="font-size:0.8125rem;color:var(--muted2);">· ${escapeHtml(readTime)}</span>
       </div>
 
       <h1 class="hero-title reveal" style="font-size:clamp(2rem,5vi,3.2rem);margin-block-start:0;line-height:1.2;">${escapeHtml(title)}</h1>
-      <p class="hero-desc reveal" style="max-width:700px;">${escapeHtml(description)}</p>
+      <p class="hero-desc reveal" style="max-width:43.75rem;">${escapeHtml(description)}</p>
     </div>
   </section>
 
-  <article style="padding:20px var(--gutter) 80px;">
-    <div class="container" style="max-width:800px;">
-      <div style="color:#bbb;line-height:1.9;font-size:16px;">
+  <article style="padding:1.25rem var(--gutter) 5rem;">
+    <div class="container" style="max-width:50rem;">
+      <div style="color:#bbb;line-height:1.9;font-size:1rem;">
         ${content}
       </div>
 ${faqHtml}
-      <div style="background:rgba(218,84,38,0.08);border:1px solid rgba(218,84,38,0.2);border-radius:14px;padding:28px;margin:40px 0;text-align:center;">
-        <p style="font-size:18px;color:#e8e8e8;font-weight:700;margin-block-end:12px;">Un projet en tête ?</p>
-        <p style="font-size:14px;color:#888;margin-block-end:20px;">Devis gratuit sous 24h · Livraison en 4 jours · Sans engagement</p>
+      <div style="background:rgba(218,84,38,0.08);border:1px solid rgba(218,84,38,0.2);border-radius:14px;padding:1.75rem;margin:2.5rem 0;text-align:center;">
+        <p style="font-size:1.125rem;color:#e8e8e8;font-weight:700;margin-block-end:0.75rem;">Un projet en tête ?</p>
+        <p style="font-size:0.875rem;color:#888;margin-block-end:1.25rem;">Devis gratuit sous 24h · Livraison en 4 jours · Sans engagement</p>
         <a href="/#contact" class="btn-primary magnetic" style="display:inline-flex;">Demander mon devis gratuit →</a>
       </div>
 
-      <a href="/blog" style="color:#f2b13b;font-weight:600;font-size:14px;text-decoration:none;">← Retour au blog</a>
+      <a href="/blog" style="color:#f2b13b;font-weight:600;font-size:0.875rem;text-decoration:none;">← Retour au blog</a>
     </div>
   </article>
 
