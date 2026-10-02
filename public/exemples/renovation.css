@@ -4,6 +4,8 @@
    cartouche (le bloc titre des plans d'architecte : lieu, surface, durée, budget).
    Palette : encre bleu de Prusse (les tirages de plans), chaux, blanc, chêne pour l'accent.
    Polices auto-hébergées (SIL OFL 1.1) : Brygada 1918 pour les titres, Sofia Sans pour le texte. */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 @font-face{font-family:"Brygada 1918";font-style:normal;font-weight:400 700;font-display:swap;
   src:url("/fonts/brygada-1918-var.woff2") format("woff2")}
 @font-face{font-family:"Sofia Sans";font-style:normal;font-weight:1 1000;font-display:swap;

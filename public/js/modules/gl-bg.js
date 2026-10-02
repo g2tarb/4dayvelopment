@@ -126,9 +126,13 @@ export function initUniverse() {
     'position:fixed;top:0;left:0;width:100%;height:100%;' +
     'z-index:0;pointer-events:none;opacity:0;transition:opacity 2.5s ease;';
 
+  // Sans GPU (rendu logiciel : vieux appareils, GPU sur liste noire, et les
+  // robots de mesure comme PageSpeed), chaque image du fond se calcule sur le
+  // thread principal : plusieurs secondes de blocage. Le contexte est alors
+  // refusé et la page garde son fond CSS.
   const gl = canvas.getContext('webgl', {
     alpha: true, antialias: false, depth: false, stencil: false,
-    powerPreference: 'low-power',
+    powerPreference: 'low-power', failIfMajorPerformanceCaveat: true,
   });
   if (!gl) return;
   document.body.insertBefore(canvas, document.body.firstChild);

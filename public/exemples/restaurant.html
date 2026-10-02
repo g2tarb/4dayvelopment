@@ -9,6 +9,8 @@
 <meta name="theme-color" content="#7A1E2C">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/bitter-var.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/playwrite-fr-trad-var.woff2" crossorigin>
+<!-- Corps masqué jusqu’à la feuille de style : sans ça, dans le téléphone de la home, la page se peignait sans CSS puis sautait (CLS). -->
+<style>body{visibility:hidden}</style>
 <link rel="stylesheet" href="/exemples/restaurant.css">
 <script src="/exemples/restaurant.js" defer></script>
 </head>

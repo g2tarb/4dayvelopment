@@ -6,6 +6,8 @@
    Polices auto-hébergées (SIL OFL 1.1) : Bitter variable 100-900 (texte et titres, une
    égyptienne de devanture) et Playwrite FR Trad (la cursive de l’école française, celle
    qu’on lit sur les ardoises), réservée à ce qui est écrit à la main. */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 @font-face{font-family:"Bitter";font-style:normal;font-weight:100 900;font-display:swap;
   src:url("/fonts/bitter-var.woff2") format("woff2")}
 @font-face{font-family:"Playwrite FR Trad";font-style:normal;font-weight:100 400;font-display:swap;

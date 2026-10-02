@@ -9,6 +9,8 @@
 <meta name="theme-color" content="#24272B">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/libre-caslon-text-400.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/karla-var.woff2" crossorigin>
+<!-- Corps masqué jusqu’à la feuille de style : sans ça, dans le téléphone de la home, la page se peignait sans CSS puis sautait (CLS). -->
+<style>body{visibility:hidden}</style>
 <link rel="stylesheet" href="/exemples/gite.css">
 <script src="/exemples/gite.js" defer></script>
 </head>

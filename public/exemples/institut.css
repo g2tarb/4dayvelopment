@@ -6,6 +6,8 @@
    poudre (surfaces nude). La couleur d’accent n’est pas fixée : c’est le vernis choisi.
    Polices auto-hébergées (SIL OFL 1.1) : Gloock 400 (titres, noms de teintes),
    Albert Sans variable 300-800 (texte, prix, interface). */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 @font-face{font-family:"Gloock";font-style:normal;font-weight:400;font-display:swap;
   src:url("/fonts/gloock-400.woff2") format("woff2")}
 @font-face{font-family:"Albert Sans";font-style:normal;font-weight:300 800;font-display:swap;

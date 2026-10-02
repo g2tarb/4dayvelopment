@@ -3,6 +3,8 @@
    Palette du Midi à midi : ciel franc, tuile, soleil ; encre bleu nuit pour le texte, azur pour l'action secondaire.
    Police auto-hébergée (SIL OFL 1.1) : Saira variable. Son axe de chasse fait les chiffres du simulateur
    (très étroits, comme l'afficheur d'un onduleur), les titres (étroits) et le texte (chasse normale). */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 @font-face{font-family:"Saira";font-style:normal;font-weight:100 900;font-stretch:50% 125%;font-display:swap;
   src:url("/fonts/saira-var.woff2") format("woff2")}
 /* repli Arial calé sur la largeur de Saira : la ligne ne saute pas quand la police arrive */

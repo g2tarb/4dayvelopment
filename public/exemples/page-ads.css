@@ -7,6 +7,8 @@
    ce qui est allumé, encre de nuit pour le texte, émail froid pour le fond, rouge réservé au gaz.
    Police : Atkinson Hyperlegible Next (SIL OFL 1.1), variable 200-800, dessinée pour les lecteurs
    malvoyants. Corps de base 19 px : la page doit se lire sans lunettes. */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 @font-face{font-family:"Atkinson Hyperlegible Next";font-style:normal;font-weight:200 800;font-display:swap;
   src:url("/fonts/atkinson-hyperlegible-next-var.woff2") format("woff2")}
 

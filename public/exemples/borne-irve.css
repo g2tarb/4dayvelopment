@@ -6,6 +6,8 @@
    joint de mortier pour les fonds clairs.
    Police : Archivo (SIL OFL 1.1) auto-hébergée ; axe de chasse utilisé comme signature :
    titres serrés comme les plaques de tableau, relevés chiffrés élargis comme un écran de borne. */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 @font-face{font-family:"Archivo";font-style:normal;font-weight:100 900;font-stretch:62% 125%;font-display:swap;
   src:url("/fonts/archivo-var.woff2") format("woff2")}
 @font-face{font-family:"Archivo repli";src:local("Arial"),local("ArialMT");
