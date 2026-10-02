@@ -2,6 +2,8 @@
    Concept : le fauteuil libre. Trois miroirs, une ampoule par poste qui dit
    en direct qui est libre ; la carte des prix gravée sur un miroir.
    Polices : Bodoni Moda (enseigne dorée, titres, prix) + Figtree (lecture, interface). */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 
 @font-face {
   font-family: "Bodoni Moda";

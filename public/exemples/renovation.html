@@ -9,6 +9,8 @@
 <meta name="theme-color" content="#1A2B3C">
 <link rel="preload" as="font" type="font/woff2" href="/fonts/brygada-1918-var.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/fonts/sofia-sans-var.woff2" crossorigin>
+<!-- Corps masqué jusqu’à la feuille de style : sans ça, dans le téléphone de la home, la page se peignait sans CSS puis sautait (CLS). -->
+<style>body{visibility:hidden}</style>
 <link rel="stylesheet" href="/exemples/renovation.css">
 <script src="/exemples/renovation.js" defer></script>
 </head>
