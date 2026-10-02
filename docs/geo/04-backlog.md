@@ -33,10 +33,7 @@ Périmètre strict fixé par la mission et les arbitrages du 23 septembre 2026. 
   - Clé `365b3bdbbc63f75d8fc720496d6278ef`, servie à la racine dans `public/365b3bdbbc63f75d8fc720496d6278ef.txt`.
   - GitHub Action `.github/workflows/indexnow.yml` : sur un push vers `main` qui touche `public/**` ou `server.js`, elle attend que la prod serve le commit, vérifie la clé, puis poste toutes les URLs du sitemap à `api.indexnow.org`.
 - **Détection du déploiement** : nouvelle route `GET /api/version`, qui renvoie `{ commit: RENDER_GIT_COMMIT }`, une variable fournie par Render. L'Action interroge toutes les 30 s pendant 20 min au maximum. Deux pushes rapprochés : `concurrency` annule l'exécution précédente, car Render ne déploie que le dernier commit.
-- **Secret** : `INDEXNOW_KEY` dans les secrets du dépôt. **Action du propriétaire du dépôt** : le compte qui ouvre la PR n'a que le droit d'écriture, et créer un secret demande d'être propriétaire.
-  ```
-  gh secret set INDEXNOW_KEY -R g2tarb/4dayvelopment --body 365b3bdbbc63f75d8fc720496d6278ef
-  ```
+- **Clé** : écrite en clair dans le workflow depuis le 2 octobre 2026. Le protocole la publie à la racine du site : ce n'est pas un secret, et le secret `INDEXNOW_KEY` n'est plus nécessaire.
 - **Fichiers** : `public/<clé>.txt`, `.github/workflows/indexnow.yml`, `server.js` (route `/api/version`).
 
 ### 4. JSON-LD
@@ -149,7 +146,7 @@ Non vérifiés dans ce lot : l'exécution réelle de la GitHub Action (elle néc
 | 6 | Graphie et coordonnées : cartes QR et vCard (`4Dayvelopment`, `contact@4dayvelopment.com`), og-image (« 4 dayvelopment », « livre ») | Moyen | 0,5 | Dev | aucune |
 | 7 | Locales : retirer « Satisfait ou remboursé 14j » / « Money-back guarantee » (réaffichés après un changement de langue) et « espace client » | Moyen | 0,1 | Dev | #2 |
 | 8 | Vérifier le domaine dans Google Search Console et Bing Webmaster Tools (TXT chez Hostinger), soumettre le sitemap, importer GSC dans BWT | Fort : Bing alimente ChatGPT et Copilot | 0,5 | Sirven | accès DNS |
-| 9 | Créer le secret `INDEXNOW_KEY` ; vérifier que GitHub Actions est actif sur le dépôt | Fort | 0,1 | Propriétaire du dépôt | merge de la PR |
+| 9 | ~~Créer le secret `INDEXNOW_KEY`~~ : plus nécessaire, la clé publique est dans le workflow (2 octobre 2026) | Fort | 0 | aucun | aucune |
 | 10 | Brancher le suivi IA : feuille, workflow n8n en 3 nœuds, variables Render | Moyen : mesure | 0,5 | Sirven | n8n, Render |
 | 11 | Maillage : lier `/essentiel`, `/services/site-internet-restaurant` et `/exemples` (aucun lien entrant), et l'article prix depuis la home et les services | Moyen | 0,5 | Dev | aucune |
 
