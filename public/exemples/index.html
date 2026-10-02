@@ -86,9 +86,16 @@
       color:#fff; padding:5px 12px; border-radius:100px;
       font-size:0.75rem; font-weight:600; letter-spacing:.03em; text-transform:uppercase;
     }
+    /* La couleur de marque des demos sombres (marine, vert, prune) tombait a
+       1,1-2,5:1 sur le fond noir de la carte : on garde sa teinte, on releve
+       sa luminosite (contraste >= 7:1). Repli : gris clair. */
+    .pcard-num, .pcard-cta {
+      color:#e8e8e8;
+      color:oklch(from var(--brand) max(l, .8) c h);
+    }
     .pcard-num {
       font-family:'JetBrains Mono',monospace; font-size:13px;
-      color:var(--brand); font-weight:600;
+      font-weight:600;
       text-shadow:0 1px 6px rgba(0,0,0,.6);
     }
     .pcard-title {
@@ -99,7 +106,7 @@
       color:#c8c8c8; font-size:13.5px; line-height:1.6; margin:0 0 13px;
     }
     .pcard-cta {
-      font-size:13px; font-weight:600; color:var(--brand);
+      font-size:13px; font-weight:600;
     }
     @media (prefers-reduced-motion: reduce) {
       .pcard, .pcard-visual { transition:none; }
