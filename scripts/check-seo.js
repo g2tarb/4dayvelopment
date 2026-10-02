@@ -247,6 +247,15 @@ function main() {
   }
   for (const route of orphans(pages)) fail('sitemap.xml', `${route} n'a aucun lien entrant depuis les autres pages`);
 
+  // llms.txt suit le sitemap : chaque page du sitemap y figure, et chaque URL
+  // qu'il cite existe. Sinon les moteurs IA lisent une liste périmée.
+  const llms = read('llms.txt');
+  for (const route of pages.keys()) if (!llms.includes(`(${SITE}${route})`)) fail('llms.txt', `${route} (sitemap) absente`);
+  for (const [, url] of llms.matchAll(/\((https:\/\/4dayvelopment\.fr[^)#\s]*)[^)]*\)/g)) {
+    const rel = resolveRoute(new URL(url).pathname);
+    if (!rel || !exists(rel)) fail('llms.txt', `${url} ne correspond à aucun fichier`);
+  }
+
   const fr = JSON.parse(read('locales/fr.json'));
   const en = JSON.parse(read('locales/en.json'));
   for (const [name, dict] of [['fr.json', fr], ['en.json', en]]) {

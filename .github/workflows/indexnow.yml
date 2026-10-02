@@ -4,7 +4,8 @@
 # poussé (GET /api/version) avant de pinguer, sinon on signalerait l'ancienne
 # version des pages.
 #
-# Secret requis : INDEXNOW_KEY, identique au nom du fichier public/<clé>.txt.
+# La clé n'est pas un secret : le protocole IndexNow la publie à la racine
+# du site (public/<clé>.txt). Elle est donc écrite ici, sans secret GitHub.
 
 name: IndexNow
 
@@ -26,7 +27,7 @@ jobs:
     timeout-minutes: 25
     env:
       SITE: https://4dayvelopment.fr
-      KEY: ${{ secrets.INDEXNOW_KEY }}
+      KEY: 365b3bdbbc63f75d8fc720496d6278ef # identique au nom de public/<clé>.txt
     steps:
       - name: Attendre que la prod serve ce commit
         run: |
@@ -40,7 +41,6 @@ jobs:
 
       - name: Vérifier la clé servie
         run: |
-          test -n "$KEY" || { echo "::error::Secret INDEXNOW_KEY absent"; exit 1; }
           test "$(curl -fsS "$SITE/$KEY.txt")" = "$KEY" || { echo "::error::$SITE/$KEY.txt ne contient pas la clé"; exit 1; }
 
       - name: Pinguer IndexNow avec les URLs du sitemap

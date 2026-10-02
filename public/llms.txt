@@ -9,20 +9,37 @@
 - Maintenance : mises à jour de sécurité, correction de bugs, sauvegardes régulières et support technique par email. 80 € TTC par mois, engagement 12 mois, résiliable à l'échéance avec un préavis de 30 jours (CGV, article 9).
 - Option WordPress sur toutes les formules : +250 € TTC, formation à la prise en main incluse.
 - Paiement : 50 % à la commande, 50 % à la livraison, paiement en 2 fois sans frais (CGV, article 4).
+- Site bilingue pour lieu de réception : français et anglais, 5 à 7 pages, traduction comprise, 1 490 € TTC.
+- Fiche Google (création ou remise en ordre de la fiche d'établissement) : 490 €.
+- Automatisation IA (réponse aux demandes en moins d'une minute) : 490 €, puis 49 € par mois.
+- [Gestion Google Ads](https://4dayvelopment.fr/services/gestion-google-ads) : sur devis, honoraires du premier mois remboursés sur demande dans les 30 jours (le budget payé à Google n'est pas remboursable).
 
 ## Pages clés
 - [Accueil](https://4dayvelopment.fr/) : présentation de l'agence, tarifs, processus, FAQ.
 - [Création de site vitrine](https://4dayvelopment.fr/services/site-vitrine)
 - [Création de site e-commerce](https://4dayvelopment.fr/services/e-commerce)
 - [Référencement SEO](https://4dayvelopment.fr/services/referencement-seo)
-- [Site internet pour restaurant](https://4dayvelopment.fr/services/site-internet-restaurant)
+- [Gestion Google Ads pour artisans et TPE](https://4dayvelopment.fr/services/gestion-google-ads)
+- [Blog](https://4dayvelopment.fr/blog) : guides sur le prix, les délais et la visibilité d'un site.
 - [Combien coûte un site internet en 2026](https://4dayvelopment.fr/blog/combien-coute-site-internet-2026) : guide des prix comparant plateformes, freelances et agences.
 - [Réalisations](https://4dayvelopment.fr/portfolio) : projets livrés, avec lien vers chaque site en ligne.
-- [Exemples par métier](https://4dayvelopment.fr/exemples) : six démos (restauration, beauté, électricien IRVE, coach sportif, barbier, plombier). Ce sont des sites de démonstration, pas des sites de clients.
+- [Exemples par métier](https://4dayvelopment.fr/exemples) : douze démos (studio de Pilates, lieu de réception, rénovation, chambres d'hôtes, pompe à chaleur, solaire, artisan IRVE, page pour Google Ads, commerce qui ouvre, restaurant, coiffeur et barbier, institut et onglerie). Ce sont des sites de démonstration d'entreprises fictives, pas des sites de clients.
 - [Application web et MVP](https://4dayvelopment.fr/services/application-web) : PWA, MVP, outil métier ou plateforme, dès 1 990 € TTC.
 - [Méthode 4 jours](https://4dayvelopment.fr/methode-4-jours) : conditions de départ, déroulé jour par jour, contenus à préparer, garantie.
 - [L'agence](https://4dayvelopment.fr/agence) : agence web à Paris fondée par trois associés, zone d'intervention, méthode de travail et contact.
 - [Demande de devis](https://4dayvelopment.fr/devis)
+
+## Sites par métier
+Chaque page présente une démo, le prix et les questions propres au métier.
+- [Site internet pour restaurant](https://4dayvelopment.fr/services/site-internet-restaurant)
+- [Site internet pour installateur de pompe à chaleur](https://4dayvelopment.fr/services/site-internet-pompe-a-chaleur)
+- [Site internet pour installateur photovoltaïque](https://4dayvelopment.fr/services/site-internet-installateur-solaire)
+- [Site internet pour installateur de bornes de recharge IRVE](https://4dayvelopment.fr/services/site-internet-borne-recharge)
+- [Site internet pour artisan de la rénovation](https://4dayvelopment.fr/services/site-internet-artisan-renovation)
+- [Site internet pour gîte et chambre d'hôtes](https://4dayvelopment.fr/services/site-internet-gite-chambre-hotes)
+- [Site internet pour lieu de réception et domaine de mariage](https://4dayvelopment.fr/services/site-internet-lieu-de-reception)
+- [Site internet pour studio de Pilates](https://4dayvelopment.fr/services/site-internet-studio-pilates)
+- [Site internet pour entreprise en création](https://4dayvelopment.fr/services/site-internet-creation-entreprise)
 
 ## Zone d'intervention
 Paris, Île-de-France et toute la France, à distance.
