@@ -241,7 +241,7 @@ ul,ol{padding:0;list-style:none}
 .fiche-photos{position:relative}
 .fiche-photo img{width:100%;aspect-ratio:4/3;object-fit:cover}
 .bascule{position:absolute;left:.75rem;bottom:.75rem;display:flex;padding:.25rem;border-radius:999px;background:var(--basalte)}
-.bascule button{min-height:2.5rem;padding:.35rem .9rem;border:2px solid transparent;border-radius:999px;background:none;
+.bascule button{min-height:2.75rem;padding:.35rem .9rem;border:2px solid transparent;border-radius:999px;background:none;
   color:var(--pierre);font-weight:700;font-size:.88rem}
 .bascule button[aria-pressed="true"]{background:var(--pierre);color:var(--basalte)}
 .bascule :focus-visible{outline-color:var(--blanc)}
@@ -383,7 +383,7 @@ ul,ol{padding:0;list-style:none}
 .hotes-texte p{max-width:40rem}
 .hotes-texte p+p{margin-top:.8rem}
 .hotes-tel{display:grid;gap:.3rem;margin-top:1.4rem!important}
-.hotes-tel a{display:inline-flex;align-items:center;gap:.6rem;width:fit-content;font-family:var(--titre);font-size:1.7rem;text-decoration:none;color:var(--volet)}
+.hotes-tel a{display:inline-flex;align-items:center;min-height:2.75rem;gap:.6rem;width:fit-content;font-family:var(--titre);font-size:1.7rem;text-decoration:none;color:var(--volet)}
 .hotes-tel a:hover{text-decoration:underline;text-underline-offset:.2em}
 .hotes-tel span{font-size:.95rem;color:var(--gris)}
 .alerte{position:relative;padding:1.5rem 1.5rem 1.6rem;border-radius:16px;background:var(--pouzzolane-pale);border:2px solid var(--pouzzolane)}

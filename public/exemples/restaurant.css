@@ -304,7 +304,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .champ{display:grid;align-content:start;gap:var(--space-3xs);margin-block-end:var(--space-s)}
 .champs .champ{margin:0}
 .champ label{font-weight:700;font-size:var(--step--1)}
-.champ small{font-weight:400;color:var(--gris)}
+.champ small{font-size:inherit;font-weight:400;color:var(--gris)}
 .champ input:not([type="range"]),.champ select,.champ textarea{inline-size:100%;min-block-size:2.9rem;padding:0.55rem 0.8rem;
   border:2px solid var(--trait);border-radius:var(--rayon-s);background:var(--blanc);font-size:max(1rem, var(--step-0))}
 .champ textarea{resize:vertical}
@@ -413,7 +413,7 @@ input[type="range"]{inline-size:100%;min-block-size:2.75rem;accent-color:var(--b
 .acces{list-style:none;margin:0;padding:0;display:grid;gap:var(--space-2xs)}
 .acces li{display:flex;gap:var(--space-2xs);align-items:baseline}
 .acces .ico{color:var(--bordeaux);translate:0 0.2em}
-.acces a{font-weight:700}
+.acces a{font-weight:700;display:inline-flex;align-items:center;min-block-size:2.75rem}
 .horaires{padding:var(--space-s) clamp(0.75rem, 0.3rem + 2vi, 1.9rem);border-radius:var(--rayon);background:var(--blanc);box-shadow:0 0 0 1px var(--trait)}
 .horaires h3{font-size:var(--step-2);margin-block-end:var(--space-xs)}
 .horaires table{inline-size:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
@@ -430,6 +430,7 @@ input[type="range"]{inline-size:100%;min-block-size:2.75rem;accent-color:var(--b
 .pied{padding-block:var(--space-xl) calc(var(--space-l) + var(--barre-h));background:var(--ardoise);color:var(--craie)}
 .pied-grille{display:grid;gap:var(--space-m);padding-block-end:var(--space-m);border-block-end:1px solid oklch(0.95 0.009 106.6 / .2)}
 .pied p,.pied address{font-style:normal;font-size:var(--step--1);opacity:.92}
+.pied address a{display:inline-flex;align-items:center;min-block-size:2.75rem}   /* le numero se touche : 44 px */
 .logo-pied{margin-block-end:var(--space-2xs)}
 .pied ul{list-style:none;margin:0;padding:0;display:grid;gap:0}
 .pied nav a{display:inline-flex;align-items:center;min-block-size:2.75rem;font-size:var(--step--1)}

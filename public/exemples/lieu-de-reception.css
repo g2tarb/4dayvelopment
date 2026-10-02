@@ -226,7 +226,7 @@ text.nord{fill:var(--cypres);stroke:none;font-size:11px}
 @media (forced-colors:active){.zone .forme{fill:Canvas}.espaces[data-esp] .zone[aria-current] .forme{fill:Highlight}}
 
 .onglets{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem}
-.onglets a{display:inline-flex;align-items:center;min-height:2.6rem;padding:.35rem .8rem;border:1px solid var(--trait);border-radius:999px;
+.onglets a{display:inline-flex;align-items:center;min-height:2.75rem;padding:.35rem .8rem;border:1px solid var(--trait);border-radius:999px;
   font-size:.9375rem;text-decoration:none;background:var(--calcaire)}
 .onglets a:hover{border-color:var(--cypres)}
 .onglets a[aria-current="true"]{background:var(--cypres);border-color:var(--cypres);color:var(--blanc)}

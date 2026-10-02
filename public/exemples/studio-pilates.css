@@ -167,7 +167,7 @@ main > section{padding-block:var(--space-2xl)}
   .onglets{position:fixed;inset-inline:0;inset-block-end:0;z-index:30;background:var(--blanc);border-block-start:1px solid var(--trait);
     box-shadow:0 -.5rem 1.5rem oklch(0.213 0.025 40.5 / .08);padding-block-end:env(safe-area-inset-bottom)}
   .onglets ul{display:grid;grid-template-columns:repeat(5, 1fr);gap:0;max-inline-size:36rem;margin-inline:auto;padding-inline:max(.5rem, env(safe-area-inset-left))}
-  .onglets a{flex-direction:column;justify-content:center;gap:.2rem;min-block-size:4.1rem;padding:.35rem .1rem;font-size:.72rem;border-radius:0}
+  .onglets a{flex-direction:column;justify-content:center;gap:.2rem;min-block-size:4.1rem;padding:.35rem .1rem;font-size:.75rem;border-radius:0;inline-size:100%}
   .onglets a .ico{inline-size:1.45rem;block-size:1.45rem}
   .onglets a[aria-current="true"]{color:var(--acajou)}
   .onglets a[aria-current="true"] .ico{stroke-width:2.3}
@@ -246,7 +246,7 @@ main > section{padding-block:var(--space-2xl)}
 .outils{display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2xs) var(--space-s);margin-block-end:var(--space-s)}
 .outils[hidden],.jours-onglets[hidden]{display:none}
 .bascule{display:inline-flex;padding:.25rem;border-radius:999px;background:oklch(0 0 0 / .22)}
-.bascule button{min-block-size:2.5rem;padding:.3rem 1.1rem;border-radius:999px;font-weight:680;color:oklch(1 0 0 / .82)}
+.bascule button{min-block-size:2.75rem;padding:.3rem 1.1rem;border-radius:999px;font-weight:680;color:oklch(1 0 0 / .82)}
 .bascule button[aria-pressed="true"]{background:var(--blanc);color:var(--acajou)}
 .filtres{display:flex;flex-wrap:wrap;gap:.4rem}
 .puce{display:inline-flex;align-items:center;gap:.35rem;min-block-size:2.75rem;padding:.3rem 1rem;border-radius:999px;border:1.5px solid oklch(1 0 0 / .4);
@@ -574,4 +574,4 @@ dialog::backdrop{background:oklch(0.2 0.04 35 / .55)}
 address a[href^="tel:"]{padding-block:.85rem}
 
 /* liens du pied de page : 44 px de haut au doigt */
-.pied nav a{min-block-size:2.75rem}
+.pied nav a{min-block-size:2.75rem;min-inline-size:2.75rem}
