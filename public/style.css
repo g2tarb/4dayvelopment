@@ -4469,7 +4469,9 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     min-height: auto;
     padding-block: 0;
   }
-  .hero-title { font-size: clamp(1.6rem, 5.5vi, 2.4rem); }
+  /* #hero : meme poids que la regle du hero (« Hero epure »), sinon elle
+     gagne et le titre garde sa taille de bureau, 50 px dans 390 de haut. */
+  #hero .hero-title { font-size: clamp(1.6rem, 5.5vi, 2.4rem); }
   .hero .demo-device { width: min(9.375rem, 38svh); }
   .appbar { display: none !important; }
   body.has-appbar { padding-block-end: 0; }
