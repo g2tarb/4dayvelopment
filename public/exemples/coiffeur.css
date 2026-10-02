@@ -215,7 +215,7 @@ h3 { font-size: var(--step-1); line-height: 1.25; }
 .etiquette[data-ton="libre"] .point { background: var(--libre); }
 .etiquette[data-ton="prise"] { color: var(--prise-txt); }
 .etiquette[data-ton="prise"] .point { background: var(--prise); }
-.etiquette small { display: block; font-weight: 500; color: var(--encre-2); }
+.etiquette small { display: block; font-size: inherit; font-weight: 500; color: var(--encre-2); }   /* small seul tombait a 10,7 px */
 .tablette { grid-area: tablette; position: relative; padding-block-start: 1.5rem; display: grid; gap: 0.15rem; }
 .tablette::before { content: ""; position: absolute; inset-inline: -0.4rem; inset-block-start: 0.4rem; block-size: 0.35rem; border-radius: 0.2rem; background: linear-gradient(180deg, var(--laiton-clair), var(--laiton-fonce)); }
 .pastille {
@@ -291,7 +291,7 @@ h3 { font-size: var(--step-1); line-height: 1.25; }
 .etape legend, .etape-titre { font-family: var(--titre); font-weight: 600; font-size: var(--step-3); line-height: 1.1; margin-block-end: var(--space-s); padding: 0; }
 .etape legend:focus, .etape-titre:focus { outline: none; }
 .groupe-presta + .groupe-presta { margin-block-start: var(--space-s); }
-.groupe-presta h4 { margin: 0 0 0.4rem; font-size: var(--step--1); font-weight: 700; color: var(--laiton-fonce); letter-spacing: 0.02em; }
+.groupe-presta h3 { margin: 0 0 0.4rem; font-size: var(--step--1); font-weight: 700; color: var(--laiton-fonce); letter-spacing: 0.02em; }
 .groupe-presta ul { display: grid; gap: 0.5rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr)); }
 
 .opt { position: relative; display: grid; grid-template-columns: 1fr auto; gap: 0.1rem 0.8rem; align-items: center; min-block-size: 3.6rem; padding: 0.65rem 0.9rem; border: 1.5px solid var(--mur-2); border-radius: 0.75rem; cursor: pointer; background: var(--blanc); }
@@ -320,7 +320,7 @@ h3 { font-size: var(--step-1); line-height: 1.25; }
 .chip input { position: absolute; opacity: 0; inline-size: 1px; block-size: 1px; }
 .chip strong { font-size: var(--step-0); }
 .creneaux { display: grid; gap: var(--space-s); }
-.plage h4 { margin: 0 0 0.4rem; font-size: var(--step--1); color: var(--encre-2); font-weight: 600; }
+.plage h3 { margin: 0 0 0.4rem; font-size: var(--step--1); color: var(--encre-2); font-weight: 600; }
 .plage-grille { display: grid; gap: 0.45rem; grid-template-columns: repeat(auto-fill, minmax(5rem, 1fr)); }
 .plage-grille .chip { min-inline-size: 0; min-block-size: 2.9rem; font-weight: 650; font-size: var(--step-0); }
 .vide { color: var(--encre-2); padding: var(--space-s); border: 1.5px dashed var(--mur-2); border-radius: 0.75rem; }
@@ -504,8 +504,8 @@ h3 { font-size: var(--step-1); line-height: 1.25; }
 .pied-grille { display: grid; gap: var(--space-l); grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
 .pied-nom { display: inline-block; font-size: var(--step-3); margin-block-end: var(--space-2xs); }
 .pied h2 { font-family: var(--texte); font-size: var(--step-0); font-weight: 700; color: var(--laiton-clair); margin-block-end: 0.5rem; }
-.pied ul { display: grid; gap: 0.2rem; }
-.pied a { display: inline-block; padding-block: 0.35rem; }
+.pied ul { display: grid; gap: 0; }
+.pied a { display: inline-flex; align-items: center; min-block-size: 2.75rem; }   /* cible de 44 px (charte 5) */
 .pied-bas { margin-block-start: var(--space-l); padding-block-start: var(--space-s); border-block-start: 1px solid color-mix(in oklch, var(--blanc) 18%, transparent); display: grid; gap: 0.3rem; }
 .pied-bas a { color: var(--laiton-clair); }
 
