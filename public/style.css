@@ -2409,10 +2409,6 @@ footer {
   /* Hero */
   .hero { padding: 120px 28px 80px; }
 
- /* hide 3rd separator */
-  .stat:nth-child(7),
-
-
   /* Results */
   .results-inner { flex-wrap: wrap; }
   .result-item { flex: 0 0 calc(50% - 1px); padding: var(--space-m) var(--space-m); }
@@ -2941,12 +2937,6 @@ footer {
 
 /* ── Sticky CTA mobile (visible apres scroll hero) ───────── */
 @media (max-width: 48rem) {
-
-
-  .sticky-mobile-cta .sticky-chip:hover,
-
-
-  /* Decaler le floating CTA quand sticky est visible */
 
 
   /* Padding body pour eviter que le contenu soit cache */
