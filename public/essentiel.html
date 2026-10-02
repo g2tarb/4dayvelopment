@@ -348,7 +348,8 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 0.75rem;
       font-weight: 800;
-      color: var(--orange);
+      /* orange eclairci : l'orange pur faisait 4,4:1 sur la pastille teintee */
+      color: color-mix(in oklch, var(--orange), #fff 18%);
       /* Inter et non Syne : a 12 px, Syne extra-gras touchait le cercle */
       font-family: 'Inter', sans-serif;
     }

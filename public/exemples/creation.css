@@ -238,7 +238,7 @@ small{font-size:.8em}
 .c-prix{font-stretch:75%;font-weight:800;font-size:2.1rem;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
 .c-inclus{font-size:.875rem;line-height:1.35;color:#4A4A3C}
 .c-action{display:none;align-items:center;gap:.35rem;margin-top:.55rem;font-weight:700;font-size:.9375rem}
-.carte[aria-pressed="false"]:not([aria-disabled="true"]) .a-plus{display:inline-flex;color:var(--rouge)}
+.carte[aria-pressed="false"]:not([aria-disabled="true"]) .a-plus{display:inline-flex;color:color-mix(in oklch,var(--rouge),var(--encre) 18%)}   /* 4,25 -> 4,8:1 sur le kraft */
 .carte[aria-pressed="true"] .a-ok{display:inline-flex;color:var(--vert)}
 .carte[aria-disabled="true"] .a-rev{display:inline-flex;color:var(--gris)}
 .carte[aria-pressed="true"]{background:#F4E7C8;box-shadow:inset 0 0 0 3px var(--vert),0 10px 16px -10px rgba(23,35,30,.55)}
