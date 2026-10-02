@@ -86,19 +86,28 @@ async function init() {
     const go = () => ('requestIdleCallback' in window ? requestIdleCallback(fn, { timeout: 1200 }) : setTimeout(fn, 200));
     if (document.readyState === 'complete') go(); else addEventListener('load', go, { once: true });
   };
-  apresChargement(() => {
-    // premier écran : démo du téléphone (son écran d'attente est déjà là),
-    // effet de la punchline, défilement amorti, barre d'onglets mobile
-    import('./modules/demos.js').then(m => m.initDemoViewer());
-    import('./modules/phone.js').then(m => m.initPhoneFrames());
-    import('./modules/punchline.js').then(m => m.initPunchline());
-    import('./modules/inertia.js').then(m => m.initInertia());
-    import('./modules/appbar.js').then(m => m.initAppBar()).then(() => import('./modules/native.js')).then(m => m.initNative());
-    import('./modules/form.js').then(m => { m.initExit(); m.initTypeChips(); m.initContactForm(); });
-    import('./modules/reel.js').then(m => m.initBrowserReel());
-    import('./modules/duel.js').then(m => m.initDuel());
-    import('./modules/carousel.js').then(m => m.initCarouselDots());
-    import('./modules/gl-bg.js').then(m => m.initUniverse());   // fond WebGL maison, hors LCP
+  apresChargement(async () => {
+    /* Téléchargés ensemble, initialisés un par tâche. Lancées d'un coup, ces
+       initialisations formaient un seul bloc d'environ 130 ms sur le thread
+       principal, bien plus sur un processeur lent (TBT). L'ordre est la
+       priorité : premier écran d'abord, fond WebGL en dernier. */
+    const etapes = [
+      [import('./modules/demos.js'),     m => m.initDemoViewer()],   // son écran d'attente est déjà là
+      [import('./modules/phone.js'),     m => m.initPhoneFrames()],
+      [import('./modules/punchline.js'), m => m.initPunchline()],
+      [import('./modules/inertia.js'),   m => m.initInertia()],      // défilement amorti
+      [import('./modules/appbar.js'),    m => m.initAppBar()],       // barre d'onglets mobile
+      [import('./modules/native.js'),    m => m.initNative()],       // après appbar
+      [import('./modules/form.js'),      m => { m.initExit(); m.initTypeChips(); m.initContactForm(); }],
+      [import('./modules/reel.js'),      m => m.initBrowserReel()],
+      [import('./modules/duel.js'),      m => m.initDuel()],
+      [import('./modules/carousel.js'),  m => m.initCarouselDots()],
+      [import('./modules/gl-bg.js'),     m => m.initUniverse()],     // fond WebGL maison, hors LCP
+    ];
+    for (const [charge, init] of etapes) {
+      try { init(await charge); } catch (e) { console.error(e); }
+      await new Promise(r => setTimeout(r));
+    }
   });
 
   console.log('%c4DAYVELOPMENT', 'color:#f2b13b;font-size:22px;font-weight:900;font-family:Syne,sans-serif;');

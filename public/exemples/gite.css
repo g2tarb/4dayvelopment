@@ -6,6 +6,8 @@
    (une nuit prise = un volet fermé), pouzzolane rouge pour votre séjour, eau de l’Allier.
    Polices auto-hébergées (SIL OFL 1.1) : Libre Caslon Text 400 et 400 italique (titres,
    heures, prix), Karla variable 200-800 (texte et interface). */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 @font-face{font-family:"Libre Caslon Text";font-style:normal;font-weight:400;font-display:swap;
   src:url("/fonts/libre-caslon-text-400.woff2") format("woff2")}
 @font-face{font-family:"Libre Caslon Text";font-style:italic;font-weight:400;font-display:swap;

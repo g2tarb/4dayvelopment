@@ -7,6 +7,8 @@
    des volets pour les actions, lumière de fin de journée pour ce qui est choisi ou disponible.
    Polices auto-hébergées (SIL OFL 1.1) : Cormorant Garamond variable 300-700, romain et italique
    (titres, légendes, chiffres), Jost variable 100-900 (texte et interface). */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 @font-face{font-family:"Cormorant Garamond";font-style:normal;font-weight:300 700;font-display:swap;
   src:url("/fonts/cormorant-garamond-var.woff2") format("woff2")}
 @font-face{font-family:"Cormorant Garamond";font-style:italic;font-weight:300 700;font-display:swap;

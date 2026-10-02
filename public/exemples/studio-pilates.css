@@ -6,6 +6,8 @@
    des reformers en bout de fil (les cernes des pastilles de profs).
    Polices auto-hébergées (SIL OFL 1.1) : Hanken Grotesk variable 100-900 (texte et titres),
    Newsreader italique (axe opsz figé à 56, graisse 400-600) pour les mots d’accent. */
+/* Rend le corps masqué par le <style> du <head> (garde-fou CLS). */
+body{visibility:visible}
 @font-face{font-family:"Hanken Grotesk";font-style:normal;font-weight:100 900;font-display:swap;
   src:url("/fonts/hanken-grotesk-var.woff2") format("woff2")}
 @font-face{font-family:"Newsreader";font-style:italic;font-weight:400 600;font-display:swap;
