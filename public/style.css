@@ -283,7 +283,11 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 20px 60px;
-  transition: all .4s var(--ease-out);
+  /* padding : le resserrement au defilement ; seule propriete de mise en
+     page animee ici, une fois par passage du seuil (dette, charte 6). */
+  transition: background-color .4s var(--ease-out), border-color .4s var(--ease-out),
+              box-shadow .4s var(--ease-out), backdrop-filter .4s var(--ease-out),
+              padding .4s var(--ease-out);
 }
 nav.scrolled {
   padding: 13px 60px;
@@ -347,7 +351,7 @@ nav.scrolled {
   border-radius: var(--radius-full);
   font-size: 0.875rem;
   font-weight: 600;
-  transition: all .4s var(--ease-out);
+  transition: color .4s var(--ease-out), background-color .4s var(--ease-out), background-position .4s var(--ease-out), border-color .4s var(--ease-out), box-shadow .4s var(--ease-out), transform .4s var(--ease-out), opacity .4s var(--ease-out);
   white-space: nowrap;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -378,7 +382,7 @@ nav.scrolled {
   width: 24px; height: 2px;
   background: var(--text);
   border-radius: 2px;
-  transition: all .3s;
+  transition: color .3s, background-color .3s, background-position .3s, border-color .3s, box-shadow .3s, transform .3s, opacity .3s;
 }
 .hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
 .hamburger.open span:nth-child(2) { opacity: 0; transform: translateX(-8px); }
@@ -550,7 +554,7 @@ p.maj {
   border-radius: var(--radius-full);
   font-weight: 700;
   font-size: var(--step--1);
-  transition: all .4s var(--ease-out);
+  transition: color .4s var(--ease-out), background-color .4s var(--ease-out), background-position .4s var(--ease-out), border-color .4s var(--ease-out), box-shadow .4s var(--ease-out), transform .4s var(--ease-out), opacity .4s var(--ease-out);
   position: relative;
   overflow: hidden;
 }
@@ -603,7 +607,7 @@ p.maj {
   font-weight: 600;
   font-size: var(--step--1);
   border: 1px solid var(--border);
-  transition: all .3s var(--ease-out);
+  transition: color .3s var(--ease-out), background-color .3s var(--ease-out), background-position .3s var(--ease-out), border-color .3s var(--ease-out), box-shadow .3s var(--ease-out), transform .3s var(--ease-out), opacity .3s var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .btn-secondary:hover {
@@ -819,7 +823,7 @@ section { padding: var(--space-2xl) var(--gutter); }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-l);
-  transition: all .4s var(--ease-out);
+  transition: color .4s var(--ease-out), background-color .4s var(--ease-out), background-position .4s var(--ease-out), border-color .4s var(--ease-out), box-shadow .4s var(--ease-out), transform .4s var(--ease-out), opacity .4s var(--ease-out);
   position: relative;
   overflow: hidden;
 }
@@ -937,7 +941,7 @@ section { padding: var(--space-2xl) var(--gutter); }
   font-size: 0.75rem;
   font-weight: 700;
   text-decoration: none;
-  transition: all .2s;
+  transition: color .2s, background-color .2s, background-position .2s, border-color .2s, box-shadow .2s, transform .2s, opacity .2s;
   white-space: nowrap;
 }
 @media (hover: hover) and (pointer: fine) {
@@ -1109,7 +1113,7 @@ section { padding: var(--space-2xl) var(--gutter); }
   border-radius: var(--radius);
   font-weight: 700;
   font-size: var(--step--1);
-  transition: all .3s var(--ease-out);
+  transition: color .3s var(--ease-out), background-color .3s var(--ease-out), background-position .3s var(--ease-out), border-color .3s var(--ease-out), box-shadow .3s var(--ease-out), transform .3s var(--ease-out), opacity .3s var(--ease-out);
   position: relative;
   overflow: hidden;
 }
@@ -1722,7 +1726,7 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: var(--space-l);
-  transition: all .4s var(--ease-out);
+  transition: color .4s var(--ease-out), background-color .4s var(--ease-out), background-position .4s var(--ease-out), border-color .4s var(--ease-out), box-shadow .4s var(--ease-out), transform .4s var(--ease-out), opacity .4s var(--ease-out);
   position: relative;
   overflow: hidden;
 }
@@ -2335,7 +2339,7 @@ footer {
   font-weight: 700;
   font-size: var(--step--1);
   margin-block-end: var(--space-s);
-  transition: all .3s var(--ease-out);
+  transition: color .3s var(--ease-out), background-color .3s var(--ease-out), background-position .3s var(--ease-out), border-color .3s var(--ease-out), box-shadow .3s var(--ease-out), transform .3s var(--ease-out), opacity .3s var(--ease-out);
 }
 @media (hover: hover) and (pointer: fine) {
   .exit-cta:hover { transform: translateY(-2px); }
