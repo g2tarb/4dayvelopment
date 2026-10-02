@@ -3956,15 +3956,19 @@ footer {
   position: absolute;
   inset-inline-start: 0;
   height: 2px;
-  width: 0;
+  /* Pleine largeur, remplie par scaleX : animer width relancait la mise en
+     page a chaque image pendant tout le diaporama (charte 6). */
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left center;
   border-radius: 2px;
   background: linear-gradient(90deg, var(--accent), var(--accent2));
 }
-.demo-seg.is-done i { width: 100%; opacity: .5; }
+.demo-seg.is-done i { transform: none; opacity: .5; }
 .demo-seg.is-current i {
   animation: demoFill var(--demo-slide) linear forwards;
 }
-@keyframes demoFill { from { width: 0; } to { width: 100%; } }
+@keyframes demoFill { from { transform: scaleX(0); } to { transform: none; } }
 
 /* Souris sur le telephone : le defilement se met en pause */
 #exemples.is-held .demo-seg.is-current i { animation-play-state: paused; }
@@ -3984,7 +3988,7 @@ footer {
 /* Pas de defilement automatique si l'utilisateur ne veut pas d'animation :
    les segments restent cliquables et le segment courant s'affiche plein. */
 @media (prefers-reduced-motion: reduce) {
-  .demo-seg.is-current i { width: 100%; animation: none; }
+  .demo-seg.is-current i { transform: none; animation: none; }
   .demo-now-txt { animation: none; }
 }
 
