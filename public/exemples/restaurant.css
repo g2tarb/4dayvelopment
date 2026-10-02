@@ -52,7 +52,8 @@ body{visibility:visible}
   --space-xl:clamp(3rem, 2.79rem + 1.07vi, 3.75rem);
   --space-2xl:clamp(4rem, 3.71rem + 1.43vi, 5rem);
   --measure:66ch;
-  --gutter:var(--space-s);
+  /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
+  --gutter:max(var(--space-s), env(safe-area-inset-left), env(safe-area-inset-right));
   --shell:min(100% - (2 * var(--gutter)), 78rem);
   --rayon:0.75rem;
   --rayon-s:0.4rem;
@@ -74,7 +75,7 @@ sup{font-size:.62em;line-height:0}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--bordeaux);outline-offset:3px;border-radius:2px}
 .vs{position:absolute!important;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;inset-inline-start:var(--space-s);inset-block-start:-4rem;z-index:50;display:inline-flex;align-items:center;min-block-size:2.75rem;padding:var(--space-2xs) var(--space-s);
+.skip{position:absolute;inset-inline-start:max(var(--space-s), env(safe-area-inset-left));inset-block-start:-4rem;z-index:50;display:inline-flex;align-items:center;min-block-size:2.75rem;padding:var(--space-2xs) var(--space-s);
   background:var(--encre);color:var(--blanc);border-radius:var(--rayon-s)}
 .skip:focus{inset-block-start:var(--space-s)}
 .shell{inline-size:var(--shell);margin-inline:auto}

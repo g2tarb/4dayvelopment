@@ -27,7 +27,8 @@ body{visibility:visible}
   --trait:#D2D8D5;
   --erreur:#B3261E;
   --r:6px;
-  --gut:clamp(1rem, .4rem + 3vi, 2.5rem);
+  /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
+  --gut:max(clamp(1rem, .4rem + 3vi, 2.5rem), env(safe-area-inset-left), env(safe-area-inset-right));
   --max:78rem;
   --section:clamp(3.5rem, 2rem + 5vi, 6.5rem);
   --entete:4.25rem;
@@ -53,7 +54,7 @@ legend{padding:0}
 :focus-visible{outline:3px solid var(--deule);outline-offset:3px}
 .wrap{width:min(100% - 2*var(--gut), var(--max));margin-inline:auto}
 .visuel-seul{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:1rem;top:-4rem;z-index:60;background:var(--courant);color:var(--deule-2);padding:.7rem 1rem;border-radius:var(--r);font-weight:700}
+.skip{position:absolute;left:max(1rem,env(safe-area-inset-left));top:-4rem;z-index:60;background:var(--courant);color:var(--deule-2);padding:.7rem 1rem;border-radius:var(--r);font-weight:700}
 .skip:focus{top:1rem}
 .ico{width:1.25rem;height:1.25rem;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .chiffre,output,.releve strong,.lignes dd,.fiche dd{font-variant-numeric:tabular-nums}

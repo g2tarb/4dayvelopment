@@ -134,7 +134,7 @@ h1, h2, h3, h4, h5, h6 { line-height: 1.2; }
 .skip-link {
   position: fixed;
   inset-block-start: 12px;
-  inset-inline-start: 12px;
+  inset-inline-start: max(12px, env(safe-area-inset-left)); /* hors de l'encoche en paysage */
   z-index: 99999;
   padding: 12px 20px;
   border-radius: 99px;

@@ -60,6 +60,8 @@
       background: var(--c-bg);
       color: var(--c-text);
       min-height: 100svh;
+      /* encoche en paysage (viewport-fit=cover) : tout le contenu recule de la zone masquee */
+      padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
       line-height: 1.6;
       animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
     }

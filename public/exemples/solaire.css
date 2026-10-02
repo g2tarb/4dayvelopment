@@ -42,7 +42,8 @@ body{visibility:visible}
   --space-l:clamp(2rem, 1.86rem + 0.71vi, 2.5rem);
   --space-xl:clamp(3rem, 2.5rem + 2vi, 4.5rem);
   --space-2xl:clamp(4rem, 3.2rem + 3vi, 6.5rem);
-  --gutter:var(--space-s);
+  /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
+  --gutter:max(var(--space-s), env(safe-area-inset-left), env(safe-area-inset-right));
   --shell:min(100% - (2 * var(--gutter)), 78rem);
   --measure:66ch;
   --r-s:.5rem;
@@ -66,7 +67,7 @@ p{text-wrap:pretty}
 sup{font-size:.7em;line-height:0}
 :focus-visible{outline:3px solid var(--azur);outline-offset:3px}
 .visuel-seul{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;inset-inline-start:1rem;inset-block-start:-4rem;z-index:60;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--r-s);font-weight:600}
+.skip{position:absolute;inset-inline-start:max(1rem, env(safe-area-inset-left));inset-block-start:-4rem;z-index:60;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--r-s);font-weight:600}
 .skip:focus{inset-block-start:1rem}
 .ico{width:1.25rem;height:1.25rem;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ico .aiguille{fill:currentColor;stroke:none}

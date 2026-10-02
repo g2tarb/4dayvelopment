@@ -23,7 +23,8 @@ body{visibility:visible}
   --trait-2:#BDB8AE;
   --vif:#2F7D55;
   --erreur:#A3281F;
-  --gut:clamp(1rem, .4rem + 3vi, 2.5rem);
+  /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
+  --gut:max(clamp(1rem, .4rem + 3vi, 2.5rem), env(safe-area-inset-left), env(safe-area-inset-right));
   --max:78rem;
   --h-entete:4.25rem;
   --section:clamp(3.75rem, 2rem + 5vi, 7rem);
@@ -47,7 +48,7 @@ sup{font-size:.62em;line-height:0}
 [hidden]{display:none !important}
 .wrap{width:min(100% - 2*var(--gut), var(--max));margin-inline:auto}
 .visuel-seul{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:1rem;top:-4rem;z-index:60;background:var(--encre);color:#fff;padding:.7rem 1rem;font-weight:650}
+.skip{position:absolute;left:max(1rem,env(safe-area-inset-left));top:-4rem;z-index:60;background:var(--encre);color:#fff;padding:.7rem 1rem;font-weight:650}
 .skip:focus{top:1rem}
 .ico{width:1.25rem;height:1.25rem;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 
