@@ -74,7 +74,7 @@ sup{font-size:.62em;line-height:0}
 button,input,select,textarea{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--bordeaux);outline-offset:3px;border-radius:2px}
 .vs{position:absolute!important;inline-size:1px;block-size:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;inset-inline-start:var(--space-s);inset-block-start:-4rem;z-index:50;padding:var(--space-2xs) var(--space-s);
+.skip{position:absolute;inset-inline-start:var(--space-s);inset-block-start:-4rem;z-index:50;display:inline-flex;align-items:center;min-block-size:2.75rem;padding:var(--space-2xs) var(--space-s);
   background:var(--encre);color:var(--blanc);border-radius:var(--rayon-s)}
 .skip:focus{inset-block-start:var(--space-s)}
 .shell{inline-size:var(--shell);margin-inline:auto}

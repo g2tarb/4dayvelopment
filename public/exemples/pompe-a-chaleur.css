@@ -88,7 +88,7 @@ p{text-wrap:pretty}
 /* En-tête */
 .entete{position:sticky;top:0;z-index:30;background:var(--blanc);border-bottom:1px solid var(--trait)}
 .entete .wrap{display:flex;align-items:center;gap:1rem;min-height:4.75rem}
-.logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;min-width:0;margin-right:auto}
+.logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;min-width:0;min-height:2.75rem;margin-right:auto}
 .logo svg{width:2.9rem;height:2.9rem;flex:none}
 .logo-txt{display:flex;flex-direction:column;line-height:1.15;min-width:0}
 .logo-nom{font-family:var(--display);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;white-space:nowrap}
@@ -140,7 +140,7 @@ p{text-wrap:pretty}
 @media (max-width:23rem){
   .logo-sig{font-size:.75rem} .logo-nom{font-size:1.0625rem} .logo{gap:.5rem}
   .logo svg{width:2.5rem;height:2.5rem}
-  .entete-tel,.burger{width:2.6rem;height:2.6rem}
+  .entete-tel,.burger{width:2.75rem;height:2.75rem}
 }
 
 /* Hero : photo plein cadre, texte à gauche, devis posé à droite et à cheval sur le bandeau */
@@ -361,7 +361,7 @@ p{text-wrap:pretty}
 .coord h3{font-size:1.25rem;margin-top:2rem}
 .coord h3:first-child{margin-top:0}
 .coord address{font-style:normal;margin-top:.6rem}
-.tel-grand{display:inline-flex;align-items:center;gap:.6rem;margin-top:.75rem;font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,1.3rem + 1.2vi,2.1rem);
+.tel-grand{display:inline-flex;align-items:center;min-height:2.75rem;gap:.6rem;margin-top:.75rem;font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,1.3rem + 1.2vi,2.1rem);
   letter-spacing:-.02em;text-decoration:none;color:var(--ardoise)}
 .tel-grand .ico{width:1.6rem;height:1.6rem;color:var(--sapin)}
 @media (hover: hover) and (pointer: fine) {
@@ -421,6 +421,6 @@ p{text-wrap:pretty}
 }
 
 /* cibles tactiles : numéros cliquables du pied de page et de la barre du haut portés à 44 px de haut, sans décaler les lignes */
-address a[href^="tel:"]{padding-block:.85rem}
+address a[href^="tel:"]{padding-block:.9rem}
 
 .topbar a{min-height:2.75rem}

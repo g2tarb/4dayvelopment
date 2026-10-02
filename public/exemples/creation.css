@@ -314,7 +314,8 @@ small{font-size:.8em}
 .comptoir fieldset{border:0;padding:0;min-width:0}
 .comptoir legend{padding:0;font-weight:700;font-size:1.125rem;margin-bottom:.5rem}
 .cal-mois{font-stretch:75%;font-weight:800;font-size:1.5rem;line-height:1.1;margin-bottom:.6rem}
-.cal-entete,.cal-grille{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.3rem}
+/* l'ecart cede la place aux cases de 44 px des que la largeur manque (7 x 2.75rem), sans descendre sous 1 px */
+.cal-entete,.cal-grille{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:max(.0625rem,min(.3rem,(100% - 7 * 2.75rem) / 6))}
 .cal-entete{font-size:.8125rem;color:var(--gris);text-align:center;margin-bottom:.3rem}
 .jour{position:relative;display:grid;place-items:center;align-content:center;min-height:2.9rem;padding:.3rem 0;border-radius:4px;
   background:var(--mur);font-weight:700;cursor:pointer;line-height:1.05;font-variant-numeric:tabular-nums}

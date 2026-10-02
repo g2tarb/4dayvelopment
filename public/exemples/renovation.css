@@ -75,7 +75,7 @@ sup{font-size:.62em;line-height:0}
 /* ---------- En-tête : sobre, sur fond de chaux, collé en haut ---------- */
 .entete{position:sticky;top:0;z-index:30;background:var(--chaux);border-bottom:1px solid var(--trait)}
 .entete-in{display:flex;align-items:center;gap:1rem;min-height:var(--h-entete);padding-inline:var(--gut)}
-.logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--encre);min-width:0}
+.logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;color:var(--encre);min-width:0;min-height:2.75rem}
 .logo svg{width:2.25rem;height:2.25rem;flex:none}
 .logo-txt{display:flex;flex-direction:column;line-height:1.1;min-width:0}
 .logo-nom{font-family:var(--titre);font-weight:700;font-size:1.375rem;letter-spacing:-.01em}
@@ -503,4 +503,4 @@ body{padding-bottom:calc(3.5rem + env(safe-area-inset-bottom))}
 address a[href^="tel:"]{padding-block:.85rem}
 
 /* liens du pied de page : 44 px de haut au doigt */
-footer li > a{display:inline-flex;align-items:center;min-height:2.75rem}
+footer li > a{display:inline-flex;align-items:center;min-height:2.75rem;min-width:2.75rem}

@@ -429,7 +429,8 @@ select{width:100%;max-width:34rem;min-height:3rem;padding:.6rem .9rem;border:1.5
 .pied-grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr));gap:var(--space-l)}
 .pied h2{font-family:var(--texte);font-size:var(--step-0);font-weight:700;color:var(--porcelaine);margin-bottom:.6rem}
 .pied ul{display:grid;gap:.35rem}
-.pied nav a{display:inline-flex;min-height:2.75rem;align-items:center;text-decoration:none}
+.pied nav a{display:inline-flex;min-height:2.75rem;min-width:2.75rem;align-items:center;text-decoration:none}
+.pied address a{display:inline-flex;align-items:center;min-height:2.75rem}
 .pied address{margin-top:var(--space-s);line-height:1.7}
 .logo-clair{color:var(--porcelaine)}
 .pied-bas{display:grid;gap:.4rem;margin-top:var(--space-l);padding-top:var(--space-s);border-top:1px solid rgb(248 243 242 / .16)}

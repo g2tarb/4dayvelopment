@@ -84,7 +84,7 @@ sup{font-size:.7em;line-height:0}
   .btn-contour:hover{background:oklch(0.25 0.06 255 / .06)}
 }
 .btn:active{transform:translateY(1px)}
-.lien{color:var(--azur);font-weight:600;text-underline-offset:.2em;text-decoration-thickness:.08em;display:inline-flex;align-items:center;gap:.35rem;
+.lien{color:var(--azur);font-weight:600;text-underline-offset:.2em;text-decoration-thickness:.08em;display:inline-flex;align-items:center;min-block-size:2.75rem;gap:.35rem;
   background:none;border:0;padding:0;cursor:pointer;text-decoration-line:underline}
 
 /* ---------- En-tête : posé sur le ciel, sans bandeau ---------- */
@@ -102,7 +102,7 @@ sup{font-size:.7em;line-height:0}
 @media (hover: hover) and (pointer: fine){.nav a:not(.btn):hover{background:oklch(1 0 0 / .35)}}
 .entete-tel{margin-inline-start:auto;display:inline-flex;align-items:center;gap:.45rem;min-block-size:2.75rem;min-inline-size:2.75rem;justify-content:center;
   font-weight:700;text-decoration:none;border-radius:999px}
-.burger{display:inline-grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;border-radius:999px;background:var(--papier);
+.burger{display:inline-grid;place-items:center;flex:none;inline-size:2.75rem;block-size:2.75rem;border-radius:999px;background:var(--papier);
   border:2px solid var(--encre);cursor:pointer}
 /* Entre 64 et 80rem, le numéro écrit en entier pousse le bouton sur deux lignes : l'icône suffit (le lien garde son nom) */
 @media (min-width: 64rem) and (max-width: 79.99rem){.entete-tel .num{display:none}}
@@ -291,7 +291,6 @@ sup{font-size:.7em;line-height:0}
 .bon-ok > .ico{inline-size:2rem;block-size:2rem;color:var(--garrigue)}
 .bon-ok-t{font-stretch:75%;font-weight:720;font-size:var(--step-2);line-height:1.1;margin-block-end:.3rem}
 .bon-ok-demo{font-size:var(--step--1);color:var(--encre-2);margin-block:.4rem .5rem}
-.bon-ok .lien{min-block-size:2.75rem}
 .visite h3{font-size:var(--step-2);margin-block-end:var(--space-xs)}
 .visite-liste{list-style:none;padding:0;display:grid;gap:.7rem;margin-block-end:var(--space-s)}
 .visite-liste li{padding-inline-start:1.6rem;position:relative;line-height:1.5}

@@ -102,7 +102,7 @@ address { font-style: normal; }
 .vs { position: absolute !important; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .ico { inline-size: 1.15em; block-size: 1.15em; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .cadre { inline-size: var(--shell); margin-inline: auto; }
-.evitement { position: absolute; inset-inline-start: var(--space-s); inset-block-start: -4rem; z-index: 60; background: var(--laiton-clair); color: var(--encre); padding: var(--space-2xs) var(--space-s); border-radius: 0.4rem; }
+.evitement { position: absolute; inset-inline-start: var(--space-s); inset-block-start: -4rem; z-index: 60; display: inline-flex; align-items: center; min-block-size: 2.75rem; background: var(--laiton-clair); color: var(--encre); padding: var(--space-2xs) var(--space-s); border-radius: 0.4rem; }
 .evitement:focus { inset-block-start: var(--space-2xs); }
 
 h2 { font-family: var(--titre); font-weight: 600; font-size: var(--step-4); line-height: 1.08; letter-spacing: -0.01em; text-wrap: balance; }

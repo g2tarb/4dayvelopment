@@ -85,7 +85,7 @@ body:has(input[name="parcours"][value="copro"]:checked) .pour-maison-entreprise{
 .logo-nom{font-weight:800;font-stretch:78%;font-size:1.3rem;letter-spacing:-.005em}
 .logo-sig{font-size:.8125rem;color:var(--ardoise-2)}
 .parcours{justify-self:center;display:flex;gap:.25rem;padding:.25rem;background:var(--joint);border-radius:calc(var(--r) + 4px)}
-.parcours label{position:relative;display:flex;align-items:center;gap:.45rem;min-height:2.6rem;padding:.35rem 1.05rem;border-radius:var(--r);
+.parcours label{position:relative;display:flex;align-items:center;gap:.45rem;min-height:2.75rem;padding:.35rem 1.05rem;border-radius:var(--r);
   font-weight:650;font-size:.9688rem;color:var(--ardoise-2);cursor:pointer;transition:background-color .15s,color .15s}
 .parcours input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
 .parcours label:has(input:checked){background:var(--deule);color:var(--blanc)}
@@ -596,7 +596,7 @@ body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parc
   .scene h1{font-size:1.5rem}
   .entete{grid-template-columns:auto 1fr auto}
   .parcours{grid-column:2;grid-row:1;justify-self:center}
-  .parcours label{flex:0 1 auto;min-height:2.4rem}
+  .parcours label{flex:0 1 auto}
   .entete-tel{grid-column:3}
   :root{--entete:3.6rem}
   .entete{padding-block:.35rem}
@@ -613,4 +613,4 @@ body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parc
 }
 
 /* cibles tactiles : numéros cliquables du pied de page et de la barre du haut portés à 44 px de haut, sans décaler les lignes */
-address a[href^="tel:"]{padding-block:.85rem}
+address a[href^="tel:"]{padding-block:.9rem}
