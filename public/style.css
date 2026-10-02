@@ -4366,11 +4366,22 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     transform: translateY(140%);
     opacity: 0;
     pointer-events: none;
+    /* Cachee, elle sort de la tabulation (visibility, apres la sortie) :
+       ses liens prenaient le focus sans etre visibles. */
+    visibility: hidden;
+    transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .3s var(--ease-out),
+                visibility 0s linear .45s;
+  }
+  .appbar.is-on {
+    transform: translateY(0); opacity: 1; pointer-events: auto; visibility: visible;
     transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .3s var(--ease-out);
   }
-  .appbar.is-on { transform: translateY(0); opacity: 1; pointer-events: auto; }
   /* on remonte : la barre s'ecarte, la lecture reprend la main */
-  .appbar.is-on.is-up { transform: translateY(140%); opacity: 0; pointer-events: none; }
+  .appbar.is-on.is-up {
+    transform: translateY(140%); opacity: 0; pointer-events: none; visibility: hidden;
+    transition: transform .45s cubic-bezier(.22,1,.36,1), opacity .3s var(--ease-out),
+                visibility 0s linear .45s;
+  }
 
   .appbar-item {
     flex: 1 1 0;
