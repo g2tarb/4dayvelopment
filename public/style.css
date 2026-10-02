@@ -3324,12 +3324,17 @@ footer {
   background: var(--bg2);
   opacity: 0;
   pointer-events: none;
-  transition: opacity .55s var(--ease-out);
+  /* visibility apres le fondu : l'iframe en attente (double tampon) restait
+     tabulable, le clavier entrait dans un site de demo invisible. */
+  visibility: hidden;
+  transition: opacity .55s var(--ease-out), visibility 0s linear .55s;
 }
 .demo-screen .demo-frame.is-active {
   opacity: 1;
   pointer-events: auto;
   z-index: 1;
+  visibility: visible;
+  transition: opacity .55s var(--ease-out);
 }
 /* Bascule sous l'interstitiel : elle doit etre instantanee, sinon le fondu
    croise laisse voir les deux sites superposes quand le logo s'efface. */
