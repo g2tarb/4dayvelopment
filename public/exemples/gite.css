@@ -63,14 +63,18 @@ ul,ol{padding:0;list-style:none}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:.75rem 1.35rem;
   border:2px solid transparent;border-radius:6px;background:var(--volet);color:var(--blanc);font-weight:700;
   font-size:1rem;line-height:1.2;text-decoration:none;text-align:center}
-.btn:hover{background:var(--volet-f)}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {background:var(--volet-f)}
+}
 .btn-petit{min-height:2.75rem;padding:.55rem 1rem;font-size:.95rem}
 .btn-large{width:100%}
 .lien{background:none;border:0;padding:0;color:var(--volet);font-weight:700;text-decoration:underline;
   text-decoration-thickness:1.5px;text-underline-offset:.2em}
 .rond{display:grid;place-items:center;width:2.75rem;height:2.75rem;flex:none;border-radius:50%;border:2px solid transparent;
   background:var(--pierre);color:var(--basalte)}
-.rond:hover{background:var(--blanc)}
+@media (hover: hover) and (pointer: fine) {
+  .rond:hover {background:var(--blanc)}
+}
 
 /* En-tête posé sur la galerie */
 .tete{position:absolute;inset:0 0 auto;z-index:6;display:flex;align-items:center;gap:1.5rem;
@@ -80,7 +84,9 @@ ul,ol{padding:0;list-style:none}
 .marque-nom{font-family:var(--titre);font-size:1.4rem;letter-spacing:-.01em}
 .tete-nav{display:none;gap:1.6rem;font-weight:600;font-size:.98rem}
 .tete-nav a{text-decoration:none;padding:.5rem 0}
-.tete-nav a:hover{text-decoration:underline;text-underline-offset:.3em}
+@media (hover: hover) and (pointer: fine) {
+  .tete-nav a:hover {text-decoration:underline;text-underline-offset:.3em}
+}
 .tete-tel{display:flex;align-items:center;justify-content:center;gap:.5rem;min-width:2.75rem;min-height:2.75rem;
   padding:.5rem;border-radius:999px;background:var(--pierre);color:var(--basalte);text-decoration:none;font-weight:700}
 .tete-tel span{display:none}
@@ -143,7 +149,9 @@ ul,ol{padding:0;list-style:none}
   .galerie-nav{bottom:5.6rem;gap:.6rem}
   .vignettes{display:flex;gap:.45rem;margin-left:.6rem}
   .vignettes button{width:4.2rem;height:2.9rem;padding:0;border:2px solid transparent;border-radius:6px;overflow:hidden;background:none;opacity:.72}
-  .vignettes button:hover{opacity:1}
+  @media (hover: hover) and (pointer: fine) {
+    .vignettes button:hover {opacity:1}
+  }
   .vignettes button[aria-current="true"]{border-color:var(--blanc);opacity:1}
   .vignettes img{width:100%;height:100%;object-fit:cover}
 }
@@ -198,7 +206,10 @@ ul,ol{padding:0;list-style:none}
   .barre-champs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) minmax(11rem,auto) auto;align-items:center;
     gap:.35rem 1.1rem;padding:.7rem .7rem .55rem 1.3rem}
   .champ input,.champ select{border:0;border-bottom:1.5px solid var(--trait);border-radius:0;padding:.3rem 0;min-height:2.4rem;cursor:pointer}
-  .champ input:hover,.champ select:hover{border-bottom-color:var(--basalte)}
+  @media (hover: hover) and (pointer: fine) {
+    .champ input:hover,
+    .champ select:hover {border-bottom-color:var(--basalte)}
+  }
   .champ+.champ{padding-left:1.1rem;border-left:1px solid var(--pierre-2)}
   .barre-total{padding-left:1.1rem;border-left:1px solid var(--pierre-2)}
   .barre-champs>.btn{min-height:3.4rem;padding-inline:1.6rem}
@@ -292,7 +303,9 @@ ul,ol{padding:0;list-style:none}
 .lieux-choix button{display:flex;flex-direction:column;align-items:flex-start;gap:.1rem;min-height:3.5rem;padding:.6rem .85rem;
   border:2px solid transparent;border-radius:10px;background:var(--blanc);text-align:left;font-weight:700;line-height:1.2;font-size:.98rem}
 .lieux-choix button span{font-weight:500;font-size:.85rem;color:var(--gris)}
-.lieux-choix button:hover{border-color:var(--trait)}
+@media (hover: hover) and (pointer: fine) {
+  .lieux-choix button:hover {border-color:var(--trait)}
+}
 .lieux-choix button[aria-pressed="true"]{background:var(--basalte);color:var(--blanc)}
 .lieux-choix button[aria-pressed="true"] span{color:var(--pierre-2)}
 .lieu{margin-top:1rem}
@@ -325,9 +338,13 @@ ul,ol{padding:0;list-style:none}
 .sem-noms{font-size:.78rem;font-weight:700;color:#AEB3AE;text-align:center;margin-bottom:.35rem}
 .jour{position:relative;aspect-ratio:1;min-height:2.75rem;display:grid;place-items:center;padding:0;border:2px solid transparent;border-radius:8px;
   background:var(--pierre);color:var(--basalte);font-family:var(--titre);font-size:1.12rem;line-height:1}
-.jour:hover{background:var(--blanc)}
+@media (hover: hover) and (pointer: fine) {
+  .jour:hover {background:var(--blanc)}
+}
 .jour.pris{background:repeating-linear-gradient(to bottom,var(--volet) 0 4px,var(--volet-f) 4px 6.5px);color:#BFD2CA}
-.jour.pris:hover{background:repeating-linear-gradient(to bottom,var(--volet) 0 4px,var(--volet-f) 4px 6.5px)}
+@media (hover: hover) and (pointer: fine) {
+  .jour.pris:hover {background:repeating-linear-gradient(to bottom,var(--volet) 0 4px,var(--volet-f) 4px 6.5px)}
+}
 .jour.nuit{background:var(--pouzzolane);color:var(--blanc)}
 .jour.debut{box-shadow:inset 0 0 0 2px var(--blanc)}
 .jour.fin{background:var(--pierre);color:var(--pouzzolane-f);border-color:var(--pouzzolane);font-weight:700}
@@ -384,7 +401,9 @@ ul,ol{padding:0;list-style:none}
 .hotes-texte p+p{margin-top:.8rem}
 .hotes-tel{display:grid;gap:.3rem;margin-top:1.4rem!important}
 .hotes-tel a{display:inline-flex;align-items:center;min-height:2.75rem;gap:.6rem;width:fit-content;font-family:var(--titre);font-size:1.7rem;text-decoration:none;color:var(--volet)}
-.hotes-tel a:hover{text-decoration:underline;text-underline-offset:.2em}
+@media (hover: hover) and (pointer: fine) {
+  .hotes-tel a:hover {text-decoration:underline;text-underline-offset:.2em}
+}
 .hotes-tel span{font-size:.95rem;color:var(--gris)}
 .alerte{position:relative;padding:1.5rem 1.5rem 1.6rem;border-radius:16px;background:var(--pouzzolane-pale);border:2px solid var(--pouzzolane)}
 .alerte-ico{width:2.2rem;height:2.2rem;fill:none;stroke:var(--pouzzolane);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;margin-bottom:.6rem}

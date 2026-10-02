@@ -60,10 +60,14 @@ button{font:inherit;color:inherit}
 .btn{display:inline-flex;align-items:center;justify-content:center;min-height:3rem;padding:.75rem 1.4rem;
   border:2px solid transparent;border-radius:4px;background:var(--volet);color:var(--blanc);font-weight:500;
   letter-spacing:.01em;line-height:1.2;text-align:center;text-decoration:none;cursor:pointer;transition:background-color .15s}
-.btn:hover{background:var(--volet-fonce)}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {background:var(--volet-fonce)}
+}
 .btn:active{transform:translateY(1px)}
 .btn-clair{background:var(--blanc);color:var(--cypres)}
-.btn-clair:hover{background:#fff}
+@media (hover: hover) and (pointer: fine) {
+  .btn-clair:hover {background:#fff}
+}
 .lien{font-weight:500;text-decoration:underline}
 .lien-clair{display:inline-flex;align-items:center;min-height:2.75rem;color:var(--blanc);font-weight:500;text-decoration:underline}
 
@@ -150,7 +154,9 @@ button{font:inherit;color:inherit}
   border:1px solid var(--trait);border-radius:4px;background:var(--blanc);cursor:pointer;text-align:center;
   font-size:.9375rem;line-height:1.2;transition:background-color .15s,border-color .15s}
 .puce input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
-.puce:hover{border-color:var(--cypres)}
+@media (hover: hover) and (pointer: fine) {
+  .puce:hover {border-color:var(--cypres)}
+}
 .puce:has(input:checked){background:var(--volet);border-color:var(--volet);color:var(--blanc);font-weight:500}
 .puce:has(input:focus-visible){outline:3px solid var(--cypres);outline-offset:2px}
 @media (forced-colors:active){.puce:has(input:checked){outline:3px solid Highlight;outline-offset:-4px}}
@@ -214,7 +220,9 @@ text.nord{fill:var(--cypres);stroke:none;font-size:11px}
 .zone{cursor:pointer}
 .zone .forme{fill:var(--blanc);stroke:var(--cypres);stroke-width:1.2;transition:fill .2s}
 .zone .detail{fill:none;stroke:var(--ombre);stroke-width:1}
-.zone:hover .forme{fill:#fff}
+@media (hover: hover) and (pointer: fine) {
+  .zone:hover .forme {fill:#fff}
+}
 .zone:focus{outline:none}
 .zone:focus-visible .forme{stroke:var(--volet);stroke-width:3.5}
 /* espace choisi : sans JS par :target, avec JS par data-esp sur la section */
@@ -228,7 +236,9 @@ text.nord{fill:var(--cypres);stroke:none;font-size:11px}
 .onglets{display:flex;flex-wrap:wrap;gap:.35rem;margin-bottom:1rem}
 .onglets a{display:inline-flex;align-items:center;min-height:2.75rem;padding:.35rem .8rem;border:1px solid var(--trait);border-radius:999px;
   font-size:.9375rem;text-decoration:none;background:var(--calcaire)}
-.onglets a:hover{border-color:var(--cypres)}
+@media (hover: hover) and (pointer: fine) {
+  .onglets a:hover {border-color:var(--cypres)}
+}
 .onglets a[aria-current="true"]{background:var(--cypres);border-color:var(--cypres);color:var(--blanc)}
 .fiche{display:none;background:var(--calcaire);border-radius:6px;overflow:hidden}
 .espaces:not([data-esp]) .fiche:target,
@@ -303,9 +313,13 @@ text.nord{fill:var(--cypres);stroke:none;font-size:11px}
 .vis-compte{font-style:italic;opacity:.75;margin-left:.5rem}
 .vis-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem;padding:.5rem var(--gout) max(1.25rem,env(safe-area-inset-bottom))}
 .vis-btn{min-height:2.9rem;padding:.5rem 1.2rem;border:1px solid rgb(251 250 247 / .55);border-radius:4px;background:transparent;cursor:pointer}
-.vis-btn:hover{background:rgb(251 250 247 / .1)}
+@media (hover: hover) and (pointer: fine) {
+  .vis-btn:hover {background:rgb(251 250 247 / .1)}
+}
 .vis-fermer{background:var(--blanc);color:var(--cypres);border-color:var(--blanc)}
-.vis-fermer:hover{background:#fff}
+@media (hover: hover) and (pointer: fine) {
+  .vis-fermer:hover {background:#fff}
+}
 
 /* VI. Dormir et venir */
 .dormir,.venir{display:grid;gap:2rem;margin-top:clamp(2rem,1.5rem + 2vw,3.25rem)}
@@ -361,7 +375,9 @@ form.envoye .merci{display:block}
 .ensuite li::before{content:counter(etape);font-family:var(--titre);font-style:italic;font-size:1.9rem;line-height:1;color:var(--volet)}
 .appel{display:grid;margin-top:2rem;padding-top:1.25rem;border-top:1px solid var(--trait-doux);font-family:var(--titre);font-size:1.35rem;font-weight:500}
 .appel a{font-size:2rem;text-decoration:none;font-variant-numeric:lining-nums}
-.appel a:hover{text-decoration:underline}
+@media (hover: hover) and (pointer: fine) {
+  .appel a:hover {text-decoration:underline}
+}
 .appel + .discret{margin-top:.25rem}
 @media (min-width:60rem){.visite-grille{grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:clamp(3rem,1rem + 4vw,5rem);margin-left:6.5rem}}
 
@@ -385,7 +401,10 @@ form.envoye .merci{display:block}
   .index a{display:flex;align-items:center;gap:.55rem;height:2.55rem;padding:0 1rem 0 .55rem;border-radius:4px 0 0 4px;
     background:var(--calcaire);box-shadow:inset 1px 0 0 var(--trait-doux),inset 0 1px 0 var(--trait-doux),inset 0 -1px 0 var(--trait-doux);
     text-decoration:none;translate:calc(100% - var(--onglet)) 0;transition:translate .25s ease,background-color .2s}
-  .index a:hover,.index a:focus-visible{translate:0 0}
+  .index a:focus-visible {translate:0 0}
+  @media (hover: hover) and (pointer: fine) {
+    .index a:hover {translate:0 0}
+  }
   .index .i-num{width:1.65rem;text-align:center;font-size:1.1rem}
   .index .i-lib{font-size:.875rem;white-space:nowrap}
   .index a[aria-current]{background:var(--volet);color:var(--blanc);box-shadow:none}

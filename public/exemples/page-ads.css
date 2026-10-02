@@ -60,14 +60,22 @@ p{text-wrap:pretty}
   min-height:3.5rem;padding:.8rem 1.4rem;border:2px solid transparent;border-radius:var(--r-s);
   font-weight:700;line-height:1.2;text-align:center;text-decoration:none;transition:background-color .15s}
 .bouton{background:var(--flamme);color:#fff}
-.bouton:hover{background:var(--flamme-fonce)}
+@media (hover: hover) and (pointer: fine) {
+  .bouton:hover {background:var(--flamme-fonce)}
+}
 .bouton-2{background:var(--blanc);color:var(--encre);border-color:var(--encre)}
-.bouton-2:hover{background:var(--flamme-pale)}
+@media (hover: hover) and (pointer: fine) {
+  .bouton-2:hover {background:var(--flamme-pale)}
+}
 .bouton-gaz{background:var(--blanc);color:var(--gaz);border-color:var(--gaz)}
-.bouton-gaz:hover{background:var(--gaz-pale)}
+@media (hover: hover) and (pointer: fine) {
+  .bouton-gaz:hover {background:var(--gaz-pale)}
+}
 /* ligne fermée : la demande de rappel devient l’action utile */
 body[data-ligne="fermee"] .une-suite .vers-rappel{background:var(--encre);border-color:var(--encre);color:#fff}
-body[data-ligne="fermee"] .une-suite .vers-rappel:hover{background:#000}
+@media (hover: hover) and (pointer: fine) {
+  body[data-ligne="fermee"] .une-suite .vers-rappel:hover {background:#000}
+}
 .bouton:active,.bouton-2:active,.bouton-gaz:active,.tuile:active{transform:translateY(1px)}
 .nw{white-space:nowrap}
 .lien{display:inline-flex;align-items:center;min-height:2.75rem;font-weight:700;color:var(--flamme-fonce)}
@@ -86,7 +94,9 @@ body[data-ligne="fermee"] .une-suite .vers-rappel:hover{background:#000}
 .logo-txt span{font-size:1rem;color:var(--encre-2)}
 .tete-tel{display:inline-flex;align-items:center;gap:.5rem;min-height:3rem;padding:.5rem 1.1rem;border:2px solid var(--encre);
   border-radius:999px;font-size:1.125rem;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap;text-decoration:none}
-.tete-tel:hover{background:var(--flamme-pale)}
+@media (hover: hover) and (pointer: fine) {
+  .tete-tel:hover {background:var(--flamme-pale)}
+}
 
 /* La veilleuse : allumée quand un technicien peut venir aujourd’hui, en veille le soir, éteinte le dimanche */
 .statut{display:flex;align-items:center;gap:.8rem;flex:1 1 22rem;max-width:40rem;padding:.6rem 1.2rem .6rem .8rem;
@@ -134,7 +144,9 @@ body[data-ligne="fermee"] .une-suite .vers-rappel:hover{background:#000}
   align-items:center;gap:.35rem .9rem;padding:1.1rem 1.25rem 1.25rem;border-radius:var(--r);
   background:var(--flamme);color:#fff;text-decoration:none;
   box-shadow:0 1px 0 rgb(14 27 61 / .25),0 22px 44px -22px rgb(35 71 214 / .7);transition:background-color .15s}
-.appel:hover{background:var(--flamme-fonce)}
+@media (hover: hover) and (pointer: fine) {
+  .appel:hover {background:var(--flamme-fonce)}
+}
 .appel:focus-visible{outline:4px solid var(--encre);outline-offset:4px}
 .appel-txt{display:contents}
 .appel-ico{grid-area:ico;display:grid;place-items:center;width:2.9rem;aspect-ratio:1;border-radius:50%;background:#fff;color:var(--flamme)}
@@ -222,11 +234,15 @@ body[data-ligne="fermee"] .une-suite .vers-rappel:hover{background:#000}
 .tuile{display:flex;align-items:center;gap:1rem;min-height:5rem;padding:1rem 1.2rem;background:var(--blanc);
   border:2px solid var(--encre);border-radius:var(--r);font-size:1.1875rem;font-weight:700;line-height:1.25;text-align:left;
   flex:1 1 16rem;transition:background-color .12s}
-.tuile:hover{background:var(--flamme-pale)}
+@media (hover: hover) and (pointer: fine) {
+  .tuile:hover {background:var(--flamme-pale)}
+}
 .tuile .ico{width:2.25rem;height:2.25rem;color:var(--flamme)}
 .tuile small{display:block;margin-top:.15rem;font-size:1rem;font-weight:400;color:var(--encre-2)}
 .tuile-gaz{flex-basis:100%;border-color:var(--gaz);background:var(--gaz-pale);color:var(--gaz-fonce)}
-.tuile-gaz:hover{background:#F8D9D5}
+@media (hover: hover) and (pointer: fine) {
+  .tuile-gaz:hover {background:#F8D9D5}
+}
 .tuile-gaz .ico{color:var(--gaz)}
 .tuile-gaz small{color:var(--gaz-fonce)}
 .tuiles-2{max-width:30rem}
@@ -292,7 +308,9 @@ input[aria-invalid="true"]{border-color:var(--gaz)}
 .communes{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem}
 .communes button{min-height:2.75rem;padding:.35rem .95rem;border:1.5px solid var(--filet);border-radius:999px;background:var(--blanc);
   font-size:1.0625rem;line-height:1.3}
-.communes button:hover{border-color:var(--flamme)}
+@media (hover: hover) and (pointer: fine) {
+  .communes button:hover {border-color:var(--flamme)}
+}
 .communes button[aria-pressed="true"]{border-color:var(--flamme);background:var(--flamme);color:#fff}
 .zone-loin{margin-top:1.25rem;color:var(--encre-2)}
 /* le plan */

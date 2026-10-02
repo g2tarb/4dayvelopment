@@ -48,20 +48,30 @@ small{font-size:.8em}
 .petit{font-size:.9375rem;color:var(--gris)}
 .lien{background:none;border:0;padding:.5rem 0;min-height:2.75rem;font-weight:700;text-decoration:underline;text-decoration-thickness:2px;
   text-decoration-color:var(--rouge);cursor:pointer;text-align:left;display:inline-flex;align-items:center}
-.lien:hover{color:var(--rouge)}
+@media (hover: hover) and (pointer: fine) {
+  .lien:hover {color:var(--rouge)}
+}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:.75rem 1.4rem;
   border:2px solid transparent;border-radius:var(--rayon);font-weight:700;font-stretch:90%;font-size:1.0625rem;line-height:1.1;
   text-decoration:none;cursor:pointer;transition:background-color .15s,transform .1s;text-align:center}
 .btn:active{transform:translateY(1px)}
 .btn-plein{background:var(--vert);color:#fff}
-.btn-plein:hover{background:var(--vert-clair)}
+@media (hover: hover) and (pointer: fine) {
+  .btn-plein:hover {background:var(--vert-clair)}
+}
 .btn-trait{border-color:var(--encre);background:transparent}
-.btn-trait:hover{background:var(--encre);color:#fff}
+@media (hover: hover) and (pointer: fine) {
+  .btn-trait:hover {background:var(--encre);color:#fff}
+}
 .btn-jaune{background:var(--jaune);color:var(--encre)}
-.btn-jaune:hover{background:#F6D35E}
+@media (hover: hover) and (pointer: fine) {
+  .btn-jaune:hover {background:#F6D35E}
+}
 .btn-encre{background:var(--encre);color:#fff}
-.btn-encre:hover{background:#2A3B33}
+@media (hover: hover) and (pointer: fine) {
+  .btn-encre:hover {background:#2A3B33}
+}
 
 /* En-tête de section : titre peint, chapeau à côté sur grand écran */
 .tete{display:grid;gap:.9rem;margin-bottom:clamp(1.5rem,1rem + 2vw,2.75rem)}
@@ -83,7 +93,9 @@ small{font-size:.8em}
   .enseigne-in{grid-template-columns:auto minmax(0,1fr) auto}
   .enseigne-nav{display:flex;gap:1.5rem;align-self:end;padding-bottom:.4rem}
   .enseigne-nav a{font-weight:600;text-decoration-color:var(--jaune);text-decoration-thickness:2px;padding-block:.5rem;white-space:nowrap}
-  .enseigne-nav a:hover{color:var(--jaune)}
+  @media (hover: hover) and (pointer: fine) {
+    .enseigne-nav a:hover {color:var(--jaune)}
+  }
 }
 
 /* ── Devanture : la vitrine et la porte, dans le cadre vert ── */
@@ -219,7 +231,9 @@ small{font-size:.8em}
   box-shadow:0 2px 0 rgba(0,0,0,.08),0 10px 16px -10px rgba(23,35,30,.55)}
 .carte::before{content:'';position:absolute;top:.4rem;left:50%;width:.65rem;height:.65rem;margin-left:-.325rem;border-radius:50%;
   background:#7B8683;box-shadow:0 0 0 .2rem #D6C293} /* trou renforcé de l'étiquette */
-.carte:hover{transform:rotate(1.4deg)}
+@media (hover: hover) and (pointer: fine) {
+  .carte:hover {transform:rotate(1.4deg)}
+}
 .c-nom{font-weight:700;font-size:1.125rem;line-height:1.2}
 .c-prix{font-stretch:75%;font-weight:800;font-size:2.1rem;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
 .c-inclus{font-size:.875rem;line-height:1.35;color:#4A4A3C}
@@ -229,7 +243,9 @@ small{font-size:.8em}
 .carte[aria-disabled="true"] .a-rev{display:inline-flex;color:var(--gris)}
 .carte[aria-pressed="true"]{background:#F4E7C8;box-shadow:inset 0 0 0 3px var(--vert),0 10px 16px -10px rgba(23,35,30,.55)}
 .carte[aria-disabled="true"]{cursor:not-allowed;opacity:.62}
-.carte[aria-disabled="true"]:hover{transform:none}
+@media (hover: hover) and (pointer: fine) {
+  .carte[aria-disabled="true"]:hover {transform:none}
+}
 .carte:focus-visible{outline:3px solid var(--encre);outline-offset:3px}
 /* téléphone : une colonne, le prix en regard du nom pour garder chaque étiquette courte */
 @media (max-width:36rem){
@@ -263,7 +279,9 @@ small{font-size:.8em}
 .et-lignes li > span:first-child{flex:1}
 .et-p{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
 .retirer{display:grid;place-items:center;width:2.75rem;height:2.75rem;margin-right:-.75rem;background:none;border:0;border-radius:50%;cursor:pointer}
-.retirer:hover{background:rgba(23,35,30,.1)}
+@media (hover: hover) and (pointer: fine) {
+  .retirer:hover {background:rgba(23,35,30,.1)}
+}
 .retirer:focus-visible{outline-color:var(--encre)}
 .et-vide{margin-top:.6rem;font-size:.9375rem}
 .et-quand{border:0;padding:0;min-width:0;margin-top:1.25rem;display:flex;flex-wrap:wrap;gap:.4rem}
@@ -298,7 +316,9 @@ small{font-size:.8em}
 .cal-entete{font-size:.8125rem;color:var(--gris);text-align:center;margin-bottom:.3rem}
 .jour{position:relative;display:grid;place-items:center;align-content:center;min-height:2.9rem;padding:.3rem 0;border-radius:4px;
   background:var(--mur);font-weight:700;cursor:pointer;line-height:1.05;font-variant-numeric:tabular-nums}
-.jour:hover{background:#DCE6DF}
+@media (hover: hover) and (pointer: fine) {
+  .jour:hover {background:#DCE6DF}
+}
 .j-num{font-size:1.0625rem}
 .j-info{font-size:.75rem;font-weight:600;color:var(--gris)}
 .jour.passe{background:transparent;color:#A3ABA7;cursor:default}

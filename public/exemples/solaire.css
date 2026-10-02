@@ -410,7 +410,10 @@ sup{font-size:.7em;line-height:0}
 .carte-svg .reperes rect{fill:#1A2F4E;stroke:var(--soleil);stroke-width:2}
 .carte-svg .reperes a{cursor:pointer}
 .carte-svg .reperes a:focus-visible{outline:none}
-.carte-svg .reperes a:focus-visible rect,.carte-svg .reperes a:hover rect{stroke:#fff;stroke-width:3.5}
+.carte-svg .reperes a:focus-visible rect {stroke:#fff;stroke-width:3.5}
+@media (hover: hover) and (pointer: fine) {
+  .carte-svg .reperes a:hover rect {stroke:#fff;stroke-width:3.5}
+}
 /* carte étroite : les petites communes s'effacent, les autres grossissent pour rester lisibles */
 @container carte (max-width: 26rem){
   .carte-svg .villes text{font-size:19px}
