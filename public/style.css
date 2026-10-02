@@ -2294,9 +2294,12 @@ footer {
   justify-content: center;
   opacity: 0;
   pointer-events: none;
-  transition: opacity .4s;
+  /* visibility : masquee, la modale sort de l'ordre de tabulation (ses
+     trois boutons prenaient le focus clavier, invisibles, en fin de page) */
+  visibility: hidden;
+  transition: opacity .4s, visibility 0s linear .4s;
 }
-#exit-overlay.show { opacity: 1; pointer-events: all; }
+#exit-overlay.show { opacity: 1; pointer-events: all; visibility: visible; transition: opacity .4s; }
 #exit-backdrop {
   position: absolute;
   inset: 0;
@@ -2320,7 +2323,7 @@ footer {
 }
 #exit-overlay.show #exit-modal { transform: scale(1) translateY(0); }
 
-.exit-emoji { font-size: 3rem; margin-block-end: var(--space-s); }
+.exit-emoji { font-size: 3rem; line-height: 1; color: var(--accent2); margin-block-end: var(--space-s); }
 .exit-title {
   font-family: 'Syne', sans-serif;
   font-size: 1.9rem;
