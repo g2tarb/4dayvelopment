@@ -2640,11 +2640,6 @@ footer {
   .faq-question { padding: var(--space-s); font-size: var(--step--1); }
   .faq-answer p { padding: 0 var(--space-s) var(--space-s); }
 
-  /* ─ iOS fix : évite le zoom auto au focus sur les champs ─ */
-  .form-group input,
-  .form-group select,
-  .form-group textarea { font-size: var(--step-0); }
-
   /* ─ Logos fade ─ */
   .logos-wrapper::before,
   .logos-wrapper::after { width: 40px; }
@@ -3127,15 +3122,6 @@ footer {
   }
 }
 
-/* ── Anti-zoom iOS : inputs a 16px minimum sur ecran tactile ── */
-@media (pointer: coarse) {
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    font-size: var(--step-0);
-  }
-}
-
 /* ── Section Exemples métier : visionneuse iPhone ───────────── */
 
 
@@ -3359,7 +3345,9 @@ footer {
   border: 1px solid var(--border);
   border-radius: 14px;
   padding: var(--space-s) var(--space-s);
-  font-size: var(--step--1);
+  /* 16 px minimum : en dessous, iOS zoome sur le champ au focus. Cette regle
+     arrive apres les blocs mobiles et les annulait : le plancher vit ici. */
+  font-size: max(1rem, var(--step--1));
   transition: border-color .25s, box-shadow .25s, background .25s;
 }
 .form-group input:focus,
