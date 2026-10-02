@@ -3789,7 +3789,7 @@ footer {
   background: rgba(255,255,255,0.05);
   border-radius: var(--radius-full);
   padding: 3px 12px;
-  font-size: 0.6875rem;
+  font-size: 0.75rem;
   color: var(--muted);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -3939,9 +3939,11 @@ footer {
 }
 
 /* Barre segmentee : un segment par exemple */
+/* Pas d'ecart entre les segments : chaque bouton s'etend jusqu'a son voisin
+   (six cibles de 44 px tiennent a 320 px), l'ecart visible est porte par la
+   barre, en retrait de 3 px de chaque cote. */
 .demo-track {
   display: flex;
-  gap: 6px;
   width: 100%;
 }
 .demo-seg {
@@ -3959,7 +3961,7 @@ footer {
 .demo-seg::before {
   content: '';
   position: absolute;
-  inset-inline-start: 0; inset-inline-end: 0;
+  inset-inline-start: 3px; inset-inline-end: 3px;
   height: 2px;
   border-radius: 2px;
   background: rgba(255,255,255,0.14);
@@ -3984,11 +3986,11 @@ footer {
 /* Remplissage du segment courant */
 .demo-seg i {
   position: absolute;
-  inset-inline-start: 0;
+  inset-inline-start: 3px;
   height: 2px;
-  /* Pleine largeur, remplie par scaleX : animer width relancait la mise en
-     page a chaque image pendant tout le diaporama (charte 6). */
-  width: 100%;
+  /* Pleine largeur de la barre, remplie par scaleX : animer width relancait
+     la mise en page a chaque image pendant tout le diaporama (charte 6). */
+  width: calc(100% - 6px);
   transform: scaleX(0);
   transform-origin: left center;
   border-radius: 2px;

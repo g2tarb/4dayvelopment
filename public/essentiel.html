@@ -80,6 +80,8 @@
       z-index: 100;
     }
     header img { height: clamp(2.125rem, 4.5vi, 3.125rem); width: auto; }
+    /* le logo est un lien : cible de 44 px meme quand l'image n'en fait que 34 */
+    header > a { display: inline-flex; align-items: center; min-height: 2.75rem; }
     .back-link {
       font-size: 0.8125rem;
       color: var(--muted);
