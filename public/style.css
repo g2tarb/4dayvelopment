@@ -708,15 +708,44 @@ p.maj {
   display: flex;
   gap: 40px;
   width: max-content;
-  animation: marquee 22s linear infinite;
   align-items: center;
   will-change: transform;
 }
-@media (hover: hover) and (pointer: fine) {
-  .logos-track:hover { animation-play-state: paused; }
-}
+/* Le defilement est tout entier dans motion.js (vitesse liee au scroll,
+   survol, bouton pause). Sans JS ou en mouvement reduit, la bande reste
+   fixe : un defilement CSS ici n'aurait aucun moyen d'etre arrete. */
 
-@keyframes marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+/* Bouton pause (WCAG 2.2.2) : pose sur le fondu de droite, au-dessus des
+   noms qui defilent. Sans JS ou en mouvement reduit, la bande ne bouge pas :
+   le bouton n'a rien a arreter, on le cache. */
+.logos-pause {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: max(4px, env(safe-area-inset-right));
+  z-index: 3;
+  margin-block: auto;
+  display: grid;
+  place-items: center;
+  inline-size: 2.75rem;
+  block-size: 2.75rem;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg2);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+}
+.logos-pause .ico-play,
+.logos-pause[aria-pressed="true"] .ico-pause { display: none; }
+.logos-pause[aria-pressed="true"] .ico-play { display: block; }
+.logos-pause:focus-visible { outline: 2px solid var(--accent2); outline-offset: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  .logos-pause:hover { border-color: var(--accent2); }
+}
+html:not(.js-enabled) .logos-pause { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .logos-pause { display: none; }
+}
 
 /* Plaque anguleuse plutot que pastille ronde : le nom se lit comme une
    signature de marque, pas comme une etiquette. Une barre verticale
@@ -2541,7 +2570,7 @@ footer {
   .logos-section { padding: 28px 0; }
   .logos-label { font-size: 0.75rem; margin-block-end: 18px; }
   .logo-item { font-size: 0.75rem; padding: 9px 14px 9px 12px; gap: 9px; letter-spacing: .07em; }
-  .logos-track { gap: 18px; animation-duration: 16s; }
+  .logos-track { gap: 18px; }
   .logo-dot { width: 10px; }
 
   /* ─ Sections générales ─ */

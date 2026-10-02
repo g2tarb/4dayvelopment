@@ -111,8 +111,6 @@ export function initVelocityMarquee() {
   const track = document.querySelector('.logos-track');
   if (!track || reduced()) return;
 
-  track.style.animation = 'none';        // le CSS passe la main au JS
-
   let x = 0, vel = 0, skew = 0, lastY = scrollY, half = 0;
   let pause = 0, pauseCible = 0;         // survol : on ralentit jusqu'a l'arret
   let visible = false, raf = null, last = 0;
@@ -121,8 +119,18 @@ export function initVelocityMarquee() {
   new ResizeObserver(mesure).observe(track);
   mesure();
 
-  on(track, 'mouseenter', () => { pauseCible = 1; });
-  on(track, 'mouseleave', () => { pauseCible = 0; });
+  // Survol : arret le temps du passage. Bouton : arret jusqu'au prochain clic
+  // (WCAG 2.2.2, le seul moyen d'arreter le ruban au doigt ou au clavier).
+  const btn = document.querySelector('.logos-pause');
+  let survol = false, stoppe = false;
+  const cible = () => { pauseCible = survol || stoppe ? 1 : 0; };
+  on(track, 'mouseenter', () => { survol = true; cible(); });
+  on(track, 'mouseleave', () => { survol = false; cible(); });
+  if (btn) on(btn, 'click', () => {
+    stoppe = !stoppe;
+    btn.setAttribute('aria-pressed', String(stoppe));
+    cible();
+  });
 
   function frame(now) {
     raf = null;
@@ -139,7 +147,8 @@ export function initVelocityMarquee() {
     x -= base * dt * (1 + boost) * (1 - pause);
     if (x <= -half) x += half;
 
-    const skewCible = Math.max(-9, Math.min(9, vel * 0.14));
+    // a l'arret, plus de bascule non plus
+    const skewCible = Math.max(-9, Math.min(9, vel * 0.14)) * (1 - pause);
     skew += (skewCible - skew) * 0.10;
 
     track.style.transform = `translate3d(${x.toFixed(2)}px, 0, 0) skewX(${skew.toFixed(2)}deg)`;
