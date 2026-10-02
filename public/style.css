@@ -1861,12 +1861,17 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   border-color: var(--accent);
 }
 
-.faq-answer {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height .5s var(--ease-out);
+/* Reponse affichee en entier, sans plafond de hauteur : un max-height de
+   500 px coupait les longues reponses a 320 px et a 200 % de zoom. Seul le
+   contenu s'anime (opacite, translation, charte 6). Fermee, elle sort de
+   l'ordre de tabulation ; sans JS, elle reste ouverte. */
+.faq-answer { display: none; }
+.faq-item.open .faq-answer,
+html:not(.js-enabled) .faq-answer { display: block; }
+@media (prefers-reduced-motion: no-preference) {
+  .faq-item.open .faq-answer-inner { animation: faqIn .35s var(--ease-out); }
 }
-.faq-item.open .faq-answer { max-height: 500px; }
+@keyframes faqIn { from { opacity: 0; transform: translateY(-.5rem); } }
 
 .faq-answer-inner {
   padding: 0 var(--space-m) var(--space-m) var(--space-m);
