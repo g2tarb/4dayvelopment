@@ -87,7 +87,6 @@
 
 /* ── TOGGLES NAV ── */
 
-
 .lang-btn {
   background: rgba(255,255,255,0.08);
   border-color: rgba(255,255,255,0.15);
@@ -201,7 +200,6 @@ html { overscroll-behavior-y: none; }
   #cursor-ring.hover { width: 3.75rem; height: 3.75rem; border-color: var(--accent); }
   #cursor-ring.click { width: 1.25rem; height: 1.25rem; }
 }
-
 
 /* ── SCREEN READER ONLY — masquage visuel accessible ────────── */
 .sr-only {
@@ -342,7 +340,6 @@ nav.scrolled {
   align-items: center;
   gap: 1rem;
 }
-
 
 .nav-cta {
   background: var(--gradient-cta);
@@ -636,19 +633,7 @@ p.maj {
   .magnetic:hover::after { opacity: 1; }
 }
 
-/* Hero stats */
-
-
-/* Social proof */
-
-
 /* Scroll indicator */
-
-
-@keyframes scroll-bounce {
-  0%,100%{opacity:1;transform:translateY(0)}
-  50%{opacity:0.3;transform:translateY(0.75rem)}
-}
 
 /* ── LOGOS TICKER ──────────────────────────────────────────── */
 /* ── Bandeau de references ─────────────────────────────────────
@@ -791,7 +776,6 @@ html:not(.js-enabled) .logos-pause { display: none; }
   }
 }
 
-
 /* Separateur : un trait fin, dans l'esprit anguleux des plaques */
 .logo-dot {
   font-size: 0;              /* le losange du HTML ne sert plus que d'ancre */
@@ -845,7 +829,6 @@ section { padding: var(--space-2xl) var(--gutter); }
   grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   gap: var(--space-s);
 }
-
 
 .service-card {
   background: var(--card);
@@ -1553,7 +1536,8 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   height: 100%;
 }
 
-/* ── Mobile : les camps s'empilent, le tap donne la main ── */
+/* Sous 56,25rem, les deux camps côte à côte deviennent trop étroits pour
+   se lire : ils s'empilent, et le tap remplace le survol. */
 @media (max-width: 56.25rem) {
   .duel-arena { flex-direction: column; }
   .duel-side { padding: var(--space-l) var(--space-m) var(--space-l); }
@@ -1781,7 +1765,6 @@ html:not(.js-enabled) .duel-chip { transform: translateY(0); opacity: 1; }
   height: 0.5em;
   pointer-events: none;
 }
-
 
 .testimonial-card blockquote {
   color: var(--text);
@@ -2172,7 +2155,6 @@ html:not(.js-enabled) .faq-answer { display: block; }
   margin-block-end: var(--space-xl);
 }
 
-
 /* ── FOOTER ────────────────────────────────────────────────── */
 footer {
   background: var(--bg2);
@@ -2193,7 +2175,6 @@ footer {
   line-height: 1.65;
   margin-block-end: var(--space-s);
 }
-
 
 .footer-links-group h4,
 .footer-links-group .footer-col-h {
@@ -2276,10 +2257,6 @@ footer {
     transform: translateY(-1px);
   }
 }
-
-
-/* ── SOCIAL PROOF TOASTS ───────────────────────────────────── */
-
 
 /* ── EXIT INTENT ───────────────────────────────────────────── */
 #exit-overlay {
@@ -2377,11 +2354,17 @@ footer {
 }
 
 /* ================================================================
-   RESPONSIVE — Mobile First · 5 Breakpoints
-   1200 · 1024 · 768 · 480 · 375
+   RESPONSIVE — paliers de largeur, du plus large au plus étroit
+   Le fluide est porté par les tokens (--step-*, --space-*, clamp()) et
+   les grilles auto-fit ; ces paliers ne traitent que ce qui casse à une
+   largeur donnée, et chacun dit quoi (charte §2). Les media queries de
+   survol, de pointeur et de mouvement réduit se justifient par leur
+   condition même, sans commentaire de plus.
    ================================================================ */
 
-/* ── 1200px — Tablette large ─────────────────────────────────── */
+/* Sous 75rem, les marges de bureau de la nav et du hero mangent la ligne,
+   et le pied de page à colonne de marque large n'a plus la place : tout se
+   resserre d'un cran. */
 @media (max-width: 75rem) {
   .contact-layout { gap: var(--space-l); }
   nav { padding: 1.125rem 2.5rem; }
@@ -2391,11 +2374,12 @@ footer {
 
   .services-grid { grid-template-columns: repeat(2, 1fr); }
 
-
   .footer-inner { grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: var(--space-l); }
 }
 
-/* ── 1024px — Tablette ───────────────────────────────────────── */
+/* Sous 64rem, les liens de la nav ne tiennent plus à leur taille, les
+   chiffres passent en 2 x 2, les avis et le pied de page en colonnes
+   réduites. */
 @media (max-width: 64rem) {
   /* Nav */
   nav { padding: 1rem 1.75rem; }
@@ -2410,10 +2394,6 @@ footer {
   .result-item { flex: 0 0 calc(50% - 1px); padding: var(--space-m) var(--space-m); }
   .result-divider:nth-child(4) { display: none; }
 
-  /* Services */
-
-  /* Pricing */
-
   /* Testimonials */
   .testimonials-grid { grid-template-columns: 1fr; max-width: 37.5rem; }
 
@@ -2424,12 +2404,10 @@ footer {
 
   /* FAQ */
   .faq-list { max-width: 100%; }
-
-  /* Process */
-
 }
 
-/* ── 768px — Mobile large ────────────────────────────────────── */
+/* Sous 48rem, plus de place pour une nav en ligne ni pour des grilles à
+   plusieurs colonnes : menu, colonne unique, rayons et marges resserrés. */
 @media (max-width: 48rem) {
   /* ─ Tokens mobile ─ */
   :root {
@@ -2508,24 +2486,6 @@ footer {
     border-radius: var(--radius);
   }
 
-  /* Stats pill — 2×2 grid */
-
-
-  /* Horizontal separators */
-
-  /* 1st sep = vertical col */
-
-  /* 2nd sep = horizontal row */
-
-  /* 3rd sep = vertical col 2nd row */
-
-
-  /* Social proof */
-
-
-  /* Scroll indicator */
-
-
   /* ─ Logos ticker ─ */
   .logos-section { padding: 1.75rem 0; }
   .logos-label { margin-block-end: 1.125rem; }
@@ -2539,7 +2499,6 @@ footer {
     font-size: var(--step-3);
     letter-spacing: -0.5px;
   }
- /* texte de lecture : 16 px minimum (charte, --step-0) */
 
   /* ─ Services ─ */
   .services-grid {
@@ -2612,7 +2571,6 @@ footer {
   .contact-guarantees { align-items: flex-start; max-width: min(25rem, 100%); margin: 0 auto var(--space-l); }
   .form-row { grid-template-columns: 1fr; gap: 0; }
 
-
   /* ─ Footer ─ */
   footer { padding: var(--space-xl) var(--space-s) var(--space-m); }
   .footer-brand .logo-img { height: clamp(1.5rem, 4vi, 2rem); }
@@ -2628,9 +2586,6 @@ footer {
   /* ─ Floating CTA ─ */
   #floating-cta { inset-inline-end: 1rem; }
 
-  /* ─ Toasts — cachés sur mobile ─ */
-
-
   /* ─ Exit modal ─ */
   #exit-modal {
     padding: var(--space-l) var(--space-m);
@@ -2641,22 +2596,16 @@ footer {
   .exit-cta { padding: var(--space-s) var(--space-l); font-size: var(--step--1); }
 }
 
-/* ── 480px — Mobile portrait ─────────────────────────────────── */
+/* Sous 30rem, le bouton de la nav ne tient plus à côté du menu (il reste
+   dans le menu et la barre d'onglets) ; marges, chiffres et cartes se
+   resserrent encore. */
 @media (max-width: 30rem) {
-
   /* ─ Nav ─ */
   nav { padding: 0.75rem 1rem; }
   .nav-cta { display: none; } /* hamburger is enough */
 
   /* ─ Hero ─ */
   .hero { padding: 6.25rem 1rem 4rem; }
-  /* 12 px (plancher de lisibilite) : interlettrage reduit pour tenir sur une
-     ligne des 360 px ; a 320 px, deux lignes equilibrees et centrees */
-
-  /* Stats — empilement vertical */
-
-  /* Social proof */
-
 
   /* ─ Sections ─ */
   .section-title { font-size: clamp(1.5rem, 8vi, 2rem); }
@@ -2672,8 +2621,6 @@ footer {
   /* ─ Process ─ */
   .step { gap: var(--space-s); padding-block-end: var(--space-m); }
   .step-num { width: 2.5rem; height: 2.5rem; min-width: 2.5rem; font-size: var(--step--1); }
-
-  /* ─ Pricing ─ */
 
   /* Guarantees → 1 colonne */
   .guarantees { grid-template-columns: 1fr; gap: var(--space-2xs); }
@@ -2694,7 +2641,6 @@ footer {
   .cta-section { padding: var(--space-2xl) var(--space-s); }
   .type-chip { display: flex; }
 
-
   /* ─ Footer ─ : Services et Agence côte à côte, la marque et le contact
      (adresse e-mail longue) en pleine largeur. */
   .footer-inner {
@@ -2709,10 +2655,10 @@ footer {
 
   /* ─ Floating CTA ─ */
   #floating-cta { inset-inline-end: 0.75rem; }
-
 }
 
-/* ── 375px — Petits mobiles (iPhone SE) ─────────────────────── */
+/* Sous 23,4375rem, les titres et boutons à leur taille cassent les mots
+   longs et touchent les bords : un cran plus petits. */
 @media (max-width: 23.4375rem) {
   .btn-primary, .btn-secondary { padding: var(--space-s) var(--space-m); }
   .section-title { font-size: var(--step-2); }
@@ -2738,21 +2684,19 @@ footer {
   }
 }
 
-/* ── Paysage mobile ──────────────────────────────────────────── */
+/* Sous 48rem en paysage, la hauteur manque : le hero perd ses grandes
+   marges verticales. */
 @media (max-width: 48rem) and (orientation: landscape) {
   .hero {
     padding: 5.625rem 1.5rem 3.75rem;
   }
-
-
 }
 
 /* ═══════════════════════════════════════════════════════════
-   MOBILE PREMIUM — Niveau agence digitale 2026
-   Touch-first · Fluid · GPU-optimized · iOS-safe
+   COMPLÉMENTS MOBILES, PAR COMPOSANT
 ═══════════════════════════════════════════════════════════ */
 
-/* ── Touch targets minimum 48px (Google / Apple guidelines) ── */
+/* ── Au doigt : cibles d'au moins 48 px et retour visuel à l'appui ── */
 @media (pointer: coarse) {
   button, a, [role="button"], select,
   .type-chip, .faq-question,
@@ -2803,21 +2747,17 @@ footer {
   .footer-legal a { padding: 0 var(--space-3xs); }
 }
 
+/* Sous 48rem, le grain plein écran coûte un calque GPU de la taille de
+   l'écran pour un effet qu'on ne voit pas sur une petite dalle : retiré.
+   (will-change permanent retiré aussi : il réservait une couche graphique
+   pour quatorze familles d'éléments en permanence, de la mémoire prise au
+   lieu d'être gagnée ; les éléments animés le déclarent au moment utile.) */
 @media (max-width: 48rem) {
-  /* will-change permanent retire : il reservait une couche graphique pour
-     quatorze familles d'elements en permanence, donc de la memoire prise au
-     lieu d'etre gagnee, ce qui pese justement sur les petits appareils. Les
-     elements reellement animes le declarent chacun au moment utile.
-     image-rendering: optimizeSpeed retire aussi : mot-cle SVG, sans effet
-     en CSS. */
-
-  /* Desactiver le grain sur mobile (perf GPU) */
-  body::after {
-    display: none;
-  }
+  body::after { display: none; }
 }
 
-/* ── Mobile menu bottom-sheet style ──────────────────────── */
+/* Sous 48rem, un tiroir latéral couvrirait tout l'écran : le menu devient
+   une feuille qui monte du bas, à portée du pouce. */
 @media (max-width: 48rem) {
   .mobile-menu {
     inset-inline-end: auto;
@@ -2880,9 +2820,8 @@ footer {
   }
 }
 
-/* ── Pricing cards — swipe horizontal mobile ─────────────── */
-
-/* ── Testimonials — carousel swipe mobile ────────────────── */
+/* Sous 48rem, les avis empilés feraient plusieurs écrans : une piste
+   horizontale qu'on fait glisser. */
 @media (max-width: 48rem) {
   .testimonials-grid {
     display: flex;
@@ -2901,7 +2840,8 @@ footer {
   }
 }
 
-/* ── Services cards — 2-col compact on tablets ───────────── */
+/* Entre 30 et 48rem, une carte de service par ligne laisse un vide
+   inutile et deux tiennent : deux colonnes compactes. */
 @media (min-width: 30.0625rem) and (max-width: 48rem) {
   .services-grid {
     grid-template-columns: 1fr 1fr;
@@ -2912,7 +2852,8 @@ footer {
   .service-card h3 { font-size: var(--step--1); }
 }
 
-/* ── Process steps — timeline vertical mobile ────────────── */
+/* Sous 30rem, le numéro d'étape à côté du texte mange la colonne : il
+   passe dans la marge, sur la ligne du temps. */
 @media (max-width: 30rem) {
   .step {
     padding-inline-start: var(--space-xl);
@@ -2930,10 +2871,9 @@ footer {
   }
 }
 
-/* ── Contact form — enhanced mobile UX ───────────────────── */
+/* Sous 48rem, le formulaire se remplit au doigt : champs plus hauts,
+   focus plus visible, puces de budget sur deux colonnes. */
 @media (max-width: 48rem) {
-
-
   .form-group input,
   .form-group select,
   .form-group textarea {
@@ -2966,7 +2906,8 @@ footer {
   }
 }
 
-/* ── FAQ — smooth expand animation ───────────────────────── */
+/* Sous 48rem, les questions se touchent au pouce : rangées plus hautes,
+   réponses au corps de lecture. */
 @media (max-width: 48rem) {
   .faq-item {
     border-radius: 0.875rem;
@@ -2992,7 +2933,8 @@ footer {
   }
 }
 
-/* ── Logo img responsive ─────────────────────────────────── */
+/* Sous 48rem, le logo à sa taille de bureau laisse trop peu de place aux
+   boutons de la barre. */
 @media (max-width: 48rem) {
   .logo-img {
     height: clamp(1.625rem, 6vi, 2.125rem);
@@ -3005,14 +2947,15 @@ footer {
   }
 }
 
-/* ── Prospect button mobile ──────────────────────────────── */
+/* Sous 48rem, le bouton prend la largeur de la colonne, plafonnée. */
 @media (max-width: 48rem) {
   .btn-prospect {
     max-width: 23.75rem;
   }
 }
 
-/* ── Dark mode scrollbar mobile ──────────────────────────── */
+/* Sous 48rem, les rails horizontaux (avis, réalisations) montreraient une
+   barre système épaisse : barre fine et discrète. */
 @media (max-width: 48rem) {
   * {
     scrollbar-width: thin;
@@ -3024,8 +2967,11 @@ footer {
   }
 }
 
-/* ── Notch & Dynamic Island safe areas ───────────────────── */
+/* ── Encoche, Dynamic Island, barre d'accueil ── */
 @supports (padding: env(safe-area-inset-top)) {
+  /* Sous 48rem (téléphone en portrait), barre d'état et barre d'accueil
+     recouvrent le haut de la nav et le bas du menu et du pied de page :
+     chacun réserve leur hauteur. */
   @media (max-width: 48rem) {
     nav {
       padding-block-start: calc(0.875rem + env(safe-area-inset-top, 0px));
@@ -3042,13 +2988,6 @@ footer {
   }
 }
 
-/* ── Orientation change — prevent layout shift ───────────── */
-@media (max-width: 48rem) {
-  html {
-    -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
-  }
-}
 
 /* ── Impression : la page sans ses commandes d'écran (nav, menus, boutons
    flottants, grain). !important admis ici (charte §11) : ces éléments
@@ -3082,7 +3021,6 @@ footer {
 }
 
 /* ── Section Exemples métier : visionneuse iPhone ───────────── */
-
 
 .demo-stage { display: flex; flex-direction: column; align-items: center; }
 
@@ -3236,7 +3174,6 @@ footer {
   .demo-all:hover { color: var(--accent2); }
 }
 
-
 /* Sous 48rem, le téléphone de démo prend presque toute la largeur de l'écran. */
 
 /* Tactile : le site montre n'est pas explorable au doigt dans un cadre de
@@ -3264,7 +3201,6 @@ footer {
    les coins paraissent trop ronds et le cadre trop epais. */
 .hero .demo-device { width: min(16.5rem, 78vi); --coque: 0.4375rem; border-radius: 2.375rem; }
 .hero .demo-screen { border-radius: 1.9375rem; }
-
 
 /* Dès 66,25rem, le texte du hero et le téléphone tiennent côte à côte : deux colonnes, texte aligné au début. */
 @media (min-width: 66.25rem) {
@@ -3370,7 +3306,6 @@ footer {
 /* Sous 48rem, l'échelle du bureau coupait le titre du hero en trop de lignes : il suit la largeur de l'écran. */
 @media (max-width: 48rem) {
   #hero .hero-title { font-size: clamp(2.1rem, 8.6vi, 2.9rem); }
-
 }
 
 /* ================================================================
@@ -4158,7 +4093,6 @@ html.is-loading, html.is-loading body { overflow: hidden; }
    declarations y dormaient deja sans servir, elles ont ete retirees.
    Regler le mobile du hero ICI. */
 @media (max-width: 56.25rem) {
-
   /* ── Accueil mobile : une seule scene ──
      Titre, phrase, bouton et telephone se suivent dans le meme ecran, sans
      porte a franchir. La hauteur est bornee en svh (petite hauteur) : elle
@@ -4328,7 +4262,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
   transform: none;
 }
 
-/* Ordinateur : aucune barre, aucun indice de defilement */
+/* Dès 56,3125rem, la nav en ligne suffit : pas de barre d'onglets. */
 @media (min-width: 56.3125rem) {
   .appbar { display: none; }
 }
@@ -4360,7 +4294,6 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 
 /* La barre d'onglets n'existe que sous 56,25rem (appbar.js) : ses états ne servent qu'ici. */
 @media (max-width: 56.25rem) {
-
   /* ── L'onglet courant s'allume ── */
   .appbar-item {
     transition: color .3s var(--ease-out), background .25s;
@@ -4443,8 +4376,6 @@ html.is-loading, html.is-loading body { overflow: hidden; }
     transition: transform .12s var(--ease-out);
   }
 }
-
-
 
 /* ── Paysage telephone : moins de 30rem de hauteur ──
    Regime distinct du portrait : un hero calibre en svh y devient un puits.
