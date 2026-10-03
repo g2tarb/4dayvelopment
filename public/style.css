@@ -165,14 +165,19 @@ button, a, label, [role="button"] { touch-action: manipulation; }
 /* Empêche l'overscroll bounce sur le corps, autorise dans les scroll-areas */
 html { overscroll-behavior-y: none; }
 
-/* ── CUSTOM CURSOR — uniquement souris / trackpad précis ───── */
-@media (pointer: fine) {
+/* ── CUSTOM CURSOR ───────────────────────────────────────────
+   Caché par défaut. Il ne s'affiche (et ne remplace le curseur système)
+   qu'avec une souris ou un trackpad précis, et au-delà de 48rem : une
+   fenêtre étroite garde le curseur système, sans rien à forcer. */
+#cursor-dot, #cursor-ring { display: none; }
+@media (pointer: fine) and (width > 48rem) {
   /* Curseur systeme masque seulement une fois le curseur maison en place
      (classe posee par initCursor) : sans JS, pendant le chargement ou si le
      module echoue, la souris reste visible. */
   .has-cursor body, .has-cursor button { cursor: none; }
 
   #cursor-dot, #cursor-ring {
+    display: block;
     position: fixed;
     inset-block-start: 0; inset-inline-start: 0;
     pointer-events: none;
@@ -187,6 +192,7 @@ html { overscroll-behavior-y: none; }
     transition: width .2s, height .2s, background .2s;
   }
   #cursor-ring {
+    display: grid;
     width: 2.25rem; height: 2.25rem;
     border: 1.5px solid rgba(218,84,38,0.5);
     border-radius: 50%;
@@ -196,11 +202,6 @@ html { overscroll-behavior-y: none; }
   #cursor-ring.click { width: 1.25rem; height: 1.25rem; }
 }
 
-/* Sur mobile / tactile : curseur système garanti */
-@media (max-width: 48rem), (pointer: coarse) {
-  #cursor-dot, #cursor-ring { display: none; }
-  body, button { cursor: auto; }
-}
 
 /* ── SCREEN READER ONLY — masquage visuel accessible ────────── */
 .sr-only {
@@ -420,16 +421,18 @@ nav.scrolled {
   transition: color .2s;
 }
 @media (hover: hover) and (pointer: fine) {
-  .mobile-menu a:hover { color: var(--text); }
+  .mobile-menu a:not(.mobile-cta):hover { color: var(--text); }
 }
-.mobile-cta {
+/* .mobile-menu a (0,1,1) imposait sa couleur, son padding et son filet :
+   le bouton d'appel passe par .mobile-menu .mobile-cta (0,2,0). */
+.mobile-menu .mobile-cta {
   margin-block-start: var(--space-m);
-  background: var(--gradient-cta) !important;
-  color: var(--on-cta) !important;
-  padding: 0.875rem 1.5rem !important;
-  border-radius: var(--radius) !important;
+  background: var(--gradient-cta);
+  color: var(--on-cta);
+  padding: 0.875rem 1.5rem;
+  border-radius: var(--radius);
   text-align: center;
-  border-block-end: none !important;
+  border-block-end: none;
 }
 
 /* ── HERO ──────────────────────────────────────────────────── */
@@ -446,7 +449,7 @@ nav.scrolled {
   overflow: hidden;
 }
 
-.hero > *:not(.scroll-indicator),
+.hero > *:not(.punchline-fx),
 .cta-section > * {
   position: relative;
   z-index: 1;
@@ -2435,10 +2438,6 @@ footer {
     --radius-xl: 1.75rem;
   }
 
-  /* ─ Cursor off ─ */
-  body, button, a { cursor: auto !important; }
-  #cursor-dot, #cursor-ring { display: none !important; }
-
   /* ─ Nav ─ */
   nav {
     padding: 0.875rem 1.25rem;
@@ -2863,21 +2862,21 @@ footer {
     border-radius: 12px;
     transition: background 0.2s;
   }
-  .mobile-menu a:active {
+  .mobile-menu a:not(.mobile-cta):active {
     background: rgba(255,255,255,0.05);
     color: var(--text);
   }
   @media (hover: hover) and (pointer: fine) {
-    .mobile-menu a:hover {
+    .mobile-menu a:not(.mobile-cta):hover {
       background: rgba(255,255,255,0.05);
       color: var(--text);
     }
   }
-  .mobile-cta {
+  .mobile-menu .mobile-cta {
     margin-block-start: var(--space-xs);
-    padding: 1rem 1.5rem !important;
-    font-size: 1rem !important;
-    border-radius: 14px !important;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 14px;
   }
 }
 
@@ -2924,10 +2923,10 @@ footer {
     inset-inline-start: 0;
   }
   .step-connector {
-    inset-inline-start: 1.1875rem !important;
-    inset-block-start: 2.75rem !important;
+    inset-inline-start: 1.1875rem;
+    inset-block-start: 2.75rem;
     inset-block-end: 0;
-    height: auto !important;
+    height: auto;
   }
 }
 
@@ -3051,7 +3050,9 @@ footer {
   }
 }
 
-/* ── Print — clean output ────────────────────────────────── */
+/* ── Impression : la page sans ses commandes d'écran (nav, menus, boutons
+   flottants, grain). !important admis ici (charte §11) : ces éléments
+   tiennent leur display de sélecteurs plus forts ou du JS. ── */
 @media print {
   nav, #floating-cta, #exit-overlay,
   #scroll-progress, #three-bg,
@@ -4076,8 +4077,11 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 .js-enabled .st-split.visible .st-w { transform: none; }
 
 /* ── Cartes : tilt 3D + reflet qui suit le curseur ── */
-/* transition courte pendant le suivi, retour souple quand on lache :
-   sans ces classes, la transition .reveal de 700 ms rendrait le tilt mou */
+/* COUCHE UTILITAIRE (charte §11 : seul endroit où !important est admis,
+   avec la reinitialisation du mouvement reduit et l'impression) : etats
+   poses par le JS pendant un geste, qui doivent primer sur toute transition
+   de composant. Transition courte pendant le suivi, retour souple quand on
+   lache : sans ces classes, la transition .reveal de 700 ms rendrait le tilt mou. */
 .is-tilt { transition: transform .16s var(--ease-out) !important; }
 .is-tilt-back { transition: transform .55s var(--ease-out) !important; }
 
@@ -4088,7 +4092,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 .js-enabled .show-card.reveal:not(.visible) .show-visual img { transform: scale(1.16); }
 
 /* ── Curseur : la fleche des liens externes ── */
-#cursor-ring { display: grid; place-items: center; }
+#cursor-ring { place-items: center; }
 .cursor-label {
   font-size: 0;
   color: var(--accent2);
@@ -4119,7 +4123,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
    accompagne le passage a "ou c'est gratuit.".
    ================================================================ */
 .hero > .punchline-fx {
-  position: absolute !important;   /* .hero > *:not(...) force relative sinon */
+  position: absolute;   /* exclu de .hero > *:not(.punchline-fx), qui met le reste en relative */
   inset: 0;
   z-index: 0;
   pointer-events: none;
@@ -4326,7 +4330,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
 
 /* Ordinateur : aucune barre, aucun indice de defilement */
 @media (min-width: 56.3125rem) {
-  .appbar { display: none !important; }
+  .appbar { display: none; }
 }
 /* Mouvement réduit : la barre d'onglets apparaît sans glisser. */
 @media (prefers-reduced-motion: reduce) {
@@ -4463,7 +4467,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
      gagne et le titre garde sa taille de bureau, 50 px dans 390 de haut. */
   #hero .hero-title { font-size: clamp(1.6rem, 5.5vi, 2.4rem); }
   .hero .demo-device { width: min(9.375rem, 38svh); }
-  .appbar { display: none !important; }
+  .appbar { display: none; }
   body.has-appbar { padding-block-end: 0; }
   /* Encoche sur le cote : la nav et le bloc flottant sont places sur la
      fenetre, le padding env() du body ne les atteint pas. Le logo et le CTA
