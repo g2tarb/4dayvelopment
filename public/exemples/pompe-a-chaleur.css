@@ -24,12 +24,13 @@ body{visibility:visible}
   --trait:#DCD8CE;
   --trait-2:#C9C4B8;
   --erreur:#A3281F;
-  --r:8px;
-  --gut:clamp(1rem, 0.4rem + 3vi, 2.5rem);
+  --r:.5rem;
+  /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
+  --gut:max(clamp(1rem, 0.4rem + 3vi, 2.5rem), env(safe-area-inset-left), env(safe-area-inset-right));
   --max:76rem;
   --carte:27rem;
   --section:clamp(3.5rem, 2rem + 5vi, 6.5rem);
-  --ombre:0 1px 2px rgb(30 58 95 / .08), 0 18px 40px -12px rgb(30 58 95 / .35);
+  --ombre:0 1px 2px rgb(30 58 95 / .08), 0 1.125rem 2.5rem -.75rem rgb(30 58 95 / .35);
   /* catégories MaPrimeRénov' (couleurs Anah), réservées au simulateur */
   --c-bleu:#2B59C3; --c-jaune:#E8B400; --c-violet:#7B4FB5; --c-rose:#D95C94;
   --display:"Red Hat Display","Red Hat Display repli",system-ui,sans-serif;
@@ -49,7 +50,7 @@ p{text-wrap:pretty}
 :focus-visible{outline:3px solid var(--sapin);outline-offset:3px}
 .wrap{width:min(100% - 2*var(--gut), var(--max));margin-inline:auto}
 .visuel-seul{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:1rem;top:-4rem;z-index:50;background:var(--ardoise);color:#fff;padding:.7rem 1rem;border-radius:var(--r);font-weight:600}
+.skip{position:absolute;left:max(1rem,env(safe-area-inset-left));top:-4rem;z-index:50;background:var(--ardoise);color:#fff;padding:.7rem 1rem;border-radius:var(--r);font-weight:600}
 .skip:focus{top:1rem}
 .ico{width:1.25rem;height:1.25rem;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 
@@ -58,12 +59,18 @@ p{text-wrap:pretty}
   border-radius:var(--r);border:2px solid transparent;background:var(--sapin);color:#fff;font-family:var(--display);
   font-weight:700;font-size:1rem;letter-spacing:-.005em;text-decoration:none;cursor:pointer;white-space:nowrap;
   transition:background-color .15s, border-color .15s, color .15s}
-.btn:hover{background:var(--sapin-2)}
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {background:var(--sapin-2)}
+}
 .btn:active{transform:translateY(1px)}
 .btn-contour{background:transparent;border-color:currentColor;color:var(--ardoise)}
-.btn-contour:hover{background:var(--pierre)}
+@media (hover: hover) and (pointer: fine) {
+  .btn-contour:hover {background:var(--pierre)}
+}
 .btn-clair{background:transparent;border-color:rgb(255 255 255 / .75);color:#fff}
-.btn-clair:hover{background:rgb(255 255 255 / .12)}
+@media (hover: hover) and (pointer: fine) {
+  .btn-clair:hover {background:rgb(255 255 255 / .12)}
+}
 .lien{color:var(--sapin);font-weight:600;text-underline-offset:.2em}
 
 /* Barre supérieure */
@@ -71,7 +78,9 @@ p{text-wrap:pretty}
 .topbar .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem 1.75rem;min-height:2.5rem;padding-block:.35rem}
 .topbar a,.topbar span{display:inline-flex;align-items:center;gap:.45rem;text-decoration:none}
 .topbar a{font-weight:600;color:#fff}
-.topbar a:hover{text-decoration:underline;text-underline-offset:.2em}
+@media (hover: hover) and (pointer: fine) {
+  .topbar a:hover {text-decoration:underline;text-underline-offset:.2em}
+}
 .topbar .ico{width:1rem;height:1rem;color:#9FC2B0}
 .topbar .zone{margin-left:auto}
 /* téléphone : la zone d’intervention cède la place au numéro et aux horaires */
@@ -80,7 +89,7 @@ p{text-wrap:pretty}
 /* En-tête */
 .entete{position:sticky;top:0;z-index:30;background:var(--blanc);border-bottom:1px solid var(--trait)}
 .entete .wrap{display:flex;align-items:center;gap:1rem;min-height:4.75rem}
-.logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;min-width:0;margin-right:auto}
+.logo{display:flex;align-items:center;gap:.75rem;text-decoration:none;min-width:0;min-height:2.75rem;margin-right:auto}
 .logo svg{width:2.9rem;height:2.9rem;flex:none}
 .logo-txt{display:flex;flex-direction:column;line-height:1.15;min-width:0}
 .logo-nom{font-family:var(--display);font-weight:800;font-size:1.25rem;letter-spacing:-.02em;white-space:nowrap}
@@ -89,8 +98,10 @@ p{text-wrap:pretty}
 /* sous 26rem : signature raccourcie, elle tient sur une ligne */
 @media (max-width:26rem){ .logo-sig .long{display:none} .logo-sig .court{display:inline} }
 .nav ul{list-style:none;padding:0;display:flex;align-items:center;gap:.25rem}
-.nav a{display:block;white-space:nowrap;padding:.6rem .7rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.975rem}
-.nav a:hover{background:var(--pierre)}
+.nav a{display:block;white-space:nowrap;padding:.6rem .7rem;border-radius:.375rem;text-decoration:none;font-weight:600;font-size:.975rem}
+@media (hover: hover) and (pointer: fine) {
+  .nav a:hover {background:var(--pierre)}
+}
 .nav .nav-plus{display:none}
 .entete-tel{display:none}
 .burger{display:none}
@@ -118,7 +129,9 @@ p{text-wrap:pretty}
   .nav .nav-plus{display:block;border:0;padding-top:1rem}
   .nav .nav-plus .btn{width:100%}
   .nav a.btn{display:flex;padding:.85rem 1.35rem;font-size:1.0625rem;border-radius:var(--r)}
-  .nav a.btn:hover{background:var(--sapin-2)}
+  @media (hover: hover) and (pointer: fine) {
+    .nav a.btn:hover {background:var(--sapin-2)}
+  }
   .nav .nav-info a{display:inline;padding:0;font:inherit;font-weight:700;color:var(--ardoise)}
   .nav .nav-info{color:var(--texte-2);font-size:.9375rem;padding-top:.75rem}
 }
@@ -128,7 +141,7 @@ p{text-wrap:pretty}
 @media (max-width:23rem){
   .logo-sig{font-size:.75rem} .logo-nom{font-size:1.0625rem} .logo{gap:.5rem}
   .logo svg{width:2.5rem;height:2.5rem}
-  .entete-tel,.burger{width:2.6rem;height:2.6rem}
+  .entete-tel,.burger{width:2.75rem;height:2.75rem}
 }
 
 /* Hero : photo plein cadre, texte à gauche, devis posé à droite et à cheval sur le bandeau */
@@ -167,8 +180,8 @@ p{text-wrap:pretty}
 .devis-tete h2{font-size:1.5rem;letter-spacing:-.02em}
 .devis-tete p{font-size:.9375rem;color:var(--texte-2);margin-top:.2rem}
 .progression{margin-top:1.1rem;display:flex;align-items:center;gap:.75rem;font-size:.8125rem;font-weight:600;color:var(--texte-2)}
-.progression-barre{flex:1;height:6px;border-radius:3px;background:#E7E4DC;overflow:hidden}
-.progression-barre span{display:block;height:100%;width:100%;background:var(--sapin);border-radius:3px;transform-origin:left;transform:scaleX(.25);transition:transform .3s ease}
+.progression-barre{flex:1;height:.375rem;border-radius:.1875rem;background:#E7E4DC;overflow:hidden}
+.progression-barre span{display:block;height:100%;width:100%;background:var(--sapin);border-radius:.1875rem;transform-origin:left;transform:scaleX(.25);transition:transform .3s ease}
 .etape{border:0;padding:1.25rem 1.5rem .25rem;min-width:0}
 .etape[hidden]{display:none}
 .etape legend{float:left;width:100%}
@@ -182,7 +195,9 @@ p{text-wrap:pretty}
 .tuile input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
 .tuile .ico{width:1.75rem;height:1.75rem;color:var(--ardoise);stroke-width:1.5}
 .tuile small{display:block;font-weight:400;font-size:.8125rem;color:var(--texte-2)}
-.tuile:hover{border-color:var(--ardoise)}
+@media (hover: hover) and (pointer: fine) {
+  .tuile:hover {border-color:var(--ardoise)}
+}
 .tuile:has(input:checked){border-color:var(--sapin);background:#EEF5F1;box-shadow:inset 0 0 0 1px var(--sapin)}
 .tuile:has(input:checked)::after{content:"";position:absolute;top:-.45rem;right:-.45rem;width:1.2rem;height:1.2rem;border-radius:50%;box-shadow:0 0 0 2px var(--blanc);
   background:var(--sapin) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.2l2.6 2.6L12 5.4' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/100% no-repeat}
@@ -204,7 +219,7 @@ p{text-wrap:pretty}
 .champ .err-champ{font-size:.875rem;color:var(--erreur);font-weight:600}
 .champ .err-champ:empty{display:none}
 .deux-champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:0 .75rem}
-.erreur{display:flex;gap:.5rem;align-items:flex-start;margin-top:.75rem;padding:.6rem .75rem;border-radius:6px;background:#FBEDEB;color:var(--erreur);font-size:.9rem;font-weight:600}
+.erreur{display:flex;gap:.5rem;align-items:flex-start;margin-top:.75rem;padding:.6rem .75rem;border-radius:.375rem;background:#FBEDEB;color:var(--erreur);font-size:.9rem;font-weight:600}
 .erreur:empty{display:none}
 .rgpd{font-size:.8125rem;color:var(--texte-2);margin-top:.25rem}
 .recap{display:grid;gap:0;margin:0}
@@ -287,7 +302,7 @@ p{text-wrap:pretty}
 .chantier img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
 .chantier h3{font-size:1.2rem;margin-top:1rem;letter-spacing:-.015em}
 .chantier p{margin-top:.3rem;font-size:.9375rem;color:var(--texte-2);line-height:1.5}
-.chantier .type{display:inline-block;margin-top:.7rem;font-size:.8125rem;font-weight:600;color:var(--sapin);border:1px solid #BFD6C9;border-radius:6px;padding:.15rem .5rem}
+.chantier .type{display:inline-block;margin-top:.7rem;font-size:.8125rem;font-weight:600;color:var(--sapin);border:1px solid #BFD6C9;border-radius:.375rem;padding:.15rem .5rem}
 
 /* L'entreprise */
 .entreprise{display:grid;gap:3rem;align-items:center}
@@ -312,7 +327,7 @@ p{text-wrap:pretty}
   .photos{padding-bottom:5rem}
   .photos .principale{width:84%;margin-left:auto}
   .photos .seconde{position:absolute;left:0;bottom:0;width:46%;margin:0}
-  .photos .seconde img{border:6px solid var(--pierre);border-radius:12px}
+  .photos .seconde img{border:6px solid var(--pierre);border-radius:.75rem}
   .photos .principale figcaption{padding-left:48%}
 }
 
@@ -324,33 +339,35 @@ p{text-wrap:pretty}
 .carte-svg{width:100%;height:auto;overflow:visible}
 .carte-svg .riv{fill:none;stroke:#9DB3C9;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .carte-svg .riv-loire{stroke-width:6;stroke:#8AA6C1}
-.carte-svg .riv-nom{font-family:var(--text);font-style:italic;font-size:13px;fill:#5F7B97}
+.carte-svg .riv-nom{font-family:var(--text);font-style:italic;font-size:.8125rem;fill:#5F7B97}
 .carte-svg .villes circle{fill:var(--ardoise)}
 .carte-svg text{paint-order:stroke;stroke:var(--pierre);stroke-width:4px;stroke-linejoin:round}
-.carte-svg .villes text{font-family:var(--text);font-size:13.5px;font-weight:500;fill:var(--ardoise)}
-.carte-svg .villes text.grande{font-family:var(--display);font-weight:800;font-size:17px}
+.carte-svg .villes text{font-family:var(--text);font-size:.84375rem;font-weight:500;fill:var(--ardoise)}
+.carte-svg .villes text.grande{font-family:var(--display);font-weight:800;font-size:1.0625rem}
 .carte-svg .siege rect{fill:var(--sapin);stroke:#fff;stroke-width:3}
-.carte-svg .siege text{font-family:var(--display);font-weight:700;font-size:14px;fill:var(--sapin)}
+.carte-svg .siege text{font-family:var(--display);font-weight:700;font-size:.875rem;fill:var(--sapin)}
 /* téléphone : noms de villes agrandis, villes secondaires masquées */
 @media (max-width:40rem){
-  .carte-svg .villes text{font-size:19px}
-  .carte-svg .villes text.grande{font-size:23px}
+  .carte-svg .villes text{font-size:1.1875rem}
+  .carte-svg .villes text.grande{font-size:1.4375rem}
   .carte-svg .villes text.mineure{display:none}
-  .carte-svg .siege text{font-size:19px}
-  .carte-svg .riv-nom{font-size:17px}
+  .carte-svg .siege text{font-size:1.1875rem}
+  .carte-svg .riv-nom{font-size:1.0625rem}
 }
 .carte-legende{font-size:.875rem;color:var(--texte-2);margin-top:1rem}
-.carre-atelier{display:inline-block;width:.8rem;height:.8rem;border-radius:3px;background:var(--sapin);margin-right:.5rem;vertical-align:-.05em}
+.carre-atelier{display:inline-block;width:.8rem;height:.8rem;border-radius:.1875rem;background:var(--sapin);margin-right:.5rem;vertical-align:-.05em}
 .communes-t{margin-top:1.75rem;font-weight:700;font-family:var(--display)}
 .communes{list-style:none;padding:0;margin-top:1rem;columns:3 9.5rem;column-gap:1.5rem;font-size:.9375rem}
 .communes li{padding:.2rem 0;break-inside:avoid}
 .coord h3{font-size:1.25rem;margin-top:2rem}
 .coord h3:first-child{margin-top:0}
 .coord address{font-style:normal;margin-top:.6rem}
-.tel-grand{display:inline-flex;align-items:center;gap:.6rem;margin-top:.75rem;font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,1.3rem + 1.2vi,2.1rem);
+.tel-grand{display:inline-flex;align-items:center;min-height:2.75rem;gap:.6rem;margin-top:.75rem;font-family:var(--display);font-weight:800;font-size:clamp(1.6rem,1.3rem + 1.2vi,2.1rem);
   letter-spacing:-.02em;text-decoration:none;color:var(--ardoise)}
 .tel-grand .ico{width:1.6rem;height:1.6rem;color:var(--sapin)}
-.tel-grand:hover{text-decoration:underline;text-underline-offset:.15em}
+@media (hover: hover) and (pointer: fine) {
+  .tel-grand:hover {text-decoration:underline;text-underline-offset:.15em}
+}
 .horaires{margin-top:.6rem;border-collapse:collapse;width:100%;max-width:26rem;font-size:.9375rem}
 .horaires th,.horaires td{text-align:left;padding:.45rem 0;border-bottom:1px solid var(--trait);font-weight:400}
 .horaires td{text-align:right;font-weight:600}
@@ -366,10 +383,12 @@ p{text-wrap:pretty}
 .pied h2{font-family:var(--display);font-size:1rem;font-weight:700;color:#fff;letter-spacing:0;margin-bottom:.8rem}
 .pied ul{list-style:none;padding:0;display:grid;gap:.35rem}
 .pied ul a{text-decoration:none}
-.pied ul a:hover{text-decoration:underline;text-underline-offset:.2em}
+@media (hover: hover) and (pointer: fine) {
+  .pied ul a:hover {text-decoration:underline;text-underline-offset:.2em}
+}
 .pied address{font-style:normal;margin-top:1.1rem;line-height:1.7}
 .badges{display:flex;flex-wrap:wrap;gap:.5rem}
-.badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgb(255 255 255 / .35);border-radius:6px;padding:.35rem .6rem;color:#fff;font-weight:600;font-size:.875rem}
+.badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgb(255 255 255 / .35);border-radius:.375rem;padding:.35rem .6rem;color:#fff;font-weight:600;font-size:.875rem}
 .badge .ico{width:1rem;height:1rem;color:#9FD3B8}
 .pied-bas{margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgb(255 255 255 / .16);display:grid;gap:.5rem;font-size:.875rem;color:#AFC0D2}
 
@@ -403,6 +422,6 @@ p{text-wrap:pretty}
 }
 
 /* cibles tactiles : numéros cliquables du pied de page et de la barre du haut portés à 44 px de haut, sans décaler les lignes */
-address a[href^="tel:"]{padding-block:.85rem}
+address a[href^="tel:"]{padding-block:.9rem}
 
 .topbar a{min-height:2.75rem}

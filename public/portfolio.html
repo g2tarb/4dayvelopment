@@ -33,14 +33,14 @@
     .pf-grid {
       display:grid;
       grid-template-columns:repeat(auto-fill, minmax(min(20.625rem, 100%), 1fr));
-      gap:20px;
+      gap:1.25rem;
     }
     .pcard {
       position:relative;
       display:flex;
       flex-direction:column;
-      min-height:300px;        /* la carte grandit avec le contenu : le titre n'est jamais rogne */
-      border-radius:18px;
+      min-height:18.75rem;        /* la carte grandit avec le contenu : le titre n'est jamais rogne */
+      border-radius:1.125rem;
       overflow:hidden;
       background:#141414;
       border:1px solid #222;
@@ -50,7 +50,7 @@
       transition:border-color .4s ease, transform .4s ease, box-shadow .4s ease;
     }
     .pcard:hover, .pcard:focus-visible {
-      transform:translateY(-4px);
+      transform:translateY(-0.25rem);
       border-color:color-mix(in srgb, var(--brand) 55%, transparent);
       box-shadow:0 24px 60px -20px color-mix(in srgb, var(--brand) 45%, transparent);
       outline:none;
@@ -91,50 +91,50 @@
       position:relative; z-index:2;
       flex:1 1 auto;        /* remplit la hauteur mini, puis pousse la carte a grandir si besoin */
       display:flex; flex-direction:column; justify-content:flex-end;
-      padding:22px;
+      padding:1.375rem;
     }
     .pcard-top {
-      position:absolute; inset-block-start:18px; inset-inline-start:22px; inset-inline-end:22px;
+      position:absolute; inset-block-start:1.125rem; inset-inline-start:1.375rem; inset-inline-end:1.375rem;
       display:flex; justify-content:space-between; align-items:center;
     }
     .pcard-cat {
       background:rgba(0,0,0,.42); backdrop-filter:blur(8px);
       border:1px solid rgba(255,255,255,.14);
-      color:#fff; padding:5px 12px; border-radius:100px;
+      color:#fff; padding:0.3125rem 0.75rem; border-radius:6.25rem;
       font-size:0.75rem; font-weight:600; letter-spacing:.03em; text-transform:uppercase;
     }
     .pcard-num {
-      font-family:'JetBrains Mono',monospace; font-size:13px;
+      font-family:'JetBrains Mono',monospace; font-size:0.8125rem;
       color:var(--brand); font-weight:600;
       text-shadow:0 1px 6px rgba(0,0,0,.6);
     }
     .pcard-title {
       font-family:'Syne',sans-serif; font-weight:700;
-      font-size:1.6rem; color:#fff; line-height:1.05; margin:0 0 8px;
+      font-size:1.6rem; color:#fff; line-height:1.05; margin:0 0 0.5rem;
     }
     .pcard-kpi {
       font-family:'Syne',sans-serif; font-weight:800; font-size:1rem;
-      color:var(--brand); margin-block-end:10px;
+      color:var(--brand); margin-block-end:0.625rem;
     }
     .pcard-desc {
-      color:#c8c8c8; font-size:13.5px; line-height:1.6;
+      color:#c8c8c8; font-size:0.84375rem; line-height:1.6;
       max-height:0; opacity:0; overflow:hidden; margin:0;
       transition:max-height .45s ease, opacity .4s ease, margin .4s ease;
     }
     .pcard:hover .pcard-desc, .pcard:focus-visible .pcard-desc {
-      max-height:160px; opacity:1; margin-block-end:13px;
+      max-height:10rem; opacity:1; margin-block-end:0.8125rem;
     }
-    .pcard-tags { display:flex; flex-wrap:wrap; gap:6px; margin-block-end:13px; }
+    .pcard-tags { display:flex; flex-wrap:wrap; gap:0.375rem; margin-block-end:0.8125rem; }
     .pcard-tags span {
       font-family:'JetBrains Mono',monospace;
       font-size:0.75rem; letter-spacing:.02em;
       color:#d2d2d2; background:rgba(255,255,255,.07);
       border:1px solid rgba(255,255,255,.1);
-      padding:4px 9px; border-radius:6px; text-transform:uppercase;
+      padding:0.25rem 0.5625rem; border-radius:0.375rem; text-transform:uppercase;
     }
     .pcard-cta {
-      font-size:13px; font-weight:600; color:var(--brand);
-      opacity:0; transform:translateY(8px);
+      font-size:0.8125rem; font-weight:600; color:var(--brand);
+      opacity:0; transform:translateY(0.5rem);
       transition:opacity .4s ease, transform .4s ease;
     }
     .pcard:hover .pcard-cta, .pcard:focus-visible .pcard-cta { opacity:1; transform:translateY(0); }
@@ -143,21 +143,21 @@
        superposait a la capture (illisible). L'apercu passe en bandeau, le texte
        en bloc plein juste dessous. */
     @media (hover: none), (max-width: 48rem) {
-      .pf-grid { grid-template-columns:1fr; gap:16px; }
+      .pf-grid { grid-template-columns:1fr; gap:1rem; }
       .pcard { min-height:0; }
       .pcard-visual {
-        position:relative; inset:auto; width:100%; height:190px; flex:none;
+        position:relative; inset:auto; width:100%; height:11.875rem; flex:none;
         filter:saturate(.95) brightness(.94); transform:none;
       }
       .pcard-overlay {
-        inset:0 0 auto; height:190px;
+        inset:0 0 auto; height:11.875rem;
         background:linear-gradient(to top, rgba(8,8,8,.86) 0%, rgba(8,8,8,.16) 48%, transparent 100%);
       }
-      .pcard-body { justify-content:flex-start; padding:18px 20px 22px; background:#101010; }
+      .pcard-body { justify-content:flex-start; padding:1.125rem 1.25rem 1.375rem; background:#101010; }
       /* le badge se referait au body (seul parent positionne) et retombait sur le titre :
          on le remet dans le flux, au-dessus du titre. */
-      .pcard-top { position:static; margin-block-end:12px; }
-      .pcard-desc { max-height:200px; opacity:1; margin-block-end:13px; }
+      .pcard-top { position:static; margin-block-end:0.75rem; }
+      .pcard-desc { max-height:12.5rem; opacity:1; margin-block-end:0.8125rem; }
       .pcard-cta { opacity:1; transform:none; }
     }
     /* Accessibilité : mouvement réduit */
@@ -196,24 +196,24 @@
   <main id="contenu">
 
   <!-- HERO -->
-  <section class="hero" style="min-height:auto;padding-block:140px 50px;">
+  <section class="hero" style="min-height:auto;padding-block:8.75rem 3.125rem;">
     <div class="container">
 
 
-      <h1 class="hero-title reveal" style="font-size:clamp(2.2rem,5vi,3.8rem);margin-block-start:20px;">
+      <h1 class="hero-title reveal" style="font-size:clamp(2.2rem,5vi,3.8rem);margin-block-start:1.25rem;">
         Nos réalisations
       </h1>
       <p class="maj">Mis à jour le <time datetime="2026-09-23">23 septembre 2026</time></p>
 
-      <p class="hero-desc reveal" style="max-width:720px;">
+      <p class="hero-desc reveal" style="max-width:45rem;">
         Chaque projet a sa propre direction artistique : vitrines, e-commerces, plateformes et applications, tous conçus et livrés en 4 jours. Ouvrez une carte, le site est en ligne.
       </p>
     </div>
   </section>
 
   <!-- GRILLE PROJETS -->
-  <section style="padding-block:30px 80px;">
-    <div class="container" style="max-width:1100px;">
+  <section style="padding-block:1.875rem 5rem;">
+    <div class="container" style="max-width:68.75rem;">
       <div class="pf-grid">
 
         <!-- 01 SecurEats -->
@@ -375,10 +375,10 @@
   </section>
 
   <!-- CTA -->
-  <section style="padding-block:40px 100px;">
-    <div class="container" style="text-align:center;max-width:700px;">
+  <section style="padding-block:2.5rem 6.25rem;">
+    <div class="container" style="text-align:center;max-width:43.75rem;">
       <h2 class="section-title reveal">Votre projet pourrait être le prochain</h2>
-      <p class="section-sub reveal" style="margin-block-end:32px;">
+      <p class="section-sub reveal" style="margin-block-end:2rem;">
         Discutons de votre projet gratuitement. Nous vous proposerons une solution sur-mesure, livrée en 4 jours.
       </p>
       <a href="/#contact" class="btn-primary magnetic reveal">Démarrer mon projet →</a>

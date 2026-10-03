@@ -46,8 +46,8 @@
       --c-muted:   #888888; /* texte reel : #444 donnait 2,1:1 */
       --c-text:    #e8e8e8;
       --c-sub:     #888888;
-      --radius:    16px;
-      --radius-sm: 10px;
+      --radius:    1rem;
+      --radius-sm: 0.625rem;
       --font-title:'Syne', sans-serif;
       --font-body: 'Inter', sans-serif;
       --transition: 0.25s ease;
@@ -59,12 +59,16 @@
       font-family: var(--font-body);
       background: var(--c-bg);
       color: var(--c-text);
-      min-height: 100vh;
+      min-height: 100svh;
+      /* encoche en paysage (viewport-fit=cover) : tout le contenu recule de la zone masquee */
+      padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
       line-height: 1.6;
-      animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+      /* backwards et non both : une animation qui reste en vigueur sur body
+         casse le flou de l'en-tete collant (le texte passe net dessous) */
+      animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
     }
     @keyframes pageEnter {
-      from { opacity: 0; transform: translateY(18px); }
+      from { opacity: 0; transform: translateY(1.125rem); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
@@ -76,31 +80,33 @@
       background: rgba(8,8,8,0.92);
       backdrop-filter: blur(20px);
       border-block-end: 1px solid var(--c-border);
-      padding: 16px 32px;
+      padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .lead-logo img { height: clamp(2.125rem, 4.5vi, 3.125rem); width: auto; }
+    /* le logo est un lien : cible de 44 px meme quand l'image n'en fait que 34 */
+    .lead-logo { display: inline-flex; align-items: center; min-height: 2.75rem; }
     .lead-header-right {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 1rem;
     }
     .secure-badge {
       font-size: 0.75rem;
       color: var(--c-sub);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.375rem;
     }
     .secure-badge svg { color: #4ade80; }
 
     /* ── Hero ── */
     .lead-hero {
       text-align: center;
-      padding: 72px 24px 48px;
-      max-width: 760px;
+      padding: 4.5rem 1.5rem 3rem;
+      max-width: 47.5rem;
       margin: 0 auto;
     }
     .lead-hero h1 {
@@ -109,12 +115,12 @@
       font-weight: 800;
       letter-spacing: -1.5px;
       line-height: 1.1;
-      margin-block-end: 16px;
+      margin-block-end: 1rem;
     }
     .lead-hero p {
       font-size: 1.0625rem;
       color: var(--c-sub);
-      max-width: 520px;
+      max-width: 32.5rem;
       margin: 0 auto;
     }
 
@@ -124,14 +130,14 @@
       align-items: center;
       justify-content: center;
       gap: 0;
-      padding: 0 24px 48px;
-      max-width: 640px;
+      padding: 0 1.5rem 3rem;
+      max-width: 40rem;
       margin: 0 auto;
     }
     .si-step {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
       font-size: 0.8125rem;
       font-weight: 600;
       color: var(--c-muted);
@@ -141,12 +147,12 @@
     .si-step.active { color: var(--c-amber); }
     .si-step.done { color: #4ade80; }
     .si-dot {
-      width: 28px; height: 28px;
+      width: 1.75rem; height: 1.75rem;
       border-radius: 50%;
       border: 2px solid var(--c-muted);
       display: flex; align-items: center; justify-content: center;
       font-size: 0.75rem; font-weight: 700;
-      transition: all var(--transition);
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
       flex-shrink: 0;
     }
     .si-step.active .si-dot {
@@ -163,8 +169,8 @@
       flex: 1;
       height: 2px;
       background: var(--c-border);
-      margin: 0 8px;
-      max-width: 80px;
+      margin: 0 0.5rem;
+      max-width: 5rem;
       border-radius: 2px;
       transition: background var(--transition);
     }
@@ -172,9 +178,9 @@
 
     /* ── Main layout ── */
     .lead-main {
-      max-width: 900px;
+      max-width: 56.25rem;
       margin: 0 auto;
-      padding: 0 24px 80px;
+      padding: 0 1.5rem 5rem;
     }
 
     /* ── Sections ── */
@@ -185,19 +191,19 @@
     .form-section.active { display: block; }
 
     @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(1.5rem); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
     .section-title-wrap {
-      margin-block-end: 32px;
+      margin-block-end: 2rem;
     }
     .section-num {
       font-family: var(--font-title);
       font-size: 0.875rem;
       font-weight: 600;
       color: var(--c-sub);
-      margin-block-end: 8px;
+      margin-block-end: 0.5rem;
     }
     .section-title-wrap h2 {
       font-family: var(--font-title);
@@ -208,21 +214,21 @@
     .section-title-wrap p {
       color: var(--c-sub);
       font-size: 0.875rem;
-      margin-block-start: 6px;
+      margin-block-start: 0.375rem;
     }
 
     /* ── Form Grid ── */
     .form-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 1.25rem;
     }
     .form-grid .full { grid-column: 1 / -1; }
 
     .form-group {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0.5rem;
     }
     .form-group label {
       font-size: 0.875rem;
@@ -237,7 +243,7 @@
       background: var(--c-card);
       border: 1px solid var(--c-border);
       border-radius: var(--radius-sm);
-      padding: 14px 16px;
+      padding: 0.875rem 1rem;
       font-family: var(--font-body);
       font-size: 0.9375rem;
       color: var(--c-text);
@@ -262,7 +268,7 @@
     }
     .form-group textarea {
       resize: vertical;
-      min-height: 120px;
+      min-height: 7.5rem;
     }
     .field-error {
       font-size: 0.75rem;
@@ -275,7 +281,7 @@
     .card-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
+      gap: 0.75rem;
     }
     .card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
     .card-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
@@ -285,9 +291,9 @@
       background: var(--c-card);
       border: 2px solid var(--c-border);
       border-radius: var(--radius);
-      padding: 20px 16px;
+      padding: 1.25rem 1rem;
       cursor: pointer;
-      transition: all var(--transition);
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
       text-align: center;
       user-select: none;
     }
@@ -307,13 +313,13 @@
       background: rgba(218,84,38,.1);
       box-shadow: 0 0 0 1px rgba(218,84,38,.3);
     }
-    .choice-card .card-icon { font-size: 1.75rem; margin-block-end: 10px; color: #f2b13b; display: inline-flex; }
+    .choice-card .card-icon { font-size: 1.75rem; margin-block-end: 0.625rem; color: #f2b13b; display: inline-flex; }
     .choice-card .card-label {
       font-family: var(--font-title);
       font-size: 0.8125rem;
       font-weight: 700;
       color: var(--c-text);
-      margin-block-end: 4px;
+      margin-block-end: 0.25rem;
     }
     .choice-card .card-sub {
       font-size: 0.75rem;
@@ -322,12 +328,12 @@
     }
     .choice-card .card-check {
       position: absolute;
-      inset-block-start: 10px; inset-inline-end: 10px;
-      width: 18px; height: 18px;
+      inset-block-start: 0.625rem; inset-inline-end: 0.625rem;
+      width: 1.125rem; height: 1.125rem;
       border-radius: 50%;
       border: 2px solid var(--c-border);
       display: flex; align-items: center; justify-content: center;
-      transition: all var(--transition);
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
     }
     .choice-card.selected .card-check {
       background: var(--c-orange);
@@ -335,7 +341,7 @@
     }
     .choice-card.selected .card-check::after {
       content: '';
-      width: 5px; height: 5px;
+      width: 0.3125rem; height: 0.3125rem;
       border-radius: 50%;
       background: #fff;
     }
@@ -345,22 +351,22 @@
       font-family: var(--font-title);
       font-size: 2rem;
       font-weight: 800;
-      margin-block-end: 16px;
+      margin-block-end: 1rem;
     }
     .budget-range {
       width: 100%;
       -webkit-appearance: none;
       appearance: none;
-      height: 6px;
+      height: 0.375rem;
       background: linear-gradient(to right, var(--c-orange) var(--pct, 40%), var(--c-border) var(--pct, 40%));
-      border-radius: 3px;
+      border-radius: 0.1875rem;
       outline: none;
       cursor: pointer;
-      margin-block-end: 8px;
+      margin-block-end: 0.5rem;
     }
     .budget-range::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 24px; height: 24px;
+      width: 1.5rem; height: 1.5rem;
       border-radius: 50%;
       background: var(--c-orange);
       cursor: pointer;
@@ -381,29 +387,29 @@
     .check-list {
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 0.5rem;
     }
     .check-item {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 0.75rem;
       background: var(--c-card);
       border: 1px solid var(--c-border);
       border-radius: var(--radius-sm);
-      padding: 12px 16px;
+      padding: 0.75rem 1rem;
       cursor: pointer;
-      transition: all var(--transition);
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
       user-select: none;
     }
     .check-item:hover { border-color: rgba(218,84,38,.3); }
     .check-item input[type="checkbox"] { display: none; }
     .check-box {
-      width: 20px; height: 20px;
-      border-radius: 6px;
+      width: 1.25rem; height: 1.25rem;
+      border-radius: 0.375rem;
       border: 2px solid var(--c-muted);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      transition: all var(--transition);
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
     }
     .check-item:has(input:checked) {
       border-color: var(--c-orange);
@@ -416,7 +422,7 @@
     .check-item:has(input:checked) .check-box::after {
       content: '';
       display: block;
-      width: 5px; height: 9px;
+      width: 0.3125rem; height: 0.5625rem;
       border: 2px solid #fff;
       border-block-start: none; border-inline-start: none;
       transform: rotate(45deg) translate(-1px, -1px);
@@ -428,18 +434,18 @@
     .tag-group {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 0.625rem;
     }
     .tag-btn {
-      padding: 8px 18px;
-      border-radius: 100px;
+      padding: 0.5rem 1.125rem;
+      border-radius: 6.25rem;
       border: 2px solid var(--c-border);
       background: var(--c-card);
       color: var(--c-sub);
       font-size: 0.8125rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all var(--transition);
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
     }
     .tag-btn:hover { border-color: rgba(218,84,38,.4); color: var(--c-text); }
     .tag-btn.selected {
@@ -458,10 +464,10 @@
     .recap-header {
       background: linear-gradient(135deg, rgba(218,84,38,.2), rgba(136,64,131,.2));
       border-block-end: 1px solid var(--c-border);
-      padding: 20px 24px;
+      padding: 1.25rem 1.5rem;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 0.75rem;
     }
     .recap-header h3 {
       font-family: var(--font-title);
@@ -476,14 +482,14 @@
     }
     .recap-item {
       background: var(--c-card);
-      padding: 16px 20px;
+      padding: 1rem 1.25rem;
     }
     .recap-item.full { grid-column: 1 / -1; }
     .recap-label {
       font-size: 0.875rem;
       font-weight: 600;
       color: var(--c-muted);
-      margin-block-end: 4px;
+      margin-block-end: 0.25rem;
     }
     .recap-value {
       font-size: 0.875rem;
@@ -496,40 +502,40 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-block-start: 40px;
-      gap: 16px;
+      margin-block-start: 2.5rem;
+      gap: 1rem;
     }
     .btn-prev {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
       background: transparent;
       border: 1px solid var(--c-border);
       color: var(--c-sub);
       font-family: var(--font-body);
       font-size: 0.875rem;
       font-weight: 600;
-      padding: 12px 20px;
+      padding: 0.75rem 1.25rem;
       border-radius: var(--radius-sm);
       cursor: pointer;
-      transition: all var(--transition);
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
     }
     .btn-prev:hover { border-color: var(--c-text); color: var(--c-text); }
     .btn-prev.hidden { visibility: hidden; pointer-events: none; }
     .btn-next-sec {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.625rem;
       background: linear-gradient(135deg, var(--c-orange), #f2b13b); /* texte sombre : le blanc tombait a 4:1 sur l'orange */
       color: #0b0b0b;
       font-family: var(--font-title);
       font-size: 0.9375rem;
       font-weight: 700;
-      padding: 14px 32px;
+      padding: 0.875rem 2rem;
       border-radius: var(--radius-sm);
       border: none;
       cursor: pointer;
-      transition: all var(--transition);
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
       letter-spacing: -0.3px;
     }
     .btn-next-sec:hover {
@@ -547,17 +553,17 @@
     .btn-submit {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.625rem;
       background: linear-gradient(135deg, var(--c-orange), #f2b13b); /* texte sombre : le blanc tombait a 4:1 sur l'orange */
       color: #0b0b0b;
       font-family: var(--font-title);
       font-size: 1rem;
       font-weight: 700;
-      padding: 18px 40px;
+      padding: 1.125rem 2.5rem;
       border-radius: var(--radius-sm);
       border: none;
       cursor: pointer;
-      transition: all var(--transition);
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
       letter-spacing: -0.3px;
     }
     .btn-submit:hover {
@@ -567,7 +573,7 @@
 
     /* spinner */
     .spinner {
-      width: 18px; height: 18px;
+      width: 1.125rem; height: 1.125rem;
       border: 2px solid rgba(11,11,11,.25);
       border-block-start-color: #0b0b0b; /* sur le bouton orange-or, le blanc ne se voyait pas */
       border-radius: 50%;
@@ -582,14 +588,14 @@
     .success-screen {
       display: none;
       text-align: center;
-      padding: 80px 24px;
-      max-width: 600px;
+      padding: 5rem 1.5rem;
+      max-width: 37.5rem;
       margin: 0 auto;
     }
     .success-screen.show { display: block; animation: fadeSlideIn .4s ease forwards; }
     .success-icon {
-      width: 100px; height: 100px;
-      margin: 0 auto 32px;
+      width: 6.25rem; height: 6.25rem;
+      margin: 0 auto 2rem;
     }
     .success-icon svg { width: 100%; height: 100%; }
     .success-screen h2 {
@@ -597,23 +603,23 @@
       font-size: clamp(1.8rem, 3vi, 2.4rem);
       font-weight: 800;
       letter-spacing: -1px;
-      margin-block-end: 16px;
+      margin-block-end: 1rem;
     }
     .success-screen p {
       color: var(--c-sub);
       font-size: 1rem;
-      margin-block-end: 32px;
-      max-width: 440px;
+      margin-block-end: 2rem;
+      max-width: 27.5rem;
       margin-inline-start: auto; margin-inline-end: auto;
     }
     .success-actions {
       display: flex;
-      gap: 12px;
+      gap: 0.75rem;
       justify-content: center;
       flex-wrap: wrap;
     }
     .btn-outline {
-      padding: 12px 24px;
+      padding: 0.75rem 1.5rem;
       border-radius: var(--radius-sm);
       border: 1px solid var(--c-border);
       color: var(--c-text);
@@ -623,15 +629,15 @@
       background: transparent;
       cursor: pointer;
       text-decoration: none;
-      transition: all var(--transition);
-      display: inline-flex; align-items: center; gap: 8px;
+      transition: color var(--transition), background-color var(--transition), background-position var(--transition), border-color var(--transition), box-shadow var(--transition), transform var(--transition), opacity var(--transition);
+      display: inline-flex; align-items: center; gap: 0.5rem;
     }
     .btn-outline:hover { border-color: var(--c-amber); color: var(--c-amber); }
 
     /* ── Form feedback ── */
     .form-feedback {
-      margin-block-start: 16px;
-      padding: 12px 16px;
+      margin-block-start: 1rem;
+      padding: 0.75rem 1rem;
       border-radius: var(--radius-sm);
       font-size: 0.8125rem;
       display: none;
@@ -648,23 +654,23 @@
     /* ── Shake ── */
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      15% { transform: translateX(-8px); }
-      30% { transform: translateX(8px); }
-      45% { transform: translateX(-6px); }
-      60% { transform: translateX(6px); }
-      75% { transform: translateX(-3px); }
-      90% { transform: translateX(3px); }
+      15% { transform: translateX(-0.5rem); }
+      30% { transform: translateX(0.5rem); }
+      45% { transform: translateX(-0.375rem); }
+      60% { transform: translateX(0.375rem); }
+      75% { transform: translateX(-0.1875rem); }
+      90% { transform: translateX(0.1875rem); }
     }
     .shake { animation: shake 0.5s ease; }
 
     /* ── Footer hint ── */
     .section-hint {
-      margin-block-start: 12px;
+      margin-block-start: 0.75rem;
       font-size: 0.75rem;
       color: var(--c-muted);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.375rem;
     }
 
     /* ── Mobile UX fondamentaux ── */
@@ -673,16 +679,16 @@
 
     /* ── Responsive ── */
     @media (max-width: 48rem) {
-      .lead-header { padding: 12px 20px; }
+      .lead-header { padding: 0.75rem 1.25rem; }
       .secure-badge { display: none; }
-      .lead-hero { padding: 40px 20px 28px; }
+      .lead-hero { padding: 2.5rem 1.25rem 1.75rem; }
       .lead-hero h1 { font-size: clamp(1.6rem, 7vi, 2.4rem); letter-spacing: -1px; }
       .lead-hero p { font-size: 0.9375rem; }
-      .steps-indicator { padding: 0 20px 28px; }
+      .steps-indicator { padding: 0 1.25rem 1.75rem; }
       .si-step span:not(.si-dot) { display: none; }
-      .si-line { max-width: 40px; }
-      .lead-main { padding: 0 16px 60px; }
-      .section-title-wrap { margin-block-end: 24px; }
+      .si-line { max-width: 2.5rem; }
+      .lead-main { padding: 0 1rem 3.75rem; }
+      .section-title-wrap { margin-block-end: 1.5rem; }
       .section-title-wrap h2 { font-size: clamp(1.3rem, 5vi, 1.7rem); }
       .form-grid { grid-template-columns: 1fr; }
       .card-grid { grid-template-columns: repeat(2, 1fr); }
@@ -695,48 +701,48 @@
     }
 
     @media (max-width: 30rem) {
-      .lead-header { padding: 10px 14px; }
-      .lead-hero { padding: 28px 16px 20px; }
+      .lead-header { padding: 0.625rem 0.875rem; }
+      .lead-hero { padding: 1.75rem 1rem 1.25rem; }
       .lead-hero h1 { font-size: clamp(1.4rem, 8vi, 2rem); }
       .lead-hero p { font-size: 0.875rem; }
-      .steps-indicator { padding: 0 14px 20px; gap: 0; }
-      .si-dot { width: 24px; height: 24px; font-size: 0.75rem; }
-      .lead-main { padding: 0 14px 48px; }
-      .card-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
-      .choice-card { padding: 14px 10px; }
+      .steps-indicator { padding: 0 0.875rem 1.25rem; gap: 0; }
+      .si-dot { width: 1.5rem; height: 1.5rem; font-size: 0.75rem; }
+      .lead-main { padding: 0 0.875rem 3rem; }
+      .card-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+      .choice-card { padding: 0.875rem 0.625rem; }
       .choice-card .card-icon { font-size: 1.25rem; }
       .choice-card .card-label { font-size: 0.75rem; }
-      .form-nav { flex-direction: column-reverse; align-items: stretch; gap: 10px; }
+      .form-nav { flex-direction: column-reverse; align-items: stretch; gap: 0.625rem; }
       .btn-prev { justify-content: center; }
-      .btn-next-sec { justify-content: center; min-height: 50px; font-size: 0.9375rem; }
+      .btn-next-sec { justify-content: center; min-height: 3.125rem; font-size: 0.9375rem; }
       .form-group input,
       .form-group select,
-      .form-group textarea { font-size: 1rem; padding: 12px 14px; }
-      .tag-group { gap: 6px; }
-      .style-tag { padding: 8px 14px; font-size: 0.75rem; min-height: 40px; }
+      .form-group textarea { font-size: 1rem; padding: 0.75rem 0.875rem; }
+      .tag-group { gap: 0.375rem; }
+      .style-tag { padding: 0.5rem 0.875rem; font-size: 0.75rem; min-height: 2.5rem; }
     }
 
     @media (max-width: 23.4375rem) {
-      .lead-hero { padding: 20px 14px 16px; }
-      .card-grid { grid-template-columns: 1fr 1fr; gap: 6px; }
-      .choice-card { padding: 12px 8px; }
-      .lead-main { padding: 0 12px 40px; }
+      .lead-hero { padding: 1.25rem 0.875rem 1rem; }
+      .card-grid { grid-template-columns: 1fr 1fr; gap: 0.375rem; }
+      .choice-card { padding: 0.75rem 0.5rem; }
+      .lead-main { padding: 0 0.75rem 2.5rem; }
     }
     .lang-btn-ext {
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.1);
       color: var(--c-sub);
-      padding: 6px 14px;
-      border-radius: 100px;
+      padding: 0.375rem 0.875rem;
+      border-radius: 6.25rem;
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all .2s;
+      transition: color .2s, background-color .2s, background-position .2s, border-color .2s, box-shadow .2s, transform .2s, opacity .2s;
       font-family: var(--font-body);
       letter-spacing: 0.3px;
     }
     /* page autonome, sans la regle tactile de style.css : 34 px de haut au doigt */
-    @media (pointer: coarse) { .lang-btn-ext { min-height: 44px; } }
+    @media (pointer: coarse) { .lang-btn-ext { min-height: 2.75rem; } }
     .lang-btn-ext:hover { background: rgba(255,255,255,0.12); color: var(--c-text); }
   </style>
 </head>
@@ -861,9 +867,9 @@
       </div>
 
       <!-- Type de site -->
-      <div class="form-group" style="margin-block-end:28px;">
+      <div class="form-group" style="margin-block-end:1.75rem;">
         <label>Type de site souhaité <span class="req">*</span></label>
-        <div class="card-grid" id="type-grid" style="margin-block-start:10px;">
+        <div class="card-grid" id="type-grid" style="margin-block-start:0.625rem;">
           <label class="choice-card">
             <input type="radio" name="type-site" value="Site vitrine">
             <div class="card-check"></div>
@@ -907,13 +913,13 @@
             <div class="card-sub">Page de conversion</div>
           </label>
         </div>
-        <span class="field-error" id="err-type" style="margin-block-start:8px;">Veuillez choisir un type de site.</span>
+        <span class="field-error" id="err-type" style="margin-block-start:0.5rem;">Veuillez choisir un type de site.</span>
       </div>
 
       <!-- Budget -->
-      <div class="form-group" style="margin-block-end:28px;">
+      <div class="form-group" style="margin-block-end:1.75rem;">
         <label for="budget-range">Budget estimé</label>
-        <div style="margin-block-start:10px;">
+        <div style="margin-block-start:0.625rem;">
           <div class="budget-display" id="budget-display" aria-live="polite">2 000 €</div>
           <input type="range" class="budget-range" id="budget-range"
                  min="0" max="10" step="1" value="2"
@@ -928,9 +934,9 @@
       </div>
 
       <!-- Délai -->
-      <div class="form-group" style="margin-block-end:28px;">
+      <div class="form-group" style="margin-block-end:1.75rem;">
         <label>Délai souhaité <span class="req">*</span></label>
-        <div class="tag-group" id="delai-tags" style="margin-block-start:10px;">
+        <div class="tag-group" id="delai-tags" style="margin-block-start:0.625rem;">
           <button class="tag-btn" type="button" data-val="Le plus vite possible">Urgent</button>
           <button class="tag-btn" type="button" data-val="Dans le mois">Ce mois-ci</button>
           <button class="tag-btn" type="button" data-val="Dans 1 à 3 mois">1 à 3 mois</button>
@@ -938,7 +944,7 @@
           <button class="tag-btn" type="button" data-val="Je ne sais pas encore">Pas encore défini</button>
         </div>
         <input type="hidden" id="f-delai" name="delai">
-        <span class="field-error" id="err-delai" style="margin-block-start:8px;">Veuillez sélectionner un délai.</span>
+        <span class="field-error" id="err-delai" style="margin-block-start:0.5rem;">Veuillez sélectionner un délai.</span>
       </div>
 
       <!-- Objectif principal -->
@@ -973,9 +979,9 @@
       </div>
 
       <!-- Pages -->
-      <div class="form-group" style="margin-block-end:28px;">
+      <div class="form-group" style="margin-block-end:1.75rem;">
         <label>Pages souhaitées (cochez tout ce qui s'applique)</label>
-        <div class="check-list" style="margin-block-start:10px;">
+        <div class="check-list" style="margin-block-start:0.625rem;">
           <label class="check-item">
             <input type="checkbox" name="pages" value="Accueil">
             <div class="check-box"></div>
@@ -1044,62 +1050,62 @@
       </div>
 
       <!-- Fonctionnalités -->
-      <div class="form-group" style="margin-block-end:28px;">
+      <div class="form-group" style="margin-block-end:1.75rem;">
         <label>Fonctionnalités souhaitées</label>
-        <div class="card-grid cols-2" style="margin-block-start:10px;">
-          <label class="choice-card" style="text-align:start;padding:14px 16px;">
+        <div class="card-grid cols-2" style="margin-block-start:0.625rem;">
+          <label class="choice-card" style="text-align:start;padding:0.875rem 1rem;">
             <input type="checkbox" name="fonctionnalites" value="Formulaire de contact">
             <div class="card-check"></div>
-            <div style="padding-inline-end:20px;">
+            <div style="padding-inline-end:1.25rem;">
               <div class="card-label" style="text-align:start;">Formulaire de contact</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:start;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:0.875rem 1rem;">
             <input type="checkbox" name="fonctionnalites" value="Prise de rendez-vous">
             <div class="card-check"></div>
-            <div style="padding-inline-end:20px;">
+            <div style="padding-inline-end:1.25rem;">
               <div class="card-label" style="text-align:start;">Prise de rendez-vous</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:start;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:0.875rem 1rem;">
             <input type="checkbox" name="fonctionnalites" value="Paiement en ligne">
             <div class="card-check"></div>
-            <div style="padding-inline-end:20px;">
+            <div style="padding-inline-end:1.25rem;">
               <div class="card-label" style="text-align:start;">Paiement en ligne</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:start;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:0.875rem 1rem;">
             <input type="checkbox" name="fonctionnalites" value="Espace membre / Connexion">
             <div class="card-check"></div>
-            <div style="padding-inline-end:20px;">
+            <div style="padding-inline-end:1.25rem;">
               <div class="card-label" style="text-align:start;">Espace membre</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:start;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:0.875rem 1rem;">
             <input type="checkbox" name="fonctionnalites" value="Multilingue">
             <div class="card-check"></div>
-            <div style="padding-inline-end:20px;">
+            <div style="padding-inline-end:1.25rem;">
               <div class="card-label" style="text-align:start;">Multilingue</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:start;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:0.875rem 1rem;">
             <input type="checkbox" name="fonctionnalites" value="SEO avancé">
             <div class="card-check"></div>
-            <div style="padding-inline-end:20px;">
+            <div style="padding-inline-end:1.25rem;">
               <div class="card-label" style="text-align:start;">SEO avancé</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:start;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:0.875rem 1rem;">
             <input type="checkbox" name="fonctionnalites" value="Chat / Support en ligne">
             <div class="card-check"></div>
-            <div style="padding-inline-end:20px;">
+            <div style="padding-inline-end:1.25rem;">
               <div class="card-label" style="text-align:start;">Chat / Support</div>
             </div>
           </label>
-          <label class="choice-card" style="text-align:start;padding:14px 16px;">
+          <label class="choice-card" style="text-align:start;padding:0.875rem 1rem;">
             <input type="checkbox" name="fonctionnalites" value="Tableau de bord admin">
             <div class="card-check"></div>
-            <div style="padding-inline-end:20px;">
+            <div style="padding-inline-end:1.25rem;">
               <div class="card-label" style="text-align:start;">Dashboard admin</div>
             </div>
           </label>
@@ -1107,9 +1113,9 @@
       </div>
 
       <!-- Style visuel -->
-      <div class="form-group" style="margin-block-end:28px;">
+      <div class="form-group" style="margin-block-end:1.75rem;">
         <label>Style visuel préféré</label>
-        <div class="tag-group" id="style-tags" style="margin-block-start:10px;">
+        <div class="tag-group" id="style-tags" style="margin-block-start:0.625rem;">
           <button class="tag-btn" type="button" data-val="Moderne & épuré">Moderne & épuré</button>
           <button class="tag-btn" type="button" data-val="Luxe & premium">Luxe & premium</button>
           <button class="tag-btn" type="button" data-val="Coloré & dynamique">Coloré & dynamique</button>
@@ -1171,7 +1177,7 @@
         </button>
       </div>
 
-      <p id="lead-legal" style="font-size: 0.75rem;color:var(--c-muted);text-align:center;margin-block-start:16px;">
+      <p id="lead-legal" style="font-size: 0.75rem;color:var(--c-muted);text-align:center;margin-block-start:1rem;">
         En soumettant ce formulaire, vous acceptez que vos données soient utilisées pour vous recontacter. Aucun spam.
       </p>
     </section>

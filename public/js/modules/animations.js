@@ -6,6 +6,7 @@ export function initCursor() {
   const dot  = document.createElement('div'); dot.id  = 'cursor-dot';
   const ring = document.createElement('div'); ring.id = 'cursor-ring';
   document.body.append(dot, ring);
+  document.documentElement.classList.add('has-cursor');
 
   let mx = -200, my = -200, rx = -200, ry = -200, hover = false;
   let anime = false;   // la boucle s'endort quand l'anneau a rejoint la souris

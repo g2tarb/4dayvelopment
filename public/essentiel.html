@@ -49,7 +49,7 @@
       --border:  #1e1e1e;
       --text:    #e8e8e8;
       --muted:   #888888; /* #666 donnait 3,5:1 sur ce fond */
-      --radius:  14px;
+      --radius:  0.875rem;
     }
 
     html { scroll-behavior: smooth; }
@@ -58,11 +58,15 @@
       font-family: 'Inter', sans-serif;
       background: var(--bg);
       color: var(--text);
-      min-height: 100vh;
-      animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+      min-height: 100svh;
+      /* encoche en paysage (viewport-fit=cover) : tout le contenu recule de la zone masquee */
+      padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+      /* backwards et non both : une animation qui reste en vigueur sur body
+         casse le flou de l'en-tete collant (le texte passe net dessous) */
+      animation: pageEnter 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
     }
     @keyframes pageEnter {
-      from { opacity: 0; transform: translateY(18px); }
+      from { opacity: 0; transform: translateY(1.125rem); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
@@ -71,7 +75,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 32px;
+      padding: 1rem 2rem;
       border-block-end: 1px solid var(--border);
       background: rgba(8,8,8,0.95);
       backdrop-filter: blur(20px);
@@ -80,40 +84,42 @@
       z-index: 100;
     }
     header img { height: clamp(2.125rem, 4.5vi, 3.125rem); width: auto; }
+    /* le logo est un lien : cible de 44 px meme quand l'image n'en fait que 34 */
+    header > a { display: inline-flex; align-items: center; min-height: 2.75rem; }
     .back-link {
       font-size: 0.8125rem;
       color: var(--muted);
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.375rem;
       transition: color .2s;
     }
     /* page autonome, sans la regle tactile de style.css : 30 px de haut au doigt */
-    @media (pointer: coarse) { .back-link, .lang-btn-ext { min-height: 44px; } }
+    @media (pointer: coarse) { .back-link, .lang-btn-ext { min-height: 2.75rem; } }
     .back-link:hover { color: var(--text); }
 
     /* ── Layout ── */
     .page {
       display: grid;
-      grid-template-columns: 1fr 420px;
-      min-height: calc(100vh - 67px);
+      grid-template-columns: 1fr 26.25rem;
+      min-height: calc(100svh - 4.1875rem);
     }
 
     /* ── Colonne gauche : pitch ── */
     .pitch {
-      padding: 64px 56px;
+      padding: 4rem 3.5rem;
       border-inline-end: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      gap: 40px;
+      gap: 2.5rem;
     }
 
     /* Badge 4 jours */
     .badge-4j {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.625rem;
       width: fit-content;
     }
     .badge-4j-icon { font-size: 1.375rem; color: var(--amber, #f2b13b); display: inline-flex; }
@@ -147,7 +153,7 @@
       font-size: 1rem;
       color: var(--muted);
       line-height: 1.7;
-      max-width: 460px;
+      max-width: 28.75rem;
     }
 
     /* Ce que comprend la formule */
@@ -155,22 +161,22 @@
       font-family: 'Syne', sans-serif;
       font-size: 1rem;
       font-weight: 700;
-      margin-block-end: 16px;
+      margin-block-end: 1rem;
     }
     .inclus-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 0.625rem;
     }
     .inclus-item {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 0.75rem;
       font-size: 0.875rem;
       color: var(--text);
     }
     .inclus-check {
-      width: 22px; height: 22px;
+      width: 1.375rem; height: 1.375rem;
       border-radius: 50%;
       background: rgba(218,84,38,0.15);
       border: 1px solid rgba(218,84,38,0.3);
@@ -185,11 +191,11 @@
       background: linear-gradient(135deg, rgba(218,84,38,0.08), rgba(242,177,59,0.05));
       border: 1px solid rgba(218,84,38,0.2);
       border-radius: var(--radius);
-      padding: 24px 28px;
+      padding: 1.5rem 1.75rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      gap: 1rem;
     }
     .prix-montant {
       font-family: 'Syne', sans-serif;
@@ -204,8 +210,8 @@
       background: rgba(218,84,38,0.1);
       border: 1px solid rgba(218,84,38,0.2);
       color: var(--amber);
-      padding: 4px 12px;
-      border-radius: 100px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 6.25rem;
       font-weight: 600;
       white-space: nowrap;
     }
@@ -215,10 +221,10 @@
       background: rgba(136,64,131,0.08);
       border: 1px solid rgba(136,64,131,0.25);
       border-radius: var(--radius);
-      padding: 20px;
+      padding: 1.25rem;
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 0.875rem;
     }
     .mb-header {
       display: flex;
@@ -227,7 +233,7 @@
          ecrans les plus etroits, le prix passe dessous au lieu de pousser
          la page. Aucun breakpoint : la ligne decide selon sa place. */
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 0.75rem;
     }
     .mb-icon { font-size: 1.5rem; flex-shrink: 0; color: #f2b13b; display: inline-flex; }
     .mb-title {
@@ -240,7 +246,7 @@
       margin-inline-start: auto;
       display: flex;
       align-items: baseline;
-      gap: 3px;
+      gap: 0.1875rem;
       flex-shrink: 0;
     }
     .mb-amount {
@@ -257,44 +263,44 @@
          decide elle-meme, aucun breakpoint. min(100%, 10rem) garantit
          qu'une colonne ne peut jamais exiger plus que son conteneur. */
       grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
-      gap: 6px;
+      gap: 0.375rem;
     }
     .mb-item {
       font-size: 0.75rem;
       color: var(--muted);
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 0.375rem;
     }
     .mb-footer {
       font-size: 0.75rem;
       color: var(--muted);
-      padding-block-start: 10px;
+      padding-block-start: 0.625rem;
       border-block-start: 1px solid rgba(136,64,131,0.15);
     }
     .mb-toggle {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 0.625rem;
       cursor: pointer;
       font-size: 0.8125rem;
       font-weight: 600;
       color: var(--text);
-      padding: 10px 14px;
+      padding: 0.625rem 0.875rem;
       background: rgba(136,64,131,0.1);
-      border-radius: 8px;
+      border-radius: 0.5rem;
       border: 1px solid rgba(136,64,131,0.2);
-      transition: all .2s;
+      transition: color .2s, background-color .2s, background-position .2s, border-color .2s, box-shadow .2s, transform .2s, opacity .2s;
     }
     .mb-toggle:hover { border-color: rgba(136,64,131,0.4); }
     .mb-toggle input { display: none; }
     .mb-toggle-box {
-      width: 20px; height: 20px;
-      border-radius: 5px;
+      width: 1.25rem; height: 1.25rem;
+      border-radius: 0.3125rem;
       border: 2px solid #444;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
-      transition: all .2s;
+      transition: color .2s, background-color .2s, background-position .2s, border-color .2s, box-shadow .2s, transform .2s, opacity .2s;
     }
     .mb-toggle:has(input:checked) .mb-toggle-box {
       background: #884083;
@@ -302,7 +308,7 @@
     }
     .mb-toggle:has(input:checked) .mb-toggle-box::after {
       content: '';
-      width: 5px; height: 9px;
+      width: 0.3125rem; height: 0.5625rem;
       border: 2px solid #fff;
       border-block-start: none; border-inline-start: none;
       transform: rotate(45deg) translate(-1px,-1px);
@@ -310,29 +316,29 @@
     }
     .wp-add-title { font-family: 'Syne', sans-serif; font-size: 0.9375rem; font-weight: 700; }
     .wp-add-sub { font-size: 0.75rem; color: var(--muted); margin-block-start: 2px; }
-    .wp-add-item { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 6px; }
-    .wp-add-footer { font-size: 0.75rem; color: var(--muted); padding-block-start: 10px; border-block-start: 1px solid rgba(136,64,131,0.15); }
+    .wp-add-item { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 0.375rem; }
+    .wp-add-footer { font-size: 0.75rem; color: var(--muted); padding-block-start: 0.625rem; border-block-start: 1px solid rgba(136,64,131,0.15); }
 
     /* Timeline 4 jours */
     .timeline { display: flex; flex-direction: column; gap: 0; }
     .tl-item {
       display: flex;
-      gap: 16px;
-      padding-block-end: 20px;
+      gap: 1rem;
+      padding-block-end: 1.25rem;
       position: relative;
     }
     .tl-item:last-child { padding-block-end: 0; }
     .tl-item:not(:last-child) .tl-dot::after {
       content: '';
       position: absolute;
-      inset-inline-start: 13.5px;
-      inset-block-start: 30px;
+      inset-inline-start: 0.84375rem;
+      inset-block-start: 1.875rem;
       inset-block-end: 0;
       width: 1px;
       background: linear-gradient(180deg, rgba(218,84,38,0.4), transparent);
     }
     .tl-dot {
-      width: 28px;
+      width: 1.75rem;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
@@ -341,14 +347,15 @@
     }
     .tl-dot-circle {
       /* 28 px : « J1 » a 12 px (plancher de lisibilite) debordait d'un cercle de 22 */
-      width: 28px; height: 28px;
+      width: 1.75rem; height: 1.75rem;
       border-radius: 50%;
       background: rgba(218,84,38,0.15);
       border: 2px solid var(--orange);
       display: flex; align-items: center; justify-content: center;
       font-size: 0.75rem;
       font-weight: 800;
-      color: var(--orange);
+      /* orange eclairci : l'orange pur faisait 4,4:1 sur la pastille teintee */
+      color: color-mix(in oklch, var(--orange), #fff 18%);
       /* Inter et non Syne : a 12 px, Syne extra-gras touchait le cercle */
       font-family: 'Inter', sans-serif;
     }
@@ -364,7 +371,7 @@
     /* ── Colonne droite : formulaire ── */
     .form-side {
       background: var(--card);
-      padding: 40px 36px;
+      padding: 2.5rem 2.25rem;
       overflow-y: auto;
     }
     .form-title {
@@ -372,16 +379,16 @@
       font-size: 1.125rem;
       font-weight: 800;
       letter-spacing: -0.5px;
-      margin-block-end: 6px;
+      margin-block-end: 0.375rem;
     }
     .form-subtitle {
       font-size: 0.8125rem;
       color: var(--muted);
-      margin-block-end: 32px;
+      margin-block-end: 2rem;
     }
 
     /* Champs */
-    .field { display: flex; flex-direction: column; gap: 7px; margin-block-end: 18px; }
+    .field { display: flex; flex-direction: column; gap: 0.4375rem; margin-block-end: 1.125rem; }
     .field label {
       font-size: 0.875rem;
       font-weight: 600;
@@ -393,8 +400,8 @@
     .field textarea {
       background: #181818;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 13px 16px;
+      border-radius: 0.625rem;
+      padding: 0.8125rem 1rem;
       font-family: 'Inter', sans-serif;
       font-size: 0.875rem;
       color: var(--text);
@@ -413,18 +420,18 @@
       box-shadow: 0 0 0 3px rgba(218,84,38,0.1);
     }
     .field input.err { border-color: #ef4444; }
-    .field textarea { resize: vertical; min-height: 90px; }
+    .field textarea { resize: vertical; min-height: 5.625rem; }
     .field-error { font-size: 0.75rem; color: #ef4444; display: none; }
     .field-error.show { display: block; }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      15%  { transform: translateX(-8px); }
-      30%  { transform: translateX(8px); }
-      45%  { transform: translateX(-6px); }
-      60%  { transform: translateX(6px); }
-      75%  { transform: translateX(-4px); }
-      90%  { transform: translateX(4px); }
+      15%  { transform: translateX(-0.5rem); }
+      30%  { transform: translateX(0.5rem); }
+      45%  { transform: translateX(-0.375rem); }
+      60%  { transform: translateX(0.375rem); }
+      75%  { transform: translateX(-0.25rem); }
+      90%  { transform: translateX(0.25rem); }
     }
     .shake { animation: shake 0.55s ease; }
 
@@ -432,19 +439,19 @@
     .pages-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 8px;
+      gap: 0.5rem;
     }
     .page-check {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
       background: #181818;
       border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 10px 12px;
+      border-radius: 0.5rem;
+      padding: 0.625rem 0.75rem;
       cursor: pointer;
       font-size: 0.8125rem;
-      transition: all .2s;
+      transition: color .2s, background-color .2s, background-position .2s, border-color .2s, box-shadow .2s, transform .2s, opacity .2s;
       user-select: none;
     }
     .page-check input { display: none; }
@@ -455,12 +462,12 @@
       color: var(--amber);
     }
     .page-check-box {
-      width: 16px; height: 16px;
-      border-radius: 4px;
+      width: 1rem; height: 1rem;
+      border-radius: 0.25rem;
       border: 1.5px solid #333;
       flex-shrink: 0;
       display: flex; align-items: center; justify-content: center;
-      transition: all .2s;
+      transition: color .2s, background-color .2s, background-position .2s, border-color .2s, box-shadow .2s, transform .2s, opacity .2s;
     }
     .page-check:has(input:checked) .page-check-box {
       background: var(--orange);
@@ -468,7 +475,7 @@
     }
     .page-check:has(input:checked) .page-check-box::after {
       content: '';
-      width: 4px; height: 7px;
+      width: 0.25rem; height: 0.4375rem;
       border: 1.5px solid #fff;
       border-block-start: none; border-inline-start: none;
       transform: rotate(45deg) translate(-1px,-1px);
@@ -478,12 +485,12 @@
     /* Urgence toggle */
     .urgence-toggle {
       display: flex;
-      gap: 8px;
+      gap: 0.5rem;
     }
     .urg-btn {
       flex: 1;
-      padding: 10px;
-      border-radius: 8px;
+      padding: 0.625rem;
+      border-radius: 0.5rem;
       border: 1px solid var(--border);
       background: #181818;
       color: var(--muted);
@@ -491,7 +498,7 @@
       font-weight: 600;
       cursor: pointer;
       text-align: center;
-      transition: all .2s;
+      transition: color .2s, background-color .2s, background-position .2s, border-color .2s, box-shadow .2s, transform .2s, opacity .2s;
     }
     .urg-btn:hover { border-color: rgba(218,84,38,0.3); color: var(--text); }
     .urg-btn.sel {
@@ -506,18 +513,18 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 0.625rem;
       background: linear-gradient(135deg, var(--orange), #f2b13b); /* texte sombre : le blanc tombait a 4:1 sur l'orange */
       color: #0b0b0b;
       font-family: 'Syne', sans-serif;
       font-size: 0.9375rem;
       font-weight: 800;
-      padding: 18px;
-      border-radius: 12px;
+      padding: 1.125rem;
+      border-radius: 0.75rem;
       border: none;
       cursor: pointer;
-      margin-block-start: 8px;
-      transition: all .3s;
+      margin-block-start: 0.5rem;
+      transition: color .3s, background-color .3s, background-position .3s, border-color .3s, box-shadow .3s, transform .3s, opacity .3s;
       letter-spacing: -0.3px;
       position: relative;
       overflow: hidden;
@@ -537,7 +544,7 @@
     .btn-submit:disabled { opacity: .6; cursor: not-allowed; transform: none; box-shadow: none; }
 
     .spinner {
-      width: 18px; height: 18px;
+      width: 1.125rem; height: 1.125rem;
       border: 2px solid rgba(11,11,11,.25);
       border-block-start-color: #0b0b0b; /* sur le bouton orange-or, le blanc ne se voyait pas */
       border-radius: 50%;
@@ -552,16 +559,16 @@
       font-size: 0.75rem;
       color: var(--muted);
       text-align: center;
-      margin-block-start: 12px;
+      margin-block-start: 0.75rem;
       line-height: 1.5;
     }
 
     /* Feedback */
     .feedback {
-      padding: 12px 16px;
-      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      border-radius: 0.625rem;
       font-size: 0.8125rem;
-      margin-block-start: 12px;
+      margin-block-start: 0.75rem;
       display: none;
     }
     .feedback.err {
@@ -578,13 +585,13 @@
     .garanties {
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      margin-block-start: 4px;
+      gap: 0.5rem;
+      margin-block-start: 0.25rem;
     }
     .garantie {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0.5rem;
       font-size: 0.75rem;
       color: var(--muted);
     }
@@ -594,30 +601,30 @@
     .success {
       display: none;
       text-align: center;
-      padding: 40px 20px;
+      padding: 2.5rem 1.25rem;
     }
     .success.show { display: block; }
-    .success-svg { width: 80px; height: 80px; margin: 0 auto 24px; }
+    .success-svg { width: 5rem; height: 5rem; margin: 0 auto 1.5rem; }
     .success h2 {
       font-family: 'Syne', sans-serif;
       font-size: 1.375rem;
       font-weight: 800;
       letter-spacing: -0.5px;
-      margin-block-end: 12px;
+      margin-block-end: 0.75rem;
     }
-    .success p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-block-end: 24px; }
+    .success p { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin-block-end: 1.5rem; }
     .btn-retour {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 10px;
+      gap: 0.5rem;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.625rem;
       border: 1px solid var(--border);
       color: var(--text);
       text-decoration: none;
       font-size: 0.8125rem;
       font-weight: 600;
-      transition: all .2s;
+      transition: color .2s, background-color .2s, background-position .2s, border-color .2s, box-shadow .2s, transform .2s, opacity .2s;
     }
     .btn-retour:hover { border-color: var(--amber); color: var(--amber); }
 
@@ -629,12 +636,12 @@
       background: rgba(255,255,255,0.06);
       border: 1px solid rgba(255,255,255,0.1);
       color: var(--muted);
-      padding: 6px 14px;
-      border-radius: 100px;
+      padding: 0.375rem 0.875rem;
+      border-radius: 6.25rem;
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
-      transition: all .2s;
+      transition: color .2s, background-color .2s, background-position .2s, border-color .2s, box-shadow .2s, transform .2s, opacity .2s;
       font-family: 'Inter', sans-serif;
       letter-spacing: 0.3px;
     }
@@ -648,39 +655,39 @@
     @media (max-width: 56.25rem) {
       .page { grid-template-columns: 1fr; }
       .pitch {
-        padding: 40px 28px;
+        padding: 2.5rem 1.75rem;
         border-inline-end: none;
         border-block-end: 1px solid var(--border);
       }
-      .form-side { padding: 32px 28px; }
+      .form-side { padding: 2rem 1.75rem; }
     }
 
     @media (max-width: 37.5rem) {
-      header { padding: 10px 16px; }
-      header img { max-height: 64px; }
+      header { padding: 0.625rem 1rem; }
+      header img { max-height: 4rem; }
       .back-link { font-size: 0.75rem; }
-      .pitch { padding: 28px 16px; gap: 24px; }
+      .pitch { padding: 1.75rem 1rem; gap: 1.5rem; }
       .pitch h1 { font-size: clamp(1.6rem, 7vi, 2.2rem); letter-spacing: -1px; }
-      .prix-block { flex-direction: column; align-items: flex-start; gap: 10px; padding: 18px 16px; }
+      .prix-block { flex-direction: column; align-items: flex-start; gap: 0.625rem; padding: 1.125rem 1rem; }
       .prix-montant { font-size: 2.2rem; }
-      .maintenance-block { padding: 16px; }
-      .form-side { padding: 24px 16px; }
+      .maintenance-block { padding: 1rem; }
+      .form-side { padding: 1.5rem 1rem; }
       .form-title { font-size: 1rem; }
-      .form-subtitle { font-size: 0.75rem; margin-block-end: 20px; }
-      .field { margin-block-end: 14px; }
+      .form-subtitle { font-size: 0.75rem; margin-block-end: 1.25rem; }
+      .field { margin-block-end: 0.875rem; }
       /* iOS : évite le zoom auto au focus */
       .field input,
       .field select,
-      .field textarea { font-size: 1rem; padding: 12px 14px; }
+      .field textarea { font-size: 1rem; padding: 0.75rem 0.875rem; }
       .urg-btns { flex-direction: column; }
-      .urg-btn { width: 100%; justify-content: center; padding: 14px; min-height: 50px; }
-      .btn-submit-wrap { position: sticky; inset-block-end: 0; background: var(--card); padding: 12px 0 0; }
+      .urg-btn { width: 100%; justify-content: center; padding: 0.875rem; min-height: 3.125rem; }
+      .btn-submit-wrap { position: sticky; inset-block-end: 0; background: var(--card); padding: 0.75rem 0 0; }
     }
 
     @media (max-width: 25rem) {
-      header img { max-height: 52px; }
-      .pitch { padding: 20px 14px; }
-      .form-side { padding: 20px 14px; }
+      header img { max-height: 3.25rem; }
+      .pitch { padding: 1.25rem 0.875rem; }
+      .form-side { padding: 1.25rem 0.875rem; }
       .pages-grid { grid-template-columns: 1fr; }
       .prix-montant { font-size: 1.9rem; }
     }
@@ -690,7 +697,7 @@
 
   <header>
     <a href="/"><img src="logo/logo4day.svg" alt="4dayvelopment" width="240" height="89"></a>
-    <div style="display:flex;align-items:center;gap:12px;">
+    <div style="display:flex;align-items:center;gap:0.75rem;">
       <button type="button" id="lang-btn" class="lang-btn-ext" aria-label="EN, English version">EN</button>
       <a href="/" class="back-link">← Retour au site</a>
     </div>
@@ -714,7 +721,7 @@
       <div>
         <h1>Formule Essentiel<br>à 890€ <span class="taxe">TTC</span></h1>
         <p class="maj">Mis à jour le <time datetime="2026-09-28">28 septembre 2026</time></p>
-        <p class="desc" style="margin-block-start:16px;">Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.</p>
+        <p class="desc" style="margin-block-start:1rem;">Votre site vitrine professionnel, livré en 4 jours chrono. Idéal pour démarrer avec une présence en ligne qui rassure vos clients et génère des contacts.</p>
       </div>
 
       <!-- Ce qui est inclus -->
@@ -740,7 +747,7 @@
         </div>
         <div style="text-align:right;">
           <div class="prix-paiement">ou 2× 445€ TTC</div>
-          <div id="prix-secure" style="font-size: 0.75rem;color:var(--muted);margin-block-start:6px;">Paiement sécurisé</div>
+          <div id="prix-secure" style="font-size: 0.75rem;color:var(--muted);margin-block-start:0.375rem;">Paiement sécurisé</div>
         </div>
       </div>
 
@@ -872,7 +879,7 @@
 
           <div class="field">
             <label>Pages souhaitées (3 max)</label>
-            <div class="pages-grid" style="margin-block-start:4px;">
+            <div class="pages-grid" style="margin-block-start:0.25rem;">
               <label class="page-check"><input type="checkbox" name="pages" value="Accueil"><div class="page-check-box"></div><span class="page-label">Accueil</span></label>
               <label class="page-check"><input type="checkbox" name="pages" value="À propos"><div class="page-check-box"></div><span class="page-label">À propos</span></label>
               <label class="page-check"><input type="checkbox" name="pages" value="Services"><div class="page-check-box"></div><span class="page-label">Services</span></label>
@@ -906,7 +913,7 @@
 
           <div class="field">
             <label>Délai souhaité</label>
-            <div class="urgence-toggle" id="urg-toggle" style="margin-block-start:4px;">
+            <div class="urgence-toggle" id="urg-toggle" style="margin-block-start:0.25rem;">
               <button type="button" class="urg-btn" data-val="Le plus vite possible">Urgent</button>
               <button type="button" class="urg-btn" data-val="Dans le mois">Ce mois</button>
               <button type="button" class="urg-btn" data-val="Flexible">Flexible</button>
@@ -937,7 +944,7 @@
             <span class="btn-label">Commander ma formule Essentiel →</span>
           </button>
 
-          <div class="garanties" style="margin-block-start:16px;">
+          <div class="garanties" style="margin-block-start:1rem;">
             <div class="garantie"><span class="garantie-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>Paiement 100% sécurisé</div>
             <div class="garantie"><span class="garantie-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>Livraison en 4 jours garantie contractuellement</div>
             <div class="garantie"><span class="garantie-icon" aria-hidden="true"><svg class="ico" viewBox="0 0 24 24" width="1em" height="1em" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></span>Réponse sous 2h par email ou WhatsApp</div>

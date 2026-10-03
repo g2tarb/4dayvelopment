@@ -42,13 +42,14 @@ body{visibility:visible}
   --space-l:clamp(2rem, 1.86rem + 0.71vi, 2.5rem);
   --space-xl:clamp(3rem, 2.5rem + 2vi, 4.5rem);
   --space-2xl:clamp(4rem, 3.2rem + 3vi, 6.5rem);
-  --gutter:var(--space-s);
+  /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
+  --gutter:max(var(--space-s), env(safe-area-inset-left), env(safe-area-inset-right));
   --shell:min(100% - (2 * var(--gutter)), 78rem);
   --measure:66ch;
   --r-s:.5rem;
   --r-m:1rem;
   --r-l:1.5rem;
-  --ombre:0 1px 2px oklch(0.25 0.06 255 / .08), 0 18px 40px -18px oklch(0.25 0.06 255 / .4);
+  --ombre:0 1px 2px oklch(0.25 0.06 255 / .08), 0 1.125rem 2.5rem -1.125rem oklch(0.25 0.06 255 / .4);
   --police:"Saira","Saira repli",system-ui,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -66,7 +67,7 @@ p{text-wrap:pretty}
 sup{font-size:.7em;line-height:0}
 :focus-visible{outline:3px solid var(--azur);outline-offset:3px}
 .visuel-seul{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;inset-inline-start:1rem;inset-block-start:-4rem;z-index:60;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--r-s);font-weight:600}
+.skip{position:absolute;inset-inline-start:max(1rem, env(safe-area-inset-left));inset-block-start:-4rem;z-index:60;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--r-s);font-weight:600}
 .skip:focus{inset-block-start:1rem}
 .ico{width:1.25rem;height:1.25rem;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .ico .aiguille{fill:currentColor;stroke:none}
@@ -75,7 +76,7 @@ sup{font-size:.7em;line-height:0}
 
 /* Boutons : le soleil porte l'action principale, texte encre (contraste > 9:1) */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;min-block-size:3rem;padding:.7rem 1.35rem;
-  border-radius:999px;border:2px solid transparent;font-stretch:88%;font-weight:700;font-size:var(--step-0);line-height:1.15;
+  border-radius:62.4375rem;border:2px solid transparent;font-stretch:88%;font-weight:700;font-size:var(--step-0);line-height:1.15;
   text-decoration:none;cursor:pointer;text-align:center}
 .btn-soleil{background:var(--soleil);color:var(--encre);border-color:var(--encre)}
 .btn-contour{background:transparent;border-color:currentColor}
@@ -84,7 +85,7 @@ sup{font-size:.7em;line-height:0}
   .btn-contour:hover{background:oklch(0.25 0.06 255 / .06)}
 }
 .btn:active{transform:translateY(1px)}
-.lien{color:var(--azur);font-weight:600;text-underline-offset:.2em;text-decoration-thickness:.08em;display:inline-flex;align-items:center;gap:.35rem;
+.lien{color:var(--azur);font-weight:600;text-underline-offset:.2em;text-decoration-thickness:.08em;display:inline-flex;align-items:center;min-block-size:2.75rem;gap:.35rem;
   background:none;border:0;padding:0;cursor:pointer;text-decoration-line:underline}
 
 /* ---------- En-tête : posé sur le ciel, sans bandeau ---------- */
@@ -98,11 +99,11 @@ sup{font-size:.7em;line-height:0}
 .logo-nom{font-stretch:70%;font-weight:760;font-size:var(--step-1)}
 .logo-sig{font-size:var(--step--1);font-stretch:90%}
 .nav ul{list-style:none;padding:0;display:flex;gap:.25rem}
-.nav a:not(.btn){display:flex;align-items:center;min-block-size:2.75rem;padding-inline:.8rem;text-decoration:none;font-weight:600;font-stretch:90%;border-radius:999px}
+.nav a:not(.btn){display:flex;align-items:center;min-block-size:2.75rem;padding-inline:.8rem;text-decoration:none;font-weight:600;font-stretch:90%;border-radius:62.4375rem}
 @media (hover: hover) and (pointer: fine){.nav a:not(.btn):hover{background:oklch(1 0 0 / .35)}}
 .entete-tel{margin-inline-start:auto;display:inline-flex;align-items:center;gap:.45rem;min-block-size:2.75rem;min-inline-size:2.75rem;justify-content:center;
-  font-weight:700;text-decoration:none;border-radius:999px}
-.burger{display:inline-grid;place-items:center;inline-size:2.75rem;block-size:2.75rem;border-radius:999px;background:var(--papier);
+  font-weight:700;text-decoration:none;border-radius:62.4375rem}
+.burger{display:inline-grid;place-items:center;flex:none;inline-size:2.75rem;block-size:2.75rem;border-radius:62.4375rem;background:var(--papier);
   border:2px solid var(--encre);cursor:pointer}
 /* Entre 64 et 80rem, le numéro écrit en entier pousse le bouton sur deux lignes : l'icône suffit (le lien garde son nom) */
 @media (min-width: 64rem) and (max-width: 79.99rem){.entete-tel .num{display:none}}
@@ -133,7 +134,7 @@ sup{font-size:.7em;line-height:0}
 .scene{grid-area:scene;min-inline-size:0}
 .etat{grid-area:etat}
 .cmd{grid-area:cmd}
-.statut{display:inline-flex;align-items:center;gap:.5rem;background:oklch(1 0 0 / .55);border-radius:999px;padding:.3rem .85rem .3rem .6rem;
+.statut{display:inline-flex;align-items:center;gap:.5rem;background:oklch(1 0 0 / .55);border-radius:62.4375rem;padding:.3rem .85rem .3rem .6rem;
   font-size:var(--step--1);font-weight:600;line-height:1.3;margin-block-end:var(--space-2xs)}
 .statut-point{inline-size:.6rem;block-size:.6rem;border-radius:50%;background:var(--garrigue);flex:none;box-shadow:0 0 0 3px oklch(0.47 0.09 145 / .25)}
 .statut.ferme .statut-point{background:var(--encre-2);box-shadow:none}
@@ -142,13 +143,13 @@ sup{font-size:.7em;line-height:0}
 /* Le dessin : le ciel est celui de la section, le SVG n'apporte que le toit, la maison et le soleil */
 .toit{inline-size:100%;block-size:auto;aspect-ratio:800 / 425;overflow:hidden;touch-action:manipulation}
 .trajet{fill:none;stroke:#fff;stroke-opacity:.8;stroke-width:2;stroke-dasharray:3 9;stroke-linecap:round}
-.soleil{transform:translate(400px,52px)}
+.soleil{transform:translate(25rem,3.25rem)}
 .soleil-halo{fill:#FFE793;opacity:.55}
 .soleil-disque{fill:#FFCB3C;stroke:#F2AE12;stroke-width:2}
-.simu[data-o="sud-est"] .soleil{transform:translate(585px,92px)}
-.simu[data-o="sud-ouest"] .soleil{transform:translate(215px,92px)}
+.simu[data-o="sud-est"] .soleil{transform:translate(36.5625rem,5.75rem)}
+.simu[data-o="sud-ouest"] .soleil{transform:translate(13.4375rem,5.75rem)}
 .rose-fond{fill:oklch(1 0 0 / .8);stroke:var(--encre);stroke-width:1.5}
-.rose-l{font:700 11px var(--police);fill:var(--encre);text-anchor:middle}
+.rose-l{font:700 .6875rem var(--police);fill:var(--encre);text-anchor:middle}
 .rose-axe{fill:var(--encre)}
 .rose-aiguille{fill:var(--tuile);stroke:var(--encre);stroke-width:1;transform:rotate(0deg)}
 .simu[data-o="sud-est"] .rose-simple{transform:rotate(-45deg)}
@@ -193,7 +194,7 @@ sup{font-size:.7em;line-height:0}
 .mesure .chiffre{font-size:clamp(1.9rem, 7.5cqi, 4rem);line-height:.9;letter-spacing:-.01em}
 .unite{font-weight:600;font-stretch:80%;font-size:var(--step--1)}
 .jauge{margin-block-start:var(--space-2xs);padding-block-start:.1rem;border-block-start:1px solid var(--trait)}
-.jauge-barre{position:relative;block-size:.55rem;border-radius:999px;background:var(--trait);margin-block:1.25rem .45rem}
+.jauge-barre{position:relative;block-size:.55rem;border-radius:62.4375rem;background:var(--trait);margin-block:1.25rem .45rem}
 .jauge-rempli{position:absolute;inset:0;border-radius:inherit;background:var(--azur);transform-origin:0 50%;transform:scaleX(var(--k, .425))}
 .jauge-seuil{position:absolute;inset-block-end:0;inset-inline-start:75%;block-size:1.6rem;border-inline-start:2px solid var(--encre);
   font-size:.75rem;font-weight:700;line-height:1;padding-inline-start:.3rem;white-space:nowrap}
@@ -215,9 +216,9 @@ sup{font-size:.7em;line-height:0}
 .pas-aide{font-size:var(--step--1);color:var(--encre-2);margin-block-start:.3rem;line-height:1.35}
 /* curseur : piste en dents de panneau, pouce soleil de 2 rem */
 .curseur{-webkit-appearance:none;appearance:none;inline-size:100%;block-size:3rem;background:transparent;cursor:pointer;margin:0}
-.curseur::-webkit-slider-runnable-track{block-size:.6rem;border-radius:999px;background:linear-gradient(90deg,var(--encre) 0 var(--p,52%),oklch(1 0 0 / .8) var(--p,52%));border:1px solid var(--encre)}
-.curseur::-moz-range-track{block-size:.6rem;border-radius:999px;background:oklch(1 0 0 / .8);border:1px solid var(--encre)}
-.curseur::-moz-range-progress{block-size:.6rem;border-radius:999px;background:var(--encre)}
+.curseur::-webkit-slider-runnable-track{block-size:.6rem;border-radius:62.4375rem;background:linear-gradient(90deg,var(--encre) 0 var(--p,52%),oklch(1 0 0 / .8) var(--p,52%));border:1px solid var(--encre)}
+.curseur::-moz-range-track{block-size:.6rem;border-radius:62.4375rem;background:oklch(1 0 0 / .8);border:1px solid var(--encre)}
+.curseur::-moz-range-progress{block-size:.6rem;border-radius:62.4375rem;background:var(--encre)}
 .curseur::-webkit-slider-thumb{-webkit-appearance:none;inline-size:2rem;block-size:2rem;border-radius:50%;background:var(--soleil);border:2px solid var(--encre);margin-block-start:-.75rem}
 .curseur::-moz-range-thumb{inline-size:1.9rem;block-size:1.9rem;border-radius:50%;background:var(--soleil);border:2px solid var(--encre)}
 .curseur:focus-visible{outline:none}
@@ -291,7 +292,6 @@ sup{font-size:.7em;line-height:0}
 .bon-ok > .ico{inline-size:2rem;block-size:2rem;color:var(--garrigue)}
 .bon-ok-t{font-stretch:75%;font-weight:720;font-size:var(--step-2);line-height:1.1;margin-block-end:.3rem}
 .bon-ok-demo{font-size:var(--step--1);color:var(--encre-2);margin-block:.4rem .5rem}
-.bon-ok .lien{min-block-size:2.75rem}
 .visite h3{font-size:var(--step-2);margin-block-end:var(--space-xs)}
 .visite-liste{list-style:none;padding:0;display:grid;gap:.7rem;margin-block-end:var(--space-s)}
 .visite-liste li{padding-inline-start:1.6rem;position:relative;line-height:1.5}
@@ -308,7 +308,7 @@ sup{font-size:.7em;line-height:0}
   overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:inline mandatory;scrollbar-width:thin;padding-block:.25rem 1rem;
   scroll-padding-inline:var(--gutter)}
 .etape-btn::before{content:"";position:absolute;z-index:-1;inset-block-start:calc(1.6rem - 2px);inset-inline-start:50%;
-  inline-size:calc(100% + .5rem);block-size:4px;background:oklch(1 0 0 / .22)}
+  inline-size:calc(100% + .5rem);block-size:.25rem;background:oklch(1 0 0 / .22)}
 .etape-btn:last-of-type::before{content:none}
 .etape-btn.fait::before{background:var(--soleil)}
 @media (prefers-reduced-motion: no-preference){.etape-btn::before{transition:background-color .3s}}
@@ -319,8 +319,8 @@ sup{font-size:.7em;line-height:0}
 .etape-btn.fait .etape-num{border-color:var(--soleil)}
 .etape-btn[aria-selected="true"] .etape-num{background:var(--soleil);border-color:var(--soleil);color:var(--encre)}
 .etape-nom{font-weight:700;font-stretch:80%;font-size:var(--step-0);line-height:1.15}
-.etape-qui{font-size:.8rem;line-height:1.2;color:oklch(1 0 0 / .75);border:1px solid oklch(1 0 0 / .3);border-radius:999px;padding:.1rem .5rem}
-.etape-btn[aria-selected="true"] .etape-nom{text-decoration:underline;text-decoration-color:var(--soleil);text-decoration-thickness:3px;text-underline-offset:.3em}
+.etape-qui{font-size:.8rem;line-height:1.2;color:oklch(1 0 0 / .75);border:1px solid oklch(1 0 0 / .3);border-radius:62.4375rem;padding:.1rem .5rem}
+.etape-btn[aria-selected="true"] .etape-nom{text-decoration:underline;text-decoration-color:var(--soleil);text-decoration-thickness:.1875rem;text-underline-offset:.3em}
 .etape-btn:focus-visible{outline-color:var(--soleil)}
 @media (hover: hover) and (pointer: fine){.etape-btn:not([aria-selected="true"]):hover .etape-num{border-color:#fff}}
 .etape-panneau{display:grid;gap:var(--space-m);grid-template-columns:repeat(auto-fit,minmax(min(100%,20rem),1fr));
@@ -344,7 +344,7 @@ sup{font-size:.7em;line-height:0}
 .ch-in{inline-size:var(--shell);margin-inline:auto}
 .ch-tete{max-inline-size:var(--measure);margin-block-end:var(--space-m)}
 .filtres{display:flex;flex-wrap:wrap;gap:.5rem;margin-block-end:var(--space-m)}
-.filtre{min-block-size:2.75rem;padding:.4rem 1rem;border-radius:999px;border:2px solid var(--encre);background:var(--papier);cursor:pointer;
+.filtre{min-block-size:2.75rem;padding:.4rem 1rem;border-radius:62.4375rem;border:2px solid var(--encre);background:var(--papier);cursor:pointer;
   font-weight:600;font-stretch:88%;display:inline-flex;align-items:center;gap:.45rem}
 .filtre-n{font-stretch:62%;font-weight:760;font-variant-numeric:tabular-nums}
 .filtre[aria-pressed="true"]{background:var(--encre);color:#fff}
@@ -399,25 +399,28 @@ sup{font-size:.7em;line-height:0}
 .carte-svg{inline-size:100%;block-size:auto;overflow:visible}
 .carte-svg .mer{fill:oklch(0.83 0.06 238)}
 .carte-svg .cote{fill:none;stroke:oklch(0.6 0.08 245);stroke-width:2}
-.carte-svg .mer-nom,.carte-svg .riv-nom{font-family:var(--police);font-style:italic;font-size:15px;fill:oklch(0.42 0.08 245)}
+.carte-svg .mer-nom,.carte-svg .riv-nom{font-family:var(--police);font-style:italic;font-size:.9375rem;fill:oklch(0.42 0.08 245)}
 .carte-svg .riv{fill:none;stroke:oklch(0.66 0.08 240);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .carte-svg .canal{fill:none;stroke:var(--garrigue);stroke-width:2.5;stroke-dasharray:7 5;stroke-linecap:round;stroke-linejoin:round}
-.carte-svg .canal-nom{font-family:var(--police);font-style:italic;font-size:13px;fill:var(--garrigue)}
+.carte-svg .canal-nom{font-family:var(--police);font-style:italic;font-size:.8125rem;fill:var(--garrigue)}
 .carte-svg .villes circle{fill:var(--encre)}
 .carte-svg text{paint-order:stroke;stroke:oklch(0.93 0.03 238);stroke-width:4px;stroke-linejoin:round}
 .carte-svg .mer-nom{stroke:oklch(0.83 0.06 238)}
-.carte-svg .villes text{font-family:var(--police);font-size:14px;font-weight:500;fill:var(--encre)}
+.carte-svg .villes text{font-family:var(--police);font-size:.875rem;font-weight:500;fill:var(--encre)}
 .carte-svg .siege rect{fill:var(--tuile);stroke:var(--encre);stroke-width:2.5}
-.carte-svg .siege text{font-family:var(--police);font-stretch:70%;font-weight:760;font-size:22px;fill:var(--encre)}
+.carte-svg .siege text{font-family:var(--police);font-stretch:70%;font-weight:760;font-size:1.375rem;fill:var(--encre)}
 .carte-svg .reperes rect{fill:#1A2F4E;stroke:var(--soleil);stroke-width:2}
 .carte-svg .reperes a{cursor:pointer}
 .carte-svg .reperes a:focus-visible{outline:none}
-.carte-svg .reperes a:focus-visible rect,.carte-svg .reperes a:hover rect{stroke:#fff;stroke-width:3.5}
+.carte-svg .reperes a:focus-visible rect {stroke:#fff;stroke-width:3.5}
+@media (hover: hover) and (pointer: fine) {
+  .carte-svg .reperes a:hover rect {stroke:#fff;stroke-width:3.5}
+}
 /* carte étroite : les petites communes s'effacent, les autres grossissent pour rester lisibles */
 @container carte (max-width: 26rem){
-  .carte-svg .villes text{font-size:19px}
+  .carte-svg .villes text{font-size:1.1875rem}
   .carte-svg .villes .mineure{display:none}
-  .carte-svg .siege text{font-size:26px}
+  .carte-svg .siege text{font-size:1.625rem}
 }
 .zone-carte{container:carte / inline-size}
 .carte-legende{display:flex;flex-wrap:wrap;gap:.4rem 1.25rem;font-size:var(--step--1);color:var(--encre-2);margin-block-start:1rem}
@@ -429,7 +432,7 @@ sup{font-size:.7em;line-height:0}
 .zone-infos{display:grid;gap:var(--space-s)}
 .zone-infos h3{font-size:var(--step-2)}
 .communes{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:.4rem}
-.communes li{background:var(--papier);border:1px solid var(--trait-fort);border-radius:999px;padding:.15rem .7rem;font-size:var(--step--1)}
+.communes li{background:var(--papier);border:1px solid var(--trait-fort);border-radius:62.4375rem;padding:.15rem .7rem;font-size:var(--step--1)}
 .contact{display:grid;gap:.6rem;background:var(--papier);border-radius:var(--r-m);padding:var(--space-s)}
 .contact address{font-style:normal;line-height:1.5}
 .contact-tel{display:inline-flex;align-items:center;gap:.5rem;min-block-size:2.75rem;font-weight:720;font-stretch:80%;font-size:var(--step-2);text-decoration:none;color:var(--azur-fonce)}
@@ -451,7 +454,7 @@ sup{font-size:.7em;line-height:0}
 
 /* ---------- La configuration qui suit le visiteur ---------- */
 .suivi{position:fixed;z-index:30;inset-inline:var(--gutter);inset-block-end:max(var(--space-2xs), env(safe-area-inset-bottom));
-  display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:var(--encre);color:#fff;border-radius:999px;
+  display:flex;align-items:center;justify-content:space-between;gap:.75rem;background:var(--encre);color:#fff;border-radius:62.4375rem;
   padding:.4rem .4rem .4rem 1.1rem;box-shadow:0 12px 30px -10px oklch(0.25 0.06 255 / .6);
   opacity:0;transform:translateY(130%);pointer-events:none}
 .suivi.visible{opacity:1;transform:none;pointer-events:auto}

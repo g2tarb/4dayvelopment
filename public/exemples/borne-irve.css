@@ -26,8 +26,9 @@ body{visibility:visible}
   --ardoise-2:#4B5A5C;
   --trait:#D2D8D5;
   --erreur:#B3261E;
-  --r:6px;
-  --gut:clamp(1rem, .4rem + 3vi, 2.5rem);
+  --r:.375rem;
+  /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
+  --gut:max(clamp(1rem, .4rem + 3vi, 2.5rem), env(safe-area-inset-left), env(safe-area-inset-right));
   --max:78rem;
   --section:clamp(3.5rem, 2rem + 5vi, 6.5rem);
   --entete:4.25rem;
@@ -53,7 +54,7 @@ legend{padding:0}
 :focus-visible{outline:3px solid var(--deule);outline-offset:3px}
 .wrap{width:min(100% - 2*var(--gut), var(--max));margin-inline:auto}
 .visuel-seul{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.skip{position:absolute;left:1rem;top:-4rem;z-index:60;background:var(--courant);color:var(--deule-2);padding:.7rem 1rem;border-radius:var(--r);font-weight:700}
+.skip{position:absolute;left:max(1rem,env(safe-area-inset-left));top:-4rem;z-index:60;background:var(--courant);color:var(--deule-2);padding:.7rem 1rem;border-radius:var(--r);font-weight:700}
 .skip:focus{top:1rem}
 .ico{width:1.25rem;height:1.25rem;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .chiffre,output,.releve strong,.lignes dd,.fiche dd{font-variant-numeric:tabular-nums}
@@ -79,13 +80,13 @@ body:has(input[name="parcours"][value="copro"]:checked) .pour-maison-entreprise{
 /* En-tête : le logo, les trois parcours en onglets, l'état de l'atelier */
 .entete{position:sticky;top:0;z-index:40;display:grid;grid-template-columns:auto 1fr auto auto auto;align-items:center;gap:1rem 1.5rem;
   min-height:var(--entete);padding:.55rem var(--gut);background:var(--blanc);border-bottom:1px solid var(--trait)}
-.logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;min-width:0}
+.logo{display:flex;align-items:center;gap:.65rem;text-decoration:none;min-width:0;min-height:2.75rem}
 .logo svg{width:2.5rem;height:2.5rem;flex:none}
 .logo-txt{display:grid;line-height:1.1}
 .logo-nom{font-weight:800;font-stretch:78%;font-size:1.3rem;letter-spacing:-.005em}
 .logo-sig{font-size:.8125rem;color:var(--ardoise-2)}
-.parcours{justify-self:center;display:flex;gap:.25rem;padding:.25rem;background:var(--joint);border-radius:calc(var(--r) + 4px)}
-.parcours label{position:relative;display:flex;align-items:center;gap:.45rem;min-height:2.6rem;padding:.35rem 1.05rem;border-radius:var(--r);
+.parcours{justify-self:center;display:flex;gap:.25rem;padding:.25rem;background:var(--joint);border-radius:calc(var(--r) + .25rem)}
+.parcours label{position:relative;display:flex;align-items:center;gap:.45rem;min-height:2.75rem;padding:.35rem 1.05rem;border-radius:var(--r);
   font-weight:650;font-size:.9688rem;color:var(--ardoise-2);cursor:pointer;transition:background-color .15s,color .15s}
 .parcours input{position:absolute;inset:0;opacity:0;margin:0;cursor:pointer}
 .parcours label:has(input:checked){background:var(--deule);color:var(--blanc)}
@@ -138,7 +139,7 @@ body:has(input[name="parcours"][value="copro"]:checked) .pour-maison-entreprise{
 .scene h1{font-size:clamp(2.1rem, 1.2rem + 2.4vi, 3.4rem);font-stretch:68%;line-height:.98}
 .insecable{white-space:nowrap}
 .chapo{margin-top:.75rem;color:#C9DAD8;max-width:52ch}
-.dessin{width:100%;height:auto;aspect-ratio:600/330;border-radius:10px;background:#0E2A2E}
+.dessin{width:100%;height:auto;aspect-ratio:600/330;border-radius:.625rem;background:#0E2A2E}
 /* ordinateur : la scène occupe la hauteur de l'écran, le dessin prend la place qui reste (recadré en haut et en bas) */
 @media (min-width:60rem){
   .scene{overflow:hidden}
@@ -157,7 +158,7 @@ body:has(input[name="parcours"][value="entreprise"]:checked) :is(.fantomes,.badg
 .tri-marques rect{fill:var(--courant)}
 .dj-nouveau{fill:var(--courant);stroke:#8A6A00;stroke-width:.8;transform-box:fill-box;transform-origin:left center;transition:transform .25s ease-out}
 .dessin[data-kw="11"] .dj-nouveau,.dessin[data-kw="22"] .dj-nouveau{transform:scaleX(1.55)}
-.legende-svg{font:600 10px var(--police);fill:#3B4846;letter-spacing:.02em}
+.legende-svg{font:600 .625rem var(--police);fill:#3B4846;letter-spacing:.02em}
 .goulotte{fill:none;stroke:#D8D2C8;stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
 .cable{fill:none;stroke:#101516;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
 .cable-voiture{stroke-width:4.2}
@@ -165,13 +166,13 @@ body:has(input[name="parcours"][value="entreprise"]:checked) :is(.fantomes,.badg
 .dessin.en-tranchee .tranchee{display:inline}
 .cote path{fill:none;stroke:var(--courant);stroke-width:1.6}
 .cote rect{fill:var(--courant)}
-.cote text,.badge-points text{font:650 13px var(--police);font-stretch:112%;fill:var(--deule-2)}
+.cote text,.badge-points text{font:650 .8125rem var(--police);font-stretch:112%;fill:var(--deule-2)}
 .badge-points rect{fill:var(--courant)}
 .fantomes rect{fill:#1A2728;stroke:#46585A;stroke-width:1.2}
 .corps{fill:#1B2729}
 .face{fill:#253538}
 .ecran{fill:#07171A}
-.ecran-txt{font:600 11px var(--police);font-stretch:115%;fill:var(--courant)}
+.ecran-txt{font:600 .6875rem var(--police);font-stretch:115%;fill:var(--courant)}
 .led{fill:var(--courant);filter:drop-shadow(0 0 4px rgb(255 210 63 / .9))}
 .prise{fill:#0C1718;stroke:#3F5154;stroke-width:1.5}
 .prise-trou{fill:#56696C}
@@ -188,9 +189,9 @@ body:has(input[name="parcours"][value="entreprise"]:checked) :is(.fantomes,.badg
 .releve strong.bouge{animation:elargit .45s cubic-bezier(.2,.7,.2,1)}
 @keyframes elargit{from{font-stretch:70%;opacity:.4}to{font-stretch:118%;opacity:1}}
 .batterie{display:flex;align-items:center;gap:.9rem;font-size:.9375rem;color:#D3E2E0}
-.batterie-boitier{--cap:75;--jour:26.7;position:relative;flex:none;width:calc(var(--cap) * .09rem);height:1rem;border:2px solid #A9C6C3;border-radius:3px;padding:2px;
+.batterie-boitier{--cap:75;--jour:26.7;position:relative;flex:none;width:calc(var(--cap) * .09rem);height:1rem;border:2px solid #A9C6C3;border-radius:.1875rem;padding:2px;
   transition:width .3s ease-out}
-.batterie-boitier::after{content:"";position:absolute;right:-6px;top:3px;width:3px;height:6px;border-radius:0 2px 2px 0;background:#A9C6C3}
+.batterie-boitier::after{content:"";position:absolute;right:-.375rem;top:.1875rem;width:.1875rem;height:.375rem;border-radius:0 2px 2px 0;background:#A9C6C3}
 .batterie-jour{display:block;height:100%;width:calc(var(--jour) * 1%);max-width:100%;background:var(--courant);border-radius:1px;transition:width .3s ease-out}
 
 /* Panneau des étapes */
@@ -226,15 +227,15 @@ legend.etape-t{margin-bottom:1.1rem}
 @media (hover:hover) and (pointer:fine){ .tuile:not(:has(input:checked)):hover{border-color:#8FA09D} }
 @media (forced-colors:active){ .tuile:has(input:checked){outline:3px solid Highlight} }
 /* la pile dessinée dit la taille de la batterie */
-.pile{position:relative;display:block;height:1rem;margin-bottom:.45rem;border:2px solid var(--deule);border-radius:3px;padding:2px}
+.pile{position:relative;display:block;height:1rem;margin-bottom:.45rem;border:2px solid var(--deule);border-radius:.1875rem;padding:2px}
 .pile::before{content:"";display:block;height:100%;background:var(--eau);border-radius:1px}
-.pile::after{content:"";position:absolute;right:-5px;top:2px;width:3px;height:6px;border-radius:0 2px 2px 0;background:var(--deule)}
+.pile::after{content:"";position:absolute;right:-.3125rem;top:2px;width:.1875rem;height:.375rem;border-radius:0 2px 2px 0;background:var(--deule)}
 .pile-40{width:1.9rem}.pile-60{width:2.8rem}.pile-80{width:3.7rem}
 .tuile:has(input:checked) .pile::before{background:var(--courant)}
 /* les fils disent le nombre de phases */
 .fils{display:block;height:1rem;margin-bottom:.45rem;width:2.2rem;background:linear-gradient(var(--deule),var(--deule)) left 50%/100% 2px no-repeat}
-.fils-1{background:linear-gradient(var(--brique),var(--brique)) 0 50%/100% 3px no-repeat}
-.fils-3{background:linear-gradient(var(--brique),var(--brique)) 0 10%/100% 3px no-repeat,linear-gradient(#6B4E1F,#6B4E1F) 0 50%/100% 3px no-repeat,linear-gradient(#5A6B6E,#5A6B6E) 0 90%/100% 3px no-repeat}
+.fils-1{background:linear-gradient(var(--brique),var(--brique)) 0 50%/100% .1875rem no-repeat}
+.fils-3{background:linear-gradient(var(--brique),var(--brique)) 0 10%/100% .1875rem no-repeat,linear-gradient(#6B4E1F,#6B4E1F) 0 50%/100% .1875rem no-repeat,linear-gradient(#5A6B6E,#5A6B6E) 0 90%/100% .1875rem no-repeat}
 .fils-0{background:none;font-weight:800;line-height:1;color:var(--ardoise-2)}
 .fils-0::before{content:"?"}
 
@@ -260,7 +261,7 @@ legend.etape-t{margin-bottom:1.1rem}
 .compteur-ctrl{display:flex;align-items:center;border:2px solid var(--trait);border-radius:var(--r)}
 .compteur-ctrl input{width:3.5rem;height:2.75rem;border:0;text-align:center;font-weight:650;font-stretch:118%;font-size:1.25rem;background:transparent;-moz-appearance:textfield}
 .compteur-ctrl input::-webkit-inner-spin-button,.compteur-ctrl input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
-.pas{display:grid;place-items:center;width:2.75rem;height:2.75rem;border:0;background:var(--joint);border-radius:4px}
+.pas{display:grid;place-items:center;width:2.75rem;height:2.75rem;border:0;background:var(--joint);border-radius:.25rem}
 .case{position:relative;display:flex;gap:.7rem;align-items:flex-start;cursor:pointer;font-weight:600;line-height:1.3}
 .case input{width:1.35rem;height:1.35rem;margin-top:.05rem;accent-color:var(--deule);flex:none}
 .case small{display:block;font-weight:400;font-size:.8125rem;color:var(--ardoise-2);margin-top:.2rem}
@@ -276,7 +277,7 @@ legend.etape-t{margin-bottom:1.1rem}
 .produit-corps{fill:#1B2729}
 .produit-face{fill:#253538}
 .produit-ecran{fill:#07171A}
-.produit-txt{font:600 13px var(--police);font-stretch:112%;fill:var(--courant)}
+.produit-txt{font:600 .8125rem var(--police);font-stretch:112%;fill:var(--courant)}
 .produit-led{fill:var(--courant);filter:drop-shadow(0 0 4px rgb(255 210 63 / .9))}
 .produit-tri{display:none;fill:var(--courant)}
 .produit[data-kw="11"] .produit-tri,.produit[data-kw="22"] .produit-tri{display:inline}
@@ -290,7 +291,7 @@ legend.etape-t{margin-bottom:1.1rem}
 .dj.tri{grid-column:span 4}
 .dj input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;z-index:1}
 .dj-corps{position:relative;display:flex;flex-direction:column;align-items:center;gap:clamp(.35rem,2cqi,.7rem);min-height:clamp(6rem,30cqi,9rem);padding:.45rem .15rem .5rem;
-  background:#FBFCFB;border:1px solid #7A8884;border-radius:3px;transition:border-color .15s,box-shadow .15s}
+  background:#FBFCFB;border:1px solid #7A8884;border-radius:.1875rem;transition:border-color .15s,box-shadow .15s}
 .dj-corps::before{content:"";position:absolute;z-index:-1;inset-inline:-.2rem;top:36%;height:clamp(1.4rem,6cqi,2.2rem);background:#9EAAA6;border-block:1px solid #83908C}
 .dj:first-of-type .dj-corps::before{inset-inline-start:-.6rem}
 .dj:last-of-type .dj-corps::before{inset-inline-end:-.6rem}
@@ -358,7 +359,7 @@ legend.etape-t{margin-bottom:1.1rem}
 .lieu-chapo{font-size:1.125rem;max-width:56ch}
 .coches{list-style:none;padding:0;display:grid;gap:.55rem}
 .coches li{position:relative;padding-left:1.9rem}
-.coches li::before{content:"";position:absolute;left:0;top:.2rem;width:1.2rem;height:1.2rem;border-radius:3px;background:var(--deule)}
+.coches li::before{content:"";position:absolute;left:0;top:.2rem;width:1.2rem;height:1.2rem;border-radius:.1875rem;background:var(--deule)}
 .coches li::after{content:"";position:absolute;left:.42rem;top:.36rem;width:.33rem;height:.65rem;border:solid var(--courant);border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
 .encadre{padding:1rem 1.1rem;background:var(--blanc);border:1px solid var(--trait);border-radius:var(--r);font-size:.9688rem}
 .suite{list-style:none;padding:0;display:grid;gap:1rem;counter-reset:s}
@@ -366,9 +367,9 @@ legend.etape-t{margin-bottom:1.1rem}
 .suite li::before{content:counter(s);grid-row:span 2;display:grid;place-items:center;width:2.4rem;height:2.4rem;border-radius:50%;background:var(--courant);color:var(--deule-2);font-weight:800}
 .suite strong{color:var(--ardoise);font-size:1.0625rem}
 .lieu-visuel figure{position:relative}
-.lieu-visuel img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+.lieu-visuel img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:.625rem}
 .lettre-fig{display:grid}
-.lettre{position:relative;z-index:1;justify-self:start;width:min(100%,24rem);margin:0 0 -3.5rem 1.2rem;padding:1.1rem 1.2rem;background:#FFFEFA;border:1px solid var(--trait);border-radius:4px;
+.lettre{position:relative;z-index:1;justify-self:start;width:min(100%,24rem);margin:0 0 -3.5rem 1.2rem;padding:1.1rem 1.2rem;background:#FFFEFA;border:1px solid var(--trait);border-radius:.25rem;
   box-shadow:0 18px 30px -18px rgb(11 37 40 / .55);transform:rotate(-1.5deg);font-size:.875rem;line-height:1.4}
 .lettre-envoi{font-size:.75rem;font-weight:700;color:var(--brique)}
 .lettre-objet{font-weight:700;margin-top:.5rem}
@@ -389,7 +390,7 @@ legend.etape-t{margin-bottom:1.1rem}
   body:has(input[name="parcours"][value="copro"]:checked) .chantier[data-parcours="copro"],
   body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parcours="entreprise"]) img{height:100%;aspect-ratio:auto}
 }
-.chantier{position:relative;display:flex;flex-direction:column;background:var(--blanc);border:1px solid var(--trait);border-radius:10px;overflow:hidden}
+.chantier{position:relative;display:flex;flex-direction:column;background:var(--blanc);border:1px solid var(--trait);border-radius:.625rem;overflow:hidden}
 body:has(input[name="parcours"][value="copro"]:checked) .chantier[data-parcours="copro"],
 body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parcours="entreprise"]{order:-1}
 .chantier img{width:100%;aspect-ratio:3/2;object-fit:cover}
@@ -418,13 +419,13 @@ body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parc
 .fil li{counter-increment:f;position:relative;display:grid;gap:.5rem;align-content:start}
 .fil li::before{content:counter(f);position:relative;z-index:1;display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;background:var(--deule);color:var(--courant);
   font-weight:800;font-stretch:110%;font-size:1.1rem;margin-bottom:.5rem}
-.fil li:not(:last-child)::after{content:"";position:absolute;top:1.25rem;left:2.6rem;right:-2rem;height:3px;background:var(--ardoise)}
+.fil li:not(:last-child)::after{content:"";position:absolute;top:1.25rem;left:2.6rem;right:-2rem;height:.1875rem;background:var(--ardoise)}
 .fil p{color:var(--ardoise-2);font-size:.9688rem}
 @media (max-width:59.99rem){
   .fil{grid-template-columns:minmax(0,1fr);gap:1.5rem}
   .fil li{padding-left:3.6rem;min-height:2.6rem}
   .fil li::before{position:absolute;left:0;top:0;margin:0}
-  .fil li:not(:last-child)::after{left:1.2rem;top:2.6rem;bottom:-1.5rem;right:auto;width:3px;height:auto}
+  .fil li:not(:last-child)::after{left:1.2rem;top:2.6rem;bottom:-1.5rem;right:auto;width:.1875rem;height:auto}
 }
 
 /* Questions */
@@ -441,7 +442,7 @@ body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parc
 /* L'atelier et l'équipe */
 .atelier{padding-block:var(--section);background:var(--joint)}
 .atelier-grille{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(2rem,1rem + 4vi,5rem);align-items:center}
-.atelier-photo img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px}
+.atelier-photo img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:.625rem}
 .atelier-photo figcaption{margin-top:.6rem;font-size:.875rem;color:var(--ardoise-2)}
 .atelier-texte{display:grid;gap:1.1rem}
 .atelier-texte > p{max-width:58ch}
@@ -464,20 +465,20 @@ body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parc
 .carte-svg text{paint-order:stroke;stroke:var(--deule);stroke-width:4px;stroke-linejoin:round}
 .eau{fill:none;stroke:var(--eau);stroke-width:5;stroke-linecap:round;stroke-linejoin:round}
 .canal-rx{stroke-width:3.5;stroke-dasharray:1 0}
-.eau-nom{font:italic 600 12px var(--police);fill:var(--eau)}
+.eau-nom{font:italic 600 .75rem var(--police);fill:var(--eau)}
 .villes circle{fill:#E8EAE6}
-.villes text{font:600 12.5px var(--police);fill:#D7E4E2}
-.villes text.grande{font-size:15px;font-weight:800;fill:var(--blanc)}
-.villes text.mineure{font-size:11px;fill:#AFC7C4}
+.villes text{font:600 .78125rem var(--police);fill:#D7E4E2}
+.villes text.grande{font-size:.9375rem;font-weight:800;fill:var(--blanc)}
+.villes text.mineure{font-size:.6875rem;fill:#AFC7C4}
 .siege rect{fill:var(--courant)}
 .siege path{fill:var(--deule-2)}
-.siege text{font:800 13px var(--police);fill:var(--courant)}
+.siege text{font:800 .8125rem var(--police);fill:var(--courant)}
 .carte-legende{display:flex;align-items:center;gap:.55rem;margin-top:.8rem;font-size:.9375rem;color:#C9DAD8}
 .carre-atelier{width:.9rem;height:.9rem;border-radius:2px;background:var(--courant)}
 .coord{display:grid;gap:1rem;justify-items:start}
 .coord p{color:#C9DAD8}
 .coord address{font-style:normal;line-height:1.5}
-.tel-grand{display:inline-flex;align-items:center;gap:.6rem;font-weight:650;font-stretch:115%;font-size:clamp(1.5rem,1.1rem + 1.2vi,2rem);text-decoration:none;color:var(--courant)}
+.tel-grand{display:inline-flex;align-items:center;min-height:2.75rem;gap:.6rem;font-weight:650;font-stretch:115%;font-size:clamp(1.5rem,1.1rem + 1.2vi,2rem);text-decoration:none;color:var(--courant)}
 .tel-grand .ico{width:1.5rem;height:1.5rem}
 .horaires{border-collapse:collapse;width:100%;max-width:26rem;font-size:.9375rem}
 .horaires th,.horaires td{padding:.5rem 0;border-bottom:1px solid rgb(255 255 255 / .18);text-align:left;font-weight:400}
@@ -491,13 +492,13 @@ body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parc
 .pied-nom{font-weight:800;font-stretch:76%;font-size:1.4rem;color:var(--blanc)}
 .pied address{font-style:normal;margin-top:.6rem}
 .pied ul{list-style:none;padding:0;display:grid;gap:.1rem}
-.pied nav a{display:inline-flex;align-items:center;min-height:2.5rem;text-decoration:none}
+.pied nav a{display:inline-flex;align-items:center;min-height:2.75rem;text-decoration:none}
 .pied a{color:var(--blanc)}
 @media (hover:hover) and (pointer:fine){ .pied nav a:hover{text-decoration:underline;text-underline-offset:.2em} }
 .pied-mentions{display:grid;gap:.4rem;align-content:start}
 
 /* Demande de visite : une fenêtre sur ordinateur, un écran entier sur téléphone */
-.visite{width:min(100% - 2rem, 38rem);max-height:min(92svh, 56rem);margin:auto;padding:0;border:0;border-radius:12px;color:var(--ardoise);background:var(--blanc);
+.visite{width:min(100% - 2rem, 38rem);max-height:min(92svh, 56rem);margin:auto;padding:0;border:0;border-radius:.75rem;color:var(--ardoise);background:var(--blanc);
   box-shadow:0 30px 60px -20px rgb(6 22 24 / .6)}
 .visite::backdrop{background:rgb(8 26 29 / .62)}
 .visite-form{display:flex;flex-direction:column;max-height:inherit}
@@ -596,7 +597,7 @@ body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parc
   .scene h1{font-size:1.5rem}
   .entete{grid-template-columns:auto 1fr auto}
   .parcours{grid-column:2;grid-row:1;justify-self:center}
-  .parcours label{flex:0 1 auto;min-height:2.4rem}
+  .parcours label{flex:0 1 auto}
   .entete-tel{grid-column:3}
   :root{--entete:3.6rem}
   .entete{padding-block:.35rem}
@@ -613,4 +614,4 @@ body:has(input[name="parcours"][value="entreprise"]:checked) .chantier[data-parc
 }
 
 /* cibles tactiles : numéros cliquables du pied de page et de la barre du haut portés à 44 px de haut, sans décaler les lignes */
-address a[href^="tel:"]{padding-block:.85rem}
+address a[href^="tel:"]{padding-block:.9rem}

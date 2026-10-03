@@ -23,8 +23,9 @@ body{visibility:visible}
   --tole:#C8CECD;       /* panneau perforé galvanisé */
   --kraft:#EADAB8;      /* étiquettes prix du tableau */
   --ouvert:#1E7A4C;
-  --pas:clamp(1rem,.55rem + 2vw,2rem);
-  --rayon:6px;
+  /* gouttiere jamais sous l'encoche en paysage (viewport-fit=cover) */
+  --pas:max(clamp(1rem,.55rem + 2vw,2rem), env(safe-area-inset-left), env(safe-area-inset-right));
+  --rayon:.375rem;
 }
 *,*::before,*::after{box-sizing:border-box}
 *{margin:0}
@@ -45,25 +46,35 @@ small{font-size:.8em}
 .vs{position:absolute;width:0;height:0;overflow:hidden}
 .ico{width:1.15em;height:1.15em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .shell{width:min(100% - 2*var(--pas),76rem);margin-inline:auto}
-.skip{position:absolute;left:-999px;top:0}
-.skip:focus{left:1rem;top:1rem;z-index:30;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--rayon)}
+.skip{position:absolute;left:-62.4375rem;top:0}
+.skip:focus{left:max(1rem,env(safe-area-inset-left));top:1rem;z-index:30;background:var(--encre);color:#fff;padding:.7rem 1rem;border-radius:var(--rayon)}
 .petit{font-size:.9375rem;color:var(--gris)}
 .lien{background:none;border:0;padding:.5rem 0;min-height:2.75rem;font-weight:700;text-decoration:underline;text-decoration-thickness:2px;
   text-decoration-color:var(--rouge);cursor:pointer;text-align:left;display:inline-flex;align-items:center}
-.lien:hover{color:var(--rouge)}
+@media (hover: hover) and (pointer: fine) {
+  .lien:hover {color:var(--rouge)}
+}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;min-height:3rem;padding:.75rem 1.4rem;
   border:2px solid transparent;border-radius:var(--rayon);font-weight:700;font-stretch:90%;font-size:1.0625rem;line-height:1.1;
   text-decoration:none;cursor:pointer;transition:background-color .15s,transform .1s;text-align:center}
 .btn:active{transform:translateY(1px)}
 .btn-plein{background:var(--vert);color:#fff}
-.btn-plein:hover{background:var(--vert-clair)}
+@media (hover: hover) and (pointer: fine) {
+  .btn-plein:hover {background:var(--vert-clair)}
+}
 .btn-trait{border-color:var(--encre);background:transparent}
-.btn-trait:hover{background:var(--encre);color:#fff}
+@media (hover: hover) and (pointer: fine) {
+  .btn-trait:hover {background:var(--encre);color:#fff}
+}
 .btn-jaune{background:var(--jaune);color:var(--encre)}
-.btn-jaune:hover{background:#F6D35E}
+@media (hover: hover) and (pointer: fine) {
+  .btn-jaune:hover {background:#F6D35E}
+}
 .btn-encre{background:var(--encre);color:#fff}
-.btn-encre:hover{background:#2A3B33}
+@media (hover: hover) and (pointer: fine) {
+  .btn-encre:hover {background:#2A3B33}
+}
 
 /* En-tête de section : titre peint, chapeau à côté sur grand écran */
 .tete{display:grid;gap:.9rem;margin-bottom:clamp(1.5rem,1rem + 2vw,2.75rem)}
@@ -85,7 +96,9 @@ small{font-size:.8em}
   .enseigne-in{grid-template-columns:auto minmax(0,1fr) auto}
   .enseigne-nav{display:flex;gap:1.5rem;align-self:end;padding-bottom:.4rem}
   .enseigne-nav a{font-weight:600;text-decoration-color:var(--jaune);text-decoration-thickness:2px;padding-block:.5rem;white-space:nowrap}
-  .enseigne-nav a:hover{color:var(--jaune)}
+  @media (hover: hover) and (pointer: fine) {
+    .enseigne-nav a:hover {color:var(--jaune)}
+  }
 }
 
 /* ── Devanture : la vitrine et la porte, dans le cadre vert ── */
@@ -154,7 +167,7 @@ small{font-size:.8em}
 /* le chevalet d'ardoise posé sur le trottoir devant la porte */
 .chevalet{position:relative;flex-basis:100%;max-width:24rem;margin-bottom:1.9rem;padding:1.1rem 1.25rem 1.2rem;color:#F1EFE6;
   background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.07),transparent 60%),#2A312E;
-  border:.6rem solid #8C6C46;border-radius:4px;box-shadow:0 12px 20px -14px rgba(23,35,30,.7)}
+  border:.6rem solid #8C6C46;border-radius:.25rem;box-shadow:0 12px 20px -14px rgba(23,35,30,.7)}
 .chevalet::before,.chevalet::after{content:'';position:absolute;top:100%;width:.6rem;height:1.5rem;margin-top:.6rem;background:#7A5C3A}
 .chevalet::before{left:1.2rem;transform:skewX(8deg)}
 .chevalet::after{right:1.2rem;transform:skewX(-8deg)}
@@ -194,7 +207,7 @@ small{font-size:.8em}
 .atelier-prix{padding-block:clamp(3rem,2rem + 4vw,5.5rem);background:var(--mur-2)}
 .prix-grille{display:grid;gap:2.5rem;align-items:start}
 @media (min-width:62rem){.prix-grille{grid-template-columns:minmax(0,1fr) 21.5rem;gap:2.5rem}}
-.panneau{padding:1.25rem 1.1rem 1.5rem;border-radius:4px;background-color:var(--tole);
+.panneau{padding:1.25rem 1.1rem 1.5rem;border-radius:.25rem;background-color:var(--tole);
   background-image:radial-gradient(circle,#76817E 0 .18rem,transparent .22rem),
                    linear-gradient(135deg,rgba(255,255,255,.35),rgba(255,255,255,0) 45%,rgba(0,0,0,.07));
   background-size:1.5rem 1.5rem,100% 100%;background-position:.75rem .75rem,0 0;
@@ -203,7 +216,7 @@ small{font-size:.8em}
 .choix-velo legend,.etape,.et-quand legend{display:flex;align-items:center;gap:.55rem;padding:0;font-weight:700;font-size:1.125rem;margin-bottom:.75rem}
 .choix-velo legend b,.etape b,.et-quand legend b{display:grid;place-items:center;flex:none;width:1.75rem;height:1.75rem;border-radius:50%;
   background:var(--encre);color:var(--jaune);font-stretch:75%;font-weight:800;font-size:1.05rem;line-height:1}
-.choix-velo legend,.etape{background:var(--blanc);padding:.2rem .7rem .2rem .25rem;border-radius:999px;width:fit-content}
+.choix-velo legend,.etape{background:var(--blanc);padding:.2rem .7rem .2rem .25rem;border-radius:62.4375rem;width:fit-content}
 .etape{margin-top:1.75rem}
 .dymos{display:flex;flex-wrap:wrap;gap:.5rem .6rem}
 .dymo-choix input,.et-quand input,.creneau input,.jour input{position:absolute;opacity:0;width:1px;height:1px}
@@ -217,21 +230,25 @@ small{font-size:.8em}
 .crochets li::before{content:'';position:absolute;z-index:1;top:-1.15rem;left:50%;width:.3rem;height:1.55rem;margin-left:-.15rem;
   border-radius:.15rem;background:linear-gradient(90deg,#56615E,#B7BFBD 50%,#56615E)} /* crochet du panneau */
 .carte{position:relative;flex:1;display:grid;align-content:start;gap:.2rem;padding:1.35rem 1rem 1rem;background:var(--kraft);border:0;
-  border-radius:4px;text-align:left;cursor:pointer;transform-origin:50% -.6rem;transition:transform .25s ease-out,box-shadow .15s;
+  border-radius:.25rem;text-align:left;cursor:pointer;transform-origin:50% -.6rem;transition:transform .25s ease-out,box-shadow .15s;
   box-shadow:0 2px 0 rgba(0,0,0,.08),0 10px 16px -10px rgba(23,35,30,.55)}
 .carte::before{content:'';position:absolute;top:.4rem;left:50%;width:.65rem;height:.65rem;margin-left:-.325rem;border-radius:50%;
   background:#7B8683;box-shadow:0 0 0 .2rem #D6C293} /* trou renforcé de l'étiquette */
-.carte:hover{transform:rotate(1.4deg)}
+@media (hover: hover) and (pointer: fine) {
+  .carte:hover {transform:rotate(1.4deg)}
+}
 .c-nom{font-weight:700;font-size:1.125rem;line-height:1.2}
 .c-prix{font-stretch:75%;font-weight:800;font-size:2.1rem;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
 .c-inclus{font-size:.875rem;line-height:1.35;color:#4A4A3C}
 .c-action{display:none;align-items:center;gap:.35rem;margin-top:.55rem;font-weight:700;font-size:.9375rem}
-.carte[aria-pressed="false"]:not([aria-disabled="true"]) .a-plus{display:inline-flex;color:var(--rouge)}
+.carte[aria-pressed="false"]:not([aria-disabled="true"]) .a-plus{display:inline-flex;color:color-mix(in oklch,var(--rouge),var(--encre) 18%)}   /* 4,25 -> 4,8:1 sur le kraft */
 .carte[aria-pressed="true"] .a-ok{display:inline-flex;color:var(--vert)}
 .carte[aria-disabled="true"] .a-rev{display:inline-flex;color:var(--gris)}
 .carte[aria-pressed="true"]{background:#F4E7C8;box-shadow:inset 0 0 0 3px var(--vert),0 10px 16px -10px rgba(23,35,30,.55)}
 .carte[aria-disabled="true"]{cursor:not-allowed;opacity:.62}
-.carte[aria-disabled="true"]:hover{transform:none}
+@media (hover: hover) and (pointer: fine) {
+  .carte[aria-disabled="true"]:hover {transform:none}
+}
 .carte:focus-visible{outline:3px solid var(--encre);outline-offset:3px}
 /* téléphone : une colonne, le prix en regard du nom pour garder chaque étiquette courte */
 @media (max-width:36rem){
@@ -247,7 +264,7 @@ small{font-size:.8em}
   .carte{grid-template-columns:minmax(0,1fr)}
   .c-prix{grid-column:1;grid-row:auto;font-size:1.6rem}
 }
-.panneau-note{width:fit-content;margin-top:1.4rem;padding:.3rem .7rem;background:rgba(251,251,248,.9);border-radius:3px;font-size:.9375rem}
+.panneau-note{width:fit-content;margin-top:1.4rem;padding:.3rem .7rem;background:rgba(251,251,248,.9);border-radius:.1875rem;font-size:.9375rem}
 .atelier-prix .note{margin-top:1.75rem;max-width:62ch;color:var(--gris)}
 
 /* ── L'étiquette de réparation : carton jaune, œillet et ficelle ── */
@@ -265,14 +282,16 @@ small{font-size:.8em}
 .et-lignes li > span:first-child{flex:1}
 .et-p{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
 .retirer{display:grid;place-items:center;width:2.75rem;height:2.75rem;margin-right:-.75rem;background:none;border:0;border-radius:50%;cursor:pointer}
-.retirer:hover{background:rgba(23,35,30,.1)}
+@media (hover: hover) and (pointer: fine) {
+  .retirer:hover {background:rgba(23,35,30,.1)}
+}
 .retirer:focus-visible{outline-color:var(--encre)}
 .et-vide{margin-top:.6rem;font-size:.9375rem}
 .et-quand{border:0;padding:0;min-width:0;margin-top:1.25rem;display:flex;flex-wrap:wrap;gap:.4rem}
 .et-quand legend{margin-bottom:.6rem}
 .et-quand label{display:flex}
 .et-quand span{display:inline-flex;align-items:center;gap:.3rem;min-height:2.75rem;padding:.35rem .75rem;border:1.5px solid var(--encre);
-  border-radius:999px;font-weight:600;font-size:.9375rem;cursor:pointer;line-height:1.15}
+  border-radius:62.4375rem;font-weight:600;font-size:.9375rem;cursor:pointer;line-height:1.15}
 .et-quand input:checked + span{background:var(--encre);color:var(--jaune)}
 .et-quand input:focus-visible + span{outline:3px solid var(--encre);outline-offset:2px}
 .et-quand input:disabled + span{opacity:.45;cursor:not-allowed}
@@ -291,21 +310,24 @@ small{font-size:.8em}
 .depot h2:focus{outline:none}
 .depot-grille{display:grid;gap:2.5rem;align-items:start}
 @media (min-width:62rem){.depot-grille{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:3.5rem}}
-.comptoir{display:grid;gap:1.6rem;padding:clamp(1.1rem,.8rem + 1.5vw,1.9rem);background:var(--blanc);color:var(--encre);border-radius:8px;
+.comptoir{display:grid;gap:1.6rem;padding:clamp(1.1rem,.8rem + 1.5vw,1.9rem);background:var(--blanc);color:var(--encre);border-radius:.5rem;
   box-shadow:0 18px 30px -18px rgba(0,0,0,.55)}
 .comptoir fieldset{border:0;padding:0;min-width:0}
 .comptoir legend{padding:0;font-weight:700;font-size:1.125rem;margin-bottom:.5rem}
 .cal-mois{font-stretch:75%;font-weight:800;font-size:1.5rem;line-height:1.1;margin-bottom:.6rem}
-.cal-entete,.cal-grille{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.3rem}
+/* l'ecart cede la place aux cases de 44 px des que la largeur manque (7 x 2.75rem), sans descendre sous 1 px */
+.cal-entete,.cal-grille{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:max(.0625rem,min(.3rem,(100% - 7 * 2.75rem) / 6))}
 .cal-entete{font-size:.8125rem;color:var(--gris);text-align:center;margin-bottom:.3rem}
-.jour{position:relative;display:grid;place-items:center;align-content:center;min-height:2.9rem;padding:.3rem 0;border-radius:4px;
+.jour{position:relative;display:grid;place-items:center;align-content:center;min-height:2.9rem;padding:.3rem 0;border-radius:.25rem;
   background:var(--mur);font-weight:700;cursor:pointer;line-height:1.05;font-variant-numeric:tabular-nums}
-.jour:hover{background:#DCE6DF}
+@media (hover: hover) and (pointer: fine) {
+  .jour:hover {background:#DCE6DF}
+}
 .j-num{font-size:1.0625rem}
-.j-info{font-size:.6875rem;font-weight:600;color:var(--gris)}
+.j-info{font-size:.75rem;font-weight:600;color:var(--gris)}
 .jour.passe{background:transparent;color:#A3ABA7;cursor:default}
 .jour.ferme{cursor:not-allowed;color:var(--gris);
-  background:repeating-linear-gradient(135deg,var(--mur) 0 5px,#E7CFC9 5px 7px)}
+  background:repeating-linear-gradient(135deg,var(--mur) 0 .3125rem,#E7CFC9 .3125rem .4375rem)}
 .jour:has(input:checked){background:var(--jaune);box-shadow:inset 0 0 0 2px var(--encre)}
 .jour:has(input:focus-visible){outline:3px solid var(--rouge);outline-offset:2px}
 .jour.ferme .j-num{text-decoration:line-through;text-decoration-color:var(--rouge);text-decoration-thickness:2px}
@@ -313,7 +335,7 @@ small{font-size:.8em}
 .cal-legende,.cal-sans{margin-top:.7rem;font-size:.875rem;color:var(--gris)}
 .cal-choix{margin-top:.7rem;font-weight:700}
 .creneaux-l{display:grid;gap:.6rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,13rem),1fr))}
-.creneau{display:grid;gap:.15rem;padding:.8rem 1rem;border:1.5px solid #9AA39F;border-radius:6px;cursor:pointer}
+.creneau{display:grid;gap:.15rem;padding:.8rem 1rem;border:1.5px solid #9AA39F;border-radius:.375rem;cursor:pointer}
 .creneau:has(input:checked){border-color:var(--vert);box-shadow:inset 0 0 0 2px var(--vert);background:#EAF2EC}
 .creneau:has(input:focus-visible){outline:3px solid var(--rouge);outline-offset:2px}
 .creneau:has(input:disabled){opacity:.5;cursor:not-allowed}
@@ -323,13 +345,13 @@ small{font-size:.8em}
 .champs{display:grid;gap:1rem;grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr))}
 .champ label{display:block;font-weight:600;margin-bottom:.35rem}
 .champ input{width:100%;min-height:3rem;padding:.7rem .8rem;font:inherit;font-size:1rem;color:var(--encre);background:#fff;
-  border:1.5px solid #7D8783;border-radius:6px}
+  border:1.5px solid #7D8783;border-radius:.375rem}
 .champ input:focus-visible{outline:3px solid var(--rouge);outline-offset:1px;border-color:var(--encre)}
 .champ input[aria-invalid="true"]{border-color:var(--rouge);box-shadow:inset 0 0 0 1px var(--rouge)}
 .aide{margin-top:.3rem;font-size:.875rem;color:var(--gris)}
 .case{display:flex;align-items:center;gap:.65rem;min-height:2.75rem;font-weight:600;cursor:pointer}
 .case input{width:1.3rem;height:1.3rem;margin:0;accent-color:var(--vert);flex:none}
-.recap{padding:.75rem .9rem;background:var(--mur);border-left:4px solid var(--jaune);border-radius:0 6px 6px 0;font-size:.9375rem}
+.recap{padding:.75rem .9rem;background:var(--mur);border-left:4px solid var(--jaune);border-radius:0 .375rem .375rem 0;font-size:.9375rem}
 .recap a{font-weight:700;white-space:nowrap}
 .erreur{font-weight:600;color:var(--rouge)}
 .comptoir .btn{justify-self:start}
@@ -348,7 +370,7 @@ small{font-size:.8em}
 .quartier{padding-block:clamp(3rem,2rem + 4vw,5.5rem)}
 .quartier-grille{display:grid;gap:2.5rem;align-items:start}
 @media (min-width:62rem){.quartier-grille{grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:3.5rem}}
-.plan svg{display:block;width:100%;height:auto;border-radius:8px;font-family:inherit}
+.plan svg{display:block;width:100%;height:auto;border-radius:.5rem;font-family:inherit}
 .plan figcaption{margin-top:.5rem;font-size:.875rem;color:var(--gris)}
 .p-sol{fill:#D6DDD7}
 .p-rue path,.p-axe path,.p-auxonne{fill:none;stroke-linecap:round;stroke-linejoin:round}
@@ -356,16 +378,16 @@ small{font-size:.8em}
 .p-axe path{stroke:#fff;stroke-width:13}
 .p-place{fill:#B5CCB8;stroke:#fff;stroke-width:8}
 .p-auxonne{stroke:var(--jaune);stroke-width:18}
-.p-nom text,.p-fleche text,.p-atelier text{font-size:22px;font-weight:700;fill:var(--encre);paint-order:stroke;stroke:#D6DDD7;stroke-width:5px;stroke-linejoin:round}
-.p-nom .p-petit,.p-atelier .p-petit{font-size:18px;font-weight:600}
+.p-nom text,.p-fleche text,.p-atelier text{font-size:1.375rem;font-weight:700;fill:var(--encre);paint-order:stroke;stroke:#D6DDD7;stroke-width:5px;stroke-linejoin:round}
+.p-nom .p-petit,.p-atelier .p-petit{font-size:1.125rem;font-weight:600}
 .p-bus rect{fill:var(--vert)}
-.p-bus text{font-size:15px;font-weight:700;fill:#fff}
+.p-bus text{font-size:.9375rem;font-weight:700;fill:#fff}
 .p-fleche path{fill:none;stroke:var(--encre);stroke-width:3;stroke-linecap:round}
 .p-atelier{color:var(--vert);--logo-trait:var(--jaune)}
 .p-atelier .p-halo{fill:rgba(181,57,42,.2)}
-.p-atelier text{font-size:26px;font-weight:800;font-stretch:75%}
+.p-atelier text{font-size:1.625rem;font-weight:800;font-stretch:75%}
 .p-nord path{fill:var(--encre)}
-.p-nord text{font-size:16px;font-weight:700;fill:var(--encre)}
+.p-nord text{font-size:1rem;font-weight:700;fill:var(--encre)}
 .infos address{font-style:normal;font-size:1.125rem;line-height:1.45}
 .infos address b{font-stretch:75%;font-weight:800;font-size:1.6rem}
 .infos .tel{margin-top:.4rem}
@@ -374,8 +396,8 @@ small{font-size:.8em}
 .horaires div:first-child{border-top:1px solid #C9CFCB}
 .horaires dt{flex:0 0 10rem;font-weight:700}
 .horaires dd{flex:1 1 10rem;font-variant-numeric:tabular-nums}
-.horaires .aujourdhui{background:var(--jaune);border-radius:4px;border-color:transparent}
-.auj-tag{display:inline-block;margin-left:.4rem;padding:0 .4rem;border-radius:3px;background:var(--encre);color:var(--jaune);font-size:.75rem;font-weight:700;vertical-align:.1em}
+.horaires .aujourdhui{background:var(--jaune);border-radius:.25rem;border-color:transparent}
+.auj-tag{display:inline-block;margin-left:.4rem;padding:0 .4rem;border-radius:.1875rem;background:var(--encre);color:var(--jaune);font-size:.75rem;font-weight:700;vertical-align:.1em}
 .acces{list-style:none;padding:0;display:grid;gap:.75rem}
 .acces li{display:flex;gap:.75rem;align-items:flex-start}
 .acces .ico{width:1.6rem;height:1.6rem;color:var(--vert);margin-top:.05rem}
@@ -408,7 +430,7 @@ small{font-size:.8em}
 
 /* ── Message éphémère : « ajouté à l'étiquette » ── */
 .toast{position:fixed;z-index:25;left:50%;bottom:1.5rem;width:max-content;max-width:calc(100% - 2rem);padding:.7rem 1rem;
-  background:var(--encre);color:#fff;border-radius:8px;font-weight:600;font-size:.9375rem;box-shadow:0 10px 20px -10px rgba(0,0,0,.5);
+  background:var(--encre);color:#fff;border-radius:.5rem;font-weight:600;font-size:.9375rem;box-shadow:0 10px 20px -10px rgba(0,0,0,.5);
   opacity:0;transform:translate(-50%,.75rem);transition:opacity .2s,transform .2s;pointer-events:none}
 .toast.visible{opacity:1;transform:translate(-50%,0)}
 @media (max-width:47.99rem),(max-height:30rem) and (orientation:landscape){.toast{bottom:calc(4.9rem + env(safe-area-inset-bottom))}}
@@ -416,7 +438,7 @@ small{font-size:.8em}
 /* ── Ticket de dépôt : le talon qu'on détache au comptoir ── */
 .ticket{width:min(26rem,100% - 2rem);max-width:none;margin:auto;padding:0;border:0;background:transparent;color:var(--encre)}
 .ticket::backdrop{background:rgba(10,22,17,.62)}
-.ticket-in{padding:1.9rem 1.5rem 1.5rem;background:var(--blanc);border-radius:0 0 8px 8px;
+.ticket-in{padding:1.9rem 1.5rem 1.5rem;background:var(--blanc);border-radius:0 0 .5rem .5rem;
   -webkit-mask:radial-gradient(circle at 50% 0,transparent .42rem,#000 .47rem) 0 0/1.3rem 100% repeat-x;
   mask:radial-gradient(circle at 50% 0,transparent .42rem,#000 .47rem) 0 0/1.3rem 100% repeat-x}
 .ticket[open] .ticket-in{animation:sort .3s ease-out}
@@ -426,9 +448,9 @@ small{font-size:.8em}
 .ticket h2:focus{outline:none}
 .ticket-quand{margin-top:.6rem;font-weight:700;font-size:1.125rem;line-height:1.3}
 .ticket-in > p:not(.ticket-num):not(.petit){margin-top:.5rem}
-.sms{margin-top:1.25rem;padding:.9rem;background:#E3E9E5;border-radius:12px}
+.sms{margin-top:1.25rem;padding:.9rem;background:#E3E9E5;border-radius:.75rem}
 .sms-de{font-size:.8125rem;color:var(--gris)}
-.sms-bulle{margin-top:.35rem;padding:.7rem .85rem;background:#fff;border-radius:14px 14px 14px 4px;font-size:.9375rem;line-height:1.4}
+.sms-bulle{margin-top:.35rem;padding:.7rem .85rem;background:#fff;border-radius:.875rem .875rem .875rem .25rem;font-size:.9375rem;line-height:1.4}
 .sms-rappel{margin-top:.55rem;font-size:.875rem}
 .ticket .petit{margin-top:1rem;font-size:.875rem}
 .ticket form{margin-top:1.1rem}

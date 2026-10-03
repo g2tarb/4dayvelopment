@@ -217,7 +217,7 @@
         li.append(lab);
         ul.append(li);
       }
-      div.append(el('h4', g), ul);
+      div.append(el('h3', g), ul);   // h3 : sous le h2 « Réserver », pas de saut de niveau
       return div;
     }));
   }
@@ -295,7 +295,7 @@
         lab.append(i, h(t));
         g.append(lab);
       }
-      div.append(el('h4', nom), g);
+      div.append(el('h3', nom), g);
       return div;
     }));
   }
