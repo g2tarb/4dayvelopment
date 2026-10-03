@@ -53,7 +53,7 @@ Les libellés de catégorie changent selon les plateformes : à confirmer dans l
 | Malt | profils freelances très bien indexés | profil de chaque associé, qui mentionne 4dayvelopment | Malt vise les indépendants : vérifier qu'un profil lié à une structure est accepté `[À VÉRIFIER]` | `[À FAIRE]` | |
 | Clutch | classements « top agencies » cités par les moteurs anglophones | « Web Design », « Web Development », localisation Paris | les avis Clutch sont vérifiés par entretien avec le client : adapté aux avis réels | `[À FAIRE]` | |
 | Trustpilot | avis, requête « 4dayvelopment avis » | « Agence de conception web » | invitations envoyées aux seuls clients réels après livraison, sans contrepartie. Répondre à chaque avis | `[À FAIRE]` | |
-| Page LinkedIn | entité d'entreprise, `sameAs`, profils des associés | secteur « Services et conseil en informatique » ou « Design » ; taille 2 à 10 | relier les trois associés à la page (poste actuel) | `[À FAIRE]` | |
+| Page LinkedIn | entité d'entreprise, `sameAs`, profils des associés | secteur « Services et conseil en informatique » ou « Design » ; taille 2 à 10 | relier les trois associés à la page (poste actuel) | créée : https://www.linkedin.com/company/4dayvelopment/ (dans `sameAs`) | 2026-10-03 |
 
 Une fois un profil créé, ajouter son URL dans `sameAs` de l'`Organization` (home, JSON-LD). C'est le seul changement de code nécessaire.
 
