@@ -183,7 +183,7 @@
    (1,9:1), padding et filet de lien de menu. On rend au bouton son aspect. */
 .lp .lp-menu-cta { display: flex; margin-block-start: var(--space-m); color: #0b0b0b; padding: var(--space-s) var(--space-m); border: 2px solid transparent; }
 @media (hover: hover) and (pointer: fine) {
-  .lp .lp-menu-cta:hover { display: flex; margin-block-start: var(--space-m); color: #0b0b0b; padding: var(--space-s) var(--space-m); border: 2px solid transparent; }
+  .lp .lp-menu-cta:hover { color: #0b0b0b; } /* .mobile-menu a:hover le rendrait gris */
 }
 .lp .skip-link { background: var(--accent2); color: #0b0b0b; }
 @media (max-width: 56.25rem) {

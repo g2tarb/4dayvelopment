@@ -1963,33 +1963,6 @@ html:not(.js-enabled) .faq-answer { display: block; }
   line-height: 1.8;
   margin: 0;
 }
-.faq-list-items {
-  list-style: none;
-  padding: 0;
-  margin: var(--space-xs) 0 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2xs);
-}
-.faq-list-items li {
-  font-size: var(--step-0);
-  color: var(--muted);
-  display: flex;
-  align-items: center;
-  gap: var(--space-2xs);
-  padding: var(--space-2xs) var(--space-xs);
-  background: rgba(218,84,38,0.05);
-  border-radius: 8px;
-  border: 1px solid rgba(218,84,38,0.1);
-  transition: background .2s;
-}
-@media (hover: hover) and (pointer: fine) {
-  .faq-list-items li:hover {
-    background: rgba(218,84,38,0.1);
-    color: var(--text);
-  }
-}
-
 /* ── CONTACT / CTA FINAL ───────────────────────────────────── */
 .cta-section {
   padding: 6.25rem var(--space-m);
@@ -2783,7 +2756,7 @@ footer {
 /* ── Touch targets minimum 48px (Google / Apple guidelines) ── */
 @media (pointer: coarse) {
   button, a, [role="button"], select,
-  .type-chip, .faq-question, .nav-toggle,
+  .type-chip, .faq-question,
   .hamburger,
   .btn-primary, .btn-secondary, .btn-plan,
   .btn-submit, .mobile-cta, .exit-cta, .exit-close, .exit-close-icon {
@@ -2908,16 +2881,6 @@ footer {
   }
 }
 
-/* ── Sticky CTA mobile (visible apres scroll hero) ───────── */
-@media (max-width: 48rem) {
-
-
-  /* Padding body pour eviter que le contenu soit cache */
-  body.has-sticky-cta {
-    padding-block-end: calc(4.5rem + env(safe-area-inset-bottom, 0px));
-  }
-}
-
 /* ── Pricing cards — swipe horizontal mobile ─────────────── */
 
 /* ── Testimonials — carousel swipe mobile ────────────────── */
@@ -3028,10 +2991,6 @@ footer {
     font-size: var(--step-0);
     line-height: 1.7;
   }
-  .faq-list-items li {
-    font-size: var(--step-0);
-    padding: var(--space-3xs) 0;
-  }
 }
 
 /* ── Logo img responsive ─────────────────────────────────── */
@@ -3094,9 +3053,9 @@ footer {
 
 /* ── Print — clean output ────────────────────────────────── */
 @media print {
-  nav, #floating-cta, #toast-container, #exit-overlay,
+  nav, #floating-cta, #exit-overlay,
   #scroll-progress, #three-bg,
-  .mobile-menu, .sticky-mobile-cta,
+  .mobile-menu,
   body::after { display: none !important; }
   body { background: #fff; color: #111; }
   .hero { min-height: auto; padding: 2.5rem 0; }
@@ -4538,7 +4497,7 @@ html.is-loading, html.is-loading body { overflow: hidden; }
    texte a chaque image, et un equilibrage recalcule soixante fois par
    seconde se paierait sur la fluidite. Il porte de toute facon un <br>. */
 h1:not(.hero-title), h2, h3, h4,
-.section-title, .duel-title, .mo-title, .faq-question {
+.section-title, .faq-question {
   text-wrap: balance;
 }
 p { text-wrap: pretty; }
