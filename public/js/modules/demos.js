@@ -240,23 +240,35 @@ export function initDemoViewer() {
      logo tourne dans le telephone pendant l'attente : rien ne parait
      casse, le diaporama commence simplement une respiration plus tard.
      Le prechargement du site suivant attend, lui, que le premier soit
-     affiche : deux sites complets partaient d'un coup. */
-  let enVueDemarrage = false, pageCalme = document.readyState === 'complete';
+     affiche : deux sites complets partaient d'un coup.
+     Troisieme verrou (2 octobre 2026, choix valide pour PageSpeed) : un
+     premier geste du visiteur (souris, defilement, toucher, clavier) ou
+     3 s de calme. Le site de demo pesait un tiers du travail du processeur
+     au premier affichage sur ordinateur. */
+  let enVueDemarrage = false, pageCalme = false, geste = false;
   const demarrer = () => {
-    if (started || !enVueDemarrage || !pageCalme) return;
+    if (started || !enVueDemarrage || !pageCalme || !geste) return;
     started = true;
     frames[front].src = urlAt(idx);
-    on(frames[front], 'load', preloadNext, { once: true });
+    on(frames[front], 'load', () => {
+      if (splash) splash.classList.remove('is-on');
+      preloadNext();
+    }, { once: true });
     fit();
     restartFill();
     schedule();
   };
-  if (!pageCalme) {
-    on(window, 'load', () => {
-      const calme = () => { pageCalme = true; demarrer(); };
-      'requestIdleCallback' in window ? requestIdleCallback(calme, { timeout: 1200 }) : setTimeout(calme, 600);
-    }, { once: true });
-  }
+  const parGeste = () => { geste = true; demarrer(); };
+  ['pointermove', 'pointerdown', 'wheel', 'scroll', 'keydown', 'touchstart']
+    .forEach(type => on(window, type, parGeste, { passive: true, once: true }));
+  const calme = () => { pageCalme = true; setTimeout(parGeste, 3000); demarrer(); };
+  if (document.readyState === 'complete') calme();
+  else on(window, 'load', () => {
+    'requestIdleCallback' in window ? requestIdleCallback(calme, { timeout: 1200 }) : setTimeout(calme, 600);
+  }, { once: true });
+
+  // L'ecran d'attente au logo couvre le telephone jusqu'au premier site
+  if (splash && !reduced) splash.classList.add('is-on');
   const io = new IntersectionObserver(entries => {
     if (!entries.some(e => e.isIntersecting)) return;
     enVueDemarrage = true;
