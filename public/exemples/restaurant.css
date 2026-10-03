@@ -83,7 +83,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 
 /* boutons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2xs);min-block-size:2.9rem;
-  padding:0.6rem 1.35rem;border-radius:999px;border:2px solid transparent;font-weight:700;font-size:var(--step-0);
+  padding:0.6rem 1.35rem;border-radius:62.4375rem;border:2px solid transparent;font-weight:700;font-size:var(--step-0);
   text-decoration:none;cursor:pointer;line-height:1.2;transition:background-color .15s,color .15s,border-color .15s}
 .btn-bordeaux{background:var(--bordeaux);color:var(--blanc)}
 .btn-craie{background:var(--craie);color:var(--bordeaux-fonce)}
@@ -109,7 +109,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .nav::-webkit-scrollbar{display:none}
 .nav ul{display:flex;gap:var(--space-3xs);list-style:none;margin:0;padding:0 var(--gutter)}
 .nav a{display:flex;align-items:center;min-block-size:2.75rem;padding-inline:var(--space-2xs);white-space:nowrap;
-  text-decoration:none;font-weight:600;font-size:var(--step--1);border-radius:999px}
+  text-decoration:none;font-weight:600;font-size:var(--step--1);border-radius:62.4375rem}
 .nav a[aria-current]{background:oklch(1 0 0 / .14)}
 .store-tel{display:inline-flex;align-items:center;justify-content:center;gap:var(--space-3xs);margin-inline-start:auto;
   min-block-size:2.75rem;min-inline-size:2.75rem;text-decoration:none;font-weight:700;font-variant-numeric:tabular-nums}
@@ -177,8 +177,8 @@ button,input,select,textarea{font:inherit;color:inherit}
   padding-block-end:var(--space-xs);margin-block-end:var(--space-s);
   background:linear-gradient(to right, oklch(0.95 0.009 106.6 / .5), oklch(0.95 0.009 106.6 / .15)) 0 100%/100% 2px no-repeat}
 .ardoise-date{font-family:var(--main);font-weight:300;font-size:clamp(1.5rem, 1rem + 4cqi, 2.4rem);line-height:1.5;filter:url(#craie)}
-.ardoise-service{display:flex;gap:var(--space-3xs);padding:0.2rem;border-radius:999px;background:oklch(0 0 0 / .22)}
-.ardoise-onglet{min-block-size:2.75rem;padding:0.2rem 1rem;border:0;border-radius:999px;background:none;cursor:pointer;
+.ardoise-service{display:flex;gap:var(--space-3xs);padding:0.2rem;border-radius:62.4375rem;background:oklch(0 0 0 / .22)}
+.ardoise-onglet{min-block-size:2.75rem;padding:0.2rem 1rem;border:0;border-radius:62.4375rem;background:none;cursor:pointer;
   font-weight:700;font-size:var(--step--1);color:var(--craie)}
 .ardoise-onglet[aria-pressed="true"]{background:var(--craie);color:var(--ardoise)}
 .ardoise-onglet:focus-visible,.semaine button:focus-visible{outline-color:var(--craie-jaune)}
@@ -297,7 +297,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .aide-creneaux{font-weight:700;color:var(--encre);font-size:var(--step-0)}
 .creneaux{display:flex;flex-wrap:wrap;gap:var(--space-2xs);margin-block-start:var(--space-2xs);min-block-size:2.9rem}
 .creneau{position:relative}
-.creneau span{display:grid;place-items:center;min-inline-size:4.6rem;min-block-size:2.9rem;padding-inline:0.6rem;border-radius:999px;
+.creneau span{display:grid;place-items:center;min-inline-size:4.6rem;min-block-size:2.9rem;padding-inline:0.6rem;border-radius:62.4375rem;
   border:2px solid var(--wallace);color:var(--wallace);background:var(--blanc);font-weight:700;font-variant-numeric:tabular-nums}
 .creneau input:disabled + span{border-color:var(--trait);color:var(--gris);text-decoration:line-through;background:var(--zinc)}
 .creneaux-vide{font-size:var(--step--1);color:var(--gris);align-self:center}
@@ -338,7 +338,7 @@ button,input,select,textarea{font:inherit;color:inherit}
 .filtre{display:grid;gap:var(--space-2xs);margin-block-end:var(--space-m)}
 .filtre-t{font-weight:800}
 .filtre-puces{display:flex;flex-wrap:wrap;gap:var(--space-2xs)}
-.filtre-puces button{min-block-size:2.75rem;padding:0.3rem 1rem;border-radius:999px;border:2px solid var(--encre);background:var(--blanc);
+.filtre-puces button{min-block-size:2.75rem;padding:0.3rem 1rem;border-radius:62.4375rem;border:2px solid var(--encre);background:var(--blanc);
   font-weight:600;font-size:var(--step--1);cursor:pointer}
 .filtre-puces button[aria-pressed="true"]{background:var(--encre);color:var(--blanc)}
 .filtre-puces button[aria-pressed="true"]::before{content:"";display:inline-block;inline-size:.5em;block-size:.9em;margin-inline-end:.45em;

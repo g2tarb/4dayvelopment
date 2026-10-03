@@ -98,7 +98,7 @@ p{text-wrap:pretty}
 /* sous 26rem : signature raccourcie, elle tient sur une ligne */
 @media (max-width:26rem){ .logo-sig .long{display:none} .logo-sig .court{display:inline} }
 .nav ul{list-style:none;padding:0;display:flex;align-items:center;gap:.25rem}
-.nav a{display:block;white-space:nowrap;padding:.6rem .7rem;border-radius:6px;text-decoration:none;font-weight:600;font-size:.975rem}
+.nav a{display:block;white-space:nowrap;padding:.6rem .7rem;border-radius:.375rem;text-decoration:none;font-weight:600;font-size:.975rem}
 @media (hover: hover) and (pointer: fine) {
   .nav a:hover {background:var(--pierre)}
 }
@@ -180,8 +180,8 @@ p{text-wrap:pretty}
 .devis-tete h2{font-size:1.5rem;letter-spacing:-.02em}
 .devis-tete p{font-size:.9375rem;color:var(--texte-2);margin-top:.2rem}
 .progression{margin-top:1.1rem;display:flex;align-items:center;gap:.75rem;font-size:.8125rem;font-weight:600;color:var(--texte-2)}
-.progression-barre{flex:1;height:.375rem;border-radius:3px;background:#E7E4DC;overflow:hidden}
-.progression-barre span{display:block;height:100%;width:100%;background:var(--sapin);border-radius:3px;transform-origin:left;transform:scaleX(.25);transition:transform .3s ease}
+.progression-barre{flex:1;height:.375rem;border-radius:.1875rem;background:#E7E4DC;overflow:hidden}
+.progression-barre span{display:block;height:100%;width:100%;background:var(--sapin);border-radius:.1875rem;transform-origin:left;transform:scaleX(.25);transition:transform .3s ease}
 .etape{border:0;padding:1.25rem 1.5rem .25rem;min-width:0}
 .etape[hidden]{display:none}
 .etape legend{float:left;width:100%}
@@ -219,7 +219,7 @@ p{text-wrap:pretty}
 .champ .err-champ{font-size:.875rem;color:var(--erreur);font-weight:600}
 .champ .err-champ:empty{display:none}
 .deux-champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr));gap:0 .75rem}
-.erreur{display:flex;gap:.5rem;align-items:flex-start;margin-top:.75rem;padding:.6rem .75rem;border-radius:6px;background:#FBEDEB;color:var(--erreur);font-size:.9rem;font-weight:600}
+.erreur{display:flex;gap:.5rem;align-items:flex-start;margin-top:.75rem;padding:.6rem .75rem;border-radius:.375rem;background:#FBEDEB;color:var(--erreur);font-size:.9rem;font-weight:600}
 .erreur:empty{display:none}
 .rgpd{font-size:.8125rem;color:var(--texte-2);margin-top:.25rem}
 .recap{display:grid;gap:0;margin:0}
@@ -302,7 +302,7 @@ p{text-wrap:pretty}
 .chantier img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--r)}
 .chantier h3{font-size:1.2rem;margin-top:1rem;letter-spacing:-.015em}
 .chantier p{margin-top:.3rem;font-size:.9375rem;color:var(--texte-2);line-height:1.5}
-.chantier .type{display:inline-block;margin-top:.7rem;font-size:.8125rem;font-weight:600;color:var(--sapin);border:1px solid #BFD6C9;border-radius:6px;padding:.15rem .5rem}
+.chantier .type{display:inline-block;margin-top:.7rem;font-size:.8125rem;font-weight:600;color:var(--sapin);border:1px solid #BFD6C9;border-radius:.375rem;padding:.15rem .5rem}
 
 /* L'entreprise */
 .entreprise{display:grid;gap:3rem;align-items:center}
@@ -327,7 +327,7 @@ p{text-wrap:pretty}
   .photos{padding-bottom:5rem}
   .photos .principale{width:84%;margin-left:auto}
   .photos .seconde{position:absolute;left:0;bottom:0;width:46%;margin:0}
-  .photos .seconde img{border:6px solid var(--pierre);border-radius:12px}
+  .photos .seconde img{border:6px solid var(--pierre);border-radius:.75rem}
   .photos .principale figcaption{padding-left:48%}
 }
 
@@ -355,7 +355,7 @@ p{text-wrap:pretty}
   .carte-svg .riv-nom{font-size:1.0625rem}
 }
 .carte-legende{font-size:.875rem;color:var(--texte-2);margin-top:1rem}
-.carre-atelier{display:inline-block;width:.8rem;height:.8rem;border-radius:3px;background:var(--sapin);margin-right:.5rem;vertical-align:-.05em}
+.carre-atelier{display:inline-block;width:.8rem;height:.8rem;border-radius:.1875rem;background:var(--sapin);margin-right:.5rem;vertical-align:-.05em}
 .communes-t{margin-top:1.75rem;font-weight:700;font-family:var(--display)}
 .communes{list-style:none;padding:0;margin-top:1rem;columns:3 9.5rem;column-gap:1.5rem;font-size:.9375rem}
 .communes li{padding:.2rem 0;break-inside:avoid}
@@ -388,7 +388,7 @@ p{text-wrap:pretty}
 }
 .pied address{font-style:normal;margin-top:1.1rem;line-height:1.7}
 .badges{display:flex;flex-wrap:wrap;gap:.5rem}
-.badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgb(255 255 255 / .35);border-radius:6px;padding:.35rem .6rem;color:#fff;font-weight:600;font-size:.875rem}
+.badge{display:inline-flex;align-items:center;gap:.4rem;border:1px solid rgb(255 255 255 / .35);border-radius:.375rem;padding:.35rem .6rem;color:#fff;font-weight:600;font-size:.875rem}
 .badge .ico{width:1rem;height:1rem;color:#9FD3B8}
 .pied-bas{margin-top:3rem;padding-top:1.5rem;border-top:1px solid rgb(255 255 255 / .16);display:grid;gap:.5rem;font-size:.875rem;color:#AFC0D2}
 

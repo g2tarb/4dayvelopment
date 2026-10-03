@@ -670,7 +670,7 @@ ${ARTICLE_NAV}  <!-- /partial:nav -->
       </nav>
 
       <div style="display:flex;flex-wrap:wrap;gap:0.75rem;align-items:center;margin-block-start:1.25rem;margin-block-end:1.25rem;">
-        <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:0.25rem 0.75rem;border-radius:100px;font-size:0.75rem;font-weight:600;">${escapeHtml(category)}</span>
+        <span style="background:rgba(218,84,38,0.15);color:#f2b13b;padding:0.25rem 0.75rem;border-radius:6.25rem;font-size:0.75rem;font-weight:600;">${escapeHtml(category)}</span>
         <time datetime="${date}" style="font-size:0.8125rem;color:var(--muted2);">${dateFR}</time>
         <span style="font-size:0.8125rem;color:var(--muted2);">· ${escapeHtml(readTime)}</span>
       </div>
@@ -686,7 +686,7 @@ ${ARTICLE_NAV}  <!-- /partial:nav -->
         ${content}
       </div>
 ${faqHtml}
-      <div style="background:rgba(218,84,38,0.08);border:1px solid rgba(218,84,38,0.2);border-radius:14px;padding:1.75rem;margin:2.5rem 0;text-align:center;">
+      <div style="background:rgba(218,84,38,0.08);border:1px solid rgba(218,84,38,0.2);border-radius:0.875rem;padding:1.75rem;margin:2.5rem 0;text-align:center;">
         <p style="font-size:1.125rem;color:#e8e8e8;font-weight:700;margin-block-end:0.75rem;">Un projet en tête ?</p>
         <p style="font-size:0.875rem;color:#888;margin-block-end:1.25rem;">Devis gratuit sous 24h · Livraison en 4 jours · Sans engagement</p>
         <a href="/#contact" class="btn-primary magnetic" style="display:inline-flex;">Demander mon devis gratuit →</a>
