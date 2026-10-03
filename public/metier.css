@@ -102,7 +102,7 @@
   .lp-large .lp-wrap > h2 { position: static; max-width: none; }
   .lp-large .lp-wrap > h2 + .lp-garanties { margin-block-start: var(--space-xl); }
   /* même bord droit que les colonnes de contenu des autres blocs */
-  .lp-large .lp-wrap > .lp-garanties { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-xl); max-width: none; }
+  .lp-large .lp-wrap > .lp-garanties { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-xl); }
   .lp-large .lp-garanties li { border-block-start: 1px solid var(--lp-ligne); padding-block-start: var(--space-s); }
   .lp-bloc .lp-wrap > :not(h2) { grid-column: 2; max-width: none; }
   /* les filets courent jusqu'au bord droit commun ; le texte garde une ligne lisible */
